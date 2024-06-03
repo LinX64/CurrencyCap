@@ -5,3 +5,6 @@ import androidx.compose.ui.graphics.painter.Painter
 
 @Composable
 expect fun getPlaceHolderDrawable(): Painter
+
+@Composable
+expect fun getSearchText(): String

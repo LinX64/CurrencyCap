@@ -8,18 +8,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun BulbBackground(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    val darkBlue = Color(0xFF001f3f)
-    val lightBlue = Color(0xFF003C70)
+    val darkBlue = Color(0xFF000000)
+    val lightBlue = Color(0xFF001222)
 
     Box(
-        modifier = modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().then(modifier)
     ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
             val height = size.height
@@ -58,10 +57,4 @@ fun BulbBackground(
         }
         content()
     }
-}
-
-@Preview
-@Composable
-fun BulbBackgroundPreview() {
-    BulbBackground(content = {})
 }

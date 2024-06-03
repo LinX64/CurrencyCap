@@ -7,3 +7,8 @@ import androidx.compose.ui.graphics.painter.Painter
 actual fun getPlaceHolderDrawable(): Painter {
     // TODO
 }
+
+@Composable
+actual fun getSearchText(): String {
+    // TODO
+}

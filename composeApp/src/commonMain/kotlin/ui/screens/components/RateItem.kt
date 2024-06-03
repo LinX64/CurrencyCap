@@ -1,8 +1,8 @@
 package ui.screens.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -33,7 +33,6 @@ fun RateItem(
 ) {
     val hazeState = remember { HazeState() }
 
-    Box {
         Box(
             modifier.fillMaxSize()
                 .haze(
@@ -53,39 +52,32 @@ fun RateItem(
                     ),
             ) {
                 Column(
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(42.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Column(
-                        modifier = Modifier.padding(32.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        AsyncImage(
-                            modifier = Modifier.size(48.dp),
-                            placeholder = getPlaceHolderDrawable(),
-                            model = "https://icons.veryicon.com/png/o/business/business-finance/coin-11.png",
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(Color.White)
-                        )
+                    AsyncImage(
+                        modifier = Modifier.size(48.dp),
+                        placeholder = getPlaceHolderDrawable(),
+                        model = "https://icons.veryicon.com/png/o/business/business-finance/coin-11.png",
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(Color.White)
+                    )
 
-                        Spacer(modifier = Modifier.size(16.dp))
+                    Text(
+                        modifier = Modifier.padding(top = 4.dp),
+                        text = rate.code,
+                        color = Color.White,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
 
-                        Text(
-                            text = rate.code,
-                            color = Color.White,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-
-                        Spacer(modifier = Modifier.size(5.dp))
-
-                        Text(
-                            text = rate.sell.toString(),
-                            color = Color.LightGray,
-                            style = MaterialTheme.typography.bodyLarge,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
+                    Text(
+                        text = rate.sell.toString(),
+                        color = Color.LightGray,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
         }
-    }
 }
