@@ -12,7 +12,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-private const val BASE_URL = "https://api.exchangerate-api.com/v4/latest/USD"
+private const val BASE_URL =
+    "https://raw.githubusercontent.com/LinX64/CoinCap/f4a2e9922b441eea56d6d4256bfce21de5796675/currencies.json"
 
 class MainRepositoryImpl(
     private val httpClient: HttpClient

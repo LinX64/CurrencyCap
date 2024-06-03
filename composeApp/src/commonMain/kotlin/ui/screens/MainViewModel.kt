@@ -2,9 +2,9 @@ package ui.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.client.myapplication.data.util.NetworkResult
-import com.client.myapplication.data.util.asResult
 import data.repository.MainRepository
+import data.util.NetworkResult
+import data.util.asResult
 import domain.model.RateDao
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

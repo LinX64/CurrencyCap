@@ -1,4 +1,4 @@
-package com.client.myapplication.data.util
+package data.util
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.MapSerializer

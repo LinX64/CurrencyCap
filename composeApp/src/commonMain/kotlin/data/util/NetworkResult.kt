@@ -1,4 +1,4 @@
-package com.client.myapplication.data.util
+package data.util
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
