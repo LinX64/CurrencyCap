@@ -17,7 +17,7 @@ reusable-components = "1.2"
 koin = "3.5.6"
 koin-compose = "1.1.5"
 lifecycleViewModel = "2.8.1"
-navigationCompose = "2.7.0-alpha03"
+navigationCompose = "2.7.0-alpha07"
 
 # Network
 kotlinx-serialization = "1.6.3"
