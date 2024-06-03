@@ -7,10 +7,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import appModule
+import di.httpClientModule
+import di.repositoryModule
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import org.koin.compose.currentKoinScope
 import ui.navigation.AppNavigation
+import viewModelModule
 
 @Composable
 @Preview
@@ -20,7 +23,7 @@ fun App(
     MaterialTheme {
         KoinApplication(
             application = {
-                modules(appModule)
+                modules(appModule, viewModelModule, repositoryModule, httpClientModule)
             }) {
             AppNavigation(navController = navController)
         }

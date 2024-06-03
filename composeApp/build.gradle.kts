@@ -30,8 +30,9 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
-
             implementation(libs.koin.android)
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.kotlinx.coroutines.android)
 
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -41,21 +42,29 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
             implementation(libs.kotlinx.serialization)
+            implementation(libs.kotlin.serialization)
+            implementation(libs.ktor.client.core)
+            implementation(libs.kotlinx.coroutines.core)
+
+            implementation(libs.reusableComponents)
+
+            implementation(libs.bundles.ktor)
+            implementation(libs.ktor.client.content.negotiation)
 
             api(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.lifecycle.viewmodel)
             implementation(libs.navigation.compose)
-
         }
 
-        iosMain {
-
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
     }
 }
@@ -91,6 +100,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     dependencies {
         debugImplementation(compose.uiTooling)
