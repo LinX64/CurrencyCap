@@ -1,7 +1,7 @@
 package data.repository
 
-import data.model.Currencies
 import data.model.toDomain
+import data.util.parseCurrencyRates
 import domain.model.RateDao
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -19,7 +19,8 @@ class MainRepositoryImpl(
     private val httpClient: HttpClient
 ) : MainRepository {
     override fun getCurrencies(): Flow<List<RateDao>> = flow {
-        val response = httpClient.get(BASE_URL).body<Currencies>().rates.toDomain()
-        emit(response)
+        val response = httpClient.get(BASE_URL).body<String>()
+        val rates = parseCurrencyRates(response).toDomain()
+        emit(rates)
     }.flowOn(Dispatchers.IO)
 }

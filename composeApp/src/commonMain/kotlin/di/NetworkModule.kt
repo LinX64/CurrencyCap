@@ -11,7 +11,13 @@ val httpClientModule = module {
     single {
         HttpClient {
             install(ContentNegotiation) {
-                json(json = Json { ignoreUnknownKeys = true }, contentType = ContentType.Any)
+                json(
+                    json = Json {
+                        ignoreUnknownKeys = true
+                        isLenient = true
+                    },
+                    contentType = ContentType.Application.Json
+                )
             }
         }
     }

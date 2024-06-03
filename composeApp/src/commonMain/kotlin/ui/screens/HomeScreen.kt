@@ -6,9 +6,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import domain.model.RateDao
+import koinViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import ui.koinViewModel
-
 
 @Composable
 fun HomeRoute(
