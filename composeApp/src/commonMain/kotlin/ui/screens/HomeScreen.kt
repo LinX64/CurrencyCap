@@ -1,13 +1,23 @@
 package ui.screens
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import dev.chrisbanes.haze.HazeDefaults
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.haze
 import domain.model.RateDao
 import koinViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import ui.screens.components.RateItem
 
 @Composable
 fun HomeRoute(
@@ -21,9 +31,22 @@ fun HomeRoute(
 
 @Composable
 internal fun HomeScreen(
+    modifier: Modifier = Modifier,
     rates: MainState
 ) {
-    LazyColumn {
+    val hazeState = remember { HazeState() }
+    LazyVerticalGrid(
+        modifier = modifier.fillMaxSize()
+            .haze(
+                state = hazeState,
+                style = HazeStyle(
+                    HazeDefaults.tint(Color.Transparent),
+                    HazeDefaults.blurRadius,
+                    HazeDefaults.noiseFactor
+                )
+            ),
+        columns = GridCells.Fixed(2),
+    ) {
         if (rates is MainState.Success) {
             items(rates.rates.size) { index ->
                 RateItem(rate = rates.rates[index])
@@ -33,7 +56,7 @@ internal fun HomeScreen(
 
     when (rates) {
         is MainState.Loading -> {
-            Text("Loading...")
+            CircularProgressIndicator()
         }
 
         is MainState.Error -> {
@@ -41,14 +64,6 @@ internal fun HomeScreen(
         }
 
         else -> Unit
-    }
-}
-
-@Composable
-fun RateItem(rate: RateDao) {
-    Column {
-        Text(text = rate.code)
-        Text(text = rate.buy.toString())
     }
 }
 
