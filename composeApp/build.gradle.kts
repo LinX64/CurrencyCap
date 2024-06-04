@@ -34,7 +34,6 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
             // implementation(libs.kotlinx.coroutines.android)
 
-            implementation(libs.reusableComponents)
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
         }
@@ -45,8 +44,9 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
-
             implementation(compose.components.uiToolingPreview)
+
+            implementation(compose.materialIconsExtended)
 
             implementation(libs.kotlinx.serialization)
             implementation(libs.kotlin.serialization)

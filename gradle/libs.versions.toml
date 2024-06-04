@@ -13,7 +13,6 @@ androidx-test-junit = "1.1.5"
 compose-plugin = "1.6.11"
 junit = "4.13.2"
 kotlin = "2.0.0"
-reusable-components = "1.2"
 koin = "3.5.6"
 koin-compose = "1.1.5"
 lifecycleViewModel = "2.8.1"
@@ -29,11 +28,11 @@ coroutines = "1.8.1"
 [libraries]
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
-reusableComponents = { group = "io.github.linx64", name = "reusablecomponents", version.ref = "reusable-components" }
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModel" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+
 haze = { group = "dev.chrisbanes.haze", name = "haze", version.ref = "haze" }
 
 coil = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }

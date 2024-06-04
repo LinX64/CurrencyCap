@@ -9,24 +9,6 @@ import ui.screens.MainState
 import ui.screens.SearchUiState
 import ui.theme.AppM3Theme
 
-//@Preview
-//@Composable
-//fun RateDaoListPreview() {
-//    AppM3Theme(dark = true) {
-//        BulbBackground {
-//            LazyHorizontalGrid(
-//                rows = GridCells.Fixed(1),
-//                contentPadding = PaddingValues(16.dp),
-//                horizontalArrangement = Arrangement.spacedBy(16.dp)
-//            ) {
-//                items(10) {
-//                    RateItem(rate = RateDao("USD", buy = 58000, sell = 58000))
-//                }
-//            }
-//        }
-//    }
-//}
-//
 @Preview
 @Composable
 fun MainScreenPreviewLight() {

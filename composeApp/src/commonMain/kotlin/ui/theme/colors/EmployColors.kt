@@ -12,6 +12,7 @@ object CurrencyColors {
     val DarkGray = Color(0xFF303033)
     val ExtraDarkGray = Color(0xFF1C1C1F)
     val Black = Color(0xFF09090A)
+    val Text_Green = Color(0xFF00FF00)
 
     val Red = ColorShades(
         extraLight = Color(0xFFF5ABAB),

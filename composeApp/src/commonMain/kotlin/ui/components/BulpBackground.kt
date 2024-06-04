@@ -15,7 +15,9 @@ fun BulbBackground(
     content: @Composable () -> Unit
 ) {
     val darkBlue = Color(0xFF000000)
-    val lightBlue = Color(0xFF001222)
+    val lightBlue = Color(0xFF012342)
+
+    val lightBlueCircle = Color(0xFF003C70)
 
     Box(
         modifier = Modifier.fillMaxSize().then(modifier)
@@ -36,7 +38,7 @@ fun BulbBackground(
             // Draw the top right diffused light effect using Compose Brush
             drawCircle(
                 brush = Brush.radialGradient(
-                    colors = listOf(lightBlue.copy(alpha = 0.6f), Color.Transparent),
+                    colors = listOf(lightBlueCircle.copy(alpha = 0.6f), Color.Transparent),
                     center = Offset(width - 200f, 200f),
                     radius = 600f
                 ),
@@ -47,7 +49,7 @@ fun BulbBackground(
             // Draw the left-center diffused light effect using Compose Brush
             drawCircle(
                 brush = Brush.radialGradient(
-                    colors = listOf(lightBlue.copy(alpha = 0.6f), Color.Transparent),
+                    colors = listOf(lightBlueCircle.copy(alpha = 0.6f), Color.Transparent),
                     center = Offset(200f, height / 2),
                     radius = 300f
                 ),

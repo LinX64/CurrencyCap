@@ -72,8 +72,8 @@ fun RateItem(
                     )
 
                     Text(
-                        text = rate.sell.toString(),
-                        color = Color.LightGray,
+                        text = "58,000",
+                        color = Color.White,
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold
                     )

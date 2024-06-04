@@ -1,14 +1,9 @@
 package ui.screens.components
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyGridScope
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
@@ -32,6 +27,8 @@ import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.client.currencycap.ui.common.getSearchText
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.hazeChild
 import ui.screens.SearchUiState
 
 @Composable
@@ -48,7 +45,7 @@ fun SearchBarView(
     val isQueryEmpty = query.value.isEmpty()
     var active by rememberSaveable { mutableStateOf(false) }
     val showShouldLoading = remember { mutableStateOf(false) }
-
+    val hazeState = remember { HazeState() }
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -58,7 +55,8 @@ fun SearchBarView(
         SearchBar(
             modifier = modifier
                 .fillMaxWidth()
-                .align(Alignment.TopCenter),
+                .align(Alignment.TopCenter)
+                .hazeChild(hazeState),
             query = query.value,
             onQueryChange = {
                 query.value = it
@@ -82,18 +80,7 @@ fun SearchBarView(
                 dividerColor = Color.Transparent
             )
         ) {
-            LazyVerticalGrid(
-                modifier = modifier.fillMaxWidth(),
-                columns = GridCells.Adaptive(300.dp),
-                contentPadding = PaddingValues(8.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                onboardingView(searchUiState = searchUiState, onItemClick = onItemClick)
-            }
 
-            if (showShouldLoading.value) {
-//                LoadingDots()
-            }
         }
 
         Spacer(modifier = Modifier.padding(16.dp))
@@ -104,34 +91,6 @@ fun SearchBarView(
 
         if (searchUiState !is SearchUiState.Loading) {
             showShouldLoading.value = false
-        }
-    }
-}
-
-private fun LazyGridScope.onboardingView(
-    searchUiState: SearchUiState,
-    onItemClick: (String) -> Unit
-) = when (searchUiState) {
-    is SearchUiState.Loading,
-    is SearchUiState.EmptyQuery,
-    is SearchUiState.SearchNotReady -> Unit
-
-    is SearchUiState.Success -> {
-        val users = searchUiState.users
-        items(users.size) { index ->
-//            UserItem(user = users[index], onItemClick = { onItemClick(users[index].login) })
-        }
-    }
-
-    is SearchUiState.EmptyResponse -> {
-        item {
-//            EmptyResponseView()
-        }
-    }
-
-    is SearchUiState.Error -> {
-        item {
-//            ErrorView()
         }
     }
 }
