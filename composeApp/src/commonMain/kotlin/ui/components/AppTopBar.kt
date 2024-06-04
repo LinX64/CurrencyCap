@@ -14,11 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
+import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeChild
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,21 +26,16 @@ internal fun AppTopBar(
     name: String = "Currency Cap",
     navController: NavHostController,
     currentDestination: NavDestination?,
-    scrollBehavior: TopAppBarScrollBehavior
+    scrollBehavior: TopAppBarScrollBehavior,
 ) {
     val hazeState = remember { HazeState() }
     CenterAlignedTopAppBar(
         modifier = Modifier
             .hazeChild(
                 state = hazeState,
-                style = HazeStyle(
-                    tint = Color.White.copy(alpha = 0.1f),
-                    blurRadius = 1.dp
-                )
+                style = HazeDefaults.style(backgroundColor = Color.Transparent)
             ),
-        title = {
-            AppTitle(name = name)
-        },
+        title = { AppTitle(name = name) },
         navigationIcon = {
 //            if (currentDestination?.route != NavRoutes.Home.ROUTE) {
 //                AppNavigationIcon(navController = navController)
@@ -51,9 +45,9 @@ internal fun AppTopBar(
         colors = TopAppBarColors(
             containerColor = Color.Transparent,
             scrolledContainerColor = Color.Transparent,
-            titleContentColor = MaterialTheme.colorScheme.surface,
-            navigationIconContentColor = MaterialTheme.colorScheme.surface,
-            actionIconContentColor = MaterialTheme.colorScheme.surface
+            titleContentColor = Color.Transparent,
+            navigationIconContentColor = Color.Transparent,
+            actionIconContentColor = Color.Transparent,
         )
     )
 }

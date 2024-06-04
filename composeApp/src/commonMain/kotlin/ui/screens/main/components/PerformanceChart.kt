@@ -1,4 +1,4 @@
-package ui.screens.components
+package ui.screens.main.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Row

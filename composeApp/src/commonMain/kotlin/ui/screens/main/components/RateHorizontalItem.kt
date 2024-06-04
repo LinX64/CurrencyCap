@@ -1,4 +1,4 @@
-package ui.screens.components
+package ui.screens.main.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,10 +20,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.client.currencycap.ui.common.formatToPrice
 import com.client.currencycap.ui.common.getPlaceHolderDrawable
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
@@ -68,8 +68,8 @@ fun RateHorizontalItem(
                     modifier = Modifier.size(48.dp),
                     placeholder = getPlaceHolderDrawable(),
                     model = icon,
+                    error = getPlaceHolderDrawable(),
                     contentDescription = null,
-                    colorFilter = ColorFilter.tint(Color.White)
                 )
 
                 Row(
@@ -104,7 +104,7 @@ private fun FirstColumn(
         )
 
         Text(
-            text = rate.rateUsd,
+            text = formatToPrice(rate.rateUsd.toDouble()),
             color = Color.LightGray.copy(alpha = 0.8f),
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold
@@ -142,7 +142,7 @@ private fun EndComponents() {
                 )
 
                 Text(
-                    text = "Buy",
+                    text = "% 22.5",
                     color = CurrencyColors.Text_Green,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,

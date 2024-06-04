@@ -3,8 +3,10 @@ package com.client.currencycap.ui.common
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
 import platform.Foundation.NSDecimalNumber
+import platform.Foundation.NSNumber
 import platform.Foundation.NSNumberFormatter
 import platform.Foundation.NSNumberFormatterCurrencyStyle
+import platform.Foundation.NSNumberFormatterDecimalStyle
 
 actual fun formatCurrentTotal(currentTotal: Long): String {
     val decimalFormat = NSNumberFormatter().apply {
@@ -34,3 +36,12 @@ actual fun getEthIcon(): Int {
 actual fun getIcon(icon: Int): Painter {
     TODO("Not yet implemented")
 }
+
+actual fun formatToPrice(price: Double): String {
+    val formatter = NSNumberFormatter()
+    formatter.minimumFractionDigits = 5u
+    formatter.maximumFractionDigits = 5u
+    formatter.numberStyle = NSNumberFormatterDecimalStyle
+    return formatter.stringFromNumber(NSNumber()) ?: "$price"
+}
+

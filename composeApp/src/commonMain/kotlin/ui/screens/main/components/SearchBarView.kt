@@ -1,4 +1,4 @@
-package ui.screens.components
+package ui.screens.main.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box

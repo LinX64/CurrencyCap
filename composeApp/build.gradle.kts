@@ -53,6 +53,7 @@ kotlin {
             implementation(libs.ktor.client.core)
 
             implementation(libs.haze)
+            implementation(libs.haze.material)
 
             implementation(libs.coil)
             implementation(libs.coil.compose)

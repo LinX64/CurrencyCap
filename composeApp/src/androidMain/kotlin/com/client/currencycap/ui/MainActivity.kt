@@ -3,9 +3,7 @@ package com.client.currencycap.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
+import androidx.activity.enableEdgeToEdge
 import di.httpClientModule
 import di.repositoryModule
 import org.koin.compose.KoinApplication
@@ -17,16 +15,17 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        enableEdgeToEdge()
+
         setContent {
             KoinApplication(
                 application = {
                     modules(viewModelModule, repositoryModule, httpClientModule)
                 }
             ) {
+                // TODO: Add dark mode support
                 AppM3Theme(dark = true) {
-                    Surface(modifier = Modifier.fillMaxSize()) {
-                        App()
-                    }
+                    App()
                 }
             }
         }

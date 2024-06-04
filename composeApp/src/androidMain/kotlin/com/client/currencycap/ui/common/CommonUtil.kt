@@ -6,6 +6,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.client.currencycap.R
 import java.text.DecimalFormat
+import java.util.Locale
 
 @Composable
 actual fun getPlaceHolderDrawable(): Painter {
@@ -41,3 +42,5 @@ actual fun formatCurrentTotal(currentTotal: Long): String {
 actual fun getIcon(icon: Int): Painter {
     return painterResource(id = icon)
 }
+
+actual fun formatToPrice(price: Double): String = String.format(Locale.US, "%,.4f", price)

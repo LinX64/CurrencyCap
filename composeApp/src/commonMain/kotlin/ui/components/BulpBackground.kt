@@ -16,7 +16,6 @@ fun BulbBackground(
 ) {
     val darkBlue = Color(0xFF000000)
     val lightBlue = Color(0xFF012342)
-
     val lightBlueCircle = Color(0xFF003C70)
 
     Box(
@@ -57,6 +56,7 @@ fun BulbBackground(
                 center = Offset(200f, height / 2)
             )
         }
+
         content()
     }
 }

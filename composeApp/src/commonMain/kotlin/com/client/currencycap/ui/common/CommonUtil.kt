@@ -22,3 +22,5 @@ expect fun formatCurrentTotal(currentTotal: Long): String
 
 @Composable
 expect fun getIcon(icon: Int): Painter
+
+expect fun formatToPrice(price: Double): String

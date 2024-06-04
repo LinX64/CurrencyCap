@@ -1,9 +1,12 @@
-package ui.screens
+package ui.screens.main
+
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import data.repository.MainRepository
-import data.util.NetworkResult
+import data.util.NetworkResult.Error
+import data.util.NetworkResult.Loading
+import data.util.NetworkResult.Success
 import data.util.asResult
 import domain.model.DataDao
 import domain.model.RateDao
@@ -20,9 +23,9 @@ class MainViewModel(
         .asResult()
         .map {
             when (it) {
-                is NetworkResult.Success -> MainState.Success(it.data)
-                is NetworkResult.Error -> MainState.Error(it.exception)
-                NetworkResult.Loading -> MainState.Loading
+                is Success -> MainState.Success(it.data)
+                is Error -> MainState.Error(it.exception)
+                Loading -> MainState.Loading
             }
         }
         .stateIn(
@@ -31,30 +34,34 @@ class MainViewModel(
             initialValue = MainState.Loading
         )
 
-    val cryptoRates: StateFlow<MainCryptoState> = mainRepository.getCoinCapRates()
+    val cryptoRates: StateFlow<CryptoState> = mainRepository.getCoinCapRates()
         .asResult()
         .map {
             when (it) {
-                is NetworkResult.Success -> MainCryptoState.Success(it.data)
-                is NetworkResult.Error -> MainCryptoState.Error(it.exception)
-                NetworkResult.Loading -> MainCryptoState.Loading
+                is Success -> {
+                    val reversed = it.data.sortedBy { it.symbol }
+                    CryptoState.Success(reversed)
+                }
+
+                is Error -> CryptoState.Error(it.exception)
+                Loading -> CryptoState.Loading
             }
         }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = MainCryptoState.Loading
+            initialValue = CryptoState.Loading
         )
 }
 
 sealed interface MainState {
     data object Loading : MainState
-    data class Success(val rates: List<RateDao>) : MainState
+    data class Success(val ratesList: List<RateDao>) : MainState
     data class Error(val error: Throwable) : MainState
 }
 
-sealed interface MainCryptoState {
-    data object Loading : MainCryptoState
-    data class Success(val rates: List<DataDao>) : MainCryptoState
-    data class Error(val error: Throwable) : MainCryptoState
+sealed interface CryptoState {
+    data object Loading : CryptoState
+    data class Success(val rates: List<DataDao>) : CryptoState
+    data class Error(val error: Throwable) : CryptoState
 }
