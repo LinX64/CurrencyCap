@@ -1,55 +1,44 @@
 package ui.components
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.BottomAppBar
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconToggleButton
-import androidx.compose.material3.IconToggleButtonColors
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.hazeChild
 
 @Composable
 internal fun AppBottomBar(
-    hazeState: HazeState,
+    modifier: Modifier = Modifier,
     currentDestination: String,
-    navController: NavHostController
+    navController: NavHostController,
+    selectedIndex: Int,
+    onItemClicked: (Int) -> Unit,
 ) {
     NavigationBar(
         containerColor = Color.Transparent,
+        modifier = modifier,
     ) {
-        BottomAppBar(
-            modifier = Modifier.fillMaxWidth()
-                .hazeChild(state = hazeState),
-            containerColor = Color.Transparent,
-        ) {
-            IconToggleButton(
-                checked = currentDestination == "Home",
-                onCheckedChange = {
-                    if (it) {
-                        navController.navigate("Home")
-                    }
+        for (i in (0 until 3)) {
+            NavigationBarItem(
+                selected = selectedIndex == i,
+                onClick = { onItemClicked(i) },
+                icon = {
+                    Icon(
+                        imageVector = when (i) {
+                            0 -> Icons.Default.Call
+                            1 -> Icons.Default.Lock
+                            else -> Icons.Default.Search
+                        },
+                        contentDescription = null,
+                    )
                 },
-                colors = IconToggleButtonColors(
-                    contentColor = Color.White,
-                    checkedContentColor = Color.White,
-                    containerColor = Color.Transparent,
-                    checkedContainerColor = Color.Transparent,
-                    disabledContentColor = Color.White.copy(alpha = 0.5f),
-                    disabledContainerColor = Color.Transparent,
-                ),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Home,
-                    contentDescription = "Home"
-                )
-            }
+            )
         }
     }
 }

@@ -24,9 +24,7 @@ class MainActivity : ComponentActivity() {
                 }
             ) {
                 AppM3Theme(dark = true) {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                    ) {
+                    Surface(modifier = Modifier.fillMaxSize()) {
                         App()
                     }
                 }

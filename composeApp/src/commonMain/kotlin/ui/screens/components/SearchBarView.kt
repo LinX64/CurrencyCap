@@ -1,5 +1,6 @@
 package ui.screens.components
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -55,8 +56,9 @@ fun SearchBarView(
         SearchBar(
             modifier = modifier
                 .fillMaxWidth()
-                .align(Alignment.TopCenter)
-                .hazeChild(hazeState),
+                .align(Alignment.Center)
+                .hazeChild(hazeState)
+                .border(1.dp, Color.Gray),
             query = query.value,
             onQueryChange = {
                 query.value = it
@@ -77,11 +79,10 @@ fun SearchBarView(
             active = active.also(isSearchBarActive),
             onActiveChange = { active = it },
             colors = SearchBarDefaults.colors(
-                dividerColor = Color.Transparent
+                dividerColor = Color.Transparent,
+                containerColor = Color.Transparent
             )
-        ) {
-
-        }
+        ) {}
 
         Spacer(modifier = Modifier.padding(16.dp))
 

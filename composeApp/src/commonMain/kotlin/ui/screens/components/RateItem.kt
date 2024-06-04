@@ -24,11 +24,12 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
 import domain.model.RateDao
+import formatToPrice
 
 @Composable
 fun RateItem(
     modifier: Modifier = Modifier,
-    icon: String = "https://example.com/image.jpg",
+    icon: String,
     rate: RateDao
 ) {
     val hazeState = remember { HazeState() }
@@ -52,14 +53,19 @@ fun RateItem(
                     ),
             ) {
                 Column(
-                    modifier = Modifier.padding(42.dp),
+                    modifier = Modifier.padding(
+                        start = 32.dp,
+                        end = 32.dp,
+                        top = 16.dp,
+                        bottom = 16.dp
+                    ),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     AsyncImage(
                         modifier = Modifier.size(48.dp),
                         placeholder = getPlaceHolderDrawable(),
-                        model = "https://icons.veryicon.com/png/o/business/business-finance/coin-11.png",
+                        model = icon,
                         contentDescription = null,
                         colorFilter = ColorFilter.tint(Color.White)
                     )
@@ -72,7 +78,7 @@ fun RateItem(
                     )
 
                     Text(
-                        text = "58,000",
+                        text = rate.sell.formatToPrice(),
                         color = Color.White,
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold

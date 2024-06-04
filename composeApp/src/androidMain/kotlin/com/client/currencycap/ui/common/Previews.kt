@@ -34,7 +34,8 @@ private fun RateItemPreview() {
                             code = "USD",
                             sell = 1,
                             buy = 1
-                        )
+                        ),
+                        icon = "https://www.countryflags.io/us/flat/64.png"
                     )
                 }
             }

@@ -16,7 +16,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,27 +23,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
 import koinViewModel
 import ui.screens.components.RateHorizontalItem
 import ui.screens.components.RateItem
-import ui.screens.components.SearchBarView
+import ui.screens.components.TopHeaderCard
 import ui.theme.colors.CurrencyColors
 
 @Composable
 fun HomeRoute(
     mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
-    searchViewModel: SearchViewModel = koinViewModel<SearchViewModel>(),
 ) {
     val ratesState = mainViewModel.rates.collectAsState().value
-    val searchResultState = searchViewModel.searchResultState.collectAsState().value
+    val cryptoRates = mainViewModel.cryptoRates.collectAsState().value
     HomeScreen(
         rates = ratesState,
-        searchResultState = searchResultState,
-        onSearchClick = searchViewModel::onSearchClick,
-        onClear = searchViewModel::onClear,
-        onItemClick = {}
+        cryptoRates = cryptoRates
     )
 }
 
@@ -52,42 +46,28 @@ fun HomeRoute(
 fun HomeScreen(
     modifier: Modifier = Modifier,
     rates: MainState,
-    searchResultState: SearchUiState,
-    onSearchClick: (String) -> Unit = {},
-    onClear: () -> Unit,
-    onItemClick: (String) -> Unit
+    cryptoRates: MainCryptoState,
 ) {
-    val shouldShowDefaultContent = remember { mutableStateOf(true) }
     val hazeState = remember { HazeState() }
-
-    Box(modifier = modifier.fillMaxSize()) {
-        LazyColumn(
-            modifier = modifier.haze(
+    Box(
+        modifier = modifier.fillMaxSize()
+            .padding(8.dp)
+            .haze(
                 state = hazeState,
-                style = HazeStyle(
-                    HazeDefaults.tint(Color.Transparent),
-                    HazeDefaults.blurRadius,
-                    HazeDefaults.noiseFactor
-                )
+                style = HazeDefaults.style(backgroundColor = Color.Transparent),
             )
+    ) {
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
         ) {
             item {
-                SearchBarView(
-                    searchUiState = searchResultState,
-                    isSearchBarActive = { shouldShowDefaultContent.value = !it },
-                    onSearchClick = onSearchClick,
-                    onClear = onClear,
-                    onItemClick = onItemClick
-                )
+                CryptoCardItems(rates)
             }
             item {
                 TopRates(rates)
             }
             item {
-                TrendingRates(rates)
-            }
-            item {
-                TrendingRates(rates)
+                TrendingRates(cryptoRates)
             }
         }
     }
@@ -108,7 +88,26 @@ fun HomeScreen(
 }
 
 @Composable
-private fun TopRates(rates: MainState) {
+fun CryptoCardItems(
+    rates: MainState
+) {
+    LazyHorizontalGrid(
+        modifier = Modifier.fillMaxWidth()
+            .heightIn(max = 180.dp),
+        rows = GridCells.Fixed(1),
+        contentPadding = PaddingValues(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        if (rates is MainState.Success) {
+            items(rates.rates.size) { index ->
+                TopHeaderCard()
+            }
+        }
+    }
+}
+
+@Composable
+fun TopRates(rates: MainState) {
     Column {
         Text(
             modifier = Modifier.padding(start = 16.dp, top = 16.dp),
@@ -119,22 +118,31 @@ private fun TopRates(rates: MainState) {
 
         LazyHorizontalGrid(
             modifier = Modifier.fillMaxWidth()
-                .heightIn(max = 250.dp),
+                .heightIn(max = 180.dp),
             rows = GridCells.Fixed(1),
             contentPadding = PaddingValues(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             if (rates is MainState.Success) {
                 items(rates.rates.size) { index ->
-                    RateItem(rate = rates.rates[index])
+                    val code = rates.rates[index].code
+                    RateItem(
+                        rate = rates.rates[index],
+                        icon = getIconBy(rates.rates[index].code)
+                    )
                 }
             }
         }
     }
 }
 
+private fun getIconBy(symbol: String): String {
+    val lowerCaseSymbol = symbol.lowercase()
+    return "https://farisaziz12.github.io/cryptoicon-api/icons/$lowerCaseSymbol.png"
+}
+
 @Composable
-private fun TrendingRates(rates: MainState) {
+private fun TrendingRates(rates: MainCryptoState) {
     Column {
         Text(
             modifier = Modifier.padding(start = 16.dp, top = 16.dp),
@@ -145,15 +153,19 @@ private fun TrendingRates(rates: MainState) {
 
         LazyHorizontalGrid(
             modifier = Modifier.fillMaxWidth()
-                .heightIn(max = 350.dp),
+                .heightIn(max = 300.dp),
             rows = GridCells.Fixed(3),
             contentPadding = PaddingValues(10.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            if (rates is MainState.Success) {
+            if (rates is MainCryptoState.Success) {
                 items(rates.rates.size) { index ->
-                    RateHorizontalItem(rate = rates.rates[index])
+                    println("Crypto rate: ${rates.rates[index].symbol}")
+                    RateHorizontalItem(
+                        rate = rates.rates[index],
+                        icon = getIconBy(rates.rates[index].symbol)
+                    )
                 }
             }
         }
