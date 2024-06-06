@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import com.client.currencycap.ui.common.formatCurrentTotal
 import com.client.currencycap.ui.common.getArrowBottomLeftDrawable
 import com.client.currencycap.ui.common.getBtcIcon
-import com.client.currencycap.ui.common.getIcon
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
@@ -41,8 +40,7 @@ data class CryptoCardData(
     val name: String,
     val value: Float,
     val valueChange: Int,
-    val currentTotal: Long,
-    val icon: Int
+    val currentTotal: Long
 )
 
 @Composable
@@ -92,8 +90,7 @@ fun CardContent(
         name = "Bitcoin",
         value = 3.689087f,
         valueChange = -18,
-        currentTotal = 98160,
-        icon = getBtcIcon()
+        currentTotal = 98160
     )
 
     Column(
@@ -120,7 +117,7 @@ fun CardContent(
                 modifier = Modifier.size(24.dp)
                     .clip(CircleShape)
                     .border(1.dp, Color.White, CircleShape),
-                painter = getIcon(data.icon),
+                painter = getBtcIcon(),
                 contentScale = ContentScale.FillWidth,
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
                 contentDescription = null,

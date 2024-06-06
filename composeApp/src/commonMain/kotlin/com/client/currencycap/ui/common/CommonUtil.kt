@@ -10,17 +10,13 @@ expect fun getPlaceHolderDrawable(): Painter
 expect fun getArrowBottomLeftDrawable(): Painter
 
 @Composable
-expect fun getBtcIcon(): Int
+expect fun getBtcIcon(): Painter
 
 @Composable
-expect fun getEthIcon(): Int
+expect fun getEthIcon(): Painter
 
 @Composable
 expect fun getSearchText(): String
 
 expect fun formatCurrentTotal(currentTotal: Long): String
-
-@Composable
-expect fun getIcon(icon: Int): Painter
-
 expect fun formatToPrice(price: Double): String

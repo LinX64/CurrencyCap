@@ -19,13 +19,13 @@ actual fun getArrowBottomLeftDrawable(): Painter {
 }
 
 @Composable
-actual fun getBtcIcon(): Int {
-    return R.drawable.ic_btc
+actual fun getBtcIcon(): Painter {
+    return painterResource(id = R.drawable.ic_btc)
 }
 
 @Composable
-actual fun getEthIcon(): Int {
-    return R.drawable.ic_ethereum
+actual fun getEthIcon(): Painter {
+    return painterResource(id = R.drawable.ic_ethereum)
 }
 
 @Composable
@@ -36,11 +36,6 @@ actual fun getSearchText(): String {
 actual fun formatCurrentTotal(currentTotal: Long): String {
     val decimalFormat = DecimalFormat("$#,###")
     return decimalFormat.format(currentTotal)
-}
-
-@Composable
-actual fun getIcon(icon: Int): Painter {
-    return painterResource(id = icon)
 }
 
 actual fun formatToPrice(price: Double): String {
