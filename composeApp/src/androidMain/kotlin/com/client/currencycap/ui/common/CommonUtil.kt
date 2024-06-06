@@ -43,4 +43,19 @@ actual fun getIcon(icon: Int): Painter {
     return painterResource(id = icon)
 }
 
-actual fun formatToPrice(price: Double): String = String.format(Locale.US, "%,.4f", price)
+actual fun formatToPrice(price: Double): String {
+    if (price == price.toLong().toDouble()) {
+        return String.format(Locale.US, "%,d", price.toLong())
+    }
+
+    val formattedPrice = String.format(Locale.US, "%,.10f", price).trimEnd('0').trimEnd('.')
+
+    val decimalIndex = formattedPrice.indexOf('.')
+    val finalPrice = if (decimalIndex != -1 && decimalIndex + 6 < formattedPrice.length) {
+        formattedPrice.substring(0, decimalIndex + 6)
+    } else {
+        formattedPrice
+    }
+
+    return finalPrice
+}

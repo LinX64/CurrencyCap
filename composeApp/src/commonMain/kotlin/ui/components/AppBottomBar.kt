@@ -3,6 +3,7 @@ package ui.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CurrencyExchange
 import androidx.compose.material.icons.filled.Home
@@ -11,6 +12,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
@@ -20,8 +24,11 @@ internal fun AppBottomBar(
     currentDestination: String,
     selectedIndex: Int,
     onItemClicked: (Int) -> Unit,
-    showNavigationBar: Boolean,
 ) {
+    val gridState = rememberLazyGridState()
+    val showNavigationBar by remember(gridState) {
+        derivedStateOf { gridState.firstVisibleItemIndex == 0 }
+    }
     AnimatedVisibility(
         visible = showNavigationBar,
         enter = slideInVertically { it },

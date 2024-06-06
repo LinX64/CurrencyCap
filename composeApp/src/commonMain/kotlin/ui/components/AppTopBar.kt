@@ -1,5 +1,6 @@
 package ui.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -8,17 +9,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
-import dev.chrisbanes.haze.HazeDefaults
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.hazeChild
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,27 +25,15 @@ internal fun AppTopBar(
     currentDestination: NavDestination?,
     scrollBehavior: TopAppBarScrollBehavior,
 ) {
-    val hazeState = remember { HazeState() }
     CenterAlignedTopAppBar(
-        modifier = Modifier
-            .hazeChild(
-                state = hazeState,
-                style = HazeDefaults.style(backgroundColor = Color.Transparent)
-            ),
-        title = { AppTitle(name = name) },
-        navigationIcon = {
-//            if (currentDestination?.route != NavRoutes.Home.ROUTE) {
-//                AppNavigationIcon(navController = navController)
-//            }
-        },
-        scrollBehavior = scrollBehavior,
-        colors = TopAppBarColors(
+        title = { AppTitle(name) },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.Transparent,
             scrolledContainerColor = Color.Transparent,
-            titleContentColor = Color.Transparent,
-            navigationIconContentColor = Color.Transparent,
-            actionIconContentColor = Color.Transparent,
-        )
+        ),
+        scrollBehavior = scrollBehavior,
+        modifier = Modifier
+            .fillMaxWidth()
     )
 }
 

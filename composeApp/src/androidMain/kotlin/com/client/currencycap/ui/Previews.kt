@@ -1,32 +1,43 @@
 package com.client.currencycap.ui
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import domain.model.DataDao
 import domain.model.RateDao
+import ui.App
+import ui.components.BlurDarkBackground
+import ui.components.BlurLightBackground
 import ui.screens.main.CryptoState
 import ui.screens.main.HomeScreen
 import ui.screens.main.MainState
-import ui.screens.main.components.IranianRate
 import ui.theme.AppM3Theme
 
 @Preview
 @Composable
 fun MainScreenPreviewLight() {
     AppM3Theme(dark = true) {
-        HomeScreen(
-            rates = MainState.Success(
-                listOf(
-                    RateDao("USD", buy = 58000, sell = 58000),
-                    RateDao("EUR", buy = 68000, sell = 68000),
-                    RateDao("JPY", buy = 48000, sell = 48000),
-                    RateDao("GBP", buy = 78000, sell = 78000),
-                    RateDao("CNY", buy = 38000, sell = 38000),
-                    RateDao("KRW", buy = 28000, sell = 28000),
+        BlurDarkBackground {
+            HomeScreen(
+                rates = MainState.Success(
+                    listOf(
+                        RateDao("USD", buy = 58000, sell = 58000),
+                        RateDao("EUR", buy = 68000, sell = 68000),
+                        RateDao("JPY", buy = 48000, sell = 48000)
+                    )
+                ),
+                cryptoRates = CryptoState.Success(
+                    listOf(
+                        DataDao(
+                            currencySymbol = "BTC",
+                            symbol = "BTC",
+                            rateUsd = "5800",
+                            type = "crypto",
+                            id = "1",
+                        )
+                    )
                 )
-            ),
-            cryptoRates = CryptoState.Loading
-        )
+            )
+        }
     }
 }
 
@@ -60,38 +71,15 @@ fun MainScreenPreviewLight() {
 //    }
 //}
 
-//@Preview
-//@Composable
-//fun MainScreenPreviewDarkError() {
-//    AppM3Theme(dark = true) {
-//        BulbBackground {
-//            Column {
-//                RateItem(rate = RateDao("USD", buy = 58000, sell = 58000))
-//            }
-//        }
-//    }
-//}
-
+// preview for app
 @Preview
 @Composable
-fun MainScreenPreviewDarkError() {
-    AppM3Theme(dark = true) {
-        Column {
-            IranianRate(
-                rates = MainState.Success(
-                    listOf(
-                        RateDao("USD", buy = 58000, sell = 58000),
-                        RateDao("EUR", buy = 68000, sell = 68000),
-                        RateDao("JPY", buy = 48000, sell = 48000),
-                        RateDao("GBP", buy = 78000, sell = 78000),
-                        RateDao("CNY", buy = 38000, sell = 38000),
-                        RateDao("KRW", buy = 28000, sell = 28000),
-                    )
-                )
-            )
+fun AppPreview() {
+    AppM3Theme(dark = false) {
+        BlurLightBackground {
+            App()
         }
     }
 }
-
 
 

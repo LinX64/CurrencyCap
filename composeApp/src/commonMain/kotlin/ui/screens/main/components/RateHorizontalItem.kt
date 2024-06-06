@@ -32,11 +32,38 @@ import dev.chrisbanes.haze.hazeChild
 import domain.model.DataDao
 import ui.theme.colors.CurrencyColors
 
+data class AssetInfo(
+    val lastDayChange: List<Float>,
+    val currentValue: Float,
+)
+
+private val mockAssetInfo = AssetInfo(
+    listOf(
+        113.518f,
+        113.799f,
+        113.333f,
+        113.235f,
+        114.099f,
+        113.506f,
+        113.985f,
+        114.212f,
+        114.125f,
+        113.531f,
+        114.228f,
+        113.284f,
+        114.031f,
+        113.493f,
+        113.112f
+    ),
+    113.02211f
+)
+
 @Composable
 fun RateHorizontalItem(
     modifier: Modifier = Modifier,
     icon: String,
-    rate: DataDao
+    rate: DataDao,
+    assetInfo: AssetInfo = mockAssetInfo
 ) {
     val hazeState = remember { HazeState() }
 
@@ -78,7 +105,7 @@ fun RateHorizontalItem(
                 ) {
                     FirstColumn(rate = rate)
 
-                    PerformanceChart(Modifier.height(40.dp).width(80.dp))
+                    PerformanceChart(Modifier.height(40.dp).width(80.dp), assetInfo.lastDayChange)
 
                     EndComponents()
                 }
@@ -93,8 +120,7 @@ private fun FirstColumn(
     rate: DataDao
 ) {
     Column(
-        modifier = modifier.padding(start = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(3.dp)
+        modifier = modifier.padding(start = 8.dp)
     ) {
         Text(
             text = rate.symbol,
@@ -103,9 +129,10 @@ private fun FirstColumn(
             fontWeight = FontWeight.Bold
         )
 
+        val formattedRate = formatToPrice(rate.rateUsd.toDouble())
         Text(
-            text = formatToPrice(rate.rateUsd.toDouble()),
-            color = Color.LightGray.copy(alpha = 0.8f),
+            text = "$$formattedRate",
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold
         )
@@ -116,13 +143,13 @@ private fun FirstColumn(
 private fun EndComponents() {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.End,
+        horizontalArrangement = Arrangement.End
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(3.dp)
+            horizontalAlignment = Alignment.End
         ) {
             Text(
-                text = "$ 1,000",
+                text = "$898.5",
                 color = Color.White,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold
@@ -142,7 +169,7 @@ private fun EndComponents() {
                 )
 
                 Text(
-                    text = "% 22.5",
+                    text = "%22.5",
                     color = CurrencyColors.Text_Green,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,

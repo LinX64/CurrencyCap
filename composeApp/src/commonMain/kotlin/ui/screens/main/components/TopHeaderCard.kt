@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -36,6 +35,7 @@ import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
+import domain.model.DataDao
 
 data class CryptoCardData(
     val name: String,
@@ -50,19 +50,19 @@ fun TopHeaderCard(
     modifier: Modifier = Modifier,
     cardBackground: Color = Color.Transparent,
     cardSize: Dp = 150.dp,
+    dataDao: DataDao
 ) {
     val hazeState = remember { HazeState() }
 
     Box(
-        modifier
-            .fillMaxSize()
+        modifier = modifier
             .haze(
                 state = hazeState,
                 style = HazeDefaults.style(
                     tint = Color.White.copy(alpha = 0.1f),
                     blurRadius = 1.dp
-                ),
-            ),
+                )
+            )
     ) {
         Box(
             modifier = Modifier
@@ -78,7 +78,7 @@ fun TopHeaderCard(
                     .clip(RoundedCornerShape(15.dp)),
                 colors = CardDefaults.cardColors(containerColor = cardBackground)
             ) {
-                CardContent()
+                CardContent(dataDao = dataDao)
             }
         }
     }
@@ -86,15 +86,16 @@ fun TopHeaderCard(
 
 @Composable
 fun CardContent(
-    data: CryptoCardData = CryptoCardData(
+    dataDao: DataDao
+) {
+    val data = CryptoCardData(
         name = "Bitcoin",
         value = 3.689087f,
         valueChange = -18,
         currentTotal = 98160,
         icon = getBtcIcon()
     )
-) {
-    val textColor = Color(0xFFFFFFFF)
+
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.size(150.dp)
@@ -107,8 +108,8 @@ fun CardContent(
         ) {
             Row {
                 Text(
-                    text = "${data.valueChange}%",
-                    color = textColor,
+                    text = "${dataDao.symbol}%",
+                    color = MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.labelMedium
                 )
 
@@ -121,7 +122,7 @@ fun CardContent(
                     .border(1.dp, Color.White, CircleShape),
                 painter = getIcon(data.icon),
                 contentScale = ContentScale.FillWidth,
-                colorFilter = ColorFilter.tint(textColor),
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
                 contentDescription = null,
             )
         }
@@ -132,17 +133,17 @@ fun CardContent(
         ) {
             Text(
                 text = data.name,
-                color = textColor,
+                color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.labelMedium
             )
             Text(
                 text = "${data.value}",
-                color = textColor,
+                color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.headlineSmall
             )
             Text(
                 text = formatCurrentTotal(data.currentTotal),
-                color = textColor,
+                color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.bodySmall
             )
         }

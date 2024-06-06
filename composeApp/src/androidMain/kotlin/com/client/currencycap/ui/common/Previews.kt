@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import domain.model.DataDao
-import ui.components.BulbBackground
+import ui.components.BlurDarkBackground
 import ui.screens.main.components.RateHorizontalItem
 import ui.theme.AppM3Theme
 
@@ -20,7 +20,7 @@ import ui.theme.AppM3Theme
 @Composable
 private fun RateItemPreview() {
     AppM3Theme(dark = false) {
-        BulbBackground {
+        BlurDarkBackground {
             LazyHorizontalGrid(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -19,7 +19,7 @@ class MainViewModel(
     mainRepository: MainRepository,
 ) : ViewModel() {
 
-    val rates: StateFlow<MainState> = mainRepository.getIranianFiat()
+    val iranianRate: StateFlow<MainState> = mainRepository.getIranianFiat()
         .asResult()
         .map {
             when (it) {

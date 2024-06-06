@@ -9,11 +9,11 @@ import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ui.screens.main.MainState
+import ui.screens.main.CryptoState
 
 @Composable
 fun CryptoCardItems(
-    rates: MainState
+    cryptoRates: CryptoState
 ) {
     LazyHorizontalGrid(
         modifier = Modifier.fillMaxWidth()
@@ -22,9 +22,9 @@ fun CryptoCardItems(
         contentPadding = PaddingValues(16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        if (rates is MainState.Success) {
-            items(rates.ratesList.size) { index ->
-                TopHeaderCard()
+        if (cryptoRates is CryptoState.Success) {
+            items(cryptoRates.rates.size) { index ->
+                TopHeaderCard(dataDao = cryptoRates.rates[index])
             }
         }
     }
