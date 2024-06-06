@@ -4,13 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import di.httpClientModule
-import di.repositoryModule
-import org.koin.compose.KoinApplication
+import org.koin.compose.KoinContext
 import org.koin.core.context.GlobalContext.stopKoin
 import ui.App
 import ui.theme.AppM3Theme
-import viewModelModule
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,11 +16,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            KoinApplication(
-                application = {
-                    modules(viewModelModule, repositoryModule, httpClientModule)
-                }
-            ) {
+            KoinContext {
                 // TODO: Add dark/light support
                 // should also change BlurDarkBackground to BlurLightBackground
                 AppM3Theme(dark = true) {

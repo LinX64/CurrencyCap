@@ -1,5 +1,6 @@
 package ui.screens.main.components
 
+import SearchUiState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -27,10 +28,9 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.client.currencycap.ui.common.getSearchText
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
-import ui.screens.SearchUiState
+import ui.common.getSearchText
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)

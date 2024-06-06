@@ -1,85 +1,49 @@
 package com.client.currencycap.ui
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import domain.model.DataDao
-import domain.model.RateDao
-import ui.App
 import ui.components.BlurDarkBackground
-import ui.components.BlurLightBackground
-import ui.screens.main.CryptoState
-import ui.screens.main.HomeScreen
-import ui.screens.main.MainState
+import ui.screens.main.components.RateHorizontalItem
 import ui.theme.AppM3Theme
 
 @Preview
 @Composable
-fun MainScreenPreviewLight() {
-    AppM3Theme(dark = true) {
-        BlurDarkBackground {
-            HomeScreen(
-                rates = MainState.Success(
-                    listOf(
-                        RateDao("USD", buy = 58000, sell = 58000),
-                        RateDao("EUR", buy = 68000, sell = 68000),
-                        RateDao("JPY", buy = 48000, sell = 48000)
-                    )
-                ),
-                cryptoRates = CryptoState.Success(
-                    listOf(
-                        DataDao(
-                            currencySymbol = "BTC",
-                            symbol = "BTC",
-                            rateUsd = "5800",
-                            type = "crypto",
-                            id = "1",
-                        )
-                    )
-                )
-            )
-        }
-    }
-}
-
-//@Preview
-//@Composable
-//fun MainScreenPreviewDark() {
-//    AppM3Theme(dark = true) {
-//        BulbBackground {
-//            Column {
-//                Text(
-//                    modifier = Modifier.padding(start = 16.dp, top = 16.dp),
-//                    text = "Top rates",
-//                    style = MaterialTheme.typography.titleLarge,
-//                    color = CurrencyColors.White
-//                )
-//
-//                LazyHorizontalGrid(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .heightIn(max = 250.dp),
-//                    rows = GridCells.Fixed(1),
-//                    contentPadding = PaddingValues(16.dp),
-//                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-//                ) {
-//                    items(6) { index ->
-//                        RateItem(rate = RateDao("USD", buy = 58000, sell = 58000))
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
-
-// preview for app
-@Preview
-@Composable
-fun AppPreview() {
+private fun RateItemPreview() {
     AppM3Theme(dark = false) {
-        BlurLightBackground {
-            App()
+        BlurDarkBackground {
+            LazyHorizontalGrid(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 300.dp)
+                    .widthIn(max = 250.dp, min = 250.dp),
+                rows = GridCells.Fixed(3),
+                contentPadding = PaddingValues(10.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(5) { index ->
+                    RateHorizontalItem(
+                        rate = DataDao(
+                            currencySymbol = "USD",
+                            symbol = "USD",
+                            id = "USD",
+                            type = "USD",
+                            rateUsd = "44422",
+                        ),
+                        icon = "https://www.google.com"
+                    )
+                }
+            }
         }
     }
 }
-
-

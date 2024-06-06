@@ -1,4 +1,6 @@
 import android.content.Context
+import di.httpClientModule
+import di.repositoryModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -10,7 +12,7 @@ actual class KoinInitializer(
         startKoin {
             androidContext(context)
             androidLogger()
-            modules(viewModelModule)
+            modules(appModule, viewModelModule, httpClientModule, repositoryModule)
         }
     }
 }

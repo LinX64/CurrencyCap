@@ -1,5 +1,3 @@
-package ui.screens
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import domain.model.RateDao

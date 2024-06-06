@@ -27,14 +27,14 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.client.currencycap.ui.common.formatCurrentTotal
-import com.client.currencycap.ui.common.getArrowBottomLeftDrawable
-import com.client.currencycap.ui.common.getBtcIcon
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
 import domain.model.DataDao
+import ui.common.formatCurrentTotal
+import ui.common.getArrowBottomLeftDrawable
+import ui.common.getBtcIcon
 
 data class CryptoCardData(
     val name: String,

@@ -1,6 +1,5 @@
 package ui.screens.main
 
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import data.repository.MainRepository

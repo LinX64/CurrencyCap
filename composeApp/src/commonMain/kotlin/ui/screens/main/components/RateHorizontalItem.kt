@@ -23,13 +23,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.client.currencycap.ui.common.formatToPrice
-import com.client.currencycap.ui.common.getPlaceHolderDrawable
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
 import domain.model.DataDao
+import ui.common.formatToPrice
+import ui.common.getPlaceHolderDrawable
 import ui.theme.colors.CurrencyColors
 
 data class AssetInfo(
