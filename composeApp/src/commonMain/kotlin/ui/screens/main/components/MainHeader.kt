@@ -34,7 +34,7 @@ internal fun MainHeader() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(horizontal = 16.dp, vertical = 50.dp),
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -127,10 +127,12 @@ private fun FirstColumn() {
             color = MaterialTheme.colorScheme.onSurface,
         )
 
+        Spacer(modifier = Modifier.height(8.dp))
+
         Text(
             text = "Stock performance",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
         Text(

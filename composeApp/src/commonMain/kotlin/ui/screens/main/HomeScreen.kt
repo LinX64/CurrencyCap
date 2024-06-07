@@ -3,15 +3,10 @@ package ui.screens.main
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import dev.chrisbanes.haze.HazeDefaults
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
 import di.koinViewModel
 import ui.screens.main.components.CenteredColumn
 import ui.screens.main.components.CryptoCardItems
@@ -40,14 +35,7 @@ fun HomeScreen(
     rates: MainState,
     cryptoRates: CryptoState,
 ) {
-    val hazeState = remember { HazeState() }
-    LazyColumn(
-        modifier = modifier.fillMaxSize()
-            .haze(
-                state = hazeState,
-                style = HazeDefaults.style(backgroundColor = MaterialTheme.colorScheme.surface),
-            )
-    ) {
+    LazyColumn(modifier = modifier.fillMaxSize()) {
         item { MainHeader() }
         item { TodayTopMovers() }
         item { CryptoCardItems(cryptoRates) }

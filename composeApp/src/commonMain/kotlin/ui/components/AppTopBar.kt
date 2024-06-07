@@ -14,16 +14,20 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.hazeChild
+import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
+import dev.chrisbanes.haze.materials.HazeMaterials
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
 internal fun AppTopBar(
     name: String = "Currency Cap",
     navController: NavHostController,
-    currentDestination: NavDestination?,
+    currentDestination: String,
     scrollBehavior: TopAppBarScrollBehavior,
+    hazeState: HazeState,
 ) {
     CenterAlignedTopAppBar(
         title = { AppTitle(name) },
@@ -32,8 +36,11 @@ internal fun AppTopBar(
             scrolledContainerColor = Color.Transparent,
         ),
         scrollBehavior = scrollBehavior,
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
+            .hazeChild(
+                state = hazeState,
+                style = HazeMaterials.regular(MaterialTheme.colorScheme.surface),
+            )
     )
 }
 

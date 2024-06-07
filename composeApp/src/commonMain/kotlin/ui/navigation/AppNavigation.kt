@@ -14,7 +14,7 @@ import ui.screens.main.HomeRoute
 @Composable
 internal fun AppNavigation(
     navController: NavHostController,
-    padding: PaddingValues
+    padding: PaddingValues,
 ) {
     NavHost(
         navController = navController,
