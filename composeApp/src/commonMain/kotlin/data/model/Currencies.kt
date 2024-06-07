@@ -4,11 +4,6 @@ import domain.model.RateDao
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Currencies(
-    val rates: List<Rate>
-)
-
-@Serializable
 data class Rate(
     val code: String,
     val sell: Int,
