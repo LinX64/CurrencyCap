@@ -65,7 +65,6 @@ kotlin {
             implementation(libs.coil.network.ktor)
 
             implementation(libs.bundles.ktor)
-            implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.client.logging)
 
             api(libs.koin.core)
