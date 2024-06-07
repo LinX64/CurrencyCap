@@ -10,13 +10,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BatchPrediction
 import androidx.compose.material.icons.filled.CurrencyExchange
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -74,37 +74,50 @@ internal fun BottomBarTabs(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
-                    Icon(imageVector = tab.icon, contentDescription = "tab ${tab.title}")
-                    Text(text = tab.title)
+
+                    val isItemSelected =
+                        if (selectedTab == tabs.indexOf(tab)) Modifier.alpha(1f) else Modifier.alpha(
+                            .35f
+                        )
+                    Icon(
+                        modifier = isItemSelected,
+                        imageVector = tab.icon,
+                        contentDescription = null
+                    )
                 }
             }
         }
     }
 }
 
-sealed class BottomBarTab(val title: String, val icon: ImageVector, val color: Color) {
-
-    data object Home : BottomBarTab(
-        title = "Home",
-        icon = Icons.Rounded.Home,
-        color = Color(0xFFFA6FFF)
-    )
-
+sealed class BottomBarTab(
+    val icon: ImageVector,
+    val color: Color
+) {
     data object Exchange : BottomBarTab(
-        title = "Exchange",
         icon = Icons.Default.CurrencyExchange,
         color = Color(0xFFFFA574)
     )
 
-    data object Settings : BottomBarTab(
-        title = "Search",
-        icon = Icons.Rounded.Search,
+    data object Home : BottomBarTab(
+        icon = Icons.Rounded.Home,
         color = Color(0xFFADFF64)
+    )
+
+    data object Search : BottomBarTab(
+        icon = Icons.Rounded.Search,
+        color = Color(0xFFFA6FFF)
+    )
+
+    data object AiPrediction : BottomBarTab(
+        icon = Icons.Default.BatchPrediction,
+        color = Color(0xFFFA6FFF)
     )
 }
 
 val tabs = listOf(
-    BottomBarTab.Home,
     BottomBarTab.Exchange,
-    BottomBarTab.Settings,
+    BottomBarTab.Home,
+    BottomBarTab.Search,
+    BottomBarTab.AiPrediction,
 )
