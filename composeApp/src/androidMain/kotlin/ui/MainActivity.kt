@@ -1,4 +1,4 @@
-package com.client.currencycap.ui
+package ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import org.koin.compose.KoinContext
 import org.koin.core.context.GlobalContext.stopKoin
-import ui.App
 import ui.theme.AppM3Theme
 
 class MainActivity : ComponentActivity() {

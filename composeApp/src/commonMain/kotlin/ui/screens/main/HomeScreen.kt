@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
-import koinViewModel
+import di.koinViewModel
 import ui.screens.main.components.CenteredColumn
 import ui.screens.main.components.CryptoCardItems
 import ui.screens.main.components.IranianRate

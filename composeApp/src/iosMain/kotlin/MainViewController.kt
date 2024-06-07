@@ -3,7 +3,7 @@ import ui.App
 
 fun MainViewController() = ComposeUIViewController(
     configure = {
-        KoinInitializer().init()
+        di.KoinInitializer().init()
     }
 ) {
     App()

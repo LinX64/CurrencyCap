@@ -1,4 +1,4 @@
-package com.client.currencycap.ui
+package ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
