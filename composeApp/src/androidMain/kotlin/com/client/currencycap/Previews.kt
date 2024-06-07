@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.dp
 import domain.model.DataDao
 import domain.model.RateDao
 import ui.App
-import ui.components.BlurBackground
+import ui.screens.components.BlurBackground
 import ui.screens.main.CryptoState
 import ui.screens.main.HomeScreen
 import ui.screens.main.MainState

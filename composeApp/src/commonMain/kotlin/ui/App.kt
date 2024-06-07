@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
-import ui.components.BottomNavigationBar
 import ui.navigation.AppNavigation
+import ui.screens.components.BottomNavigationBar
 
 @Composable
 fun App(
@@ -21,11 +21,11 @@ fun App(
     Scaffold(
         bottomBar = { BottomNavigationBar(hazeState) },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize()
     ) { paddingValues ->
         AppNavigation(
             navController = navController,
-            padding = paddingValues,
+            padding = paddingValues
         )
     }
 }

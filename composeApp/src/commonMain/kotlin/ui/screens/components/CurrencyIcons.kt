@@ -1,4 +1,4 @@
-package ui.components
+package ui.screens.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle

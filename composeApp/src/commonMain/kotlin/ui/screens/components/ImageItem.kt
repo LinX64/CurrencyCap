@@ -1,7 +1,7 @@
 // Copyright 2023, Christopher Banes and the Haze project contributors
 // SPDX-License-Identifier: Apache-2.0
 
-package ui.components
+package ui.screens.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

@@ -22,8 +22,8 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
 import domain.model.RateDao
-import formatToPrice
 import ui.common.getPlaceHolderDrawable
+import util.formatToPrice
 
 @Composable
 fun RateItem(

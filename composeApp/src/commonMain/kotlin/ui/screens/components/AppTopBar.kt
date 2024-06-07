@@ -1,4 +1,4 @@
-package ui.components
+package ui.screens.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
