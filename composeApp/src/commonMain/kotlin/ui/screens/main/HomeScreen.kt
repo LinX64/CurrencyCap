@@ -7,6 +7,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,22 +30,19 @@ fun HomeRoute(
     padding: PaddingValues,
     mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
 ) {
-    val ratesState = mainViewModel.iranianRate.collectAsState().value
-    val cryptoRates = mainViewModel.cryptoRates.collectAsState().value
+    val state by mainViewModel.viewState.collectAsState()
 
     HomeScreen(
         padding = padding,
-        rates = ratesState,
-        cryptoRates = cryptoRates
+        state = state
     )
 }
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    rates: MainState,
-    cryptoRates: CryptoState,
     padding: PaddingValues,
+    state: MainState,
 ) {
     val hazeState = remember { HazeState() }
     LazyColumn(
@@ -61,18 +59,23 @@ fun HomeScreen(
     ) {
         item { MainHeader() }
         item { TodayTopMovers() }
-        item { CryptoCardItems(cryptoRates) }
-        item { IranianRate(rates) }
-        item { TrendingCryptoCurrencies(cryptoRates) }
-        item { Stocks(cryptoRates) }
+        item { CryptoCardItems(state) }
+        item { IranianRate(state) }
+        item { TrendingCryptoCurrencies(state) }
+        item { Stocks(state) }
     }
 
-    when (rates) {
+    when (state) {
         is MainState.Loading -> CenteredColumn {
             CircularProgressIndicator()
         }
+        is MainState.Error -> {
+            Text(text = "Error")
+        }
 
-        is MainState.Error -> Text("Error: ${rates.error}")
+        is MainState.CryptoRatesError -> {
+            Text(text = "CryptoRatesError")
+        }
         else -> Unit
     }
 }

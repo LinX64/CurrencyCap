@@ -14,11 +14,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ui.screens.main.CryptoState
+import ui.screens.main.MainState
 import ui.theme.colors.CurrencyColors
 
 @Composable
-internal fun TrendingCryptoCurrencies(rates: CryptoState) {
+internal fun TrendingCryptoCurrencies(rates: MainState) {
     Column {
         Text(
             modifier = Modifier.padding(start = 16.dp, top = 16.dp),
@@ -36,12 +36,12 @@ internal fun TrendingCryptoCurrencies(rates: CryptoState) {
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            if (rates is CryptoState.Success) {
-                items(rates.rates.size) { index ->
-                    val symbol = rates.rates[index].symbol
+            if (rates is MainState.CryptoRatesSuccess) {
+                items(rates.ratesList.size) { index ->
+                    val symbol = rates.ratesList[index].symbol
 
                     RateHorizontalItem(
-                        rate = rates.rates[index],
+                        rate = rates.ratesList[index],
                         icon = getIconBy(symbol)
                     )
                 }

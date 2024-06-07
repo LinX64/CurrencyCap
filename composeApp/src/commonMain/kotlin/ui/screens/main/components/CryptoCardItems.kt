@@ -13,11 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ui.screens.main.CryptoState
+import ui.screens.main.MainState
 
 @Composable
 fun CryptoCardItems(
-    cryptoRates: CryptoState
+    mainState: MainState,
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -37,9 +37,9 @@ fun CryptoCardItems(
             contentPadding = PaddingValues(16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            if (cryptoRates is CryptoState.Success) {
-                items(cryptoRates.rates.size) { index ->
-                    TopHeaderCard(dataDao = cryptoRates.rates[index])
+            if (mainState is MainState.CryptoRatesSuccess) {
+                items(mainState.ratesList.size) { index ->
+                    TopHeaderCard(dataDao = mainState.ratesList[index])
                 }
             }
         }
