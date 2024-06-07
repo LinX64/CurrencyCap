@@ -18,6 +18,11 @@ import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
+import di.appModule
+import di.httpClientModule
+import di.repositoryModule
+import di.viewModelModule
+import org.koin.compose.KoinApplication
 import ui.components.AppBottomBar
 import ui.components.AppTopBar
 import ui.navigation.AppNavigation
@@ -32,33 +37,36 @@ fun App(
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val hazeState = remember { HazeState() }
 
-    Scaffold(
-        topBar = {
-            AppTopBar(
-                navController = navController,
-                currentDestination = navController.currentDestination,
-                scrollBehavior = scrollBehavior
-            )
-        },
-        bottomBar = {
-            AppBottomBar(modifier = Modifier
-                .fillMaxWidth()
-                .nestedScroll(scrollBehavior.nestedScrollConnection)
-                .haze(
-                    state = hazeState,
-                    style = HazeDefaults.style(
-                        tint = Color.White.copy(alpha = 0.1f),
-                        blurRadius = 1.dp
-                    )
-                ),
-                currentDestination = currentDestination,
-                selectedIndex = 0,
-                onItemClicked = { /*TODO*/ })
-        },
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection)
-    ) { paddingValues ->
-        AppNavigation(navController = navController, padding = paddingValues)
+    KoinApplication(application = {
+        modules(appModule, httpClientModule, repositoryModule, viewModelModule)
+    }) {
+        Scaffold(
+            topBar = {
+                AppTopBar(
+                    navController = navController,
+                    currentDestination = navController.currentDestination,
+                    scrollBehavior = scrollBehavior
+                )
+            },
+            bottomBar = {
+                AppBottomBar(modifier = Modifier
+                    .fillMaxWidth()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)
+                    .haze(
+                        state = hazeState,
+                        style = HazeDefaults.style(
+                            tint = Color.White.copy(alpha = 0.1f),
+                            blurRadius = 1.dp
+                        )
+                    ),
+                    currentDestination = currentDestination,
+                    selectedIndex = 0,
+                    onItemClicked = { /*TODO*/ })
+            },
+            contentWindowInsets = WindowInsets(0, 0, 0, 0),
+            modifier = Modifier.fillMaxSize().nestedScroll(scrollBehavior.nestedScrollConnection)
+        ) { paddingValues ->
+            AppNavigation(navController = navController, padding = paddingValues)
+        }
     }
 }
-

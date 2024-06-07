@@ -1,5 +1,9 @@
 package di
 
-import org.koin.core.module.Module
+import data.repository.MainRepository
+import data.repository.MainRepositoryImpl
+import org.koin.dsl.module
 
-expect val repositoryModule: Module
+val repositoryModule = module {
+    single<MainRepository> { MainRepositoryImpl(get()) }
+}
