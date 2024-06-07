@@ -34,7 +34,7 @@ internal fun MainHeader() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 50.dp),
+            .padding(start = 16.dp, end = 16.dp, top = 50.dp),
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
