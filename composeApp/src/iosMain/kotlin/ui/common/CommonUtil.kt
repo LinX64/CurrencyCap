@@ -8,9 +8,6 @@ import currencycap.composeapp.generated.resources.ic_arrow_bottom_left
 import currencycap.composeapp.generated.resources.ic_btc
 import currencycap.composeapp.generated.resources.ic_ethereum
 import org.jetbrains.compose.resources.painterResource
-import platform.Foundation.NSNumber
-import platform.Foundation.NSNumberFormatter
-import platform.Foundation.NSNumberFormatterDecimalStyle
 
 @Composable
 actual fun getArrowBottomLeftDrawable(): Painter {
@@ -38,17 +35,19 @@ actual fun getSearchText(): String {
 }
 
 actual fun formatToPrice(price: Double): String {
-    val formatter = NSNumberFormatter()
-    formatter.minimumFractionDigits = 5u
-    formatter.maximumFractionDigits = 5u
-    formatter.numberStyle = NSNumberFormatterDecimalStyle
-    return formatter.stringFromNumber(NSNumber()) ?: "$price"
+    return "$price"
+//    val formatter = NSNumberFormatter()
+//    formatter.minimumFractionDigits = 5u
+//    formatter.maximumFractionDigits = 5u
+//    formatter.numberStyle = NSNumberFormatterDecimalStyle
+//    return formatter.stringFromNumber(NSNumber()) ?: "$price"
 }
 
 actual fun formatCurrentTotal(currentTotal: Long): String {
-    val formatter = NSNumberFormatter()
-    formatter.minimumFractionDigits = 5u
-    formatter.maximumFractionDigits = 5u
-    formatter.numberStyle = NSNumberFormatterDecimalStyle
-    return formatter.stringFromNumber(NSNumber()) ?: "$currentTotal"
+//    val formatter = NSNumberFormatter()
+//    formatter.minimumFractionDigits = 5u
+//    formatter.maximumFractionDigits = 5u
+//    formatter.numberStyle = NSNumberFormatterDecimalStyle
+//    return formatter.stringFromNumber(NSNumber()) ?: "$currentTotal"
+    return "$currentTotal"
 }
