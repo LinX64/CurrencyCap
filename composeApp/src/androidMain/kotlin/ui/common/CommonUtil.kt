@@ -14,8 +14,13 @@ actual fun getPlaceHolderDrawable(): Painter {
 }
 
 @Composable
-actual fun getArrowBottomLeftDrawable(): Painter {
-    return painterResource(id = R.drawable.ic_arrow_bottom_left)
+actual fun getTrendingUpIcon(): Painter {
+    return painterResource(id = R.drawable.baseline_trending_up_24)
+}
+
+@Composable
+actual fun getTrendingDownIcon(): Painter {
+    return painterResource(id = R.drawable.baseline_trending_down_24)
 }
 
 @Composable

@@ -7,7 +7,10 @@ import androidx.compose.ui.graphics.painter.Painter
 expect fun getPlaceHolderDrawable(): Painter
 
 @Composable
-expect fun getArrowBottomLeftDrawable(): Painter
+expect fun getTrendingUpIcon(): Painter
+
+@Composable
+expect fun getTrendingDownIcon(): Painter
 
 @Composable
 expect fun getBtcIcon(): Painter

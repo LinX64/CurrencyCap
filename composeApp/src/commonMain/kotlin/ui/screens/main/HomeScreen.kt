@@ -16,6 +16,9 @@ import di.koinViewModel
 import ui.screens.main.components.CenteredColumn
 import ui.screens.main.components.CryptoCardItems
 import ui.screens.main.components.IranianRate
+import ui.screens.main.components.MainHeader
+import ui.screens.main.components.Stocks
+import ui.screens.main.components.TodayTopMovers
 import ui.screens.main.components.TrendingCryptoCurrencies
 
 @Composable
@@ -45,10 +48,12 @@ fun HomeScreen(
                 style = HazeDefaults.style(backgroundColor = MaterialTheme.colorScheme.surface),
             )
     ) {
+        item { MainHeader() }
+        item { TodayTopMovers() }
         item { CryptoCardItems(cryptoRates) }
         item { IranianRate(rates) }
         item { TrendingCryptoCurrencies(cryptoRates) }
-
+        item { Stocks(cryptoRates) }
     }
 
     when (rates) {
@@ -60,4 +65,5 @@ fun HomeScreen(
         else -> Unit
     }
 }
+
 

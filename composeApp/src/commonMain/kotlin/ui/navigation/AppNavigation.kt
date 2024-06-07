@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ui.components.BlurDarkBackground
+import ui.components.BlurBackground
 import ui.screens.main.HomeRoute
 
 @Composable
@@ -24,7 +24,7 @@ internal fun AppNavigation(
             .consumeWindowInsets(padding)
     ) {
         composable(NavRoutes.Home.ROUTE) {
-            BlurDarkBackground {
+            BlurBackground {
                 HomeRoute()
             }
         }

@@ -4,13 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowUpward
@@ -34,34 +30,8 @@ import ui.common.formatToPrice
 import ui.common.getPlaceHolderDrawable
 import ui.theme.colors.CurrencyColors
 
-data class AssetInfo(
-    val lastDayChange: List<Float>,
-    val currentValue: Float,
-)
-
-val mockAssetInfo = AssetInfo(
-    listOf(
-        113.518f,
-        113.799f,
-        113.333f,
-        113.235f,
-        114.099f,
-        113.506f,
-        113.985f,
-        114.212f,
-        114.125f,
-        113.531f,
-        114.228f,
-        113.284f,
-        114.031f,
-        113.493f,
-        113.112f
-    ),
-    113.02211f
-)
-
 @Composable
-fun RateHorizontalItem(
+internal fun StocksHorizontalItem(
     modifier: Modifier = Modifier,
     icon: String,
     rate: DataDao,
@@ -79,18 +49,17 @@ fun RateHorizontalItem(
         )
     ) {
         Box(
-            modifier = Modifier
+            modifier = Modifier.fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp)
                 .align(Alignment.Center)
                 .hazeChild(
                     state = hazeState,
                     shape = RoundedCornerShape(16.dp),
                 )
-                .heightIn(max = 300.dp)
-                .widthIn(max = 250.dp, min = 250.dp)
         ) {
             Row(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -104,13 +73,10 @@ fun RateHorizontalItem(
                 )
 
                 Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(32.dp)
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     FirstColumn(rate = rate)
-
-                    PerformanceChart(Modifier.height(40.dp).width(80.dp), assetInfo.lastDayChange)
-
                     EndComponents()
                 }
             }

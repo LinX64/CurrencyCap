@@ -4,14 +4,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.baseline_monetization_on_24
-import currencycap.composeapp.generated.resources.ic_arrow_bottom_left
+import currencycap.composeapp.generated.resources.baseline_trending_down_24
+import currencycap.composeapp.generated.resources.baseline_trending_up_24
 import currencycap.composeapp.generated.resources.ic_btc
 import currencycap.composeapp.generated.resources.ic_ethereum
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-actual fun getArrowBottomLeftDrawable(): Painter {
-    return painterResource(Res.drawable.ic_arrow_bottom_left)
+actual fun getTrendingUpIcon(): Painter {
+    return painterResource(Res.drawable.baseline_trending_up_24)
+}
+
+@Composable
+actual fun getTrendingDownIcon(): Painter {
+    return painterResource(Res.drawable.baseline_trending_down_24)
 }
 
 @Composable

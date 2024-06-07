@@ -13,7 +13,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
@@ -33,7 +31,6 @@ import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
 import domain.model.DataDao
 import ui.common.formatCurrentTotal
-import ui.common.getArrowBottomLeftDrawable
 import ui.common.getBtcIcon
 
 data class CryptoCardData(
@@ -82,16 +79,17 @@ fun TopHeaderCard(
     }
 }
 
+val data = CryptoCardData(
+    name = "Bitcoin",
+    value = 3.689087f,
+    valueChange = -18,
+    currentTotal = 98160
+)
+
 @Composable
 fun CardContent(
     dataDao: DataDao
 ) {
-    val data = CryptoCardData(
-        name = "Bitcoin",
-        value = 3.689087f,
-        valueChange = -18,
-        currentTotal = 98160
-    )
 
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
@@ -145,27 +143,4 @@ fun CardContent(
             )
         }
     }
-}
-
-@Composable
-private fun ChangeIcon(valueChange: Int = -18) {
-    var iconModifier: Modifier = Modifier
-    val tint: Color
-    val contentDescription: String
-
-    if (valueChange > 0) {
-        tint = Color(0xFFFFFFFF)
-        iconModifier = Modifier.rotate(180f)
-        contentDescription = "Arrow Up"
-    } else {
-        tint = Color(0xFFa97d72)
-        contentDescription = "Arrow Down"
-    }
-
-    Icon(
-        modifier = iconModifier.size(17.dp),
-        painter = getArrowBottomLeftDrawable(),
-        contentDescription = contentDescription,
-        tint = tint
-    )
 }
