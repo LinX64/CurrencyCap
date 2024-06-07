@@ -37,7 +37,7 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.koin.android)
             implementation(libs.ktor.client.okhttp)
-            // implementation(libs.kotlinx.coroutines.android)
+            implementation(libs.kotlinx.coroutines.android)
 
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)

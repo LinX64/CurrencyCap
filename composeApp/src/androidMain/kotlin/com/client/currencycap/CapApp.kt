@@ -1,3 +1,5 @@
+package com.client.currencycap
+
 import android.app.Application
 import di.KoinInitializer
 
