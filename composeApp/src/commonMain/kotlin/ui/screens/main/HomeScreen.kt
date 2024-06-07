@@ -1,5 +1,6 @@
 package ui.screens.main
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
@@ -25,12 +26,14 @@ import ui.screens.main.components.TrendingCryptoCurrencies
 
 @Composable
 fun HomeRoute(
+    padding: PaddingValues,
     mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
 ) {
     val ratesState = mainViewModel.iranianRate.collectAsState().value
     val cryptoRates = mainViewModel.cryptoRates.collectAsState().value
 
     HomeScreen(
+        padding = padding,
         rates = ratesState,
         cryptoRates = cryptoRates
     )
@@ -41,6 +44,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     rates: MainState,
     cryptoRates: CryptoState,
+    padding: PaddingValues,
 ) {
     val hazeState = remember { HazeState() }
     LazyColumn(
@@ -52,7 +56,8 @@ fun HomeScreen(
                     blurRadius = 30.dp,
                     noiseFactor = HazeDefaults.noiseFactor
                 )
-            )
+            ),
+        contentPadding = padding,
     ) {
         item { MainHeader() }
         item { TodayTopMovers() }

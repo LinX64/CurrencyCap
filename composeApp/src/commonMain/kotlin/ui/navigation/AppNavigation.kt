@@ -1,12 +1,9 @@
 package ui.navigation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,14 +18,11 @@ internal fun AppNavigation(
     NavHost(
         navController = navController,
         startDestination = NavRoutes.Home.ROUTE,
-        modifier = Modifier
-            .padding(padding)
-            .consumeWindowInsets(padding)
-            .background(color = Color.Transparent),
+        modifier = Modifier.consumeWindowInsets(padding)
     ) {
         composable(NavRoutes.Home.ROUTE) {
             BlurBackground {
-                HomeRoute()
+                HomeRoute(padding)
             }
         }
     }

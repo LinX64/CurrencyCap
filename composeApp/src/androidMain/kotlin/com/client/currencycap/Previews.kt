@@ -2,6 +2,7 @@ package com.client.currencycap
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import domain.model.DataDao
 import domain.model.RateDao
 import ui.App
@@ -36,7 +37,8 @@ private fun AppPreview() {
                             rateUsd = "44422",
                         )
                     )
-                )
+                ),
+                padding = androidx.compose.foundation.layout.PaddingValues(0.dp, 0.dp, 0.dp, 0.dp)
             )
         }
     }
