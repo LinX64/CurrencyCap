@@ -16,9 +16,12 @@ import ui.screens.exchange.ExchangeViewEvent.OnConvertClick
 import ui.screens.exchange.ExchangeViewEvent.OnFromChange
 import ui.screens.exchange.ExchangeViewEvent.OnToChange
 
+private const val FIAT = "fiat"
+
 internal class ExchangeViewModel(
     private val mainRepository: MainRepository
 ) : MviViewModel<ExchangeViewEvent, ExchangeState, ExchangeNavigationEffect>(ExchangeState.Loading) {
+
     private val fromValue = MutableStateFlow("")
     private val toValue = MutableStateFlow("")
     private val amountValue = MutableStateFlow("")
@@ -46,7 +49,7 @@ internal class ExchangeViewModel(
 
     private fun mapToState(it: NetworkResult<List<DataDao>>) = when (it) {
         is NetworkResult.Success -> {
-            val fiats = it.data.filter { rates -> rates.type == "fiat" }
+            val fiats = it.data.filter { rates -> rates.type == FIAT }
             if (fiats.isNotEmpty()) {
                 setState { Success(fiats) }
             } else {

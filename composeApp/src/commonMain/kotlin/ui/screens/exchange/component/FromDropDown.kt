@@ -2,6 +2,7 @@ package ui.screens.exchange.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -26,14 +27,14 @@ internal fun FromDropDown(
 ) = when (exchangeState) {
     is ExchangeState.Success -> handleFromSuccess(
         rates = exchangeState.rates,
-        onFromChange = onFromChange,
+        onFromChange = onFromChange
     )
 
     is ExchangeState.Error -> {
-        // todo: handle error
+        println("Error: ${exchangeState.message}")
     }
 
-    else -> Unit
+    else -> CircularProgressIndicator()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

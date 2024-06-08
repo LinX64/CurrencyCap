@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -19,12 +20,24 @@ import util.getIconBy
 @Composable
 internal fun Stocks(mainState: MainState) {
     Column {
-        Text(
-            modifier = Modifier.padding(16.dp),
-            text = "Stocks",
-            style = MaterialTheme.typography.titleLarge,
-            color = CurrencyColors.White
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "Stocks",
+                style = MaterialTheme.typography.titleLarge,
+                color = CurrencyColors.White
+            )
+
+            Text(
+                modifier = Modifier.padding(16.dp),
+                text = "See all",
+                style = MaterialTheme.typography.titleMedium,
+                color = CurrencyColors.White
+            )
+        }
 
         FlowColumn(
             modifier = Modifier.fillMaxWidth(),

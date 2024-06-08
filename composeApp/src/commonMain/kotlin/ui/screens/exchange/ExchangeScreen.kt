@@ -39,21 +39,13 @@ import ui.screens.exchange.component.ToSection
 
 @Composable
 internal fun ExchangeScreen(
-    modifier: Modifier = Modifier,
     exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>()
 ) {
     val state by exchangeViewModel.viewState.collectAsState()
-
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        ScreenContent(
-            exchangeViewModel = exchangeViewModel,
-            state = state
-        )
-    }
+    ScreenContent(
+        exchangeViewModel = exchangeViewModel,
+        state = state
+    )
 }
 
 @Composable
@@ -65,57 +57,63 @@ private fun ScreenContent(
     val hazeState = remember { HazeState() }
     val amount by remember { mutableStateOf("") }
 
-    Box(
-        modifier
-            .fillMaxSize()
-            .haze(
-                state = hazeState,
-                style = HazeDefaults.style(
-                    tint = Color.White.copy(alpha = 0.1f),
-                    blurRadius = 1.dp
-                ),
-            ),
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
-            modifier = Modifier.padding(16.dp)
-                .align(Alignment.Center)
-                .hazeChild(
+            modifier
+                .fillMaxSize()
+                .haze(
                     state = hazeState,
-                    shape = RoundedCornerShape(16.dp),
-                )
+                    style = HazeDefaults.style(
+                        tint = Color.White.copy(alpha = 0.1f),
+                        blurRadius = 1.dp
+                    ),
+                ),
         ) {
-            Column(
-                modifier = modifier.padding(16.dp)
-                    .wrapContentHeight(),
+            Box(
+                modifier = Modifier.padding(16.dp)
+                    .align(Alignment.Center)
+                    .hazeChild(
+                        state = hazeState,
+                        shape = RoundedCornerShape(16.dp),
+                    )
             ) {
-                Header()
+                Column(
+                    modifier = modifier.padding(16.dp)
+                        .wrapContentHeight(),
+                ) {
+                    Header()
 
-                FromDropDown(
-                    exchangeState = exchangeViewModel.viewState.value,
-                    onFromChange = { exchangeViewModel.handleEvent(OnFromChange(it)) }
-                )
+                    FromDropDown(
+                        exchangeState = state,
+                        onFromChange = { exchangeViewModel.handleEvent(OnFromChange(it)) }
+                    )
 
-                ToSection()
+                    ToSection()
 
-                ToDropDown(
-                    exchangeState = exchangeViewModel.viewState.value,
-                    onToChange = { exchangeViewModel.handleEvent(OnToChange(it)) }
-                )
+                    ToDropDown(
+                        exchangeState = state,
+                        onToChange = { exchangeViewModel.handleEvent(OnToChange(it)) }
+                    )
 
-                AmountSection()
+                    AmountSection()
 
-                AmountField(
-                    onAmountChange = { exchangeViewModel.handleEvent(OnAmountChange(it)) },
-                    onFromChanged = amount
-                )
+                    AmountField(
+                        onAmountChange = { exchangeViewModel.handleEvent(OnAmountChange(it)) },
+                        onFromChanged = amount
+                    )
 
-                Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
 
-                ResultText(result = exchangeViewModel.convertResult.value)
+                    ResultText(result = exchangeViewModel.convertResult.value)
 
-                Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
 
-                ConvertButton(onConvertClicked = { exchangeViewModel.handleEvent(OnConvertClick) })
+                    ConvertButton(onConvertClicked = { exchangeViewModel.handleEvent(OnConvertClick) })
+                }
             }
         }
     }
