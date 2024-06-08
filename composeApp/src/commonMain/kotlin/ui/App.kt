@@ -20,9 +20,10 @@ import ui.components.BottomBarTab.Home
 import ui.components.BottomBarTab.Search
 import ui.components.BottomNavigationBar
 import ui.navigation.AppNavigation
-import ui.navigation.NavRoutes
+import ui.screens.ai_predict.navigation.navigateToAiPredictScreen
 import ui.screens.exchange.navigation.navigateToExchangeScreen
 import ui.screens.home.navigation.navigateToHomeScreen
+import ui.screens.search.navigation.navigateToSearchScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,6 +67,6 @@ private fun handleTabSelection(
 ) = when (bottomBarTab) {
     Home -> navController.navigateToHomeScreen()
     Exchange -> navController.navigateToExchangeScreen()
-    Search -> navController.navigate(NavRoutes.SEARCH)
-    AiPrediction -> navController.navigate(NavRoutes.AI_PREDICTION)
+    Search -> navController.navigateToSearchScreen()
+    AiPrediction -> navController.navigateToAiPredictScreen()
 }
