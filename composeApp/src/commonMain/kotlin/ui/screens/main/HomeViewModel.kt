@@ -29,8 +29,8 @@ class MainViewModel(
     private fun loadCombinedRates() {
         viewModelScope.launch {
             val iranianRateFlow = mainRepository.getIranianRate()
-            val cryptoRatesFlow = mainRepository.getCoinCapRates().map { filterByCrypto(it) }
-            val topMoversFlow = cryptoRatesFlow.map { mapToTopMovers(it) }
+            val cryptoRatesFlow = mainRepository.getCoinCapRates().map(::filterByCrypto)
+            val topMoversFlow = cryptoRatesFlow.map(::mapToTopMovers)
 
             combine(
                 iranianRateFlow,
