@@ -23,6 +23,10 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
 import di.koinViewModel
+import ui.screens.exchange.ExchangeViewEvent.OnAmountChange
+import ui.screens.exchange.ExchangeViewEvent.OnConvertClick
+import ui.screens.exchange.ExchangeViewEvent.OnFromChange
+import ui.screens.exchange.ExchangeViewEvent.OnToChange
 import ui.screens.exchange.component.AmountField
 import ui.screens.exchange.component.AmountSection
 import ui.screens.exchange.component.ConvertButton
@@ -33,59 +37,27 @@ import ui.screens.exchange.component.ToDropDown
 import ui.screens.exchange.component.ToSection
 
 @Composable
-fun ExchangeRoute(
+internal fun ExchangeScreen(
     modifier: Modifier = Modifier,
     exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>()
 ) {
-    ExchangeScreen(
-        modifier = modifier,
-        onAmountChange = exchangeViewModel::onAmountChange,
-        onFromChange = exchangeViewModel::onFromChange,
-        onToChange = exchangeViewModel::onToChange,
-        onConvertClick = exchangeViewModel::onConvertClick,
-        convertResult = exchangeViewModel.convertResult.value
-    )
-}
-
-@Composable
-internal fun ExchangeScreen(
-    modifier: Modifier = Modifier,
-    onAmountChange: (String) -> Unit,
-    onFromChange: (String) -> Unit,
-    onToChange: (String) -> Unit,
-    onConvertClick: () -> Unit,
-    convertResult: String = ""
-) {
-    val amount by remember { mutableStateOf("") }
-
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ScreenContent(
-            modifier = modifier,
-            onAmountChange = onAmountChange,
-            onFromChange = onFromChange,
-            onToChange = onToChange,
-            amount = amount,
-            convertResult = convertResult,
-            onConvertClick = onConvertClick
-        )
+        ScreenContent(exchangeViewModel = exchangeViewModel)
     }
 }
 
 @Composable
 private fun ScreenContent(
-    modifier: Modifier,
-    onFromChange: (String) -> Unit,
-    onToChange: (String) -> Unit,
-    onAmountChange: (String) -> Unit,
-    amount: String,
-    convertResult: String,
-    onConvertClick: () -> Unit
+    modifier: Modifier = Modifier,
+    exchangeViewModel: ExchangeViewModel,
 ) {
     val hazeState = remember { HazeState() }
+    val amount by remember { mutableStateOf("") }
+
     Box(
         modifier
             .fillMaxSize()
@@ -112,29 +84,31 @@ private fun ScreenContent(
                 Header()
 
                 FromDropDown(
-                    onFromChange = { onFromChange(it) }
+                    exchangeState = exchangeViewModel.viewState.value,
+                    onFromChange = { exchangeViewModel.handleEvent(OnFromChange(it)) }
                 )
 
                 ToSection()
 
                 ToDropDown(
-                    onToChange = { onToChange(it) }
+                    exchangeState = exchangeViewModel.viewState.value,
+                    onToChange = { exchangeViewModel.handleEvent(OnToChange(it)) }
                 )
 
                 AmountSection()
 
                 AmountField(
-                    onAmountChange = { onAmountChange(it) },
+                    onAmountChange = { exchangeViewModel.handleEvent(OnAmountChange(it)) },
                     onFromChanged = amount
                 )
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                ResultText(result = convertResult)
+                ResultText(result = exchangeViewModel.convertResult.value)
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                ConvertButton(onConvertClicked = onConvertClick)
+                ConvertButton(onConvertClicked = { exchangeViewModel.handleEvent(OnConvertClick) })
             }
         }
     }

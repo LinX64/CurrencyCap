@@ -14,14 +14,34 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import domain.model.DataDao
+import ui.screens.exchange.ExchangeState
 
 @Composable
+internal fun FromDropDown(
+    onFromChange: (String) -> Unit,
+    exchangeState: ExchangeState
+) = when (exchangeState) {
+    is ExchangeState.Success -> handleFromSuccess(
+        rates = exchangeState.rates,
+        onFromChange = onFromChange,
+    )
+
+    is ExchangeState.Error -> {
+        // todo: handle error
+    }
+
+    else -> Unit
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
-fun FromDropDown(
+@Composable
+private fun handleFromSuccess(
     modifier: Modifier = Modifier,
+    rates: List<DataDao>,
     onFromChange: (String) -> Unit
 ) {
-    val options = listOf(1, 2)
+    val options = rates.map { it.symbol }.sortedBy { it.take(2) }
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[0]) }
     val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
@@ -35,7 +55,7 @@ fun FromDropDown(
                 .fillMaxWidth()
                 .menuAnchor(),
             readOnly = true,
-            value = selectedOptionText.toString(),
+            value = selectedOptionText,
             onValueChange = {},
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             colors = ExposedDropdownMenuDefaults.textFieldColors(
@@ -56,7 +76,7 @@ fun FromDropDown(
                     onClick = {
                         selectedOptionText = selectionOption
                         expanded = false
-                        onFromChange(selectionOption.toString())
+                        onFromChange(selectionOption)
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                 )

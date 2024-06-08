@@ -14,15 +14,33 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import ui.screens.exchange.ExchangeState
+
+@Composable
+internal fun ToDropDown(
+    onToChange: (String) -> Unit,
+    exchangeState: ExchangeState
+) = when (exchangeState) {
+    is ExchangeState.Success -> handleSuccess(
+        onToChange = onToChange,
+        exchangeState = exchangeState
+    )
+
+    is ExchangeState.Error -> {
+        // todo: handle error
+    }
+
+    else -> Unit
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ToDropDown(
+private fun handleSuccess(
     modifier: Modifier = Modifier,
-    onToChange: (String) -> Unit
+    onToChange: (String) -> Unit,
+    exchangeState: ExchangeState.Success
 ) {
-    val options = listOf(1, 2)
-
+    val options = exchangeState.rates.map { it.symbol }.sortedBy { it.take(2) }
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[0]) }
     val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)

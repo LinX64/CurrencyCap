@@ -10,9 +10,9 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ui.screens.components.BlurBackground
-import ui.screens.exchange.ExchangeRoute
-import ui.screens.main.HomeRoute
+import ui.components.BlurBackground
+import ui.screens.exchange.ExchangeScreen
+import ui.screens.main.HomeScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,12 +28,12 @@ internal fun AppNavigation(
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
         composable(NavRoutes.HOME) {
-            BlurBackground { HomeRoute(padding = padding) }
+            BlurBackground { HomeScreen(padding = padding) }
         }
 
         composable(NavRoutes.EXCHANGE) {
             BlurBackground {
-                ExchangeRoute()
+                ExchangeScreen()
             }
         }
     }

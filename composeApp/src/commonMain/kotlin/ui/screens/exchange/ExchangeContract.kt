@@ -1,15 +1,18 @@
 package ui.screens.exchange
 
+import domain.model.DataDao
+
 sealed interface ExchangeViewEvent {
-    data class AmountChange(val amount: String) : ExchangeViewEvent
-    data class FromChange(val from: String) : ExchangeViewEvent
-    data class ToChange(val to: String) : ExchangeViewEvent
-    data object ConvertClick : ExchangeViewEvent
+    data class OnFromChange(val from: String) : ExchangeViewEvent
+    data class OnToChange(val to: String) : ExchangeViewEvent
+    data class OnAmountChange(val amount: String) : ExchangeViewEvent
+    data object OnConvertClick : ExchangeViewEvent
 }
 
 sealed interface ExchangeState {
     data object Loading : ExchangeState
-    data class Success(val rates: List<ExchangeRate>) : ExchangeState
+    data class Success(val rates: List<DataDao>) : ExchangeState
+    data class Error(val message: String) : ExchangeState
 }
 
 sealed interface ExchangeNavigationEffect {

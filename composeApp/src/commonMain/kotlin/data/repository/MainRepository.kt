@@ -16,11 +16,11 @@ interface MainRepository {
      *        "rateUsd": "1.0865065663024334"
      *     }
      */
-    suspend fun getCoinCapRates(): Flow<List<DataDao>>
+    fun getCoinCapRates(): Flow<List<DataDao>>
 
     /**
      * Get Iranian fiat rates from the Bonbast API
      * i.e: "name": "US Dollar", "sell": 59200, "buy": 59100}
      */
-    suspend fun getIranianRate(): Flow<List<RateDao>>
+    fun getIranianRate(): Flow<List<RateDao>>
 }

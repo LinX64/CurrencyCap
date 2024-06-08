@@ -26,23 +26,12 @@ import ui.screens.main.components.TodayTopMovers
 import ui.screens.main.components.TrendingCryptoCurrencies
 
 @Composable
-internal fun HomeRoute(
-    padding: PaddingValues,
-    mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
-) {
-    val state by mainViewModel.viewState.collectAsState()
-    HomeScreen(
-        padding = padding,
-        state = state
-    )
-}
-
-@Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
     padding: PaddingValues,
-    state: MainState,
+    mainViewModel: MainViewModel = koinViewModel<MainViewModel>()
 ) {
+    val state by mainViewModel.viewState.collectAsState()
     val hazeState = remember { HazeState() }
     LazyColumn(
         modifier = modifier.fillMaxSize()

@@ -18,9 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
+import ui.components.AppTopBar
+import ui.components.BottomNavigationBar
 import ui.navigation.AppNavigation
-import ui.screens.components.AppTopBar
-import ui.screens.components.BottomNavigationBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -29,22 +29,21 @@ class MainViewModel(
     }
 
     private fun loadCombinedRates() {
-        viewModelScope.launch {
-            val iranianRateFlow = mainRepository.getIranianRate()
-            val cryptoRatesFlow = mainRepository.getCoinCapRates().map(::filterByCrypto)
-            val topMoversFlow = cryptoRatesFlow.map(::mapToTopMovers)
+        val iranianRateFlow = mainRepository.getIranianRate()
+        val cryptoRatesFlow = mainRepository.getCoinCapRates().map(::filterByCrypto)
+        val topMoversFlow = cryptoRatesFlow.map(::mapToTopMovers)
 
-            combine(
-                iranianRateFlow,
-                cryptoRatesFlow,
-                topMoversFlow
-            ) { iranianRate, cryptoRates, topMovers ->
-                setState { Success(iranianRate, cryptoRates, topMovers) }
-            }
-                .asResult()
-                .launchIn(viewModelScope)
+        combine(
+            iranianRateFlow,
+            cryptoRatesFlow,
+            topMoversFlow
+        ) { iranianRate, cryptoRates, topMovers ->
+            setState { Success(iranianRate, cryptoRates, topMovers) }
         }
+            .asResult()
+            .launchIn(viewModelScope)
     }
+    // todo check this later
 
     private fun refreshRates() {
         viewModelScope.launch {

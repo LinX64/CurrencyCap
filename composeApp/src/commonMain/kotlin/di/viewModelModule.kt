@@ -6,5 +6,5 @@ import ui.screens.main.MainViewModel
 
 val viewModelModule = module {
     single { MainViewModel(get()) }
-    single { ExchangeViewModel() }
+    single { ExchangeViewModel(get()) }
 }

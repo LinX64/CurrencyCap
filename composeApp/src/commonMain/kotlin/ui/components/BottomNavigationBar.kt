@@ -1,4 +1,4 @@
-package ui.screens.components
+package ui.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring

@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import domain.model.DataDao
 import domain.model.RateDao
-import ui.screens.components.BlurBackground
+import ui.components.BlurBackground
 import ui.screens.exchange.ExchangeScreen
 import ui.screens.main.components.PerformanceChart
 import ui.theme.AppM3Theme
@@ -61,11 +61,7 @@ private fun ExchangePreview() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                ExchangeScreen(
-                    onAmountChange = { /*TODO*/ },
-                    onFromChange = { /*TODO*/ },
-                    onToChange = { /*TODO*/ },
-                    onConvertClick = { /*TODO*/ })
+                ExchangeScreen()
             }
         }
     }
