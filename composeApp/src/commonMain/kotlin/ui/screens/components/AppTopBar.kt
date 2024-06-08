@@ -25,7 +25,6 @@ import dev.chrisbanes.haze.materials.HazeMaterials
 internal fun AppTopBar(
     name: String = "Currency Cap",
     navController: NavHostController,
-    currentDestination: String,
     scrollBehavior: TopAppBarScrollBehavior,
     hazeState: HazeState,
 ) {
@@ -39,7 +38,7 @@ internal fun AppTopBar(
         modifier = Modifier.fillMaxWidth()
             .hazeChild(
                 state = hazeState,
-                style = HazeMaterials.regular(MaterialTheme.colorScheme.surface),
+                style = HazeMaterials.regular(MaterialTheme.colorScheme.surface)
             )
     )
 }

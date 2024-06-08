@@ -25,7 +25,7 @@ class MainViewModel(
 
     override fun handleEvent(event: MainViewEvent) = when (event) {
         is LoadRates -> loadCombinedRates()
-        is RefreshRates -> loadCombinedRates()
+        is RefreshRates -> refreshRates()
     }
 
     private fun loadCombinedRates() {
@@ -43,6 +43,12 @@ class MainViewModel(
             }
                 .asResult()
                 .launchIn(viewModelScope)
+        }
+    }
+
+    private fun refreshRates() {
+        viewModelScope.launch {
+            // todo: implement refresh logic
         }
     }
 
