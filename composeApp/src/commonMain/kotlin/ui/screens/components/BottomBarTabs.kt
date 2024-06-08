@@ -91,25 +91,30 @@ internal fun BottomBarTabs(
 }
 
 sealed class BottomBarTab(
+    val name: String,
     val icon: ImageVector,
     val color: Color
 ) {
     data object Exchange : BottomBarTab(
+        name = "Exchange",
         icon = Icons.Default.CurrencyExchange,
         color = Color(0xFFFFA574)
     )
 
     data object Home : BottomBarTab(
+        name = "Home",
         icon = Icons.Rounded.Home,
         color = Color(0xFFADFF64)
     )
 
     data object Search : BottomBarTab(
+        name = "Search",
         icon = Icons.Rounded.Search,
         color = Color(0xFFFA6FFF)
     )
 
     data object AiPrediction : BottomBarTab(
+        name = "AiPrediction",
         icon = Icons.Default.BatchPrediction,
         color = Color(0xFFFA6FFF)
     )

@@ -23,23 +23,25 @@ import dev.chrisbanes.haze.materials.HazeMaterials
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
 internal fun AppTopBar(
-    name: String = "Currency Cap",
+    name: String,
     navController: NavHostController,
+    currentDestination: String,
     scrollBehavior: TopAppBarScrollBehavior,
     hazeState: HazeState,
 ) {
     CenterAlignedTopAppBar(
+        modifier = Modifier.fillMaxWidth()
+            .hazeChild(
+                state = hazeState,
+                style = HazeMaterials.regular(MaterialTheme.colorScheme.surface)
+            ),
         title = { AppTitle(name) },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.Transparent,
             scrolledContainerColor = Color.Transparent,
         ),
         scrollBehavior = scrollBehavior,
-        modifier = Modifier.fillMaxWidth()
-            .hazeChild(
-                state = hazeState,
-                style = HazeMaterials.regular(MaterialTheme.colorScheme.surface)
-            )
+        navigationIcon = { AppNavigationIcon(navController, currentDestination) }
     )
 }
 
@@ -55,11 +57,15 @@ private fun AppTitle(name: String) {
 }
 
 @Composable
-fun AppNavigationIcon(navController: NavHostController) {
-    IconButton(
-        onClick = { navController.navigateUp() }
-    ) {
-        Icon(Icons.AutoMirrored.Filled.ArrowBack, tint = Color.White, contentDescription = null)
+fun AppNavigationIcon(navController: NavHostController, currentDestination: String) {
+    if (currentDestination != "Home") {
+        IconButton(onClick = { navController.popBackStack() }) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = "Back",
+                tint = Color.White
+            )
+        }
     }
 }
 

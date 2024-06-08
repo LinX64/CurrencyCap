@@ -40,9 +40,11 @@ fun App(
     Scaffold(
         topBar = {
             AppTopBar(
+                name = currentDestination,
                 navController = navController,
                 hazeState = hazeState,
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
+                currentDestination = currentDestination
             )
         },
         bottomBar = {
