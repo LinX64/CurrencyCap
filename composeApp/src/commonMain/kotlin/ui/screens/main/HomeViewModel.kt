@@ -24,20 +24,12 @@ class MainViewModel(
         handleEvent(LoadCryptoRates)
     }
 
-    override fun handleEvent(event: MainViewEvent) {
-        when (event) {
-            is LoadIranianRates -> loadIranianRates()
-            is LoadCryptoRates -> loadCryptoRates()
-            is MainViewEvent.RefreshRates -> {
-                loadIranianRates()
-                loadCryptoRates()
-            }
-
-            is MainViewEvent.ShowError -> setState {
-                MainState.Error(
-                    event.error.message ?: "Unknown error"
-                )
-            }
+    override fun handleEvent(event: MainViewEvent) = when (event) {
+        is LoadIranianRates -> loadIranianRates()
+        is LoadCryptoRates -> loadCryptoRates()
+        is MainViewEvent.RefreshRates -> {
+            loadIranianRates()
+            loadCryptoRates()
         }
     }
 
@@ -46,8 +38,8 @@ class MainViewModel(
             .asResult()
             .map {
                 when (it) {
-                    is Success -> MainState.Success(it.data)
-                    is Error -> MainState.Error(it.exception.message ?: "Unknown error")
+                    is Success -> MainState.IranianRateSuccess(it.data)
+                    is Error -> MainState.IranianRateError(it.exception.message ?: "Unknown error")
                     Loading -> MainState.Loading
                 }
             }

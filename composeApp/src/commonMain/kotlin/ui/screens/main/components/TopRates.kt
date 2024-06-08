@@ -57,7 +57,7 @@ fun IranianRate(rates: MainState) {
             rows = GridCells.Fixed(1),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            if (rates is MainState.Success) {
+            if (rates is MainState.IranianRateSuccess) {
                 items(rates.ratesList.size) { index ->
                     val code = rates.ratesList[index].code
                     RateItem(

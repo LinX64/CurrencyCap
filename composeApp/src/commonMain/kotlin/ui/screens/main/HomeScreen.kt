@@ -3,7 +3,6 @@ package ui.screens.main
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,7 +16,7 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
 import di.koinViewModel
-import ui.screens.main.components.CenteredColumn
+import ui.common.ui.LoadingAnimation
 import ui.screens.main.components.CryptoCardItems
 import ui.screens.main.components.IranianRate
 import ui.screens.main.components.MainHeader
@@ -31,7 +30,6 @@ fun HomeRoute(
     mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
 ) {
     val state by mainViewModel.viewState.collectAsState()
-
     HomeScreen(
         padding = padding,
         state = state
@@ -55,7 +53,7 @@ fun HomeScreen(
                     noiseFactor = HazeDefaults.noiseFactor
                 )
             ),
-        contentPadding = padding,
+        contentPadding = padding
     ) {
         item { MainHeader() }
         item { TodayTopMovers() }
@@ -66,10 +64,8 @@ fun HomeScreen(
     }
 
     when (state) {
-        is MainState.Loading -> CenteredColumn {
-            CircularProgressIndicator()
-        }
-        is MainState.Error -> {
+        is MainState.Loading -> LoadingAnimation()
+        is MainState.IranianRateError -> {
             Text(text = "Error")
         }
 

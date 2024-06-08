@@ -22,7 +22,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import ui.common.getPlaceHolderDrawable
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.baseline_monetization_on_24
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun TodayTopMovers() {
@@ -67,7 +69,7 @@ private fun TopMovers(
         ) {
             AsyncImage(
                 modifier = Modifier.size(48.dp),
-                placeholder = getPlaceHolderDrawable(),
+                placeholder = painterResource(Res.drawable.baseline_monetization_on_24),
                 model = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
                 contentDescription = null
             )

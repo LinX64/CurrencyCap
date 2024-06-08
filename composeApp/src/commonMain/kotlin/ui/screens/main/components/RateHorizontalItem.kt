@@ -25,13 +25,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.baseline_monetization_on_24
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
 import domain.model.DataDao
+import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
-import ui.common.getPlaceHolderDrawable
 import ui.theme.colors.CurrencyColors
 
 data class AssetInfo(
@@ -55,7 +57,7 @@ val mockAssetInfo = AssetInfo(
         113.284f,
         114.031f,
         113.493f,
-        113.112f
+        115.112f
     ),
     113.02211f
 )
@@ -97,9 +99,9 @@ fun RateHorizontalItem(
             ) {
                 AsyncImage(
                     modifier = Modifier.size(48.dp),
-                    placeholder = getPlaceHolderDrawable(),
+                    placeholder = painterResource(Res.drawable.baseline_monetization_on_24),
                     model = icon,
-                    error = getPlaceHolderDrawable(),
+                    error = painterResource(Res.drawable.baseline_monetization_on_24),
                     contentDescription = null,
                 )
 

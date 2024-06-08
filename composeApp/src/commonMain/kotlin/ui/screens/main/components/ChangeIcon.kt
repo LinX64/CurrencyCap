@@ -7,8 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
-import ui.common.getTrendingDownIcon
-import ui.common.getTrendingUpIcon
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.baseline_trending_down_24
+import currencycap.composeapp.generated.resources.baseline_trending_up_24
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun ChangeIcon(valueChange: Int = -18) {
@@ -16,10 +18,10 @@ internal fun ChangeIcon(valueChange: Int = -18) {
     val painter: Painter
 
     if (valueChange > 0) {
-        painter = getTrendingUpIcon()
+        painter = painterResource(Res.drawable.baseline_trending_up_24)
         tint = Color.Green
     } else {
-        painter = getTrendingDownIcon()
+        painter = painterResource(Res.drawable.baseline_trending_down_24)
         tint = Color.Red
     }
 

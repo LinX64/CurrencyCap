@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import di.appModule
 import di.httpClientModule
 import di.repositoryModule
 import di.viewModelModule
@@ -18,7 +17,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         startKoin {
-            modules(appModule, httpClientModule, repositoryModule, viewModelModule)
+            modules(httpClientModule, repositoryModule, viewModelModule)
         }
 
         enableEdgeToEdge()

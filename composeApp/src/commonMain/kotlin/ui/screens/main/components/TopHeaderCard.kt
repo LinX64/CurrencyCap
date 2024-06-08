@@ -25,13 +25,15 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.ic_btc
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import dev.chrisbanes.haze.hazeChild
 import domain.model.DataDao
+import org.jetbrains.compose.resources.painterResource
 import ui.common.formatCurrentTotal
-import ui.common.getBtcIcon
 
 data class CryptoCardData(
     val name: String,
@@ -115,7 +117,7 @@ fun CardContent(
                 modifier = Modifier.size(24.dp)
                     .clip(CircleShape)
                     .border(1.dp, Color.White, CircleShape),
-                painter = getBtcIcon(),
+                painter = painterResource(Res.drawable.ic_btc),
                 contentScale = ContentScale.FillWidth,
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
                 contentDescription = null,

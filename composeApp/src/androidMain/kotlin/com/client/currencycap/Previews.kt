@@ -17,7 +17,7 @@ private fun AppPreview() {
     AppM3Theme(dark = true) {
         BlurBackground {
             HomeScreen(
-                state = MainState.Success(
+                state = MainState.IranianRateSuccess(
                     listOf(
                         RateDao(
                             code = "USD",
