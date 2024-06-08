@@ -59,11 +59,11 @@ internal class ExchangeViewModel(
     }
 
     private fun onFromChange(from: String) {
-        fromValue.value = from.split(" ")[2]
+        fromValue.value = from
     }
 
     private fun onToChange(to: String) {
-        toValue.value = to.split(" ")[2]
+        toValue.value = to
     }
 
     private fun onAmountChange(amount: String) {

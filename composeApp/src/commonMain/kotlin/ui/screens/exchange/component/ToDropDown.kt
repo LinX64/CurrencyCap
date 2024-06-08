@@ -1,11 +1,13 @@
 package ui.screens.exchange.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -54,7 +56,7 @@ private fun handleSuccess(
                 .fillMaxWidth()
                 .menuAnchor(),
             readOnly = true,
-            value = selectedOptionText.toString(),
+            value = selectedOptionText,
             onValueChange = {},
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             colors = ExposedDropdownMenuDefaults.textFieldColors(
@@ -67,16 +69,23 @@ private fun handleSuccess(
             singleLine = true
         )
         ExposedDropdownMenu(
+            modifier = Modifier.background(MaterialTheme.colorScheme.surface),
             expanded = expanded,
             onDismissRequest = { expanded = false },
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
-                    text = { },
+                    text = {
+                        Text(
+                            text = selectionOption,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    },
                     onClick = {
                         selectedOptionText = selectionOption
                         expanded = false
-                        onToChange(selectionOption.toString())
+                        onToChange(selectionOption)
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                 )

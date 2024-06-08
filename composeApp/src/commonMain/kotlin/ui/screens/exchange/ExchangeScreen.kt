@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,12 +42,17 @@ internal fun ExchangeScreen(
     modifier: Modifier = Modifier,
     exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>()
 ) {
+    val state by exchangeViewModel.viewState.collectAsState()
+
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ScreenContent(exchangeViewModel = exchangeViewModel)
+        ScreenContent(
+            exchangeViewModel = exchangeViewModel,
+            state = state
+        )
     }
 }
 
@@ -54,6 +60,7 @@ internal fun ExchangeScreen(
 private fun ScreenContent(
     modifier: Modifier = Modifier,
     exchangeViewModel: ExchangeViewModel,
+    state: ExchangeState,
 ) {
     val hazeState = remember { HazeState() }
     val amount by remember { mutableStateOf("") }
