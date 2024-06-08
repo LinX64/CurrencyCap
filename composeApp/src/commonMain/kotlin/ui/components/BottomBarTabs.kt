@@ -43,9 +43,7 @@ internal fun BottomBarTabs(
         ),
         LocalContentColor provides Color.White
     ) {
-        Row(
-            modifier = Modifier.fillMaxSize(),
-        ) {
+        Row(modifier = Modifier.fillMaxSize()) {
             for (tab in tabs) {
                 val alpha by animateFloatAsState(
                     targetValue = if (selectedTab == tabs.indexOf(tab)) 1f else .35f,
@@ -74,7 +72,6 @@ internal fun BottomBarTabs(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
-
                     val isItemSelected = if (selectedTab == tabs.indexOf(tab)) {
                         Modifier.alpha(1f)
                     } else Modifier.alpha(.35f)

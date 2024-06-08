@@ -1,4 +1,4 @@
-package ui.screens.main.components
+package ui.screens.home.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ui.screens.main.MainState
+import ui.screens.home.MainState
 
 @Composable
 internal fun CryptoCardItems(

@@ -14,7 +14,7 @@ import domain.model.DataDao
 import domain.model.RateDao
 import ui.components.BlurBackground
 import ui.screens.exchange.ExchangeScreen
-import ui.screens.main.components.PerformanceChart
+import ui.screens.home.components.PerformanceChart
 import ui.theme.AppM3Theme
 
 @Composable

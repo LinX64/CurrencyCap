@@ -1,4 +1,4 @@
-package ui.screens.main
+package ui.screens.home
 
 import androidx.lifecycle.viewModelScope
 import data.repository.MainRepository
@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
-import ui.screens.main.MainState.Success
-import ui.screens.main.MainViewEvent.LoadRates
-import ui.screens.main.MainViewEvent.RefreshRates
+import ui.screens.home.MainState.Success
+import ui.screens.home.MainViewEvent.LoadRates
+import ui.screens.home.MainViewEvent.RefreshRates
 
 private const val CRYPTO = "crypto"
 

@@ -9,12 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import ui.components.BlurBackground
-import ui.screens.ai_predict.AiPredictScreen
-import ui.screens.exchange.ExchangeScreen
-import ui.screens.main.HomeScreen
-import ui.screens.search.SearchScreen
+import ui.screens.ai_predict.navigation.aiPredictScreen
+import ui.screens.exchange.navigation.exchangeScreen
+import ui.screens.home.navigation.homeScreen
+import ui.screens.search.navigation.searchScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,29 +24,13 @@ internal fun AppNavigation(
     NavHost(
         navController = navController,
         startDestination = NavRoutes.HOME,
-        modifier = Modifier.consumeWindowInsets(padding)
+        modifier = Modifier
+            .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
-        composable(NavRoutes.HOME) {
-            BlurBackground { HomeScreen(padding = padding) }
-        }
-
-        composable(NavRoutes.EXCHANGE) {
-            BlurBackground {
-                ExchangeScreen(padding = padding)
-            }
-        }
-
-        composable(NavRoutes.AI_PREDICTION) {
-            BlurBackground {
-                AiPredictScreen(padding = padding)
-            }
-        }
-
-        composable(NavRoutes.SEARCH) {
-            BlurBackground {
-                SearchScreen(padding = padding)
-            }
-        }
+        homeScreen(padding)
+        searchScreen(padding)
+        aiPredictScreen(padding)
+        exchangeScreen(padding)
     }
 }

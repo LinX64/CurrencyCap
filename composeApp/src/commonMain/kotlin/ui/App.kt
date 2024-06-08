@@ -1,26 +1,28 @@
 package ui
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
 import ui.components.AppTopBar
+import ui.components.BottomBarTab
+import ui.components.BottomBarTab.AiPrediction
+import ui.components.BottomBarTab.Exchange
+import ui.components.BottomBarTab.Home
+import ui.components.BottomBarTab.Search
 import ui.components.BottomNavigationBar
 import ui.navigation.AppNavigation
+import ui.navigation.NavRoutes
+import ui.screens.exchange.navigation.navigateToExchangeScreen
+import ui.screens.home.navigation.navigateToHomeScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,12 +30,7 @@ fun App(
     navController: NavHostController = rememberNavController()
 ) {
     val currentDestination = navController.currentDestination?.route ?: ""
-
     val hazeState = remember { HazeState() }
-    val listState = rememberLazyListState()
-    val showNavigationBar by remember(listState) {
-        derivedStateOf { listState.firstVisibleItemIndex == 0 }
-    }
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
@@ -47,13 +44,10 @@ fun App(
             )
         },
         bottomBar = {
-            AnimatedVisibility(
-                visible = showNavigationBar,
-                enter = slideInVertically { it },
-                exit = slideOutVertically { it },
-            ) {
-                BottomNavigationBar(hazeState = hazeState, navController = navController)
-            }
+            BottomNavigationBar(
+                hazeState = hazeState,
+                selectedTab = { tab -> handleTabSelection(tab, navController) }
+            )
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         modifier = Modifier.fillMaxSize()
@@ -64,4 +58,14 @@ fun App(
             padding = paddingValues
         )
     }
+}
+
+private fun handleTabSelection(
+    bottomBarTab: BottomBarTab,
+    navController: NavHostController
+) = when (bottomBarTab) {
+    Home -> navController.navigateToHomeScreen()
+    Exchange -> navController.navigateToExchangeScreen()
+    Search -> navController.navigate(NavRoutes.SEARCH)
+    AiPrediction -> navController.navigate(NavRoutes.AI_PREDICTION)
 }

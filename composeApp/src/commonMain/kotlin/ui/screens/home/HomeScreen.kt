@@ -1,4 +1,4 @@
-package ui.screens.main
+package ui.screens.home
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,13 +17,13 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
 import di.koinViewModel
-import ui.screens.main.components.CenteredColumn
-import ui.screens.main.components.CryptoCardItems
-import ui.screens.main.components.IranianRate
-import ui.screens.main.components.MainHeader
-import ui.screens.main.components.Stocks
-import ui.screens.main.components.TodayTopMovers
-import ui.screens.main.components.TrendingCryptoCurrencies
+import ui.screens.home.components.CenteredColumn
+import ui.screens.home.components.CryptoCardItems
+import ui.screens.home.components.IranianRate
+import ui.screens.home.components.MainHeader
+import ui.screens.home.components.Stocks
+import ui.screens.home.components.TodayTopMovers
+import ui.screens.home.components.TrendingCryptoCurrencies
 
 @Composable
 internal fun HomeScreen(

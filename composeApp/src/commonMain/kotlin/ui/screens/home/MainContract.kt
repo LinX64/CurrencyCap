@@ -1,4 +1,4 @@
-package ui.screens.main
+package ui.screens.home
 
 import domain.model.DataDao
 import domain.model.RateDao

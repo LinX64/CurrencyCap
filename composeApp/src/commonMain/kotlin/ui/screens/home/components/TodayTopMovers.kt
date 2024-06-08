@@ -1,4 +1,4 @@
-package ui.screens.main.components
+package ui.screens.home.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,7 +27,7 @@ import currencycap.composeapp.generated.resources.baseline_monetization_on_24
 import currencycap.composeapp.generated.resources.today_top_movers
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import ui.screens.main.MainState
+import ui.screens.home.MainState
 import util.getIconBy
 
 @Composable

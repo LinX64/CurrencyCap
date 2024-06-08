@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Currency Cap</string>
-    <string name="rial">Rial:</string>
     <string name="search">Search coins or currencies</string>
     <string name="today_top_movers">Today's Top Movers</string>
     <string name="top_gainers">Top Gainers</string>
