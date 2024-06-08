@@ -13,6 +13,8 @@ import ui.screens.main.MainState.Success
 import ui.screens.main.MainViewEvent.LoadRates
 import ui.screens.main.MainViewEvent.RefreshRates
 
+private const val CRYPTO = "crypto"
+
 class MainViewModel(
     private val mainRepository: MainRepository
 ) : MviViewModel<MainViewEvent, MainState, NavigationEffect>(MainState.Loading) {
@@ -57,8 +59,4 @@ class MainViewModel(
                 rateUsd = topMover.rateUsd
             )
         }
-
-    private companion object {
-        private const val CRYPTO = "crypto"
-    }
 }
