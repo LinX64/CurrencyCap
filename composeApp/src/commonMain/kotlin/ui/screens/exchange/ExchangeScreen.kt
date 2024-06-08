@@ -3,12 +3,13 @@ package ui.screens.exchange
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -39,12 +40,14 @@ import ui.screens.exchange.component.ToSection
 
 @Composable
 internal fun ExchangeScreen(
-    exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>()
+    exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>(),
+    padding: PaddingValues
 ) {
     val state by exchangeViewModel.viewState.collectAsState()
     ScreenContent(
         exchangeViewModel = exchangeViewModel,
-        state = state
+        state = state,
+        padding = padding
     )
 }
 
@@ -53,66 +56,74 @@ private fun ScreenContent(
     modifier: Modifier = Modifier,
     exchangeViewModel: ExchangeViewModel,
     state: ExchangeState,
+    padding: PaddingValues
 ) {
     val hazeState = remember { HazeState() }
     val amount by remember { mutableStateOf("") }
 
-    Column(
-        modifier = modifier.fillMaxWidth(),
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        contentPadding = padding
     ) {
-        Box(
-            modifier
-                .fillMaxSize()
-                .haze(
-                    state = hazeState,
-                    style = HazeDefaults.style(
-                        tint = Color.White.copy(alpha = 0.1f),
-                        blurRadius = 1.dp
-                    ),
-                ),
-        ) {
+        item {
             Box(
-                modifier = Modifier.padding(16.dp)
-                    .align(Alignment.Center)
-                    .hazeChild(
+                modifier
+                    .fillMaxSize()
+                    .haze(
                         state = hazeState,
-                        shape = RoundedCornerShape(16.dp),
+                        style = HazeDefaults.style(
+                            tint = Color.White.copy(alpha = 0.1f),
+                            blurRadius = 1.dp
+                        )
                     )
             ) {
-                Column(
-                    modifier = modifier.padding(16.dp)
-                        .wrapContentHeight(),
+                Box(
+                    modifier = Modifier.padding(16.dp)
+                        .align(Alignment.Center)
+                        .hazeChild(
+                            state = hazeState,
+                            shape = RoundedCornerShape(16.dp),
+                        )
                 ) {
-                    Header()
+                    Column(
+                        modifier = modifier.padding(16.dp)
+                            .wrapContentHeight(),
+                    ) {
+                        Header()
 
-                    FromDropDown(
-                        exchangeState = state,
-                        onFromChange = { exchangeViewModel.handleEvent(OnFromChange(it)) }
-                    )
+                        FromDropDown(
+                            exchangeState = state,
+                            onFromChange = { exchangeViewModel.handleEvent(OnFromChange(it)) }
+                        )
 
-                    ToSection()
+                        ToSection()
 
-                    ToDropDown(
-                        exchangeState = state,
-                        onToChange = { exchangeViewModel.handleEvent(OnToChange(it)) }
-                    )
+                        ToDropDown(
+                            exchangeState = state,
+                            onToChange = { exchangeViewModel.handleEvent(OnToChange(it)) }
+                        )
 
-                    AmountSection()
+                        AmountSection()
 
-                    AmountField(
-                        onAmountChange = { exchangeViewModel.handleEvent(OnAmountChange(it)) },
-                        onFromChanged = amount
-                    )
+                        AmountField(
+                            onAmountChange = { exchangeViewModel.handleEvent(OnAmountChange(it)) },
+                            onFromChanged = amount
+                        )
 
-                    Spacer(modifier = Modifier.height(32.dp))
+                        Spacer(modifier = Modifier.height(32.dp))
 
-                    ResultText(result = exchangeViewModel.convertResult.value)
+                        ResultText(result = exchangeViewModel.convertResult.value)
 
-                    Spacer(modifier = Modifier.height(32.dp))
+                        Spacer(modifier = Modifier.height(32.dp))
 
-                    ConvertButton(onConvertClicked = { exchangeViewModel.handleEvent(OnConvertClick) })
+                        ConvertButton(onConvertClicked = {
+                            exchangeViewModel.handleEvent(
+                                OnConvertClick
+                            )
+                        })
+                    }
                 }
             }
         }

@@ -10,6 +10,7 @@ import di.useCaseModule
 import di.viewModelModule
 import org.koin.compose.KoinContext
 import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 import ui.App
 import ui.theme.AppM3Theme
 
@@ -39,5 +40,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        stopKoin()
     }
 }

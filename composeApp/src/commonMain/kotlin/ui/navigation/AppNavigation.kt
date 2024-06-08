@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ui.components.BlurBackground
+import ui.screens.ai_predict.AiPredictScreen
 import ui.screens.exchange.ExchangeScreen
 import ui.screens.main.HomeScreen
 
@@ -33,7 +34,13 @@ internal fun AppNavigation(
 
         composable(NavRoutes.EXCHANGE) {
             BlurBackground {
-                ExchangeScreen()
+                ExchangeScreen(padding = padding)
+            }
+        }
+
+        composable(NavRoutes.AI_PREDICTION) {
+            BlurBackground {
+                AiPredictScreen()
             }
         }
     }

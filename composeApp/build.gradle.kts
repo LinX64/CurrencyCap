@@ -57,8 +57,10 @@ kotlin {
             implementation(libs.kotlin.serialization)
             implementation(libs.ktor.client.core)
 
+            // UI
             implementation(libs.haze)
             implementation(libs.haze.material)
+            implementation(libs.compottie)
 
             implementation(libs.coil)
             implementation(libs.coil.compose)

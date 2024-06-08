@@ -2,6 +2,7 @@ package com.client.currencycap
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -61,7 +62,7 @@ private fun ExchangePreview() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                ExchangeScreen()
+                ExchangeScreen(padding = PaddingValues(16.dp))
             }
         }
     }
