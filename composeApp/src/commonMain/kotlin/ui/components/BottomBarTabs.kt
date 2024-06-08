@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import ui.navigation.NavRoutes
 
 @Composable
 internal fun BottomBarTabs(
@@ -87,30 +88,30 @@ internal fun BottomBarTabs(
 }
 
 sealed class BottomBarTab(
-    val name: String,
+    val route: String,
     val icon: ImageVector,
     val color: Color
 ) {
     data object Exchange : BottomBarTab(
-        name = "Exchange",
+        route = NavRoutes.EXCHANGE,
         icon = Icons.Default.CurrencyExchange,
         color = Color(0xFFFFA574)
     )
 
     data object Home : BottomBarTab(
-        name = "Home",
+        route = NavRoutes.HOME,
         icon = Icons.Rounded.Home,
         color = Color(0xFFADFF64)
     )
 
     data object Search : BottomBarTab(
-        name = "Search",
+        route = NavRoutes.SEARCH,
         icon = Icons.Rounded.Search,
         color = Color(0xFFFA6FFF)
     )
 
     data object AiPrediction : BottomBarTab(
-        name = "AiPrediction",
+        route = NavRoutes.AI_PREDICTION,
         icon = Icons.Default.BatchPrediction,
         color = Color(0xFFFA6FFF)
     )

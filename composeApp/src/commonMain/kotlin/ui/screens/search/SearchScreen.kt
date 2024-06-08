@@ -22,7 +22,12 @@ internal fun SearchScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
+//        SearchBar(
+//            value = searchViewModel.searchQuery,
+//            onValueChange = { searchViewModel.searchQuery = it },
+//            placeholder = { Text("Search") },
+//            modifier = Modifier.fillMaxWidth()
+//        )
     }
 }
 

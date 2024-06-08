@@ -19,7 +19,7 @@ sealed interface MainState {
         val topMovers: List<TopMovers>
     ) : MainState
 
-    data class Error(val error: String) : MainState
+    data class Error(val message: String) : MainState
 }
 
 data class TopMovers(

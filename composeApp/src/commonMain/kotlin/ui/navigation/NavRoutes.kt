@@ -1,9 +1,8 @@
 package ui.navigation
 
 object NavRoutes {
-    const val HOME = "home"
-    const val EXCHANGE = "exchange"
-    const val DETAIL = "detail"
-    const val SEARCH = "search"
-    const val AI_PREDICTION = "ai_predict"
+    const val HOME = "Market Overview"
+    const val EXCHANGE = "Exchange"
+    const val SEARCH = "Search"
+    const val AI_PREDICTION = "AI Prediction"
 }

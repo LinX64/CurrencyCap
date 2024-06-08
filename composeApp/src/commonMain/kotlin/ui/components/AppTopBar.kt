@@ -19,15 +19,15 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
+import ui.navigation.NavRoutes
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
 internal fun AppTopBar(
-    name: String = "Market Overview",
+    name: String,
     navController: NavHostController,
-    currentDestination: String,
     scrollBehavior: TopAppBarScrollBehavior,
-    hazeState: HazeState,
+    hazeState: HazeState
 ) {
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
@@ -35,15 +35,13 @@ internal fun AppTopBar(
                 state = hazeState,
                 style = HazeMaterials.regular(MaterialTheme.colorScheme.surface)
             ),
-        title = {
-            // todo: disable title for exchange
-        },
+        title = { AppTitle(name) },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.Transparent,
             scrolledContainerColor = Color.Transparent,
         ),
         scrollBehavior = scrollBehavior,
-        navigationIcon = { }
+        navigationIcon = { AppNavigationIcon(navController, name) }
     )
 }
 
@@ -53,13 +51,16 @@ private fun AppTitle(name: String) {
         text = name,
         maxLines = 1,
         style = MaterialTheme.typography.titleLarge,
-        color = Color.White,
+        color = Color.White
     )
 }
 
 @Composable
-fun AppNavigationIcon(navController: NavHostController, currentDestination: String) {
-    if (currentDestination != "Home") {
+private fun AppNavigationIcon(
+    navController: NavHostController,
+    currentDestination: String
+) {
+    if (currentDestination != NavRoutes.HOME) {
         IconButton(onClick = { navController.popBackStack() }) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,

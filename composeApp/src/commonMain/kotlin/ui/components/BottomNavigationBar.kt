@@ -38,9 +38,10 @@ import dev.chrisbanes.haze.hazeChild
 @Composable
 internal fun BottomNavigationBar(
     hazeState: HazeState,
-    selectedTab: (BottomBarTab) -> Unit
+    onTabSelected: (BottomBarTab) -> Unit
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
+
     Box(
         modifier = Modifier
             .padding(vertical = 24.dp, horizontal = 64.dp)
@@ -58,7 +59,7 @@ internal fun BottomNavigationBar(
             selectedTab = selectedTabIndex,
             onTabSelected = {
                 selectedTabIndex = tabs.indexOf(it)
-                selectedTab(it)
+                onTabSelected(it)
             }
         )
 

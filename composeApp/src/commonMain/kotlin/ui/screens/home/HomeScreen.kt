@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -17,6 +16,7 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
 import di.koinViewModel
+import ui.components.ErrorView
 import ui.screens.home.components.CenteredColumn
 import ui.screens.home.components.CryptoCardItems
 import ui.screens.home.components.IranianRate
@@ -33,6 +33,7 @@ internal fun HomeScreen(
 ) {
     val state by mainViewModel.viewState.collectAsState()
     val hazeState = remember { HazeState() }
+
     LazyColumn(
         modifier = modifier.fillMaxSize()
             .haze(
@@ -59,7 +60,8 @@ internal fun HomeScreen(
         }
 
         is MainState.Error -> {
-            Text(text = "Error")
+            val message = (state as MainState.Error).message
+            ErrorView(message = message)
         }
 
         else -> Unit

@@ -1,10 +1,12 @@
-package ui.screens.ai_predict
+package ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,31 +19,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.feature_not_available
-import di.koinViewModel
 import io.github.alexzhirkevich.compottie.LottieAnimation
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.LottieConstants
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-internal fun AiPredictScreen(
-    aiPredictViewModel: AiPredictViewModel = koinViewModel<AiPredictViewModel>(),
-    padding: PaddingValues
+fun ErrorView(
+    modifier: Modifier = Modifier,
+    message: String
 ) {
     var bytes by remember { mutableStateOf(ByteArray(0)) }
     val composition by rememberLottieComposition(LottieCompositionSpec.JsonString(bytes.decodeToString()))
 
     LaunchedEffect(Unit) {
-        bytes = Res.readBytes("files/coming_soon.json")
+        bytes = Res.readBytes("files/error.json")
     }
 
     Column(
-        modifier = Modifier.fillMaxSize()
-            .padding(padding),
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -51,13 +49,25 @@ internal fun AiPredictScreen(
             iterations = LottieConstants.IterateForever
         )
 
+        Spacer(modifier = Modifier.height(16.dp))
+
         Text(
-            modifier = Modifier.padding(16.dp),
-            text = stringResource(Res.string.feature_not_available),
-            style = MaterialTheme.typography.labelLarge,
+            text = "Oops! Something went wrong",
+            style = MaterialTheme.typography.titleLarge
         )
+
+        Text(
+            text = "This is what we know: $message",
+            style = MaterialTheme.typography.bodyLarge
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        IconButton(
+            modifier = Modifier.padding(16.dp),
+            onClick = { /*TODO*/ }
+        ) {
+            Text("Retry")
+        }
     }
 }
-
-
-
