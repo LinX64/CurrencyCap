@@ -40,7 +40,6 @@ fun App(
     Scaffold(
         topBar = {
             AppTopBar(
-                name = currentDestination,
                 navController = navController,
                 hazeState = hazeState,
                 scrollBehavior = scrollBehavior,
@@ -53,7 +52,7 @@ fun App(
                 enter = slideInVertically { it },
                 exit = slideOutVertically { it },
             ) {
-                BottomNavigationBar(hazeState)
+                BottomNavigationBar(hazeState = hazeState, navController = navController)
             }
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),

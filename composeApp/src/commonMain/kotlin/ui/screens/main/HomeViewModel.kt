@@ -17,7 +17,7 @@ private const val CRYPTO = "crypto"
 
 class MainViewModel(
     private val mainRepository: MainRepository
-) : MviViewModel<MainViewEvent, MainState, NavigationEffect>(MainState.Loading) {
+) : MviViewModel<MainViewEvent, MainState, MainNavigationEffect>(MainState.Loading) {
 
     init {
         loadCombinedRates()

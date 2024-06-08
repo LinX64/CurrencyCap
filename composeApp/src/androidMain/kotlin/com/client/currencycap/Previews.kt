@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import domain.model.DataDao
 import domain.model.RateDao
 import ui.screens.components.BlurBackground
+import ui.screens.exchange.ExchangeScreen
 import ui.screens.main.components.PerformanceChart
 import ui.theme.AppM3Theme
 
@@ -45,6 +46,26 @@ private fun AppChartPreview() {
                         )
                     )
                 }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ExchangePreview() {
+    AppM3Theme(dark = true) {
+        BlurBackground {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                ExchangeScreen(
+                    onAmountChange = { /*TODO*/ },
+                    onFromChange = { /*TODO*/ },
+                    onToChange = { /*TODO*/ },
+                    onConvertClick = { /*TODO*/ })
             }
         }
     }

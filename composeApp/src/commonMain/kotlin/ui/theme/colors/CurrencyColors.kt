@@ -82,4 +82,13 @@ object CurrencyColors {
         dark = Color(0xFF8F2459),
         extraDark = Color(0xFF521433),
     )
+    val Lemon = ColorShades(
+        extraLight = Color(0xFFE9F5AB),
+        light = Color(0xFFC4F587),
+        kindaLight = Color(0xFFA8F562),
+        primary = Color(0xFF7DF518),
+        kindaDark = Color(0xFF66CC14),
+        dark = Color(0xFF4FA810),
+        extraDark = Color(0xFF3A7A0C),
+    )
 }

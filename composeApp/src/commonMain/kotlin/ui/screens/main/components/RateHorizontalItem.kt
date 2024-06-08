@@ -58,7 +58,7 @@ val mockAssetInfo = AssetInfo(
         113.284f,
         114.031f,
         113.493f,
-        113.112f
+        115.112f
     ),
     113.02211f
 )

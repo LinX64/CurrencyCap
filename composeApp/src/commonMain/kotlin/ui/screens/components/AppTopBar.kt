@@ -23,7 +23,7 @@ import dev.chrisbanes.haze.materials.HazeMaterials
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
 internal fun AppTopBar(
-    name: String,
+    name: String = "Market Overview",
     navController: NavHostController,
     currentDestination: String,
     scrollBehavior: TopAppBarScrollBehavior,
@@ -35,13 +35,15 @@ internal fun AppTopBar(
                 state = hazeState,
                 style = HazeMaterials.regular(MaterialTheme.colorScheme.surface)
             ),
-        title = { AppTitle(name) },
+        title = {
+            // todo: disable title for exchange
+        },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.Transparent,
             scrolledContainerColor = Color.Transparent,
         ),
         scrollBehavior = scrollBehavior,
-        navigationIcon = { AppNavigationIcon(navController, currentDestination) }
+        navigationIcon = { }
     )
 }
 
@@ -52,7 +54,6 @@ private fun AppTitle(name: String) {
         maxLines = 1,
         style = MaterialTheme.typography.titleLarge,
         color = Color.White,
-        fontFamily = MaterialTheme.typography.titleLarge.fontFamily,
     )
 }
 

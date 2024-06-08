@@ -8,7 +8,7 @@ sealed interface MainViewEvent {
     data object RefreshRates : MainViewEvent
 }
 
-sealed interface NavigationEffect
+sealed interface MainNavigationEffect
 
 sealed interface MainState {
     data object Loading : MainState

@@ -50,7 +50,7 @@ fun RateItem(
                     .hazeChild(
                         state = hazeState,
                         shape = RoundedCornerShape(16.dp),
-                    ),
+                    )
             ) {
                 Column(
                     modifier = Modifier.padding(

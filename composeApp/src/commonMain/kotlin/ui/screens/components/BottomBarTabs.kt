@@ -75,10 +75,9 @@ internal fun BottomBarTabs(
                     verticalArrangement = Arrangement.Center,
                 ) {
 
-                    val isItemSelected =
-                        if (selectedTab == tabs.indexOf(tab)) Modifier.alpha(1f) else Modifier.alpha(
-                            .35f
-                        )
+                    val isItemSelected = if (selectedTab == tabs.indexOf(tab)) {
+                        Modifier.alpha(1f)
+                    } else Modifier.alpha(.35f)
                     Icon(
                         modifier = isItemSelected,
                         imageVector = tab.icon,
@@ -121,8 +120,8 @@ sealed class BottomBarTab(
 }
 
 val tabs = listOf(
-    BottomBarTab.Exchange,
     BottomBarTab.Home,
+    BottomBarTab.Exchange,
     BottomBarTab.Search,
     BottomBarTab.AiPrediction,
 )

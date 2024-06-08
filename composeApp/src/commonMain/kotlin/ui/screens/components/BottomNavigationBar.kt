@@ -32,12 +32,17 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
+import ui.navigation.NavRoutes
 
 @Composable
-internal fun BottomNavigationBar(hazeState: HazeState) {
-    var selectedTabIndex by remember { mutableIntStateOf(1) }
+internal fun BottomNavigationBar(
+    hazeState: HazeState,
+    navController: NavHostController
+) {
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
     Box(
         modifier = Modifier
             .padding(vertical = 24.dp, horizontal = 64.dp)
@@ -55,6 +60,7 @@ internal fun BottomNavigationBar(hazeState: HazeState) {
             selectedTab = selectedTabIndex,
             onTabSelected = {
                 selectedTabIndex = tabs.indexOf(it)
+                handleTabSelection(it, navController)
             }
         )
 
@@ -100,8 +106,8 @@ internal fun BottomNavigationBar(hazeState: HazeState) {
                 addRoundRect(RoundRect(size.toRect(), CornerRadius(size.height)))
             }
             val length = PathMeasure().apply { setPath(path, false) }.length
-
             val tabWidth = size.width / tabs.size
+
             drawPath(
                 path,
                 brush = Brush.horizontalGradient(
@@ -122,5 +128,17 @@ internal fun BottomNavigationBar(hazeState: HazeState) {
                 )
             )
         }
+    }
+}
+
+private fun handleTabSelection(
+    it: BottomBarTab,
+    navController: NavHostController
+) {
+    when (it) {
+        BottomBarTab.Home -> navController.navigate(NavRoutes.HOME)
+        BottomBarTab.Exchange -> navController.navigate(NavRoutes.EXCHANGE)
+        BottomBarTab.Search -> navController.navigate(NavRoutes.SEARCH)
+        BottomBarTab.AiPrediction -> navController.navigate(NavRoutes.AI_PREDICTION)
     }
 }

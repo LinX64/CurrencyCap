@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ui.screens.components.BlurBackground
+import ui.screens.exchange.ExchangeRoute
 import ui.screens.main.HomeRoute
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -22,13 +23,17 @@ internal fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.Home.ROUTE,
+        startDestination = NavRoutes.HOME,
         modifier = Modifier.consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
-        composable(NavRoutes.Home.ROUTE) {
+        composable(NavRoutes.HOME) {
+            BlurBackground { HomeRoute(padding = padding) }
+        }
+
+        composable(NavRoutes.EXCHANGE) {
             BlurBackground {
-                HomeRoute(padding = padding)
+                ExchangeRoute()
             }
         }
     }

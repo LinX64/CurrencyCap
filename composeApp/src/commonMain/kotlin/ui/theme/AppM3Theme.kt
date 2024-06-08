@@ -17,7 +17,7 @@ fun AppM3Theme(
 }
 
 private fun appLightColorScheme(): ColorScheme = ColorScheme(
-    primary = CurrencyColors.Blue.primary,
+    primary = CurrencyColors.Lemon.primary,
     onPrimary = CurrencyColors.White,
     primaryContainer = CurrencyColors.Blue.light,
     onPrimaryContainer = CurrencyColors.White,
@@ -52,11 +52,11 @@ private fun appLightColorScheme(): ColorScheme = ColorScheme(
 )
 
 private fun appDarkColorScheme(): ColorScheme = ColorScheme(
-    primary = CurrencyColors.Blue.primary,
+    primary = CurrencyColors.Lemon.primary,
     onPrimary = CurrencyColors.White,
-    primaryContainer = CurrencyColors.Blue.light,
+    primaryContainer = CurrencyColors.Lemon.light,
     onPrimaryContainer = CurrencyColors.White,
-    inversePrimary = CurrencyColors.Blue.dark,
+    inversePrimary = CurrencyColors.Lemon.dark,
     secondary = CurrencyColors.Green.primary,
     onSecondary = CurrencyColors.White,
     secondaryContainer = CurrencyColors.Green.light,
