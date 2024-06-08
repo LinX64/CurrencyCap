@@ -2,7 +2,6 @@ package ui.screens.exchange.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,9 +19,7 @@ fun ConvertButton(
     onConvertClicked: () -> Unit
 ) {
     Column(
-        modifier = modifier
-            .fillMaxHeight()
-            .padding(16.dp),
+        modifier = modifier.padding(16.dp),
         verticalArrangement = Arrangement.Bottom
     ) {
         Button(
@@ -34,7 +31,8 @@ fun ConvertButton(
         ) {
             Text(
                 text = "Convert",
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.surface
             )
         }
     }

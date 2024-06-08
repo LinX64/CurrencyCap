@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -87,7 +88,7 @@ private fun ScreenContent(
     val hazeState = remember { HazeState() }
     Box(
         modifier
-            .padding(top = 50.dp)
+            .fillMaxSize()
             .haze(
                 state = hazeState,
                 style = HazeDefaults.style(
@@ -130,6 +131,8 @@ private fun ScreenContent(
                 Spacer(modifier = Modifier.height(32.dp))
 
                 ResultText(result = convertResult)
+
+                Spacer(modifier = Modifier.height(32.dp))
 
                 ConvertButton(onConvertClicked = onConvertClick)
             }
