@@ -3,7 +3,7 @@ package ui.screens.main
 import androidx.lifecycle.viewModelScope
 import data.repository.MainRepository
 import data.util.asResult
-import domain.usecase.GetTopMoversUseCase
+import domain.model.DataDao
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -14,8 +14,7 @@ import ui.screens.main.MainViewEvent.LoadRates
 import ui.screens.main.MainViewEvent.RefreshRates
 
 class MainViewModel(
-    private val mainRepository: MainRepository,
-    private val getTopMoversUseCase: GetTopMoversUseCase
+    private val mainRepository: MainRepository
 ) : MviViewModel<MainViewEvent, MainState, NavigationEffect>(MainState.Loading) {
 
     init {
@@ -30,26 +29,8 @@ class MainViewModel(
     private fun loadCombinedRates() {
         viewModelScope.launch {
             val iranianRateFlow = mainRepository.getIranianRate()
-            val cryptoRatesFlow = mainRepository.getCoinCapRates()
-                .map { rates ->
-                    rates
-                        .sortedBy { it.currencySymbol }
-                        .filter { it.type == "crypto" }
-                }
-            val topMoversFlow = cryptoRatesFlow
-                .map { rates ->
-                    rates
-                        .sortedByDescending { it.rateUsd }
-                        .take(5)
-                }
-                .map {
-                    it.map { topMover ->
-                        TopMovers(
-                            symbol = topMover.symbol ?: "",
-                            rateUsd = topMover.rateUsd
-                        )
-                    }
-                }
+            val cryptoRatesFlow = mainRepository.getCoinCapRates().map { filterByCrypto(it) }
+            val topMoversFlow = cryptoRatesFlow.map { mapToTopMovers(it) }
 
             combine(
                 iranianRateFlow,
@@ -61,5 +42,23 @@ class MainViewModel(
                 .asResult()
                 .launchIn(viewModelScope)
         }
+    }
+
+    private fun filterByCrypto(rates: List<DataDao>) = rates
+        .sortedBy { it.currencySymbol }
+        .filter { it.type == CRYPTO }
+
+    private fun mapToTopMovers(rates: List<DataDao>) = rates
+        .sortedByDescending { it.rateUsd }
+        .take(4)
+        .map { topMover ->
+            TopMovers(
+                symbol = topMover.symbol,
+                rateUsd = topMover.rateUsd
+            )
+        }
+
+    private companion object {
+        private const val CRYPTO = "crypto"
     }
 }
