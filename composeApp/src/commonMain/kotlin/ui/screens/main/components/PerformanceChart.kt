@@ -17,7 +17,6 @@ internal fun PerformanceChart(
     list: List<Float>
 ) {
     val zipList: List<Pair<Float, Float>> = list.zipWithNext()
-
     Canvas(
         modifier = modifier.fillMaxWidth()
             .height(250.dp)
@@ -69,17 +68,22 @@ internal fun PerformanceChart(
                 strokeWidth = 3f
             )
         }
-
-        // Draw horizontal lines with shadow below the chart
         lastToPoint?.let {
             val horizontalLineColor = Color.Gray.copy(alpha = 0.2f)
-
-            val yPosition1 = it.y + (size.height - it.y) * 1 / 4
+            val yPositionBottom = size.height.times(1 - getValuePercentageForRange(min, max, min))
+            val yPositionAboveBottom = yPositionBottom - 20.dp.toPx()
 
             drawLine(
                 color = horizontalLineColor,
-                start = Offset(x = 0f, y = yPosition1),
-                end = Offset(x = size.width, y = yPosition1),
+                start = Offset(x = 0f, y = yPositionBottom),
+                end = Offset(x = size.width, y = yPositionBottom),
+                strokeWidth = 1f
+            )
+
+            drawLine(
+                color = horizontalLineColor,
+                start = Offset(x = 0f, y = yPositionAboveBottom),
+                end = Offset(x = size.width, y = yPositionAboveBottom),
                 strokeWidth = 1f
             )
         }
@@ -87,5 +91,6 @@ internal fun PerformanceChart(
 }
 
 private fun getValuePercentageForRange(value: Float, max: Float, min: Float): Float =
-    (value - min) / (max - min)
+    if (max == min) 0f else (value - min) / (max - min)
+
 

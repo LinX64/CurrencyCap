@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -57,7 +58,7 @@ val mockAssetInfo = AssetInfo(
         113.284f,
         114.031f,
         113.493f,
-        115.112f
+        113.112f
     ),
     113.02211f
 )
@@ -98,7 +99,7 @@ fun RateHorizontalItem(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 AsyncImage(
-                    modifier = Modifier.size(48.dp),
+                    modifier = Modifier.size(48.dp).clip(RoundedCornerShape(55.dp)),
                     placeholder = painterResource(Res.drawable.baseline_monetization_on_24),
                     model = icon,
                     error = painterResource(Res.drawable.baseline_monetization_on_24),

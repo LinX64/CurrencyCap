@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import di.httpClientModule
 import di.repositoryModule
+import di.useCaseModule
 import di.viewModelModule
 import org.koin.compose.KoinContext
 import org.koin.core.context.startKoin
@@ -21,7 +22,8 @@ class MainActivity : ComponentActivity() {
                 listOf(
                     httpClientModule,
                     repositoryModule,
-                    viewModelModule
+                    viewModelModule,
+                    useCaseModule
                 )
             )
         }

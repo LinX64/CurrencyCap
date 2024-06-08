@@ -15,8 +15,14 @@ sealed interface MainState {
 
     data class Success(
         val iranianRate: List<RateDao>,
-        val cryptoRates: List<DataDao>
+        val cryptoRates: List<DataDao>,
+        val topMovers: List<TopMovers>
     ) : MainState
 
     data class Error(val error: String) : MainState
 }
+
+data class TopMovers(
+    val symbol: String,
+    val rateUsd: String
+)

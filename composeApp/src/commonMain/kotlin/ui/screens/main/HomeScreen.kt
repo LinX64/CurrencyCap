@@ -57,7 +57,7 @@ fun HomeScreen(
         contentPadding = padding
     ) {
         item { MainHeader() }
-        item { TodayTopMovers() }
+        item { TodayTopMovers(state) }
         item { CryptoCardItems(state) }
         item { IranianRate(state) }
         item { TrendingCryptoCurrencies(state) }

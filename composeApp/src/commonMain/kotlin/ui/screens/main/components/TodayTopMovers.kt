@@ -24,15 +24,21 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.baseline_monetization_on_24
+import currencycap.composeapp.generated.resources.today_top_movers
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import ui.screens.main.MainState
+import util.getIconBy
 
 @Composable
-internal fun TodayTopMovers() {
+internal fun TodayTopMovers(
+    mainState: MainState
+) {
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
         Text(
-            text = "Today's Top Movers",
+            text = stringResource(Res.string.today_top_movers),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -44,8 +50,15 @@ internal fun TodayTopMovers() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            items(4) {
-                TopMovers(icon = "")
+            if (mainState is MainState.Success) {
+                items(mainState.topMovers.size) {
+                    val topMovers = mainState.topMovers[it]
+
+                    TopMovers(
+                        icon = getIconBy(topMovers.symbol),
+                        name = topMovers.symbol
+                    )
+                }
             }
         }
     }
@@ -55,6 +68,7 @@ internal fun TodayTopMovers() {
 private fun TopMovers(
     modifier: Modifier = Modifier,
     icon: String,
+    name: String,
 ) {
     val isColorRed = remember { data.valueChange < 0 }
     Column(
@@ -70,17 +84,18 @@ private fun TopMovers(
             AsyncImage(
                 modifier = Modifier.size(48.dp),
                 placeholder = painterResource(Res.drawable.baseline_monetization_on_24),
-                model = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png",
+                model = icon,
                 contentDescription = null
             )
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "BTC",
+            text = name,
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Bold
         )
 
         BottomIconText(isColorRed)
