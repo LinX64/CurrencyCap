@@ -14,6 +14,7 @@ import ui.components.BlurBackground
 import ui.screens.ai_predict.AiPredictScreen
 import ui.screens.exchange.ExchangeScreen
 import ui.screens.main.HomeScreen
+import ui.screens.search.SearchScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,7 +41,13 @@ internal fun AppNavigation(
 
         composable(NavRoutes.AI_PREDICTION) {
             BlurBackground {
-                AiPredictScreen()
+                AiPredictScreen(padding = padding)
+            }
+        }
+
+        composable(NavRoutes.SEARCH) {
+            BlurBackground {
+                SearchScreen(padding = padding)
             }
         }
     }

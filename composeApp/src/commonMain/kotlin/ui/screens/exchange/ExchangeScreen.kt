@@ -40,24 +40,11 @@ import ui.screens.exchange.component.ToSection
 
 @Composable
 internal fun ExchangeScreen(
+    modifier: Modifier = Modifier,
+    padding: PaddingValues,
     exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>(),
-    padding: PaddingValues
 ) {
     val state by exchangeViewModel.viewState.collectAsState()
-    ScreenContent(
-        exchangeViewModel = exchangeViewModel,
-        state = state,
-        padding = padding
-    )
-}
-
-@Composable
-private fun ScreenContent(
-    modifier: Modifier = Modifier,
-    exchangeViewModel: ExchangeViewModel,
-    state: ExchangeState,
-    padding: PaddingValues
-) {
     val hazeState = remember { HazeState() }
     val amount by remember { mutableStateOf("") }
 
@@ -71,6 +58,7 @@ private fun ScreenContent(
             Box(
                 modifier
                     .fillMaxSize()
+                    .padding(horizontal = 16.dp)
                     .haze(
                         state = hazeState,
                         style = HazeDefaults.style(

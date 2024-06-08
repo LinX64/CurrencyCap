@@ -1,7 +1,7 @@
-package ui.screens.ai_predict
+package ui.screens.search
 
 import androidx.lifecycle.ViewModel
 
-class AiPredictViewModel : ViewModel() {
+class SearchViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 }

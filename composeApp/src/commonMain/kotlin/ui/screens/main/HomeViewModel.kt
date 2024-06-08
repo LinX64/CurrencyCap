@@ -43,7 +43,6 @@ class MainViewModel(
             .asResult()
             .launchIn(viewModelScope)
     }
-    // todo check this later
 
     private fun refreshRates() {
         viewModelScope.launch {
