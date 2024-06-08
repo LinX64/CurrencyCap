@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ui.screens.home.MainState
 
@@ -26,7 +27,8 @@ internal fun CryptoCardItems(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = "Top Cryptocurrencies",
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Bold
         )
 
         LazyHorizontalGrid(

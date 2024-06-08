@@ -14,6 +14,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
@@ -51,7 +52,8 @@ private fun AppTitle(name: String) {
         text = name,
         maxLines = 1,
         style = MaterialTheme.typography.titleLarge,
-        color = Color.White
+        color = Color.White,
+        fontWeight = FontWeight.Bold
     )
 }
 

@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import ui.components.BottomBarTab
 import ui.screens.ai_predict.navigation.aiPredictScreen
 import ui.screens.exchange.navigation.exchangeScreen
 import ui.screens.home.navigation.homeScreen
@@ -32,5 +33,19 @@ internal fun AppNavigation(
         searchScreen(padding)
         aiPredictScreen(padding)
         exchangeScreen(padding)
+    }
+}
+
+internal fun handleNavigation(
+    navController: NavHostController,
+    tab: BottomBarTab
+) {
+    navController.navigate(tab.route) {
+        navController.graph.startDestinationRoute?.let { startDestinationRoute ->
+            popUpTo(startDestinationRoute) {
+                saveState = true
+            }
+        }
+        restoreState = true
     }
 }

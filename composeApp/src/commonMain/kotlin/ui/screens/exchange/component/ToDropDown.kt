@@ -2,6 +2,7 @@ package ui.screens.exchange.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -16,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import ui.screens.exchange.ExchangeState
 
 @Composable
@@ -66,7 +68,8 @@ private fun handleSuccess(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             ),
-            singleLine = true
+            singleLine = true,
+            shape = RoundedCornerShape(10.dp)
         )
         ExposedDropdownMenu(
             modifier = Modifier.background(MaterialTheme.colorScheme.surface),

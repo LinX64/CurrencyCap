@@ -25,7 +25,7 @@ internal fun Header(
             Text(
                 text = "Currency Converter",
                 color = MaterialTheme.colorScheme.onSurface,
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
 

@@ -14,16 +14,17 @@ import ui.components.BlurBackground
 import ui.theme.AppM3Theme
 
 @Composable
-fun KoinPreview(
+internal fun KoinPreview(
     content: @Composable () -> Unit
 ) {
     if (KoinPlatformTools.defaultContext().getOrNull() == null) {
         val context = LocalContext.current
         KoinApplication(application = {
-            // If you need Context
             androidContext(context)
+
             modules(
-                previewModule, httpClientModule,
+                previewModule,
+                httpClientModule,
                 repositoryModule,
                 viewModelModule,
                 useCaseModule

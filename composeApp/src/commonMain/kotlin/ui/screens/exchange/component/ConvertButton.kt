@@ -27,7 +27,7 @@ internal fun ConvertButton(
             modifier = modifier
                 .fillMaxWidth()
                 .height(52.dp),
-            shape = RoundedCornerShape(8.dp)
+            shape = RoundedCornerShape(10.dp)
         ) {
             Text(
                 text = "Convert",

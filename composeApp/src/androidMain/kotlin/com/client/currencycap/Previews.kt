@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import domain.model.DataDao
 import domain.model.RateDao
-import ui.screens.search.SearchScreen
+import ui.screens.exchange.ExchangeScreen
 
 //@Preview(showBackground = true, device = "id:pixel_3a")
 //@Composable
@@ -36,7 +36,7 @@ private fun SearchScreenPreview() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            SearchScreen(padding = PaddingValues(16.dp))
+            ExchangeScreen(padding = PaddingValues(16.dp))
         }
     }
 }

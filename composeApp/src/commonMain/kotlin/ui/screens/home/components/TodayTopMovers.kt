@@ -40,7 +40,8 @@ internal fun TodayTopMovers(
         Text(
             text = stringResource(Res.string.today_top_movers),
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(16.dp))

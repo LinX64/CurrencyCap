@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ui.screens.home.MainState
 import ui.theme.colors.CurrencyColors
@@ -25,7 +26,8 @@ internal fun TrendingCryptoCurrencies(rates: MainState) {
             modifier = Modifier.padding(start = 16.dp, top = 16.dp),
             text = "Trending rates",
             style = MaterialTheme.typography.titleLarge,
-            color = CurrencyColors.White
+            color = CurrencyColors.White,
+            fontWeight = FontWeight.Bold
         )
 
         LazyHorizontalGrid(
