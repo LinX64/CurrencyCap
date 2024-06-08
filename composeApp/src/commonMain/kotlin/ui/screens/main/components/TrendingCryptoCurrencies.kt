@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ui.screens.main.MainState
 import ui.theme.colors.CurrencyColors
+import util.getIconBy
 
 @Composable
 internal fun TrendingCryptoCurrencies(rates: MainState) {
@@ -30,18 +31,18 @@ internal fun TrendingCryptoCurrencies(rates: MainState) {
         LazyHorizontalGrid(
             modifier = Modifier.fillMaxWidth()
                 .heightIn(max = 300.dp)
-                .widthIn(max = 300.dp, min = 300.dp),
+                .widthIn(max = 380.dp, min = 380.dp),
             rows = GridCells.Fixed(3),
             contentPadding = PaddingValues(10.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            if (rates is MainState.CryptoRatesSuccess) {
-                items(rates.ratesList.size) { index ->
-                    val symbol = rates.ratesList[index].symbol
+            if (rates is MainState.Success) {
+                items(rates.cryptoRates.size) { index ->
+                    val symbol = rates.cryptoRates[index].symbol
 
                     RateHorizontalItem(
-                        rate = rates.ratesList[index],
+                        rate = rates.cryptoRates[index],
                         icon = getIconBy(symbol)
                     )
                 }

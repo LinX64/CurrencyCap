@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ui.screens.main.MainState
 import ui.theme.colors.CurrencyColors
+import util.getIconBy
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -30,8 +31,8 @@ internal fun Stocks(mainState: MainState) {
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            if (mainState is MainState.CryptoRatesSuccess) {
-                mainState.ratesList.take(10).forEach { rate ->
+            if (mainState is MainState.Success) {
+                mainState.cryptoRates.take(10).forEach { rate ->
                     StocksHorizontalItem(
                         rate = rate,
                         icon = getIconBy(rate.symbol)

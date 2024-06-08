@@ -3,6 +3,7 @@ package ui.screens.main
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,7 +17,7 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
 import di.koinViewModel
-import ui.common.ui.LoadingAnimation
+import ui.screens.main.components.CenteredColumn
 import ui.screens.main.components.CryptoCardItems
 import ui.screens.main.components.IranianRate
 import ui.screens.main.components.MainHeader
@@ -40,7 +41,7 @@ fun HomeRoute(
 fun HomeScreen(
     modifier: Modifier = Modifier,
     padding: PaddingValues,
-    state: MainState,
+    state: MainState
 ) {
     val hazeState = remember { HazeState() }
     LazyColumn(
@@ -64,14 +65,14 @@ fun HomeScreen(
     }
 
     when (state) {
-        is MainState.Loading -> LoadingAnimation()
-        is MainState.IranianRateError -> {
+        is MainState.Loading -> CenteredColumn {
+            CircularProgressIndicator()
+        }
+
+        is MainState.Error -> {
             Text(text = "Error")
         }
 
-        is MainState.CryptoRatesError -> {
-            Text(text = "CryptoRatesError")
-        }
         else -> Unit
     }
 }

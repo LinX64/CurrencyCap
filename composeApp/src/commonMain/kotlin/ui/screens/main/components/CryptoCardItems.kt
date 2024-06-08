@@ -16,13 +16,12 @@ import androidx.compose.ui.unit.dp
 import ui.screens.main.MainState
 
 @Composable
-fun CryptoCardItems(
-    mainState: MainState,
+internal fun CryptoCardItems(
+    mainState: MainState
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = "Top Cryptocurrencies",
@@ -37,9 +36,9 @@ fun CryptoCardItems(
             contentPadding = PaddingValues(16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            if (mainState is MainState.CryptoRatesSuccess) {
-                items(mainState.ratesList.size) { index ->
-                    TopHeaderCard(dataDao = mainState.ratesList[index])
+            if (mainState is MainState.Success) {
+                items(mainState.cryptoRates.size) { index ->
+                    TopHeaderCard(dataDao = mainState.cryptoRates[index])
                 }
             }
         }

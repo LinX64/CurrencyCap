@@ -17,9 +17,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ui.screens.main.MainState
+import util.getIconBy
 
 @Composable
-fun IranianRate(rates: MainState) {
+internal fun IranianRate(rates: MainState) {
     Column(
         modifier = Modifier.fillMaxWidth()
             .padding(start = 16.dp, top = 16.dp, end = 16.dp)
@@ -57,11 +58,11 @@ fun IranianRate(rates: MainState) {
             rows = GridCells.Fixed(1),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            if (rates is MainState.IranianRateSuccess) {
-                items(rates.ratesList.size) { index ->
-                    val code = rates.ratesList[index].code
+            if (rates is MainState.Success) {
+                items(rates.iranianRate.size) { index ->
+                    val code = rates.iranianRate[index].code
                     RateItem(
-                        rate = rates.ratesList[index],
+                        rate = rates.iranianRate[index],
                         icon = getIconBy(code)
                     )
                 }
@@ -70,7 +71,3 @@ fun IranianRate(rates: MainState) {
     }
 }
 
-internal fun getIconBy(symbol: String): String {
-    val lowerCaseSymbol = symbol.lowercase()
-    return "https://farisaziz12.github.io/cryptoicon-api/icons/$lowerCaseSymbol.png"
-}

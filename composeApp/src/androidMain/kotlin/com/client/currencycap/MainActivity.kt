@@ -17,7 +17,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         startKoin {
-            modules(httpClientModule, repositoryModule, viewModelModule)
+            modules(
+                listOf(
+                    httpClientModule,
+                    repositoryModule,
+                    viewModelModule
+                )
+            )
         }
 
         enableEdgeToEdge()

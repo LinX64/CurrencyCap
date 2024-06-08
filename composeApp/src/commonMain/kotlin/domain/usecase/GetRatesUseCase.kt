@@ -13,7 +13,7 @@ class GetRatesUseCase(
 
     suspend operator fun invoke(): Flow<List<DataDao>> = coroutineScope {
         val coinCapRatesDeferred = async { mainRepository.getCoinCapRates() }
-        val iranianFiatDeferred = async { mainRepository.getIranianFiat() }
+        val iranianFiatDeferred = async { mainRepository.getIranianRate() }
 
         val coinCapRates = coinCapRatesDeferred.await()
         val iranianFiat = iranianFiatDeferred.await()

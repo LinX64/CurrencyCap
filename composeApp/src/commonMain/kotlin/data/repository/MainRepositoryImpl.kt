@@ -20,12 +20,12 @@ class MainRepositoryImpl(
     private val httpClient: HttpClient
 ) : MainRepository {
 
-    override fun getCoinCapRates(): Flow<List<DataDao>> = flow {
+    override suspend fun getCoinCapRates(): Flow<List<DataDao>> = flow {
         val response = httpClient.get(COINCAP_API).body<CoinCapRates>().data.toDomain()
         emit(response)
     }.flowOn(Dispatchers.IO)
 
-    override fun getIranianFiat(): Flow<List<RateDao>> = flow {
+    override suspend fun getIranianRate(): Flow<List<RateDao>> = flow {
         val response = httpClient.get(BASE_URL).body<String>()
         val rates = parseCurrencyRates(response).toDomain()
         emit(rates)

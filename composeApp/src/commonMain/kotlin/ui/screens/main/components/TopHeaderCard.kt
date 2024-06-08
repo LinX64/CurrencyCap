@@ -42,15 +42,21 @@ data class CryptoCardData(
     val currentTotal: Long
 )
 
+val data = CryptoCardData(
+    name = "Bitcoin",
+    value = 3.689087f,
+    valueChange = -18,
+    currentTotal = 98160
+)
+
 @Composable
-fun TopHeaderCard(
+internal fun TopHeaderCard(
     modifier: Modifier = Modifier,
     cardBackground: Color = Color.Transparent,
     cardSize: Dp = 150.dp,
     dataDao: DataDao
 ) {
     val hazeState = remember { HazeState() }
-
     Box(
         modifier = modifier
             .haze(
@@ -81,18 +87,10 @@ fun TopHeaderCard(
     }
 }
 
-val data = CryptoCardData(
-    name = "Bitcoin",
-    value = 3.689087f,
-    valueChange = -18,
-    currentTotal = 98160
-)
-
 @Composable
-fun CardContent(
+private fun CardContent(
     dataDao: DataDao
 ) {
-
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.size(150.dp)

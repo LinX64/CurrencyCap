@@ -88,7 +88,7 @@ fun RateHorizontalItem(
                     shape = RoundedCornerShape(16.dp),
                 )
                 .heightIn(max = 300.dp)
-                .widthIn(max = 250.dp, min = 250.dp)
+                .widthIn(max = 380.dp, min = 380.dp)
         ) {
             Row(
                 modifier = Modifier
