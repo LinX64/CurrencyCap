@@ -18,11 +18,11 @@ import dev.chrisbanes.haze.haze
 import di.koinViewModel
 import ui.components.ErrorView
 import ui.screens.home.components.CenteredColumn
-import ui.screens.home.components.CryptoCardItems
 import ui.screens.home.components.IranianRate
 import ui.screens.home.components.MainHeader
 import ui.screens.home.components.Stocks
 import ui.screens.home.components.TodayTopMovers
+import ui.screens.home.components.TopCrypto
 import ui.screens.home.components.TrendingCryptoCurrencies
 
 @Composable
@@ -48,7 +48,7 @@ internal fun HomeScreen(
     ) {
         item { MainHeader() }
         item { TodayTopMovers(state) }
-        item { CryptoCardItems(state) }
+        item { TopCrypto(state) }
         item { IranianRate(state) }
         item { TrendingCryptoCurrencies(state) }
         item { Stocks(state) }

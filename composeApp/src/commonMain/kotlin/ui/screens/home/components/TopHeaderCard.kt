@@ -1,14 +1,13 @@
 package ui.screens.home.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -16,34 +15,24 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.ic_btc
-import dev.chrisbanes.haze.HazeDefaults
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
-import dev.chrisbanes.haze.hazeChild
+import coil3.compose.AsyncImage
 import domain.model.DataDao
-import org.jetbrains.compose.resources.painterResource
 import ui.common.formatCurrentTotal
+import util.getIconBy
 
 data class CryptoCardData(
-    val name: String,
     val value: Float,
     val valueChange: Int,
     val currentTotal: Long
 )
 
 val data = CryptoCardData(
-    name = "Bitcoin",
     value = 3.689087f,
     valueChange = -18,
     currentTotal = 98160
@@ -56,33 +45,21 @@ internal fun TopHeaderCard(
     cardSize: Dp = 150.dp,
     dataDao: DataDao
 ) {
-    val hazeState = remember { HazeState() }
-    Box(
+    Column(
         modifier = modifier
-            .haze(
-                state = hazeState,
-                style = HazeDefaults.style(
-                    tint = Color.White.copy(alpha = 0.1f),
-                    blurRadius = 1.dp
-                )
+            .wrapContentHeight()
+            .background(
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                shape = RoundedCornerShape(20.dp)
             )
     ) {
-        Box(
+        Card(
             modifier = Modifier
-                .align(Alignment.Center)
-                .hazeChild(
-                    state = hazeState,
-                    shape = RoundedCornerShape(16.dp),
-                ),
+                .size(cardSize)
+                .clip(RoundedCornerShape(15.dp)),
+            colors = CardDefaults.cardColors(containerColor = cardBackground)
         ) {
-            Card(
-                modifier = Modifier
-                    .size(cardSize)
-                    .clip(RoundedCornerShape(15.dp)),
-                colors = CardDefaults.cardColors(containerColor = cardBackground)
-            ) {
-                CardContent(dataDao = dataDao)
-            }
+            CardContent(dataDao = dataDao)
         }
     }
 }
@@ -103,7 +80,7 @@ private fun CardContent(
         ) {
             Row {
                 Text(
-                    text = "${dataDao.symbol}%",
+                    text = formatCurrentTotal(data.currentTotal),
                     color = MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.labelMedium
                 )
@@ -111,14 +88,11 @@ private fun CardContent(
                 ChangeIcon(data.valueChange)
             }
 
-            Image(
-                modifier = Modifier.size(24.dp)
-                    .clip(CircleShape)
-                    .border(1.dp, Color.White, CircleShape),
-                painter = painterResource(Res.drawable.ic_btc),
-                contentScale = ContentScale.FillWidth,
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
+            AsyncImage(
+                modifier = Modifier.size(24.dp).clip(CircleShape),
+                model = getIconBy(dataDao.symbol),
                 contentDescription = null,
+                contentScale = ContentScale.FillWidth,
             )
         }
 
@@ -127,12 +101,12 @@ private fun CardContent(
             modifier = Modifier.padding(12.dp)
         ) {
             Text(
-                text = data.name,
+                text = dataDao.symbol,
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.labelMedium
             )
             Text(
-                text = "${data.value}",
+                text = "${dataDao.currencySymbol}",
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.headlineSmall
             )

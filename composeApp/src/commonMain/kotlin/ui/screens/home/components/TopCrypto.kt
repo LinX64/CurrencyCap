@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import ui.screens.home.MainState
 
 @Composable
-internal fun CryptoCardItems(
+internal fun TopCrypto(
     mainState: MainState
 ) {
     Column(

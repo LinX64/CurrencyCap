@@ -1,12 +1,12 @@
 package com.client.currencycap
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -14,11 +14,32 @@ import androidx.compose.ui.unit.dp
 import domain.model.DataDao
 import domain.model.RateDao
 import ui.screens.home.components.RateHorizontalItem
-import util.getIconBy
+
+//@OptIn(ExperimentalLayoutApi::class)
+//@Preview(showBackground = true, device = "id:pixel_3a")
+//@Composable
+//private fun SearchScreenPreview() {
+//    KoinPreview {
+//        Column {
+//            FlowColumn(
+//                modifier = Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.spacedBy(16.dp),
+//                verticalArrangement = Arrangement.spacedBy(16.dp)
+//            ) {
+//                cryptoDummyRate.forEach { rate ->
+//                    StocksHorizontalItem(
+//                        icon = rate.symbol,
+//                        rate = rate
+//                    )
+//                }
+//            }
+//        }
+//    }
+//}
 
 @Preview(showBackground = true, device = "id:pixel_3a")
 @Composable
-private fun SearchScreenPreview() {
+private fun HorizontalRateItemPreview() {
     KoinPreview {
         Column {
             LazyHorizontalGrid(
@@ -27,13 +48,17 @@ private fun SearchScreenPreview() {
                     .heightIn(max = 300.dp),
                 rows = GridCells.Fixed(3),
                 contentPadding = PaddingValues(10.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(cryptoDummyRate.size) { index ->
+                items(iranianDummyRate) { rate ->
                     RateHorizontalItem(
-                        rate = cryptoDummyRate[index],
-                        icon = getIconBy("symbol")
+                        icon = rate.code,
+                        rate = DataDao(
+                            currencySymbol = rate.code,
+                            id = rate.code,
+                            rateUsd = rate.sell.toString(),
+                            symbol = rate.code,
+                            type = rate.code
+                        )
                     )
                 }
             }
@@ -44,6 +69,26 @@ private fun SearchScreenPreview() {
 private val iranianDummyRate = listOf(
     RateDao(
         code = "USD",
+        sell = 113,
+        buy = 113
+    ),
+    RateDao(
+        code = "EUR",
+        sell = 113,
+        buy = 113
+    ),
+    RateDao(
+        code = "EUR",
+        sell = 113,
+        buy = 113
+    ),
+    RateDao(
+        code = "EUR",
+        sell = 113,
+        buy = 113
+    ),
+    RateDao(
+        code = "EUR",
         sell = 113,
         buy = 113
     ),

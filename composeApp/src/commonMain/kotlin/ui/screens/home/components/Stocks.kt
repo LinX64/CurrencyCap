@@ -45,13 +45,13 @@ internal fun Stocks(mainState: MainState) {
         FlowColumn(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             if (mainState is MainState.Success) {
                 mainState.cryptoRates.take(10).forEach { rate ->
                     StocksHorizontalItem(
-                        rate = rate,
-                        icon = getIconBy(rate.symbol)
+                        icon = getIconBy(rate.symbol),
+                        rate = rate
                     )
                 }
             }

@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,7 +24,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.baseline_monetization_on_24
 import domain.model.DataDao
+import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.theme.colors.CurrencyColors
 
@@ -72,7 +74,8 @@ internal fun RateHorizontalItem(
     ) {
         Row(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
+                .width(330.dp)
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -80,16 +83,22 @@ internal fun RateHorizontalItem(
             AsyncImage(
                 modifier = Modifier.size(48.dp).clip(RoundedCornerShape(55.dp)),
                 model = icon,
+                placeholder = painterResource(Res.drawable.baseline_monetization_on_24),
+                error = painterResource(Res.drawable.baseline_monetization_on_24),
                 contentDescription = null
             )
 
             Row(
+                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(32.dp)
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 FirstColumn(rate = rate)
 
-                PerformanceChart(Modifier.height(40.dp).width(80.dp), assetInfo.lastDayChange)
+                PerformanceChart(
+                    modifier = Modifier.height(40.dp).width(80.dp).padding(horizontal = 10.dp),
+                    list = assetInfo.lastDayChange
+                )
 
                 EndHorizontalComponents(rate = rate)
             }
