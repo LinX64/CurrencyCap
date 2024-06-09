@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BatchPrediction
 import androidx.compose.material.icons.filled.CurrencyExchange
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Icon
@@ -113,6 +114,12 @@ sealed class BottomBarTab(
     data object AiPrediction : BottomBarTab(
         route = NavRoutes.AI_PREDICTION,
         icon = Icons.Default.BatchPrediction,
+        color = Color(0xFFFA6FFF)
+    )
+
+    data object Profile : BottomBarTab(
+        route = NavRoutes.PROFILE,
+        icon = Icons.Default.Person,
         color = Color(0xFFFA6FFF)
     )
 }

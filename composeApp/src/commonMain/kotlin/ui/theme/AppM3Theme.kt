@@ -12,7 +12,7 @@ fun AppM3Theme(
 ) {
     MaterialTheme(
         colorScheme = if (dark) appDarkColorScheme() else appLightColorScheme(),
-        typography = TitilliumWebTypography(),
+        // typography = TitilliumWebTypography(),
         content = content
     )
 }
