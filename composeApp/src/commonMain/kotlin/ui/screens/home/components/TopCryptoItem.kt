@@ -71,7 +71,7 @@ internal fun TopCryptoItem(
                             style = MaterialTheme.typography.labelMedium
                         )
 
-                        ChangeIcon(data.valueChange)
+                        ChangeIcon(valueChange = data.valueChange, isLoading = isLoading)
                     }
 
                     SubcomposeAsyncImage(

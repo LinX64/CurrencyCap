@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
@@ -23,7 +25,11 @@ import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.baseline_close_24
+import currencycap.composeapp.generated.resources.baseline_search_24
 import di.koinViewModel
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,9 +61,30 @@ internal fun SearchScreen(
                 placeholder = { SearchPlaceHolder() },
                 onSearch = { expanded = false },
                 leadingIcon = { LeadingIcon() },
+                trailingIcon = {
+                    TrailingIcon(expanded = expanded, onCloseClick = { expanded = false })
+                }
             ) {
                 HandleList()
             }
+        }
+    }
+}
+
+@Composable
+private fun TrailingIcon(
+    expanded: Boolean,
+    onCloseClick: () -> Unit
+) {
+    if (expanded) {
+        IconButton(
+            onClick = onCloseClick,
+            modifier = Modifier.semantics { traversalIndex = 2f }
+        ) {
+            Icon(
+                painter = painterResource(Res.drawable.baseline_close_24),
+                contentDescription = null
+            )
         }
     }
 }
@@ -83,12 +110,10 @@ private fun HandleList() {
 
 @Composable
 private fun LeadingIcon() {
-//    Icon(
-//        painter = painterResource(Res.drawable.baseline_search_24),
-//        contentDescription = null
-//    )
-
-    // TODO: check this icon
+    Icon(
+        painter = painterResource(Res.drawable.baseline_search_24),
+        contentDescription = null
+    )
 }
 
 @Composable

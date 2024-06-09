@@ -93,7 +93,7 @@ internal fun RateHorizontalItem(
                 FirstHorizontalColumn(rate = rate, isLoading = isLoading)
 
                 PerformanceChart(
-                    modifier = Modifier.height(40.dp).width(80.dp).padding(horizontal = 10.dp),
+                    modifier = if (isLoading) getPlaceHolder(Modifier.height(40.dp).width(80.dp)) else Modifier,
                     list = assetInfo.lastDayChange
                 )
 

@@ -13,7 +13,10 @@ import currencycap.composeapp.generated.resources.baseline_trending_up_24
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-internal fun ChangeIcon(valueChange: Int = -18) {
+internal fun ChangeIcon(
+    valueChange: Int = -18,
+    isLoading: Boolean = false
+) {
     val tint: Color
     val painter: Painter
 
@@ -26,7 +29,7 @@ internal fun ChangeIcon(valueChange: Int = -18) {
     }
 
     Icon(
-        modifier = Modifier.size(17.dp),
+        modifier = if (isLoading) getPlaceHolder(Modifier.size(17.dp)) else Modifier,
         painter = painter,
         contentDescription = null,
         tint = tint

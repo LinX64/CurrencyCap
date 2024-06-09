@@ -3,6 +3,7 @@ package ui.screens.home.components
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -20,6 +21,7 @@ internal fun PerformanceChart(
     Canvas(
         modifier = modifier.fillMaxWidth()
             .height(250.dp)
+            .padding(horizontal = 16.dp)
     ) {
         val max = list.maxOrNull() ?: 0f
         val min = list.minOrNull() ?: 0f
