@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ui.components.DottedShape
 
 @Composable
 internal fun HelpCenterCard() {
@@ -33,7 +34,7 @@ internal fun HelpCenterCard() {
                     .height(20.dp)
                     .background(Color(0xFF1E88E5))
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(10.dp))
             Text(
                 text = "Help center",
                 fontWeight = FontWeight.Bold,
@@ -45,6 +46,15 @@ internal fun HelpCenterCard() {
             modifier = Modifier.fillMaxWidth()
         ) {
             HelpCenterItem(text = "FAQ")
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Box(
+                Modifier
+                    .height(1.dp)
+                    .fillMaxWidth()
+                    .background(Color.Gray, shape = DottedShape(step = 10.dp))
+            )
+
             Spacer(modifier = Modifier.height(8.dp))
             HelpCenterItem(text = "Support")
         }

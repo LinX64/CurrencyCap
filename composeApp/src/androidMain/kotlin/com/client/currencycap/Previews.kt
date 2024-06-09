@@ -2,14 +2,16 @@ package com.client.currencycap
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import domain.model.DataDao
 import domain.model.RateDao
-import ui.screens.profile.ProfileCard
+import ui.screens.profile.ProfileScreen
 
 @Preview(showBackground = true, device = "id:pixel_3a")
 @Composable
@@ -20,7 +22,7 @@ private fun SearchScreenPreview() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            ProfileCard()
+            ProfileScreen(padding = PaddingValues(16.dp))
         }
     }
 }

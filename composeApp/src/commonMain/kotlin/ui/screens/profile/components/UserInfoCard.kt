@@ -17,12 +17,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.profile
-import org.jetbrains.compose.resources.painterResource
 
 @Composable
-internal fun FirstCard(
+internal fun UserInfoCard(
     profileImage: String,
     name: String,
     email: String,
@@ -39,7 +36,6 @@ internal fun FirstCard(
                 .clip(RoundedCornerShape(50))
                 .padding(top = 16.dp),
             model = profileImage,
-            placeholder = painterResource(Res.drawable.profile),
             contentDescription = null
         )
 

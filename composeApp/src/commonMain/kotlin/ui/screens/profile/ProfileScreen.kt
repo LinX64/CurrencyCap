@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ui.screens.profile.components.DeleteAccountCard
-import ui.screens.profile.components.FirstCard
 import ui.screens.profile.components.HelpCenterCard
+import ui.screens.profile.components.UserInfoCard
 
 
 @Composable
@@ -59,7 +59,7 @@ internal fun ProfileCard(
                     shape = RoundedCornerShape(20.dp)
                 )
         ) {
-            FirstCard(
+            UserInfoCard(
                 profileImage = profileImage,
                 name = name,
                 email = email,
