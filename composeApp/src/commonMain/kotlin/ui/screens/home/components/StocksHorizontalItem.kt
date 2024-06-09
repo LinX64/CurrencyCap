@@ -79,7 +79,7 @@ internal fun StocksHorizontalItem(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     FirstColumn(rate = rate)
-                    EndComponents()
+                    EndHorizontalComponents()
                 }
             }
         }
@@ -112,7 +112,7 @@ private fun FirstColumn(
 }
 
 @Composable
-private fun EndComponents() {
+private fun EndHorizontalComponents() {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.End

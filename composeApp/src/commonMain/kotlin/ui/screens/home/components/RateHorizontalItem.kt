@@ -1,16 +1,16 @@
 package ui.screens.home.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowUpward
@@ -18,7 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,14 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.baseline_monetization_on_24
-import dev.chrisbanes.haze.HazeDefaults
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
-import dev.chrisbanes.haze.hazeChild
 import domain.model.DataDao
-import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.theme.colors.CurrencyColors
 
@@ -64,58 +56,42 @@ val mockAssetInfo = AssetInfo(
 )
 
 @Composable
-fun RateHorizontalItem(
+internal fun RateHorizontalItem(
     modifier: Modifier = Modifier,
     icon: String,
     rate: DataDao,
     assetInfo: AssetInfo = mockAssetInfo
 ) {
-    val hazeState = remember { HazeState() }
-
-    Box(
-        modifier.haze(
-            state = hazeState,
-            style = HazeDefaults.style(
-                tint = Color.White.copy(alpha = 0.1f),
-                blurRadius = 1.dp
+    Column(
+        modifier = modifier
+            .wrapContentHeight()
+            .background(
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                shape = RoundedCornerShape(20.dp)
             )
-        )
     ) {
-        Box(
+        Row(
             modifier = Modifier
-                .align(Alignment.Center)
-                .hazeChild(
-                    state = hazeState,
-                    shape = RoundedCornerShape(16.dp),
-                )
-                .heightIn(max = 300.dp)
-                .widthIn(max = 380.dp, min = 380.dp)
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            AsyncImage(
+                modifier = Modifier.size(48.dp).clip(RoundedCornerShape(55.dp)),
+                model = icon,
+                contentDescription = null
+            )
+
             Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.spacedBy(32.dp)
             ) {
-                AsyncImage(
-                    modifier = Modifier.size(48.dp).clip(RoundedCornerShape(55.dp)),
-                    placeholder = painterResource(Res.drawable.baseline_monetization_on_24),
-                    model = icon,
-                    error = painterResource(Res.drawable.baseline_monetization_on_24),
-                    contentDescription = null,
-                )
+                FirstColumn(rate = rate)
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(32.dp)
-                ) {
-                    FirstColumn(rate = rate)
+                PerformanceChart(Modifier.height(40.dp).width(80.dp), assetInfo.lastDayChange)
 
-                    PerformanceChart(Modifier.height(40.dp).width(80.dp), assetInfo.lastDayChange)
-
-                    EndComponents()
-                }
+                EndHorizontalComponents(rate = rate)
             }
         }
     }
@@ -147,8 +123,12 @@ private fun FirstColumn(
 }
 
 @Composable
-private fun EndComponents() {
+private fun EndHorizontalComponents(
+    modifier: Modifier = Modifier,
+    rate: DataDao
+) {
     Row(
+        modifier = modifier.fillMaxWidth().padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.End
     ) {

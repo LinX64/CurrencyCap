@@ -33,7 +33,7 @@ internal fun TrendingCryptoCurrencies(rates: MainState) {
         LazyHorizontalGrid(
             modifier = Modifier.fillMaxWidth()
                 .heightIn(max = 300.dp)
-                .widthIn(max = 380.dp, min = 380.dp),
+                .widthIn(max = 370.dp, min = 350.dp),
             rows = GridCells.Fixed(3),
             contentPadding = PaddingValues(10.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp),

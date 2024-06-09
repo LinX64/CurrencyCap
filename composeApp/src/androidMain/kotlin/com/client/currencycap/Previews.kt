@@ -3,26 +3,40 @@ package com.client.currencycap
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import domain.model.DataDao
 import domain.model.RateDao
-import ui.screens.profile.ProfileScreen
+import ui.screens.home.components.RateHorizontalItem
+import util.getIconBy
 
 @Preview(showBackground = true, device = "id:pixel_3a")
 @Composable
 private fun SearchScreenPreview() {
     KoinPreview {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            ProfileScreen(padding = PaddingValues(16.dp))
+        Column {
+            LazyHorizontalGrid(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 300.dp),
+                rows = GridCells.Fixed(3),
+                contentPadding = PaddingValues(10.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(cryptoDummyRate.size) { index ->
+                    RateHorizontalItem(
+                        rate = cryptoDummyRate[index],
+                        icon = getIconBy("symbol")
+                    )
+                }
+            }
         }
     }
 }
