@@ -16,7 +16,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 internal fun ConvertButton(
     modifier: Modifier = Modifier,
-    onConvertClicked: () -> Unit
+    onConvertClicked: () -> Unit,
+    isEnabled: Boolean
 ) {
     Column(
         modifier = modifier.padding(16.dp),
@@ -27,7 +28,8 @@ internal fun ConvertButton(
             modifier = modifier
                 .fillMaxWidth()
                 .height(52.dp),
-            shape = RoundedCornerShape(10.dp)
+            shape = RoundedCornerShape(10.dp),
+            enabled = isEnabled
         ) {
             Text(
                 text = "Convert",

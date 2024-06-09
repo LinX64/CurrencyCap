@@ -18,3 +18,4 @@ sealed interface ExchangeState {
 sealed interface ExchangeNavigationEffect {
     data class ShowToast(val message: String) : ExchangeNavigationEffect
 }
+

@@ -24,7 +24,7 @@ internal class ExchangeViewModel(
 
     private val fromValue = MutableStateFlow("")
     private val toValue = MutableStateFlow("")
-    private val amountValue = MutableStateFlow("")
+    val amountValue = MutableStateFlow("")
     val convertResult = MutableStateFlow("")
 
     init {

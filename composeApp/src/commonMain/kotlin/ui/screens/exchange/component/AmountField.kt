@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.dp
 fun AmountField(
     modifier: Modifier = Modifier,
     onAmountChange: (String) -> Unit,
-    onFromChanged: String,
     maxLength: Int = 10,
 ) {
     var amount by remember { mutableStateOf("") }
     val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+
     TextField(
         modifier = modifier.fillMaxWidth(),
         value = amount,
@@ -36,9 +36,9 @@ fun AmountField(
                 onAmountChange(it)
             }
         },
-        placeholder = { if (amount.isEmpty()) Text(text = "Enter amount") },
-        leadingIcon = { LeadingIcon(onFromChanged) },
-        trailingIcon = { TrailingIcon(onFromChanged) },
+        placeholder = { if (amount.isEmpty()) Text(text = "enter amount") },
+        leadingIcon = { LeadingIcon() },
+        trailingIcon = { TrailingIcon() },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Done
@@ -57,13 +57,15 @@ fun AmountField(
 }
 
 @Composable
-private fun LeadingIcon(onFromChanged: String) {
+private fun LeadingIcon() {
+    val onFromChanged = "AED"
     val flag = onFromChanged.ifEmpty { "🇦🇪" }
     Text(text = flag)
 }
 
 @Composable
-private fun TrailingIcon(onFromChanged: String) {
-    Text(text = if (onFromChanged.isNotEmpty()) onFromChanged.split(" ")[2] else "AED")
+private fun TrailingIcon() {
+    val onFromChanged = "AED"
+    Text(text = if (onFromChanged.isNotEmpty()) onFromChanged else "AED")
 }
 

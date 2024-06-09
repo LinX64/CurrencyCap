@@ -15,13 +15,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.screens.exchange.ExchangeViewEvent.OnAmountChange
 import ui.screens.exchange.ExchangeViewEvent.OnConvertClick
 import ui.screens.exchange.ExchangeViewEvent.OnFromChange
@@ -36,14 +34,13 @@ import ui.screens.exchange.component.ToDropDown
 import ui.screens.exchange.component.ToSection
 
 @Composable
+@Preview
 internal fun ExchangeScreen(
     modifier: Modifier = Modifier,
     padding: PaddingValues,
     exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>()
 ) {
     val state by exchangeViewModel.viewState.collectAsState()
-    val hazeState = remember { HazeState() }
-    val amount by remember { mutableStateOf("") }
 
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -55,7 +52,7 @@ internal fun ExchangeScreen(
             ExchangeCard(
                 state = state,
                 exchangeViewModel = exchangeViewModel,
-                amount = amount
+
             )
         }
     }
@@ -66,7 +63,6 @@ private fun ExchangeCard(
     modifier: Modifier = Modifier,
     state: ExchangeState,
     exchangeViewModel: ExchangeViewModel,
-    amount: String
 ) {
     Column(
         modifier = modifier.padding(16.dp)
@@ -98,7 +94,6 @@ private fun ExchangeCard(
 
             AmountField(
                 onAmountChange = { exchangeViewModel.handleEvent(OnAmountChange(it)) },
-                onFromChanged = amount
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -107,7 +102,10 @@ private fun ExchangeCard(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            ConvertButton(onConvertClicked = { exchangeViewModel.handleEvent(OnConvertClick) })
+            ConvertButton(
+                onConvertClicked = { exchangeViewModel.handleEvent(OnConvertClick) },
+                isEnabled = exchangeViewModel.amountValue.value.isNotEmpty()
+            )
         }
     }
 }
