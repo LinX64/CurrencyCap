@@ -54,7 +54,11 @@ internal fun TodayTopMovers(
 
             if (mainState is MainState.Loading) {
                 items(4) {
-                    TopMoversItemLoading()
+                    TopMoversItem(
+                        isLoading = true,
+                        icon = "",
+                        name = ""
+                    )
                 }
             }
         }

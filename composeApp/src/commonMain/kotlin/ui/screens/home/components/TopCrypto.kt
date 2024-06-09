@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import domain.model.DataDao
 import ui.screens.home.MainState
 
 @Composable
@@ -40,13 +41,22 @@ internal fun TopCrypto(
         ) {
             if (mainState is MainState.Success) {
                 items(mainState.cryptoRates.size) { index ->
-                    TopCryptoItem(dataDao = mainState.cryptoRates[index])
+                    TopCryptoItem(dataDao = mainState.cryptoRates[index], isLoading = true)
                 }
             }
 
             if (mainState is MainState.Loading) {
                 items(5) {
-                    TopCryptoItemLoading()
+                    TopCryptoItem(
+                        isLoading = true,
+                        dataDao = DataDao(
+                            currencySymbol = "",
+                            id = "",
+                            symbol = "",
+                            rateUsd = "",
+                            type = ""
+                        )
+                    )
                 }
             }
         }

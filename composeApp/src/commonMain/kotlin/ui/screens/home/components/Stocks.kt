@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import domain.model.DataDao
 import ui.screens.home.MainState
 import ui.theme.colors.CurrencyColors
 import util.getIconBy
@@ -51,7 +52,24 @@ internal fun Stocks(mainState: MainState) {
                 mainState.cryptoRates.take(10).forEach { rate ->
                     StocksHorizontalItem(
                         icon = getIconBy(rate.symbol),
-                        rate = rate
+                        rate = rate,
+                        isLoading = true
+                    )
+                }
+            }
+
+            if (mainState is MainState.Loading) {
+                repeat(10) {
+                    StocksHorizontalItem(
+                        icon = "",
+                        isLoading = true,
+                        rate = DataDao(
+                            currencySymbol = "",
+                            id = "",
+                            symbol = "",
+                            rateUsd = "",
+                            type = ""
+                        )
                     )
                 }
             }

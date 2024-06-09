@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import domain.model.DataDao
 import ui.screens.home.MainState
 import ui.theme.colors.CurrencyColors
 import util.getIconBy
@@ -44,8 +45,25 @@ internal fun TrendingCryptoCurrencies(rates: MainState) {
                     val symbol = rates.cryptoRates[index].symbol
 
                     RateHorizontalItem(
+                        icon = getIconBy(symbol),
                         rate = rates.cryptoRates[index],
-                        icon = getIconBy(symbol)
+                        isLoading = true
+                    )
+                }
+            }
+
+            if (rates is MainState.Loading) {
+                items(5) {
+                    RateHorizontalItem(
+                        icon = getIconBy(""),
+                        rate = DataDao(
+                            currencySymbol = "",
+                            id = "",
+                            symbol = "",
+                            rateUsd = "",
+                            type = ""
+                        ),
+                        isLoading = true
                     )
                 }
             }

@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import domain.model.RateDao
 import ui.screens.home.MainState
 import util.getIconBy
 
@@ -72,7 +73,17 @@ internal fun IranianRate(rates: MainState) {
 
             if (rates is MainState.Loading) {
                 items(5) {
-                    RateItemLoading()
+                    RateItem(
+                        isLoading = true,
+                        icon = "",
+                        rate = listOf(
+                            RateDao(
+                                code = "",
+                                sell = 0,
+                                buy = 0,
+                            )
+                        )[0]
+                    )
                 }
             }
         }

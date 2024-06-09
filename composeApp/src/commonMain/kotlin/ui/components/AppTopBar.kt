@@ -1,8 +1,10 @@
 package ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
@@ -20,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
@@ -68,10 +71,12 @@ private fun ActionsMenu(
             onDismissRequest = { expanded.value = false }
         ) {
             DropdownMenuItem(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                 onClick = {
-                    /* Handle log out click */
+                    /* TODO: Handle log out click */
                     expanded.value = false
                 },
+                leadingIcon = { Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "Log out") },
                 text = { Text("Log out") }
             )
         }

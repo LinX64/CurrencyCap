@@ -1,11 +1,9 @@
 package ui.screens.home.components
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +23,7 @@ import util.formatToPrice
 @Composable
 internal fun RateItem(
     modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
     icon: String,
     rate: RateDao
 ) {
@@ -39,65 +38,29 @@ internal fun RateItem(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            AsyncImage(
-                modifier = Modifier.size(48.dp),
-                placeholder = painterResource(Res.drawable.baseline_monetization_on_48),
-                error = painterResource(Res.drawable.baseline_monetization_on_48),
-                model = icon,
-                contentDescription = null
-            )
+            if (isLoading) {
+                ItemPlaceHolder(modifier = Modifier.size(48.dp))
+            } else {
+                AsyncImage(
+                    modifier = Modifier.size(48.dp),
+                    placeholder = painterResource(Res.drawable.baseline_monetization_on_48),
+                    error = painterResource(Res.drawable.baseline_monetization_on_48),
+                    model = icon,
+                    contentDescription = null
+                )
+            }
 
             Text(
-                modifier = Modifier.padding(top = 4.dp),
-                text = rate.code,
+                modifier = if (isLoading) getPlaceHolder(Modifier.padding(top = 4.dp)) else Modifier.padding(top = 4.dp),
+                text = if (isLoading) "" else rate.code,
                 color = Color.White,
                 style = MaterialTheme.typography.bodyLarge
             )
 
             val formattedPrice = rate.sell.formatToPrice()
             Text(
+                modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = "$formattedPrice t",
-                color = Color.White,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold
-            )
-        }
-    }
-}
-
-@Composable
-internal fun RateItemLoading(
-    modifier: Modifier = Modifier
-) {
-    BlurColumn {
-        Column(
-            modifier = modifier.padding(
-                start = 32.dp,
-                end = 32.dp,
-                top = 16.dp,
-                bottom = 16.dp
-            ),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Box(
-                modifier = Modifier.size(48.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    color = Color.White
-                )
-            }
-
-            Text(
-                modifier = Modifier.padding(top = 4.dp),
-                text = "",
-                color = Color.White,
-                style = MaterialTheme.typography.bodyLarge
-            )
-
-            Text(
-                text = "",
                 color = Color.White,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold

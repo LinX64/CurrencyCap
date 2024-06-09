@@ -30,7 +30,8 @@ import ui.theme.colors.CurrencyColors
 internal fun StocksHorizontalItem(
     modifier: Modifier = Modifier,
     icon: String,
-    rate: DataDao
+    rate: DataDao,
+    isLoading: Boolean = false
 ) {
     BlurColumn {
         Row(
@@ -40,20 +41,24 @@ internal fun StocksHorizontalItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            AsyncImage(
-                modifier = Modifier.size(48.dp),
-                model = icon,
-                contentDescription = null,
-                placeholder = painterResource(Res.drawable.baseline_monetization_on_48),
-                error = painterResource(Res.drawable.baseline_monetization_on_48)
-            )
+            if (isLoading) {
+                ItemPlaceHolder(modifier = Modifier.size(48.dp))
+            } else {
+                AsyncImage(
+                    modifier = Modifier.size(48.dp),
+                    model = icon,
+                    contentDescription = null,
+                    placeholder = painterResource(Res.drawable.baseline_monetization_on_48),
+                    error = painterResource(Res.drawable.baseline_monetization_on_48)
+                )
+            }
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                FirstColumn(rate = rate)
-                EndHorizontalComponents()
+                FirstColumn(rate = rate, isLoading = isLoading)
+                EndHorizontalComponent(isLoading = isLoading)
             }
         }
     }
@@ -62,20 +67,23 @@ internal fun StocksHorizontalItem(
 @Composable
 private fun FirstColumn(
     modifier: Modifier = Modifier,
-    rate: DataDao
+    rate: DataDao,
+    isLoading: Boolean = false
 ) {
     Column(
         modifier = modifier.padding(start = 8.dp)
     ) {
         Text(
+            modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
             text = rate.symbol,
             color = Color.White,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold
         )
 
-        val formattedRate = formatToPrice(rate.rateUsd.toDouble())
+        val formattedRate = if (rate.rateUsd.isNotBlank()) formatToPrice(rate.rateUsd.toDouble()) else ""
         Text(
+            modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
             text = "$$formattedRate",
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             style = MaterialTheme.typography.bodyLarge,
@@ -85,7 +93,9 @@ private fun FirstColumn(
 }
 
 @Composable
-private fun EndHorizontalComponents() {
+private fun EndHorizontalComponent(
+    isLoading: Boolean = false
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.End
@@ -94,6 +104,7 @@ private fun EndHorizontalComponents() {
             horizontalAlignment = Alignment.End
         ) {
             Text(
+                modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = "$898.5",
                 color = Color.White,
                 style = MaterialTheme.typography.bodyLarge,
@@ -107,13 +118,14 @@ private fun EndHorizontalComponents() {
 
                 // TODO: add upward arrow icon and downward arrow icon
                 Icon(
-                    modifier = Modifier.size(16.dp),
+                    modifier = if (isLoading) getPlaceHolder(Modifier.size(16.dp)) else Modifier,
                     imageVector = Icons.Default.ArrowUpward,
                     contentDescription = null,
                     tint = CurrencyColors.Text_Green
                 )
 
                 Text(
+                    modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                     text = "%22.5",
                     color = CurrencyColors.Text_Green,
                     style = MaterialTheme.typography.bodyLarge,
