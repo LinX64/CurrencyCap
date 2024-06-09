@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.baseline_monetization_on_24
+import currencycap.composeapp.generated.resources.baseline_monetization_on_48
 import currencycap.composeapp.generated.resources.today_top_movers
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -84,7 +84,7 @@ private fun TopMovers(
         ) {
             AsyncImage(
                 modifier = Modifier.size(48.dp),
-                placeholder = painterResource(Res.drawable.baseline_monetization_on_24),
+                placeholder = painterResource(Res.drawable.baseline_monetization_on_48),
                 model = icon,
                 contentDescription = null
             )

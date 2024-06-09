@@ -1,7 +1,6 @@
 package ui.screens.profile.components
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import ui.components.BlurColumn
 
 @Composable
 internal fun ProfileCard(
@@ -47,14 +47,8 @@ internal fun ProfileCard(
             )
         }
 
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .background(
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                    shape = RoundedCornerShape(20.dp)
-                )
+        BlurColumn(
+            modifier = modifier.padding(horizontal = 16.dp)
         ) {
             Column(
                 modifier = Modifier.padding(25.dp),
@@ -62,10 +56,7 @@ internal fun ProfileCard(
                 verticalArrangement = Arrangement.Center
             ) {
                 AsyncImage(
-                    modifier = Modifier
-                        .size(100.dp)
-                        .clip(RoundedCornerShape(55))
-                        .padding(top = 16.dp),
+                    modifier = Modifier.size(100.dp).clip(RoundedCornerShape(55)),
                     model = profileImage,
                     contentDescription = null
                 )

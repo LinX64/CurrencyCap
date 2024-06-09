@@ -3,7 +3,10 @@ package ui.components
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -12,6 +15,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -25,7 +30,7 @@ import ui.navigation.NavRoutes
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
 internal fun AppTopBar(
-    name: String,
+    currentDestination: String,
     navController: NavHostController,
     scrollBehavior: TopAppBarScrollBehavior,
     hazeState: HazeState
@@ -36,20 +41,47 @@ internal fun AppTopBar(
                 state = hazeState,
                 style = HazeMaterials.regular(MaterialTheme.colorScheme.surface)
             ),
-        title = { AppTitle(name) },
+        title = { AppTitle(currentDestination = currentDestination) },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.Transparent,
             scrolledContainerColor = Color.Transparent,
         ),
         scrollBehavior = scrollBehavior,
-        navigationIcon = { AppNavigationIcon(navController, name) }
+        navigationIcon = { AppNavigationIcon(navController = navController, currentDestination = currentDestination) },
+        actions = { ActionsMenu(currentDestination = currentDestination) }
     )
 }
 
 @Composable
-private fun AppTitle(name: String) {
+private fun ActionsMenu(
+    currentDestination: String
+) {
+    val expanded = remember { mutableStateOf(false) }
+
+    if (currentDestination == NavRoutes.PROFILE) {
+        IconButton(onClick = { expanded.value = !expanded.value }) {
+            Icon(Icons.Default.MoreVert, contentDescription = "More")
+        }
+
+        DropdownMenu(
+            expanded = expanded.value,
+            onDismissRequest = { expanded.value = false }
+        ) {
+            DropdownMenuItem(
+                onClick = {
+                    /* Handle log out click */
+                    expanded.value = false
+                },
+                text = { Text("Log out") }
+            )
+        }
+    }
+}
+
+@Composable
+private fun AppTitle(currentDestination: String) {
     Text(
-        text = name,
+        text = currentDestination,
         maxLines = 1,
         style = MaterialTheme.typography.titleLarge,
         color = Color.White,

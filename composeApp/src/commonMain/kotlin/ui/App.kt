@@ -30,7 +30,7 @@ internal fun App() {
     Scaffold(
         topBar = {
             AppTopBar(
-                name = currentDestination,
+                currentDestination = currentDestination,
                 navController = navController,
                 hazeState = hazeState,
                 scrollBehavior = scrollBehavior

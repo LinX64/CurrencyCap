@@ -1,70 +1,51 @@
 package com.client.currencycap
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import domain.model.DataDao
 import domain.model.RateDao
-import ui.screens.home.components.RateHorizontalItem
+import ui.screens.search.SearchScreen
 
-//@OptIn(ExperimentalLayoutApi::class)
+@Preview(showBackground = true, device = "id:pixel_3a")
+@Composable
+private fun SearchScreenPreview() {
+    KoinPreview {
+        SearchScreen(
+            padding = PaddingValues(0.dp)
+        )
+    }
+}
+
 //@Preview(showBackground = true, device = "id:pixel_3a")
 //@Composable
-//private fun SearchScreenPreview() {
+//private fun HorizontalRateItemPreview() {
 //    KoinPreview {
 //        Column {
-//            FlowColumn(
-//                modifier = Modifier.fillMaxWidth(),
-//                horizontalArrangement = Arrangement.spacedBy(16.dp),
-//                verticalArrangement = Arrangement.spacedBy(16.dp)
+//            LazyHorizontalGrid(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .heightIn(max = 300.dp),
+//                rows = GridCells.Fixed(3),
+//                contentPadding = PaddingValues(10.dp),
 //            ) {
-//                cryptoDummyRate.forEach { rate ->
-//                    StocksHorizontalItem(
-//                        icon = rate.symbol,
-//                        rate = rate
+//                items(iranianDummyRate) { rate ->
+//                    RateHorizontalItem(
+//                        icon = rate.code,
+//                        rate = DataDao(
+//                            currencySymbol = rate.code,
+//                            id = rate.code,
+//                            rateUsd = rate.sell.toString(),
+//                            symbol = rate.code,
+//                            type = rate.code
+//                        )
 //                    )
 //                }
 //            }
 //        }
 //    }
 //}
-
-@Preview(showBackground = true, device = "id:pixel_3a")
-@Composable
-private fun HorizontalRateItemPreview() {
-    KoinPreview {
-        Column {
-            LazyHorizontalGrid(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(max = 300.dp),
-                rows = GridCells.Fixed(3),
-                contentPadding = PaddingValues(10.dp),
-            ) {
-                items(iranianDummyRate) { rate ->
-                    RateHorizontalItem(
-                        icon = rate.code,
-                        rate = DataDao(
-                            currencySymbol = rate.code,
-                            id = rate.code,
-                            rateUsd = rate.sell.toString(),
-                            symbol = rate.code,
-                            type = rate.code
-                        )
-                    )
-                }
-            }
-        }
-    }
-}
 
 private val iranianDummyRate = listOf(
     RateDao(

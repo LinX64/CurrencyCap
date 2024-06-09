@@ -17,16 +17,12 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import dev.chrisbanes.haze.HazeDefaults
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
-import dev.chrisbanes.haze.hazeChild
+import ui.components.BlurColumn
 import ui.theme.colors.CurrencyColors
 
 @Composable
@@ -134,43 +130,22 @@ private fun FirstColumn() {
 }
 
 @Composable
-private fun CircleCard(
-    modifier: Modifier = Modifier,
-) {
-    val hazeState = remember { HazeState() }
+private fun CircleCard() {
     val isColorRed = data.valueChange < 0
 
-    Box(
-        modifier
-            .padding(top = 16.dp)
-            .haze(
-                state = hazeState,
-                style = HazeDefaults.style(
-                    tint = Color.White.copy(alpha = 0.1f),
-                    blurRadius = 1.dp
-                ),
-            ),
-    ) {
-        Box(
-            modifier = Modifier
-                .hazeChild(
-                    state = hazeState,
-                    shape = RoundedCornerShape(16.dp),
-                ),
+    BlurColumn {
+        Row(
+            modifier = Modifier.padding(6.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                modifier = Modifier.padding(6.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                ChangeIcon(data.valueChange)
+            ChangeIcon(data.valueChange)
 
-                Text(
-                    text = "-42.64%",
-                    color = if (isColorRed) Color.Red else Color.Green,
-                    style = MaterialTheme.typography.bodySmall,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+            Text(
+                text = "-42.64%",
+                color = if (isColorRed) Color.Red else Color.Green,
+                style = MaterialTheme.typography.bodySmall,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }

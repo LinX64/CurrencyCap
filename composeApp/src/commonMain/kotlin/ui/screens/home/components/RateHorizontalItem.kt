@@ -1,6 +1,5 @@
 package ui.screens.home.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowUpward
@@ -25,10 +23,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.baseline_monetization_on_24
+import currencycap.composeapp.generated.resources.baseline_monetization_on_48
 import domain.model.DataDao
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
+import ui.components.BlurColumn
 import ui.theme.colors.CurrencyColors
 
 data class AssetInfo(
@@ -64,16 +63,9 @@ internal fun RateHorizontalItem(
     rate: DataDao,
     assetInfo: AssetInfo = mockAssetInfo
 ) {
-    Column(
-        modifier = modifier
-            .wrapContentHeight()
-            .background(
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                shape = RoundedCornerShape(20.dp)
-            )
-    ) {
+    BlurColumn {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .width(330.dp)
                 .padding(16.dp),
@@ -83,8 +75,8 @@ internal fun RateHorizontalItem(
             AsyncImage(
                 modifier = Modifier.size(48.dp).clip(RoundedCornerShape(55.dp)),
                 model = icon,
-                placeholder = painterResource(Res.drawable.baseline_monetization_on_24),
-                error = painterResource(Res.drawable.baseline_monetization_on_24),
+                placeholder = painterResource(Res.drawable.baseline_monetization_on_48),
+                error = painterResource(Res.drawable.baseline_monetization_on_48),
                 contentDescription = null
             )
 

@@ -22,7 +22,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.baseline_monetization_on_48
 import domain.model.DataDao
+import org.jetbrains.compose.resources.painterResource
 import ui.common.formatCurrentTotal
 import util.getIconBy
 
@@ -93,6 +96,8 @@ private fun CardContent(
                 model = getIconBy(dataDao.symbol),
                 contentDescription = null,
                 contentScale = ContentScale.FillWidth,
+                placeholder = painterResource(Res.drawable.baseline_monetization_on_48),
+                error = painterResource(Res.drawable.baseline_monetization_on_48)
             )
         }
 

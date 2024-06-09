@@ -1,12 +1,9 @@
 package ui.screens.home.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,9 +14,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.baseline_monetization_on_24
+import currencycap.composeapp.generated.resources.baseline_monetization_on_48
 import domain.model.RateDao
 import org.jetbrains.compose.resources.painterResource
+import ui.components.BlurColumn
 import util.formatToPrice
 
 @Composable
@@ -28,16 +26,9 @@ internal fun RateItem(
     icon: String,
     rate: RateDao
 ) {
-    Column(
-        modifier = modifier
-            .wrapContentHeight()
-            .background(
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                shape = RoundedCornerShape(20.dp)
-            )
-    ) {
+    BlurColumn {
         Column(
-            modifier = Modifier.padding(
+            modifier = modifier.padding(
                 start = 32.dp,
                 end = 32.dp,
                 top = 16.dp,
@@ -48,8 +39,8 @@ internal fun RateItem(
         ) {
             AsyncImage(
                 modifier = Modifier.size(48.dp),
-                placeholder = painterResource(Res.drawable.baseline_monetization_on_24),
-                error = painterResource(Res.drawable.baseline_monetization_on_24),
+                placeholder = painterResource(Res.drawable.baseline_monetization_on_48),
+                error = painterResource(Res.drawable.baseline_monetization_on_48),
                 model = icon,
                 contentDescription = null
             )

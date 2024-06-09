@@ -7,14 +7,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import dev.chrisbanes.haze.HazeDefaults
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.haze
 import di.koinViewModel
 import ui.components.ErrorView
 import ui.screens.home.components.CenteredColumn
@@ -32,18 +25,8 @@ internal fun HomeScreen(
     mainViewModel: MainViewModel = koinViewModel<MainViewModel>()
 ) {
     val state by mainViewModel.viewState.collectAsState()
-    val hazeState = remember { HazeState() }
-
     LazyColumn(
-        modifier = modifier.fillMaxSize()
-            .haze(
-                hazeState,
-                HazeStyle(
-                    tint = Color.Black.copy(alpha = .2f),
-                    blurRadius = 30.dp,
-                    noiseFactor = HazeDefaults.noiseFactor
-                )
-            ),
+        modifier = modifier.fillMaxSize(),
         contentPadding = padding
     ) {
         item { MainHeader() }

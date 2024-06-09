@@ -1,14 +1,11 @@
 package ui.screens.home.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material3.Icon
@@ -21,8 +18,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.baseline_monetization_on_48
 import domain.model.DataDao
+import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
+import ui.components.BlurColumn
 import ui.theme.colors.CurrencyColors
 
 @Composable
@@ -31,16 +32,9 @@ internal fun StocksHorizontalItem(
     icon: String,
     rate: DataDao
 ) {
-    Column(
-        modifier = modifier.padding(start = 16.dp, end = 16.dp)
-            .wrapContentHeight()
-            .background(
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                shape = RoundedCornerShape(20.dp)
-            )
-    ) {
+    BlurColumn {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -50,6 +44,8 @@ internal fun StocksHorizontalItem(
                 modifier = Modifier.size(48.dp),
                 model = icon,
                 contentDescription = null,
+                placeholder = painterResource(Res.drawable.baseline_monetization_on_48),
+                error = painterResource(Res.drawable.baseline_monetization_on_48)
             )
 
             Row(

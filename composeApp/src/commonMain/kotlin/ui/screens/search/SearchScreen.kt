@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
@@ -24,51 +23,41 @@ import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
-import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.baseline_search_24
 import di.koinViewModel
-import org.jetbrains.compose.resources.painterResource
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SearchScreen(
     searchViewModel: SearchViewModel = koinViewModel<SearchViewModel>(),
     padding: PaddingValues
 ) {
+    var text by rememberSaveable { mutableStateOf("") }
+    var expanded by rememberSaveable { mutableStateOf(false) }
+
     Column(
         modifier = Modifier.fillMaxSize()
             .padding(padding),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        SearchBarView()
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-internal fun SearchBarView(
-    modifier: Modifier = Modifier
-) {
-    var text by rememberSaveable { mutableStateOf("") }
-    var expanded by rememberSaveable { mutableStateOf(false) }
-
-    Box(
-        modifier = modifier
-            .padding(horizontal = 16.dp)
-            .semantics { isTraversalGroup = true }
-    ) {
-        SearchBar(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .semantics { traversalIndex = 0f },
-            active = expanded,
-            onActiveChange = { expanded = it },
-            onQueryChange = { text = it },
-            query = text,
-            placeholder = { SearchPlaceHolder() },
-            onSearch = { expanded = false },
-            leadingIcon = { LeadingIcon() },
+        Box(
+            modifier = Modifier.fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .semantics { isTraversalGroup = true }
         ) {
-            HandleList()
+            SearchBar(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .semantics { traversalIndex = 0f },
+                active = expanded,
+                onActiveChange = { expanded = it },
+                onQueryChange = { text = it },
+                query = text,
+                placeholder = { SearchPlaceHolder() },
+                onSearch = { expanded = false },
+                leadingIcon = { LeadingIcon() },
+            ) {
+                HandleList()
+            }
         }
     }
 }
@@ -94,17 +83,19 @@ private fun HandleList() {
 
 @Composable
 private fun LeadingIcon() {
-    Icon(
-        painter = painterResource(Res.drawable.baseline_search_24),
-        contentDescription = null
-    )
+//    Icon(
+//        painter = painterResource(Res.drawable.baseline_search_24),
+//        contentDescription = null
+//    )
+
+    // TODO: check this icon
 }
 
 @Composable
 private fun SearchPlaceHolder() {
     Text(
         text = "Search for currency or coin",
-        color = MaterialTheme.colorScheme.onSurface,
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
     )
 }
 

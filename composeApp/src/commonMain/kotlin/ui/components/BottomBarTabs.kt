@@ -96,31 +96,31 @@ sealed class BottomBarTab(
     data object Exchange : BottomBarTab(
         route = NavRoutes.EXCHANGE,
         icon = Icons.Default.CurrencyExchange,
-        color = Color(0xFFFFA574)
+        color = Color(0xFFFFA574) // Orange
     )
 
     data object Home : BottomBarTab(
         route = NavRoutes.HOME,
         icon = Icons.Rounded.Home,
-        color = Color(0xFFADFF64)
+        color = Color(0xFFADFF64) // Light Green
     )
 
     data object Search : BottomBarTab(
         route = NavRoutes.SEARCH,
         icon = Icons.Rounded.Search,
-        color = Color(0xFFFA6FFF)
+        color = Color(0xFFFA6FFF) // Pink
     )
 
     data object AiPrediction : BottomBarTab(
         route = NavRoutes.AI_PREDICTION,
         icon = Icons.Default.BatchPrediction,
-        color = Color(0xFFFA6FFF)
+        color = Color(0xFF6FFFA6) // Light Green
     )
 
     data object Profile : BottomBarTab(
         route = NavRoutes.PROFILE,
         icon = Icons.Default.Person,
-        color = Color(0xFFFA6FFF)
+        color = Color(0xFF6FA6FF) // Light Blue
     )
 }
 

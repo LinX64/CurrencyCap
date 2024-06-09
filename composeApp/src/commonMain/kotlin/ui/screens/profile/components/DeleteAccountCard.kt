@@ -27,18 +27,13 @@ import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.delete_your_account_warning
 import org.jetbrains.compose.resources.stringResource
+import ui.components.BlurColumn
 import ui.components.DottedShape
 
 @Composable
 internal fun DeleteAccountCard() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .background(
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                shape = RoundedCornerShape(20.dp)
-            )
+    BlurColumn(
+        modifier = Modifier.padding(horizontal = 16.dp)
     ) {
         Column(
             modifier = Modifier.padding(24.dp)
