@@ -40,7 +40,7 @@ internal fun ProfileCard(
     modifier: Modifier = Modifier,
     profileImage: String = "https://www.w3schools.com/howto/img_avatar.png",
     name: String = "John Doe",
-    email: String = "",
+    email: String = "ash.qxrz@hotmail.com",
     phone: String = "+989123456789"
 ) {
     Column(
@@ -52,11 +52,11 @@ internal fun ProfileCard(
     ) {
         Column(
             modifier = Modifier
-                .padding(horizontal = 32.dp)
+                .padding(horizontal = 16.dp)
                 .wrapContentSize()
                 .background(
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                    shape = RoundedCornerShape(25.dp)
+                    shape = RoundedCornerShape(20.dp)
                 )
         ) {
             FirstCard(
@@ -69,11 +69,11 @@ internal fun ProfileCard(
 
         Column(
             modifier = Modifier
-                .padding(horizontal = 32.dp)
+                .padding(horizontal = 16.dp)
                 .wrapContentSize()
                 .background(
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                    shape = RoundedCornerShape(25.dp)
+                    shape = RoundedCornerShape(20.dp)
                 )
         ) {
             HelpCenterCard()
@@ -81,11 +81,11 @@ internal fun ProfileCard(
 
         Column(
             modifier = Modifier
-                .padding(horizontal = 32.dp)
+                .padding(horizontal = 16.dp)
                 .wrapContentSize()
                 .background(
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                    shape = RoundedCornerShape(25.dp)
+                    shape = RoundedCornerShape(20.dp)
                 )
         ) {
             DeleteAccountCard()

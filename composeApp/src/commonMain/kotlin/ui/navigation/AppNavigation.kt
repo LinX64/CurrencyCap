@@ -13,6 +13,7 @@ import ui.components.BottomBarTab
 import ui.screens.ai_predict.navigation.aiPredictScreen
 import ui.screens.exchange.navigation.exchangeScreen
 import ui.screens.home.navigation.homeScreen
+import ui.screens.profile.navigation.profileScreen
 import ui.screens.search.navigation.searchScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,6 +34,7 @@ internal fun AppNavigation(
         searchScreen(padding)
         aiPredictScreen(padding)
         exchangeScreen(padding)
+        profileScreen(padding)
     }
 }
 

@@ -1,7 +1,7 @@
 package ui.screens.exchange
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,12 +19,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
-import dev.chrisbanes.haze.hazeChild
 import di.koinViewModel
 import ui.screens.exchange.ExchangeViewEvent.OnAmountChange
 import ui.screens.exchange.ExchangeViewEvent.OnConvertClick
@@ -56,7 +53,6 @@ internal fun ExchangeScreen(
     ) {
         item {
             ExchangeCard(
-                hazeState = hazeState,
                 state = state,
                 exchangeViewModel = exchangeViewModel,
                 amount = amount
@@ -68,64 +64,50 @@ internal fun ExchangeScreen(
 @Composable
 private fun ExchangeCard(
     modifier: Modifier = Modifier,
-    hazeState: HazeState,
     state: ExchangeState,
     exchangeViewModel: ExchangeViewModel,
     amount: String
 ) {
-    Box(
-        modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp)
-            .haze(
-                state = hazeState,
-                style = HazeDefaults.style(
-                    tint = Color.White.copy(alpha = 0.1f),
-                    blurRadius = 1.dp
-                )
+    Column(
+        modifier = modifier.padding(16.dp)
+            .wrapContentHeight()
+            .background(
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                shape = RoundedCornerShape(20.dp)
             )
     ) {
-        Box(
-            modifier = Modifier.padding(16.dp)
-                .align(Alignment.Center)
-                .hazeChild(
-                    state = hazeState,
-                    shape = RoundedCornerShape(35.dp),
-                )
+        Column(
+            modifier = modifier.padding(16.dp)
+                .wrapContentHeight()
         ) {
-            Column(
-                modifier = modifier.padding(16.dp)
-                    .wrapContentHeight()
-            ) {
-                Header()
+            Header()
 
-                FromDropDown(
-                    exchangeState = state,
-                    onFromChange = { exchangeViewModel.handleEvent(OnFromChange(it)) }
-                )
+            FromDropDown(
+                exchangeState = state,
+                onFromChange = { exchangeViewModel.handleEvent(OnFromChange(it)) }
+            )
 
-                ToSection()
+            ToSection()
 
-                ToDropDown(
-                    exchangeState = state,
-                    onToChange = { exchangeViewModel.handleEvent(OnToChange(it)) }
-                )
+            ToDropDown(
+                exchangeState = state,
+                onToChange = { exchangeViewModel.handleEvent(OnToChange(it)) }
+            )
 
-                AmountSection()
+            AmountSection()
 
-                AmountField(
-                    onAmountChange = { exchangeViewModel.handleEvent(OnAmountChange(it)) },
-                    onFromChanged = amount
-                )
+            AmountField(
+                onAmountChange = { exchangeViewModel.handleEvent(OnAmountChange(it)) },
+                onFromChanged = amount
+            )
 
-                Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-                ResultText(result = exchangeViewModel.convertResult.value)
+            ResultText(result = exchangeViewModel.convertResult.value)
 
-                Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
-                ConvertButton(onConvertClicked = { exchangeViewModel.handleEvent(OnConvertClick) })
-            }
+            ConvertButton(onConvertClicked = { exchangeViewModel.handleEvent(OnConvertClick) })
         }
     }
 }

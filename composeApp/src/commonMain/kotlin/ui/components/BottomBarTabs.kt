@@ -129,4 +129,5 @@ val tabs = listOf(
     BottomBarTab.Exchange,
     BottomBarTab.Search,
     BottomBarTab.AiPrediction,
+    BottomBarTab.Profile
 )
