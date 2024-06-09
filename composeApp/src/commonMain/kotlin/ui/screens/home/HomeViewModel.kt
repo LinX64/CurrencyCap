@@ -1,7 +1,7 @@
 package ui.screens.home
 
 import androidx.lifecycle.viewModelScope
-import data.repository.MainRepository
+import data.repository.main.MainRepository
 import data.util.asResult
 import domain.model.DataDao
 import kotlinx.coroutines.flow.combine

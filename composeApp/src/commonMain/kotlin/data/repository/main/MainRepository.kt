@@ -1,4 +1,4 @@
-package data.repository
+package data.repository.main
 
 import domain.model.DataDao
 import domain.model.RateDao

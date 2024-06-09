@@ -1,13 +1,29 @@
 package ui.screens.auth.login
 
 sealed interface LoginViewEvent {
-    data object OnLoginClick : LoginViewEvent
+    data class OnEmailChanged(val email: String) : LoginViewEvent
+    data class OnPasswordChanged(val password: String) : LoginViewEvent
+
+    data class OnLoginClick(
+        val email: String,
+        val password: String
+    ) : LoginViewEvent
 }
 
 sealed interface LoginState {
     data object Loading : LoginState
+
+    data class Content(
+        val email: String = "",
+        val password: String = ""
+    ) : LoginState
+
+    data class Success(val uid: String) : LoginState
+    data class Error(val message: String) : LoginState
 }
 
 sealed interface LoginNavigationEffect {
-    data object NavigateToHome : LoginNavigationEffect
+    data object LoginSuccess : LoginNavigationEffect
+    data class LoginError(val message: String) : LoginNavigationEffect
 }
+

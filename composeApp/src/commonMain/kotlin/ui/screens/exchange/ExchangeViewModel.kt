@@ -1,7 +1,7 @@
 package ui.screens.exchange
 
 import androidx.lifecycle.viewModelScope
-import data.repository.MainRepository
+import data.repository.main.MainRepository
 import data.util.NetworkResult
 import data.util.asResult
 import domain.model.DataDao

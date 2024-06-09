@@ -1,4 +1,4 @@
-package data.repository
+package data.repository.main
 
 import data.model.CoinCapRates
 import data.model.toDomain

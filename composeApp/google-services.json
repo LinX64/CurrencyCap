@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "905854838299",
+    "project_id": "currency-cap",
+    "storage_bucket": "currency-cap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905854838299:android:f6ce3920d927237da83abe",
+        "android_client_info": {
+          "package_name": "com.client.currencycap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBU0eTl_RICq0r4AomiigEaUtdrlqoyA3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

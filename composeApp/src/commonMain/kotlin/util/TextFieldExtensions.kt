@@ -1,4 +1,4 @@
-package ui.screens.auth.login
+package util
 
 fun String.validateEmail(): Boolean {
     val emailRegex = Regex("^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})")

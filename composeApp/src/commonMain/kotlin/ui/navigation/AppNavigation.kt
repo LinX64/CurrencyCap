@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import ui.components.BottomBarTab
 import ui.screens.ai_predict.navigation.aiPredictScreen
+import ui.screens.auth.login.navigation.loginScreen
 import ui.screens.exchange.navigation.exchangeScreen
 import ui.screens.home.navigation.homeScreen
 import ui.screens.profile.navigation.profileScreen
@@ -35,6 +36,9 @@ internal fun AppNavigation(
         aiPredictScreen(padding)
         exchangeScreen(padding)
         profileScreen(padding)
+
+        // Auth
+        loginScreen(padding)
     }
 }
 

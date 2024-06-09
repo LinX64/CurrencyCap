@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.gms)
 }
 
 kotlin {
@@ -38,8 +39,13 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.kotlinx.coroutines.android)
-
             implementation(compose.preview)
+
+            // Firebase
+            implementation(project.dependencies.platform(libs.firebase.bom))
+            implementation(libs.firebase.firestore)
+            implementation(libs.firebase.auth)
+
             implementation(libs.androidx.activity.compose)
         }
 
@@ -56,6 +62,9 @@ kotlin {
             implementation(libs.kotlinx.serialization)
             implementation(libs.kotlin.serialization)
             implementation(libs.ktor.client.core)
+
+            // Firebase SDk
+            implementation(libs.firebase.auth)
 
             // UI
             implementation(libs.haze)

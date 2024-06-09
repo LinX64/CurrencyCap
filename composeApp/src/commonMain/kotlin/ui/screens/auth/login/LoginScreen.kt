@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.client.auth.components.PasswordTextField
 import di.koinViewModel
 import ui.components.BaseCenterColumn
+import ui.screens.auth.login.LoginViewEvent.OnEmailChanged
 import ui.screens.auth.login.components.EmailTextField
 
 @Composable
@@ -30,8 +31,14 @@ internal fun LoginScreen(
     padding: PaddingValues = PaddingValues(16.dp),
     loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>()
 ) {
-    BaseCenterColumn {
-        LoginForm()
+    BaseCenterColumn(
+        modifier = Modifier.fillMaxSize()
+            .padding(padding),
+    ) {
+        LoginForm(
+            onEmailChanged = { loginViewModel.handleEvent(OnEmailChanged(it)) },
+            onPasswordChanged = { loginViewModel.handleEvent(OnEmailChanged(it)) }
+        )
     }
 
     Column {
@@ -40,7 +47,11 @@ internal fun LoginScreen(
 }
 
 @Composable
-private fun LoginForm(modifier: Modifier = Modifier) {
+private fun LoginForm(
+    modifier: Modifier = Modifier,
+    onEmailChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit
+) {
     Column(
         modifier = Modifier
             .wrapContentHeight()
@@ -72,14 +83,14 @@ private fun LoginForm(modifier: Modifier = Modifier) {
             ) {
                 EmailTextField(
                     isEmailValid = { },
-                    onEmailChanged = { }
+                    onEmailChanged = onEmailChanged
                 )
 
                 Spacer(modifier = modifier.height(10.dp))
 
                 PasswordTextField(
                     isPasswordValid = { },
-                    onPasswordChanged = {}
+                    onPasswordChanged = onPasswordChanged
                 )
 
                 Spacer(modifier = modifier.height(32.dp))
