@@ -2,6 +2,7 @@
 .kotlin
 .gradle
 **/build/
+**/build 2/
 xcuserdata
 !src/**/build/
 local.properties
