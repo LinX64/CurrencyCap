@@ -44,12 +44,6 @@ class MainViewModel(
             .launchIn(viewModelScope)
     }
 
-    private fun refreshRates() {
-        viewModelScope.launch {
-            // todo: implement refresh logic
-        }
-    }
-
     private fun filterByCrypto(rates: List<DataDao>) = rates
         .sortedBy { it.currencySymbol }
         .filter { it.type == CRYPTO }
@@ -63,4 +57,10 @@ class MainViewModel(
                 rateUsd = topMover.rateUsd
             )
         }
+
+    private fun refreshRates() {
+        viewModelScope.launch {
+            // todo: implement refresh logic
+        }
+    }
 }

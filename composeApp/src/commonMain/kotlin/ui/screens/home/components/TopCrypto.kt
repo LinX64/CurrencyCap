@@ -40,7 +40,13 @@ internal fun TopCrypto(
         ) {
             if (mainState is MainState.Success) {
                 items(mainState.cryptoRates.size) { index ->
-                    TopHeaderCard(dataDao = mainState.cryptoRates[index])
+                    TopCryptoItem(dataDao = mainState.cryptoRates[index])
+                }
+            }
+
+            if (mainState is MainState.Loading) {
+                items(5) {
+                    TopCryptoItemLoading()
                 }
             }
         }

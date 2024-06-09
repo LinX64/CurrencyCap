@@ -69,6 +69,12 @@ internal fun IranianRate(rates: MainState) {
                     )
                 }
             }
+
+            if (rates is MainState.Loading) {
+                items(5) {
+                    RateItemLoading()
+                }
+            }
         }
     }
 }
