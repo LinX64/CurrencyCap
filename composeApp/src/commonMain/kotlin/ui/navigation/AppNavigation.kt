@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import ui.components.BottomBarTab
 import ui.screens.ai_predict.navigation.aiPredictScreen
 import ui.screens.auth.login.navigation.loginScreen
+import ui.screens.auth.register.navigation.registerScreen
 import ui.screens.exchange.navigation.exchangeScreen
 import ui.screens.home.navigation.homeScreen
 import ui.screens.profile.navigation.profileScreen
@@ -26,7 +27,7 @@ internal fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.HOME,
+        startDestination = NavRoutes.REGISTER,
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
@@ -39,6 +40,7 @@ internal fun AppNavigation(
 
         // Auth
         loginScreen(padding)
+        registerScreen(padding)
     }
 }
 

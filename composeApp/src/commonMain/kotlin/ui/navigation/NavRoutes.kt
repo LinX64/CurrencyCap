@@ -9,4 +9,5 @@ object NavRoutes {
 
     // Auth
     const val LOGIN = "Login"
+    const val REGISTER = "Register"
 }

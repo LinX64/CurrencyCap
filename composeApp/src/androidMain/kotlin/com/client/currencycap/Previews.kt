@@ -1,12 +1,10 @@
 package com.client.currencycap
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import domain.model.DataDao
 import domain.model.RateDao
-import ui.screens.exchange.ExchangeScreen
+import ui.screens.auth.register.RegisterScreen
 
 private val iranianDummyRate = listOf(
     RateDao(
@@ -61,7 +59,7 @@ private val cryptoDummyRate = listOf(
 @Composable
 private fun RegisterScreenPreview() {
     KoinPreview {
-        ExchangeScreen(padding = PaddingValues(16.dp))
+        RegisterScreen()
     }
 }
 

@@ -1,6 +1,8 @@
 package data.repository.auth
 
 import data.model.User
+import dev.gitlive.firebase.auth.ActionCodeSettings
+import dev.gitlive.firebase.auth.AndroidPackageName
 import dev.gitlive.firebase.auth.FirebaseAuth
 import domain.repository.AuthService
 import kotlinx.coroutines.CoroutineScope
@@ -46,6 +48,21 @@ class AuthServiceImpl(
         } catch (e: Exception) {
             AuthResponse.Error(e.message ?: "Could not create user!")
         }
+    }
+
+    override suspend fun signUpWithEmailOnly(email: String) {
+        val actionCodeSettings = ActionCodeSettings(
+            url = "https://currencycap.page.link",
+            androidPackageName = AndroidPackageName(
+                packageName = "com.client.currencycap",
+                minimumVersion = "24"
+            ),
+            iOSBundleId = "com.client.currencycap",
+            dynamicLinkDomain = "currencycap.page.link",
+            canHandleCodeInApp = true
+        )
+
+        auth.sendSignInLinkToEmail(email, actionCodeSettings)
     }
 
     override suspend fun sendRecoveryEmail(email: String) = launchWithAwait { auth.sendPasswordResetEmail(email) }

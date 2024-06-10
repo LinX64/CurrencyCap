@@ -19,24 +19,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.client.auth.components.PasswordTextField
+import di.koinViewModel
 import ui.components.BaseCenterColumn
 import ui.screens.auth.login.components.EmailTextField
+import ui.screens.auth.register.RegisterViewEvent.OnEmailChanged
+import ui.screens.auth.register.RegisterViewEvent.OnRegisterClick
 
 @Composable
 internal fun RegisterScreen(
     padding: PaddingValues = PaddingValues(16.dp),
-    // registerViewModel: RegisterViewModel = koinViewModel<RegisterViewModel>()
+    registerViewModel: RegisterViewModel = koinViewModel<RegisterViewModel>()
 ) {
     BaseCenterColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .padding(padding),
     ) {
         RegisterForm(
-            onNameChanged = { },
-            onLastNameChanged = { },
-            onEmailChanged = { },
-            onPasswordChanged = { }
+            onEmailChanged = { registerViewModel.handleEvent(OnEmailChanged(it)) },
+            onSignUpClick = { registerViewModel.handleEvent(OnRegisterClick) }
         )
     }
 }
@@ -44,10 +45,8 @@ internal fun RegisterScreen(
 @Composable
 private fun RegisterForm(
     modifier: Modifier = Modifier,
-    onNameChanged: () -> Unit,
-    onLastNameChanged: () -> Unit,
-    onPasswordChanged: (String) -> Unit,
-    onEmailChanged: (String) -> Unit
+    onEmailChanged: (String) -> Unit,
+    onSignUpClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -66,7 +65,7 @@ private fun RegisterForm(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Register",
+                text = "Sign up with Email",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold
@@ -83,17 +82,10 @@ private fun RegisterForm(
                     onEmailChanged = onEmailChanged
                 )
 
-                Spacer(modifier = modifier.height(10.dp))
-
-                PasswordTextField(
-                    isPasswordValid = { },
-                    onPasswordChanged = onPasswordChanged
-                )
-
                 Spacer(modifier = modifier.height(32.dp))
 
                 Button(
-                    onClick = { },
+                    onClick = { onSignUpClick() },
                     modifier = modifier
                         .fillMaxWidth()
                         .height(52.dp),

@@ -6,14 +6,14 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import ui.components.BlurBackground
 import ui.navigation.NavRoutes
-import ui.screens.auth.login.LoginScreen
+import ui.screens.auth.register.RegisterScreen
 
-fun NavController.navigateToLoginScreen() = navigate(NavRoutes.LOGIN)
+fun NavController.navigateToRegisterScreen() = navigate(NavRoutes.REGISTER)
 
-fun NavGraphBuilder.loginScreen(padding: PaddingValues) {
-    composable(NavRoutes.LOGIN) {
+fun NavGraphBuilder.registerScreen(padding: PaddingValues) {
+    composable(NavRoutes.REGISTER) {
         BlurBackground {
-            LoginScreen(padding)
+            RegisterScreen(padding)
         }
     }
 }
