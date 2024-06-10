@@ -62,7 +62,7 @@ class AuthServiceImpl(
             canHandleCodeInApp = true
         )
 
-        auth.sendSignInLinkToEmail(email, actionCodeSettings)
+        launchWithAwait { auth.sendSignInLinkToEmail(email, actionCodeSettings) }
     }
 
     override suspend fun sendRecoveryEmail(email: String) = launchWithAwait { auth.sendPasswordResetEmail(email) }

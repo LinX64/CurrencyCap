@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import domain.model.DataDao
 import domain.model.RateDao
-import ui.screens.auth.register.RegisterScreen
+import ui.screens.landing.LandingScreen
 
 private val iranianDummyRate = listOf(
     RateDao(
@@ -59,7 +59,10 @@ private val cryptoDummyRate = listOf(
 @Composable
 private fun RegisterScreenPreview() {
     KoinPreview {
-        RegisterScreen()
+        LandingScreen(
+            onLoginClick = {},
+            onCreateAccountClick = {}
+        )
     }
 }
 

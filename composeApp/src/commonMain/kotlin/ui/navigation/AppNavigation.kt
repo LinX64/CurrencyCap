@@ -7,6 +7,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import ui.components.BottomBarTab
@@ -15,6 +16,7 @@ import ui.screens.auth.login.navigation.loginScreen
 import ui.screens.auth.register.navigation.registerScreen
 import ui.screens.exchange.navigation.exchangeScreen
 import ui.screens.home.navigation.homeScreen
+import ui.screens.landing.navigation.landingScreen
 import ui.screens.profile.navigation.profileScreen
 import ui.screens.search.navigation.searchScreen
 
@@ -27,21 +29,27 @@ internal fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.REGISTER,
+        startDestination = NavRoutes.LANDING,
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
+        landingScreen(navController = navController)
+        authGraph(padding)
+
         homeScreen(padding)
         searchScreen(padding)
         aiPredictScreen(padding)
         exchangeScreen(padding)
         profileScreen(padding)
-
-        // Auth
-        loginScreen(padding)
-        registerScreen(padding)
     }
+}
+
+private fun NavGraphBuilder.authGraph(
+    padding: PaddingValues
+) {
+    loginScreen(padding)
+    registerScreen(padding)
 }
 
 internal fun handleNavigation(
