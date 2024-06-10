@@ -22,7 +22,6 @@ import ui.components.AppTopBar
 import ui.components.BottomNavigationBar
 import ui.components.SubscribeBottomSheet
 import ui.navigation.AppNavigation
-import ui.navigation.NavRoutes
 import ui.navigation.handleNavigation
 import ui.screens.subscribers.SubscribersSection
 
@@ -49,10 +48,7 @@ internal fun App() {
         bottomBar = {
             BottomNavigationBar(
                 hazeState = hazeState,
-                onTabSelected = { tab ->
-                    if (tab.route == NavRoutes.AI_PREDICTION) isSheetOpen = !isSheetOpen
-                    handleNavigation(navController, tab)
-                }
+                onTabSelected = { tab -> handleNavigation(navController, tab) }
             )
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
@@ -66,13 +62,13 @@ internal fun App() {
     }
 
     if (isSheetOpen) {
-        showBottomSheet(sheetState = scaffoldState)
+        SubscribeBottomSheet(sheetState = scaffoldState)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun showBottomSheet(sheetState: BottomSheetScaffoldState) {
+private fun SubscribeBottomSheet(sheetState: BottomSheetScaffoldState) {
     SubscribeBottomSheet(scaffoldState = sheetState) {
         SubscribersSection()
     }
