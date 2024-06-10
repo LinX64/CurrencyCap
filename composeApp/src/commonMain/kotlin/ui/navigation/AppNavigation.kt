@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavGraphBuilder
@@ -54,8 +55,11 @@ private fun NavGraphBuilder.authGraph(
 
 internal fun handleNavigation(
     navController: NavHostController,
-    tab: BottomBarTab
+    tab: BottomBarTab,
+    isSheetOpen: MutableState<Boolean>
 ) {
+    isSheetOpen.value = tab.route == NavRoutes.AI_PREDICTION
+
     navController.navigate(tab.route) {
         navController.graph.startDestinationRoute?.let { startDestinationRoute ->
             popUpTo(startDestinationRoute) {

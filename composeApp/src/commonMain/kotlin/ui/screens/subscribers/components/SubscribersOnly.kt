@@ -38,7 +38,7 @@ internal fun SubscribersOnly(
         )
 
         Text(
-            text = "Subscribers Only",
+            text = "Premium Access Only",
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold
@@ -47,7 +47,7 @@ internal fun SubscribersOnly(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "This feature is only available to subscribers, please subscribe to access this feature.",
+            text = "Unlock exclusive features by subscribing to our Pro Plan.",
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center

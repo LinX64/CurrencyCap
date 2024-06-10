@@ -21,7 +21,9 @@ import util.getIconBy
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun Stocks(mainState: MainState) {
-    Column {
+    Column(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween

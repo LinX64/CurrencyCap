@@ -19,55 +19,59 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import ui.components.BlurColumn
 
 @Composable
 internal fun ProPlanCard(
     modifier: Modifier = Modifier
 ) {
     val features = listOf(
-        "Real-time market data with no delay",
+        "Instant real-time market data",
         "Advanced AI predictions and in-depth insights",
         "Premium customer support"
     )
-    Column(
-        modifier = modifier
-            .padding(16.dp)
-            .fillMaxWidth(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = "Pro Plan",
-                tint = MaterialTheme.colorScheme.primary
-            )
 
-            Spacer(modifier = Modifier.width(4.dp))
+    BlurColumn(modifier = modifier.padding(8.dp)) {
+        Column(
+            modifier = modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = "Pro Plan",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+
+                Spacer(modifier = Modifier.width(4.dp))
+
+                Text(
+                    text = "Pro Plan",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Pro",
-                style = MaterialTheme.typography.titleLarge,
+                text = "Upgrade for Premium Features",
+                style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.Bold
+                textAlign = TextAlign.Center
             )
-        }
 
-        Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-        Text(
-            text = "Upgrade to unlock premium features",
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            textAlign = TextAlign.Center
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        for (feature in features) {
-            FeatureItem(feature)
+            for (feature in features) {
+                FeatureItem(feature)
+            }
         }
     }
 }

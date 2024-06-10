@@ -3,7 +3,6 @@ package ui.screens.subscribers.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -14,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import ui.components.BlurColumn
 
 @Composable
 internal fun FreePlanCard(
@@ -23,34 +23,34 @@ internal fun FreePlanCard(
         "Basic real-time market data",
         "Basic news and alerts"
     )
+    BlurColumn(modifier = modifier.padding(8.dp)) {
+        Column(
+            modifier = modifier
+                .padding(horizontal = 16.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Free Plan",
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.Bold
+            )
 
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Free",
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontWeight = FontWeight.Bold
-        )
+            Spacer(modifier = Modifier.height(8.dp))
 
-        Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "Your current plan",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Center
+            )
 
-        Text(
-            text = "Your current plan",
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            textAlign = TextAlign.Center
-        )
+            Spacer(modifier = Modifier.height(8.dp))
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        for (feature in features) {
-            FeatureItem(feature)
+            for (feature in features) {
+                FeatureItem(feature)
+            }
         }
     }
 }

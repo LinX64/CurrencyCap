@@ -13,7 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -32,7 +31,7 @@ internal fun App() {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination?.route ?: ""
     val hazeState = remember { HazeState() }
-    var isSheetOpen by rememberSaveable { mutableStateOf(false) }
+    val isSheetOpen = rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
     val scaffoldState = rememberBottomSheetScaffoldState()
 
@@ -48,7 +47,13 @@ internal fun App() {
         bottomBar = {
             BottomNavigationBar(
                 hazeState = hazeState,
-                onTabSelected = { tab -> handleNavigation(navController, tab) }
+                onTabSelected = { tab ->
+                    handleNavigation(
+                        navController = navController,
+                        tab = tab,
+                        isSheetOpen = isSheetOpen
+                    )
+                }
             )
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
@@ -61,7 +66,7 @@ internal fun App() {
         )
     }
 
-    if (isSheetOpen) {
+    if (isSheetOpen.value) {
         SubscribeBottomSheet(sheetState = scaffoldState)
     }
 }

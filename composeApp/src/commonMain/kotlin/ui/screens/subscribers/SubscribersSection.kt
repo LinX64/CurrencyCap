@@ -28,7 +28,6 @@ import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import ui.components.BlurColumn
 import ui.screens.subscribers.components.FreePlanCard
 import ui.screens.subscribers.components.ProPlanCard
 import ui.screens.subscribers.components.SubscribersOnly
@@ -59,52 +58,50 @@ internal fun SubscribersSection(
         item {
             Text(
                 modifier = modifier.padding(horizontal = 8.dp, vertical = 8.dp),
-                text = "Choose a plan",
+                text = "Select Your Plan",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )
         }
 
-        item {
-            BlurColumn(modifier = modifier.padding(8.dp)) {
-                FreePlanCard()
+        items(2) {
+            when (it) {
+                0 -> FreePlanCard()
+                1 -> ProPlanCard()
             }
         }
 
-        item {
-            BlurColumn(modifier = modifier.padding(8.dp)) {
-                ProPlanCard()
-            }
-        }
+        item { SubscribeButton() }
+    }
+}
 
-        item {
-            Button(
-                modifier = modifier.fillMaxWidth()
-                    .padding(16.dp)
-                    .height(52.dp),
-                onClick = { /* TODO */ },
-                shape = RoundedCornerShape(10.dp),
-                enabled = true // TODO: Implement this
-            ) {
-                Row(
-                    modifier = modifier.padding(horizontal = 32.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "Subscribe",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.surface
-                    )
+@Composable
+private fun SubscribeButton(modifier: Modifier = Modifier) {
+    Button(
+        modifier = modifier.fillMaxWidth()
+            .padding(16.dp)
+            .height(52.dp),
+        onClick = { /* TODO */ },
+        shape = RoundedCornerShape(10.dp),
+        enabled = true // TODO: Implement this
+    ) {
+        Row(
+            modifier = modifier.padding(horizontal = 32.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Subscribe",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.surface
+            )
 
-                    Spacer(modifier = modifier.width(16.dp))
+            Spacer(modifier = modifier.width(16.dp))
 
-                    Icon(
-                        imageVector = Icons.Default.ChevronRight,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.surface
-                    )
-                }
-            }
+            Icon(
+                imageVector = Icons.Default.ChevronRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.surface
+            )
         }
     }
 }
