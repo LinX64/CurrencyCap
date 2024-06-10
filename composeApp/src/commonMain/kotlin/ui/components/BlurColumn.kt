@@ -21,6 +21,7 @@ internal fun BlurColumn(
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
                 shape = RoundedCornerShape(20.dp)
             )
+            .then(modifier)
     ) {
         content()
     }
