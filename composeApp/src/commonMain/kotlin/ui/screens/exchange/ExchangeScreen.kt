@@ -76,12 +76,8 @@ private fun ExchangeCard(
     convertResult: String,
     amount: String
 ) {
-    BlurColumn(
-        modifier = modifier.padding(16.dp)
-    ) {
-        Column(
-            modifier = modifier.padding(32.dp),
-        ) {
+    BlurColumn(modifier = modifier.padding(16.dp)) {
+        Column(modifier = modifier.padding(16.dp)) {
             Column(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally

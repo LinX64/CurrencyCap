@@ -35,7 +35,7 @@ import ui.screens.subscribers.components.SubscribersOnly
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-internal fun SubscribersScreen(
+internal fun SubscribersSection(
     modifier: Modifier = Modifier
 ) {
     var bytes by remember { mutableStateOf(ByteArray(0)) }

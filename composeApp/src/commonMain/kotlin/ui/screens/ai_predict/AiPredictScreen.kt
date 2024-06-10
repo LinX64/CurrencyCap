@@ -29,15 +29,13 @@ import org.jetbrains.compose.resources.stringResource
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 internal fun AiPredictScreen(
-    aiPredictViewModel: AiPredictViewModel = koinViewModel<AiPredictViewModel>(),
-    padding: PaddingValues
+    padding: PaddingValues,
+    aiPredictViewModel: AiPredictViewModel = koinViewModel<AiPredictViewModel>()
 ) {
     var bytes by remember { mutableStateOf(ByteArray(0)) }
     val composition by rememberLottieComposition(LottieCompositionSpec.JsonString(bytes.decodeToString()))
 
-    LaunchedEffect(Unit) {
-        bytes = Res.readBytes("files/coming_soon.json")
-    }
+    LaunchedEffect(Unit) { bytes = Res.readBytes("files/coming_soon.json") }
 
     Column(
         modifier = Modifier.fillMaxSize()
