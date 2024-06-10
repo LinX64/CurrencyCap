@@ -27,7 +27,7 @@ internal fun HomeScreen(
         modifier = modifier.fillMaxSize(),
         contentPadding = padding
     ) {
-        item { MainHeader() }
+        item { MainHeader(state) }
         item { TodayTopMovers(state) }
         item { TopCrypto(state) }
         item { IranianRate(state) }

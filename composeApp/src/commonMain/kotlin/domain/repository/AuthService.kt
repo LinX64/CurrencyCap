@@ -1,6 +1,7 @@
-package data.repository.auth
+package domain.repository
 
 import data.model.User
+import data.repository.auth.AuthServiceImpl
 import kotlinx.coroutines.flow.Flow
 
 interface AuthService {
@@ -8,8 +9,8 @@ interface AuthService {
     val hasUser: Boolean
     val currentUser: Flow<User>
 
-    suspend fun authenticate(email: String, password: String): AuthResponse
-    suspend fun signUpWithEmail(email: String, password: String): AuthResponse
+    suspend fun authenticate(email: String, password: String): AuthServiceImpl.AuthResponse
+    suspend fun signUpWithEmail(email: String, password: String): AuthServiceImpl.AuthResponse
 
     suspend fun sendRecoveryEmail(email: String)
     suspend fun deleteAccount()

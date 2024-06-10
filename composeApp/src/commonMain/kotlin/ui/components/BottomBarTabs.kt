@@ -122,12 +122,6 @@ sealed class BottomBarTab(
         icon = Icons.Default.Person,
         color = Color(0xFF6FA6FF) // Light Blue
     )
-
-    data object Login : BottomBarTab(
-        route = NavRoutes.LOGIN,
-        icon = Icons.Default.Person,
-        color = Color(0xFF6FA6FF) // Light Blue
-    )
 }
 
 val tabs = listOf(
@@ -135,6 +129,5 @@ val tabs = listOf(
     BottomBarTab.Exchange,
     BottomBarTab.Search,
     BottomBarTab.AiPrediction,
-    BottomBarTab.Profile,
-    BottomBarTab.Login
+    BottomBarTab.Profile
 )

@@ -1,7 +1,9 @@
 package ui.screens.exchange.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
@@ -16,10 +18,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import domain.model.DataDao
+import ui.common.getCountryFlag
+import ui.common.getCountryName
+import ui.components.getDataRates
 import ui.screens.exchange.ExchangeState
 
 @Composable
@@ -27,74 +33,96 @@ internal fun FromDropDown(
     onFromChange: (String) -> Unit,
     exchangeState: ExchangeState
 ) = when (exchangeState) {
-    is ExchangeState.Success -> handleFromSuccess(
+    is ExchangeState.Success -> HandleFromDropDown(
         rates = exchangeState.rates,
         onFromChange = onFromChange
     )
 
-    is ExchangeState.Error -> {
-        println("Error: ${exchangeState.message}")
-    }
+    is ExchangeState.Error -> HandleFromDropDown(
+        rates = getDataRates(),
+        onError = exchangeState.message.ifEmpty { "Error while fetching rates" },
+        onFromChange = onFromChange,
+    )
 
-    else -> CircularProgressIndicator()
+    else -> HandleFromDropDown(
+        rates = getDataRates(),
+        onFromChange = onFromChange,
+        isLoading = true
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun handleFromSuccess(
+private fun HandleFromDropDown(
     modifier: Modifier = Modifier,
     rates: List<DataDao>,
-    onFromChange: (String) -> Unit
+    onError: String = "",
+    isLoading: Boolean = false,
+    onFromChange: (String) -> Unit,
 ) {
-    val options = rates.map { it.symbol }.sortedBy { it.take(2) }
+    val options = rates.map { it.symbol }.sortedBy { it }.map { symbol ->
+        val getSymbol = symbol.take(2)
+        with(getSymbol) {
+            val countryName = getCountryName()
+            val flag = getCountryFlag()
+            "$flag  $symbol - $countryName"
+        }
+    }
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[0]) }
     val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
 
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded },
-    ) {
-        TextField(
-            modifier = modifier
-                .fillMaxWidth()
-                .menuAnchor(),
-            readOnly = true,
-            value = selectedOptionText,
-            onValueChange = {},
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(
-                focusedContainerColor = containerColor,
-                unfocusedContainerColor = containerColor,
-                disabledContainerColor = containerColor,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            shape = RoundedCornerShape(10.dp)
-        )
-        ExposedDropdownMenu(
-            modifier = Modifier.background(MaterialTheme.colorScheme.surface),
+    Box {
+        ExposedDropdownMenuBox(
             expanded = expanded,
-            onDismissRequest = { expanded = false },
+            onExpandedChange = { expanded = !expanded },
         ) {
-            options.forEach { selectionOption ->
-                DropdownMenuItem(
-                    text = {
-                        Text(
-                            text = selectionOption,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
-                    },
-                    onClick = {
-                        selectedOptionText = selectionOption
-                        expanded = false
-                        onFromChange(selectionOption)
-                    },
-                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-                )
+            TextField(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .menuAnchor(),
+                readOnly = true,
+                value = onError.ifEmpty { selectedOptionText },
+                onValueChange = {},
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                colors = ExposedDropdownMenuDefaults.textFieldColors(
+                    focusedContainerColor = containerColor,
+                    unfocusedContainerColor = containerColor,
+                    disabledContainerColor = containerColor,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                ),
+                shape = RoundedCornerShape(10.dp)
+            )
+            ExposedDropdownMenu(
+                modifier = Modifier.background(MaterialTheme.colorScheme.surface),
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+            ) {
+                options.forEach { selectionOption ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = selectionOption,
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                        },
+                        onClick = {
+                            selectedOptionText = selectionOption
+                            expanded = false
+
+                            val selectedCountryCode = if (selectionOption.isNotEmpty()) selectionOption.split(" ")[2] else "AED"
+                            onFromChange(selectedCountryCode)
+                        },
+                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                    )
+                }
             }
         }
-    }
 
+        if (isLoading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center).size(24.dp))
+        }
+    }
 }

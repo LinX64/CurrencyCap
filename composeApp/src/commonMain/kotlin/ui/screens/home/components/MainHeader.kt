@@ -23,10 +23,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ui.components.BlurColumn
+import ui.screens.home.MainState
 import ui.theme.colors.CurrencyColors
 
 @Composable
-internal fun MainHeader() {
+internal fun MainHeader(
+    state: MainState
+) {
+    val isLoading = state is MainState.Loading
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -38,15 +42,13 @@ internal fun MainHeader() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             FirstColumn()
-            CircleCard()
+            CircleCard(isLoading = isLoading)
         }
 
         Spacer(modifier = Modifier.height(32.dp))
 
         PerformanceChart(
-            Modifier
-                .fillMaxWidth()
-                .height(60.dp),
+            modifier = if (isLoading) getPlaceHolder(Modifier.height(60.dp)) else Modifier,
             list = mockAssetInfo.lastDayChange
         )
 
@@ -74,7 +76,6 @@ private fun CircleButton(
     onClick: () -> Unit,
 ) {
     val isAll = text == "All"
-
     Card(
         modifier = Modifier
             .size(40.dp),
@@ -130,7 +131,9 @@ private fun FirstColumn() {
 }
 
 @Composable
-private fun CircleCard() {
+private fun CircleCard(
+    isLoading: Boolean
+) {
     val isColorRed = data.valueChange < 0
 
     BlurColumn {
@@ -138,9 +141,10 @@ private fun CircleCard() {
             modifier = Modifier.padding(6.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ChangeIcon(data.valueChange)
+            ChangeIcon(valueChange = data.valueChange, isLoading = isLoading)
 
             Text(
+                modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = "-42.64%",
                 color = if (isColorRed) Color.Red else Color.Green,
                 style = MaterialTheme.typography.bodySmall,

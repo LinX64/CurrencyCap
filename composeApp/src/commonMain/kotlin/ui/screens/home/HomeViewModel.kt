@@ -1,9 +1,9 @@
 package ui.screens.home
 
 import androidx.lifecycle.viewModelScope
-import data.repository.main.MainRepository
 import data.util.asResult
 import domain.model.DataDao
+import domain.repository.MainRepository
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -38,11 +38,21 @@ class MainViewModel(
             cryptoRatesFlow,
             topMoversFlow
         ) { iranianRate, cryptoRates, topMovers ->
-            setState { Success(iranianRate, cryptoRates, topMovers) }
+            setState {
+                when {
+                    cryptoRates.isEmpty() || topMovers.isEmpty() -> MainState.Loading
+                    else -> Success(
+                        iranianRate = iranianRate,
+                        topMovers = topMovers,
+                        cryptoRates = cryptoRates
+                    )
+                }
+            }
         }
             .asResult()
             .launchIn(viewModelScope)
     }
+    // TODO: fix me
 
     private fun filterByCrypto(rates: List<DataDao>) = rates
         .sortedBy { it.currencySymbol }

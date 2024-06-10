@@ -19,9 +19,9 @@ internal fun PerformanceChart(
 ) {
     val zipList: List<Pair<Float, Float>> = list.zipWithNext()
     Canvas(
-        modifier = modifier.fillMaxWidth()
-            .height(250.dp)
-            .padding(horizontal = 16.dp)
+        modifier = Modifier.fillMaxWidth()
+            .height(100.dp)
+            .padding(horizontal = 16.dp).then(modifier)
     ) {
         val max = list.maxOrNull() ?: 0f
         val min = list.minOrNull() ?: 0f

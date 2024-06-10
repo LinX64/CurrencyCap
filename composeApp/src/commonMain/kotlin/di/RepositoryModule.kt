@@ -1,9 +1,9 @@
 package di
 
-import data.repository.auth.AuthService
 import data.repository.auth.AuthServiceImpl
-import data.repository.main.MainRepository
 import data.repository.main.MainRepositoryImpl
+import domain.repository.AuthService
+import domain.repository.MainRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {

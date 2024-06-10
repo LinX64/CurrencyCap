@@ -17,12 +17,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import ui.common.getCountryFlag
 
 @Composable
-fun AmountField(
+internal fun AmountField(
     modifier: Modifier = Modifier,
+    maxLength: Int = 12,
+    countryCode: String,
     onAmountChange: (String) -> Unit,
-    maxLength: Int = 10,
 ) {
     var amount by remember { mutableStateOf("") }
     val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
@@ -31,14 +33,13 @@ fun AmountField(
         modifier = modifier.fillMaxWidth(),
         value = amount,
         onValueChange = {
-            if (it.length <= maxLength) {
+            if (it.isEmpty() || it.length <= maxLength) {
                 amount = it
                 onAmountChange(it)
             }
         },
         placeholder = { if (amount.isEmpty()) Text(text = "enter amount") },
-        leadingIcon = { LeadingIcon() },
-        trailingIcon = { TrailingIcon() },
+        leadingIcon = { LeadingIcon(countryCode) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Done
@@ -51,21 +52,13 @@ fun AmountField(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
         ),
-        shape = RoundedCornerShape(10.dp)
+        shape = RoundedCornerShape(10.dp),
+        visualTransformation = CurrencyVisualTransformation(countryCode)
     )
-    // TODO: Use VisualTransformation to format the amount
 }
 
 @Composable
-private fun LeadingIcon() {
-    val onFromChanged = "AED"
-    val flag = onFromChanged.ifEmpty { "🇦🇪" }
+private fun LeadingIcon(countryCode: String) {
+    val flag = if (countryCode.isEmpty()) "AE".getCountryFlag() else countryCode.getCountryFlag()
     Text(text = flag)
 }
-
-@Composable
-private fun TrailingIcon() {
-    val onFromChanged = "AED"
-    Text(text = if (onFromChanged.isNotEmpty()) onFromChanged else "AED")
-}
-

@@ -1,5 +1,9 @@
 package ui.common
 
+import platform.Foundation.NSLocale
+import platform.Foundation.currentLocale
+import platform.Foundation.localeIdentifier
+
 actual fun formatToPrice(price: Double): String {
     return "$price"
 //    val formatter = NSNumberFormatter()
@@ -16,4 +20,13 @@ actual fun formatCurrentTotal(currentTotal: Long): String {
 //    formatter.numberStyle = NSNumberFormatterDecimalStyle
 //    return formatter.stringFromNumber(NSNumber()) ?: "$currentTotal"
     return "$currentTotal"
+}
+
+actual fun String.getCountryName(): String {
+    return NSLocale.currentLocale.localeIdentifier.split("_")[1]
+}
+
+actual fun String.getCountryFlag(): String {
+    return ""
+    // TODO: Implement this
 }

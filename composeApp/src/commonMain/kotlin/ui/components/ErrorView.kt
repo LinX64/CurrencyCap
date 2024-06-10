@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
+import domain.model.DataDao
 import io.github.alexzhirkevich.compottie.LottieAnimation
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.LottieConstants
@@ -70,4 +71,23 @@ fun ErrorView(
             Text("Retry")
         }
     }
+}
+
+
+fun getDataRates(): List<DataDao> {
+    return listOf(
+        DataDao(
+            symbol = "USD",
+            rateUsd = "1.0",
+            currencySymbol = "USD",
+            id = "USD",
+            type = "USD"
+        ), DataDao(
+            symbol = "USD",
+            rateUsd = "1.0",
+            currencySymbol = "USD",
+            id = "USD",
+            type = "USD"
+        )
+    )
 }

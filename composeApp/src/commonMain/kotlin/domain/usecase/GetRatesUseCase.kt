@@ -1,7 +1,7 @@
 package domain.usecase
 
-import data.repository.main.MainRepository
 import domain.model.DataDao
+import domain.repository.MainRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow

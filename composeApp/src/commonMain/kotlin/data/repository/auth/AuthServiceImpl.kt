@@ -2,6 +2,7 @@ package data.repository.auth
 
 import data.model.User
 import dev.gitlive.firebase.auth.FirebaseAuth
+import domain.repository.AuthService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -60,5 +61,11 @@ class AuthServiceImpl(
 
     private suspend fun launchWithAwait(block: suspend () -> Unit) {
         scope.async { block() }.await()
+    }
+
+    sealed class AuthResponse {
+        data object Loading : AuthResponse()
+        data class Success(val uid: String) : AuthResponse()
+        data class Error(val message: String) : AuthResponse()
     }
 }

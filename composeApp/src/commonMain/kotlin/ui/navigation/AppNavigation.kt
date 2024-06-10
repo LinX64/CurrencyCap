@@ -22,7 +22,7 @@ import ui.screens.search.navigation.searchScreen
 internal fun AppNavigation(
     navController: NavHostController,
     padding: PaddingValues,
-    scrollBehavior: TopAppBarScrollBehavior,
+    scrollBehavior: TopAppBarScrollBehavior
 ) {
     NavHost(
         navController = navController,

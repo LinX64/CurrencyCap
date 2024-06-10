@@ -1,8 +1,8 @@
 package ui.screens.auth.login
 
 import androidx.lifecycle.viewModelScope
-import data.repository.auth.AuthResponse
-import data.repository.auth.AuthService
+import data.repository.auth.AuthServiceImpl.AuthResponse
+import domain.repository.AuthService
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
 import ui.screens.auth.login.LoginState.Error
