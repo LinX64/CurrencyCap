@@ -85,13 +85,15 @@ private fun ActionsMenu(
 
 @Composable
 private fun AppTitle(currentDestination: String) {
-    Text(
-        text = currentDestination,
-        maxLines = 1,
-        style = MaterialTheme.typography.titleLarge,
-        color = Color.White,
-        fontWeight = FontWeight.Bold
-    )
+    if (currentDestination != NavRoutes.EXCHANGE) {
+        Text(
+            text = currentDestination,
+            maxLines = 1,
+            style = MaterialTheme.typography.titleLarge,
+            color = Color.White,
+            fontWeight = FontWeight.Bold
+        )
+    }
 }
 
 @Composable

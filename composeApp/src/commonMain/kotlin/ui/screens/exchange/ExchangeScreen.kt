@@ -87,7 +87,7 @@ private fun ExchangeCard(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Currency Exchange",
+                    text = "Currency Converter",
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface
                 )
