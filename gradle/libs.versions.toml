@@ -29,7 +29,7 @@ firebaseBom = "33.1.0"
 firebaseCrashlyticsPlugin = "3.0.1"
 firebasePerfPlugin = "1.4.2"
 
-firebaseAuth = "1.11.1"
+firebaseAuth = "1.12.0"
 gmsPlugin = "4.4.2"
 
 # Network
