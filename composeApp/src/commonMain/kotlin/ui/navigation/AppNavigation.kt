@@ -58,7 +58,11 @@ internal fun handleNavigation(
     tab: BottomBarTab,
     isSheetOpen: MutableState<Boolean>
 ) {
-    isSheetOpen.value = tab.route == NavRoutes.AI_PREDICTION
+    val isAiPredictionTab = tab.route == NavRoutes.AI_PREDICTION
+    isSheetOpen.value = isAiPredictionTab
+    if (isAiPredictionTab) {
+        return
+    }
 
     navController.navigate(tab.route) {
         navController.graph.startDestinationRoute?.let { startDestinationRoute ->

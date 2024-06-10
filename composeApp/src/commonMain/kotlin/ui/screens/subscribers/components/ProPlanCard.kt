@@ -19,11 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import ui.components.BlurColumn
+import ui.components.ClickableCard
 
 @Composable
 internal fun ProPlanCard(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isProCardSelected: Boolean = false,
+    onProPlanClick: () -> Unit
 ) {
     val features = listOf(
         "Instant real-time market data",
@@ -31,7 +33,7 @@ internal fun ProPlanCard(
         "Premium customer support"
     )
 
-    BlurColumn(modifier = modifier.padding(8.dp)) {
+    ClickableCard(onClick = onProPlanClick, isCardSelected = isProCardSelected) {
         Column(
             modifier = modifier
                 .padding(16.dp)
@@ -44,7 +46,7 @@ internal fun ProPlanCard(
             ) {
                 Icon(
                     imageVector = Icons.Default.Star,
-                    contentDescription = "Pro Plan",
+                    contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary
                 )
 

@@ -13,17 +13,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import ui.components.BlurColumn
+import ui.components.ClickableCard
 
 @Composable
 internal fun FreePlanCard(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isFreeCardSelected: Boolean,
+    onFreePlanClick: () -> Unit
 ) {
     val features = listOf(
         "Basic real-time market data",
         "Basic news and alerts"
     )
-    BlurColumn(modifier = modifier.padding(8.dp)) {
+    ClickableCard(onClick = onFreePlanClick, isCardSelected = isFreeCardSelected) {
         Column(
             modifier = modifier
                 .padding(horizontal = 16.dp, vertical = 16.dp),

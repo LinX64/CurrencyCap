@@ -19,7 +19,7 @@ import io.github.alexzhirkevich.compottie.LottieAnimation
 import io.github.alexzhirkevich.compottie.LottieComposition
 
 @Composable
-internal fun SubscribersOnly(
+internal fun PremiumAccessOnly(
     modifier: Modifier,
     composition: LottieComposition?,
     progress: Float
