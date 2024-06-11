@@ -13,36 +13,96 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.client.auth.components.PasswordTextField
 import di.koinViewModel
+import kotlinx.coroutines.flow.onEach
+import ui.components.BaseBlurDialog
 import ui.components.BaseCenterColumn
 import ui.screens.auth.login.LoginViewEvent.OnEmailChanged
+import ui.screens.auth.login.LoginViewEvent.OnErrorDialogDismissed
+import ui.screens.auth.login.LoginViewEvent.OnLoginClick
+import ui.screens.auth.login.LoginViewEvent.OnPasswordChanged
 import ui.screens.auth.login.components.EmailTextField
 
 @Composable
 internal fun LoginScreen(
     padding: PaddingValues = PaddingValues(16.dp),
-    loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>()
+    loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
+    onLoginSuccess: () -> Unit
 ) {
+    val state by loginViewModel.viewState.collectAsState()
+    val email = loginViewModel.newEmail.collectAsState()
+    val password = loginViewModel.newPassword.collectAsState()
+
     BaseCenterColumn(
-        modifier = Modifier.fillMaxSize()
-            .padding(padding),
+        modifier = Modifier.fillMaxSize().padding(padding)
     ) {
         LoginForm(
             onEmailChanged = { loginViewModel.handleEvent(OnEmailChanged(it)) },
-            onPasswordChanged = { loginViewModel.handleEvent(OnEmailChanged(it)) }
+            onPasswordChanged = { loginViewModel.handleEvent(OnPasswordChanged(it)) },
+            onLoginClick = { loginViewModel.handleEvent(OnLoginClick(email.value, password.value)) }
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        when (state) {
+            is LoginState.Loading -> CircularProgressIndicator()
+            is LoginState.Error -> OnErrorDialog(
+                message = (state as LoginState.Error).message,
+                onDismissRequest = { loginViewModel.handleEvent(OnErrorDialogDismissed) }
+            )
+
+            else -> Unit
+        }
     }
 
     Column {
         MadeWithLove()
+    }
+
+    LaunchedEffect(key1 = "side_effects") {
+        loginViewModel.effect.onEach { sideEffect ->
+            when (sideEffect) {
+                is LoginNavigationEffect.LoginSuccess -> onLoginSuccess()
+            }
+        }.collect {}
+    }
+}
+
+@Composable
+private fun OnErrorDialog(message: String, onDismissRequest: () -> Unit) {
+    BaseBlurDialog(onDismissRequest = onDismissRequest) {
+        Text(
+            text = message,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = onDismissRequest,
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(10.dp),
+        ) {
+            Text(
+                text = "Dismiss",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.surface
+            )
+
+        }
     }
 }
 
@@ -50,7 +110,8 @@ internal fun LoginScreen(
 private fun LoginForm(
     modifier: Modifier = Modifier,
     onEmailChanged: (String) -> Unit,
-    onPasswordChanged: (String) -> Unit
+    onPasswordChanged: (String) -> Unit,
+    onLoginClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -96,7 +157,7 @@ private fun LoginForm(
                 Spacer(modifier = modifier.height(32.dp))
 
                 Button(
-                    onClick = { },
+                    onClick = onLoginClick,
                     modifier = modifier
                         .fillMaxWidth()
                         .height(52.dp),

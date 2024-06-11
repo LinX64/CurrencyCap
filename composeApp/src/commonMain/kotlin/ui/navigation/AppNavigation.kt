@@ -30,13 +30,13 @@ internal fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.HOME,
+        startDestination = NavRoutes.LOGIN,
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
         landingScreen(navController = navController)
-        authGraph(padding)
+        authGraph(padding = padding, navController = navController)
 
         homeScreen(padding)
         searchScreen(padding)
@@ -47,9 +47,10 @@ internal fun AppNavigation(
 }
 
 private fun NavGraphBuilder.authGraph(
-    padding: PaddingValues
+    padding: PaddingValues,
+    navController: NavHostController
 ) {
-    loginScreen(padding)
+    loginScreen(padding = padding, navController = navController)
     registerScreen(padding)
 }
 

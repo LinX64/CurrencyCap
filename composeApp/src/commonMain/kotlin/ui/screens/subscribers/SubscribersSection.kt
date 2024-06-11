@@ -2,17 +2,12 @@ package ui.screens.subscribers
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -86,25 +81,28 @@ internal fun SubscribersSection(
             }
         }
 
-        item { SubscribeButton() }
+        item { SubscribeButton(onSubscribeClick = {}, isPremium = isPremium) }
     }
 }
 
 private enum class Plan {
-    FREE, PRO
+    FREE,
+    PRO
 }
 
 @Composable
 private fun SubscribeButton(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onSubscribeClick: () -> Unit,
+    isPremium: Boolean
 ) {
     Button(
         modifier = modifier.fillMaxWidth()
             .padding(16.dp)
             .height(52.dp),
-        onClick = { /* TODO */ },
+        onClick = onSubscribeClick,
         shape = RoundedCornerShape(20.dp),
-        enabled = true // TODO: Implement this
+        enabled = isPremium
     ) {
         Row(
             modifier = modifier.padding(horizontal = 32.dp),
@@ -114,14 +112,6 @@ private fun SubscribeButton(
                 text = "Subscribe",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.surface
-            )
-
-            Spacer(modifier = modifier.width(16.dp))
-
-            Icon(
-                imageVector = Icons.Default.ChevronRight,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.surface
             )
         }
     }

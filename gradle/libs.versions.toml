@@ -13,7 +13,7 @@ androidx-test-junit = "1.1.5"
 compose-plugin = "1.6.11"
 junit = "4.13.2"
 kotlin = "2.0.0"
-koin = "3.6.0-wasm-alpha2"
+koin = "3.6.0-Beta4"
 koin-compose = "1.1.5"
 lifecycleViewModel = "2.8.1"
 navigationCompose = "2.7.0-alpha07"
@@ -54,7 +54,6 @@ firebase-cloud-messaging = { group = "com.google.firebase", name = "firebase-mes
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 firebase-performance = { group = "com.google.firebase", name = "firebase-perf-ktx" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
-
 firebase-auth = { module = "dev.gitlive:firebase-auth", version.ref = "firebaseAuth" }
 
 # Coil

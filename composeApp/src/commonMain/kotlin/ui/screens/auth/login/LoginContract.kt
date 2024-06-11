@@ -8,22 +8,17 @@ sealed interface LoginViewEvent {
         val email: String,
         val password: String
     ) : LoginViewEvent
+
+    data object OnErrorDialogDismissed : LoginViewEvent
 }
 
 sealed interface LoginState {
     data object Loading : LoginState
-
-    data class Content(
-        val email: String = "",
-        val password: String = ""
-    ) : LoginState
-
     data class Success(val uid: String) : LoginState
     data class Error(val message: String) : LoginState
 }
 
 sealed interface LoginNavigationEffect {
-    data object LoginSuccess : LoginNavigationEffect
-    data class LoginError(val message: String) : LoginNavigationEffect
+    data class LoginSuccess(val uid: String) : LoginNavigationEffect
 }
 
