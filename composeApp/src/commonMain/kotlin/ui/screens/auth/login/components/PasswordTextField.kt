@@ -1,4 +1,4 @@
-package com.client.auth.components
+package ui.screens.auth.login.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 internal fun PasswordTextField(
     modifier: Modifier = Modifier,
-    isPasswordValid: (Boolean) -> Unit,
     onPasswordChanged: (String) -> Unit
 ) {
     val password = rememberSaveable { mutableStateOf("") }
@@ -43,12 +42,7 @@ internal fun PasswordTextField(
         value = password.value,
         onValueChange = {
             password.value = it
-            if (it.length >= 6) {
-                onPasswordChanged(it)
-                isPasswordValid(true)
-            } else {
-                isPasswordValid(false)
-            }
+            onPasswordChanged(it)
         },
         colors = TextFieldDefaults.colors(
             focusedContainerColor = containerColor,

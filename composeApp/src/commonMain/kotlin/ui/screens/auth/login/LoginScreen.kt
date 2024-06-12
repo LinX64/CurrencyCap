@@ -24,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.client.auth.components.PasswordTextField
 import di.koinViewModel
 import kotlinx.coroutines.flow.onEach
 import ui.components.BaseBlurDialog
@@ -34,16 +33,17 @@ import ui.screens.auth.login.LoginViewEvent.OnErrorDialogDismissed
 import ui.screens.auth.login.LoginViewEvent.OnLoginClick
 import ui.screens.auth.login.LoginViewEvent.OnPasswordChanged
 import ui.screens.auth.login.components.EmailTextField
+import ui.screens.auth.login.components.PasswordTextField
 
 @Composable
 internal fun LoginScreen(
-    padding: PaddingValues = PaddingValues(16.dp),
     loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
+    padding: PaddingValues = PaddingValues(16.dp),
     onLoginSuccess: () -> Unit
 ) {
     val state by loginViewModel.viewState.collectAsState()
-    val email = loginViewModel.newEmail.collectAsState()
-    val password = loginViewModel.newPassword.collectAsState()
+    val email by loginViewModel.newEmail.collectAsState()
+    val password by loginViewModel.newPassword.collectAsState()
 
     BaseCenterColumn(
         modifier = Modifier.fillMaxSize().padding(padding)
@@ -51,7 +51,7 @@ internal fun LoginScreen(
         LoginForm(
             onEmailChanged = { loginViewModel.handleEvent(OnEmailChanged(it)) },
             onPasswordChanged = { loginViewModel.handleEvent(OnPasswordChanged(it)) },
-            onLoginClick = { loginViewModel.handleEvent(OnLoginClick(email.value, password.value)) }
+            onLoginClick = { loginViewModel.handleEvent(OnLoginClick(email, password)) }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -81,27 +81,35 @@ internal fun LoginScreen(
 }
 
 @Composable
-private fun OnErrorDialog(message: String, onDismissRequest: () -> Unit) {
+private fun OnErrorDialog(
+    message: String,
+    onDismissRequest: () -> Unit
+) {
     BaseBlurDialog(onDismissRequest = onDismissRequest) {
-        Text(
-            text = message,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = onDismissRequest,
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(10.dp),
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
         ) {
             Text(
-                text = "Dismiss",
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.surface
+                text = message,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface
             )
 
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = onDismissRequest,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(10.dp),
+            ) {
+                Text(
+                    text = "Dismiss",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.surface
+                )
+            }
         }
     }
 }
@@ -143,14 +151,12 @@ private fun LoginForm(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 EmailTextField(
-                    isEmailValid = { },
                     onEmailChanged = onEmailChanged
                 )
 
                 Spacer(modifier = modifier.height(10.dp))
 
                 PasswordTextField(
-                    isPasswordValid = { },
                     onPasswordChanged = onPasswordChanged
                 )
 

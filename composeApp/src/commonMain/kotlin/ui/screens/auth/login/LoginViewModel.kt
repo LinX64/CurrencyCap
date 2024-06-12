@@ -11,10 +11,11 @@ import ui.screens.auth.login.LoginState.Loading
 import ui.screens.auth.login.LoginViewEvent.OnEmailChanged
 import ui.screens.auth.login.LoginViewEvent.OnLoginClick
 import ui.screens.auth.login.LoginViewEvent.OnPasswordChanged
+import util.validateEmail
 
 internal class LoginViewModel(
     private val authService: AuthService
-) : MviViewModel<LoginViewEvent, LoginState, LoginNavigationEffect>(Loading) {
+) : MviViewModel<LoginViewEvent, LoginState, LoginNavigationEffect>(LoginState.Idle) {
 
     val newEmail: MutableStateFlow<String> = MutableStateFlow("")
     val newPassword: MutableStateFlow<String> = MutableStateFlow("")
@@ -24,13 +25,23 @@ internal class LoginViewModel(
             is OnLoginClick -> authenticate(email = event.email, password = event.password)
             is OnEmailChanged -> newEmail.value = event.email
             is OnPasswordChanged -> newPassword.value = event.password
-            LoginViewEvent.OnErrorDialogDismissed -> TODO()
+            LoginViewEvent.OnErrorDialogDismissed -> setState { LoginState.Idle }
         }
     }
 
     private fun authenticate(email: String, password: String) {
-        if (email.isEmpty() || password.isEmpty()) {
-            setState { Error("Email and password must not be empty") }
+        if (email.isEmpty()) {
+            setState { Error("Email must not be empty") }
+            return
+        }
+
+        if (password.isEmpty()) {
+            setState { Error("Password must not be empty") }
+            return
+        }
+
+        if (email.validateEmail().not()) {
+            setState { Error("Invalid email format") }
             return
         }
 

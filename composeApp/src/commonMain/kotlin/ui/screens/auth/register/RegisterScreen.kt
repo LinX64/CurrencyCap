@@ -78,7 +78,6 @@ private fun RegisterForm(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 EmailTextField(
-                    isEmailValid = { },
                     onEmailChanged = onEmailChanged
                 )
 

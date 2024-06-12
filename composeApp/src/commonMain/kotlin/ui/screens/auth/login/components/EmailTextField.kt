@@ -22,12 +22,10 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import util.validateEmail
 
 @Composable
 internal fun EmailTextField(
     modifier: Modifier = Modifier,
-    isEmailValid: (Boolean) -> Unit,
     onEmailChanged: (String) -> Unit
 ) {
     val email = rememberSaveable { mutableStateOf("") }
@@ -39,13 +37,7 @@ internal fun EmailTextField(
         value = email.value,
         onValueChange = {
             email.value = it
-            if (it.validateEmail()) {
-                onEmailChanged(it)
-                isEmailValid(true)
-            } else {
-                onEmailChanged("")
-                isEmailValid(false)
-            }
+            onEmailChanged(it)
         },
         colors = TextFieldDefaults.colors(
             focusedContainerColor = containerColor,
