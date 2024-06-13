@@ -17,7 +17,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,9 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import di.koinViewModel
-import kotlinx.coroutines.flow.onEach
 import ui.components.BaseBlurDialog
 import ui.components.BaseCenterColumn
+import ui.components.HandleNavigationEffect
 import ui.screens.auth.login.LoginViewEvent.OnEmailChanged
 import ui.screens.auth.login.LoginViewEvent.OnErrorDialogDismissed
 import ui.screens.auth.login.LoginViewEvent.OnLoginClick
@@ -71,12 +70,10 @@ internal fun LoginScreen(
         MadeWithLove()
     }
 
-    LaunchedEffect(key1 = "side_effects") {
-        loginViewModel.effect.onEach { sideEffect ->
-            when (sideEffect) {
-                is LoginNavigationEffect.LoginSuccess -> onLoginSuccess()
-            }
-        }.collect {}
+    HandleNavigationEffect(loginViewModel) { effect ->
+        when (effect) {
+            is LoginNavigationEffect.LoginSuccess -> onLoginSuccess()
+        }
     }
 }
 
