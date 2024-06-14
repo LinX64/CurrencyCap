@@ -4,6 +4,10 @@ import domain.model.DataDao
 
 sealed interface SearchEvent {
     data class OnSearchTextChanged(val query: String) : SearchEvent
+    data class OnSearchClicked(val query: String) : SearchEvent
+    data class OnSearchResultClicked(val dataDao: DataDao) : SearchEvent
+    data object OnSearchCleared : SearchEvent
+    data object OnSearchCloseClicked : SearchEvent
 }
 
 sealed interface SearchNavigationEffect

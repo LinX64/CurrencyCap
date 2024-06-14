@@ -15,17 +15,25 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import ui.common.MviViewModel
+import ui.screens.search.SearchEvent.OnSearchCleared
+import ui.screens.search.SearchEvent.OnSearchClicked
+import ui.screens.search.SearchEvent.OnSearchCloseClicked
+import ui.screens.search.SearchEvent.OnSearchResultClicked
 import ui.screens.search.SearchEvent.OnSearchTextChanged
 
 class SearchViewModel(
     private val mainRepository: MainRepository
 ) : MviViewModel<SearchEvent, SearchState, SearchNavigationEffect>(SearchState.Idle) {
 
-    private val searchQuery = MutableStateFlow("")
+    private val searchQuery: MutableStateFlow<String?> = MutableStateFlow(null)
 
     override fun handleEvent(event: SearchEvent) {
         when (event) {
             is OnSearchTextChanged -> search(event.query)
+            is OnSearchClicked -> TODO()
+            is OnSearchResultClicked -> TODO()
+            OnSearchCloseClicked -> TODO()
+            OnSearchCleared -> TODO()
         }
     }
 
