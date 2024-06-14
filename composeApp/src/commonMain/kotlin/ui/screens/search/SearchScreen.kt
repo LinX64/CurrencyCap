@@ -41,8 +41,7 @@ internal fun SearchScreen(
     var expanded by rememberSaveable { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier.fillMaxSize()
-            .padding(padding),
+        modifier = Modifier.fillMaxSize().padding(padding),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
@@ -66,7 +65,7 @@ internal fun SearchScreen(
                 LazyColumn(
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.semantics { traversalIndex = 1f },
+                    modifier = Modifier.semantics { traversalIndex = 1f }
                 ) {
                     if (state is SearchState.Success) {
                         val result = (state as SearchState.Success).resultList
@@ -78,9 +77,7 @@ internal fun SearchScreen(
 
                     if (state is SearchState.Loading) {
                         item {
-                            CenteredColumn {
-                                CircularProgressIndicator()
-                            }
+                            CenteredColumn { CircularProgressIndicator() }
                         }
                     }
                 }
