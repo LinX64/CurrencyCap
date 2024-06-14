@@ -4,8 +4,8 @@ import domain.model.DataDao
 import domain.model.RateDao
 
 sealed interface MainViewEvent {
-    data object LoadRates : MainViewEvent
-    data object RefreshRates : MainViewEvent
+    data object OnLoadRates : MainViewEvent
+    data object OnRefreshRates : MainViewEvent
 }
 
 sealed interface MainNavigationEffect

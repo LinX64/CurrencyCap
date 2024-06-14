@@ -43,6 +43,7 @@ internal fun SubscribersSection(
     LaunchedEffect(Unit) {
         bytes = Res.readBytes("files/premium.json")
     }
+
     LazyColumn(modifier = modifier.padding(16.dp)) {
         item {
             PremiumAccessOnly(

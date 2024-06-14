@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
 import ui.screens.home.MainState.Success
-import ui.screens.home.MainViewEvent.LoadRates
-import ui.screens.home.MainViewEvent.RefreshRates
+import ui.screens.home.MainViewEvent.OnLoadRates
+import ui.screens.home.MainViewEvent.OnRefreshRates
 
 private const val CRYPTO = "crypto"
 
@@ -24,8 +24,8 @@ class MainViewModel(
     }
 
     override fun handleEvent(event: MainViewEvent) = when (event) {
-        is LoadRates -> loadCombinedRates()
-        is RefreshRates -> refreshRates()
+        is OnLoadRates -> loadCombinedRates()
+        is OnRefreshRates -> refreshRates()
     }
 
     private fun loadCombinedRates() {

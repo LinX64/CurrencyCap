@@ -76,6 +76,8 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
 
+            //implementation(libs.mvi.compose.common)
+
             implementation(libs.bundles.ktor)
             implementation(libs.ktor.client.logging)
 
