@@ -34,99 +34,108 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
+import ui.navigation.NavRoutes
 
 @Composable
 internal fun BottomNavigationBar(
     hazeState: HazeState,
-    onTabSelected: (BottomBarTab) -> Unit
+    onTabSelected: (BottomBarTab) -> Unit,
+    currentDestination: String
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
 
-    Box(
-        modifier = Modifier
-            .padding(vertical = 24.dp, horizontal = 64.dp)
-            .fillMaxWidth()
-            .height(64.dp)
-            .hazeChild(state = hazeState, shape = CircleShape)
-            .border(
-                width = 2.dp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),
-                shape = CircleShape
-            )
-    ) {
-        BottomBarTabs(
-            tabs,
-            selectedTab = selectedTabIndex,
-            onTabSelected = {
-                selectedTabIndex = tabs.indexOf(it)
-                onTabSelected(it)
-            }
-        )
-
-        val animatedSelectedTabIndex by animateFloatAsState(
-            targetValue = selectedTabIndex.toFloat(), label = "animatedSelectedTabIndex",
-            animationSpec = spring(
-                stiffness = Spring.StiffnessLow,
-                dampingRatio = Spring.DampingRatioLowBouncy,
-            )
-        )
-
-        val animatedColor by animateColorAsState(
-            targetValue = tabs[selectedTabIndex].color,
-            label = "animatedColor",
-            animationSpec = spring(
-                stiffness = Spring.StiffnessLow,
-            )
-        )
-
-        Canvas(
+    if (isNotLoggedIn(currentDestination)) {
+        Box(
             modifier = Modifier
-                .fillMaxSize()
-                .clip(CircleShape)
-                .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
+                .padding(vertical = 24.dp, horizontal = 64.dp)
+                .fillMaxWidth()
+                .height(64.dp)
+                .hazeChild(state = hazeState, shape = CircleShape)
+                .border(
+                    width = 2.dp,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),
+                    shape = CircleShape
+                )
         ) {
-            val tabWidth = size.width / tabs.size
-            drawCircle(
-                color = animatedColor.copy(alpha = .6f),
-                radius = size.height / 2,
-                center = Offset(
-                    (tabWidth * animatedSelectedTabIndex) + tabWidth / 2,
-                    size.height / 2
+            BottomBarTabs(
+                tabs,
+                selectedTab = selectedTabIndex,
+                onTabSelected = {
+                    selectedTabIndex = tabs.indexOf(it)
+                    onTabSelected(it)
+                }
+            )
+
+            val animatedSelectedTabIndex by animateFloatAsState(
+                targetValue = selectedTabIndex.toFloat(), label = "animatedSelectedTabIndex",
+                animationSpec = spring(
+                    stiffness = Spring.StiffnessLow,
+                    dampingRatio = Spring.DampingRatioLowBouncy,
                 )
             )
-        }
 
-        Canvas(
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(CircleShape)
-        ) {
-            val path = Path().apply {
-                addRoundRect(RoundRect(size.toRect(), CornerRadius(size.height)))
-            }
-            val length = PathMeasure().apply { setPath(path, false) }.length
-            val tabWidth = size.width / tabs.size
+            val animatedColor by animateColorAsState(
+                targetValue = tabs[selectedTabIndex].color,
+                label = "animatedColor",
+                animationSpec = spring(
+                    stiffness = Spring.StiffnessLow,
+                )
+            )
 
-            drawPath(
-                path,
-                brush = Brush.horizontalGradient(
-                    colors = listOf(
-                        animatedColor.copy(alpha = 0f),
-                        animatedColor.copy(alpha = 1f),
-                        animatedColor.copy(alpha = 1f),
-                        animatedColor.copy(alpha = 0f),
-                    ),
-                    startX = tabWidth * animatedSelectedTabIndex,
-                    endX = tabWidth * (animatedSelectedTabIndex + 1),
-                ),
-                style = Stroke(
-                    width = 6f,
-                    pathEffect = PathEffect.dashPathEffect(
-                        intervals = floatArrayOf(length / 2, length)
+            Canvas(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(CircleShape)
+                    .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
+            ) {
+                val tabWidth = size.width / tabs.size
+                drawCircle(
+                    color = animatedColor.copy(alpha = .6f),
+                    radius = size.height / 2,
+                    center = Offset(
+                        (tabWidth * animatedSelectedTabIndex) + tabWidth / 2,
+                        size.height / 2
                     )
                 )
-            )
+            }
+
+            Canvas(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(CircleShape)
+            ) {
+                val path = Path().apply {
+                    addRoundRect(RoundRect(size.toRect(), CornerRadius(size.height)))
+                }
+                val length = PathMeasure().apply { setPath(path, false) }.length
+                val tabWidth = size.width / tabs.size
+
+                drawPath(
+                    path,
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(
+                            animatedColor.copy(alpha = 0f),
+                            animatedColor.copy(alpha = 1f),
+                            animatedColor.copy(alpha = 1f),
+                            animatedColor.copy(alpha = 0f),
+                        ),
+                        startX = tabWidth * animatedSelectedTabIndex,
+                        endX = tabWidth * (animatedSelectedTabIndex + 1),
+                    ),
+                    style = Stroke(
+                        width = 6f,
+                        pathEffect = PathEffect.dashPathEffect(
+                            intervals = floatArrayOf(length / 2, length)
+                        )
+                    )
+                )
+            }
         }
     }
 }
 
+fun isNotLoggedIn(currentDestination: String): Boolean {
+    return (currentDestination != NavRoutes.LANDING)
+            && (currentDestination != NavRoutes.LOGIN)
+            && (currentDestination != NavRoutes.REGISTER)
+}

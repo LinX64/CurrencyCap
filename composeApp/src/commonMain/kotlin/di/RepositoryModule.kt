@@ -9,9 +9,9 @@ import domain.repository.MainRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<MainRepository> { MainRepositoryImpl(get()) }
+    single<MainRepository> { MainRepositoryImpl(get(), get()) }
 
-    // Temporary solution for the crash of Koin
+    // Temporary solution for the crash with Koin
     single { Firebase.auth }
     single<AuthService> { AuthServiceImpl(get()) }
 }

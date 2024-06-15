@@ -47,6 +47,7 @@ internal fun App() {
         bottomBar = {
             BottomNavigationBar(
                 hazeState = hazeState,
+                currentDestination = currentDestination,
                 onTabSelected = { tab ->
                     handleNavigation(
                         navController = navController,

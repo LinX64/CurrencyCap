@@ -85,7 +85,7 @@ private fun ActionsMenu(
 
 @Composable
 private fun AppTitle(currentDestination: String) {
-    if (currentDestination != NavRoutes.EXCHANGE) {
+    if (isNotLoggedIn(currentDestination)) {
         Text(
             text = currentDestination,
             maxLines = 1,
@@ -101,7 +101,7 @@ private fun AppNavigationIcon(
     navController: NavHostController,
     currentDestination: String
 ) {
-    if (currentDestination != NavRoutes.HOME) {
+    if (isNotLoggedIn(currentDestination)) {
         IconButton(onClick = { navController.popBackStack() }) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
