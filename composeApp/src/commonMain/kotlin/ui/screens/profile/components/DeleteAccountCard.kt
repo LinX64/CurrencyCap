@@ -31,7 +31,9 @@ import ui.components.BlurColumn
 import ui.components.DottedShape
 
 @Composable
-internal fun DeleteAccountCard() {
+internal fun DeleteAccountCard(
+    onDeleteAccountClicked: () -> Unit
+) {
     BlurColumn(
         modifier = Modifier.padding(horizontal = 16.dp)
     ) {
@@ -62,7 +64,7 @@ internal fun DeleteAccountCard() {
 
             Button(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { /* Handle click */ },
+                onClick = { onDeleteAccountClicked() },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.error,
                     contentColor = MaterialTheme.colorScheme.onSurface

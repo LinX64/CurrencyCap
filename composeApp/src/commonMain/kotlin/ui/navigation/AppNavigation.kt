@@ -30,7 +30,7 @@ internal fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.HOME,
+        startDestination = NavRoutes.LOGIN,
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)

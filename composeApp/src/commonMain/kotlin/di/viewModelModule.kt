@@ -6,6 +6,7 @@ import ui.screens.auth.login.LoginViewModel
 import ui.screens.auth.register.RegisterViewModel
 import ui.screens.exchange.ExchangeViewModel
 import ui.screens.home.MainViewModel
+import ui.screens.profile.ProfileViewModel
 import ui.screens.search.SearchViewModel
 
 val viewModelModule = module {
@@ -15,6 +16,7 @@ val viewModelModule = module {
     single { SearchViewModel(get()) }
     single { LoginViewModel(get()) }
     single { RegisterViewModel(get()) }
+    single { ProfileViewModel(get()) }
 }
 
 val previewModule = module {
