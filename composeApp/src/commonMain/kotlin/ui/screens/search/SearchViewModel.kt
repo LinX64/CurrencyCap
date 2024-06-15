@@ -30,7 +30,7 @@ class SearchViewModel(
     override fun handleEvent(event: SearchEvent) {
         when (event) {
             is OnSearchTextChanged -> search(event.query)
-            is OnSearchClicked -> TODO()
+            is OnSearchClicked -> search(searchQuery.value ?: "")
             is OnSearchResultClicked -> TODO()
             OnSearchCloseClicked -> TODO()
             OnSearchCleared -> TODO()
@@ -44,12 +44,13 @@ class SearchViewModel(
             debounce(500)
                 .filterNotNull()
                 .distinctUntilChanged()
-                .flatMapLatest { flowOf(makeCall()) }
+                .flatMapLatest { flowOf(getCoinCapRates()) }
                 .launchIn(viewModelScope)
         }
     }
 
-    private fun makeCall() {
+    // TODO: Maybe try to implement this in a different way
+    private fun getCoinCapRates() {
         mainRepository.getCoinCapRates()
             .asResult()
             .map { result ->
@@ -59,5 +60,6 @@ class SearchViewModel(
                     NetworkResult.Loading -> setState { SearchState.Loading }
                 }
             }
+            .launchIn(viewModelScope)
     }
 }

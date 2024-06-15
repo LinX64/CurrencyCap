@@ -60,7 +60,7 @@ internal fun ProPlanCard(
                 )
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
             Text(
                 text = "Upgrade for Premium Features",

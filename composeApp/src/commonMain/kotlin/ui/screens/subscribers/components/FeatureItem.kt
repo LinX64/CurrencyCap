@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 internal fun FeatureItem(text: String) {
     Row(
-        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+        modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
         horizontalArrangement = Arrangement.Center
     ) {
         Icon(

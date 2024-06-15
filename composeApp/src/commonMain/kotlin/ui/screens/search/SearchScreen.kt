@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SearchBar
 import androidx.compose.runtime.Composable
@@ -24,7 +24,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
 import di.koinViewModel
-import ui.components.CenteredColumn
+import domain.model.DataDao
+import ui.components.ErrorView
 import ui.screens.search.components.LeadingIcon
 import ui.screens.search.components.SearchItem
 import ui.screens.search.components.SearchPlaceHolder
@@ -55,7 +56,10 @@ internal fun SearchScreen(
                     .semantics { traversalIndex = 0f },
                 active = expanded,
                 onActiveChange = { expanded = it },
-                onQueryChange = { text = it },
+                onQueryChange = {
+                    text = it
+                    searchViewModel.handleEvent(SearchEvent.OnSearchTextChanged(it))
+                },
                 query = text,
                 placeholder = { SearchPlaceHolder() },
                 onSearch = { expanded = false },
@@ -67,21 +71,42 @@ internal fun SearchScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier.semantics { traversalIndex = 1f }
                 ) {
-                    if (state is SearchState.Success) {
-                        val result = (state as SearchState.Success).resultList
-                        items(result.size) {
-                            val data = result[it]
-                            SearchItem(dataDao = data)
-                        }
-                    }
-
-                    if (state is SearchState.Loading) {
-                        item {
-                            CenteredColumn { CircularProgressIndicator() }
-                        }
-                    }
+                    searchResultContent(state)
                 }
             }
         }
     }
+}
+
+private fun LazyListScope.searchResultContent(state: SearchState) = when (state) {
+    is SearchState.Loading -> {
+        items(5) {
+            SearchItem(
+                rate = DataDao(
+                    symbol = "USD",
+                    rateUsd = "1.0",
+                    currencySymbol = "USD",
+                    id = "USD",
+                    type = "USD"
+                ),
+                isLoading = true
+            )
+        }
+    }
+
+    is SearchState.Success -> {
+        val result = state.resultList
+        items(result.size) {
+            val data = result[it]
+            SearchItem(rate = data)
+        }
+    }
+
+    is SearchState.Error -> {
+        item {
+            ErrorView(message = state.message)
+        }
+    }
+
+    else -> Unit
 }
