@@ -69,6 +69,13 @@ internal fun ProPlanCard(
                 textAlign = TextAlign.Center
             )
 
+            Text(
+                text = "Only \$3.99/month",
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Center
+            )
+
             Spacer(modifier = Modifier.height(12.dp))
 
             for (feature in features) {
