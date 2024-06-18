@@ -1,6 +1,7 @@
 package ui.screens.auth.login
 
 import androidx.lifecycle.viewModelScope
+import data.repository.auth.AuthServiceImpl.AuthState
 import domain.repository.AuthService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -47,11 +48,10 @@ internal class LoginViewModel(
         }
 
         viewModelScope.launch {
-            val user = authService.authenticate(email, password).user
-            if (user?.uid?.isNotBlank() == true) {
-                setEffect(NavigateToMarketOverview(user.uid))
-            } else {
-                setState { Error("Could not authenticate user!") }
+            val authState = authService.authenticate(email, password)
+            when (authState) {
+                is AuthState.Success -> setEffect(NavigateToMarketOverview(authService.currentUserId))
+                is AuthState.Error -> setState { Error("Invalid email or password") }
             }
         }
     }

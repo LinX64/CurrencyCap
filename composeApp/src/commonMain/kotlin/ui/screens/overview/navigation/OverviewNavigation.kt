@@ -12,11 +12,11 @@ import ui.screens.overview.OverviewScreen
 
 fun NavController.navigateToHomeScreen() = navigate(NavRoutes.MARKET_OVERVIEW)
 
-fun NavGraphBuilder.homeScreen(padding: PaddingValues) {
+fun NavGraphBuilder.overviewScreen(padding: PaddingValues) {
     composable(
-        route = "${NavRoutes.MARKET_OVERVIEW}/{userId}",
+        route = "${NavRoutes.MARKET_OVERVIEW}/{uid}",
         arguments = listOf(
-            navArgument("userId") {
+            navArgument("uid") {
                 type = NavType.StringType
                 nullable = true
                 defaultValue = null

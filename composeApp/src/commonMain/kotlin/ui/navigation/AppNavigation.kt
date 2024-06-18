@@ -16,8 +16,8 @@ import ui.screens.ai_predict.navigation.aiPredictScreen
 import ui.screens.auth.login.navigation.loginScreen
 import ui.screens.auth.register.navigation.registerScreen
 import ui.screens.exchange.navigation.exchangeScreen
-import ui.screens.overview.navigation.homeScreen
 import ui.screens.landing.navigation.landingScreen
+import ui.screens.overview.navigation.overviewScreen
 import ui.screens.profile.navigation.profileScreen
 import ui.screens.search.navigation.searchScreen
 
@@ -26,7 +26,8 @@ import ui.screens.search.navigation.searchScreen
 internal fun AppNavigation(
     navController: NavHostController,
     padding: PaddingValues,
-    scrollBehavior: TopAppBarScrollBehavior
+    scrollBehavior: TopAppBarScrollBehavior,
+    onError: (message: String) -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -36,9 +37,13 @@ internal fun AppNavigation(
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
         landingScreen(navController = navController)
-        authGraph(padding = padding, navController = navController)
+        authGraph(
+            padding = padding,
+            navController = navController,
+            onError = onError
+        )
 
-        homeScreen(padding)
+        overviewScreen(padding)
         searchScreen(padding)
         aiPredictScreen(padding)
         exchangeScreen(padding)
@@ -48,9 +53,14 @@ internal fun AppNavigation(
 
 private fun NavGraphBuilder.authGraph(
     padding: PaddingValues,
-    navController: NavHostController
+    navController: NavHostController,
+    onError: (message: String) -> Unit
 ) {
-    loginScreen(padding = padding, navController = navController)
+    loginScreen(
+        padding = padding,
+        navController = navController,
+        onError = onError
+    )
     registerScreen(padding)
 }
 

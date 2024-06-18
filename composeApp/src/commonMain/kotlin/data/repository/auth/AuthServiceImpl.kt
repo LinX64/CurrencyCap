@@ -3,7 +3,6 @@ package data.repository.auth
 import data.model.User
 import dev.gitlive.firebase.auth.ActionCodeSettings
 import dev.gitlive.firebase.auth.AndroidPackageName
-import dev.gitlive.firebase.auth.AuthResult
 import dev.gitlive.firebase.auth.FirebaseAuth
 import domain.repository.AuthService
 import kotlinx.coroutines.CoroutineScope
@@ -31,16 +30,18 @@ class AuthServiceImpl(
     override suspend fun authenticate(
         email: String,
         password: String
-    ): AuthResult = try {
-        auth.signInWithEmailAndPassword(email, password)
+    ): AuthState = try {
+        val user = auth.signInWithEmailAndPassword(email, password).user
+        AuthState.Success(User(user!!.uid, user.isAnonymous))
     } catch (e: Exception) {
-        throw Exception(e.message ?: "Could not authenticate user!")
+        AuthState.Error(e.message ?: "Could not authenticate user!")
     }
 
-    override suspend fun signUpWithEmail(email: String, password: String): AuthResult = try {
-        auth.createUserWithEmailAndPassword(email, password)
+    override suspend fun signUpWithEmail(email: String, password: String): AuthState = try {
+        val user = auth.createUserWithEmailAndPassword(email, password).user
+        AuthState.Success(User(user!!.uid, user.isAnonymous))
     } catch (e: Exception) {
-        throw Exception(e.message ?: "Could not create user!")
+        AuthState.Error(e.message ?: "Could not create user!")
     }
 
     override suspend fun signUpWithEmailOnly(email: String) {
@@ -71,5 +72,10 @@ class AuthServiceImpl(
 
     private suspend fun launchWithAwait(block: suspend () -> Unit) {
         scope.async { block() }.await()
+    }
+
+    sealed class AuthState {
+        data class Success(val user: User) : AuthState()
+        data class Error(val message: String) : AuthState()
     }
 }

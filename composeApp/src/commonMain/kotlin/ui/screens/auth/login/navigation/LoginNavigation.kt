@@ -11,14 +11,20 @@ import ui.screens.auth.login.LoginScreen
 
 fun NavController.navigateToLoginScreen() = navigate(NavRoutes.LOGIN)
 
-fun NavGraphBuilder.loginScreen(padding: PaddingValues, navController: NavHostController) {
-    composable(NavRoutes.LOGIN) { backStackEntry ->
-        val uid = backStackEntry.arguments?.getString("uid") ?: ""
-
+fun NavGraphBuilder.loginScreen(
+    padding: PaddingValues,
+    navController: NavHostController,
+    onError: (message: String) -> Unit
+) {
+    composable(NavRoutes.LOGIN) {
         BlurBackground {
-            LoginScreen(padding = padding, onNavigateToMarketOverview = {
-                navController.navigate(NavRoutes.MARKET_OVERVIEW + "/$uid")
-            })
+            LoginScreen(
+                padding = padding,
+                onError = onError,
+                onNavigateToMarketOverview = { uid ->
+                    navController.navigate(NavRoutes.MARKET_OVERVIEW + "/$uid")
+                }
+            )
         }
     }
 }

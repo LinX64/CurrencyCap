@@ -17,18 +17,17 @@ import ui.components.BaseCenterColumn
 import ui.components.HandleNavigationEffect
 import ui.screens.auth.login.LoginNavigationEffect.NavigateToMarketOverview
 import ui.screens.auth.login.LoginViewEvent.OnEmailChanged
-import ui.screens.auth.login.LoginViewEvent.OnErrorDialogDismissed
 import ui.screens.auth.login.LoginViewEvent.OnLoginClick
 import ui.screens.auth.login.LoginViewEvent.OnPasswordChanged
 import ui.screens.auth.login.components.LoginForm
 import ui.screens.auth.login.components.MadeWithLove
-import ui.screens.auth.login.components.OnErrorDialog
 
 @Composable
 internal fun LoginScreen(
     loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
     padding: PaddingValues = PaddingValues(16.dp),
-    onNavigateToMarketOverview: () -> Unit
+    onNavigateToMarketOverview: (uid: String) -> Unit,
+    onError: (message: String) -> Unit
 ) {
     val state by loginViewModel.viewState.collectAsState()
     val email by loginViewModel.newEmail.collectAsState()
@@ -47,10 +46,7 @@ internal fun LoginScreen(
 
         when (state) {
             is LoginState.Loading -> CircularProgressIndicator()
-            is LoginState.Error -> OnErrorDialog(
-                message = (state as LoginState.Error).message,
-                onDismissRequest = { loginViewModel.handleEvent(OnErrorDialogDismissed) }
-            )
+            is LoginState.Error -> onError((state as LoginState.Error).message)
 
             else -> Unit
         }
@@ -62,7 +58,7 @@ internal fun LoginScreen(
 
     HandleNavigationEffect(loginViewModel) { effect ->
         when (effect) {
-            is NavigateToMarketOverview -> onNavigateToMarketOverview()
+            is NavigateToMarketOverview -> onNavigateToMarketOverview(effect.uid)
         }
     }
 }
