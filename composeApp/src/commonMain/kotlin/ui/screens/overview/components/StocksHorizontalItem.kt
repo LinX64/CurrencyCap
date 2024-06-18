@@ -1,14 +1,11 @@
-package ui.screens.home.components
+package ui.screens.overview.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material3.Icon
@@ -17,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -30,45 +26,17 @@ import ui.common.formatToPrice
 import ui.components.BlurColumn
 import ui.theme.colors.CurrencyColors
 
-data class AssetInfo(
-    val lastDayChange: List<Float>,
-    val currentValue: Float,
-)
-
-val mockAssetInfo = AssetInfo(
-    listOf(
-        113.518f,
-        113.799f,
-        113.333f,
-        113.235f,
-        114.099f,
-        113.506f,
-        113.985f,
-        114.212f,
-        114.125f,
-        113.531f,
-        114.228f,
-        113.284f,
-        114.031f,
-        113.493f,
-        115.112f
-    ),
-    113.02211f
-)
-
 @Composable
-internal fun RateHorizontalItem(
+internal fun StocksHorizontalItem(
     modifier: Modifier = Modifier,
     icon: String,
     rate: DataDao,
-    isLoading: Boolean = false,
-    assetInfo: AssetInfo = mockAssetInfo,
+    isLoading: Boolean = false
 ) {
     BlurColumn {
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .width(330.dp)
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -77,34 +45,27 @@ internal fun RateHorizontalItem(
                 ItemPlaceHolder(modifier = Modifier.size(48.dp))
             } else {
                 AsyncImage(
-                    modifier = Modifier.size(48.dp).clip(RoundedCornerShape(55.dp)),
+                    modifier = Modifier.size(48.dp),
                     model = icon,
+                    contentDescription = null,
                     placeholder = painterResource(Res.drawable.baseline_monetization_on_48),
-                    error = painterResource(Res.drawable.baseline_monetization_on_48),
-                    contentDescription = null
+                    error = painterResource(Res.drawable.baseline_monetization_on_48)
                 )
             }
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                FirstHorizontalColumn(rate = rate, isLoading = isLoading)
-
-                PerformanceChart(
-                    modifier = if (isLoading) getPlaceHolder(Modifier.height(40.dp).width(80.dp)) else Modifier,
-                    list = assetInfo.lastDayChange
-                )
-
-                EndHorizontalComponents(isLoading = isLoading)
+                FirstColumn(rate = rate, isLoading = isLoading)
+                EndHorizontalComponent(isLoading = isLoading)
             }
         }
     }
 }
 
 @Composable
-private fun FirstHorizontalColumn(
+private fun FirstColumn(
     modifier: Modifier = Modifier,
     rate: DataDao,
     isLoading: Boolean = false
@@ -132,12 +93,10 @@ private fun FirstHorizontalColumn(
 }
 
 @Composable
-private fun EndHorizontalComponents(
-    modifier: Modifier = Modifier,
-    isLoading: Boolean
+private fun EndHorizontalComponent(
+    isLoading: Boolean = false
 ) {
     Row(
-        modifier = modifier.fillMaxWidth().padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.End
     ) {
@@ -167,7 +126,7 @@ private fun EndHorizontalComponents(
 
                 Text(
                     modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                    text = "1.2%",
+                    text = "%22.5",
                     color = CurrencyColors.Text_Green,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,

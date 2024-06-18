@@ -8,10 +8,10 @@ import ui.components.BlurBackground
 import ui.navigation.NavRoutes
 import ui.screens.exchange.ExchangeScreen
 
-fun NavController.navigateToExchangeScreen() = navigate(NavRoutes.EXCHANGE)
+fun NavController.navigateToExchangeScreen() = navigate(NavRoutes.CURRENCY_CONVERTER)
 
 fun NavGraphBuilder.exchangeScreen(padding: PaddingValues) {
-    composable(NavRoutes.EXCHANGE) {
+    composable(NavRoutes.CURRENCY_CONVERTER) {
         BlurBackground {
             ExchangeScreen(padding = padding)
         }

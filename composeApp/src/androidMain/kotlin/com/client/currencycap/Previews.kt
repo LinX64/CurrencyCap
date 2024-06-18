@@ -8,7 +8,7 @@ import ui.screens.auth.login.LoginScreen
 @Composable
 private fun LoginScreenPreview() {
     KoinPreview {
-        LoginScreen(onLoginSuccess = {})
+        LoginScreen(onNavigateToMarketOverview = {})
     }
 }
 

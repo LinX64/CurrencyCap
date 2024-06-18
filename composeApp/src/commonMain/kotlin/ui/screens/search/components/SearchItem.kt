@@ -24,8 +24,8 @@ import domain.model.DataDao
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.components.BlurColumn
-import ui.screens.home.components.ItemPlaceHolder
-import ui.screens.home.components.getPlaceHolder
+import ui.screens.overview.components.ItemPlaceHolder
+import ui.screens.overview.components.getPlaceHolder
 import ui.theme.colors.CurrencyColors
 import util.getIconBy
 

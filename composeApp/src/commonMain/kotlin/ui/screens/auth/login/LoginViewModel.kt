@@ -1,13 +1,12 @@
 package ui.screens.auth.login
 
 import androidx.lifecycle.viewModelScope
-import data.repository.auth.AuthServiceImpl.AuthResponse
 import domain.repository.AuthService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
+import ui.screens.auth.login.LoginNavigationEffect.NavigateToMarketOverview
 import ui.screens.auth.login.LoginState.Error
-import ui.screens.auth.login.LoginState.Loading
 import ui.screens.auth.login.LoginViewEvent.OnEmailChanged
 import ui.screens.auth.login.LoginViewEvent.OnLoginClick
 import ui.screens.auth.login.LoginViewEvent.OnPasswordChanged
@@ -30,6 +29,8 @@ internal class LoginViewModel(
     }
 
     private fun authenticate(email: String, password: String) {
+        setState { LoginState.Loading }
+
         if (email.isEmpty()) {
             setState { Error("Email must not be empty") }
             return
@@ -46,10 +47,11 @@ internal class LoginViewModel(
         }
 
         viewModelScope.launch {
-            when (val result = authService.authenticate(email, password)) {
-                is AuthResponse.Loading -> setState { Loading }
-                is AuthResponse.Success -> setEffect(LoginNavigationEffect.LoginSuccess(result.uid))
-                is AuthResponse.Error -> setState { Error(result.message) }
+            val user = authService.authenticate(email, password).user
+            if (user?.uid?.isNotBlank() == true) {
+                setEffect(NavigateToMarketOverview(user.uid))
+            } else {
+                setState { Error("Could not authenticate user!") }
             }
         }
     }

@@ -16,7 +16,7 @@ import ui.screens.ai_predict.navigation.aiPredictScreen
 import ui.screens.auth.login.navigation.loginScreen
 import ui.screens.auth.register.navigation.registerScreen
 import ui.screens.exchange.navigation.exchangeScreen
-import ui.screens.home.navigation.homeScreen
+import ui.screens.overview.navigation.homeScreen
 import ui.screens.landing.navigation.landingScreen
 import ui.screens.profile.navigation.profileScreen
 import ui.screens.search.navigation.searchScreen

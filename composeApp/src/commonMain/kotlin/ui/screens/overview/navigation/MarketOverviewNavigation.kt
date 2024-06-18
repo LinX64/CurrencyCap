@@ -1,4 +1,4 @@
-package ui.screens.home.navigation
+package ui.screens.overview.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
@@ -8,13 +8,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import ui.components.BlurBackground
 import ui.navigation.NavRoutes
-import ui.screens.home.HomeScreen
+import ui.screens.overview.OverviewScreen
 
-fun NavController.navigateToHomeScreen() = navigate(NavRoutes.HOME)
+fun NavController.navigateToHomeScreen() = navigate(NavRoutes.MARKET_OVERVIEW)
 
 fun NavGraphBuilder.homeScreen(padding: PaddingValues) {
     composable(
-        route = "${NavRoutes.HOME}/{userId}",
+        route = "${NavRoutes.MARKET_OVERVIEW}/{userId}",
         arguments = listOf(
             navArgument("userId") {
                 type = NavType.StringType
@@ -24,7 +24,7 @@ fun NavGraphBuilder.homeScreen(padding: PaddingValues) {
         )
     ) {
         BlurBackground {
-            HomeScreen(padding = padding)
+            OverviewScreen(padding = padding)
         }
     }
 }

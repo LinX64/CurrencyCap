@@ -1,4 +1,4 @@
-package ui.screens.home
+package ui.screens.overview
 
 import androidx.lifecycle.viewModelScope
 import data.util.asResult
@@ -9,21 +9,21 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
-import ui.screens.home.MainState.Success
-import ui.screens.home.MainViewEvent.OnLoadRates
-import ui.screens.home.MainViewEvent.OnRefreshRates
+import ui.screens.overview.OverviewState.Success
+import ui.screens.overview.OverviewViewEvent.OnLoadRates
+import ui.screens.overview.OverviewViewEvent.OnRefreshRates
 
 private const val CRYPTO = "crypto"
 
-class MainViewModel(
+class OverviewViewModel(
     private val mainRepository: MainRepository
-) : MviViewModel<MainViewEvent, MainState, MainNavigationEffect>(MainState.Loading) {
+) : MviViewModel<OverviewViewEvent, OverviewState, OverviewNavigationEffect>(OverviewState.Loading) {
 
     init {
         loadCombinedRates()
     }
 
-    override fun handleEvent(event: MainViewEvent) = when (event) {
+    override fun handleEvent(event: OverviewViewEvent) = when (event) {
         is OnLoadRates -> loadCombinedRates()
         is OnRefreshRates -> refreshRates()
     }
@@ -40,7 +40,7 @@ class MainViewModel(
         ) { iranianRate, cryptoRates, topMovers ->
             setState {
                 when {
-                    cryptoRates.isEmpty() || topMovers.isEmpty() -> MainState.Loading
+                    cryptoRates.isEmpty() || topMovers.isEmpty() -> OverviewState.Loading
                     else -> Success(
                         iranianRate = iranianRate,
                         topMovers = topMovers,

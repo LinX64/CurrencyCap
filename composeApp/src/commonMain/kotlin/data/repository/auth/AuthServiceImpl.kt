@@ -3,6 +3,7 @@ package data.repository.auth
 import data.model.User
 import dev.gitlive.firebase.auth.ActionCodeSettings
 import dev.gitlive.firebase.auth.AndroidPackageName
+import dev.gitlive.firebase.auth.AuthResult
 import dev.gitlive.firebase.auth.FirebaseAuth
 import domain.repository.AuthService
 import kotlinx.coroutines.CoroutineScope
@@ -30,24 +31,16 @@ class AuthServiceImpl(
     override suspend fun authenticate(
         email: String,
         password: String
-    ): AuthResponse {
-        return try {
-            AuthResponse.Loading
-            val response = scope.async { auth.signInWithEmailAndPassword(email, password) }.await()
-            AuthResponse.Success(response.user?.uid ?: response.user?.email.orEmpty())
-        } catch (e: Exception) {
-            AuthResponse.Error(e.message ?: "User not found")
-        }
+    ): AuthResult = try {
+        auth.signInWithEmailAndPassword(email, password)
+    } catch (e: Exception) {
+        throw Exception(e.message ?: "Could not authenticate user!")
     }
 
-    override suspend fun signUpWithEmail(email: String, password: String): AuthResponse {
-        return try {
-            AuthResponse.Loading
-            val response = scope.async { auth.createUserWithEmailAndPassword(email, password) }.await()
-            AuthResponse.Success(response.user?.uid ?: response.user?.email.orEmpty())
-        } catch (e: Exception) {
-            AuthResponse.Error(e.message ?: "Could not create user!")
-        }
+    override suspend fun signUpWithEmail(email: String, password: String): AuthResult = try {
+        auth.createUserWithEmailAndPassword(email, password)
+    } catch (e: Exception) {
+        throw Exception(e.message ?: "Could not create user!")
     }
 
     override suspend fun signUpWithEmailOnly(email: String) {
@@ -70,19 +63,13 @@ class AuthServiceImpl(
     override suspend fun deleteAccount() = launchWithAwait { auth.currentUser!!.delete() }
 
     override suspend fun signOut() {
-        if (auth.currentUser!!.isAnonymous) {
-            auth.currentUser!!.delete()
+        if (auth.currentUser?.isAnonymous == true) {
+            auth.currentUser?.delete()
         }
         auth.signOut()
     }
 
     private suspend fun launchWithAwait(block: suspend () -> Unit) {
         scope.async { block() }.await()
-    }
-
-    sealed class AuthResponse {
-        data object Loading : AuthResponse()
-        data class Success(val uid: String) : AuthResponse()
-        data class Error(val message: String) : AuthResponse()
     }
 }

@@ -1,4 +1,4 @@
-package ui.screens.home.components
+package ui.screens.overview.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,13 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import domain.model.DataDao
-import ui.screens.home.MainState
+import ui.screens.overview.OverviewState
 import ui.theme.colors.CurrencyColors
 import util.getIconBy
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-internal fun Stocks(mainState: MainState) {
+internal fun Stocks(overviewState: OverviewState) {
     Column(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
     ) {
@@ -50,8 +50,8 @@ internal fun Stocks(mainState: MainState) {
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            if (mainState is MainState.Success) {
-                mainState.cryptoRates.take(10).forEach { rate ->
+            if (overviewState is OverviewState.Success) {
+                overviewState.cryptoRates.take(10).forEach { rate ->
                     StocksHorizontalItem(
                         icon = getIconBy(rate.symbol),
                         rate = rate,
@@ -60,7 +60,7 @@ internal fun Stocks(mainState: MainState) {
                 }
             }
 
-            if (mainState is MainState.Loading) {
+            if (overviewState is OverviewState.Loading) {
                 repeat(10) {
                     StocksHorizontalItem(
                         icon = "",

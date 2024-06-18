@@ -1,4 +1,4 @@
-package ui.screens.home
+package ui.screens.overview
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,20 +9,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import di.koinViewModel
 import ui.components.ErrorView
-import ui.screens.home.components.IranianRate
-import ui.screens.home.components.MainHeader
-import ui.screens.home.components.Stocks
-import ui.screens.home.components.TodayTopMovers
-import ui.screens.home.components.TopCrypto
-import ui.screens.home.components.TrendingCryptoCurrencies
+import ui.screens.overview.components.IranianRate
+import ui.screens.overview.components.MainHeader
+import ui.screens.overview.components.Stocks
+import ui.screens.overview.components.TodayTopMovers
+import ui.screens.overview.components.TopCrypto
+import ui.screens.overview.components.TrendingCryptoCurrencies
 
 @Composable
-internal fun HomeScreen(
+internal fun OverviewScreen(
     modifier: Modifier = Modifier,
     padding: PaddingValues,
-    mainViewModel: MainViewModel = koinViewModel<MainViewModel>()
+    overviewViewModel: OverviewViewModel = koinViewModel<OverviewViewModel>()
 ) {
-    val state by mainViewModel.viewState.collectAsState()
+    val state by overviewViewModel.viewState.collectAsState()
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = padding
@@ -36,8 +36,8 @@ internal fun HomeScreen(
     }
 
     when (state) {
-        is MainState.Error -> {
-            val message = (state as MainState.Error).message
+        is OverviewState.Error -> {
+            val message = (state as OverviewState.Error).message
             ErrorView(message = message)
         }
 

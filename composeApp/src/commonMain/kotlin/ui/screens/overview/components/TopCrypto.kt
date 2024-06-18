@@ -1,4 +1,4 @@
-package ui.screens.home.components
+package ui.screens.overview.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,11 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import domain.model.DataDao
-import ui.screens.home.MainState
+import ui.screens.overview.OverviewState
 
 @Composable
 internal fun TopCrypto(
-    mainState: MainState
+    overviewState: OverviewState
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -39,13 +39,13 @@ internal fun TopCrypto(
             contentPadding = PaddingValues(16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            if (mainState is MainState.Success) {
-                items(mainState.cryptoRates.size) { index ->
-                    TopCryptoItem(dataDao = mainState.cryptoRates[index], isLoading = true)
+            if (overviewState is OverviewState.Success) {
+                items(overviewState.cryptoRates.size) { index ->
+                    TopCryptoItem(dataDao = overviewState.cryptoRates[index], isLoading = true)
                 }
             }
 
-            if (mainState is MainState.Loading) {
+            if (overviewState is OverviewState.Loading) {
                 items(5) {
                     TopCryptoItem(
                         isLoading = true,

@@ -94,13 +94,13 @@ sealed class BottomBarTab(
     val color: Color
 ) {
     data object Exchange : BottomBarTab(
-        route = NavRoutes.EXCHANGE,
+        route = NavRoutes.CURRENCY_CONVERTER,
         icon = Icons.Default.CurrencyExchange,
         color = Color(0xFFFFA574) // Orange
     )
 
     data object Home : BottomBarTab(
-        route = NavRoutes.HOME,
+        route = NavRoutes.MARKET_OVERVIEW,
         icon = Icons.Rounded.Home,
         color = Color(0xFFADFF64) // Light Green
     )

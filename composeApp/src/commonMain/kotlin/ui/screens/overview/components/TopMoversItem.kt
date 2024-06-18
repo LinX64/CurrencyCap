@@ -1,4 +1,4 @@
-package ui.screens.home.components
+package ui.screens.overview.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

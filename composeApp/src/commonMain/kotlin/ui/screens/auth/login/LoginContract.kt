@@ -20,6 +20,6 @@ sealed interface LoginState {
 }
 
 sealed interface LoginNavigationEffect {
-    data class LoginSuccess(val uid: String) : LoginNavigationEffect
+    data class NavigateToMarketOverview(val uid: String) : LoginNavigationEffect
 }
 

@@ -1,4 +1,4 @@
-package ui.screens.home.components
+package ui.screens.overview.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,12 +17,12 @@ import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.today_top_movers
 import org.jetbrains.compose.resources.stringResource
-import ui.screens.home.MainState
+import ui.screens.overview.OverviewState
 import util.getIconBy
 
 @Composable
 internal fun TodayTopMovers(
-    mainState: MainState
+    overviewState: OverviewState
 ) {
     Column(
         modifier = Modifier.padding(16.dp)
@@ -41,9 +41,9 @@ internal fun TodayTopMovers(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (mainState is MainState.Success) {
-                items(mainState.topMovers.size) {
-                    val topMovers = mainState.topMovers[it]
+            if (overviewState is OverviewState.Success) {
+                items(overviewState.topMovers.size) {
+                    val topMovers = overviewState.topMovers[it]
 
                     TopMoversItem(
                         icon = getIconBy(topMovers.symbol),
@@ -52,7 +52,7 @@ internal fun TodayTopMovers(
                 }
             }
 
-            if (mainState is MainState.Loading) {
+            if (overviewState is OverviewState.Loading) {
                 items(4) {
                     TopMoversItem(
                         isLoading = true,

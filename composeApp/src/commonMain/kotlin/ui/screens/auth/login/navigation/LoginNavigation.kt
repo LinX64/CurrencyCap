@@ -16,11 +16,9 @@ fun NavGraphBuilder.loginScreen(padding: PaddingValues, navController: NavHostCo
         val uid = backStackEntry.arguments?.getString("uid") ?: ""
 
         BlurBackground {
-            LoginScreen(
-                padding = padding, onLoginSuccess = {
-                    navController.navigate(NavRoutes.HOME + "/$uid")
-                }
-            )
+            LoginScreen(padding = padding, onNavigateToMarketOverview = {
+                navController.navigate(NavRoutes.MARKET_OVERVIEW + "/$uid")
+            })
         }
     }
 }

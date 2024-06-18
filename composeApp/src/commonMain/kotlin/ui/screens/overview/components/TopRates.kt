@@ -1,4 +1,4 @@
-package ui.screens.home.components
+package ui.screens.overview.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,11 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import domain.model.RateDao
-import ui.screens.home.MainState
+import ui.screens.overview.OverviewState
 import util.getIconBy
 
 @Composable
-internal fun IranianRate(rates: MainState) {
+internal fun IranianRate(rates: OverviewState) {
     Column(
         modifier = Modifier.fillMaxWidth()
             .padding(start = 16.dp, top = 16.dp, end = 16.dp)
@@ -61,7 +61,7 @@ internal fun IranianRate(rates: MainState) {
             rows = GridCells.Fixed(1),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            if (rates is MainState.Success) {
+            if (rates is OverviewState.Success) {
                 items(rates.iranianRate.size) { index ->
                     val code = rates.iranianRate[index].code
                     RateItem(
@@ -71,7 +71,7 @@ internal fun IranianRate(rates: MainState) {
                 }
             }
 
-            if (rates is MainState.Loading) {
+            if (rates is OverviewState.Loading) {
                 items(5) {
                     RateItem(
                         isLoading = true,

@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import di.koinViewModel
 import ui.components.BaseCenterColumn
 import ui.components.HandleNavigationEffect
+import ui.screens.auth.login.LoginNavigationEffect.NavigateToMarketOverview
 import ui.screens.auth.login.LoginViewEvent.OnEmailChanged
 import ui.screens.auth.login.LoginViewEvent.OnErrorDialogDismissed
 import ui.screens.auth.login.LoginViewEvent.OnLoginClick
@@ -27,7 +28,7 @@ import ui.screens.auth.login.components.OnErrorDialog
 internal fun LoginScreen(
     loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
     padding: PaddingValues = PaddingValues(16.dp),
-    onLoginSuccess: () -> Unit
+    onNavigateToMarketOverview: () -> Unit
 ) {
     val state by loginViewModel.viewState.collectAsState()
     val email by loginViewModel.newEmail.collectAsState()
@@ -61,7 +62,7 @@ internal fun LoginScreen(
 
     HandleNavigationEffect(loginViewModel) { effect ->
         when (effect) {
-            is LoginNavigationEffect.LoginSuccess -> onLoginSuccess()
+            is NavigateToMarketOverview -> onNavigateToMarketOverview()
         }
     }
 }

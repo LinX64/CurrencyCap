@@ -1,4 +1,4 @@
-package ui.screens.home.components
+package ui.screens.overview.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,12 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import domain.model.DataDao
-import ui.screens.home.MainState
+import ui.screens.overview.OverviewState
 import ui.theme.colors.CurrencyColors
 import util.getIconBy
 
 @Composable
-internal fun TrendingCryptoCurrencies(rates: MainState) {
+internal fun TrendingCryptoCurrencies(rates: OverviewState) {
     Column {
         Text(
             modifier = Modifier.padding(start = 16.dp, top = 16.dp),
@@ -40,7 +40,7 @@ internal fun TrendingCryptoCurrencies(rates: MainState) {
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            if (rates is MainState.Success) {
+            if (rates is OverviewState.Success) {
                 items(rates.cryptoRates.size) { index ->
                     val symbol = rates.cryptoRates[index].symbol
 
@@ -52,7 +52,7 @@ internal fun TrendingCryptoCurrencies(rates: MainState) {
                 }
             }
 
-            if (rates is MainState.Loading) {
+            if (rates is OverviewState.Loading) {
                 items(5) {
                     RateHorizontalItem(
                         icon = getIconBy(""),

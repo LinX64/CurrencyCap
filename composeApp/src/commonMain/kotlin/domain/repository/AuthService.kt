@@ -1,7 +1,7 @@
 package domain.repository
 
 import data.model.User
-import data.repository.auth.AuthServiceImpl.AuthResponse
+import dev.gitlive.firebase.auth.AuthResult
 import kotlinx.coroutines.flow.Flow
 
 interface AuthService {
@@ -9,8 +9,8 @@ interface AuthService {
     val hasUser: Boolean
     val currentUser: Flow<User>
 
-    suspend fun authenticate(email: String, password: String): AuthResponse
-    suspend fun signUpWithEmail(email: String, password: String): AuthResponse
+    suspend fun authenticate(email: String, password: String): AuthResult
+    suspend fun signUpWithEmail(email: String, password: String): AuthResult
     suspend fun signUpWithEmailOnly(email: String)
 
     suspend fun sendRecoveryEmail(email: String)

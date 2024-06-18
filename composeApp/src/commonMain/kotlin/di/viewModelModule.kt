@@ -5,12 +5,12 @@ import ui.screens.ai_predict.AiPredictViewModel
 import ui.screens.auth.login.LoginViewModel
 import ui.screens.auth.register.RegisterViewModel
 import ui.screens.exchange.ExchangeViewModel
-import ui.screens.home.MainViewModel
+import ui.screens.overview.OverviewViewModel
 import ui.screens.profile.ProfileViewModel
 import ui.screens.search.SearchViewModel
 
 val viewModelModule = module {
-    single { MainViewModel(get()) }
+    single { OverviewViewModel(get()) }
     single { ExchangeViewModel(get(), get()) }
     single { AiPredictViewModel() }
     single { SearchViewModel(get()) }

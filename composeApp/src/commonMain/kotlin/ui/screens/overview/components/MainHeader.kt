@@ -1,4 +1,4 @@
-package ui.screens.home.components
+package ui.screens.overview.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -23,14 +23,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ui.components.BlurColumn
-import ui.screens.home.MainState
+import ui.screens.overview.OverviewState
 import ui.theme.colors.CurrencyColors
 
 @Composable
 internal fun MainHeader(
-    state: MainState
+    state: OverviewState
 ) {
-    val isLoading = state is MainState.Loading
+    val isLoading = state is OverviewState.Loading
     Column(
         modifier = Modifier
             .fillMaxWidth()
