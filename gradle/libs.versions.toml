@@ -27,7 +27,7 @@ placeholder-material3 = "1.0.8"
 # Firebase
 firebase-firestore = "25.0.0"
 firebaseBom = "33.1.0"
-firebaseCrashlyticsPlugin = "3.0.1"
+firebaseCrashlyticsPlugin = "3.0.2"
 firebasePerfPlugin = "1.4.2"
 
 firebaseAuth = "1.12.0"
