@@ -35,7 +35,7 @@ gmsPlugin = "4.4.2"
 
 # Network
 kotlinx-serialization = "1.7.0"
-ktor = "2.3.11"
+ktor = "2.3.12"
 coroutines = "1.8.1"
 
 [libraries]
