@@ -40,7 +40,7 @@ class OverviewViewModel(
         ) { iranianRate, cryptoRates, topMovers ->
             setState {
                 when {
-                    cryptoRates.isEmpty() || topMovers.isEmpty() -> OverviewState.Loading
+                    iranianRate.isEmpty() || cryptoRates.isEmpty() || topMovers.isEmpty() -> OverviewState.Loading
                     else -> Success(
                         iranianRate = iranianRate,
                         topMovers = topMovers,

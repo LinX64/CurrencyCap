@@ -22,7 +22,7 @@ import ui.screens.overview.OverviewState
 import util.getIconBy
 
 @Composable
-internal fun IranianRate(rates: OverviewState) {
+internal fun TopRates(rates: OverviewState) {
     Column(
         modifier = Modifier.fillMaxWidth()
             .padding(start = 16.dp, top = 16.dp, end = 16.dp)

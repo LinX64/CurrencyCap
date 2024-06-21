@@ -47,7 +47,7 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
                     RateHorizontalItem(
                         icon = getIconBy(symbol),
                         rate = rates.cryptoRates[index],
-                        isLoading = true
+                        isLoading = false
                     )
                 }
             }

@@ -55,7 +55,7 @@ internal fun Stocks(overviewState: OverviewState) {
                     StocksHorizontalItem(
                         icon = getIconBy(rate.symbol),
                         rate = rate,
-                        isLoading = true
+                        isLoading = false
                     )
                 }
             }

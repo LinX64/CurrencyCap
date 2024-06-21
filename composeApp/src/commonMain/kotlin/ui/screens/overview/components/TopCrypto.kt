@@ -41,7 +41,7 @@ internal fun TopCrypto(
         ) {
             if (overviewState is OverviewState.Success) {
                 items(overviewState.cryptoRates.size) { index ->
-                    TopCryptoItem(dataDao = overviewState.cryptoRates[index], isLoading = true)
+                    TopCryptoItem(dataDao = overviewState.cryptoRates[index], isLoading = false)
                 }
             }
 

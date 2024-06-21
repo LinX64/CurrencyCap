@@ -3,11 +3,12 @@ package ui.screens.profile
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import data.model.User
 import domain.repository.AuthService
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
+import ui.screens.profile.ProfileViewEvent.OnDeleteAccountCardClicked
+import ui.screens.profile.ProfileViewEvent.OnHelpCenterCardClicked
+import ui.screens.profile.ProfileViewEvent.OnProfileCardClicked
 
 class ProfileViewModel(
     private val authService: AuthService
@@ -24,26 +25,29 @@ class ProfileViewModel(
 
     override fun handleEvent(event: ProfileViewEvent) {
         when (event) {
-            is ProfileViewEvent.OnProfileCardClicked -> {
+            is OnProfileCardClicked -> {
 
             }
 
-            is ProfileViewEvent.OnHelpCenterCardClicked -> {
+            is OnHelpCenterCardClicked -> {
 
             }
 
-            is ProfileViewEvent.OnDeleteAccountCardClicked -> {
+            is OnDeleteAccountCardClicked -> handleDeleteAccount()
+        }
+    }
 
-            }
+    private fun handleDeleteAccount() {
+        setState { ProfileState.Loading }
+
+        viewModelScope.launch {
+            authService.deleteAccount()
         }
     }
 
     private fun fetchProfile() {
         val user = authService.currentUser
-        updateState(user)
-    }
 
-    private fun updateState(user: Flow<User>) {
         viewModelScope.launch {
             user.collect {
                 name.value = it.name ?: "error"

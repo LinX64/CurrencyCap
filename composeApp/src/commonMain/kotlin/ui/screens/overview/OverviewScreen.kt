@@ -9,11 +9,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import di.koinViewModel
 import ui.components.ErrorView
-import ui.screens.overview.components.IranianRate
 import ui.screens.overview.components.MainHeader
 import ui.screens.overview.components.Stocks
 import ui.screens.overview.components.TodayTopMovers
 import ui.screens.overview.components.TopCrypto
+import ui.screens.overview.components.TopRates
 import ui.screens.overview.components.TrendingCryptoCurrencies
 
 @Composable
@@ -30,7 +30,7 @@ internal fun OverviewScreen(
         item { MainHeader(state) }
         item { TodayTopMovers(state) }
         item { TopCrypto(state) }
-        item { IranianRate(state) }
+        item { TopRates(state) }
         item { TrendingCryptoCurrencies(state) }
         item { Stocks(state) }
     }

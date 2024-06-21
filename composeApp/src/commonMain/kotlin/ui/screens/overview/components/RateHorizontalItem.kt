@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -67,8 +66,7 @@ internal fun RateHorizontalItem(
     BlurColumn {
         Row(
             modifier = modifier
-                .fillMaxWidth()
-                .width(330.dp)
+                .width(350.dp)
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -92,10 +90,12 @@ internal fun RateHorizontalItem(
             ) {
                 FirstHorizontalColumn(rate = rate, isLoading = isLoading)
 
-                PerformanceChart(
-                    modifier = if (isLoading) getPlaceHolder(Modifier.height(40.dp).width(80.dp)) else Modifier,
-                    list = assetInfo.lastDayChange
-                )
+//                PerformanceChart(
+//                    modifier = Modifier.height(40.dp).width(80.dp),
+//                    list = assetInfo.lastDayChange
+//                )
+
+                // TODO: add PerformanceChart
 
                 EndHorizontalComponents(isLoading = isLoading)
             }

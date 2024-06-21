@@ -12,6 +12,7 @@ sealed interface ProfileViewEvent {
 
 sealed interface ProfileState {
     data object Idle : ProfileState
+    data object Loading : ProfileState
     data class Loaded(val data: Flow<User>) : ProfileState
     data class Success(val rates: List<DataDao>) : ProfileState
     data class Error(val message: String) : ProfileState
