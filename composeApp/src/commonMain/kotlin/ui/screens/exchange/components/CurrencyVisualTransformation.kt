@@ -1,4 +1,4 @@
-package ui.screens.exchange.component
+package ui.screens.exchange.components
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
@@ -7,7 +7,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 class CurrencyVisualTransformation(private val countryCode: String) : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
-        val symbol = getCurrencySymbolForCountry(countryCode)
+        val code = countryCode.uppercase().take(2)
+        val symbol = getCurrencySymbolForCountry(code)
         val transformedText = symbol + text.text
 
         return TransformedText(

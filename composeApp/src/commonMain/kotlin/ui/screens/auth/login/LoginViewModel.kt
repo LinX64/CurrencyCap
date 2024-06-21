@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
 import ui.screens.auth.login.LoginNavigationEffect.NavigateToMarketOverview
+import ui.screens.auth.login.LoginNavigationEffect.NavigateToRegister
 import ui.screens.auth.login.LoginState.Error
 import ui.screens.auth.login.LoginViewEvent.OnEmailChanged
 import ui.screens.auth.login.LoginViewEvent.OnLoginClick
@@ -26,6 +27,7 @@ internal class LoginViewModel(
             is OnEmailChanged -> newEmail.value = event.email
             is OnPasswordChanged -> newPassword.value = event.password
             LoginViewEvent.OnErrorDialogDismissed -> setState { LoginState.Idle }
+            LoginViewEvent.OnSignUpClick -> setEffect(NavigateToRegister)
         }
     }
 

@@ -1,4 +1,4 @@
-package ui.screens.exchange.component
+package ui.screens.exchange.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -27,51 +27,49 @@ import ui.common.getCountryFlag
 import ui.common.getCountryName
 import ui.components.getDataRates
 import ui.screens.exchange.ExchangeState
-import ui.screens.exchange.ExchangeState.Error
-import ui.screens.exchange.ExchangeState.Success
 
 @Composable
-internal fun ToDropDown(
-    onToChange: (String) -> Unit,
+internal fun FromDropDown(
+    onFromChange: (String) -> Unit,
     exchangeState: ExchangeState
 ) = when (exchangeState) {
-    is Success -> HandleToDropDown(
-        onToChange = onToChange,
-        rates = exchangeState.rates
+    is ExchangeState.Success -> HandleFromDropDown(
+        rates = exchangeState.rates,
+        onFromChange = onFromChange
     )
 
-    is Error -> HandleToDropDown(
-        onToChange = onToChange,
+    is ExchangeState.Error -> HandleFromDropDown(
         rates = getDataRates(),
-        onError = exchangeState.message.ifEmpty { "Error while fetching rates" }
+        onError = exchangeState.message.ifEmpty { "Error while fetching rates" },
+        onFromChange = onFromChange,
     )
 
-    else -> HandleToDropDown(
+    else -> HandleFromDropDown(
         rates = getDataRates(),
-        onToChange = onToChange,
+        onFromChange = onFromChange,
         isLoading = true
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun HandleToDropDown(
+private fun HandleFromDropDown(
     modifier: Modifier = Modifier,
     rates: List<DataDao>,
     onError: String = "",
     isLoading: Boolean = false,
-    onToChange: (String) -> Unit
+    onFromChange: (String) -> Unit,
 ) {
     val options = rates.map { it.symbol }.sortedBy { it }.map { symbol ->
         val getSymbol = symbol.take(2)
         with(getSymbol) {
             val countryName = getCountryName()
             val flag = getCountryFlag()
-            "$flag $symbol - $countryName"
+            "$flag  $symbol - $countryName"
         }
     }
     var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(options[1]) }
+    var selectedOptionText by remember { mutableStateOf(options[0]) }
     val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
 
     Box {
@@ -94,7 +92,6 @@ private fun HandleToDropDown(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 ),
-                singleLine = true,
                 shape = RoundedCornerShape(10.dp)
             )
             ExposedDropdownMenu(
@@ -115,10 +112,10 @@ private fun HandleToDropDown(
                             selectedOptionText = selectionOption
                             expanded = false
 
-                            val selectedCountryCode = if (selectionOption.isNotEmpty()) selectionOption.split(" ")[2] else "AFN"
-                            onToChange(selectedCountryCode)
+                            val selectedCountryCode = if (selectionOption.isNotEmpty()) selectionOption.split(" ")[2] else "AED"
+                            onFromChange(selectedCountryCode)
                         },
-                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
                     )
                 }
             }

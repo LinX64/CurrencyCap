@@ -21,9 +21,10 @@ fun NavGraphBuilder.loginScreen(
             LoginScreen(
                 padding = padding,
                 onError = onError,
-                onNavigateToMarketOverview = { uid ->
+                navigateToMarketOverview = { uid ->
                     navController.navigate(NavRoutes.MARKET_OVERVIEW + "/$uid")
-                }
+                },
+                navigateToRegister = { navController.navigate(NavRoutes.REGISTER) }
             )
         }
     }

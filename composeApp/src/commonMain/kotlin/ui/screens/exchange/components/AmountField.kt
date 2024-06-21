@@ -1,4 +1,4 @@
-package ui.screens.exchange.component
+package ui.screens.exchange.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,7 +23,7 @@ import ui.common.getCountryFlag
 internal fun AmountField(
     modifier: Modifier = Modifier,
     maxLength: Int = 12,
-    countryCode: String,
+    countryCode: String = "AE",
     onAmountChange: (String) -> Unit,
 ) {
     var amount by remember { mutableStateOf("") }

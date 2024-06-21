@@ -1,4 +1,4 @@
-package ui.screens.exchange.component
+package ui.screens.exchange.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

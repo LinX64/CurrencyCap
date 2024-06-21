@@ -10,6 +10,7 @@ sealed interface LoginViewEvent {
     ) : LoginViewEvent
 
     data object OnErrorDialogDismissed : LoginViewEvent
+    data object OnSignUpClick : LoginViewEvent
 }
 
 sealed interface LoginState {
@@ -21,5 +22,6 @@ sealed interface LoginState {
 
 sealed interface LoginNavigationEffect {
     data class NavigateToMarketOverview(val uid: String) : LoginNavigationEffect
+    object NavigateToRegister : LoginNavigationEffect
 }
 

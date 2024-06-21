@@ -30,8 +30,8 @@ internal class ExchangeViewModel(
     private val convertRateUseCase: ConvertRateUseCase
 ) : MviViewModel<ExchangeViewEvent, ExchangeState, ExchangeNavigationEffect>(ExchangeState.Loading) {
 
-    private val toValue: MutableStateFlow<String> = MutableStateFlow("")
     val fromValue: MutableStateFlow<String> = MutableStateFlow("")
+    val toValue: MutableStateFlow<String> = MutableStateFlow("")
     val amountValue: MutableStateFlow<String> = MutableStateFlow("")
     val convertedResult: MutableStateFlow<String> = MutableStateFlow("")
 

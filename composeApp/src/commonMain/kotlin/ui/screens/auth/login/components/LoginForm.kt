@@ -31,7 +31,7 @@ internal fun LoginForm(
     Column(
         modifier = Modifier
             .wrapContentHeight()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 16.dp, vertical = 16.dp)
             .background(
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
                 shape = RoundedCornerShape(20.dp)
