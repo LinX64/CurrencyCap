@@ -23,8 +23,7 @@ class MainRepositoryImpl(
 ) : MainRepository {
 
     override fun getCoinCapRates(): Flow<List<DataDao>> = flow {
-        val response = httpClient.get(COINCAP_API).body<CoinCapRates>().data.toDomain()
-        emit(response)
+        emit(getCoinCapRate())
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
@@ -36,4 +35,17 @@ class MainRepositoryImpl(
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
+
+    override fun search(query: String): Flow<List<DataDao>> = flow {
+        val rates = getCoinCapRate()
+        val filteredRates = rates.filter {
+            it.symbol.contains(query, ignoreCase = true)
+        }
+        emit(filteredRates)
+    }
+        .flowOn(Dispatchers.IO)
+
+    private suspend fun getCoinCapRate(): List<DataDao> {
+        return httpClient.get(COINCAP_API).body<CoinCapRates>().data.toDomain()
+    }
 }

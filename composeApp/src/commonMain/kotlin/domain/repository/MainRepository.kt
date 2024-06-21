@@ -23,4 +23,6 @@ interface MainRepository {
      * i.e: "name": "US Dollar", "sell": 59200, "buy": 59100}
      */
     fun getIranianRate(): Flow<List<RateDao>>
+
+    fun search(query: String): Flow<List<DataDao>>
 }

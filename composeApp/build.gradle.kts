@@ -34,6 +34,10 @@ kotlin {
         }
     }
 
+    sourceSets.all {
+        languageSettings.enableLanguageFeature("ExplicitBackingFields")
+    }
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.koin.android)

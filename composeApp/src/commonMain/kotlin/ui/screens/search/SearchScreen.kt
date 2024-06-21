@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import di.koinViewModel
 import domain.model.DataDao
 import ui.components.ErrorView
+import ui.screens.search.components.EmptyView
 import ui.screens.search.components.LeadingIcon
 import ui.screens.search.components.SearchItem
 import ui.screens.search.components.SearchPlaceHolder
@@ -64,21 +65,29 @@ internal fun SearchScreen(
                 placeholder = { SearchPlaceHolder() },
                 onSearch = { expanded = false },
                 leadingIcon = { LeadingIcon() },
-                trailingIcon = { TrailingIcon(expanded = expanded, onCloseClick = { expanded = false }) }
+                trailingIcon = {
+                    TrailingIcon(expanded = expanded, onCloseClick = {
+                        expanded = false
+                        text = ""
+                    })
+                }
             ) {
                 LazyColumn(
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     modifier = Modifier.semantics { traversalIndex = 1f }
                 ) {
-                    searchResultContent(state)
+                    searchResultContent(state, onRetryClicked = { searchViewModel.handleEvent(SearchEvent.OnRetryClicked(text)) })
                 }
             }
         }
     }
 }
 
-private fun LazyListScope.searchResultContent(state: SearchState) = when (state) {
+private fun LazyListScope.searchResultContent(
+    state: SearchState,
+    onRetryClicked: () -> Unit
+) = when (state) {
     is SearchState.Loading -> {
         items(5) {
             SearchItem(
@@ -104,7 +113,16 @@ private fun LazyListScope.searchResultContent(state: SearchState) = when (state)
 
     is SearchState.Error -> {
         item {
-            ErrorView(message = state.message)
+            ErrorView(
+                message = state.message,
+                onRetryClicked = onRetryClicked
+            )
+        }
+    }
+
+    SearchState.Empty -> {
+        item {
+            EmptyView()
         }
     }
 

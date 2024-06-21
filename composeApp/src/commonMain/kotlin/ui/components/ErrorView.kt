@@ -28,9 +28,10 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun ErrorView(
+internal fun ErrorView(
     modifier: Modifier = Modifier,
-    message: String
+    message: String,
+    onRetryClicked: () -> Unit
 ) {
     var bytes by remember { mutableStateOf(ByteArray(0)) }
     val composition by rememberLottieComposition(LottieCompositionSpec.JsonString(bytes.decodeToString()))
@@ -66,7 +67,7 @@ fun ErrorView(
 
         IconButton(
             modifier = Modifier.padding(16.dp),
-            onClick = { /*TODO*/ }
+            onClick = onRetryClicked
         ) {
             Text("Retry")
         }

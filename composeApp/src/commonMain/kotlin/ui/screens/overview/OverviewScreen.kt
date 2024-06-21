@@ -38,7 +38,7 @@ internal fun OverviewScreen(
     when (state) {
         is OverviewState.Error -> {
             val message = (state as OverviewState.Error).message
-            ErrorView(message = message)
+            ErrorView(message = message, onRetryClicked = { /* TODO */ })
         }
 
         else -> Unit

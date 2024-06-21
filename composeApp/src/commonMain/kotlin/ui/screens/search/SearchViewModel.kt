@@ -9,15 +9,13 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import ui.common.MviViewModel
-import ui.screens.search.SearchEvent.OnSearchCleared
+import ui.screens.search.SearchEvent.OnRetryClicked
 import ui.screens.search.SearchEvent.OnSearchClicked
-import ui.screens.search.SearchEvent.OnSearchCloseClicked
 import ui.screens.search.SearchEvent.OnSearchResultClicked
 import ui.screens.search.SearchEvent.OnSearchTextChanged
 
@@ -25,41 +23,42 @@ class SearchViewModel(
     private val mainRepository: MainRepository
 ) : MviViewModel<SearchEvent, SearchState, SearchNavigationEffect>(SearchState.Idle) {
 
-    private val searchQuery: MutableStateFlow<String?> = MutableStateFlow(null)
+    private val searchQuery: MutableStateFlow<String> = MutableStateFlow("")
 
     override fun handleEvent(event: SearchEvent) {
         when (event) {
             is OnSearchTextChanged -> search(event.query)
             is OnSearchClicked -> search(searchQuery.value ?: "")
             is OnSearchResultClicked -> TODO()
-            OnSearchCloseClicked -> TODO()
-            OnSearchCleared -> TODO()
+            is OnRetryClicked -> search(event.query)
         }
     }
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     private fun search(query: String) {
         with(searchQuery) {
+            if (query.isEmpty()) setState { SearchState.Idle }
+
             value = query.trim()
             debounce(500)
-                .filterNotNull()
+                .filter { it.isNotEmpty() }
                 .distinctUntilChanged()
-                .flatMapLatest { flowOf(getCoinCapRates()) }
+                .flatMapLatest(mainRepository::search)
+                .asResult()
+                .onEach { result ->
+                    setState {
+                        when (result) {
+                            is NetworkResult.Error -> SearchState.Error(result.exception.message ?: "")
+                            NetworkResult.Loading -> SearchState.Loading
+                            is NetworkResult.Success -> {
+                                if (result.data.isNotEmpty()) {
+                                    SearchState.Success(result.data)
+                                } else SearchState.Empty
+                            }
+                        }
+                    }
+                }
                 .launchIn(viewModelScope)
         }
-    }
-
-    // TODO: Maybe try to implement this in a different way
-    private fun getCoinCapRates() {
-        mainRepository.getCoinCapRates()
-            .asResult()
-            .map { result ->
-                when (result) {
-                    is NetworkResult.Success -> setState { SearchState.Success(result.data) }
-                    is NetworkResult.Error -> setState { SearchState.Error(result.exception.message.toString()) }
-                    NetworkResult.Loading -> setState { SearchState.Loading }
-                }
-            }
-            .launchIn(viewModelScope)
     }
 }
