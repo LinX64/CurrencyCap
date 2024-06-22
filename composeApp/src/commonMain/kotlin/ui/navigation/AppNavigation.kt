@@ -61,7 +61,11 @@ private fun NavGraphBuilder.authGraph(
         navController = navController,
         onError = onError
     )
-    registerScreen(padding = padding, navController = navController)
+    registerScreen(
+        padding = padding,
+        navController = navController,
+        onError = onError
+    )
 }
 
 internal fun handleNavigation(

@@ -7,6 +7,7 @@ sealed interface RegisterViewEvent {
 }
 
 sealed interface RegisterState {
+    object Idle : RegisterState
     data object Loading : RegisterState
     data class Success(val uid: String) : RegisterState
     data class Error(val message: String) : RegisterState

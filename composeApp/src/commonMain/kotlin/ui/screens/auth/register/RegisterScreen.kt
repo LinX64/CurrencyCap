@@ -12,15 +12,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import di.koinViewModel
 import ui.components.BaseCenterColumn
+import ui.components.CenteredColumn
 import ui.components.HandleNavigationEffect
 import ui.screens.auth.login.components.EmailTextField
 import ui.screens.auth.register.RegisterNavigationEffect.NavigateToMarketOverview
@@ -34,7 +38,9 @@ internal fun RegisterScreen(
     padding: PaddingValues = PaddingValues(16.dp),
     registerViewModel: RegisterViewModel = koinViewModel<RegisterViewModel>(),
     navigateToMarketOverview: (uid: String) -> Unit,
+    onError: (message: String) -> Unit
 ) {
+    val state by registerViewModel.viewState.collectAsState()
     BaseCenterColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -53,6 +59,11 @@ internal fun RegisterScreen(
         }
     }
 
+    when (state) {
+        is RegisterState.Loading -> CenteredColumn { CircularProgressIndicator() }
+        is RegisterState.Error -> onError((state as RegisterState.Error).message)
+        else -> Unit
+    }
 }
 
 @Composable
@@ -94,12 +105,13 @@ private fun RegisterForm(
                 EmailTextField(
                     onEmailChanged = onEmailChanged
                 )
-
-                Spacer(modifier = modifier.height(32.dp))
+                Spacer(modifier = modifier.height(10.dp))
 
                 PasswordTextField(
                     onPasswordChanged = onPasswordChanged
                 )
+
+                Spacer(modifier = modifier.height(32.dp))
 
                 Button(
                     onClick = { onSignUpClick() },

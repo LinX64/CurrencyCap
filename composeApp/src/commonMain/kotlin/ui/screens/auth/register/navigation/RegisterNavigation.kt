@@ -13,7 +13,8 @@ fun NavController.navigateToRegisterScreen() = navigate(NavRoutes.REGISTER)
 
 fun NavGraphBuilder.registerScreen(
     navController: NavHostController,
-    padding: PaddingValues
+    padding: PaddingValues,
+    onError: (message: String) -> Unit
 ) {
     composable(NavRoutes.REGISTER) {
         BlurBackground {
@@ -21,7 +22,8 @@ fun NavGraphBuilder.registerScreen(
                 padding = padding,
                 navigateToMarketOverview = { uid ->
                     navController.navigate(NavRoutes.MARKET_OVERVIEW + "/$uid")
-                }
+                },
+                onError = onError
             )
         }
     }
