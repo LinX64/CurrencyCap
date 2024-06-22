@@ -4,7 +4,8 @@ import androidx.datastore.core.DataMigration
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.preferences.core.Preferences
-import com.client.currencycap.applicationContext
+import di.SETTINGS_PREFERENCES
+import di.createDataStoreWithDefaults
 import kotlinx.coroutines.CoroutineScope
 import java.io.File
 

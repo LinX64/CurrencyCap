@@ -29,7 +29,7 @@
             tools:node="merge">
 
             <meta-data
-                android:name="context.ContextProvider"
+                android:name="ui.common.ContextProvider"
                 android:value="androidx.startup" />
         </provider>
     </application>

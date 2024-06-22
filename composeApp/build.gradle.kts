@@ -70,6 +70,7 @@ kotlin {
             implementation(libs.ktor.client.core)
 
             implementation(libs.androidx.data.store.core)
+            implementation(libs.androidx.startup)
 
             // Firebase SDk
             implementation(libs.firebase.auth)

@@ -1,4 +1,4 @@
-package com.client.currencycap
+package ui.common
 
 import android.content.Context
 import androidx.startup.Initializer

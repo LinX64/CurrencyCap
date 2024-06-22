@@ -21,14 +21,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import di.koinViewModel
 import ui.components.BaseCenterColumn
+import ui.components.HandleNavigationEffect
 import ui.screens.auth.login.components.EmailTextField
+import ui.screens.auth.register.RegisterNavigationEffect.NavigateToMarketOverview
 import ui.screens.auth.register.RegisterViewEvent.OnEmailChanged
+import ui.screens.auth.register.RegisterViewEvent.OnPasswordChanged
 import ui.screens.auth.register.RegisterViewEvent.OnRegisterClick
+import ui.screens.auth.register.components.PasswordTextField
 
 @Composable
 internal fun RegisterScreen(
     padding: PaddingValues = PaddingValues(16.dp),
-    registerViewModel: RegisterViewModel = koinViewModel<RegisterViewModel>()
+    registerViewModel: RegisterViewModel = koinViewModel<RegisterViewModel>(),
+    navigateToMarketOverview: (uid: String) -> Unit,
 ) {
     BaseCenterColumn(
         modifier = Modifier
@@ -37,15 +42,24 @@ internal fun RegisterScreen(
     ) {
         RegisterForm(
             onEmailChanged = { registerViewModel.handleEvent(OnEmailChanged(it)) },
+            onPasswordChanged = { registerViewModel.handleEvent(OnPasswordChanged(it)) },
             onSignUpClick = { registerViewModel.handleEvent(OnRegisterClick) }
         )
     }
+
+    HandleNavigationEffect(registerViewModel) { effect ->
+        when (effect) {
+            is NavigateToMarketOverview -> navigateToMarketOverview(effect.uid)
+        }
+    }
+
 }
 
 @Composable
 private fun RegisterForm(
     modifier: Modifier = Modifier,
     onEmailChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
     onSignUpClick: () -> Unit
 ) {
     Column(
@@ -82,6 +96,10 @@ private fun RegisterForm(
                 )
 
                 Spacer(modifier = modifier.height(32.dp))
+
+                PasswordTextField(
+                    onPasswordChanged = onPasswordChanged
+                )
 
                 Button(
                     onClick = { onSignUpClick() },

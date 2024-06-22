@@ -1,5 +1,7 @@
 package ui.common
 
+import di.SETTINGS_PREFERENCES
+import platform.Foundation.NSFileManager
 import platform.Foundation.NSLocale
 import platform.Foundation.currentLocale
 import platform.Foundation.localeIdentifier
@@ -29,4 +31,8 @@ actual fun String.getCountryName(): String {
 actual fun String.getCountryFlag(): String {
     return ""
     // TODO: Implement this
+}
+
+actual fun getSettingsPreferencesPath(): String {
+    return NSFileManager.defaultManager.currentDirectoryPath + "/" + SETTINGS_PREFERENCES
 }

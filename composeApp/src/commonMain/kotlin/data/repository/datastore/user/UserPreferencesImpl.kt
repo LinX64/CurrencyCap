@@ -15,10 +15,9 @@ internal class UserPreferencesImpl(
     private companion object {
         private const val PREFS_TAG_KEY = "UserPreferences"
         private const val IS_USER_LOGGED_IN = "is_user_logged_in"
-        val USER_UID_KEY = stringPreferencesKey("user_uid")
+        private val USER_UID_KEY = stringPreferencesKey("user_uid")
+        private val isUserLoggedInKey = booleanPreferencesKey(IS_USER_LOGGED_IN)
     }
-
-    private val isUserLoggedInKey = booleanPreferencesKey(IS_USER_LOGGED_IN)
 
     override suspend fun isUserLoggedIn(): Boolean {
         return dataStore.data.map { preferences ->

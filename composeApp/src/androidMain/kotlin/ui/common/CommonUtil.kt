@@ -1,5 +1,7 @@
 package ui.common
 
+import di.SETTINGS_PREFERENCES
+import java.io.File
 import java.text.DecimalFormat
 import java.util.Locale
 
@@ -26,4 +28,8 @@ actual fun String.getCountryFlag(): String {
     val firstLetter = Character.codePointAt(countryCode, 0) - 0x41 + 0x1F1E6
     val secondLetter = Character.codePointAt(countryCode, 1) - 0x41 + 0x1F1E6
     return String(Character.toChars(firstLetter)) + String(Character.toChars(secondLetter))
+}
+
+actual fun getSettingsPreferencesPath(): String {
+    return File(applicationContext.filesDir, SETTINGS_PREFERENCES).absolutePath
 }

@@ -2,6 +2,7 @@ package ui.screens.auth.register
 
 sealed interface RegisterViewEvent {
     data class OnEmailChanged(val newEmail: String) : RegisterViewEvent
+    data class OnPasswordChanged(val newPassword: String) : RegisterViewEvent
     data object OnRegisterClick : RegisterViewEvent
 }
 
@@ -12,7 +13,7 @@ sealed interface RegisterState {
 }
 
 sealed interface RegisterNavigationEffect {
-    data object RegisterSuccess : RegisterNavigationEffect
-    data class RegisterError(val message: String) : RegisterNavigationEffect
+    data class NavigateToMarketOverview(val uid: String) : RegisterNavigationEffect
+
 }
 
