@@ -14,7 +14,7 @@ val viewModelModule = module {
     single { ExchangeViewModel(get(), get()) }
     single { AiPredictViewModel() }
     single { SearchViewModel(get()) }
-    single { LoginViewModel(get()) }
+    single { LoginViewModel(get(), get()) }
     single { RegisterViewModel(get()) }
     single { ProfileViewModel(get()) }
 }

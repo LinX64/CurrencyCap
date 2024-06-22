@@ -23,6 +23,8 @@ haze-material = "0.7.1"
 coil = "3.0.0-alpha06"
 compottie = "1.1.2"
 placeholder-material3 = "1.0.8"
+androidx-data-store = "1.1.1"
+androidx-startup = "1.1.1"
 
 # Firebase
 firebase-firestore = "25.0.0"
@@ -58,6 +60,8 @@ firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore
 firebase-auth = { module = "dev.gitlive:firebase-auth", version.ref = "firebaseAuth" }
 
 mvi-compose-common = { group = "io.github.linx64", name = "mvicompose", version.ref = "mvicompose" }
+androidx-data-store-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "androidx-data-store" }
+androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 
 # Coil
 coil = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }

@@ -50,6 +50,9 @@ kotlin {
             implementation(libs.firebase.firestore)
             implementation(libs.firebase.auth)
 
+            implementation(libs.androidx.data.store.core)
+            api(libs.androidx.startup)
+
             implementation(libs.androidx.activity.compose)
         }
 
@@ -60,12 +63,13 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-
             implementation(compose.materialIconsExtended)
 
             implementation(libs.kotlinx.serialization)
             implementation(libs.kotlin.serialization)
             implementation(libs.ktor.client.core)
+
+            implementation(libs.androidx.data.store.core)
 
             // Firebase SDk
             implementation(libs.firebase.auth)
@@ -94,6 +98,8 @@ kotlin {
         iosMain.dependencies {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.darwin)
+
+            implementation(libs.androidx.data.store.core)
         }
     }
 }

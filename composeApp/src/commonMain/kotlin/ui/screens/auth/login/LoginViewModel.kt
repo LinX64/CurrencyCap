@@ -2,6 +2,7 @@ package ui.screens.auth.login
 
 import androidx.lifecycle.viewModelScope
 import data.repository.auth.AuthServiceImpl.AuthState
+import data.repository.datastore.user.UserPreferences
 import domain.repository.AuthService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -15,7 +16,8 @@ import ui.screens.auth.login.LoginViewEvent.OnPasswordChanged
 import util.validateEmail
 
 internal class LoginViewModel(
-    private val authService: AuthService
+    private val authService: AuthService,
+    private val userPreferences: UserPreferences
 ) : MviViewModel<LoginViewEvent, LoginState, LoginNavigationEffect>(LoginState.Idle) {
 
     val newEmail: MutableStateFlow<String> = MutableStateFlow("")
@@ -52,7 +54,11 @@ internal class LoginViewModel(
         viewModelScope.launch {
             val authState = authService.authenticate(email, password)
             when (authState) {
-                is AuthState.Success -> setEffect(NavigateToMarketOverview(authService.currentUserId))
+                is AuthState.Success -> {
+                    userPreferences.saveUserUid(authService.currentUserId)
+                    setEffect(NavigateToMarketOverview(authService.currentUserId))
+                }
+
                 is AuthState.Error -> setState { Error("Invalid email or password") }
             }
         }
