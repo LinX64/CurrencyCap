@@ -13,7 +13,6 @@ internal class UserPreferencesImpl(
 ) : UserPreferences {
 
     private companion object {
-        private const val PREFS_TAG_KEY = "UserPreferences"
         private const val IS_USER_LOGGED_IN = "is_user_logged_in"
         private val USER_UID_KEY = stringPreferencesKey("user_uid")
         private val isUserLoggedInKey = booleanPreferencesKey(IS_USER_LOGGED_IN)
@@ -28,6 +27,7 @@ internal class UserPreferencesImpl(
     override suspend fun saveUserUid(uid: String) {
         dataStore.edit { preferences ->
             preferences[USER_UID_KEY] = uid
+            preferences[isUserLoggedInKey] = true
         }
     }
 

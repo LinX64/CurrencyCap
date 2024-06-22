@@ -30,7 +30,9 @@ import ui.screens.subscribers.SubscribersSection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun App() {
+internal fun App(
+    startDestination: (uid: String) -> String
+) {
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination?.route ?: ""
@@ -70,6 +72,7 @@ internal fun App() {
         AppNavigation(
             navController = navController,
             scrollBehavior = scrollBehavior,
+            startDestination = startDestination,
             padding = paddingValues,
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } }
         )

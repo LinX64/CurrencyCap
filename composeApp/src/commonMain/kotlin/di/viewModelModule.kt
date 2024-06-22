@@ -15,10 +15,10 @@ val viewModelModule = module {
     single { AiPredictViewModel() }
     single { SearchViewModel(get()) }
     single { LoginViewModel(get(), get()) }
-    single { RegisterViewModel(get()) }
+    single { RegisterViewModel(get(), get()) }
     single { ProfileViewModel(get()) }
 }
 
 val previewModule = module {
-    single { RegisterViewModel(get()) }
+    single { RegisterViewModel(get(), get()) }
 }

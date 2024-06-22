@@ -4,55 +4,55 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
-import di.dataStoreModule
-import di.httpClientModule
-import di.repositoryModule
-import di.useCaseModule
-import di.viewModelModule
-import org.koin.android.ext.koin.androidContext
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.compose.KoinContext
-import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import ui.App
+import ui.navigation.NavRoutes
 import ui.theme.AppM3Theme
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val mainViewModel by viewModel<MainViewModel>()
+    private var startDestination: (uid: String) -> String = { NavRoutes.LANDING }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        startKoin()
-
         enableEdgeToEdge()
 
-        setContent {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.viewState
+                    .onEach {
+                        when (it) {
+                            is MainState.LoggedIn -> {
+                                val uid = it.uid
+                                startDestination = { NavRoutes.MARKET_OVERVIEW + "/${uid}" }
+                            }
 
-
-            // TODO: Add dark/light support
-            // should also change BlurDarkBackground to BlurLightBackground
-            KoinContext {
-                AppM3Theme(dark = true) {
-                    App()
-                }
+                            is MainState.LoggedOut -> startDestination = { NavRoutes.LOGIN }
+                            else -> Unit
+                        }
+                    }
+                    .collect {}
             }
         }
-    }
 
-    private fun startKoin() {
-        startKoin {
-            androidContext(this@MainActivity)
-            modules(
-                listOf(
-                    httpClientModule,
-                    repositoryModule,
-                    viewModelModule,
-                    useCaseModule,
-                    dataStoreModule
-                )
-            )
+        setContent {
+            // TODO: Add dark/light support
+            KoinContext {
+                AppM3Theme(dark = true) {
+                    App(
+                        startDestination = startDestination,
+                    )
+                }
+            }
         }
     }
 

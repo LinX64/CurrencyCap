@@ -27,11 +27,12 @@ internal fun AppNavigation(
     navController: NavHostController,
     padding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
-    onError: (message: String) -> Unit
+    onError: (message: String) -> Unit,
+    startDestination: (uid: String) -> String
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.LOGIN,
+        startDestination = startDestination(""),
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)

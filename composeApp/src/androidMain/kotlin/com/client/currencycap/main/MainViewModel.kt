@@ -1,29 +1,29 @@
 package com.client.currencycap.main
 
-import com.client.currencycap.main.MainViewEvent.OnUserLoggedIn
-import data.repository.datastore.app.AppPreferences
+import androidx.lifecycle.viewModelScope
 import data.repository.datastore.user.UserPreferences
+import kotlinx.coroutines.launch
 import ui.common.MviViewModel
 
 class MainViewModel(
-    private val userPreferences: UserPreferences,
-    private val appPreferences: AppPreferences
-) : MviViewModel<MainViewEvent, MainState, MainNavigationEffect>(MainState.Loading) {
+    private val userPreferences: UserPreferences
+) : MviViewModel<MainViewEvent, MainState, MainNavigationEffect>(MainState.Idle) {
 
-    override fun handleEvent(event: MainViewEvent) {
-        when (event) {
-            is OnUserLoggedIn -> TODO()
-        }
+    init {
+        checkUserLoginStatus()
     }
 
-//    private fun isUserLoggedIn(): Boolean {
-//        viewModelScope.launch {
-//            val userLoggedIn = userPreferences.isUserLoggedIn()
-//            if (userLoggedIn) {
-//                setEffect(NavigateToOverview(userPreferences.getUserUid()))
-//            } else {
-//                setEffect(NavigateToLogin)
-//            }
-//        }
-//    }
+    override fun handleEvent(event: MainViewEvent) {}
+
+    private fun checkUserLoginStatus() {
+        viewModelScope.launch {
+            val userLoggedIn = userPreferences.isUserLoggedIn()
+            if (userLoggedIn) {
+                val uid = userPreferences.getUserUid()
+                setEffect(MainNavigationEffect.NavigateToOverview(uid))
+            } else {
+                setEffect(MainNavigationEffect.NavigateToLogin)
+            }
+        }
+    }
 }

@@ -35,7 +35,7 @@ import ui.screens.auth.register.components.PasswordTextField
 
 @Composable
 internal fun RegisterScreen(
-    padding: PaddingValues = PaddingValues(16.dp),
+    padding: PaddingValues,
     registerViewModel: RegisterViewModel = koinViewModel<RegisterViewModel>(),
     navigateToMarketOverview: (uid: String) -> Unit,
     onError: (message: String) -> Unit

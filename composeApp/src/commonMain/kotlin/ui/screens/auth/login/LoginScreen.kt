@@ -47,15 +47,9 @@ internal fun LoginScreen(
     val email by loginViewModel.newEmail.collectAsState()
     val password by loginViewModel.newPassword.collectAsState()
 
-    HandleNavigationEffect(loginViewModel) { effect ->
-        when (effect) {
-            is NavigateToMarketOverview -> navigateToMarketOverview(effect.uid)
-            NavigateToRegister -> navigateToRegister()
-        }
-    }
-
     Box(
         modifier = Modifier.fillMaxSize()
+            .padding(padding)
     ) {
         Canvas(
             modifier = Modifier
@@ -95,6 +89,13 @@ internal fun LoginScreen(
 
         Column {
             MadeWithLove()
+        }
+    }
+
+    HandleNavigationEffect(loginViewModel) { effect ->
+        when (effect) {
+            is NavigateToMarketOverview -> navigateToMarketOverview(effect.uid)
+            NavigateToRegister -> navigateToRegister()
         }
     }
 

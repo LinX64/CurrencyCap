@@ -20,9 +20,7 @@ fun NavGraphBuilder.registerScreen(
         BlurBackground {
             RegisterScreen(
                 padding = padding,
-                navigateToMarketOverview = { uid ->
-                    navController.navigate(NavRoutes.MARKET_OVERVIEW + "/$uid")
-                },
+                navigateToMarketOverview = { uid -> navController.navigate(NavRoutes.MARKET_OVERVIEW + "/$uid") },
                 onError = onError
             )
         }
