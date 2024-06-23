@@ -101,7 +101,7 @@ private fun AppNavigationIcon(
     navController: NavHostController,
     currentDestination: String
 ) {
-    if (isNotLoggedIn(currentDestination)) {
+    if (isNotLoggedIn(currentDestination) && !currentDestination.startsWith(NavRoutes.MARKET_OVERVIEW)) {
         IconButton(onClick = { navController.popBackStack() }) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,

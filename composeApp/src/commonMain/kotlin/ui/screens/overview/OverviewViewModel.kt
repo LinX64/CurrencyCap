@@ -1,11 +1,8 @@
 package ui.screens.overview
 
 import androidx.lifecycle.viewModelScope
-import data.util.asResult
-import domain.model.DataDao
 import domain.repository.MainRepository
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
@@ -29,44 +26,24 @@ class OverviewViewModel(
     }
 
     private fun loadCombinedRates() {
-        val iranianRateFlow = mainRepository.getIranianRate()
-        val cryptoRatesFlow = mainRepository.getCoinCapRates().map(::filterByCrypto)
-        val topMoversFlow = cryptoRatesFlow.map(::mapToTopMovers)
+        setState { OverviewState.Loading }
 
-        combine(
-            iranianRateFlow,
-            cryptoRatesFlow,
-            topMoversFlow
-        ) { iranianRate, cryptoRates, topMovers ->
-            setState {
-                when {
-                    iranianRate.isEmpty() || cryptoRates.isEmpty() || topMovers.isEmpty() -> OverviewState.Loading
-                    else -> Success(
-                        iranianRate = iranianRate,
-                        topMovers = topMovers,
-                        cryptoRates = cryptoRates
-                    )
-                }
+        viewModelScope.launch {
+            val rates = mainRepository.getAllRates()
+
+            val bonbastRates = rates.map { it.bonbast }.first()
+            val cryptoRates = rates.map { it.crypto }.first().filter { it.name == CRYPTO }
+            val markets = rates.map { it.markets }.first()
+            val fiatRates = rates.map { it.rates }.first()
+
+            if (bonbastRates.isEmpty() || cryptoRates.isEmpty() || markets.isEmpty() || fiatRates.isEmpty()) {
+                setState { OverviewState.Error("Failed to load rates") }
+                return@launch
             }
+
+            setState { Success(bonbastRates, cryptoRates, markets, fiatRates) }
         }
-            .asResult()
-            .launchIn(viewModelScope)
     }
-    // TODO: fix me
-
-    private fun filterByCrypto(rates: List<DataDao>) = rates
-        .sortedBy { it.currencySymbol }
-        .filter { it.type == CRYPTO }
-
-    private fun mapToTopMovers(rates: List<DataDao>) = rates
-        .sortedByDescending { it.rateUsd }
-        .take(4)
-        .map { topMover ->
-            TopMovers(
-                symbol = topMover.symbol,
-                rateUsd = topMover.rateUsd
-            )
-        }
 
     private fun refreshRates() {
         viewModelScope.launch {

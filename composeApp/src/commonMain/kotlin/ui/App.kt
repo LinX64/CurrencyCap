@@ -11,15 +11,19 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
+import di.koinViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ui.components.AppTopBar
 import ui.components.BottomNavigationBar
@@ -31,17 +35,24 @@ import ui.screens.subscribers.SubscribersSection
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun App(
-    startDestination: (uid: String) -> String
+    mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
+    navController: NavHostController = rememberNavController(),
+    scaffoldState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState(),
+    scope: CoroutineScope = rememberCoroutineScope(),
+    hazeState: HazeState = remember { HazeState() },
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 ) {
-    val navController = rememberNavController()
+    val mainState by mainViewModel.state.collectAsState()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination?.route ?: ""
-    val hazeState = remember { HazeState() }
     val isSheetOpen = rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-    val scaffoldState = rememberBottomSheetScaffoldState()
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
+
+    val isUserLoggedIn = when (mainState) {
+        is MainState.LoggedIn -> true
+        else -> false
+    }
+    val getUid = { (mainState as? MainState.LoggedIn)?.uid ?: "" }
 
     Scaffold(
         topBar = {
@@ -71,9 +82,10 @@ internal fun App(
     ) { paddingValues ->
         AppNavigation(
             navController = navController,
-            scrollBehavior = scrollBehavior,
-            startDestination = startDestination,
             padding = paddingValues,
+            isUserLoggedIn = isUserLoggedIn,
+            uid = getUid(),
+            scrollBehavior = scrollBehavior,
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } }
         )
     }

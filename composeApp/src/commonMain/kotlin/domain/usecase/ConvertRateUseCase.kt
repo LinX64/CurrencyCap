@@ -1,6 +1,6 @@
 package domain.usecase
 
-import domain.model.DataDao
+import data.model.GetCurrencies
 import domain.repository.MainRepository
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
@@ -14,7 +14,7 @@ class ConvertRateUseCase(
         to: String,
         amount: String
     ): String = coroutineScope {
-        val rates = mainRepository.getCoinCapRates().first()
+        val rates = mainRepository.getAllRates().first()
         val fromRate = findRateUsd(rates, from)
         val toRate = findRateUsd(rates, to)
         val amountValue = amount.toDoubleOrNull()
@@ -33,8 +33,9 @@ class ConvertRateUseCase(
      * Find the rate in USD for the given symbol using binary search
      * @param rates List of rates
      */
-    private fun findRateUsd(rates: List<DataDao>, symbol: String): Double? {
-        val index = rates.binarySearch { it.symbol.compareTo(symbol) }
-        return if (index >= 0) rates[index].rateUsd.toDoubleOrNull() else null
+    private fun findRateUsd(rates: GetCurrencies, symbol: String): Double? {
+        val mRates = rates.rates.map { it.copy(symbol = it.symbol.uppercase()) }
+        val index = mRates.binarySearch { it.symbol.compareTo(symbol) }
+        return if (index >= 0) mRates[index].rateUsd.toDoubleOrNull() else null
     }
 }

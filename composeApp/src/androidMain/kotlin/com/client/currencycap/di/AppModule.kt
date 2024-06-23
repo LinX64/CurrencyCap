@@ -1,7 +1,7 @@
 package com.client.currencycap.di
 
-import com.client.currencycap.main.MainViewModel
 import org.koin.dsl.module
+import ui.MainViewModel
 
 val appModule = module {
     single { MainViewModel(get()) }

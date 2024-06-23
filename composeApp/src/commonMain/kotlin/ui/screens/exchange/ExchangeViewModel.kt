@@ -1,9 +1,9 @@
 package ui.screens.exchange
 
 import androidx.lifecycle.viewModelScope
+import data.model.GetCurrencies
 import data.util.NetworkResult
 import data.util.asResult
-import domain.model.DataDao
 import domain.repository.MainRepository
 import domain.usecase.ConvertRateUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -40,7 +40,7 @@ internal class ExchangeViewModel(
     }
 
     private fun getFiats() {
-        mainRepository.getCoinCapRates()
+        mainRepository.getAllRates()
             .asResult()
             .map { mapToState(it) }
             .distinctUntilChanged()
@@ -57,9 +57,9 @@ internal class ExchangeViewModel(
         }
     }
 
-    private fun mapToState(it: NetworkResult<List<DataDao>>) = when (it) {
+    private fun mapToState(it: NetworkResult<GetCurrencies>) = when (it) {
         is NetworkResult.Success -> {
-            val fiats = it.data.filter { rates -> rates.type == FIAT }
+            val fiats = it.data.rates.filter { it.type == FIAT }
             if (fiats.isNotEmpty()) {
                 setState { Success(fiats) }
             } else setState { Error("No fiat currencies found") }

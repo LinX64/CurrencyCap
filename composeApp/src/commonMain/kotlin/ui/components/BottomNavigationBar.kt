@@ -43,7 +43,6 @@ internal fun BottomNavigationBar(
     currentDestination: String
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
-
     if (isNotLoggedIn(currentDestination)) {
         Box(
             modifier = Modifier
@@ -134,8 +133,6 @@ internal fun BottomNavigationBar(
     }
 }
 
-fun isNotLoggedIn(currentDestination: String): Boolean {
-    return (currentDestination != NavRoutes.LANDING)
-            && (currentDestination != NavRoutes.LOGIN)
-            && (currentDestination != NavRoutes.REGISTER)
-}
+internal fun isNotLoggedIn(currentDestination: String): Boolean = (currentDestination != NavRoutes.LANDING)
+        && (currentDestination != NavRoutes.LOGIN)
+        && (currentDestination != NavRoutes.REGISTER)

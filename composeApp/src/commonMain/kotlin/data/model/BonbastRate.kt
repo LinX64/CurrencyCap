@@ -4,16 +4,16 @@ import domain.model.RateDao
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Rate(
+data class BonbastRate(
     val code: String,
     val sell: Int,
     val buy: Int
 )
 
-fun List<Rate>.toDomain(): List<RateDao> {
+fun List<BonbastRate>.toDomain(): List<RateDao> {
     return map { it.toDomain() }
 }
 
-fun Rate.toDomain(): RateDao {
+fun BonbastRate.toDomain(): RateDao {
     return RateDao(code, sell, buy)
 }

@@ -8,13 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import ui.components.BottomBarTab
 import ui.screens.ai_predict.navigation.aiPredictScreen
-import ui.screens.auth.login.navigation.loginScreen
-import ui.screens.auth.register.navigation.registerScreen
 import ui.screens.exchange.navigation.exchangeScreen
 import ui.screens.landing.navigation.landingScreen
 import ui.screens.overview.navigation.overviewScreen
@@ -28,16 +25,22 @@ internal fun AppNavigation(
     padding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
     onError: (message: String) -> Unit,
-    startDestination: (uid: String) -> String
+    isUserLoggedIn: Boolean = false,
+    uid: String = ""
 ) {
+    val initialRoute = if (isUserLoggedIn) {
+        NavRoutes.MARKET_OVERVIEW + "/${uid}"
+    } else NavRoutes.LANDING
+
     NavHost(
         navController = navController,
-        startDestination = startDestination(""),
+        startDestination = initialRoute,
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
-        landingScreen(navController = navController)
+        landingScreen(navController)
+
         authGraph(
             padding = padding,
             navController = navController,
@@ -52,23 +55,6 @@ internal fun AppNavigation(
     }
 }
 
-private fun NavGraphBuilder.authGraph(
-    padding: PaddingValues,
-    navController: NavHostController,
-    onError: (message: String) -> Unit
-) {
-    loginScreen(
-        padding = padding,
-        navController = navController,
-        onError = onError
-    )
-    registerScreen(
-        padding = padding,
-        navController = navController,
-        onError = onError
-    )
-}
-
 internal fun handleNavigation(
     navController: NavHostController,
     tab: BottomBarTab,
@@ -76,9 +62,7 @@ internal fun handleNavigation(
 ) {
     val isAiPredictionTab = tab.route == NavRoutes.AI_PREDICTION
     isSheetOpen.value = isAiPredictionTab
-    if (isAiPredictionTab) {
-        return
-    }
+    if (isAiPredictionTab) return
 
     navController.navigate(tab.route) {
         navController.graph.startDestinationRoute?.let { startDestinationRoute ->
