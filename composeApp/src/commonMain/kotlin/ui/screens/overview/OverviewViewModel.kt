@@ -35,13 +35,22 @@ class OverviewViewModel(
             val cryptoRates = rates.map { it.crypto }.first().filter { it.name == CRYPTO }
             val markets = rates.map { it.markets }.first()
             val fiatRates = rates.map { it.rates }.first()
+            val topMovers = rates.map { it.rates }.first().filter { it.symbol == CRYPTO }
+                .sortedByDescending { it.rateUsd }
+                .take(4)
+                .map { topMover ->
+                    TopMovers(
+                        symbol = topMover.symbol,
+                        rateUsd = topMover.rateUsd
+                    )
+                }
 
             if (bonbastRates.isEmpty() || cryptoRates.isEmpty() || markets.isEmpty() || fiatRates.isEmpty()) {
                 setState { OverviewState.Error("Failed to load rates") }
                 return@launch
             }
 
-            setState { Success(bonbastRates, cryptoRates, markets, fiatRates) }
+            setState { Success(bonbastRates, cryptoRates, markets, fiatRates, topMovers) }
         }
     }
 

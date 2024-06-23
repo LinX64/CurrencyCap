@@ -1,6 +1,6 @@
 package domain.usecase
 
-import data.model.GetCurrencies
+import data.model.Currencies
 import domain.repository.MainRepository
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
@@ -33,7 +33,7 @@ class ConvertRateUseCase(
      * Find the rate in USD for the given symbol using binary search
      * @param rates List of rates
      */
-    private fun findRateUsd(rates: GetCurrencies, symbol: String): Double? {
+    private fun findRateUsd(rates: Currencies, symbol: String): Double? {
         val mRates = rates.rates.map { it.copy(symbol = it.symbol.uppercase()) }
         val index = mRates.binarySearch { it.symbol.compareTo(symbol) }
         return if (index >= 0) mRates[index].rateUsd.toDoubleOrNull() else null

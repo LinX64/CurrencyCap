@@ -1,7 +1,7 @@
 package ui.screens.exchange
 
 import androidx.lifecycle.viewModelScope
-import data.model.GetCurrencies
+import data.model.Currencies
 import data.util.NetworkResult
 import data.util.asResult
 import domain.repository.MainRepository
@@ -57,7 +57,7 @@ internal class ExchangeViewModel(
         }
     }
 
-    private fun mapToState(it: NetworkResult<GetCurrencies>) = when (it) {
+    private fun mapToState(it: NetworkResult<Currencies>) = when (it) {
         is NetworkResult.Success -> {
             val fiats = it.data.rates.filter { it.type == FIAT }
             if (fiats.isNotEmpty()) {

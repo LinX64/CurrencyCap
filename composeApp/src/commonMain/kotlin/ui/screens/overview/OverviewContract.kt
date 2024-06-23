@@ -19,7 +19,8 @@ sealed interface OverviewState {
         val bonbastRates: List<BonbastRate>,
         val cryptoRates: List<Crypto>,
         val markets: List<Market>,
-        val fiatRates: List<Rate>
+        val fiatRates: List<Rate>,
+        val topMovers: List<TopMovers>
     ) : OverviewState
 
     data class Error(val message: String) : OverviewState

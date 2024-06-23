@@ -1,12 +1,10 @@
 package data.repository.main
 
-import data.model.CoinCapRates
-import data.model.GetCurrencies
+import data.model.Currencies
 import data.model.toDomain
 import data.util.APIConst.BASE_URL
-import data.util.APIConst.COINCAP_API
 import data.util.retryOnIOException
-import domain.model.DataDao
+import domain.model.CurrenciesDto
 import domain.repository.MainRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -21,15 +19,10 @@ class MainRepositoryImpl(
     private val httpClient: HttpClient
 ) : MainRepository {
 
-    override fun getAllRates(): Flow<GetCurrencies> = flow {
-        val rates = httpClient.get(BASE_URL).body<GetCurrencies>()
+    override fun getAllRates(): Flow<CurrenciesDto> = flow {
+        val rates = httpClient.get(BASE_URL).body<Currencies>().toDomain()
         emit(rates)
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
-
-
-    private suspend fun getCoinCapRate(): List<DataDao> {
-        return httpClient.get(COINCAP_API).body<CoinCapRates>().data.toDomain()
-    }
 }

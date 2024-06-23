@@ -3,7 +3,7 @@ package domain.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RateDao(
+data class BonbastRateDto(
     val code: String,
     val sell: Int,
     val buy: Int
