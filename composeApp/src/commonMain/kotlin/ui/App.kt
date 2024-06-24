@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.BottomSheetScaffoldState
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -30,7 +29,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ui.components.AppTopBar
 import ui.components.BottomNavigationBar
-import ui.components.CenteredColumn
 import ui.components.SubscribeBottomSheet
 import ui.navigation.graphs.AuthNavGraph
 import ui.navigation.graphs.MainNavGraph
@@ -87,6 +85,7 @@ internal fun App(
             navController = navController,
             paddingValues = paddingValues,
             scrollBehavior = scrollBehavior,
+            onLoginSuccess = { mainViewModel.onLoginSuccess() },
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } }
         )
     }
@@ -103,9 +102,9 @@ private fun checkUserStatus(
     navController: NavHostController,
     paddingValues: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
+    onLoginSuccess: () -> Unit,
     onError: (message: String) -> Unit
 ) = when (mainState) {
-    is MainState.Loading -> CenteredColumn { CircularProgressIndicator() }
     is MainState.LoggedIn -> {
         MainNavGraph(
             navController = navController,
@@ -118,6 +117,7 @@ private fun checkUserStatus(
         AuthNavGraph(
             padding = paddingValues,
             navController = navController,
+            onLoginSuccess = onLoginSuccess,
             onError = onError
         )
     }

@@ -41,8 +41,8 @@ internal fun LandingScreen(
 //            Image(
 //                modifier = modifier
 //                    .fillMaxWidth()
-//                    .size(270.dp),
-//                painter = painterResource(Res.drawable.ic_ethereum),
+//                    .size(120.dp),
+//                painter = painterResource(Res.drawable.bird),
 //                contentDescription = null
 //            )
 
@@ -50,21 +50,9 @@ internal fun LandingScreen(
 
             Text(
                 modifier = modifier.padding(horizontal = 16.dp),
-                text = "Currency Cap",
-                style = MaterialTheme.typography.headlineLarge,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.surface
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                modifier = modifier.padding(horizontal = 16.dp),
                 text = "The best way to track your crypto assets",
                 style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.surface
+                textAlign = TextAlign.Center
             )
         }
 
@@ -88,7 +76,7 @@ internal fun LandingScreen(
             ) {
                 Text(
                     modifier = Modifier.padding(8.dp),
-                    text = "Login in",
+                    text = "Log in",
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
@@ -102,16 +90,14 @@ internal fun LandingScreen(
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(8.dp)),
                 onClick = onCreateAccountClick,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                ),
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.surface)
             ) {
                 Text(
                     modifier = Modifier.padding(8.dp),
                     text = "Create an Account",
                     style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.surface
                 )
             }
         }

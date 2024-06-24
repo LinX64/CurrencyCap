@@ -8,12 +8,14 @@ import androidx.navigation.compose.composable
 import ui.components.BlurBackground
 import ui.navigation.NavRoutes
 import ui.screens.auth.login.LoginScreen
+import ui.screens.auth.register.navigation.navigateToRegisterScreen
 
 fun NavController.navigateToLoginScreen() = navigate(NavRoutes.LOGIN)
 
 fun NavGraphBuilder.loginScreen(
     padding: PaddingValues,
     navController: NavHostController,
+    onLoginSuccess: () -> Unit,
     onError: (message: String) -> Unit
 ) {
     composable(NavRoutes.LOGIN) {
@@ -21,12 +23,8 @@ fun NavGraphBuilder.loginScreen(
             LoginScreen(
                 padding = padding,
                 onError = onError,
-                navigateToMarketOverview = {
-                    navController.navigate(NavRoutes.MARKET_OVERVIEW) {
-                        popUpTo(NavRoutes.LOGIN) { inclusive = true }
-                    }
-                },
-                navigateToRegister = { navController.navigate(NavRoutes.REGISTER) }
+                navigateToMarketOverview = onLoginSuccess,
+                navigateToRegister = { navController.navigateToRegisterScreen() }
             )
         }
     }

@@ -34,20 +34,7 @@ internal fun BlurBackground(
                         )
                     )
                 })
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .drawWithContent {
-                    drawRect(
-                        Brush.radialGradient(
-                            colors = listOf(
-                                Color(0xFF4CAF50), Color.Transparent
-                            ),
-                            center = Offset(0f, this.size.height * 0.8f),
-                            radius = size.height * 0.2f,
-                        )
-                    )
-                })
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
