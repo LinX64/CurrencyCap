@@ -3,8 +3,8 @@ package ui.screens.overview
 import androidx.lifecycle.viewModelScope
 import domain.model.RateDto
 import domain.repository.MainRepository
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
 import ui.screens.overview.OverviewState.Success
@@ -32,18 +32,17 @@ class OverviewViewModel(
         viewModelScope.launch {
             val rates = mainRepository.getAllRates()
 
-            val bonbastRates = rates.map { it.bonbast }.first()
-            val cryptoRates = rates.map { it.crypto }.first().sortedBy { it.name }
-            val markets = rates.map { it.markets }.first()
-            val fiatRates = rates.map { it.rates }.first().filter { it.type == FIAT }
-            val topMovers = mapToTopMovers(filterByCrypto(fiatRates))
+            val bonbastRates = rates.mapNotNull { it.bonbast }.firstOrNull() ?: emptyList()
+            val cryptoRates = rates.mapNotNull { it.crypto }.firstOrNull()?.sortedBy { it.name } ?: emptyList()
+            val markets = rates.mapNotNull { it.markets }.firstOrNull() ?: emptyList()
+            val fiatRates = rates.mapNotNull { it.rates }.firstOrNull()?.filter { it.type == FIAT } ?: emptyList()
+            val topMovers = rates.mapNotNull { it.rates }.firstOrNull()?.let { mapToTopMovers(it) } ?: emptyList()
 
-            if (bonbastRates.isEmpty() || cryptoRates.isEmpty() || markets.isEmpty() || fiatRates.isEmpty()) {
+            if (bonbastRates.isEmpty() || cryptoRates.isEmpty() || markets.isEmpty() || fiatRates.isEmpty() || topMovers.isEmpty()) {
                 setState { OverviewState.Error("Failed to load rates") }
-                return@launch
+            } else {
+                setState { Success(bonbastRates, cryptoRates, markets, fiatRates, topMovers) }
             }
-
-            setState { Success(bonbastRates, cryptoRates, markets, fiatRates, topMovers) }
         }
     }
 
