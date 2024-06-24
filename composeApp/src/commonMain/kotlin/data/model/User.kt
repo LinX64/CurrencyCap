@@ -15,5 +15,6 @@ data class User(
     val jobType: String? = null,
     val interests: String? = null,
     val dateOfBirth: String? = null,
-    val gender: String? = null
+    val gender: String? = null,
+    val photoUrl: String? = null
 )

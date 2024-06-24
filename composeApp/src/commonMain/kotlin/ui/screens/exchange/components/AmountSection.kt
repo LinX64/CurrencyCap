@@ -13,7 +13,7 @@ internal fun AmountSection() {
     Spacer(modifier = Modifier.height(16.dp))
 
     Text(
-        text = "amount",
+        text = "Amount",
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurface
     )

@@ -1,16 +1,12 @@
 package ui.screens.exchange
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,7 +24,9 @@ import ui.screens.exchange.components.AmountSection
 import ui.screens.exchange.components.ConvertButton
 import ui.screens.exchange.components.Disclaimer
 import ui.screens.exchange.components.FromDropDown
+import ui.screens.exchange.components.FromSection
 import ui.screens.exchange.components.ResultText
+import ui.screens.exchange.components.SwapButton
 import ui.screens.exchange.components.ToDropDown
 import ui.screens.exchange.components.ToSection
 
@@ -67,63 +65,50 @@ internal fun ExchangeScreen(
 private fun ExchangeCard(
     modifier: Modifier = Modifier,
     state: ExchangeState,
-    exchangeViewModel: ExchangeViewModel,
     toCountryCode: String,
     convertResult: String,
-    amount: String
+    amount: String,
+    exchangeViewModel: ExchangeViewModel
 ) {
-    BlurColumn(modifier = modifier.padding(16.dp)) {
-        Column(modifier = modifier.padding(16.dp)) {
-            Column(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Currency Converter",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-            }
-            Text(
-                text = "from",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface
-            )
+    BlurColumn(
+        modifier = modifier.padding(24.dp)
+    ) {
+        FromSection()
+        FromDropDown(
+            exchangeState = state,
+            onFromChange = { exchangeViewModel.handleEvent(OnFromChange(it)) }
+        )
 
-            Spacer(modifier = Modifier.height(8.dp))
+        SwapButton(onClick = { })
 
-            FromDropDown(
-                exchangeState = state,
-                onFromChange = { exchangeViewModel.handleEvent(OnFromChange(it)) }
-            )
+        ToSection()
 
-            ToSection()
+        ToDropDown(
+            exchangeState = state,
+            onToChange = { exchangeViewModel.handleEvent(OnToChange(it)) }
+        )
 
-            ToDropDown(
-                exchangeState = state,
-                onToChange = { exchangeViewModel.handleEvent(OnToChange(it)) }
-            )
+        AmountSection()
 
-            AmountSection()
+        AmountField(
+            onAmountChange = { exchangeViewModel.handleEvent(OnAmountChange(it)) },
+            countryCode = toCountryCode
+        )
 
-            AmountField(
-                onAmountChange = { exchangeViewModel.handleEvent(OnAmountChange(it)) },
-                countryCode = toCountryCode
-            )
+        Spacer(modifier = Modifier.height(16.dp))
 
-            Spacer(modifier = Modifier.height(16.dp))
+        ResultText(
+            result = convertResult,
+            currency = toCountryCode
+        )
 
-            ResultText(
-                result = convertResult,
-                currency = toCountryCode
-            )
+        Spacer(modifier = Modifier.height(16.dp))
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            ConvertButton(
-                onConvertClicked = { exchangeViewModel.handleEvent(ExchangeViewEvent.OnConvertClick) },
-                isEnabled = amount.isNotEmpty()
-            )
-        }
+        ConvertButton(
+            onConvertClicked = { exchangeViewModel.handleEvent(ExchangeViewEvent.OnConvertClick) },
+            isEnabled = amount.isNotEmpty()
+        )
     }
 }
+
+

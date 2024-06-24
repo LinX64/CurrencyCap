@@ -31,7 +31,7 @@ import ui.screens.auth.login.LoginNavigationEffect.NavigateToRegister
 import ui.screens.auth.login.LoginViewEvent.OnEmailChanged
 import ui.screens.auth.login.LoginViewEvent.OnLoginClick
 import ui.screens.auth.login.LoginViewEvent.OnPasswordChanged
-import ui.screens.auth.login.LoginViewEvent.OnSignUpClick
+import ui.screens.auth.login.LoginViewEvent.OnResetPasswordClick
 import ui.screens.auth.login.components.LoginForm
 import ui.screens.auth.login.components.MadeWithLove
 
@@ -41,6 +41,7 @@ internal fun LoginScreen(
     padding: PaddingValues,
     navigateToMarketOverview: () -> Unit,
     navigateToRegister: () -> Unit,
+    navigateToResetPassword: () -> Unit,
     onError: (message: String) -> Unit
 ) {
     val state by loginViewModel.viewState.collectAsState()
@@ -72,7 +73,9 @@ internal fun LoginScreen(
                 onLoginClick = { loginViewModel.handleEvent(OnLoginClick(email, password)) }
             )
 
-            SignUpText(onSignUpClick = { loginViewModel.handleEvent(OnSignUpClick) })
+            ResetPasswordText(
+                onResetPasswordClick = { loginViewModel.handleEvent(OnResetPasswordClick) }
+            )
         }
 
         Canvas(
@@ -96,6 +99,7 @@ internal fun LoginScreen(
         when (effect) {
             is NavigateToMarketOverview -> navigateToMarketOverview()
             NavigateToRegister -> navigateToRegister()
+            LoginNavigationEffect.NavigateToResetPassword -> navigateToResetPassword()
         }
     }
 
@@ -107,27 +111,15 @@ internal fun LoginScreen(
 }
 
 @Composable
-private fun SignUpText(
-    onSignUpClick: () -> Unit
-) {
-    val annotatedString = buildAnnotatedString {
-        append("Don't have an account? ")
-        pushStringAnnotation(tag = "SignUp", annotation = "SignUp")
+private fun ResetPasswordText(onResetPasswordClick: () -> Unit) {
+    val text = buildAnnotatedString {
         withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary, textDecoration = TextDecoration.Underline)) {
-            append("Sign up")
+            append("Forgot your password?")
         }
-        pop()
     }
 
     ClickableText(
-        text = annotatedString,
-        style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurface),
-        modifier = Modifier.padding(top = 16.dp),
-        onClick = { offset ->
-            annotatedString.getStringAnnotations(tag = "SignUp", start = offset, end = offset)
-                .firstOrNull()?.let {
-                    onSignUpClick()
-                }
-        }
+        text = text,
+        onClick = { onResetPasswordClick() }
     )
 }

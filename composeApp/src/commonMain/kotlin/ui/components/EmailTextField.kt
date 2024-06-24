@@ -1,4 +1,4 @@
-package ui.screens.auth.login.components
+package ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

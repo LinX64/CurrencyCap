@@ -42,6 +42,15 @@ class AuthServiceImpl(
         AuthState.Error(e.message ?: "Could not create user!")
     }
 
+    override suspend fun updateCurrentUser(user: User) {
+        auth.currentUser?.updateProfile(displayName = user.name, photoUrl = user.photoUrl)
+    }
+
+//    override suspend fun updatePhoneNumber(phoneNumber: String) {
+//        val phoneAuthCredential = auth.PhoneAuthProvider.getCredential(phone Number, "123456")
+//        auth.currentUser?.updatePhoneNumber(credential =)
+//    }
+
     override suspend fun sendRecoveryEmail(email: String) = launchWithAwait { auth.sendPasswordResetEmail(email) }
 
     override suspend fun deleteAccount() = launchWithAwait { auth.currentUser!!.delete() }
@@ -52,6 +61,7 @@ class AuthServiceImpl(
         }
         auth.signOut()
     }
+
 
     private suspend fun launchWithAwait(block: suspend () -> Unit) {
         scope.async { block() }.await()

@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import ui.components.BlurBackground
 import ui.navigation.NavRoutes
+import ui.screens.auth.forgot_password.navigation.navigateToResetPassword
 import ui.screens.auth.login.LoginScreen
 import ui.screens.auth.register.navigation.navigateToRegisterScreen
 
@@ -24,7 +25,8 @@ fun NavGraphBuilder.loginScreen(
                 padding = padding,
                 onError = onError,
                 navigateToMarketOverview = onLoginSuccess,
-                navigateToRegister = { navController.navigateToRegisterScreen() }
+                navigateToRegister = { navController.navigateToRegisterScreen() },
+                navigateToResetPassword = { navController.navigateToResetPassword() }
             )
         }
     }

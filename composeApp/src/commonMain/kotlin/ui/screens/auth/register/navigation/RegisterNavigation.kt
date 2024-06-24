@@ -7,6 +7,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import ui.components.BlurBackground
 import ui.navigation.NavRoutes
+import ui.screens.auth.fill_profile.navigation.navigateToFillProfileScreen
+import ui.screens.auth.login.navigation.navigateToLoginScreen
 import ui.screens.auth.register.RegisterScreen
 
 fun NavController.navigateToRegisterScreen() = navigate(NavRoutes.REGISTER)
@@ -20,7 +22,8 @@ fun NavGraphBuilder.registerScreen(
         BlurBackground {
             RegisterScreen(
                 padding = padding,
-                navigateToMarketOverview = { navController.navigate(NavRoutes.MARKET_OVERVIEW) },
+                onNavigateToFillProfile = { navController.navigateToFillProfileScreen() },
+                navigateToLogin = { navController.navigateToLoginScreen() },
                 onError = onError
             )
         }

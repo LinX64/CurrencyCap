@@ -30,18 +30,19 @@ internal fun ProfileScreen(
         contentPadding = padding
     ) {
         item {
-            ProfileCard(
-                name = profileViewModel.name.value,
-                email = profileViewModel.email.value,
-                phone = profileViewModel.phone.value
-            )
+            if (state is ProfileState.Success) {
+                val profileState = state as ProfileState.Success
+                ProfileCard(
+                    name = profileState.user.name ?: "",
+                    email = profileState.user.email ?: "",
+                    phone = profileState.user.phoneNumber ?: "",
+                )
+            }
         }
         item { HelpCenterCard() }
         item {
             DeleteAccountCard(
-                onDeleteAccountClicked = {
-                    profileViewModel.handleEvent(OnDeleteAccountCardClicked(profileViewModel.uid.value))
-                }
+                onDeleteAccountClicked = { profileViewModel.handleEvent(OnDeleteAccountCardClicked(profileViewModel.uid.value)) }
             )
         }
     }

@@ -14,9 +14,6 @@ class ProfileViewModel(
     private val authService: AuthService
 ) : MviViewModel<ProfileViewEvent, ProfileState, ProfileNavigationEffect>(ProfileState.Idle) {
 
-    val name: MutableState<String> = mutableStateOf("")
-    val email: MutableState<String> = mutableStateOf("")
-    val phone: MutableState<String> = mutableStateOf("")
     val uid: MutableState<String> = mutableStateOf("")
 
     init {
@@ -47,13 +44,9 @@ class ProfileViewModel(
 
     private fun fetchProfile() {
         val user = authService.currentUser
-
         viewModelScope.launch {
-            user.collect {
-                name.value = it.name ?: "error"
-                email.value = it.email ?: "error"
-                phone.value = it.phoneNumber ?: "error"
-                uid.value = it.id
+            user.collect { user ->
+                setState { ProfileState.Success(user) }
             }
         }
     }

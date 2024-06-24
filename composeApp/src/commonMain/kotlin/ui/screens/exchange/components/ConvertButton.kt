@@ -32,7 +32,7 @@ internal fun ConvertButton(
             enabled = isEnabled
         ) {
             Text(
-                text = "Convert",
+                text = "Convert Now",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.surface,
                 fontWeight = FontWeight.Bold

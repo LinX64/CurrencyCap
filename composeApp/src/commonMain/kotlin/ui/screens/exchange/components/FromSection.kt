@@ -9,12 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ToSection() {
+internal fun FromSection() {
     Text(
-        text = "To Currency",
+        text = "From Currency",
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurface
     )
 
     Spacer(modifier = Modifier.height(8.dp))
 }
+
+

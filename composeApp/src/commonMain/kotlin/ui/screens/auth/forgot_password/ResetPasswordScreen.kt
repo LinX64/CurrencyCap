@@ -1,9 +1,11 @@
-package ui.screens.auth.login.components
+package ui.screens.auth.forgot_password
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -15,24 +17,42 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import di.koinViewModel
+import ui.components.BaseCenterColumn
 import ui.components.EmailTextField
+import ui.screens.auth.forgot_password.ResetPasswordViewEvent.OnEmailChanged
+import ui.screens.auth.forgot_password.ResetPasswordViewEvent.OnResetPasswordClick
 
 @Composable
-internal fun LoginForm(
+internal fun ResetPasswordScreen(
+    padding: PaddingValues,
+    resetPasswordViewModel: ResetPasswordViewModel = koinViewModel<ResetPasswordViewModel>(),
+    onError: (message: String) -> Unit
+) {
+    BaseCenterColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(padding),
+    ) {
+        ResetPasswordContent(
+            onEmailChanged = { email -> resetPasswordViewModel.handleEvent(OnEmailChanged(email)) },
+            onResetPasswordClick = { resetPasswordViewModel.handleEvent(OnResetPasswordClick) }
+        )
+    }
+}
+
+@Composable
+private fun ResetPasswordContent(
     modifier: Modifier = Modifier,
     onEmailChanged: (String) -> Unit,
-    onPasswordChanged: (String) -> Unit,
-    onLoginClick: () -> Unit
+    onResetPasswordClick: () -> Unit
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-
     Column(
         modifier = Modifier
             .wrapContentHeight()
-            .padding(horizontal = 16.dp, vertical = 16.dp)
+            .padding(horizontal = 16.dp)
             .background(
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
                 shape = RoundedCornerShape(20.dp)
@@ -46,7 +66,7 @@ internal fun LoginForm(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Login",
+                text = "Forgot Password",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold
@@ -58,30 +78,18 @@ internal fun LoginForm(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                EmailTextField(
-                    onEmailChanged = onEmailChanged
-                )
-
-                Spacer(modifier = modifier.height(10.dp))
-
-                PasswordTextField(
-                    onPasswordChanged = onPasswordChanged
-                )
-
+                EmailTextField(onEmailChanged = onEmailChanged)
                 Spacer(modifier = modifier.height(32.dp))
 
                 Button(
-                    onClick = {
-                        keyboardController?.hide()
-                        onLoginClick()
-                    },
+                    onClick = onResetPasswordClick,
                     modifier = modifier
                         .fillMaxWidth()
                         .height(52.dp),
                     shape = RoundedCornerShape(10.dp),
                 ) {
                     Text(
-                        text = "Sign In",
+                        text = "Send Reset Link",
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.surface
                     )
@@ -90,3 +98,4 @@ internal fun LoginForm(
         }
     }
 }
+

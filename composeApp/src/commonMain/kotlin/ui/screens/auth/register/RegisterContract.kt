@@ -14,6 +14,6 @@ sealed interface RegisterState {
 }
 
 sealed interface RegisterNavigationEffect {
-    data object NavigateToMarketOverview : RegisterNavigationEffect
+    data object NavigateToFillProfile : RegisterNavigationEffect
 }
 

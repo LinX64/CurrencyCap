@@ -12,6 +12,8 @@ interface AuthService {
     suspend fun authenticate(email: String, password: String): AuthState
     suspend fun signUpWithEmailAndPassword(email: String, password: String): AuthState
 
+    suspend fun updateCurrentUser(user: User)
+
     suspend fun sendRecoveryEmail(email: String)
     suspend fun deleteAccount()
     suspend fun signOut()

@@ -9,10 +9,13 @@ import kotlinx.coroutines.launch
 import ui.common.MviViewModel
 import ui.screens.auth.login.LoginNavigationEffect.NavigateToMarketOverview
 import ui.screens.auth.login.LoginNavigationEffect.NavigateToRegister
+import ui.screens.auth.login.LoginNavigationEffect.NavigateToResetPassword
 import ui.screens.auth.login.LoginState.Error
 import ui.screens.auth.login.LoginViewEvent.OnEmailChanged
 import ui.screens.auth.login.LoginViewEvent.OnLoginClick
 import ui.screens.auth.login.LoginViewEvent.OnPasswordChanged
+import ui.screens.auth.login.LoginViewEvent.OnResetPasswordClick
+import ui.screens.auth.login.LoginViewEvent.OnSignUpClick
 import util.validateEmail
 
 internal class LoginViewModel(
@@ -28,8 +31,8 @@ internal class LoginViewModel(
             is OnLoginClick -> authenticate(email = event.email, password = event.password)
             is OnEmailChanged -> newEmail.value = event.email
             is OnPasswordChanged -> newPassword.value = event.password
-            LoginViewEvent.OnErrorDialogDismissed -> setState { LoginState.Idle }
-            LoginViewEvent.OnSignUpClick -> setEffect(NavigateToRegister)
+            OnSignUpClick -> setEffect(NavigateToRegister)
+            OnResetPasswordClick -> setEffect(NavigateToResetPassword)
         }
     }
 

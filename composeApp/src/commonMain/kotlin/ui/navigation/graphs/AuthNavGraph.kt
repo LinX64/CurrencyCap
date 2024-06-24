@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import ui.navigation.NavRoutes
+import ui.screens.auth.fill_profile.navigation.fillProfileScreen
+import ui.screens.auth.forgot_password.navigation.resetPasswordScreen
 import ui.screens.auth.login.navigation.loginScreen
 import ui.screens.auth.register.navigation.registerScreen
 import ui.screens.landing.navigation.landingScreen
@@ -28,9 +30,22 @@ internal fun AuthNavGraph(
             onLoginSuccess = onLoginSuccess,
             onError = onError
         )
+
         registerScreen(
             padding = padding,
             navController = navController,
+            onError = onError
+        )
+
+        fillProfileScreen(
+            padding = padding,
+            navController = navController,
+            onError = onError
+        )
+
+        resetPasswordScreen(
+            navController = navController,
+            padding = padding,
             onError = onError
         )
     }

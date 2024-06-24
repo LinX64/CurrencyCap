@@ -55,7 +55,6 @@ internal fun handleNavigation(
                 saveState = true
             }
         }
-        launchSingleTop = true
         restoreState = true
     }
 }
