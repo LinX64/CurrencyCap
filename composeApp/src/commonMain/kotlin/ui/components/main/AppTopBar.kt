@@ -1,6 +1,5 @@
-package ui.components
+package ui.components.main
 
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -20,7 +19,6 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -53,7 +51,7 @@ internal fun AppTopBar(
             scrolledContainerColor = Color.Transparent,
         ),
         scrollBehavior = scrollBehavior,
-        navigationIcon = { AppNavigationIcon(navController = navController, currentDestination = currentDestination) },
+        //navigationIcon = { AppNavigationIcon(navController = navController, currentDestination = currentDestination) },
         actions = { ActionsMenu(currentDestination = currentDestination, onLogoutClick = onLogoutClick) }
     )
 }
@@ -89,15 +87,13 @@ private fun ActionsMenu(
 
 @Composable
 private fun AppTitle(currentDestination: String) {
-    if (isNotLoggedIn(currentDestination)) {
-        Text(
-            text = currentDestination,
-            maxLines = 1,
-            style = MaterialTheme.typography.titleLarge,
-            color = Color.White,
-            fontWeight = FontWeight.Bold
-        )
-    }
+    Text(
+        text = currentDestination,
+        maxLines = 1,
+        style = MaterialTheme.typography.titleLarge,
+        color = Color.White,
+        fontWeight = FontWeight.Bold
+    )
 }
 
 @Composable
@@ -110,18 +106,8 @@ private fun AppNavigationIcon(
         currentDestination != NavRoutes.LOGIN &&
         currentDestination != NavRoutes.MARKET_OVERVIEW
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconButton(onClick = { navController.navigateUp() }) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-            }
-
-            Text(
-                text = "Back",
-                color = Color.White,
-                modifier = Modifier.padding(start = 8.dp)
-            )
+        IconButton(onClick = { navController.navigateUp() }) {
+            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
         }
     }
 }

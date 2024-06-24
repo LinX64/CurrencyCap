@@ -34,7 +34,7 @@ internal fun LandingScreen(
         Column(
             modifier = modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
+            verticalArrangement = Arrangement.Center
         ) {
             Spacer(modifier = Modifier.height(64.dp))
 
@@ -49,7 +49,7 @@ internal fun LandingScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                modifier = modifier.padding(horizontal = 16.dp),
+                modifier = modifier.fillMaxWidth(),
                 text = "The best way to track your crypto assets",
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
@@ -71,7 +71,7 @@ internal fun LandingScreen(
                     .clip(RoundedCornerShape(8.dp)),
                 onClick = onLoginClick,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.surface
+                    containerColor = MaterialTheme.colorScheme.onSurface
                 )
             ) {
                 Text(
@@ -79,7 +79,7 @@ internal fun LandingScreen(
                     text = "Log in",
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
 
