@@ -36,7 +36,8 @@ internal fun AppTopBar(
     currentDestination: String,
     navController: NavHostController,
     scrollBehavior: TopAppBarScrollBehavior,
-    hazeState: HazeState
+    hazeState: HazeState,
+    onLogoutClick: () -> Unit
 ) {
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
@@ -51,13 +52,14 @@ internal fun AppTopBar(
         ),
         scrollBehavior = scrollBehavior,
         //navigationIcon = { AppNavigationIcon(navController = navController, currentDestination = currentDestination) },
-        actions = { ActionsMenu(currentDestination = currentDestination) }
+        actions = { ActionsMenu(currentDestination = currentDestination, onLogoutClick = onLogoutClick) }
     )
 }
 
 @Composable
 private fun ActionsMenu(
-    currentDestination: String
+    currentDestination: String,
+    onLogoutClick: () -> Unit
 ) {
     val expanded = remember { mutableStateOf(false) }
 
@@ -73,7 +75,7 @@ private fun ActionsMenu(
             DropdownMenuItem(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                 onClick = {
-                    /* TODO: Handle log out click */
+                    onLogoutClick()
                     expanded.value = false
                 },
                 leadingIcon = { Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "Log out") },

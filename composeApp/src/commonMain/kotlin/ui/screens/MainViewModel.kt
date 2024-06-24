@@ -32,6 +32,15 @@ class MainViewModel(
             } else _state.value = MainState.NotLoggedIn
         }
     }
+
+    fun logout() {
+        _state.value = MainState.Loading
+
+        viewModelScope.launch {
+            userPreferences.clear()
+            _state.value = MainState.NotLoggedIn
+        }
+    }
 }
 
 sealed class MainState {

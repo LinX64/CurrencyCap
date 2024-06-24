@@ -55,18 +55,14 @@ internal fun App(
     val isSheetOpen = rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
-    val isUserLoggedIn = when (mainState) {
-        is MainState.LoggedIn -> true
-        else -> false
-    }
-
     Scaffold(
         topBar = {
             AppTopBar(
                 currentDestination = currentDestination,
                 navController = navController,
                 hazeState = hazeState,
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
+                onLogoutClick = { mainViewModel.logout() }
             )
         },
         bottomBar = {
@@ -91,7 +87,6 @@ internal fun App(
             navController = navController,
             paddingValues = paddingValues,
             scrollBehavior = scrollBehavior,
-            isUserLoggedIn = isUserLoggedIn,
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } }
         )
     }
@@ -108,7 +103,6 @@ private fun checkUserStatus(
     navController: NavHostController,
     paddingValues: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
-    isUserLoggedIn: Boolean,
     onError: (message: String) -> Unit
 ) = when (mainState) {
     is MainState.Loading -> CenteredColumn { CircularProgressIndicator() }
@@ -116,8 +110,7 @@ private fun checkUserStatus(
         MainNavGraph(
             navController = navController,
             padding = paddingValues,
-            scrollBehavior = scrollBehavior,
-            isUserLoggedIn = isUserLoggedIn
+            scrollBehavior = scrollBehavior
         )
     }
 

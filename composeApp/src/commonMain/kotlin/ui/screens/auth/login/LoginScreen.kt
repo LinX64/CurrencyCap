@@ -39,7 +39,7 @@ import ui.screens.auth.login.components.MadeWithLove
 internal fun LoginScreen(
     loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
     padding: PaddingValues,
-    navigateToMarketOverview: (uid: String) -> Unit,
+    navigateToMarketOverview: () -> Unit,
     navigateToRegister: () -> Unit,
     onError: (message: String) -> Unit
 ) {
@@ -94,7 +94,7 @@ internal fun LoginScreen(
 
     HandleNavigationEffect(loginViewModel) { effect ->
         when (effect) {
-            is NavigateToMarketOverview -> navigateToMarketOverview(effect.uid)
+            is NavigateToMarketOverview -> navigateToMarketOverview()
             NavigateToRegister -> navigateToRegister()
         }
     }

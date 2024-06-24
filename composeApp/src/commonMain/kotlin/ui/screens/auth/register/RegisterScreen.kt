@@ -37,7 +37,7 @@ import ui.screens.auth.register.components.PasswordTextField
 internal fun RegisterScreen(
     padding: PaddingValues,
     registerViewModel: RegisterViewModel = koinViewModel<RegisterViewModel>(),
-    navigateToMarketOverview: (uid: String) -> Unit,
+    navigateToMarketOverview: () -> Unit,
     onError: (message: String) -> Unit
 ) {
     val state by registerViewModel.viewState.collectAsState()
@@ -55,7 +55,7 @@ internal fun RegisterScreen(
 
     HandleNavigationEffect(registerViewModel) { effect ->
         when (effect) {
-            is NavigateToMarketOverview -> navigateToMarketOverview(effect.uid)
+            is NavigateToMarketOverview -> navigateToMarketOverview()
         }
     }
 

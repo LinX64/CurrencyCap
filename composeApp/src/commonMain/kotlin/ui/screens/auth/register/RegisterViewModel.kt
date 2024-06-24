@@ -40,7 +40,7 @@ internal class RegisterViewModel(
             val state = authService.signUpWithEmailAndPassword(email, password)
             if (state is AuthServiceImpl.AuthState.Success) {
                 userPreferences.saveUserUid(authService.currentUserId)
-                setEffect(RegisterNavigationEffect.NavigateToMarketOverview(authService.currentUserId))
+                setEffect(RegisterNavigationEffect.NavigateToMarketOverview)
             } else {
                 setState { RegisterState.Error("Could not register user!") }
             }

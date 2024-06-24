@@ -36,4 +36,10 @@ internal class UserPreferencesImpl(
             preferences[USER_UID_KEY] ?: ""
         }.first()
     }
+
+    override suspend fun clear() {
+        dataStore.edit { preferences ->
+            preferences.clear()
+        }
+    }
 }

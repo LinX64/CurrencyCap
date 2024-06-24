@@ -14,6 +14,6 @@ sealed interface RegisterState {
 }
 
 sealed interface RegisterNavigationEffect {
-    data class NavigateToMarketOverview(val uid: String) : RegisterNavigationEffect
+    data object NavigateToMarketOverview : RegisterNavigationEffect
 }
 

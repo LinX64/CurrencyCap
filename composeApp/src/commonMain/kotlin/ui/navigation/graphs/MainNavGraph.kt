@@ -23,12 +23,11 @@ import ui.screens.search.navigation.searchScreen
 internal fun MainNavGraph(
     navController: NavHostController,
     padding: PaddingValues,
-    scrollBehavior: TopAppBarScrollBehavior,
-    isUserLoggedIn: Boolean = false
+    scrollBehavior: TopAppBarScrollBehavior
 ) {
     NavHost(
         navController = navController,
-        startDestination = if (isUserLoggedIn) NavRoutes.MARKET_OVERVIEW else NavRoutes.LANDING,
+        startDestination = NavRoutes.MARKET_OVERVIEW,
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)

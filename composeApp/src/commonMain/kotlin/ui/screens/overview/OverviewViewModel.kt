@@ -38,10 +38,12 @@ class OverviewViewModel(
             val fiatRates = rates.mapNotNull { it.rates }.firstOrNull()?.filter { it.type == FIAT } ?: emptyList()
             val topMovers = rates.mapNotNull { it.rates }.firstOrNull()?.let { mapToTopMovers(it) } ?: emptyList()
 
-            if (bonbastRates.isEmpty() || cryptoRates.isEmpty() || markets.isEmpty() || fiatRates.isEmpty() || topMovers.isEmpty()) {
-                setState { OverviewState.Error("Failed to load rates") }
-            } else {
-                setState { Success(bonbastRates, cryptoRates, markets, fiatRates, topMovers) }
+            when {
+                bonbastRates.isEmpty() || cryptoRates.isEmpty() || markets.isEmpty() || fiatRates.isEmpty() || topMovers.isEmpty() -> {
+                    setState { OverviewState.Error("Failed to load rates") }
+                }
+
+                else -> setState { Success(bonbastRates, cryptoRates, markets, fiatRates, topMovers) }
             }
         }
     }

@@ -56,7 +56,7 @@ internal class LoginViewModel(
             when (authState) {
                 is AuthState.Success -> {
                     userPreferences.saveUserUid(authService.currentUserId)
-                    setEffect(NavigateToMarketOverview(authService.currentUserId))
+                    setEffect(NavigateToMarketOverview)
                 }
 
                 is AuthState.Error -> setState { Error("Invalid email or password") }
