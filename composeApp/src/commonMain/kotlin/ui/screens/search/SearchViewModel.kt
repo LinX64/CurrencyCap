@@ -1,18 +1,9 @@
 package ui.screens.search
 
-import androidx.lifecycle.viewModelScope
-import data.util.NetworkResult
-import data.util.asResult
 import domain.repository.MainRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import ui.common.MviViewModel
 import ui.screens.search.SearchEvent.OnRetryClicked
 import ui.screens.search.SearchEvent.OnSearchClicked
@@ -39,26 +30,26 @@ class SearchViewModel(
         with(searchQuery) {
             if (query.isEmpty()) setState { SearchState.Idle }
 
-            value = query.trim()
-            debounce(500)
-                .filter { it.isNotEmpty() }
-                .distinctUntilChanged()
-                .flatMapLatest(mainRepository::search)
-                .asResult()
-                .onEach { result ->
-                    setState {
-                        when (result) {
-                            is NetworkResult.Error -> SearchState.Error(result.exception.message ?: "")
-                            NetworkResult.Loading -> SearchState.Loading
-                            is NetworkResult.Success -> {
-                                if (result.data.isNotEmpty()) {
-                                    SearchState.Success(result.data)
-                                } else SearchState.Empty
-                            }
-                        }
-                    }
-                }
-                .launchIn(viewModelScope)
+//            value = query.trim()
+//            debounce(500)
+//                .filter { it.isNotEmpty() }
+//                .distinctUntilChanged()
+//                .flatMapLatest(mainRepository::search)
+//                .asResult()
+//                .onEach { result ->
+//                    setState {
+//                        when (result) {
+//                            is NetworkResult.Error -> SearchState.Error(result.exception.message ?: "")
+//                            NetworkResult.Loading -> SearchState.Loading
+//                            is NetworkResult.Success -> {
+//                                if (result.data.isNotEmpty()) {
+//                                    SearchState.Success(result.data)
+//                                } else SearchState.Empty
+//                            }
+//                        }
+//                    }
+//                }
+//                .launchIn(viewModelScope)
         }
     }
 }

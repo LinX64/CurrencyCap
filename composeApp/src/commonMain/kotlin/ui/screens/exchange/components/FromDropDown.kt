@@ -22,10 +22,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import domain.model.DataDao
+import domain.model.RateDto
 import ui.common.getCountryFlag
 import ui.common.getCountryName
-import ui.components.getDataRates
+import ui.components.getDummyRates
 import ui.screens.exchange.ExchangeState
 
 @Composable
@@ -39,13 +39,13 @@ internal fun FromDropDown(
     )
 
     is ExchangeState.Error -> HandleFromDropDown(
-        rates = getDataRates(),
+        rates = getDummyRates(),
         onError = exchangeState.message.ifEmpty { "Error while fetching rates" },
         onFromChange = onFromChange,
     )
 
     else -> HandleFromDropDown(
-        rates = getDataRates(),
+        rates = getDummyRates(),
         onFromChange = onFromChange,
         isLoading = true
     )
@@ -55,7 +55,7 @@ internal fun FromDropDown(
 @Composable
 private fun HandleFromDropDown(
     modifier: Modifier = Modifier,
-    rates: List<DataDao>,
+    rates: List<RateDto>,
     onError: String = "",
     isLoading: Boolean = false,
     onFromChange: (String) -> Unit,

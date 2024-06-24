@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import domain.model.DataDao
+import domain.model.RateDto
 import ui.screens.overview.OverviewState
 import ui.theme.colors.CurrencyColors
 import util.getIconBy
@@ -51,7 +51,7 @@ internal fun Stocks(overviewState: OverviewState) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             if (overviewState is OverviewState.Success) {
-                overviewState.cryptoRates.take(10).forEach { rate ->
+                overviewState.fiatRates.take(10).forEach { rate ->
                     StocksHorizontalItem(
                         icon = getIconBy(rate.symbol),
                         rate = rate,
@@ -65,7 +65,7 @@ internal fun Stocks(overviewState: OverviewState) {
                     StocksHorizontalItem(
                         icon = "",
                         isLoading = true,
-                        rate = DataDao(
+                        rate = RateDto(
                             currencySymbol = "",
                             id = "",
                             symbol = "",

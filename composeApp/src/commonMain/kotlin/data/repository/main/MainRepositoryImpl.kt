@@ -1,8 +1,11 @@
 package data.repository.main
 
-import data.model.Currencies
-import data.model.toDomain
+import data.model.toBonbastRateDomain
+import data.model.toCryptoDomain
+import data.model.toMarketDomain
+import data.model.toRateDomain
 import data.util.APIConst.BASE_URL
+import data.util.parseCurrencyRates
 import data.util.retryOnIOException
 import domain.model.CurrenciesDto
 import domain.repository.MainRepository
@@ -20,8 +23,17 @@ class MainRepositoryImpl(
 ) : MainRepository {
 
     override fun getAllRates(): Flow<CurrenciesDto> = flow {
-        val rates = httpClient.get(BASE_URL).body<Currencies>().toDomain()
-        emit(rates)
+        val plainResponse = httpClient.get(BASE_URL).body<String>()
+        val currencies = parseCurrencyRates(plainResponse)
+
+        emit(
+            CurrenciesDto(
+                bonbast = currencies.bonbast.toBonbastRateDomain(),
+                crypto = currencies.crypto.toCryptoDomain(),
+                markets = currencies.markets.toMarketDomain(),
+                rates = currencies.rates.toRateDomain()
+            )
+        )
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()

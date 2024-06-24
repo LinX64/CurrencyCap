@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
-import domain.model.DataDao
+import domain.model.RateDto
 import ui.common.formatCurrentTotal
 import ui.components.BlurColumn
 import util.getIconBy
@@ -43,7 +43,7 @@ internal fun TopCryptoItem(
     modifier: Modifier = Modifier,
     cardBackground: Color = Color.Transparent,
     cardSize: Dp = 150.dp,
-    dataDao: DataDao,
+    dataDao: RateDto,
     isLoading: Boolean = false
 ) {
     BlurColumn {

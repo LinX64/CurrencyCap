@@ -17,7 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import domain.model.RateDao
+import domain.model.BonbastRateDto
 import ui.screens.overview.OverviewState
 import util.getIconBy
 
@@ -62,10 +62,10 @@ internal fun TopRates(rates: OverviewState) {
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             if (rates is OverviewState.Success) {
-                items(rates.iranianRate.size) { index ->
-                    val code = rates.iranianRate[index].code
+                items(rates.bonbastRates.size) { index ->
+                    val code = rates.bonbastRates[index].code
                     RateItem(
-                        rate = rates.iranianRate[index],
+                        rate = rates.bonbastRates[index],
                         icon = getIconBy(code)
                     )
                 }
@@ -77,7 +77,7 @@ internal fun TopRates(rates: OverviewState) {
                         isLoading = true,
                         icon = "",
                         rate = listOf(
-                            RateDao(
+                            BonbastRateDto(
                                 code = "",
                                 sell = 0,
                                 buy = 0,

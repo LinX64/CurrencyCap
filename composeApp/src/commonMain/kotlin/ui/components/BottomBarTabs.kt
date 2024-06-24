@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BatchPrediction
 import androidx.compose.material.icons.filled.CurrencyExchange
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.rounded.Home
@@ -111,11 +110,11 @@ sealed class BottomBarTab(
         color = Color(0xFFFA6FFF) // Pink
     )
 
-    data object AiPrediction : BottomBarTab(
-        route = NavRoutes.AI_PREDICTION,
-        icon = Icons.Default.BatchPrediction,
-        color = Color(0xFF6FFFA6) // Light Green
-    )
+//    data object AiPrediction : BottomBarTab(
+//        route = NavRoutes.AI_PREDICTION,
+//        icon = Icons.Default.BatchPrediction,
+//        color = Color(0xFF6FFFA6) // Light Green
+//    ) // todo: uncomment this line
 
     data object Profile : BottomBarTab(
         route = NavRoutes.PROFILE,
@@ -128,6 +127,6 @@ val tabs = listOf(
     BottomBarTab.Home,
     BottomBarTab.Exchange,
     BottomBarTab.Search,
-    BottomBarTab.AiPrediction,
+    // BottomBarTab.AiPrediction,
     BottomBarTab.Profile
 )

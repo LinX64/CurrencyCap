@@ -22,10 +22,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import domain.model.DataDao
+import domain.model.RateDto
 import ui.common.getCountryFlag
 import ui.common.getCountryName
-import ui.components.getDataRates
+import ui.components.getDummyRates
 import ui.screens.exchange.ExchangeState
 import ui.screens.exchange.ExchangeState.Error
 import ui.screens.exchange.ExchangeState.Success
@@ -42,12 +42,12 @@ internal fun ToDropDown(
 
     is Error -> HandleToDropDown(
         onToChange = onToChange,
-        rates = getDataRates(),
+        rates = getDummyRates(),
         onError = exchangeState.message.ifEmpty { "Error while fetching rates" }
     )
 
     else -> HandleToDropDown(
-        rates = getDataRates(),
+        rates = getDummyRates(),
         onToChange = onToChange,
         isLoading = true
     )
@@ -57,7 +57,7 @@ internal fun ToDropDown(
 @Composable
 private fun HandleToDropDown(
     modifier: Modifier = Modifier,
-    rates: List<DataDao>,
+    rates: List<RateDto>,
     onError: String = "",
     isLoading: Boolean = false,
     onToChange: (String) -> Unit

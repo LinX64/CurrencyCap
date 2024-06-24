@@ -1,6 +1,6 @@
 package ui.screens.exchange
 
-import data.model.Rate
+import domain.model.RateDto
 
 sealed interface ExchangeViewEvent {
     data class OnFromChange(val from: String) : ExchangeViewEvent
@@ -11,7 +11,7 @@ sealed interface ExchangeViewEvent {
 
 sealed interface ExchangeState {
     data object Loading : ExchangeState
-    data class Success(val rates: List<Rate>) : ExchangeState
+    data class Success(val rates: List<RateDto>) : ExchangeState
     data class Error(val message: String) : ExchangeState
 }
 

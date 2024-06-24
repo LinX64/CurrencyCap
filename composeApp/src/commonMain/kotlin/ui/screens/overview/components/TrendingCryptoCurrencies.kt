@@ -42,13 +42,13 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
         ) {
             if (rates is OverviewState.Success) {
                 items(rates.cryptoRates.size) { index ->
-                    val symbol = rates.cryptoRates[index].symbol
+                    val symbol = rates.cryptoRates[index].name
 
-                    RateHorizontalItem(
-                        icon = getIconBy(symbol),
-                        rate = rates.cryptoRates[index],
-                        isLoading = false
-                    )
+//                    RateHorizontalItem(
+//                        icon = getIconBy(symbol),
+//                        rate = rates.cryptoRates[index],
+//                        isLoading = false
+//                    )
                 }
             }
 

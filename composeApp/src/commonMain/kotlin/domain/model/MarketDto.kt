@@ -1,8 +1,5 @@
 package domain.model
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class MarketDto(
     val baseId: String,
     val baseSymbol: String,

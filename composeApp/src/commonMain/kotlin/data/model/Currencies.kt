@@ -2,7 +2,6 @@ package data.model
 
 import domain.model.BonbastRateDto
 import domain.model.CryptoDto
-import domain.model.CurrenciesDto
 import domain.model.MarketDto
 import domain.model.RateDto
 import kotlinx.serialization.SerialName
@@ -20,14 +19,7 @@ data class Currencies(
     val rates: List<Rate>
 )
 
-internal fun Currencies.toDomain(): CurrenciesDto = CurrenciesDto(
-    bonbast = bonbast.toDomain(),
-    crypto = crypto.toDomain(),
-    markets = markets.toDomain(),
-    rates = rates.toDomain()
-)
-
-internal fun List<BonbastRate>.toDomain(): List<BonbastRateDto> = map {
+internal fun List<BonbastRate>.toBonbastRateDomain(): List<BonbastRateDto> = map {
     BonbastRateDto(
         code = it.code,
         sell = it.sell,
@@ -35,7 +27,7 @@ internal fun List<BonbastRate>.toDomain(): List<BonbastRateDto> = map {
     )
 }
 
-internal fun List<Crypto>.toDomain(): List<CryptoDto> = map {
+internal fun List<Crypto>.toCryptoDomain(): List<CryptoDto> = map {
     CryptoDto(
         algorithm = it.algorithm,
         assetLaunchDate = it.assetLaunchDate,
@@ -49,7 +41,6 @@ internal fun List<Crypto>.toDomain(): List<CryptoDto> = map {
         internal = it.internal,
         maxSupply = it.maxSupply,
         name = it.name,
-        netHashesPerSecond = it.netHashesPerSecond,
         proofType = it.proofType,
         rating = Rating(
             weiss = Weiss(
@@ -63,7 +54,7 @@ internal fun List<Crypto>.toDomain(): List<CryptoDto> = map {
     )
 }
 
-internal fun List<Market>.toDomain(): List<MarketDto> = map {
+internal fun List<Market>.toMarketDomain(): List<MarketDto> = map {
     MarketDto(
         baseId = it.baseId,
         baseSymbol = it.baseSymbol,
@@ -80,7 +71,7 @@ internal fun List<Market>.toDomain(): List<MarketDto> = map {
     )
 }
 
-internal fun List<Rate>.toDomain(): List<RateDto> = map {
+internal fun List<Rate>.toRateDomain(): List<RateDto> = map {
     RateDto(
         id = it.id,
         rateUsd = it.rateUsd,

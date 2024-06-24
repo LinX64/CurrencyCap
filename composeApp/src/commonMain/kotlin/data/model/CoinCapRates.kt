@@ -1,6 +1,5 @@
 package data.model
 
-import domain.model.DataDao
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -26,16 +25,3 @@ data class CoinCapData(
     val type: String
 )
 
-fun List<CoinCapData>.toDomain(): List<DataDao> {
-    return map { it.toDomain() }
-}
-
-fun CoinCapData.toDomain(): DataDao {
-    return DataDao(
-        currencySymbol = currencySymbol,
-        id = id,
-        rateUsd = rateUsd,
-        symbol = symbol,
-        type = type
-    )
-}

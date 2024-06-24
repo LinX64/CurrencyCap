@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
-import domain.model.DataDao
+import domain.model.RateDto
 import io.github.alexzhirkevich.compottie.LottieAnimation
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.LottieConstants
@@ -75,20 +75,16 @@ internal fun ErrorView(
 }
 
 
-fun getDataRates(): List<DataDao> {
+fun getDummyRates(): List<RateDto> {
     return listOf(
-        DataDao(
-            symbol = "USD",
-            rateUsd = "1.0",
-            currencySymbol = "USD",
-            id = "USD",
-            type = "USD"
-        ), DataDao(
-            symbol = "USD",
-            rateUsd = "1.0",
-            currencySymbol = "USD",
-            id = "USD",
-            type = "USD"
+        RateDto(
+            id = "facilisi", rateUsd = "sententiae", symbol = "voluptaria", type = "netus", currencySymbol = null
+        ),
+        RateDto(
+            id = "facilisi", rateUsd = "sententiae", symbol = "voluptaria", type = "netus", currencySymbol = null
+        ),
+        RateDto(
+            id = "facilisi", rateUsd = "sententiae", symbol = "voluptaria", type = "netus", currencySymbol = null
         )
     )
 }

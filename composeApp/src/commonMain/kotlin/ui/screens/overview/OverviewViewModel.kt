@@ -32,7 +32,7 @@ class OverviewViewModel(
             val rates = mainRepository.getAllRates()
 
             val bonbastRates = rates.map { it.bonbast }.first()
-            val cryptoRates = rates.map { it.crypto }.first().filter { it.name == CRYPTO }
+            val cryptoRates = rates.map { it.crypto }.first().sortedBy { it.name }
             val markets = rates.map { it.markets }.first()
             val fiatRates = rates.map { it.rates }.first()
             val topMovers = rates.map { it.rates }.first().filter { it.symbol == CRYPTO }

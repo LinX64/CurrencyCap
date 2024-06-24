@@ -1,9 +1,7 @@
 package domain.model
 
 import data.model.Rating
-import kotlinx.serialization.Serializable
 
-@Serializable
 data class CryptoDto(
     val algorithm: String,
     val assetLaunchDate: String,
@@ -17,7 +15,6 @@ data class CryptoDto(
     val `internal`: String,
     val maxSupply: Double,
     val name: String,
-    val netHashesPerSecond: Long,
     val proofType: String,
     val rating: Rating,
     val type: Int,

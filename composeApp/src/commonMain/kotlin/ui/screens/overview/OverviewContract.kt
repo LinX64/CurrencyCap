@@ -1,9 +1,9 @@
 package ui.screens.overview
 
-import data.model.BonbastRate
-import data.model.Crypto
-import data.model.Market
-import data.model.Rate
+import domain.model.BonbastRateDto
+import domain.model.CryptoDto
+import domain.model.MarketDto
+import domain.model.RateDto
 
 sealed interface OverviewViewEvent {
     data object OnLoadRates : OverviewViewEvent
@@ -16,10 +16,10 @@ sealed interface OverviewState {
     data object Loading : OverviewState
 
     data class Success(
-        val bonbastRates: List<BonbastRate>,
-        val cryptoRates: List<Crypto>,
-        val markets: List<Market>,
-        val fiatRates: List<Rate>,
+        val bonbastRates: List<BonbastRateDto>,
+        val cryptoRates: List<CryptoDto>,
+        val markets: List<MarketDto>,
+        val fiatRates: List<RateDto>,
         val topMovers: List<TopMovers>
     ) : OverviewState
 

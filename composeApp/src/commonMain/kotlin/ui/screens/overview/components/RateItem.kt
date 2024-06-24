@@ -15,17 +15,16 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.baseline_monetization_on_48
-import domain.model.RateDao
+import domain.model.BonbastRateDto
 import org.jetbrains.compose.resources.painterResource
 import ui.components.BlurColumn
-import util.formatToPrice
 
 @Composable
 internal fun RateItem(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
     icon: String,
-    rate: RateDao
+    rate: BonbastRateDto
 ) {
     BlurColumn {
         Column(
@@ -57,7 +56,7 @@ internal fun RateItem(
                 style = MaterialTheme.typography.bodyLarge
             )
 
-            val formattedPrice = rate.sell.formatToPrice()
+            val formattedPrice = rate.sell // todo
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = "$formattedPrice t",

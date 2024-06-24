@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.ExperimentalMaterial3Api
-import org.koin.compose.KoinContext
 import org.koin.core.context.stopKoin
 import ui.App
 import ui.theme.AppM3Theme
@@ -20,10 +19,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             // TODO: Add dark/light support
-            KoinContext {
-                AppM3Theme(dark = true) {
-                    App()
-                }
+            AppM3Theme(dark = true) {
+                App()
             }
         }
     }
