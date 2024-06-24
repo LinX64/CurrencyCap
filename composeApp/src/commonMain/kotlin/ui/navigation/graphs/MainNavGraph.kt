@@ -27,7 +27,7 @@ internal fun MainNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.MARKET_OVERVIEW,
+        startDestination = NavRoutes.OVERVIEW,
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
@@ -49,7 +49,7 @@ internal fun handleNavigation(
 //    isSheetOpen.value = isAiPredictionTab
 //    if (isAiPredictionTab) return
 
-    navController.navigate(tab.route) {
+    navController.navigate(tab.title) {
         navController.graph.startDestinationRoute?.let { startDestinationRoute ->
             popUpTo(startDestinationRoute) {
                 saveState = true

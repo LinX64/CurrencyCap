@@ -1,6 +1,7 @@
 package ui.screens.landing
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -21,6 +23,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.logo
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun LandingScreen(
@@ -29,8 +34,7 @@ internal fun LandingScreen(
     onCreateAccountClick: () -> Unit
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         Column(
             modifier = modifier.padding(16.dp),
@@ -39,13 +43,13 @@ internal fun LandingScreen(
         ) {
             Spacer(modifier = Modifier.height(64.dp))
 
-//            Image(
-//                modifier = modifier
-//                    .fillMaxWidth()
-//                    .size(120.dp),
-//                painter = painterResource(Res.drawable.bird),
-//                contentDescription = null
-//            )
+            Image(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .size(120.dp),
+                painter = painterResource(Res.drawable.logo),
+                contentDescription = null
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 

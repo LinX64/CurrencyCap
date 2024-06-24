@@ -46,8 +46,8 @@ internal fun BottomNavigationBar(
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     Box(
         modifier = Modifier
-            .padding(vertical = 24.dp, horizontal = 64.dp)
             .fillMaxWidth()
+            .padding(horizontal = 32.dp, vertical = 16.dp)
             .height(64.dp)
             .hazeChild(state = hazeState, shape = CircleShape)
             .border(

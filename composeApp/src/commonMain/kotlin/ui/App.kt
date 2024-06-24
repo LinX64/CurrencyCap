@@ -1,7 +1,6 @@
 package ui
 
 import androidx.compose.material3.BottomSheetScaffoldState
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -13,11 +12,11 @@ import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import kotlinx.coroutines.CoroutineScope
-import ui.components.CenteredColumn
 import ui.components.main.LoggedInSection
 import ui.components.main.NotLoggedInSection
 import ui.screens.MainState
 import ui.screens.MainViewModel
+import ui.screens.splash.SplashScreen
 import ui.screens.subscribers.SubscribersSection
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,7 +29,7 @@ internal fun App(
     val mainState by mainViewModel.state.collectAsState()
     val hazeState = remember { HazeState() }
     when (mainState) {
-        MainState.Loading -> CenteredColumn { CircularProgressIndicator() }
+        MainState.Loading -> SplashScreen()
         is MainState.LoggedIn -> {
             LoggedInSection(
                 navController = navController,

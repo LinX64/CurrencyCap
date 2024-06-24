@@ -8,10 +8,10 @@ import ui.components.BlurBackground
 import ui.navigation.NavRoutes
 import ui.screens.overview.OverviewScreen
 
-fun NavController.navigateToOverviewScreen() = navigate(NavRoutes.MARKET_OVERVIEW)
+fun NavController.navigateToOverviewScreen() = navigate(NavRoutes.OVERVIEW)
 
 fun NavGraphBuilder.overviewScreen(padding: PaddingValues) {
-    composable(NavRoutes.MARKET_OVERVIEW) {
+    composable(NavRoutes.OVERVIEW) {
         BlurBackground {
             OverviewScreen(padding = padding)
         }

@@ -23,7 +23,7 @@ class MainViewModel(
         _state.value = MainState.Loading
 
         viewModelScope.launch {
-            delay(1000)
+            delay(2000)
 
             val userLoggedIn = userPreferences.isUserLoggedIn()
             if (userLoggedIn) {

@@ -60,6 +60,8 @@ internal class LoginViewModel(
                 is AuthState.Success -> {
                     userPreferences.saveUserUid(authService.currentUserId)
                     setEffect(NavigateToMarketOverview)
+
+                    setState { LoginState.Idle }
                 }
 
                 is AuthState.Error -> setState { Error("Invalid email or password") }

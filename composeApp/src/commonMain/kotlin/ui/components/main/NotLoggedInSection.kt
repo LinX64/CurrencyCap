@@ -70,7 +70,10 @@ internal fun NotLoggedInSection(
         AuthNavGraph(
             navController = navController,
             padding = paddingValues,
-            onLoginSuccess = { mainViewModel.onLoginSuccess() },
+            onLoginSuccess = {
+                mainViewModel.onLoginSuccess()
+                navController.popBackStack()
+            },
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } }
         )
     }

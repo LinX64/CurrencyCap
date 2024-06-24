@@ -80,8 +80,17 @@ internal fun SearchScreen(
                     searchResultContent(state, onRetryClicked = { searchViewModel.handleEvent(SearchEvent.OnRetryClicked(text)) })
                 }
             }
+
+            // TODO: Show different tabs here
+
+            SearchTabs()
         }
     }
+}
+
+@Composable
+private fun SearchTabs() {
+
 }
 
 private fun LazyListScope.searchResultContent(
