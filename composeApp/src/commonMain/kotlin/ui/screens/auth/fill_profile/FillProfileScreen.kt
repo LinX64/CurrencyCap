@@ -39,10 +39,10 @@ import di.koinViewModel
 import ui.components.BaseCenterColumn
 import ui.components.HandleNavigationEffect
 import ui.screens.auth.fill_profile.FillProfileNavigationEffect.NavigateToMarketOverview
-import ui.screens.auth.fill_profile.FillProfileViewEvent.EmailChanged
+import ui.screens.auth.fill_profile.FillProfileViewEvent.OnNameChanged
+import ui.screens.auth.fill_profile.FillProfileViewEvent.OnPhoneNumberChanged
 import ui.screens.auth.fill_profile.FillProfileViewEvent.OnSignUpClick
 import ui.screens.auth.fill_profile.FillProfileViewEvent.OnSkipClicked
-import ui.screens.auth.fill_profile.FillProfileViewEvent.PasswordChanged
 
 @Composable
 internal fun FillProfileScreen(
@@ -57,10 +57,10 @@ internal fun FillProfileScreen(
             .padding(padding),
     ) {
         FillProfileForm(
-            onEmailChanged = { fillProfileViewModel.handleEvent(EmailChanged(it)) },
-            onPasswordChanged = { fillProfileViewModel.handleEvent(PasswordChanged(it)) },
+            onNameChanged = { fillProfileViewModel.handleEvent(OnNameChanged(it)) },
             onFinishSignUpClick = { fillProfileViewModel.handleEvent(OnSignUpClick) },
-            onSkipClick = { fillProfileViewModel.handleEvent(OnSkipClicked) }
+            onSkipClick = { fillProfileViewModel.handleEvent(OnSkipClicked) },
+            onPhoneNumberChanged = { fillProfileViewModel.handleEvent(OnPhoneNumberChanged(it)) }
         )
     }
 
@@ -74,8 +74,8 @@ internal fun FillProfileScreen(
 @Composable
 private fun FillProfileForm(
     modifier: Modifier = Modifier,
-    onEmailChanged: (String) -> Unit,
-    onPasswordChanged: (String) -> Unit,
+    onNameChanged: (String) -> Unit,
+    onPhoneNumberChanged: (String) -> Unit,
     onFinishSignUpClick: () -> Unit,
     onSkipClick: () -> Unit
 ) {
@@ -115,13 +115,11 @@ private fun FillProfileForm(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                NameTextField(
-                    onNameChanged = onEmailChanged
-                )
+                NameTextField(onNameChanged = onNameChanged)
                 Spacer(modifier = modifier.height(10.dp))
 
                 PhoneNumberTextField(
-                    onPhoneChanged = onEmailChanged
+                    onPhoneChanged = onPhoneNumberChanged
                 )
 
                 Spacer(modifier = modifier.height(32.dp))
