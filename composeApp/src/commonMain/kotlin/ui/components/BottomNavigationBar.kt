@@ -136,3 +136,5 @@ internal fun BottomNavigationBar(
 internal fun isNotLoggedIn(currentDestination: String): Boolean = (currentDestination != NavRoutes.LANDING)
         && (currentDestination != NavRoutes.LOGIN)
         && (currentDestination != NavRoutes.REGISTER)
+        && (currentDestination != NavRoutes.FILL_PROFILE)
+        && (currentDestination != NavRoutes.RESET_PASSWORD)

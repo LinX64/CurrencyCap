@@ -1,5 +1,6 @@
 package ui.components
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -19,6 +20,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -51,7 +53,7 @@ internal fun AppTopBar(
             scrolledContainerColor = Color.Transparent,
         ),
         scrollBehavior = scrollBehavior,
-        //navigationIcon = { AppNavigationIcon(navController = navController, currentDestination = currentDestination) },
+        navigationIcon = { AppNavigationIcon(navController = navController, currentDestination = currentDestination) },
         actions = { ActionsMenu(currentDestination = currentDestination, onLogoutClick = onLogoutClick) }
     )
 }
@@ -103,12 +105,22 @@ private fun AppNavigationIcon(
     navController: NavHostController,
     currentDestination: String
 ) {
-    if (isNotLoggedIn(currentDestination) && !currentDestination.startsWith(NavRoutes.MARKET_OVERVIEW)) {
-        IconButton(onClick = { navController.popBackStack() }) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
-                tint = Color.White
+    if (
+        currentDestination != NavRoutes.LANDING &&
+        currentDestination != NavRoutes.LOGIN &&
+        currentDestination != NavRoutes.MARKET_OVERVIEW
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            IconButton(onClick = { navController.navigateUp() }) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+            }
+
+            Text(
+                text = "Back",
+                color = Color.White,
+                modifier = Modifier.padding(start = 8.dp)
             )
         }
     }

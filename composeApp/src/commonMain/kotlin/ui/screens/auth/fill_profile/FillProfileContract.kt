@@ -3,7 +3,8 @@ package ui.screens.auth.fill_profile
 sealed interface FillProfileViewEvent {
     data class EmailChanged(val email: String) : FillProfileViewEvent
     data class PasswordChanged(val password: String) : FillProfileViewEvent
-    data object SignUpClicked : FillProfileViewEvent
+    data object OnSignUpClick : FillProfileViewEvent
+    data object OnSkipClicked : FillProfileViewEvent
 }
 
 sealed interface FillProfileState {

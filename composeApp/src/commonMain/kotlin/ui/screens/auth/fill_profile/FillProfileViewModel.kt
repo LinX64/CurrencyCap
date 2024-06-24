@@ -6,9 +6,11 @@ import domain.repository.AuthService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
+import ui.screens.auth.fill_profile.FillProfileNavigationEffect.NavigateToMarketOverview
 import ui.screens.auth.fill_profile.FillProfileViewEvent.EmailChanged
+import ui.screens.auth.fill_profile.FillProfileViewEvent.OnSignUpClick
+import ui.screens.auth.fill_profile.FillProfileViewEvent.OnSkipClicked
 import ui.screens.auth.fill_profile.FillProfileViewEvent.PasswordChanged
-import ui.screens.auth.fill_profile.FillProfileViewEvent.SignUpClicked
 
 internal class FillProfileViewModel(
     private val authService: AuthService
@@ -21,7 +23,8 @@ internal class FillProfileViewModel(
         when (event) {
             is EmailChanged -> email.value = event.email
             is PasswordChanged -> password.value = event.password
-            SignUpClicked -> onSignUpFinishClicked()
+            OnSignUpClick -> onSignUpFinishClicked()
+            OnSkipClicked -> setEffect(NavigateToMarketOverview)
         }
     }
 
@@ -37,6 +40,6 @@ internal class FillProfileViewModel(
             authService.updateCurrentUser(updatedUser)
         }
 
-        setEffect(FillProfileNavigationEffect.NavigateToMarketOverview)
+        setEffect(NavigateToMarketOverview)
     }
 }
