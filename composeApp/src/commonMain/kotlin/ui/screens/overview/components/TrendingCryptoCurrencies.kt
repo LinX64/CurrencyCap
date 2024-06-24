@@ -41,12 +41,12 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             if (rates is OverviewState.Success) {
-                items(rates.fiatRates.size) { index ->
-                    val symbol = rates.fiatRates[index].symbol
+                items(rates.cryptoRates.size) { index ->
+                    val symbol = rates.cryptoRates[index].symbol
 
                     RateHorizontalItem(
                         icon = getIconBy(symbol),
-                        rate = rates.fiatRates[index],
+                        rate = rates.cryptoRates[index],
                         isLoading = false
                     )
                 }

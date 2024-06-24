@@ -10,11 +10,10 @@ import androidx.compose.ui.Modifier
 import di.koinViewModel
 import ui.components.ErrorView
 import ui.screens.overview.components.MainHeader
-import ui.screens.overview.components.Stocks
 import ui.screens.overview.components.TodayTopMovers
-import ui.screens.overview.components.TopCrypto
 import ui.screens.overview.components.TopRates
 import ui.screens.overview.components.TrendingCryptoCurrencies
+import ui.screens.overview.components.WatchList
 
 @Composable
 internal fun OverviewScreen(
@@ -29,10 +28,9 @@ internal fun OverviewScreen(
     ) {
         item { MainHeader(state) }
         item { TodayTopMovers(state) }
-        item { TopCrypto(state) }
+        item { WatchList(state) }
         item { TopRates(state) }
         item { TrendingCryptoCurrencies(state) }
-        item { Stocks(state) }
     }
 
     when (state) {

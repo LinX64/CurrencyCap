@@ -44,7 +44,6 @@ internal fun TodayTopMovers(
             if (overviewState is OverviewState.Success) {
                 items(overviewState.topMovers.size) {
                     val topMovers = overviewState.topMovers[it]
-
                     TopMoversItem(
                         icon = getIconBy(topMovers.symbol),
                         name = topMovers.symbol

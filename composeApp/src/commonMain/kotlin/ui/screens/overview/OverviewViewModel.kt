@@ -3,7 +3,7 @@ package ui.screens.overview
 import androidx.lifecycle.viewModelScope
 import domain.model.RateDto
 import domain.repository.MainRepository
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
@@ -32,18 +32,29 @@ class OverviewViewModel(
         viewModelScope.launch {
             val rates = mainRepository.getAllRates()
 
-            val bonbastRates = rates.mapNotNull { it.bonbast }.firstOrNull() ?: emptyList()
-            val cryptoRates = rates.mapNotNull { it.crypto }.firstOrNull()?.sortedBy { it.name } ?: emptyList()
-            val markets = rates.mapNotNull { it.markets }.firstOrNull() ?: emptyList()
-            val fiatRates = rates.mapNotNull { it.rates }.firstOrNull()?.filter { it.type == FIAT } ?: emptyList()
-            val topMovers = rates.mapNotNull { it.rates }.firstOrNull()?.let { mapToTopMovers(it) } ?: emptyList()
+            val bonbastRates = rates.mapNotNull { it.bonbast }.first()
+            val cryptoRates = rates.mapNotNull { it.crypto }.first().sortedBy { it.name } // todo: use this for details maybe
+            val markets = rates.mapNotNull { it.markets }.first()
+            val fiatRates = rates.mapNotNull { it.rates }.first().filter { it.type == FIAT }
+            val topMovers = rates.mapNotNull { it.rates }.first().let(::mapToTopMovers)
+            val cryptoFiatRates = rates.mapNotNull { it.rates }.first().let(::filterByCrypto)
 
             when {
-                bonbastRates.isEmpty() || cryptoRates.isEmpty() || markets.isEmpty() || fiatRates.isEmpty() || topMovers.isEmpty() -> {
-                    setState { OverviewState.Error("Failed to load rates") }
-                }
+                bonbastRates.isEmpty() ||
+                        cryptoFiatRates.isEmpty() ||
+                        markets.isEmpty() ||
+                        fiatRates.isEmpty() ||
+                        topMovers.isEmpty() -> setState { OverviewState.Error("Failed to load rates") }
 
-                else -> setState { Success(bonbastRates, cryptoRates, markets, fiatRates, topMovers) }
+                else -> setState {
+                    Success(
+                        bonbastRates = bonbastRates,
+                        cryptoRates = cryptoFiatRates,
+                        markets = markets,
+                        fiatRates = fiatRates,
+                        topMovers = topMovers
+                    )
+                }
             }
         }
     }
@@ -55,6 +66,7 @@ class OverviewViewModel(
     private fun mapToTopMovers(rates: List<RateDto>) = rates
         .sortedByDescending { it.rateUsd }
         .take(4)
+        .sortedBy { it.symbol }
         .map { topMover ->
             TopMovers(
                 symbol = topMover.symbol,

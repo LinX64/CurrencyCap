@@ -3,7 +3,6 @@ package ui.screens.overview.components
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -21,7 +20,7 @@ internal fun PerformanceChart(
     Canvas(
         modifier = Modifier.fillMaxWidth()
             .height(100.dp)
-            .padding(horizontal = 16.dp).then(modifier)
+            .then(modifier)
     ) {
         val max = list.maxOrNull() ?: 0f
         val min = list.minOrNull() ?: 0f
@@ -67,11 +66,11 @@ internal fun PerformanceChart(
                 color = lineColor,
                 start = fromPoint,
                 end = toPoint,
-                strokeWidth = 3f
+                strokeWidth = 5f
             )
         }
         lastToPoint?.let {
-            val horizontalLineColor = Color.Gray.copy(alpha = 0.2f)
+            val horizontalLineColor = Color.Gray.copy(alpha = 0.3f)
             val yPositionBottom = size.height.times(1 - getValuePercentageForRange(min, max, min))
             val yPositionAboveBottom = yPositionBottom - 20.dp.toPx()
 
@@ -79,14 +78,14 @@ internal fun PerformanceChart(
                 color = horizontalLineColor,
                 start = Offset(x = 0f, y = yPositionBottom),
                 end = Offset(x = size.width, y = yPositionBottom),
-                strokeWidth = 1f
+                strokeWidth = 2f
             )
 
             drawLine(
                 color = horizontalLineColor,
                 start = Offset(x = 0f, y = yPositionAboveBottom),
                 end = Offset(x = size.width, y = yPositionAboveBottom),
-                strokeWidth = 1f
+                strokeWidth = 2f
             )
         }
     }

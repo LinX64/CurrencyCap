@@ -1,7 +1,6 @@
 package ui.screens.overview
 
 import domain.model.BonbastRateDto
-import domain.model.CryptoDto
 import domain.model.MarketDto
 import domain.model.RateDto
 
@@ -17,7 +16,7 @@ sealed interface OverviewState {
 
     data class Success(
         val bonbastRates: List<BonbastRateDto>,
-        val cryptoRates: List<CryptoDto>,
+        val cryptoRates: List<RateDto>,
         val markets: List<MarketDto>,
         val fiatRates: List<RateDto>,
         val topMovers: List<TopMovers>

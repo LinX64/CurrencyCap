@@ -34,7 +34,7 @@ internal fun MainHeader(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp),
+            .padding(horizontal = 16.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -48,7 +48,7 @@ internal fun MainHeader(
         Spacer(modifier = Modifier.height(32.dp))
 
         PerformanceChart(
-            modifier = if (isLoading) getPlaceHolder(Modifier.height(60.dp)) else Modifier,
+            modifier = if (isLoading) getPlaceHolder(Modifier.height(100.dp)) else Modifier,
             list = mockAssetInfo.lastDayChange
         )
 
