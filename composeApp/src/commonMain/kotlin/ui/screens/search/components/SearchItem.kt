@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.baseline_monetization_on_48
-import domain.model.DataDao
+import domain.model.RateDto
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.components.BlurColumn
@@ -29,11 +29,10 @@ import ui.screens.overview.components.getPlaceHolder
 import ui.theme.colors.CurrencyColors
 import util.getIconBy
 
-
 @Composable
 internal fun SearchItem(
     modifier: Modifier = Modifier,
-    rate: DataDao,
+    rate: RateDto,
     isLoading: Boolean = false
 ) {
     BlurColumn {
@@ -70,7 +69,7 @@ internal fun SearchItem(
 @Composable
 private fun FirstColumn(
     modifier: Modifier = Modifier,
-    rate: DataDao,
+    rate: RateDto,
     isLoading: Boolean = false
 ) {
     Column(

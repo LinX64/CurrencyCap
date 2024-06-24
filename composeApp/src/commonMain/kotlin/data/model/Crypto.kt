@@ -29,6 +29,8 @@ data class Crypto(
     val maxSupply: Double,
     @SerialName("Name")
     val name: String,
+    @SerialName("NetHashesPerSecond")
+    val netHashesPerSecond: Double,
     @SerialName("ProofType")
     val proofType: String,
     @SerialName("Rating")

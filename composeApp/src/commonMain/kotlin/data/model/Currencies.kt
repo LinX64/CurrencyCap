@@ -41,6 +41,7 @@ internal fun List<Crypto>.toCryptoDomain(): List<CryptoDto> = map {
         internal = it.internal,
         maxSupply = it.maxSupply,
         name = it.name,
+        netHashesPerSecond = it.netHashesPerSecond,
         proofType = it.proofType,
         rating = Rating(
             weiss = Weiss(

@@ -24,7 +24,7 @@ data class Market(
     @SerialName("rank")
     val rank: String,
     @SerialName("tradesCount24Hr")
-    val tradesCount24Hr: String,
+    val tradesCount24Hr: String? = null,
     @SerialName("updated")
     val updated: Long,
     @SerialName("volumeUsd24Hr")

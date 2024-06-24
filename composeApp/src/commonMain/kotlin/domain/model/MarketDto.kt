@@ -10,7 +10,7 @@ data class MarketDto(
     val quoteId: String,
     val quoteSymbol: String,
     val rank: String,
-    val tradesCount24Hr: String,
+    val tradesCount24Hr: String? = null,
     val updated: Long,
     val volumeUsd24Hr: String
 )

@@ -27,7 +27,6 @@ class OverviewViewModel(
 
     private fun loadCombinedRates() {
         setState { OverviewState.Loading }
-
         viewModelScope.launch {
             val rates = mainRepository.getAllRates()
 

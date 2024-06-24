@@ -79,8 +79,8 @@ internal fun TopRates(rates: OverviewState) {
                         rate = listOf(
                             BonbastRateDto(
                                 code = "",
-                                sell = 0,
-                                buy = 0,
+                                sell = 0.0,
+                                buy = 0.0,
                             )
                         )[0]
                     )

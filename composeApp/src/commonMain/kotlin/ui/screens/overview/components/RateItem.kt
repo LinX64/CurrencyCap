@@ -17,6 +17,7 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.baseline_monetization_on_48
 import domain.model.BonbastRateDto
 import org.jetbrains.compose.resources.painterResource
+import ui.common.formatToPrice
 import ui.components.BlurColumn
 
 @Composable
@@ -56,7 +57,7 @@ internal fun RateItem(
                 style = MaterialTheme.typography.bodyLarge
             )
 
-            val formattedPrice = rate.sell // todo
+            val formattedPrice = formatToPrice(rate.sell)
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = "$formattedPrice t",

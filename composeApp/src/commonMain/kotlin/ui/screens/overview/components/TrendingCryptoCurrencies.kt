@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import domain.model.DataDao
+import domain.model.RateDto
 import ui.screens.overview.OverviewState
 import ui.theme.colors.CurrencyColors
 import util.getIconBy
@@ -41,14 +41,14 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             if (rates is OverviewState.Success) {
-                items(rates.cryptoRates.size) { index ->
-                    val symbol = rates.cryptoRates[index].name
+                items(rates.fiatRates.size) { index ->
+                    val symbol = rates.fiatRates[index].symbol
 
-//                    RateHorizontalItem(
-//                        icon = getIconBy(symbol),
-//                        rate = rates.cryptoRates[index],
-//                        isLoading = false
-//                    )
+                    RateHorizontalItem(
+                        icon = getIconBy(symbol),
+                        rate = rates.fiatRates[index],
+                        isLoading = false
+                    )
                 }
             }
 
@@ -56,7 +56,7 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
                 items(5) {
                     RateHorizontalItem(
                         icon = getIconBy(""),
-                        rate = DataDao(
+                        rate = RateDto(
                             currencySymbol = "",
                             id = "",
                             symbol = "",

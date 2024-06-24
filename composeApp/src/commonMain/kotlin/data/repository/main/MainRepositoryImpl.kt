@@ -8,6 +8,7 @@ import data.util.APIConst.BASE_URL
 import data.util.parseCurrencyRates
 import data.util.retryOnIOException
 import domain.model.CurrenciesDto
+import domain.model.RateDto
 import domain.repository.MainRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -34,6 +35,16 @@ class MainRepositoryImpl(
                 rates = currencies.rates.toRateDomain()
             )
         )
+    }
+        .flowOn(Dispatchers.IO)
+        .retryOnIOException()
+
+
+    override fun search(query: String): Flow<List<RateDto>> = flow {
+        val plainResponse = httpClient.get(BASE_URL).body<String>()
+        val currencies = parseCurrencyRates(plainResponse)
+
+        emit(currencies.rates.toRateDomain())
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()

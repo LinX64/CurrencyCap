@@ -24,7 +24,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
 import di.koinViewModel
-import domain.model.DataDao
+import domain.model.RateDto
 import ui.components.ErrorView
 import ui.screens.search.components.EmptyView
 import ui.screens.search.components.LeadingIcon
@@ -91,7 +91,7 @@ private fun LazyListScope.searchResultContent(
     is SearchState.Loading -> {
         items(5) {
             SearchItem(
-                rate = DataDao(
+                rate = RateDto(
                     symbol = "USD",
                     rateUsd = "1.0",
                     currencySymbol = "USD",

@@ -8,7 +8,7 @@ import data.model.Rate
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
-import kotlinx.serialization.json.intOrNull
+import kotlinx.serialization.json.doubleOrNull
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -21,8 +21,8 @@ internal fun parseCurrencyRates(jsonString: String): Currencies {
     val bonbastRates = bonbast.mapNotNull { rateObject ->
         if (rateObject is JsonObject) {
             rateObject.entries.firstOrNull()?.let { (key, value) ->
-                val sell = value.jsonObject["sell"]?.jsonPrimitive?.intOrNull ?: return@let null
-                val buy = value.jsonObject["buy"]?.jsonPrimitive?.intOrNull ?: return@let null
+                val sell = value.jsonObject["sell"]?.jsonPrimitive?.doubleOrNull ?: return@let null
+                val buy = value.jsonObject["buy"]?.jsonPrimitive?.doubleOrNull ?: return@let null
                 BonbastRate(code = key, sell = sell, buy = buy)
             }
         } else throw IllegalStateException("Expected JsonObject but got ${rateObject::class.simpleName}")
