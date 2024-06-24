@@ -1,13 +1,16 @@
 package ui
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.BottomSheetScaffoldState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -27,9 +30,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ui.components.AppTopBar
 import ui.components.BottomNavigationBar
+import ui.components.CenteredColumn
 import ui.components.SubscribeBottomSheet
-import ui.navigation.AppNavigation
+import ui.navigation.AuthNavGraph
+import ui.navigation.MainNavGraph
+import ui.navigation.NavRoutes
 import ui.navigation.handleNavigation
+import ui.screens.MainState
+import ui.screens.MainViewModel
 import ui.screens.subscribers.SubscribersSection
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,7 +60,6 @@ internal fun App(
         is MainState.LoggedIn -> true
         else -> false
     }
-    val getUid = { (mainState as? MainState.LoggedIn)?.uid ?: "" }
 
     Scaffold(
         topBar = {
@@ -80,12 +87,12 @@ internal fun App(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         modifier = Modifier.fillMaxSize()
     ) { paddingValues ->
-        AppNavigation(
+        checkUserStatus(
+            mainState = mainState,
             navController = navController,
-            padding = paddingValues,
-            isUserLoggedIn = isUserLoggedIn,
-            uid = getUid(),
+            paddingValues = paddingValues,
             scrollBehavior = scrollBehavior,
+            isUserLoggedIn = isUserLoggedIn,
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } }
         )
     }
@@ -93,6 +100,43 @@ internal fun App(
     if (isSheetOpen.value) {
         SubscribeBottomSheet(sheetState = scaffoldState)
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun checkUserStatus(
+    mainState: MainState,
+    navController: NavHostController,
+    paddingValues: PaddingValues,
+    scrollBehavior: TopAppBarScrollBehavior,
+    isUserLoggedIn: Boolean,
+    onError: (message: String) -> Unit
+) = when (mainState) {
+    is MainState.Loading -> CenteredColumn { CircularProgressIndicator() }
+    is MainState.LoggedIn -> {
+        MainNavGraph(
+            navController = navController,
+            padding = paddingValues,
+            scrollBehavior = scrollBehavior,
+            onError = onError,
+            isUserLoggedIn = isUserLoggedIn
+        )
+    }
+
+    is MainState.NotLoggedIn -> {
+        AuthNavGraph(
+            padding = paddingValues,
+            navController = navController,
+            onLoginSuccess = {
+                navController.navigate(NavRoutes.MARKET_OVERVIEW) {
+                    popUpTo(NavRoutes.LANDING) { inclusive = true }
+                }
+            },
+            onError = onError
+        )
+    }
+
+    else -> Unit
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

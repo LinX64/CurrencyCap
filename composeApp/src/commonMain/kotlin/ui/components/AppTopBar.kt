@@ -50,7 +50,7 @@ internal fun AppTopBar(
             scrolledContainerColor = Color.Transparent,
         ),
         scrollBehavior = scrollBehavior,
-        navigationIcon = { AppNavigationIcon(navController = navController, currentDestination = currentDestination) },
+        //navigationIcon = { AppNavigationIcon(navController = navController, currentDestination = currentDestination) },
         actions = { ActionsMenu(currentDestination = currentDestination) }
     )
 }

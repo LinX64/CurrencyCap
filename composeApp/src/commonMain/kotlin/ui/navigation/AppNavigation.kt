@@ -20,24 +20,38 @@ import ui.screens.search.navigation.searchScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun AppNavigation(
+internal fun MainNavGraph(
     navController: NavHostController,
     padding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
     onError: (message: String) -> Unit,
-    isUserLoggedIn: Boolean = false,
-    uid: String = ""
+    isUserLoggedIn: Boolean = false
 ) {
-    val initialRoute = if (isUserLoggedIn) {
-        NavRoutes.MARKET_OVERVIEW + "/${uid}"
-    } else NavRoutes.LANDING
-
     NavHost(
         navController = navController,
-        startDestination = initialRoute,
+        startDestination = if (isUserLoggedIn) NavRoutes.MARKET_OVERVIEW else NavRoutes.LANDING,
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
+    ) {
+        overviewScreen(padding)
+        searchScreen(padding)
+        aiPredictScreen(padding)
+        exchangeScreen(padding)
+        profileScreen(padding)
+    }
+}
+
+@Composable
+internal fun AuthNavGraph(
+    padding: PaddingValues,
+    navController: NavHostController,
+    onLoginSuccess: () -> Unit,
+    onError: (message: String) -> Unit
+) {
+    NavHost(
+        navController = navController,
+        startDestination = NavRoutes.LANDING
     ) {
         landingScreen(navController)
 
@@ -46,12 +60,6 @@ internal fun AppNavigation(
             navController = navController,
             onError = onError
         )
-
-        overviewScreen(padding)
-        searchScreen(padding)
-        aiPredictScreen(padding)
-        exchangeScreen(padding)
-        profileScreen(padding)
     }
 }
 

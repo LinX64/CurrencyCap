@@ -1,6 +1,7 @@
 package ui.screens.overview
 
 import androidx.lifecycle.viewModelScope
+import domain.model.RateDto
 import domain.repository.MainRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -11,6 +12,7 @@ import ui.screens.overview.OverviewViewEvent.OnLoadRates
 import ui.screens.overview.OverviewViewEvent.OnRefreshRates
 
 private const val CRYPTO = "crypto"
+private const val FIAT = "fiat"
 
 class OverviewViewModel(
     private val mainRepository: MainRepository
@@ -33,16 +35,8 @@ class OverviewViewModel(
             val bonbastRates = rates.map { it.bonbast }.first()
             val cryptoRates = rates.map { it.crypto }.first().sortedBy { it.name }
             val markets = rates.map { it.markets }.first()
-            val fiatRates = rates.map { it.rates }.first()
-            val topMovers = rates.map { it.rates }.first().filter { it.symbol == CRYPTO }
-                .sortedByDescending { it.rateUsd }
-                .take(4)
-                .map { topMover ->
-                    TopMovers(
-                        symbol = topMover.symbol,
-                        rateUsd = topMover.rateUsd
-                    )
-                }
+            val fiatRates = rates.map { it.rates }.first().filter { it.type == FIAT }
+            val topMovers = mapToTopMovers(filterByCrypto(fiatRates))
 
             if (bonbastRates.isEmpty() || cryptoRates.isEmpty() || markets.isEmpty() || fiatRates.isEmpty()) {
                 setState { OverviewState.Error("Failed to load rates") }
@@ -52,6 +46,20 @@ class OverviewViewModel(
             setState { Success(bonbastRates, cryptoRates, markets, fiatRates, topMovers) }
         }
     }
+
+    private fun filterByCrypto(rates: List<RateDto>) = rates
+        .sortedBy { it.currencySymbol }
+        .filter { it.type == CRYPTO }
+
+    private fun mapToTopMovers(rates: List<RateDto>) = rates
+        .sortedByDescending { it.rateUsd }
+        .take(4)
+        .map { topMover ->
+            TopMovers(
+                symbol = topMover.symbol,
+                rateUsd = topMover.rateUsd
+            )
+        }
 
     private fun refreshRates() {
         viewModelScope.launch {

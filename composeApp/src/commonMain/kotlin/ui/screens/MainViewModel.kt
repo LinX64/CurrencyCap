@@ -1,4 +1,4 @@
-package ui
+package ui.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,6 +19,8 @@ class MainViewModel(
     }
 
     private fun checkUserLoginStatus() {
+        _state.value = MainState.Loading
+
         viewModelScope.launch {
             val userLoggedIn = userPreferences.isUserLoggedIn()
             if (userLoggedIn) {
@@ -31,6 +33,7 @@ class MainViewModel(
 
 sealed class MainState {
     data object Idle : MainState()
+    data object Loading : MainState()
     data object NotLoggedIn : MainState()
     data class LoggedIn(val uid: String) : MainState()
 }
