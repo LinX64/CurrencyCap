@@ -32,10 +32,9 @@ import ui.components.AppTopBar
 import ui.components.BottomNavigationBar
 import ui.components.CenteredColumn
 import ui.components.SubscribeBottomSheet
-import ui.navigation.AuthNavGraph
-import ui.navigation.MainNavGraph
-import ui.navigation.NavRoutes
-import ui.navigation.handleNavigation
+import ui.navigation.graphs.AuthNavGraph
+import ui.navigation.graphs.MainNavGraph
+import ui.navigation.graphs.handleNavigation
 import ui.screens.MainState
 import ui.screens.MainViewModel
 import ui.screens.subscribers.SubscribersSection
@@ -118,7 +117,6 @@ private fun checkUserStatus(
             navController = navController,
             padding = paddingValues,
             scrollBehavior = scrollBehavior,
-            onError = onError,
             isUserLoggedIn = isUserLoggedIn
         )
     }
@@ -127,11 +125,6 @@ private fun checkUserStatus(
         AuthNavGraph(
             padding = paddingValues,
             navController = navController,
-            onLoginSuccess = {
-                navController.navigate(NavRoutes.MARKET_OVERVIEW) {
-                    popUpTo(NavRoutes.LANDING) { inclusive = true }
-                }
-            },
             onError = onError
         )
     }

@@ -1,4 +1,4 @@
-package ui.navigation
+package ui.navigation.graphs
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -11,9 +11,9 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import ui.components.BottomBarTab
+import ui.navigation.NavRoutes
 import ui.screens.ai_predict.navigation.aiPredictScreen
 import ui.screens.exchange.navigation.exchangeScreen
-import ui.screens.landing.navigation.landingScreen
 import ui.screens.overview.navigation.overviewScreen
 import ui.screens.profile.navigation.profileScreen
 import ui.screens.search.navigation.searchScreen
@@ -24,7 +24,6 @@ internal fun MainNavGraph(
     navController: NavHostController,
     padding: PaddingValues,
     scrollBehavior: TopAppBarScrollBehavior,
-    onError: (message: String) -> Unit,
     isUserLoggedIn: Boolean = false
 ) {
     NavHost(
@@ -39,27 +38,6 @@ internal fun MainNavGraph(
         aiPredictScreen(padding)
         exchangeScreen(padding)
         profileScreen(padding)
-    }
-}
-
-@Composable
-internal fun AuthNavGraph(
-    padding: PaddingValues,
-    navController: NavHostController,
-    onLoginSuccess: () -> Unit,
-    onError: (message: String) -> Unit
-) {
-    NavHost(
-        navController = navController,
-        startDestination = NavRoutes.LANDING
-    ) {
-        landingScreen(navController)
-
-        authGraph(
-            padding = padding,
-            navController = navController,
-            onError = onError
-        )
     }
 }
 
