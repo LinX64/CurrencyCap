@@ -3,6 +3,7 @@ package ui.screens.profile
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
+import data.repository.datastore.user.UserPreferences
 import domain.repository.AuthService
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
@@ -11,7 +12,8 @@ import ui.screens.profile.ProfileViewEvent.OnHelpCenterCardClicked
 import ui.screens.profile.ProfileViewEvent.OnProfileCardClicked
 
 class ProfileViewModel(
-    private val authService: AuthService
+    private val authService: AuthService,
+    private val userPreferences: UserPreferences
 ) : MviViewModel<ProfileViewEvent, ProfileState, ProfileNavigationEffect>(ProfileState.Idle) {
 
     val uid: MutableState<String> = mutableStateOf("")
@@ -22,14 +24,8 @@ class ProfileViewModel(
 
     override fun handleEvent(event: ProfileViewEvent) {
         when (event) {
-            is OnProfileCardClicked -> {
-
-            }
-
-            is OnHelpCenterCardClicked -> {
-
-            }
-
+            is OnProfileCardClicked -> TODO()
+            is OnHelpCenterCardClicked -> TODO()
             is OnDeleteAccountCardClicked -> handleDeleteAccount()
         }
     }
@@ -38,6 +34,7 @@ class ProfileViewModel(
         setState { ProfileState.Loading }
 
         viewModelScope.launch {
+            userPreferences.clear()
             authService.deleteAccount()
         }
     }
@@ -47,6 +44,8 @@ class ProfileViewModel(
         viewModelScope.launch {
             user.collect { user ->
                 setState { ProfileState.Success(user) }
+
+                println("User: ${user.fullName}")
             }
         }
     }

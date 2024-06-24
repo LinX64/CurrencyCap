@@ -60,7 +60,7 @@ internal fun PasswordTextField(
                 modifier = modifier.padding(start = 16.dp),
                 imageVector = Icons.Outlined.Lock,
                 contentDescription = null,
-                tint = Color.Gray
+                tint = MaterialTheme.colorScheme.onSurface
             )
         },
         placeholder = {

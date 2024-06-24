@@ -8,20 +8,20 @@ import androidx.navigation.compose.composable
 import ui.components.BlurBackground
 import ui.navigation.NavRoutes
 import ui.screens.auth.fill_profile.FillProfileScreen
-import ui.screens.overview.navigation.navigateToOverviewScreen
 
 fun NavController.navigateToFillProfileScreen() = navigate(NavRoutes.FILL_PROFILE)
 
 fun NavGraphBuilder.fillProfileScreen(
     navController: NavHostController,
     padding: PaddingValues,
+    onNavigateToMarketOverview: () -> Unit,
     onError: (message: String) -> Unit
 ) {
     composable(NavRoutes.FILL_PROFILE) {
         BlurBackground {
             FillProfileScreen(
                 padding = padding,
-                navigateToMarketOverview = { navController.navigateToOverviewScreen() },
+                navigateToMarketOverview = onNavigateToMarketOverview,
                 onError = onError
             )
         }

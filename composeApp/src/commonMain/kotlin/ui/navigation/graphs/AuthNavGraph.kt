@@ -40,7 +40,8 @@ internal fun AuthNavGraph(
         fillProfileScreen(
             padding = padding,
             navController = navController,
-            onError = onError
+            onError = onError,
+            onNavigateToMarketOverview = onLoginSuccess
         )
 
         resetPasswordScreen(

@@ -1,4 +1,4 @@
-package ui.screens.auth.login.components
+package ui.screens.auth.fill_profile.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -6,11 +6,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -19,30 +16,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun PasswordTextField(
+internal fun NameTextField(
     modifier: Modifier = Modifier,
-    onPasswordChanged: (String) -> Unit
+    onNameChanged: (String) -> Unit
 ) {
-    val password = rememberSaveable { mutableStateOf("") }
+    val name = rememberSaveable { mutableStateOf("") }
     val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
-    val passwordVisible = rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
     TextField(
         modifier = modifier.fillMaxWidth(),
-        value = password.value,
+        value = name.value,
         onValueChange = {
-            password.value = it
-            onPasswordChanged(it)
+            name.value = it
+            onNameChanged(it)
         },
         colors = TextFieldDefaults.colors(
             focusedContainerColor = containerColor,
@@ -56,37 +51,18 @@ internal fun PasswordTextField(
         leadingIcon = {
             Icon(
                 modifier = modifier.padding(start = 16.dp),
-                imageVector = Icons.Outlined.Lock,
+                imageVector = Icons.Outlined.Person,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurface
             )
         },
         placeholder = {
-            Text(text = "Password")
+            Text(text = "Name")
         },
-        visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Password,
-            imeAction = ImeAction.Done
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Next
         ),
-        keyboardActions = KeyboardActions(onNext = { focusManager.clearFocus() }),
-        trailingIcon = {
-            val image = if (passwordVisible.value) {
-                Icons.Filled.Visibility
-            } else {
-                Icons.Filled.VisibilityOff
-            }
-
-            IconButton(
-                modifier = modifier.padding(end = 16.dp),
-                onClick = { passwordVisible.value = !passwordVisible.value }
-            ) {
-                Icon(
-                    imageVector = image,
-                    null,
-                    tint = Color.Gray
-                )
-            }
-        }
+        keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
     )
 }
