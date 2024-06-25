@@ -9,8 +9,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -29,25 +29,15 @@ internal fun EmailTextField(
     onEmailChanged: (String) -> Unit
 ) {
     val email = rememberSaveable { mutableStateOf("") }
-    val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
     val focusManager = LocalFocusManager.current
 
-    TextField(
+    OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
         value = email.value,
         onValueChange = {
             email.value = it
             onEmailChanged(it)
         },
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = containerColor,
-            unfocusedContainerColor = containerColor,
-            disabledContainerColor = containerColor,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
-        ),
-        shape = RoundedCornerShape(10.dp),
-        maxLines = 1,
         leadingIcon = {
             Icon(
                 modifier = modifier.padding(start = 16.dp),
@@ -56,9 +46,14 @@ internal fun EmailTextField(
                 tint = MaterialTheme.colorScheme.onSurface
             )
         },
-        placeholder = {
-            Text(text = "Email")
-        },
+        colors = TextFieldDefaults.colors(
+            focusedLabelColor = Color(0xFF03DAC5),
+            unfocusedLabelColor = Color.Gray,
+            cursorColor = Color.White
+        ),
+        shape = RoundedCornerShape(10.dp),
+        maxLines = 1,
+        label = { Text(text = "Email") },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next

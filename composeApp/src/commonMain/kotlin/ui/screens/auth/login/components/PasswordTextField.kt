@@ -12,10 +12,11 @@ import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
@@ -33,26 +34,13 @@ internal fun PasswordTextField(
     onPasswordChanged: (String) -> Unit
 ) {
     val password = rememberSaveable { mutableStateOf("") }
-    val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
     val passwordVisible = rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
-    TextField(
-        modifier = modifier.fillMaxWidth(),
+    OutlinedTextField(
         value = password.value,
-        onValueChange = {
-            password.value = it
-            onPasswordChanged(it)
-        },
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = containerColor,
-            unfocusedContainerColor = containerColor,
-            disabledContainerColor = containerColor,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
-        ),
-        shape = RoundedCornerShape(10.dp),
-        maxLines = 1,
+        onValueChange = onPasswordChanged,
+        label = { Text("Password") },
         leadingIcon = {
             Icon(
                 modifier = modifier.padding(start = 16.dp),
@@ -61,32 +49,42 @@ internal fun PasswordTextField(
                 tint = MaterialTheme.colorScheme.onSurface
             )
         },
-        placeholder = {
-            Text(text = "Password")
-        },
+        trailingIcon = { TrailingIcon(passwordVisible, modifier) },
+        colors = TextFieldDefaults.colors(
+            focusedLabelColor = Color(0xFF03DAC5),
+            unfocusedLabelColor = Color.Gray,
+            cursorColor = Color.White
+        ),
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(8.dp),
         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Done
         ),
         keyboardActions = KeyboardActions(onNext = { focusManager.clearFocus() }),
-        trailingIcon = {
-            val image = if (passwordVisible.value) {
-                Icons.Filled.Visibility
-            } else {
-                Icons.Filled.VisibilityOff
-            }
-
-            IconButton(
-                modifier = modifier.padding(end = 16.dp),
-                onClick = { passwordVisible.value = !passwordVisible.value }
-            ) {
-                Icon(
-                    imageVector = image,
-                    null,
-                    tint = Color.Gray
-                )
-            }
-        }
     )
+}
+
+@Composable
+private fun TrailingIcon(
+    passwordVisible: MutableState<Boolean>,
+    modifier: Modifier
+) {
+    val image = if (passwordVisible.value) {
+        Icons.Filled.Visibility
+    } else {
+        Icons.Filled.VisibilityOff
+    }
+
+    IconButton(
+        modifier = modifier.padding(end = 16.dp),
+        onClick = { passwordVisible.value = !passwordVisible.value }
+    ) {
+        Icon(
+            imageVector = image,
+            null,
+            tint = MaterialTheme.colorScheme.onSurface
+        )
+    }
 }

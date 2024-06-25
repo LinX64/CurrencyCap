@@ -1,6 +1,7 @@
 package di
 
 import org.koin.dsl.module
+import ui.screens.MainViewModel
 import ui.screens.ai_predict.AiPredictViewModel
 import ui.screens.auth.fill_profile.FillProfileViewModel
 import ui.screens.auth.forgot_password.ResetPasswordViewModel
@@ -12,6 +13,7 @@ import ui.screens.profile.ProfileViewModel
 import ui.screens.search.SearchViewModel
 
 val viewModelModule = module {
+    single { MainViewModel(get()) }
     single { OverviewViewModel(get()) }
     single { ExchangeViewModel(get(), get()) }
     single { AiPredictViewModel() }
@@ -24,5 +26,5 @@ val viewModelModule = module {
 }
 
 val previewModule = module {
-    single { RegisterViewModel(get(), get()) }
+    single { LoginViewModel(get(), get()) }
 }

@@ -2,6 +2,7 @@ package com.client.currencycap
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import di.dataStoreModule
 import di.httpClientModule
 import di.previewModule
 import di.repositoryModule
@@ -23,11 +24,13 @@ internal fun KoinPreview(
             androidContext(context)
 
             modules(
-                previewModule,
                 httpClientModule,
                 repositoryModule,
                 viewModelModule,
-                useCaseModule
+                useCaseModule,
+                dataStoreModule,
+                viewModelModule,
+                previewModule,
             )
         }) {
             AppM3Theme(dark = true) {

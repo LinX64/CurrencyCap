@@ -1,6 +1,5 @@
 package ui.screens.auth.register
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,34 +8,35 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import di.koinViewModel
-import ui.components.BaseCenterColumn
 import ui.components.CenteredColumn
-import ui.components.EmailTextField
 import ui.components.HandleNavigationEffect
 import ui.screens.auth.register.RegisterNavigationEffect.NavigateToFillProfile
 import ui.screens.auth.register.RegisterViewEvent.OnEmailChanged
 import ui.screens.auth.register.RegisterViewEvent.OnPasswordChanged
 import ui.screens.auth.register.RegisterViewEvent.OnRegisterClick
-import ui.screens.auth.register.components.PasswordTextField
+import ui.screens.auth.register.components.LogInText
 
 @Composable
 internal fun RegisterScreen(
@@ -47,19 +47,12 @@ internal fun RegisterScreen(
     onError: (message: String) -> Unit
 ) {
     val state by registerViewModel.viewState.collectAsState()
-    BaseCenterColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)
-    ) {
-        RegisterForm(
-            onEmailChanged = { registerViewModel.handleEvent(OnEmailChanged(it)) },
-            onPasswordChanged = { registerViewModel.handleEvent(OnPasswordChanged(it)) },
-            onSignUpClick = { registerViewModel.handleEvent(OnRegisterClick) }
-        )
-
-        LogInText(onLogInClick = navigateToLogin)
-    }
+    RegisterContent(
+        onEmailChanged = { registerViewModel.handleEvent(OnEmailChanged(it)) },
+        onPasswordChanged = { registerViewModel.handleEvent(OnPasswordChanged(it)) },
+        onSignUpClick = { registerViewModel.handleEvent(OnRegisterClick) },
+        navigateToLogin = navigateToLogin
+    )
 
     HandleNavigationEffect(registerViewModel) { effect ->
         when (effect) {
@@ -75,101 +68,83 @@ internal fun RegisterScreen(
 }
 
 @Composable
-private fun RegisterForm(
-    modifier: Modifier = Modifier,
+fun RegisterContent(
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
-    onSignUpClick: () -> Unit
+    onSignUpClick: () -> Unit,
+    navigateToLogin: () -> Unit
 ) {
     Column(
         modifier = Modifier
-            .wrapContentHeight()
-            .padding(horizontal = 16.dp, vertical = 16.dp)
-            .background(
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                shape = RoundedCornerShape(20.dp)
-            )
+            .fillMaxSize()
+            .padding(horizontal = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Column(
-            modifier = Modifier.padding(25.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "Register",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White
+        )
+        Spacer(modifier = Modifier.height(24.dp))
 
-            Text(
-                text = "Sign up with Email",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.Bold
+        OutlinedTextField(
+            value = "",
+            onValueChange = onEmailChanged,
+            label = { Text("Email") },
+            leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
+            colors = TextFieldDefaults.colors(
+                focusedLabelColor = Color(0xFF03DAC5),
+                unfocusedLabelColor = Color.Gray,
+                cursorColor = Color.White
+            ),
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = "",
+            onValueChange = onPasswordChanged,
+            label = { Text("Password") },
+            leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+            visualTransformation = PasswordVisualTransformation(),
+            colors = TextFieldDefaults.colors(
+                focusedLabelColor = Color(0xFF03DAC5),
+                unfocusedLabelColor = Color.Gray,
+                cursorColor = Color.White
+            ),
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "By signing up, you agree to our Terms of Service and Privacy Policy",
+            fontSize = 12.sp,
+            color = Color.LightGray
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Button(
+            onClick = onSignUpClick,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            shape = RoundedCornerShape(8.dp),
+            colors = ButtonDefaults.buttonColors(
+                contentColor = Color.Black
             )
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                EmailTextField(
-                    onEmailChanged = onEmailChanged
-                )
-                Spacer(modifier = modifier.height(10.dp))
-
-                PasswordTextField(
-                    onPasswordChanged = onPasswordChanged
-                )
-
-                Spacer(modifier = modifier.height(16.dp))
-
-                Text(
-                    text = "By signing up, you agree to our Terms of Service and Privacy Policy",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                )
-
-                Spacer(modifier = modifier.height(16.dp))
-
-                Button(
-                    onClick = { onSignUpClick() },
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .height(52.dp),
-                    shape = RoundedCornerShape(10.dp),
-                ) {
-                    Text(
-                        text = "Sign Up",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.surface
-                    )
-                }
-            }
+        ) {
+            Text(text = "Sign Up", fontSize = 16.sp, fontWeight = FontWeight.Bold)
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        LogInText(onLogInClick = navigateToLogin)
     }
-}
-
-@Composable
-private fun LogInText(
-    onLogInClick: () -> Unit
-) {
-    val annotatedString = buildAnnotatedString {
-        append("Already have an account? ")
-        pushStringAnnotation(tag = "LogIn", annotation = "LogIn")
-        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary, textDecoration = TextDecoration.Underline)) {
-            append("Log in")
-        }
-        pop()
-    }
-
-    ClickableText(
-        text = annotatedString,
-        style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurface),
-        modifier = Modifier.padding(top = 16.dp),
-        onClick = { offset ->
-            val position = offset
-            annotatedString.getStringAnnotations(tag = "LogIn", start = position, end = position)
-                .firstOrNull()?.let {
-                    onLogInClick()
-                }
-        }
-    )
 }

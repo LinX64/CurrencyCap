@@ -1,7 +1,6 @@
 package com.client.currencycap
 
 import android.app.Application
-import com.client.currencycap.di.appModule
 import com.google.firebase.FirebaseApp
 import di.dataStoreModule
 import di.httpClientModule
@@ -23,8 +22,7 @@ class MyApp : Application() {
                     viewModelModule,
                     useCaseModule,
                     dataStoreModule,
-                    viewModelModule,
-                    appModule
+                    viewModelModule
                 )
             )
         }
