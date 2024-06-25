@@ -4,6 +4,8 @@ import androidx.datastore.core.DataMigration
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.preferences.core.Preferences
+import di.SETTINGS_PREFERENCES
+import di.createDataStoreWithDefaults
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.CoroutineScope
 import platform.Foundation.NSDocumentDirectory

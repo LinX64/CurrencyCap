@@ -13,6 +13,7 @@ interface AuthService {
     suspend fun signUpWithEmailAndPassword(email: String, password: String): AuthState
 
     suspend fun updateCurrentUser(user: User)
+    suspend fun updatePhoneNumber(phoneNumber: String)
 
     suspend fun sendRecoveryEmail(email: String)
     suspend fun deleteAccount()

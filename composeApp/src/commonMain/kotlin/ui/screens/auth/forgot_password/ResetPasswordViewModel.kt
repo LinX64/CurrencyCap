@@ -7,6 +7,7 @@ import kotlinx.coroutines.launch
 import ui.common.MviViewModel
 import ui.screens.auth.forgot_password.ResetPasswordViewEvent.OnEmailChanged
 import ui.screens.auth.forgot_password.ResetPasswordViewEvent.OnResetPasswordClick
+import util.validateEmail
 
 internal class ResetPasswordViewModel(
     private val authService: AuthService
@@ -29,9 +30,15 @@ internal class ResetPasswordViewModel(
             return
         }
 
+        if (email.validateEmail().not()) {
+            setState { ResetPasswordState.Error("Invalid email") }
+            return
+        }
+
         viewModelScope.launch {
             authService.sendRecoveryEmail(email)
-            setEffect(ResetPasswordNavigationEffect.NavigateToLogin)
+
+            setState { ResetPasswordState.Success }
         }
     }
 }

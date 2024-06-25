@@ -5,9 +5,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import ui.components.BlurBackground
 import ui.navigation.NavRoutes
 import ui.screens.auth.forgot_password.ResetPasswordScreen
+import ui.screens.auth.login.navigation.navigateToLoginScreen
 
 fun NavController.navigateToResetPassword() = navigate(NavRoutes.RESET_PASSWORD)
 
@@ -17,11 +17,10 @@ fun NavGraphBuilder.resetPasswordScreen(
     onError: (message: String) -> Unit
 ) {
     composable(NavRoutes.RESET_PASSWORD) {
-        BlurBackground {
-            ResetPasswordScreen(
-                padding = padding,
-                onError = onError
-            )
-        }
+        ResetPasswordScreen(
+            padding = padding,
+            onMessage = onError,
+            onNavigateToLogin = { navController.navigateToLoginScreen() }
+        )
     }
 }

@@ -2,6 +2,8 @@ package data.repository.auth
 
 import data.model.User
 import dev.gitlive.firebase.auth.FirebaseAuth
+import dev.gitlive.firebase.auth.PhoneAuthCredential
+import dev.gitlive.firebase.auth.PhoneAuthProvider
 import domain.repository.AuthService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,13 +45,13 @@ class AuthServiceImpl(
     }
 
     override suspend fun updateCurrentUser(user: User) {
-        auth.currentUser?.updateProfile(displayName = user.name, photoUrl = user.photoUrl)
+        auth.currentUser?.updateProfile(displayName = user.name)
     }
 
-//    override suspend fun updatePhoneNumber(phoneNumber: String) {
-//        val phoneAuthCredential = auth.PhoneAuthProvider.getCredential(phone Number, "123456")
-//        auth.currentUser?.updatePhoneNumber(credential =)
-//    }
+    override suspend fun updatePhoneNumber(phoneNumber: String) {
+        val credential = createPhoneAuthCredential(phoneNumber, "")
+        auth.currentUser?.updatePhoneNumber(credential = credential)
+    }
 
     override suspend fun sendRecoveryEmail(email: String) = launchWithAwait { auth.sendPasswordResetEmail(email) }
 
@@ -65,6 +67,10 @@ class AuthServiceImpl(
 
     private suspend fun launchWithAwait(block: suspend () -> Unit) {
         scope.async { block() }.await()
+    }
+
+    private fun createPhoneAuthCredential(verificationId: String, verificationCode: String): PhoneAuthCredential {
+        return PhoneAuthProvider().credential(verificationId, verificationCode)
     }
 
     sealed class AuthState {

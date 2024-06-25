@@ -31,6 +31,7 @@ internal class RegisterViewModel(
 
     private fun register(email: String, password: String) {
         setState { Loading }
+
         if (email.isEmpty()) {
             setState { RegisterState.Error("Email cannot be empty!") }
             return
@@ -41,6 +42,8 @@ internal class RegisterViewModel(
             if (state is AuthServiceImpl.AuthState.Success) {
                 userPreferences.saveUserUid(authService.currentUserId)
                 setEffect(RegisterNavigationEffect.NavigateToFillProfile)
+                setState { RegisterState.Idle }
+
             } else {
                 setState { RegisterState.Error("Could not register user!") }
             }

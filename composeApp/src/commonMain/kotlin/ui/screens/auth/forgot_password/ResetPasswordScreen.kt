@@ -15,22 +15,32 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import di.koinViewModel
 import ui.components.BaseCenterColumn
 import ui.components.EmailTextField
+import ui.screens.auth.forgot_password.ResetPasswordState.Error
 import ui.screens.auth.forgot_password.ResetPasswordViewEvent.OnEmailChanged
 import ui.screens.auth.forgot_password.ResetPasswordViewEvent.OnResetPasswordClick
+import ui.screens.auth.forgot_password.components.PasswordResetDialog
 
 @Composable
 internal fun ResetPasswordScreen(
-    padding: PaddingValues,
     resetPasswordViewModel: ResetPasswordViewModel = koinViewModel<ResetPasswordViewModel>(),
-    onError: (message: String) -> Unit
+    padding: PaddingValues,
+    onNavigateToLogin: () -> Unit,
+    onMessage: (message: String) -> Unit
 ) {
+    val state by resetPasswordViewModel.viewState.collectAsState()
+    val shouldShowDialog = remember { mutableStateOf(false) }
     BaseCenterColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -41,6 +51,16 @@ internal fun ResetPasswordScreen(
             onResetPasswordClick = { resetPasswordViewModel.handleEvent(OnResetPasswordClick) }
         )
     }
+
+    when (state) {
+        is Error -> onMessage((state as Error).message)
+        ResetPasswordState.Success -> shouldShowDialog.value = true
+        else -> Unit
+    }
+
+    if (shouldShowDialog.value) {
+        PasswordResetDialog { onNavigateToLogin() }
+    }
 }
 
 @Composable
@@ -49,6 +69,8 @@ private fun ResetPasswordContent(
     onEmailChanged: (String) -> Unit,
     onResetPasswordClick: () -> Unit
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Column(
         modifier = Modifier
             .wrapContentHeight()
@@ -79,10 +101,14 @@ private fun ResetPasswordContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 EmailTextField(onEmailChanged = onEmailChanged)
+
                 Spacer(modifier = modifier.height(32.dp))
 
                 Button(
-                    onClick = onResetPasswordClick,
+                    onClick = {
+                        keyboardController?.hide()
+                        onResetPasswordClick()
+                    },
                     modifier = modifier
                         .fillMaxWidth()
                         .height(52.dp),

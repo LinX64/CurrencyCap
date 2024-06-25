@@ -1,13 +1,14 @@
 package ui.screens.auth.forgot_password
 
 sealed interface ResetPasswordViewEvent {
-    data class OnEmailChanged(val email: String) : ResetPasswordViewEvent
     data object OnResetPasswordClick : ResetPasswordViewEvent
+    data class OnEmailChanged(val email: String) : ResetPasswordViewEvent
 }
 
 sealed interface ResetPasswordState {
     data object Idle : ResetPasswordState
     data class Error(val message: String) : ResetPasswordState
+    data object Success : ResetPasswordState
 }
 
 sealed interface ResetPasswordNavigationEffect {

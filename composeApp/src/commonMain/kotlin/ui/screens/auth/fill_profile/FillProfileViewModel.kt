@@ -38,8 +38,10 @@ internal class FillProfileViewModel(
 
         viewModelScope.launch {
             authService.updateCurrentUser(updatedUser)
+            authService
         }
 
         setEffect(NavigateToMarketOverview)
+        setState { FillProfileState.Idle }
     }
 }

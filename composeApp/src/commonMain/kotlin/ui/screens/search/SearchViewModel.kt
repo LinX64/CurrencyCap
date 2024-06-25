@@ -28,7 +28,7 @@ class SearchViewModel(
     override fun handleEvent(event: SearchEvent) {
         when (event) {
             is OnSearchTextChanged -> search(event.query)
-            is OnSearchClicked -> search(searchQuery.value ?: "")
+            is OnSearchClicked -> search(searchQuery.value)
             is OnSearchResultClicked -> TODO()
             is OnRetryClicked -> search(event.query)
         }

@@ -129,11 +129,7 @@ private fun LazyListScope.searchResultContent(
         }
     }
 
-    SearchState.Empty -> {
-        item {
-            EmptyView()
-        }
-    }
+    SearchState.Empty -> item { EmptyView() }
 
     else -> Unit
 }

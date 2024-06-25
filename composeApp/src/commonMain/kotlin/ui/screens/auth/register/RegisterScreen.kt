@@ -119,7 +119,15 @@ private fun RegisterForm(
                     onPasswordChanged = onPasswordChanged
                 )
 
-                Spacer(modifier = modifier.height(32.dp))
+                Spacer(modifier = modifier.height(16.dp))
+
+                Text(
+                    text = "By signing up, you agree to our Terms of Service and Privacy Policy",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                )
+
+                Spacer(modifier = modifier.height(16.dp))
 
                 Button(
                     onClick = { onSignUpClick() },
