@@ -31,7 +31,7 @@ internal class ExchangeViewModel(
     private val convertRateUseCase: ConvertRateUseCase
 ) : MviViewModel<ExchangeViewEvent, ExchangeState, ExchangeNavigationEffect>(ExchangeState.Loading) {
 
-    val fromValue: MutableStateFlow<String> = MutableStateFlow("")
+    private val fromValue: MutableStateFlow<String> = MutableStateFlow("")
     val toValue: MutableStateFlow<String> = MutableStateFlow("")
     val amountValue: MutableStateFlow<String> = MutableStateFlow("")
     val convertedResult: MutableStateFlow<String> = MutableStateFlow("")
@@ -73,6 +73,7 @@ internal class ExchangeViewModel(
 
     private fun onConvertClick() {
         if (fromValue.value.isEmpty() || toValue.value.isEmpty() || amountValue.value.isEmpty()) {
+            setEffect(ExchangeNavigationEffect.ShowSnakeBar("Please fill all fields!"))
             return
         }
 
@@ -82,8 +83,13 @@ internal class ExchangeViewModel(
         }
 
         viewModelScope.launch {
-            convertRateUseCase(fromValue.value, toValue.value, amountValue.value)
-                .also { convertedResult.value = it }
+            val result = convertRateUseCase(
+                from = fromValue.value,
+                to = toValue.value,
+                amount = amountValue.value
+            )
+
+            convertedResult.value = result
         }
     }
 

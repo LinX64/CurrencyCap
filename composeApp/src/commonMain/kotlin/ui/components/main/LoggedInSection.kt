@@ -21,6 +21,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import ui.components.BottomSheet
 import ui.navigation.graphs.MainNavGraph
 import ui.navigation.graphs.handleNavigation
 import ui.screens.MainViewModel
@@ -75,5 +76,5 @@ internal fun LoggedInSection(
         )
     }
 
-    if (isSheetOpen.value) ui.BottomSheet(sheetState = scaffoldState)
+    if (isSheetOpen.value) BottomSheet(sheetState = scaffoldState)
 }

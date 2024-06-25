@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,11 +24,17 @@ import ui.common.getCountryFlag
 internal fun AmountField(
     modifier: Modifier = Modifier,
     maxLength: Int = 12,
-    countryCode: String = "AE",
+    countryCode: String,
     onAmountChange: (String) -> Unit,
+    selectedToValue: MutableState<String>
 ) {
     var amount by remember { mutableStateOf("") }
     val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+    val visualTransformation = if (countryCode.isNotEmpty()) {
+        CurrencyVisualTransformation(countryCode.ifEmpty { "AE" })
+    } else {
+        CurrencyVisualTransformation(selectedToValue.value.ifEmpty { "AE" })
+    }
 
     TextField(
         modifier = modifier.fillMaxWidth(),
@@ -39,7 +46,7 @@ internal fun AmountField(
             }
         },
         placeholder = { if (amount.isEmpty()) Text(text = "enter amount") },
-        leadingIcon = { LeadingIcon(countryCode) },
+        leadingIcon = { LeadingIcon(countryCode, selectedToValue) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Done
@@ -53,12 +60,23 @@ internal fun AmountField(
             unfocusedIndicatorColor = Color.Transparent
         ),
         shape = RoundedCornerShape(10.dp),
-        visualTransformation = CurrencyVisualTransformation(countryCode)
+        visualTransformation = visualTransformation
     )
 }
 
 @Composable
-private fun LeadingIcon(countryCode: String) {
-    val flag = if (countryCode.isEmpty()) "AE".getCountryFlag() else countryCode.getCountryFlag()
+private fun LeadingIcon(
+    countryCode: String,
+    selectedToValue: MutableState<String>
+) {
+    val defaultFlag = "AF".getCountryFlag()
+
+    val flag = when {
+        countryCode.isEmpty() -> defaultFlag
+        selectedToValue.value.isNotEmpty() -> selectedToValue.value.getCountryFlag()
+        else -> countryCode.getCountryFlag()
+    }
+
     Text(text = flag)
 }
+

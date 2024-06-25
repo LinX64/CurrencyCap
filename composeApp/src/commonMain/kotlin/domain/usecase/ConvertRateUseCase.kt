@@ -1,9 +1,9 @@
 package domain.usecase
 
-import domain.model.CurrenciesDto
 import domain.repository.MainRepository
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 
 class ConvertRateUseCase(
     private val mainRepository: MainRepository
@@ -14,28 +14,14 @@ class ConvertRateUseCase(
         to: String,
         amount: String
     ): String = coroutineScope {
-        val rates = mainRepository.getAllRates().first()
-        val fromRate = findRateUsd(rates, from)
-        val toRate = findRateUsd(rates, to)
-        val amountValue = amount.toDoubleOrNull()
+        val rates = mainRepository.getAllRates().map { it.rates }.first()
 
-        if (fromRate == null || toRate == null || amountValue == null || amountValue == 0.0) {
-            return@coroutineScope "0.0"
-        }
+        val usdPrice = rates.find { it.symbol == from }?.rateUsd?.toDouble() ?: 0.0
+        val finalAmount = usdPrice.times(amount.toDouble())
+        val toUsdPrice = rates.find { it.symbol == to }?.rateUsd?.toDouble() ?: 0.0
 
-        val usdAmount = fromRate * amountValue
-        val convertedAmount = usdAmount / toRate
-
-        return@coroutineScope convertedAmount.toString()
+        val result = finalAmount.div(toUsdPrice)
+        return@coroutineScope result.toString()
     }
-
-    /**
-     * Find the rate in USD for the given symbol using binary search
-     * @param rates List of rates
-     */
-    private fun findRateUsd(rates: CurrenciesDto, symbol: String): Double? {
-        val mRates = rates.rates.map { it.copy(symbol = it.symbol.uppercase()) }
-        val index = mRates.binarySearch { it.symbol.compareTo(symbol) }
-        return if (index >= 0) mRates[index].rateUsd.toDoubleOrNull() else null
-    }
+    // TODO: Use binary search to find the rate
 }

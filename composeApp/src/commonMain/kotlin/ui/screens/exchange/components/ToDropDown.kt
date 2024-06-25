@@ -115,7 +115,8 @@ private fun HandleToDropDown(
                             selectedOptionText = selectionOption
                             expanded = false
 
-                            val selectedCountryCode = if (selectionOption.isNotEmpty()) selectionOption.split(" ")[2] else "AFN"
+                            val selectedCountryCode =
+                                if (selectionOption.isNotEmpty()) selectionOption.split(" ")[1].take(2) else "AF"
                             onToChange(selectedCountryCode)
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
