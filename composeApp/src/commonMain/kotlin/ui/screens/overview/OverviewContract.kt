@@ -1,6 +1,7 @@
 package ui.screens.overview
 
 import domain.model.BonbastRateDto
+import domain.model.CryptoDto
 import domain.model.MarketDto
 import domain.model.RateDto
 
@@ -19,13 +20,8 @@ sealed interface OverviewState {
         val cryptoRates: List<RateDto>,
         val markets: List<MarketDto>,
         val fiatRates: List<RateDto>,
-        val topMovers: List<TopMovers>
+        val topMovers: List<CryptoDto>
     ) : OverviewState
 
     data class Error(val message: String) : OverviewState
 }
-
-data class TopMovers(
-    val symbol: String,
-    val rateUsd: String
-)

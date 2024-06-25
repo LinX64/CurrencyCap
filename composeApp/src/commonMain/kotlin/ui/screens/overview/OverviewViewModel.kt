@@ -1,6 +1,7 @@
 package ui.screens.overview
 
 import androidx.lifecycle.viewModelScope
+import domain.model.CryptoDto
 import domain.model.RateDto
 import domain.repository.MainRepository
 import kotlinx.coroutines.flow.first
@@ -36,7 +37,7 @@ class OverviewViewModel(
             val cryptoRates = rates.mapNotNull { it.crypto }.first().sortedBy { it.name } // todo: use this for details maybe
             val markets = rates.mapNotNull { it.markets }.first()
             val fiatRates = rates.mapNotNull { it.rates }.first().filter { it.type == FIAT }
-            val topMovers = rates.mapNotNull { it.rates }.first().let(::mapToTopMovers)
+            val topMovers = rates.mapNotNull { it.crypto }.first().let(::mapToTopMovers)
             val cryptoFiatRates = rates.mapNotNull { it.rates }.first().let(::filterByCrypto)
 
             when {
@@ -63,16 +64,10 @@ class OverviewViewModel(
         .sortedBy { it.currencySymbol }
         .filter { it.type == CRYPTO }
 
-    private fun mapToTopMovers(rates: List<RateDto>) = rates
-        .sortedByDescending { it.rateUsd }
+    private fun mapToTopMovers(rates: List<CryptoDto>) = rates
+        .sortedByDescending { it.name }
         .take(4)
-        .sortedBy { it.symbol }
-        .map { topMover ->
-            TopMovers(
-                symbol = topMover.symbol,
-                rateUsd = topMover.rateUsd
-            )
-        }
+        .sortedBy { it.fullName }
 
     private fun refreshRates() {
         viewModelScope.launch {

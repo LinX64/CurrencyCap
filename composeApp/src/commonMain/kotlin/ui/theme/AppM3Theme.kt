@@ -12,13 +12,13 @@ fun AppM3Theme(
 ) {
     MaterialTheme(
         colorScheme = if (dark) appDarkColorScheme() else appLightColorScheme(),
-        //typography = TitilliumWebTypography(),
+        typography = TitilliumWebTypography(),
         content = content
     )
 }
 
 private fun appLightColorScheme(): ColorScheme = ColorScheme(
-    primary = CurrencyColors.Lemon.primary,
+    primary = CurrencyColors.Green.primary,
     onPrimary = CurrencyColors.White,
     primaryContainer = CurrencyColors.Blue.light,
     onPrimaryContainer = CurrencyColors.White,

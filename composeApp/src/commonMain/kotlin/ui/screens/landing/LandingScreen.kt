@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
@@ -72,16 +73,17 @@ internal fun LandingScreen(
 
             Button(
                 onClick = onSignUpClick,
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF64DD17)),
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(8.dp))
                     .padding(horizontal = 16.dp)
             ) {
                 Text(
+                    modifier = Modifier.padding(8.dp),
                     text = "Create an Account",
-                    color = Color.White,
-                    modifier = Modifier.padding(8.dp)
+                    color = MaterialTheme.colorScheme.surface,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold
                 )
             }
 
@@ -96,9 +98,11 @@ internal fun LandingScreen(
                     .padding(horizontal = 16.dp)
             ) {
                 Text(
+                    modifier = Modifier.padding(8.dp),
                     text = "Log In",
                     color = Color.White,
-                    modifier = Modifier.padding(8.dp)
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold
                 )
             }
 

@@ -12,14 +12,17 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
+import ui.common.formatCurrentTotal
 
 @Composable
 internal fun TopMoversItem(
@@ -27,8 +30,11 @@ internal fun TopMoversItem(
     isLoading: Boolean = false,
     icon: String,
     name: String,
+    symbol: String,
+    maxSupply: Double
 ) {
-    val isColorRed = remember { data.valueChange < 0 }
+    val isColorRed = remember { mutableStateOf(maxSupply < 0) }
+
     Column(
         modifier = modifier.padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -43,7 +49,8 @@ internal fun TopMoversItem(
             SubcomposeAsyncImage(
                 modifier = Modifier.size(48.dp),
                 model = icon,
-                contentDescription = null
+                contentDescription = null,
+                contentScale = ContentScale.Inside
             ) {
                 if (isLoading) {
                     ItemPlaceHolder(modifier = Modifier.size(48.dp))
@@ -57,6 +64,14 @@ internal fun TopMoversItem(
 
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
+            text = symbol,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontWeight = FontWeight.Bold
+        )
+
+        Text(
+            modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
             text = name,
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurface,
@@ -67,12 +82,12 @@ internal fun TopMoversItem(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ChangeIcon(data.valueChange)
+            ChangeIcon(maxSupply.toInt())
 
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                text = "-42.64%",
-                color = if (isColorRed) Color.Red else Color.Green,
+                text = formatCurrentTotal(maxSupply.toLong()),
+                color = if (isColorRed.value) Color.Red else Color.Green,
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Bold
             )

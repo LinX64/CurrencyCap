@@ -18,7 +18,6 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.today_top_movers
 import org.jetbrains.compose.resources.stringResource
 import ui.screens.overview.OverviewState
-import util.getIconBy
 
 @Composable
 internal fun TodayTopMovers(
@@ -45,8 +44,10 @@ internal fun TodayTopMovers(
                 items(overviewState.topMovers.size) {
                     val topMovers = overviewState.topMovers[it]
                     TopMoversItem(
-                        icon = getIconBy(topMovers.symbol),
-                        name = topMovers.symbol
+                        icon = topMovers.imageUrl,
+                        name = topMovers.fullName,
+                        symbol = topMovers.name,
+                        maxSupply = topMovers.maxSupply
                     )
                 }
             }
@@ -56,7 +57,9 @@ internal fun TodayTopMovers(
                     TopMoversItem(
                         isLoading = true,
                         icon = "",
-                        name = ""
+                        name = "",
+                        symbol = "",
+                        maxSupply = 0.0
                     )
                 }
             }

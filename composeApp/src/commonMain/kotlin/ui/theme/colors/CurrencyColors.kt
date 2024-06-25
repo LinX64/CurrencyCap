@@ -16,6 +16,7 @@ object CurrencyColors {
     val LemonGreen = Color(0xFF9EFF00)
     val DARK_SHADE = Color(0xFF4A148C)
     val PURPLE_SHADE = Color(0xFF004D40)
+    val GREEN_SHADE = Color(0xFF64DD17)
 
     val Red = ColorShades(
         extraLight = Color(0xFFF5ABAB),
@@ -43,15 +44,6 @@ object CurrencyColors {
         kindaDark = Color(0xFFCCAD14),
         dark = Color(0xFFA38B10),
         extraDark = Color(0xFF7A680C),
-    )
-    val Green = ColorShades(
-        extraLight = Color(0xFFABF5DC),
-        light = Color(0xFF5AE0B4),
-        kindaLight = Color(0xFF38E0A8),
-        primary = Color(0xFF12B880),
-        kindaDark = Color(0xFF10A372),
-        dark = Color(0xFF0C7A56),
-        extraDark = Color(0xFF085239),
     )
     val Blue = ColorShades(
         extraLight = Color(0xFFABD0F5),
@@ -88,5 +80,15 @@ object CurrencyColors {
         kindaDark = Color(0xFF66CC14),
         dark = Color(0xFF4FA810),
         extraDark = Color(0xFF3A7A0C),
+    )
+
+    val Green = ColorShades(
+        extraLight = Color(0xFFABF5DC),
+        light = Color(0xFF5AE0B4),
+        kindaLight = Color(0xFF38E0A8),
+        primary = Color(0xFF64DD17),
+        kindaDark = Color(0xFF10A372),
+        dark = Color(0xFF0C7A56),
+        extraDark = Color(0xFF085239),
     )
 }

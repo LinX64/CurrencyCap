@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import di.koinViewModel
 import ui.components.CenteredColumn
 import ui.components.HandleNavigationEffect
+import ui.screens.profile.ProfileNavigationEffect.NavigateToLanding
 import ui.screens.profile.ProfileViewEvent.OnDeleteAccountCardClicked
 import ui.screens.profile.components.DeleteAccountCard
 import ui.screens.profile.components.HelpCenterCard
@@ -35,13 +36,21 @@ internal fun ProfileScreen(
         contentPadding = padding
     ) {
         item {
-            if (state is ProfileState.Success) {
-                val profileState = state as ProfileState.Success
-                ProfileCard(
-                    name = profileState.user.name ?: "",
-                    email = profileState.user.email ?: "",
-                    phone = profileState.user.phoneNumber ?: "",
-                )
+            when (state) {
+                is ProfileState.Success -> {
+                    val profileState = state as ProfileState.Success
+                    ProfileCard(
+                        name = profileState.user.name ?: "",
+                        email = profileState.user.email ?: "",
+                        phone = profileState.user.phoneNumber ?: "",
+                    )
+                }
+
+                ProfileState.Loading -> CenteredColumn {
+                    CircularProgressIndicator()
+                }
+
+                else -> Unit
             }
         }
         item { HelpCenterCard() }
@@ -54,12 +63,11 @@ internal fun ProfileScreen(
 
     HandleNavigationEffect(profileViewModel) { effect ->
         when (effect) {
-            is ProfileNavigationEffect.NavigateToLanding -> onNavigateToLanding()
+            is NavigateToLanding -> onNavigateToLanding()
         }
     }
 
     when (state) {
-        is ProfileState.Loading -> CenteredColumn { CircularProgressIndicator() }
         is ProfileState.Error -> onError((state as ProfileState.Error).message)
         else -> Unit
     }
