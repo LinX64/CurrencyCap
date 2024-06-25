@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import ui.screens.subscribers.SubscribersSection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,4 +46,10 @@ internal fun SubscribeBottomSheet(
             scaffoldState.bottomSheetState.expand()
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun BottomSheet(sheetState: BottomSheetScaffoldState) {
+    SubscribeBottomSheet(scaffoldState = sheetState) { SubscribersSection() }
 }

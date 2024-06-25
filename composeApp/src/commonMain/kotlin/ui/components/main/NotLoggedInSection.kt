@@ -34,6 +34,7 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import ui.components.BottomSheet
 import ui.navigation.NavRoutes
 import ui.navigation.graphs.AuthNavGraph
 import ui.screens.MainViewModel
@@ -78,7 +79,7 @@ internal fun NotLoggedInSection(
         )
     }
 
-    if (isSheetOpen.value) ui.BottomSheet(sheetState = scaffoldState)
+    if (isSheetOpen.value) BottomSheet(sheetState = scaffoldState)
 }
 
 @Composable

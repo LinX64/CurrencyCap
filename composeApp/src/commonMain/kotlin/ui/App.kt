@@ -1,6 +1,5 @@
 package ui
 
-import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -12,13 +11,11 @@ import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import kotlinx.coroutines.CoroutineScope
-import ui.components.SubscribeBottomSheet
 import ui.components.main.LoggedInSection
 import ui.components.main.NotLoggedInSection
 import ui.screens.MainState
 import ui.screens.MainViewModel
 import ui.screens.splash.SplashScreen
-import ui.screens.subscribers.SubscribersSection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,8 +50,3 @@ internal fun App(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-internal fun BottomSheet(sheetState: BottomSheetScaffoldState) {
-    SubscribeBottomSheet(scaffoldState = sheetState) { SubscribersSection() }
-}
