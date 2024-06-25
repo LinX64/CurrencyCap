@@ -20,6 +20,7 @@ import ui.screens.exchange.ExchangeState.Success
 import ui.screens.exchange.ExchangeViewEvent.OnAmountChange
 import ui.screens.exchange.ExchangeViewEvent.OnConvertClick
 import ui.screens.exchange.ExchangeViewEvent.OnFromChange
+import ui.screens.exchange.ExchangeViewEvent.OnSwapClick
 import ui.screens.exchange.ExchangeViewEvent.OnToChange
 
 private const val FIAT = "fiat"
@@ -50,10 +51,11 @@ internal class ExchangeViewModel(
 
     override fun handleEvent(event: ExchangeViewEvent) {
         when (event) {
-            is OnAmountChange -> onAmountChange(event.amount)
-            is OnFromChange -> onFromChange(event.from)
-            is OnToChange -> onToChange(event.to)
+            is OnAmountChange -> amountValue.value = event.amount
+            is OnFromChange -> fromValue.value = event.from
+            is OnToChange -> toValue.value = event.to
             is OnConvertClick -> onConvertClick()
+            OnSwapClick -> onSwapClicked()
         }
     }
 
@@ -67,18 +69,6 @@ internal class ExchangeViewModel(
 
         is NetworkResult.Error -> setState { Error(it.exception.message.toString()) }
         else -> setState { ExchangeState.Loading }
-    }
-
-    private fun onFromChange(from: String) {
-        fromValue.value = from
-    }
-
-    private fun onToChange(to: String) {
-        toValue.value = to
-    }
-
-    private fun onAmountChange(amount: String) {
-        amountValue.value = amount
     }
 
     private fun onConvertClick() {
@@ -95,5 +85,12 @@ internal class ExchangeViewModel(
             convertRateUseCase(fromValue.value, toValue.value, amountValue.value)
                 .also { convertedResult.value = it }
         }
+    }
+
+    private fun onSwapClicked() {
+        val from = fromValue.value
+        val to = toValue.value
+        fromValue.value = to
+        toValue.value = from
     }
 }

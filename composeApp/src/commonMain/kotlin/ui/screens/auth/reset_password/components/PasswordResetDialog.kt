@@ -1,4 +1,4 @@
-package ui.screens.auth.forgot_password.components
+package ui.screens.auth.reset_password.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

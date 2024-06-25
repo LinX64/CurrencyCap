@@ -39,7 +39,10 @@ internal fun PasswordTextField(
 
     OutlinedTextField(
         value = password.value,
-        onValueChange = onPasswordChanged,
+        onValueChange = {
+            password.value = it
+            onPasswordChanged(it)
+        },
         label = { Text("Password") },
         leadingIcon = {
             Icon(

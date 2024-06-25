@@ -4,9 +4,9 @@ import org.koin.dsl.module
 import ui.screens.MainViewModel
 import ui.screens.ai_predict.AiPredictViewModel
 import ui.screens.auth.fill_profile.FillProfileViewModel
-import ui.screens.auth.forgot_password.ResetPasswordViewModel
 import ui.screens.auth.login.LoginViewModel
 import ui.screens.auth.register.RegisterViewModel
+import ui.screens.auth.reset_password.ResetPasswordViewModel
 import ui.screens.exchange.ExchangeViewModel
 import ui.screens.overview.OverviewViewModel
 import ui.screens.profile.ProfileViewModel

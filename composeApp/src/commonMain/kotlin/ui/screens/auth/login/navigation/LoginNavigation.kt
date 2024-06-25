@@ -6,9 +6,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import ui.navigation.NavRoutes
-import ui.screens.auth.forgot_password.navigation.navigateToResetPassword
 import ui.screens.auth.login.LoginScreen
 import ui.screens.auth.register.navigation.navigateToRegisterScreen
+import ui.screens.auth.reset_password.navigation.navigateToResetPassword
 
 fun NavController.navigateToLoginScreen() = navigate(NavRoutes.LOGIN)
 

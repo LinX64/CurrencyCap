@@ -1,4 +1,4 @@
-package ui.screens.auth.forgot_password
+package ui.screens.auth.reset_password
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,10 +27,10 @@ import androidx.compose.ui.unit.sp
 import di.koinViewModel
 import ui.components.BaseCenterColumn
 import ui.components.EmailTextField
-import ui.screens.auth.forgot_password.ResetPasswordState.Error
-import ui.screens.auth.forgot_password.ResetPasswordViewEvent.OnEmailChanged
-import ui.screens.auth.forgot_password.ResetPasswordViewEvent.OnResetPasswordClick
-import ui.screens.auth.forgot_password.components.PasswordResetDialog
+import ui.screens.auth.reset_password.ResetPasswordState.Error
+import ui.screens.auth.reset_password.ResetPasswordViewEvent.OnEmailChanged
+import ui.screens.auth.reset_password.ResetPasswordViewEvent.OnResetPasswordClick
+import ui.screens.auth.reset_password.components.PasswordResetDialog
 
 @Composable
 internal fun ResetPasswordScreen(

@@ -1,6 +1,5 @@
 package ui.screens.auth.register.navigation
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -14,12 +13,10 @@ fun NavController.navigateToRegisterScreen() = navigate(NavRoutes.REGISTER)
 
 fun NavGraphBuilder.registerScreen(
     navController: NavHostController,
-    padding: PaddingValues,
     onError: (message: String) -> Unit
 ) {
     composable(NavRoutes.REGISTER) {
         RegisterScreen(
-            padding = padding,
             onNavigateToFillProfile = { navController.navigateToFillProfileScreen() },
             navigateToLogin = { navController.navigateToLoginScreen() },
             onError = onError

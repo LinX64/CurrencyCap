@@ -6,6 +6,7 @@ sealed interface ExchangeViewEvent {
     data class OnFromChange(val from: String) : ExchangeViewEvent
     data class OnToChange(val to: String) : ExchangeViewEvent
     data class OnAmountChange(val amount: String) : ExchangeViewEvent
+    data object OnSwapClick : ExchangeViewEvent
     data object OnConvertClick : ExchangeViewEvent
 }
 

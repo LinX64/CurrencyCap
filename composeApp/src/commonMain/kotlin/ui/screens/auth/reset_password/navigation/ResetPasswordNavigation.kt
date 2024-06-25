@@ -1,4 +1,4 @@
-package ui.screens.auth.forgot_password.navigation
+package ui.screens.auth.reset_password.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
@@ -6,8 +6,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import ui.navigation.NavRoutes
-import ui.screens.auth.forgot_password.ResetPasswordScreen
 import ui.screens.auth.login.navigation.navigateToLoginScreen
+import ui.screens.auth.reset_password.ResetPasswordScreen
 
 fun NavController.navigateToResetPassword() = navigate(NavRoutes.RESET_PASSWORD)
 

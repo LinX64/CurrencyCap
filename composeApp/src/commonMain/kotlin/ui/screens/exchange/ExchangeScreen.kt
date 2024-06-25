@@ -74,12 +74,13 @@ private fun ExchangeCard(
         modifier = modifier.padding(24.dp)
     ) {
         FromSection()
+
         FromDropDown(
             exchangeState = state,
             onFromChange = { exchangeViewModel.handleEvent(OnFromChange(it)) }
         )
 
-        SwapButton(onClick = { })
+        SwapButton(onClick = { exchangeViewModel.handleEvent(ExchangeViewEvent.OnSwapClick) })
 
         ToSection()
 

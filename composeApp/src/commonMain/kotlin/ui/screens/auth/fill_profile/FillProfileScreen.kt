@@ -16,6 +16,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,6 +41,7 @@ internal fun FillProfileScreen(
     navigateToMarketOverview: () -> Unit,
     onError: (message: String) -> Unit
 ) {
+    val state by fillProfileViewModel.viewState.collectAsState()
     BaseCenterColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -56,6 +59,11 @@ internal fun FillProfileScreen(
         when (effect) {
             is NavigateToMarketOverview -> navigateToMarketOverview()
         }
+    }
+
+    when (state) {
+        is FillProfileState.Error -> onError((state as FillProfileState.Error).message)
+        else -> Unit
     }
 }
 

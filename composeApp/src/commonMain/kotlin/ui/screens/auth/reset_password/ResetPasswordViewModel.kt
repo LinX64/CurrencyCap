@@ -1,12 +1,12 @@
-package ui.screens.auth.forgot_password
+package ui.screens.auth.reset_password
 
 import androidx.lifecycle.viewModelScope
 import domain.repository.AuthService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
-import ui.screens.auth.forgot_password.ResetPasswordViewEvent.OnEmailChanged
-import ui.screens.auth.forgot_password.ResetPasswordViewEvent.OnResetPasswordClick
+import ui.screens.auth.reset_password.ResetPasswordViewEvent.OnEmailChanged
+import ui.screens.auth.reset_password.ResetPasswordViewEvent.OnResetPasswordClick
 import util.validateEmail
 
 internal class ResetPasswordViewModel(

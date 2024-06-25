@@ -2,7 +2,6 @@ package ui.screens.auth.register
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,7 +39,6 @@ import ui.screens.auth.register.components.LogInText
 
 @Composable
 internal fun RegisterScreen(
-    padding: PaddingValues,
     registerViewModel: RegisterViewModel = koinViewModel<RegisterViewModel>(),
     onNavigateToFillProfile: () -> Unit,
     navigateToLogin: () -> Unit,
@@ -68,7 +66,7 @@ internal fun RegisterScreen(
 }
 
 @Composable
-fun RegisterContent(
+private fun RegisterContent(
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
     onSignUpClick: () -> Unit,

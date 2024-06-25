@@ -1,4 +1,4 @@
-package ui.screens.auth.forgot_password
+package ui.screens.auth.reset_password
 
 sealed interface ResetPasswordViewEvent {
     data object OnResetPasswordClick : ResetPasswordViewEvent
@@ -11,7 +11,4 @@ sealed interface ResetPasswordState {
     data object Success : ResetPasswordState
 }
 
-sealed interface ResetPasswordNavigationEffect {
-    data object NavigateToLogin : ResetPasswordNavigationEffect
-}
-
+sealed interface ResetPasswordNavigationEffect

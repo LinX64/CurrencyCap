@@ -13,7 +13,6 @@ import ui.screens.overview.components.MainHeader
 import ui.screens.overview.components.TodayTopMovers
 import ui.screens.overview.components.TopRates
 import ui.screens.overview.components.TrendingCryptoCurrencies
-import ui.screens.overview.components.WatchList
 
 @Composable
 internal fun OverviewScreen(
@@ -28,7 +27,7 @@ internal fun OverviewScreen(
     ) {
         item { MainHeader(state) }
         item { TodayTopMovers(state) }
-        item { WatchList(state) }
+        //item { WatchList(state) } // todo
         item { TopRates(state) }
         item { TrendingCryptoCurrencies(state) }
     }
