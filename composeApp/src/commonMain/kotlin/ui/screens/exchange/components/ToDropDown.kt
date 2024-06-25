@@ -23,12 +23,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import domain.model.RateDto
-import ui.common.getCountryFlag
-import ui.common.getCountryName
 import ui.components.getDummyRates
 import ui.screens.exchange.ExchangeState
 import ui.screens.exchange.ExchangeState.Error
 import ui.screens.exchange.ExchangeState.Success
+import util.getTextFieldOptions
 
 @Composable
 internal fun ToDropDown(
@@ -62,14 +61,7 @@ private fun HandleToDropDown(
     isLoading: Boolean = false,
     onToChange: (String) -> Unit
 ) {
-    val options = rates.map { it.symbol }.sortedBy { it }.map { symbol ->
-        val getSymbol = symbol.take(2)
-        with(getSymbol) {
-            val countryName = getCountryName()
-            val flag = getCountryFlag()
-            "$flag $symbol - $countryName"
-        }
-    }
+    val options = rates.getTextFieldOptions()
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[1]) }
     val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
@@ -116,7 +108,7 @@ private fun HandleToDropDown(
                             expanded = false
 
                             val selectedCountryCode =
-                                if (selectionOption.isNotEmpty()) selectionOption.split(" ")[1].take(2) else "AF"
+                                if (selectionOption.isNotEmpty()) selectionOption.split(" ")[2].take(2) else "AF"
                             onToChange(selectedCountryCode)
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,

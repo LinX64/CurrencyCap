@@ -1,6 +1,9 @@
 package util
 
 import data.util.APIConst
+import domain.model.RateDto
+import ui.common.getCountryFlag
+import ui.common.getCountryName
 
 internal fun Int.formatToPrice(): String = toString()
     .reversed()
@@ -17,3 +20,21 @@ fun String.validateEmail(): Boolean {
     val emailRegex = Regex("^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})")
     return emailRegex.matches(this)
 }
+
+fun List<RateDto>.getTextFieldOptions(): List<String> = this
+    .asSequence()
+    .map { it.symbol }
+    .sorted()
+    .map { symbol ->
+        val countryCode = symbol.take(2)
+        val countryName = countryCode.getCountryName()
+        val flag = countryCode.getCountryFlag()
+        StringBuilder().apply {
+            append(flag)
+            append("  ")
+            append(symbol)
+            append(" - ")
+            append(countryName)
+        }.toString()
+    }
+    .toList()

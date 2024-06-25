@@ -142,6 +142,8 @@ android {
     }
 
     dependencies {
+        detektPlugins(libs.detekt.formatting)
+
         debugImplementation(compose.uiTooling)
     }
 

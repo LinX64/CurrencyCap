@@ -23,10 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import domain.model.RateDto
-import ui.common.getCountryFlag
-import ui.common.getCountryName
 import ui.components.getDummyRates
 import ui.screens.exchange.ExchangeState
+import util.getTextFieldOptions
 
 @Composable
 internal fun FromDropDown(
@@ -40,14 +39,13 @@ internal fun FromDropDown(
 
     is ExchangeState.Error -> HandleFromDropDown(
         rates = getDummyRates(),
-        onError = exchangeState.message.ifEmpty { "Error while fetching rates" },
         onFromChange = onFromChange,
     )
 
     else -> HandleFromDropDown(
         rates = getDummyRates(),
-        onFromChange = onFromChange,
-        isLoading = true
+        isLoading = true,
+        onFromChange = onFromChange
     )
 }
 
@@ -60,14 +58,7 @@ private fun HandleFromDropDown(
     isLoading: Boolean = false,
     onFromChange: (String) -> Unit,
 ) {
-    val options = rates.map { it.symbol }.sortedBy { it }.map { symbol ->
-        val getSymbol = symbol.take(2)
-        with(getSymbol) {
-            val countryName = getCountryName()
-            val flag = getCountryFlag()
-            "$flag  $symbol - $countryName"
-        }
-    }
+    val options = rates.getTextFieldOptions()
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[0]) }
     val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
@@ -112,7 +103,8 @@ private fun HandleFromDropDown(
                             selectedOptionText = selectionOption
                             expanded = false
 
-                            val selectedCountryCode = if (selectionOption.isNotEmpty()) selectionOption.split(" ")[2] else "AED"
+                            val selectedCountryCode =
+                                if (selectionOption.isNotEmpty()) selectionOption.split(" ")[2].take(2) else "AF"
                             onFromChange(selectedCountryCode)
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding

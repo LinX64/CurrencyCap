@@ -93,6 +93,7 @@ private fun ExchangeCard(
             exchangeState = state,
             onToChange = {
                 selectedToValue.value = it
+                println(selectedToValue.value)
                 exchangeViewModel.handleEvent(OnToChange(it))
             }
         )
