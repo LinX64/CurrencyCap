@@ -64,7 +64,6 @@ class AuthServiceImpl(
         auth.signOut()
     }
 
-
     private suspend fun launchWithAwait(block: suspend () -> Unit) {
         scope.async { block() }.await()
     }
