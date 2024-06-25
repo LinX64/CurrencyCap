@@ -78,7 +78,7 @@ internal fun NotLoggedInSection(
         )
     }
 
-    if (isSheetOpen.value) ui.SubscribeBottomSheet(sheetState = scaffoldState)
+    if (isSheetOpen.value) ui.BottomSheet(sheetState = scaffoldState)
 }
 
 @Composable

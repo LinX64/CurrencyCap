@@ -8,29 +8,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import di.koinViewModel
 import ui.components.CenteredColumn
+import ui.components.EmailTextField
 import ui.components.HandleNavigationEffect
+import ui.components.PasswordTextField
 import ui.screens.auth.register.RegisterNavigationEffect.NavigateToFillProfile
 import ui.screens.auth.register.RegisterViewEvent.OnEmailChanged
 import ui.screens.auth.register.RegisterViewEvent.OnPasswordChanged
@@ -72,6 +68,8 @@ private fun RegisterContent(
     onSignUpClick: () -> Unit,
     navigateToLogin: () -> Unit
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -87,35 +85,14 @@ private fun RegisterContent(
         )
         Spacer(modifier = Modifier.height(24.dp))
 
-        OutlinedTextField(
-            value = "",
-            onValueChange = onEmailChanged,
-            label = { Text("Email") },
-            leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
-            colors = TextFieldDefaults.colors(
-                focusedLabelColor = Color(0xFF03DAC5),
-                unfocusedLabelColor = Color.Gray,
-                cursorColor = Color.White
-            ),
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(8.dp)
+        EmailTextField(
+            onEmailChanged = onEmailChanged
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        OutlinedTextField(
-            value = "",
-            onValueChange = onPasswordChanged,
-            label = { Text("Password") },
-            leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
-            visualTransformation = PasswordVisualTransformation(),
-            colors = TextFieldDefaults.colors(
-                focusedLabelColor = Color(0xFF03DAC5),
-                unfocusedLabelColor = Color.Gray,
-                cursorColor = Color.White
-            ),
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(8.dp)
+        PasswordTextField(
+            onPasswordChanged = onPasswordChanged
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -129,7 +106,10 @@ private fun RegisterContent(
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = onSignUpClick,
+            onClick = {
+                keyboardController?.hide()
+                onSignUpClick()
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),

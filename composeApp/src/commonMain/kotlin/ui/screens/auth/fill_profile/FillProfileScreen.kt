@@ -1,6 +1,5 @@
 package ui.screens.auth.fill_profile
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -77,81 +75,74 @@ private fun FillProfileForm(
 ) {
     Column(
         modifier = Modifier
-            .wrapContentHeight()
-            .padding(horizontal = 16.dp)
-            .background(
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                shape = RoundedCornerShape(20.dp)
-            )
+            .fillMaxSize()
+            .padding(horizontal = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Fill Profile",
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Bold
+        )
+
+        Text(
+            text = "Please fill in your name and phone number",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Normal
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
         Column(
-            modifier = Modifier.padding(25.dp),
-            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
+            NameTextField(onNameChanged = onNameChanged)
 
-            Text(
-                text = "Fill Profile",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.Bold
+            Spacer(modifier = modifier.height(10.dp))
+
+            PhoneNumberTextField(
+                onPhoneChanged = onPhoneNumberChanged
             )
 
-            Text(
-                text = "Please fill in your name and phone number",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.Normal
-            )
+            Spacer(modifier = modifier.height(32.dp))
 
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
+            Button(
+                onClick = onFinishSignUpClick,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(10.dp),
             ) {
-                NameTextField(onNameChanged = onNameChanged)
-                Spacer(modifier = modifier.height(10.dp))
-
-                PhoneNumberTextField(
-                    onPhoneChanged = onPhoneNumberChanged
+                Text(
+                    text = "Finish Sign Up",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.surface
                 )
+            }
 
-                Spacer(modifier = modifier.height(32.dp))
+            Spacer(modifier = modifier.height(16.dp))
 
-                Button(
-                    onClick = onFinishSignUpClick,
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .height(52.dp),
-                    shape = RoundedCornerShape(10.dp),
-                ) {
-                    Text(
-                        text = "Finish Sign Up",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.surface
-                    )
-                }
-
-                Spacer(modifier = modifier.height(16.dp))
-
-                Button(
-                    onClick = onSkipClick,
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .height(52.dp),
-                    shape = RoundedCornerShape(10.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent
-                    )
-                ) {
-                    Text(
-                        text = "Skip",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                }
+            Button(
+                onClick = onSkipClick,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent
+                )
+            ) {
+                Text(
+                    text = "Skip",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
             }
         }
     }

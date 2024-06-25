@@ -20,6 +20,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import ui.navigation.graphs.MainNavGraph
 import ui.navigation.graphs.handleNavigation
 import ui.screens.MainViewModel
@@ -68,9 +69,11 @@ internal fun LoggedInSection(
         MainNavGraph(
             navController = navController,
             padding = paddingValues,
-            scrollBehavior = scrollBehavior
+            scrollBehavior = scrollBehavior,
+            onNavigateToLanding = { mainViewModel.logout() },
+            onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } }
         )
     }
 
-    if (isSheetOpen.value) ui.SubscribeBottomSheet(sheetState = scaffoldState)
+    if (isSheetOpen.value) ui.BottomSheet(sheetState = scaffoldState)
 }

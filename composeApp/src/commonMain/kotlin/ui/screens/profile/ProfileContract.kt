@@ -17,6 +17,6 @@ sealed interface ProfileState {
 }
 
 sealed interface ProfileNavigationEffect {
-    data class ShowSnakeBar(val message: String) : ProfileNavigationEffect
+    data object NavigateToLanding : ProfileNavigationEffect
 }
 

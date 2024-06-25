@@ -23,7 +23,9 @@ import ui.screens.search.navigation.searchScreen
 internal fun MainNavGraph(
     navController: NavHostController,
     padding: PaddingValues,
-    scrollBehavior: TopAppBarScrollBehavior
+    scrollBehavior: TopAppBarScrollBehavior,
+    onNavigateToLanding: () -> Unit,
+    onError: (message: String) -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -36,7 +38,11 @@ internal fun MainNavGraph(
         searchScreen(padding)
         aiPredictScreen(padding)
         exchangeScreen(padding)
-        profileScreen(padding)
+        profileScreen(
+            padding = padding,
+            onNavigateToLanding = onNavigateToLanding,
+            onError = onError
+        )
     }
 }
 

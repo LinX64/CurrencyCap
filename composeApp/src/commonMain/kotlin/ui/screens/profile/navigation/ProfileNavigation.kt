@@ -10,10 +10,18 @@ import ui.screens.profile.ProfileScreen
 
 fun NavController.navigateToProfileScreen() = navigate(NavRoutes.PROFILE)
 
-fun NavGraphBuilder.profileScreen(padding: PaddingValues) {
+fun NavGraphBuilder.profileScreen(
+    padding: PaddingValues,
+    onNavigateToLanding: () -> Unit,
+    onError: (message: String) -> Unit
+) {
     composable(NavRoutes.PROFILE) {
         BlurBackground {
-            ProfileScreen(padding = padding)
+            ProfileScreen(
+                padding = padding,
+                onNavigateToLanding = onNavigateToLanding,
+                onError = onError
+            )
         }
     }
 }

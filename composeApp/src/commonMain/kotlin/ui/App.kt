@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import kotlinx.coroutines.CoroutineScope
+import ui.components.SubscribeBottomSheet
 import ui.components.main.LoggedInSection
 import ui.components.main.NotLoggedInSection
 import ui.screens.MainState
@@ -54,8 +55,6 @@ internal fun App(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun SubscribeBottomSheet(sheetState: BottomSheetScaffoldState) {
-    ui.components.SubscribeBottomSheet(scaffoldState = sheetState) {
-        SubscribersSection()
-    }
+internal fun BottomSheet(sheetState: BottomSheetScaffoldState) {
+    SubscribeBottomSheet(scaffoldState = sheetState) { SubscribersSection() }
 }

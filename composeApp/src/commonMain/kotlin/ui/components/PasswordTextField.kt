@@ -1,4 +1,4 @@
-package ui.screens.auth.login.components
+package ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,8 +12,8 @@ import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -36,8 +36,9 @@ internal fun PasswordTextField(
     val password = rememberSaveable { mutableStateOf("") }
     val passwordVisible = rememberSaveable { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
+    val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
 
-    OutlinedTextField(
+    TextField(
         value = password.value,
         onValueChange = {
             password.value = it
@@ -54,9 +55,11 @@ internal fun PasswordTextField(
         },
         trailingIcon = { TrailingIcon(passwordVisible, modifier) },
         colors = TextFieldDefaults.colors(
-            focusedLabelColor = Color(0xFF03DAC5),
-            unfocusedLabelColor = Color.Gray,
-            cursorColor = Color.White
+            focusedContainerColor = containerColor,
+            unfocusedContainerColor = containerColor,
+            disabledContainerColor = containerColor,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
         ),
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),

@@ -9,8 +9,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -30,8 +30,9 @@ internal fun EmailTextField(
 ) {
     val email = rememberSaveable { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
+    val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
 
-    OutlinedTextField(
+    TextField(
         modifier = modifier.fillMaxWidth(),
         value = email.value,
         onValueChange = {
@@ -47,9 +48,11 @@ internal fun EmailTextField(
             )
         },
         colors = TextFieldDefaults.colors(
-            focusedLabelColor = Color(0xFF03DAC5),
-            unfocusedLabelColor = Color.Gray,
-            cursorColor = Color.White
+            focusedContainerColor = containerColor,
+            unfocusedContainerColor = containerColor,
+            disabledContainerColor = containerColor,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
         ),
         shape = RoundedCornerShape(10.dp),
         maxLines = 1,
