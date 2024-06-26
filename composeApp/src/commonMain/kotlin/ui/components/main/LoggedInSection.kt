@@ -54,6 +54,7 @@ internal fun LoggedInSection(
         bottomBar = {
             BottomNavigationBar(
                 hazeState = hazeState,
+                scrollBehavior = scrollBehavior,
                 onTabSelected = { tab ->
                     handleNavigation(
                         navController = navController,

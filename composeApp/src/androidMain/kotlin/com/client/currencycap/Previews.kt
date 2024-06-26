@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import dev.chrisbanes.haze.HazeState
-import ui.components.main.BottomNavigationBar
 import ui.theme.AppM3Theme
 
 @Composable
@@ -23,7 +22,7 @@ private fun CardPreview() {
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = androidx.compose.foundation.layout.Arrangement.Bottom
             ) {
-                BottomNavigationBar(hazeState = hazeState) {}
+
             }
         }
     }

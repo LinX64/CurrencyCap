@@ -23,12 +23,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.SwapVert
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -37,10 +39,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Brush
@@ -49,6 +54,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -56,10 +62,12 @@ import androidx.compose.ui.unit.sp
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun BottomNavigationBar(
     hazeState: HazeState,
-    onTabSelected: (BottomBarTab) -> Unit
+    onTabSelected: (BottomBarTab) -> Unit,
+    scrollBehavior: TopAppBarScrollBehavior
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val animatedSelectedTabIndex by animateFloatAsState(
@@ -79,6 +87,7 @@ internal fun BottomNavigationBar(
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
             .padding(horizontal = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -108,23 +117,22 @@ internal fun BottomNavigationBar(
                 }
             )
 
-//            Canvas(
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .clip(RoundedCornerShape(35.dp))
-//                    .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
-//            ) {
-//                val tabWidth = size.width / tabs.size
-//                drawCircle(
-//                    color = animatedColor.copy(alpha = .6f),
-//                    radius = size.height / 2,
-//                    center = Offset(
-//                        (tabWidth * animatedSelectedTabIndex) + tabWidth / 2,
-//                        size.height / 2
-//                    )
-//                )
-//            }
-
+            Canvas(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(35.dp))
+                    .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
+            ) {
+                val tabWidth = size.width / tabs.size
+                drawCircle(
+                    color = animatedColor.copy(alpha = .6f),
+                    radius = size.height / 2,
+                    center = Offset(
+                        (tabWidth * animatedSelectedTabIndex) + tabWidth / 2,
+                        size.height / 2
+                    )
+                )
+            }
 
             /**
              * This adds a dashed line to the bottom bar

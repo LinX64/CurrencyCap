@@ -11,7 +11,6 @@ import di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.KoinApplication
 import org.koin.mp.KoinPlatformTools
-import ui.components.BlurBackground
 import ui.theme.AppM3Theme
 
 @Composable
@@ -34,9 +33,7 @@ internal fun KoinPreview(
             )
         }) {
             AppM3Theme(dark = true) {
-                BlurBackground {
-                    content()
-                }
+                content()
             }
         }
     }

@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import ui.components.BlurBackground
 import ui.navigation.NavRoutes
 import ui.screens.exchange.ExchangeScreen
 
@@ -15,8 +14,6 @@ fun NavGraphBuilder.exchangeScreen(
     onError: (String) -> Unit
 ) {
     composable(NavRoutes.EXCHANGE) {
-        BlurBackground {
-            ExchangeScreen(padding = padding, onError = onError)
-        }
+        ExchangeScreen(padding = padding, onError = onError)
     }
 }
