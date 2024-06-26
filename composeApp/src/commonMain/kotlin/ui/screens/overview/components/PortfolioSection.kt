@@ -35,51 +35,74 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ui.screens.overview.OverviewState
 
 @Composable
-fun PortfolioSection() {
+fun PortfolioSection(
+    state: OverviewState,
+    usd: String = "USD"
+) {
+    val isLoading = state is OverviewState.Loading
     var expanded by remember { mutableStateOf(false) }
-    val usd = "USD"
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp)
     ) {
         Text(
+            modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
             text = "Portfolio Balance",
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
+
         Spacer(modifier = Modifier.height(8.dp))
+
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
+                modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = "$4,273.94",
                 color = Color(0xFF00DA74),
                 fontSize = 36.sp,
                 fontWeight = FontWeight.Bold
             )
+
             Spacer(modifier = Modifier.width(8.dp))
+
             Box {
                 Button(
                     onClick = { expanded = !expanded },
-                    modifier = Modifier
+                    modifier = if (isLoading) getPlaceHolder(
+                        Modifier
+                            .height(30.dp)
+                            .clip(RoundedCornerShape(50))
+                    ) else Modifier
                         .height(30.dp)
                         .clip(RoundedCornerShape(50)),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF202020)),
                     contentPadding = PaddingValues(8.dp),
 
                     ) {
-                    Text(text = usd, color = Color.White, fontSize = 14.sp)
+
+                    Text(
+                        modifier = if (isLoading) getPlaceHolder(Modifier.padding(end = 10.dp)) else Modifier.padding(end = 10.dp),
+                        text = usd,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        fontSize = MaterialTheme.typography.bodyMedium.fontSize
+                    )
+
                     Icon(
+                        modifier = if (isLoading) getPlaceHolder(Modifier.size(16.dp)) else Modifier.size(16.dp),
                         imageVector = Icons.Filled.ArrowDropDown,
                         contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.size(16.dp)
+                        tint = MaterialTheme.colorScheme.onSurface,
                     )
                 }
+
                 DropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
@@ -106,7 +129,11 @@ fun PortfolioSection() {
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             TopMoversChart(
-                modifier = Modifier
+                modifier = if (isLoading) getPlaceHolder(
+                    Modifier
+                        .width(120.dp)
+                        .height(60.dp)
+                ) else Modifier
                     .width(120.dp)
                     .height(60.dp),
                 lighterColor = Color(0xFF00DA74),
@@ -115,17 +142,18 @@ fun PortfolioSection() {
             )
 
             Text(
+                modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = "BTC: 0.2398467",
-                color = Color(0xFFA3A3A8),
-                fontSize = 14.sp,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                fontSize = MaterialTheme.typography.bodyMedium.fontSize
             )
 
             Icon(
                 // Replace with an up arrow icon
+                modifier = if (isLoading) getPlaceHolder(Modifier.size(16.dp)) else Modifier.size(16.dp),
                 imageVector = Icons.Filled.ArrowOutward, // Example icon
                 contentDescription = null,
                 tint = Color(0xFF00DA74),
-                modifier = Modifier.size(24.dp)
             )
         }
     }

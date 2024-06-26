@@ -12,6 +12,7 @@ import ui.components.SearchViewHeader
 import ui.components.main.BaseBlurLazyColumn
 import ui.screens.overview.components.PortfolioSection
 import ui.screens.overview.components.TodayTopMovers
+import ui.components.main.BaseBlurLazyColumn
 import ui.screens.overview.components.TopRates
 import ui.screens.overview.components.TrendingCryptoCurrencies
 
@@ -26,9 +27,9 @@ internal fun OverviewScreen(
         padding = padding,
         hazeState = hazeState
     ) {
-        item { SearchViewHeader() }
+        item { SearchViewHeader(state) }
         item { HorizontalLineWithDot() }
-        item { PortfolioSection() }
+        item { PortfolioSection(state) }
         item { HorizontalLineWithDot() }
         item { TodayTopMovers(state) }
         item { TopRates(state) }

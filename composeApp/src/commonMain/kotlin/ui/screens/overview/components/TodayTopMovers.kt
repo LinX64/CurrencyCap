@@ -22,9 +22,10 @@ import ui.screens.overview.OverviewState
 internal fun TodayTopMovers(
     overviewState: OverviewState
 ) {
+    val isLoading = overviewState is OverviewState.Loading
     Column(
         modifier = Modifier.fillMaxWidth()
-            .padding(vertical = 8.dp, horizontal = 8.dp),
+            .padding(horizontal = 8.dp),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -32,6 +33,7 @@ internal fun TodayTopMovers(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
+                modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = "Today's Top Movers",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
@@ -39,7 +41,9 @@ internal fun TodayTopMovers(
             )
 
             TextButton(
-                onClick = { /* TODO */ }) {
+                modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
+                onClick = { /* TODO */ }
+            ) {
                 Text(
                     text = "View All",
                     style = MaterialTheme.typography.bodyMedium,
@@ -61,13 +65,13 @@ internal fun TodayTopMovers(
                     TopMoversCard(
                         name = topMovers.name,
                         fullName = topMovers.fullName,
-                        isLoading = false,
+                        isLoading = false
                     )
                 }
             }
 
             if (overviewState is OverviewState.Loading) {
-                items(4) {
+                items(2) {
                     TopMoversCard(
                         isLoading = true,
                         name = "",

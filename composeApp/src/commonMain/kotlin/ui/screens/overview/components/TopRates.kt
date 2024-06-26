@@ -23,9 +23,11 @@ import util.getIconBy
 
 @Composable
 internal fun TopRates(rates: OverviewState) {
+    val isLoading = rates is OverviewState.Loading
+
     Column(
         modifier = Modifier.fillMaxWidth()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 8.dp, vertical = 16.dp),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -36,6 +38,7 @@ internal fun TopRates(rates: OverviewState) {
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
+                    modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                     text = "Top rates",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface,
@@ -43,6 +46,7 @@ internal fun TopRates(rates: OverviewState) {
                 )
 
                 Text(
+                    modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                     text = "Iranian currency",
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
@@ -50,6 +54,7 @@ internal fun TopRates(rates: OverviewState) {
             }
 
             Icon(
+                modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 imageVector = Icons.Default.Refresh,
                 contentDescription = null,
             )
@@ -57,6 +62,7 @@ internal fun TopRates(rates: OverviewState) {
 
         LazyHorizontalGrid(
             modifier = Modifier.fillMaxWidth()
+                .padding(top = 16.dp)
                 .heightIn(max = 180.dp),
             rows = GridCells.Fixed(1),
             horizontalArrangement = Arrangement.spacedBy(8.dp)

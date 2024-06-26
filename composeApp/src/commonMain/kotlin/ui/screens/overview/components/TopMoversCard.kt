@@ -40,8 +40,7 @@ internal fun TopMoversCard(
     val hazeState = remember { HazeState() }
     MaterialsCard(
         modifier = Modifier
-            .padding(8.dp)
-            .width(180.dp)
+            .width(165.dp)
             .wrapContentHeight()
             .hazeChild(
                 state = hazeState,

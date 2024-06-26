@@ -18,8 +18,8 @@ private fun ExchangePreview() {
     val hazeState = remember { HazeState() }
     KoinPreview {
         OverviewScreen(
-            padding = PaddingValues(16.dp),
-            hazeState = hazeState,
+            padding = PaddingValues(0.dp),
+            hazeState = hazeState
         )
     }
 }

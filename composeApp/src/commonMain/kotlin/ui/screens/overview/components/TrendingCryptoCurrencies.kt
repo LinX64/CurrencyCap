@@ -24,7 +24,12 @@ import util.getIconBy
 internal fun TrendingCryptoCurrencies(rates: OverviewState) {
     Column {
         Text(
-            modifier = Modifier.padding(start = 16.dp, top = 16.dp),
+            modifier = if (rates is OverviewState.Loading) getPlaceHolder(
+                Modifier.padding(
+                    vertical = 16.dp,
+                    horizontal = 8.dp
+                ),
+            ) else Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
             text = "Trending rates",
             style = MaterialTheme.typography.titleMedium,
             color = CurrencyColors.White,
@@ -35,7 +40,7 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
             modifier = Modifier.fillMaxWidth()
                 .heightIn(max = 300.dp)
                 .widthIn(max = 370.dp, min = 350.dp),
-            rows = GridCells.Fixed(3),
+            rows = GridCells.Fixed(2),
             contentPadding = PaddingValues(10.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)

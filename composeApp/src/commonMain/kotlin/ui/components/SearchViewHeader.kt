@@ -24,21 +24,30 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
+import ui.screens.overview.OverviewState
+import ui.screens.overview.components.getPlaceHolder
 
 @Composable
 internal fun SearchViewHeader(
-    modifier: Modifier = Modifier
+    state: OverviewState
 ) {
     val hazeState = remember { HazeState() }
+    val isLoading = state is OverviewState.Loading
+
     Box(
-        modifier = modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Card(
-                modifier = Modifier
+                modifier = if (isLoading) getPlaceHolder(
+                    Modifier
+                        .fillMaxWidth(0.8f)
+                        .haze(hazeState)
+                        .padding(16.dp)
+                ) else Modifier
                     .fillMaxWidth(0.8f)
                     .haze(hazeState)
                     .padding(16.dp),
@@ -46,27 +55,29 @@ internal fun SearchViewHeader(
             ) {
                 Row {
                     Icon(
+                        modifier = if (isLoading) getPlaceHolder(Modifier.padding(16.dp)) else Modifier.padding(16.dp),
                         imageVector = Icons.Default.Search,
                         contentDescription = "Search",
-                        tint = Color.Gray,
-                        modifier = Modifier.padding(16.dp)
+                        tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                     )
 
                     Text(
+                        modifier = if (isLoading) getPlaceHolder(Modifier.padding(16.dp)) else Modifier.padding(16.dp),
                         text = "Type to search",
                         style = MaterialTheme.typography.titleMedium,
-                        color = Color.Gray,
-                        modifier = Modifier.padding(16.dp)
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                     )
                 }
             }
 
             Card(
-                modifier = Modifier.wrapContentSize()
-                    .padding(horizontal = 16.dp),
+                modifier = Modifier
+                    .wrapContentSize(),
                 shape = RoundedCornerShape(35.dp),
             ) {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(
+                    modifier = if (isLoading) getPlaceHolder(Modifier.size(48.dp)) else Modifier.size(48.dp),
+                    onClick = { /*TODO*/ }) {
                     Icon(
                         imageVector = Icons.Default.Info,
                         contentDescription = "Info",
