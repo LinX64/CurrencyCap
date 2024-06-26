@@ -31,7 +31,6 @@ internal fun OverviewScreen(
         item { PortfolioSection() }
         item { HorizontalLineWithDot() }
         item { TodayTopMovers(state) }
-        //item { WatchList(state) } // todo
         item { TopRates(state) }
         item { TrendingCryptoCurrencies(state) }
     }
