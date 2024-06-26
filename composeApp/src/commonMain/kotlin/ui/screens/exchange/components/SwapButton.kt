@@ -17,18 +17,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun SwapButton(onClick: () -> Unit) {
+internal fun SwapButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 16.dp),
+            .padding(vertical = 16.dp).then(modifier),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         IconButton(
             onClick = onClick,
             modifier = Modifier
                 .size(64.dp)
-                .background(MaterialTheme.colorScheme.primary, shape = CircleShape),
+                .background(MaterialTheme.colorScheme.onSurface, shape = CircleShape),
         ) {
             Icon(
                 modifier = Modifier.size(48.dp),

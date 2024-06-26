@@ -10,11 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import ui.components.BottomBarTab
+import ui.components.main.BottomBarTab
 import ui.navigation.NavRoutes
 import ui.screens.ai_predict.navigation.aiPredictScreen
 import ui.screens.exchange.navigation.exchangeScreen
-import ui.screens.overview.navigation.overviewScreen
+import ui.screens.overview.navigation.homeScreen
 import ui.screens.profile.navigation.profileScreen
 import ui.screens.search.navigation.searchScreen
 
@@ -29,12 +29,12 @@ internal fun MainNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.OVERVIEW,
+        startDestination = NavRoutes.HOME,
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
-        overviewScreen(padding)
+        homeScreen(padding)
         searchScreen(padding)
         aiPredictScreen(padding)
         exchangeScreen(padding = padding, onError = onError)

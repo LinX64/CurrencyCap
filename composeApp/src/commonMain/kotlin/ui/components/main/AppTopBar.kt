@@ -104,7 +104,7 @@ private fun AppNavigationIcon(
     if (
         currentDestination != NavRoutes.LANDING &&
         currentDestination != NavRoutes.LOGIN &&
-        currentDestination != NavRoutes.OVERVIEW
+        currentDestination != NavRoutes.HOME
     ) {
         IconButton(onClick = { navController.navigateUp() }) {
             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")

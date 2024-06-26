@@ -1,9 +1,9 @@
 package ui.navigation
 
 object NavRoutes {
+    const val HOME = "Home"
     const val LANDING = "Landing"
 
-    const val OVERVIEW = "Overview"
     const val EXCHANGE = "Exchange"
     const val MARKET = "Market"
     const val NEWS = "News"

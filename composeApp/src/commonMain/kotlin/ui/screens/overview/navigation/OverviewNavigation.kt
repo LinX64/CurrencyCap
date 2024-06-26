@@ -4,16 +4,13 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import ui.components.BlurBackground
 import ui.navigation.NavRoutes
 import ui.screens.overview.OverviewScreen
 
-fun NavController.navigateToOverviewScreen() = navigate(NavRoutes.OVERVIEW)
+fun NavController.navigateToOverviewScreen() = navigate(NavRoutes.HOME)
 
-fun NavGraphBuilder.overviewScreen(padding: PaddingValues) {
-    composable(NavRoutes.OVERVIEW) {
-        BlurBackground {
-            OverviewScreen(padding = padding)
-        }
+fun NavGraphBuilder.homeScreen(padding: PaddingValues) {
+    composable(NavRoutes.HOME) {
+        OverviewScreen(padding = padding)
     }
 }
