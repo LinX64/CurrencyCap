@@ -8,7 +8,6 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.gms)
-    alias(libs.plugins.detekt)
 }
 
 kotlin {
@@ -145,16 +144,7 @@ android {
     }
 
     dependencies {
-        detektPlugins(libs.detekt.formatting)
-
         debugImplementation(compose.uiTooling)
-    }
-
-    detekt {
-        config.setFrom(file("$rootDir/composeApp/config/detekt/config.yml"))
-        parallel = true
-        buildUponDefaultConfig = true
-        autoCorrect = true
     }
 }
 

@@ -64,7 +64,7 @@ internal fun BottomNavigationBar(
                 selectedTabIndex = tabs.indexOf(BottomBarTab.Exchange)
                 onTabSelected(BottomBarTab.Exchange)
             }
-        ) // should navigate to exchange screen
+        )
 
         Box(
             modifier = Modifier
