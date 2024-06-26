@@ -30,6 +30,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun BottomBar(
@@ -81,13 +82,11 @@ internal fun BottomBar(
 
                     if (tab.icon != null) {
                         Icon(
-                            imageVector = tab.icon, // todo change this later
+                            painter = painterResource(tab.icon),
                             contentDescription = tab.title,
                             modifier = Modifier.size(24.dp)
                         )
-                    } else {
-                        Spacer(modifier = Modifier.height(24.dp))
-                    }
+                    } else Spacer(modifier = Modifier.height(24.dp))
 
                     Spacer(modifier = Modifier.height(10.dp))
 

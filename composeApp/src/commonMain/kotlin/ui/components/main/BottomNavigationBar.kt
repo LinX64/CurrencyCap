@@ -16,8 +16,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.SwapVert
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,8 +38,11 @@ import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.ic_arrow_up_down
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,7 +59,12 @@ internal fun BottomNavigationBar(
             .padding(horizontal = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CenteredExchangeButton()
+        CenteredExchangeButton(
+            onButtonClicked = {
+                selectedTabIndex = tabs.indexOf(BottomBarTab.Exchange)
+                onTabSelected(BottomBarTab.Exchange)
+            }
+        ) // should navigate to exchange screen
 
         Box(
             modifier = Modifier
@@ -140,9 +146,11 @@ private fun UnderDashedLine(
 }
 
 @Composable
-private fun CenteredExchangeButton() {
+private fun CenteredExchangeButton(
+    onButtonClicked: () -> Unit
+) {
     IconButton(
-        onClick = { },
+        onClick = onButtonClicked,
         modifier = Modifier
             .offset(y = 40.dp)
             .size(76.dp)
@@ -153,8 +161,8 @@ private fun CenteredExchangeButton() {
     ) {
         Icon(
             modifier = Modifier.size(48.dp),
-            imageVector = Icons.Default.SwapVert,
-            contentDescription = "Swap currencies",
+            painter = painterResource(Res.drawable.ic_arrow_up_down),
+            contentDescription = "Exchange",
             tint = MaterialTheme.colorScheme.surface
         )
     }

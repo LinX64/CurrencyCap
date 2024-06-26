@@ -11,11 +11,13 @@ import ui.components.main.BottomNavigationBar
 //@Composable
 //@Preview(showBackground = true, device = "id:pixel_3a")
 //private fun CardPreview() {
+//    val hazeState = remember { HazeState() }
 //    KoinPreview {
 //        DarkBackground {
 //            OverviewScreen(
 //                modifier = Modifier.fillMaxSize(),
 //                padding = PaddingValues(0.dp),
+//                hazeState = hazeState,
 //            )
 //        }
 //    }
