@@ -17,7 +17,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
 import ui.components.CenteredColumn
 import ui.components.HandleNavigationEffect
@@ -46,7 +46,7 @@ internal fun LoginScreen(
     navigateToResetPassword: () -> Unit,
     onError: (message: String) -> Unit
 ) {
-    val state by loginViewModel.viewState.collectAsState()
+    val state by loginViewModel.viewState.collectAsStateWithLifecycle()
 
     Content(
         loginViewModel = loginViewModel,
@@ -73,8 +73,8 @@ private fun Content(
     loginViewModel: LoginViewModel,
     padding: PaddingValues
 ) {
-    val email by loginViewModel.newEmail.collectAsState()
-    val password by loginViewModel.newPassword.collectAsState()
+    val email by loginViewModel.newEmail.collectAsStateWithLifecycle()
+    val password by loginViewModel.newPassword.collectAsStateWithLifecycle()
 
     Box(
         modifier = Modifier

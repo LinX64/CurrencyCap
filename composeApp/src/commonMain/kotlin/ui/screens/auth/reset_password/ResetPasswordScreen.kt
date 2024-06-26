@@ -13,7 +13,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +23,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
 import ui.components.BaseCenterColumn
 import ui.components.EmailTextField
@@ -39,7 +39,7 @@ internal fun ResetPasswordScreen(
     onNavigateToLogin: () -> Unit,
     onMessage: (message: String) -> Unit
 ) {
-    val state by resetPasswordViewModel.viewState.collectAsState()
+    val state by resetPasswordViewModel.viewState.collectAsStateWithLifecycle()
     val shouldShowDialog = remember { mutableStateOf(false) }
     BaseCenterColumn(
         modifier = Modifier

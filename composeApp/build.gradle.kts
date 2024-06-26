@@ -84,6 +84,9 @@ kotlin {
             implementation(libs.coil.network.ktor)
 
             //implementation(libs.mvi.compose.common)
+            implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.lifecycle.runtime.compose)
+            implementation(libs.navigation.compose)
 
             implementation(libs.bundles.ktor)
             implementation(libs.ktor.client.logging)

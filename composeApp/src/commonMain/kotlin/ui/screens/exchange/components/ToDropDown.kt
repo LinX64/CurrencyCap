@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -65,6 +66,13 @@ private fun HandleToDropDown(
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[1]) }
     val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+
+    LaunchedEffect(Unit) {
+        if (options.isNotEmpty()) {
+            val initialSelectedCountryCode = options[1].split(" ")[2].take(2)
+            onToChange(initialSelectedCountryCode)
+        }
+    }
 
     Box {
         ExposedDropdownMenuBox(

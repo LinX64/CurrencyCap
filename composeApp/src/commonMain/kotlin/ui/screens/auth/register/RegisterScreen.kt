@@ -13,7 +13,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +21,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
 import ui.components.CenteredColumn
 import ui.components.EmailTextField
@@ -40,7 +40,7 @@ internal fun RegisterScreen(
     navigateToLogin: () -> Unit,
     onError: (message: String) -> Unit
 ) {
-    val state by registerViewModel.viewState.collectAsState()
+    val state by registerViewModel.viewState.collectAsStateWithLifecycle()
     RegisterContent(
         onEmailChanged = { registerViewModel.handleEvent(OnEmailChanged(it)) },
         onPasswordChanged = { registerViewModel.handleEvent(OnPasswordChanged(it)) },

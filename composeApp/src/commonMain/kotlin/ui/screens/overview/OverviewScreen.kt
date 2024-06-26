@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
 import ui.components.ErrorView
 import ui.screens.overview.components.MainHeader
@@ -20,7 +20,7 @@ internal fun OverviewScreen(
     padding: PaddingValues,
     overviewViewModel: OverviewViewModel = koinViewModel<OverviewViewModel>()
 ) {
-    val state by overviewViewModel.viewState.collectAsState()
+    val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = padding

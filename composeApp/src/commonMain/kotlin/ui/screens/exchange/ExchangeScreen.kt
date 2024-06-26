@@ -14,10 +14,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.BlurColumn
+import ui.components.HandleNavigationEffect
 import ui.screens.exchange.ExchangeViewEvent.OnAmountChange
 import ui.screens.exchange.ExchangeViewEvent.OnConvertClick
 import ui.screens.exchange.ExchangeViewEvent.OnFromChange
@@ -36,11 +39,13 @@ import ui.screens.exchange.components.ToSection
 @Composable
 @Preview
 internal fun ExchangeScreen(
+    exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>(),
     modifier: Modifier = Modifier,
     padding: PaddingValues,
-    exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>()
+    onError: (String) -> Unit
 ) {
-    val state by exchangeViewModel.viewState.collectAsState()
+    val state by exchangeViewModel.viewState.collectAsStateWithLifecycle()
+    val fromCountryCode by exchangeViewModel.fromValue.collectAsState()
     val toCountryCode by exchangeViewModel.toValue.collectAsState()
     val convertedResult by exchangeViewModel.convertedResult.collectAsState()
     val amount by exchangeViewModel.amountValue.collectAsState()
@@ -55,6 +60,7 @@ internal fun ExchangeScreen(
             ExchangeCard(
                 state = state,
                 exchangeViewModel = exchangeViewModel,
+                fromCountryCode = fromCountryCode,
                 toCountryCode = toCountryCode,
                 convertResult = convertedResult,
                 amount = amount
@@ -62,18 +68,28 @@ internal fun ExchangeScreen(
         }
         item { Disclaimer() }
     }
+
+    HandleNavigationEffect(exchangeViewModel) { effect ->
+        when (effect) {
+            is ExchangeNavigationEffect.ShowSnakeBar -> onError(effect.message)
+        }
+    }
 }
 
 @Composable
 private fun ExchangeCard(
     modifier: Modifier = Modifier,
+    exchangeViewModel: ExchangeViewModel,
     state: ExchangeState,
+    fromCountryCode: String,
     toCountryCode: String,
     convertResult: String,
-    amount: String,
-    exchangeViewModel: ExchangeViewModel
+    amount: String
 ) {
     val selectedToValue = remember { mutableStateOf(toCountryCode) }
+    val selectedFromValue = remember { mutableStateOf(fromCountryCode) }
+    val shouldShowConvert = remember { mutableStateOf(false) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     BlurColumn(
         modifier = modifier.padding(24.dp)
@@ -82,10 +98,17 @@ private fun ExchangeCard(
 
         FromDropDown(
             exchangeState = state,
-            onFromChange = { exchangeViewModel.handleEvent(OnFromChange(it)) }
+            onFromChange = {
+                shouldShowConvert.value = true
+                exchangeViewModel.handleEvent(OnFromChange(it))
+            }
         )
 
-        SwapButton(onClick = { exchangeViewModel.handleEvent(ExchangeViewEvent.OnSwapClick) })
+        SwapButton(
+            onClick = {
+                // swap from and to values in UI // TODO
+                exchangeViewModel.handleEvent(ExchangeViewEvent.OnSwapClick)
+            })
 
         ToSection()
 
@@ -93,7 +116,7 @@ private fun ExchangeCard(
             exchangeState = state,
             onToChange = {
                 selectedToValue.value = it
-                println(selectedToValue.value)
+                shouldShowConvert.value = true
                 exchangeViewModel.handleEvent(OnToChange(it))
             }
         )
@@ -102,7 +125,10 @@ private fun ExchangeCard(
 
         AmountField(
             selectedToValue = selectedToValue,
-            onAmountChange = { exchangeViewModel.handleEvent(OnAmountChange(it)) },
+            onAmountChange = {
+                shouldShowConvert.value = true
+                exchangeViewModel.handleEvent(OnAmountChange(it))
+            },
             countryCode = toCountryCode
         )
 
@@ -115,10 +141,16 @@ private fun ExchangeCard(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        ConvertButton(
-            onConvertClicked = { exchangeViewModel.handleEvent(OnConvertClick) },
-            isEnabled = amount.isNotEmpty()
-        )
+        if (shouldShowConvert.value) {
+            ConvertButton(
+                onConvertClicked = {
+                    keyboardController?.hide()
+                    shouldShowConvert.value = false
+                    exchangeViewModel.handleEvent(OnConvertClick)
+                },
+                isEnabled = amount.isNotEmpty()
+            )
+        }
     }
 }
 

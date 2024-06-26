@@ -2,10 +2,10 @@ package ui
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
@@ -24,7 +24,7 @@ internal fun App(
     navController: NavHostController = rememberNavController(),
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
-    val mainState by mainViewModel.state.collectAsState()
+    val mainState by mainViewModel.state.collectAsStateWithLifecycle()
     val hazeState = remember { HazeState() }
     when (mainState) {
         MainState.Loading -> SplashScreen()

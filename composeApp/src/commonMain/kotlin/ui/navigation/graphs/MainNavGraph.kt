@@ -37,7 +37,7 @@ internal fun MainNavGraph(
         overviewScreen(padding)
         searchScreen(padding)
         aiPredictScreen(padding)
-        exchangeScreen(padding)
+        exchangeScreen(padding = padding, onError = onError)
         profileScreen(
             padding = padding,
             onNavigateToLanding = onNavigateToLanding,

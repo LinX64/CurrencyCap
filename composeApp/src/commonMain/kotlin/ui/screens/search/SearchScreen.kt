@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SearchBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -23,6 +22,7 @@ import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
 import domain.model.RateDto
 import ui.components.ErrorView
@@ -38,7 +38,7 @@ internal fun SearchScreen(
     searchViewModel: SearchViewModel = koinViewModel<SearchViewModel>(),
     padding: PaddingValues
 ) {
-    val state by searchViewModel.viewState.collectAsState()
+    val state by searchViewModel.viewState.collectAsStateWithLifecycle()
     var text by rememberSaveable { mutableStateOf("") }
     var expanded by rememberSaveable { mutableStateOf(false) }
 

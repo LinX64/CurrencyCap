@@ -10,10 +10,13 @@ import ui.screens.exchange.ExchangeScreen
 
 fun NavController.navigateToExchangeScreen() = navigate(NavRoutes.EXCHANGE)
 
-fun NavGraphBuilder.exchangeScreen(padding: PaddingValues) {
+fun NavGraphBuilder.exchangeScreen(
+    padding: PaddingValues,
+    onError: (String) -> Unit
+) {
     composable(NavRoutes.EXCHANGE) {
         BlurBackground {
-            ExchangeScreen(padding = padding)
+            ExchangeScreen(padding = padding, onError = onError)
         }
     }
 }
