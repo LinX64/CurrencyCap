@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -17,6 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.chrisbanes.haze.HazeDefaults
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.haze
 import di.koinViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.BlurColumn
@@ -42,7 +47,8 @@ internal fun ExchangeScreen(
     exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>(),
     modifier: Modifier = Modifier,
     padding: PaddingValues,
-    onError: (String) -> Unit
+    onError: (String) -> Unit,
+    hazeState: HazeState
 ) {
     val state by exchangeViewModel.viewState.collectAsStateWithLifecycle()
     val fromCountryCode by exchangeViewModel.fromValue.collectAsState()
@@ -51,7 +57,14 @@ internal fun ExchangeScreen(
     val amount by exchangeViewModel.amountValue.collectAsState()
 
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().haze(
+            state = hazeState,
+            style = HazeStyle(
+                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                blurRadius = 35.dp,
+                noiseFactor = HazeDefaults.noiseFactor
+            )
+        ),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         contentPadding = padding

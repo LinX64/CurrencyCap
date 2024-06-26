@@ -65,7 +65,7 @@ private fun HandleToDropDown(
     val options = rates.getTextFieldOptions()
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[1]) }
-    val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+    val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
 
     LaunchedEffect(Unit) {
         if (options.isNotEmpty()) {

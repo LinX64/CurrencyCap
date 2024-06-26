@@ -38,15 +38,23 @@ internal fun MainNavGraph(
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
         homeScreen(padding = padding, hazeState = hazeState)
-        searchScreen(padding)
-        aiPredictScreen(padding)
-        exchangeScreen(padding = padding, onError = onError)
+        searchScreen(padding = padding, hazeState = hazeState)
+        aiPredictScreen(padding = padding, hazeState = hazeState)
+
+        exchangeScreen(
+            padding = padding,
+            onError = onError,
+            hazeState = hazeState
+        )
+
         profileScreen(
             padding = padding,
             onNavigateToLanding = onNavigateToLanding,
-            onError = onError
+            onError = onError,
+            hazeState = hazeState
         )
-        newsScreen(padding)
+
+        newsScreen(padding = padding, hazeState = hazeState)
     }
 }
 

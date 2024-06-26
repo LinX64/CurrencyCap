@@ -23,6 +23,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import domain.model.RateDto
 import ui.components.ErrorView
@@ -36,7 +37,8 @@ import ui.screens.search.components.TrailingIcon
 @Composable
 internal fun SearchScreen(
     searchViewModel: SearchViewModel = koinViewModel<SearchViewModel>(),
-    padding: PaddingValues
+    padding: PaddingValues,
+    hazeState: HazeState
 ) {
     val state by searchViewModel.viewState.collectAsStateWithLifecycle()
     var text by rememberSaveable { mutableStateOf("") }

@@ -18,6 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.feature_not_available
+import dev.chrisbanes.haze.HazeDefaults
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.haze
 import di.koinViewModel
 import io.github.alexzhirkevich.compottie.LottieAnimation
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
@@ -30,7 +34,8 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 internal fun NewsScreen(
     padding: PaddingValues,
-    newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>()
+    newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
+    hazeState: HazeState
 ) {
     var bytes by remember { mutableStateOf(ByteArray(0)) }
     val composition by rememberLottieComposition(LottieCompositionSpec.JsonString(bytes.decodeToString()))
@@ -39,7 +44,15 @@ internal fun NewsScreen(
 
     Column(
         modifier = Modifier.fillMaxSize()
-            .padding(padding),
+            .padding(padding)
+            .haze(
+                state = hazeState,
+                style = HazeStyle(
+                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                    blurRadius = 35.dp,
+                    noiseFactor = HazeDefaults.noiseFactor
+                )
+            ),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.SwapVert
+import androidx.compose.material.icons.filled.CurrencyExchange
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -31,11 +31,14 @@ internal fun SwapButton(
             onClick = onClick,
             modifier = Modifier
                 .size(64.dp)
-                .background(MaterialTheme.colorScheme.onSurface, shape = CircleShape),
+                .background(
+                    color = MaterialTheme.colorScheme.onSurface,
+                    shape = RoundedCornerShape(32.dp)
+                ),
         ) {
             Icon(
-                modifier = Modifier.size(48.dp),
-                imageVector = Icons.Default.SwapVert,
+                modifier = Modifier.size(32.dp),
+                imageVector = Icons.Default.CurrencyExchange,
                 contentDescription = "Swap currencies",
                 tint = MaterialTheme.colorScheme.surface
             )

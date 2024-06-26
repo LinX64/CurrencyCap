@@ -29,7 +29,7 @@ internal fun AmountField(
     selectedToValue: MutableState<String>
 ) {
     var amount by remember { mutableStateOf("") }
-    val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+    val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
     val visualTransformation = if (countryCode.isNotEmpty()) {
         CurrencyVisualTransformation(countryCode.ifEmpty { "AE" })
     } else {
