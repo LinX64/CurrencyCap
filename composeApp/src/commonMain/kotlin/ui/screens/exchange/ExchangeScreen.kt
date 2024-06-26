@@ -3,11 +3,8 @@ package ui.screens.exchange
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -22,13 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import data.model.exchange.AmountInputType
 import data.model.exchange.CurrencyType
-import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.haze
 import di.koinViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.BlurColumn
+import ui.components.main.BaseBlurLazyColumn
 import ui.screens.exchange.components.AmountInput
 import ui.screens.exchange.components.CurrencyInputs
 import ui.screens.exchange.components.CurrencyPicker
@@ -38,7 +33,6 @@ import ui.screens.exchange.components.Disclaimer
 @Preview
 internal fun ExchangeScreen(
     exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>(),
-    modifier: Modifier = Modifier,
     padding: PaddingValues,
     onError: (String) -> Unit,
     hazeState: HazeState
@@ -47,18 +41,11 @@ internal fun ExchangeScreen(
     val convertedResult by exchangeViewModel.convertedResult.collectAsState()
     val amount by exchangeViewModel.amountValue.collectAsState()
 
-    LazyColumn(
-        modifier = modifier.fillMaxSize().haze(
-            state = hazeState,
-            style = HazeStyle(
-                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                blurRadius = 35.dp,
-                noiseFactor = HazeDefaults.noiseFactor
-            )
-        ),
+    BaseBlurLazyColumn(
+        padding = padding,
+        hazeState = hazeState,
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        contentPadding = padding
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
             ExchangeCard(

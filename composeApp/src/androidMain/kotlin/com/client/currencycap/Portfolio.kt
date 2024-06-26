@@ -1,4 +1,4 @@
-package ui.screens.overview.components
+package com.client.currencycap
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -33,8 +33,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ui.screens.overview.components.TopMoversChart
+import ui.screens.overview.components.mockAssetInfo
 
 @Composable
 fun PortfolioSection() {
@@ -43,7 +46,7 @@ fun PortfolioSection() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp)
+            .padding(16.dp)
     ) {
         Text(
             text = "Portfolio Balance",
@@ -90,7 +93,7 @@ fun PortfolioSection() {
                     DropdownMenuItem(
                         text = { Text("USD") },
                         onClick = {
-                            // TODO: Handle USD selection
+                            // Handle USD selection
                             expanded = false
                         }
                     )
@@ -127,6 +130,16 @@ fun PortfolioSection() {
                 tint = Color(0xFF00DA74),
                 modifier = Modifier.size(24.dp)
             )
+        }
+    }
+}
+
+@Preview(showBackground = true, device = "id:pixel_3a")
+@Composable
+private fun PortfolioPreview() {
+    KoinPreview {
+        DarkBackground {
+            PortfolioSection()
         }
     }
 }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +23,8 @@ internal fun TodayTopMovers(
     overviewState: OverviewState
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+        modifier = Modifier.fillMaxWidth()
+            .padding(vertical = 8.dp, horizontal = 8.dp),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -36,11 +38,14 @@ internal fun TodayTopMovers(
                 color = MaterialTheme.colorScheme.onSurface
             )
 
-            Text(
-                text = "See all",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface
-            )
+            TextButton(
+                onClick = { /* TODO */ }) {
+                Text(
+                    text = "View All",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))

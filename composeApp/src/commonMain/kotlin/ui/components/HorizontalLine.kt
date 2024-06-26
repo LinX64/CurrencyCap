@@ -9,7 +9,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -36,7 +35,6 @@ internal fun HorizontalLineWithDot() {
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
-            .padding(vertical = 8.dp)
     ) {
         val canvasWidth = size.width
         val canvasHeight = size.height / 2

@@ -2,23 +2,17 @@ package ui.screens.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.haze
 import di.koinViewModel
 import ui.components.CenteredColumn
 import ui.components.HandleNavigationEffect
+import ui.components.main.BaseBlurLazyColumn
 import ui.screens.profile.ProfileNavigationEffect.NavigateToLanding
 import ui.screens.profile.ProfileViewEvent.OnDeleteAccountCardClicked
 import ui.screens.profile.components.DeleteAccountCard
@@ -35,18 +29,11 @@ internal fun ProfileScreen(
 ) {
     val state by profileViewModel.viewState.collectAsStateWithLifecycle()
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize().haze(
-            state = hazeState,
-            style = HazeStyle(
-                tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                blurRadius = 35.dp,
-                noiseFactor = HazeDefaults.noiseFactor
-            )
-        ),
+    BaseBlurLazyColumn(
+        padding = padding,
+        hazeState = hazeState,
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        contentPadding = padding
     ) {
         item {
             when (state) {

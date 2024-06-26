@@ -48,7 +48,6 @@ kotlin {
 
             implementation(libs.androidx.data.store.core)
             api(libs.androidx.startup)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(libs.androidx.activity.compose)
         }
