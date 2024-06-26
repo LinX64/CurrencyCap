@@ -3,8 +3,8 @@ package ui.screens.profile
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import data.repository.datastore.user.UserPreferences
 import domain.repository.AuthService
+import domain.repository.UserPreferences
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel

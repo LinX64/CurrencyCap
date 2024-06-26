@@ -13,11 +13,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import data.model.exchange.AmountInputType
+import data.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
@@ -26,20 +30,11 @@ import di.koinViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.BlurColumn
 import ui.components.HandleNavigationEffect
-import ui.screens.exchange.ExchangeViewEvent.OnAmountChange
-import ui.screens.exchange.ExchangeViewEvent.OnConvertClick
-import ui.screens.exchange.ExchangeViewEvent.OnFromChange
-import ui.screens.exchange.ExchangeViewEvent.OnToChange
-import ui.screens.exchange.components.AmountField
-import ui.screens.exchange.components.AmountSection
-import ui.screens.exchange.components.ConvertButton
+import ui.screens.exchange.components.AmountInput
+import ui.screens.exchange.components.Currency
+import ui.screens.exchange.components.CurrencyInputs
+import ui.screens.exchange.components.CurrencyPicker
 import ui.screens.exchange.components.Disclaimer
-import ui.screens.exchange.components.FromDropDown
-import ui.screens.exchange.components.FromSection
-import ui.screens.exchange.components.ResultText
-import ui.screens.exchange.components.SwapButton
-import ui.screens.exchange.components.ToDropDown
-import ui.screens.exchange.components.ToSection
 
 @Composable
 @Preview
@@ -51,8 +46,6 @@ internal fun ExchangeScreen(
     hazeState: HazeState
 ) {
     val state by exchangeViewModel.viewState.collectAsStateWithLifecycle()
-    val fromCountryCode by exchangeViewModel.fromValue.collectAsState()
-    val toCountryCode by exchangeViewModel.toValue.collectAsState()
     val convertedResult by exchangeViewModel.convertedResult.collectAsState()
     val amount by exchangeViewModel.amountValue.collectAsState()
 
@@ -73,9 +66,6 @@ internal fun ExchangeScreen(
             ExchangeCard(
                 state = state,
                 exchangeViewModel = exchangeViewModel,
-                fromCountryCode = fromCountryCode,
-                toCountryCode = toCountryCode,
-                convertResult = convertedResult,
                 amount = amount
             )
         }
@@ -89,81 +79,60 @@ internal fun ExchangeScreen(
     }
 }
 
+fun dummyCurrencyList(): List<Currency> = listOf(Currency("USD", "United States Dollar"))
+
 @Composable
 private fun ExchangeCard(
     modifier: Modifier = Modifier,
     exchangeViewModel: ExchangeViewModel,
     state: ExchangeState,
-    fromCountryCode: String,
-    toCountryCode: String,
-    convertResult: String,
     amount: String
 ) {
-    val selectedToValue = remember { mutableStateOf(toCountryCode) }
-    val selectedFromValue = remember { mutableStateOf(fromCountryCode) }
-    val shouldShowConvert = remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
+    var dialogOpened by rememberSaveable { mutableStateOf(false) }
+    var selectedCurrencyType: CurrencyType by remember { mutableStateOf(CurrencyType.None) }
+    if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
+        CurrencyPicker(
+            currencyList = dummyCurrencyList(),
+            currencyType = selectedCurrencyType,
+            onEvent = {
+                exchangeViewModel.handleEvent(it)
+                dialogOpened = false
+                selectedCurrencyType = CurrencyType.None
+            },
+            onDismiss = {
+                dialogOpened = false
+                selectedCurrencyType = CurrencyType.None
+            }
+        )
+    }
 
     BlurColumn(
         modifier = modifier.padding(24.dp)
     ) {
-        FromSection()
-
-        FromDropDown(
-            exchangeState = state,
-            onFromChange = {
-                shouldShowConvert.value = true
-                exchangeViewModel.handleEvent(OnFromChange(it))
-            }
-        )
-
-        SwapButton(
-            onClick = {
-                // swap from and to values in UI // TODO
-                exchangeViewModel.handleEvent(ExchangeViewEvent.OnSwapClick)
-            })
-
-        ToSection()
-
-        ToDropDown(
-            exchangeState = state,
-            onToChange = {
-                selectedToValue.value = it
-                shouldShowConvert.value = true
-                exchangeViewModel.handleEvent(OnToChange(it))
-            }
-        )
-
-        AmountSection()
-
-        AmountField(
-            selectedToValue = selectedToValue,
-            onAmountChange = {
-                shouldShowConvert.value = true
-                exchangeViewModel.handleEvent(OnAmountChange(it))
+        CurrencyInputs(
+            source = Currency("USD", "United States Dollar"),
+            target = Currency("IRR", "Iranian Rial"),
+            onSwitch = {
+                exchangeViewModel.handleEvent(ExchangeViewEvent.OnSwitchCurrency)
             },
-            countryCode = toCountryCode
+            onCurrencyTypeSelect = {
+                dialogOpened = true
+                selectedCurrencyType = it
+            }
         )
+        Spacer(modifier = Modifier.height(12.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        ResultText(
-            result = convertResult,
-            currency = toCountryCode
+        AmountInput(
+            amountInputType = AmountInputType.SOURCE,
+            amount = "100"
         )
+        Spacer(modifier = Modifier.height(12.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        if (shouldShowConvert.value) {
-            ConvertButton(
-                onConvertClicked = {
-                    keyboardController?.hide()
-                    shouldShowConvert.value = false
-                    exchangeViewModel.handleEvent(OnConvertClick)
-                },
-                isEnabled = amount.isNotEmpty()
-            )
-        }
+        AmountInput(
+            amountInputType = AmountInputType.TARGET,
+            amount = "100"
+        )
     }
 }
 

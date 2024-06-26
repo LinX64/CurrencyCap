@@ -1,15 +1,17 @@
 package di
 
+import CurrencyRepositoryImpl
 import data.repository.auth.AuthServiceImpl
 import data.repository.datastore.app.AppPreferences
 import data.repository.datastore.app.AppPreferencesImpl
-import data.repository.datastore.user.UserPreferences
 import data.repository.datastore.user.UserPreferencesImpl
 import data.repository.main.MainRepositoryImpl
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
 import domain.repository.AuthService
+import domain.repository.CurrencyRepository
 import domain.repository.MainRepository
+import domain.repository.UserPreferences
 import org.koin.dsl.module
 
 val repositoryModule = module {
@@ -20,4 +22,5 @@ val repositoryModule = module {
     single<AuthService> { AuthServiceImpl(get()) }
     single<UserPreferences> { UserPreferencesImpl(get()) }
     single<AppPreferences> { AppPreferencesImpl(get()) }
+    single<CurrencyRepository> { CurrencyRepositoryImpl(get()) }
 }

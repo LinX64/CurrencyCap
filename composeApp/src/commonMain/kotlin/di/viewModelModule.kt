@@ -16,7 +16,7 @@ import ui.screens.search.SearchViewModel
 val viewModelModule = module {
     single { MainViewModel(get()) }
     single { OverviewViewModel(get()) }
-    single { ExchangeViewModel(get(), get()) }
+    single { ExchangeViewModel(get(), get(), get()) }
     single { AiPredictViewModel() } // TODO
     single { SearchViewModel(get()) }
     single { LoginViewModel(get(), get()) }
@@ -28,5 +28,5 @@ val viewModelModule = module {
 }
 
 val previewModule = module {
-    single { LoginViewModel(get(), get()) }
+    single { ProfileViewModel(get(), get()) }
 }

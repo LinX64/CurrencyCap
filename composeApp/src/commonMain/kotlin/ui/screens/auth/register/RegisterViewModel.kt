@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import data.repository.auth.AuthServiceImpl
-import data.repository.datastore.user.UserPreferences
+import domain.repository.UserPreferences
 import domain.repository.AuthService
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel

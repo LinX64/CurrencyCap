@@ -3,6 +3,8 @@ package ui.common
 import di.SETTINGS_PREFERENCES
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSLocale
+import platform.Foundation.NSNumber
+import platform.Foundation.NSNumberFormatter
 import platform.Foundation.currentLocale
 import platform.Foundation.localeIdentifier
 
@@ -35,4 +37,13 @@ actual fun String.getCountryFlag(): String {
 
 actual fun getSettingsPreferencesPath(): String {
     return NSFileManager.defaultManager.currentDirectoryPath + "/" + SETTINGS_PREFERENCES
+}
+actual class DecimalFormat {
+    actual fun format(double: Double): String {
+        val formatter = NSNumberFormatter()
+        formatter.minimumFractionDigits = 0u
+        formatter.maximumFractionDigits = 2u
+        formatter.numberStyle = 1u //Decimal
+        return formatter.stringFromNumber(NSNumber(double))!!
+    }
 }

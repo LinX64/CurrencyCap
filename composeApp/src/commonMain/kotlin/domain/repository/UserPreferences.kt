@@ -1,4 +1,4 @@
-package data.repository.datastore.user
+package domain.repository
 
 interface UserPreferences {
     suspend fun isUserLoggedIn(): Boolean

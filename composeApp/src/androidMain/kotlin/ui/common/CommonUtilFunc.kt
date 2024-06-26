@@ -33,3 +33,13 @@ actual fun String.getCountryFlag(): String {
 actual fun getSettingsPreferencesPath(): String {
     return File(applicationContext.filesDir, SETTINGS_PREFERENCES).absolutePath
 }
+
+actual class DecimalFormat {
+    actual fun format(double: Double): String {
+        val df = DecimalFormat()
+        df.isGroupingUsed = false
+        df.maximumFractionDigits = 2
+        df.isDecimalSeparatorAlwaysShown = false
+        return df.format(double)
+    }
+}

@@ -33,7 +33,9 @@ internal fun KoinPreview(
             )
         }) {
             AppM3Theme(dark = true) {
-                content()
+                DarkBackground {
+                    content()
+                }
             }
         }
     }

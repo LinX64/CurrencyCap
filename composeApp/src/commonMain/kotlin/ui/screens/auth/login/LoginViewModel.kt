@@ -2,8 +2,8 @@ package ui.screens.auth.login
 
 import androidx.lifecycle.viewModelScope
 import data.repository.auth.AuthServiceImpl.AuthState
-import data.repository.datastore.user.UserPreferences
 import domain.repository.AuthService
+import domain.repository.UserPreferences
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
