@@ -25,26 +25,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.hazeChild
-import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
-import dev.chrisbanes.haze.materials.HazeMaterials
 import ui.navigation.NavRoutes
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun AppTopBar(
     currentDestination: String,
     navController: NavHostController,
     scrollBehavior: TopAppBarScrollBehavior,
-    hazeState: HazeState,
     onLogoutClick: () -> Unit
 ) {
+    val hazeState = remember { HazeState() }
     CenterAlignedTopAppBar(
-        modifier = Modifier.fillMaxWidth()
-            .hazeChild(
-                state = hazeState,
-                style = HazeMaterials.regular(MaterialTheme.colorScheme.surface)
-            ),
+        modifier = Modifier.fillMaxWidth(),
         title = { AppTitle(currentDestination = currentDestination) },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.Transparent,

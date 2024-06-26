@@ -18,7 +18,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ui.components.BottomSheet
@@ -31,7 +30,6 @@ import ui.screens.MainViewModel
 internal fun LoggedInSection(
     mainViewModel: MainViewModel,
     navController: NavHostController,
-    hazeState: HazeState,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scaffoldState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState(),
     scope: CoroutineScope
@@ -46,22 +44,20 @@ internal fun LoggedInSection(
             AppTopBar(
                 currentDestination = currentDestination,
                 navController = navController,
-                hazeState = hazeState,
                 scrollBehavior = scrollBehavior,
                 onLogoutClick = { mainViewModel.logout() }
             )
         },
         bottomBar = {
             BottomNavigationBar(
-                hazeState = hazeState,
-                scrollBehavior = scrollBehavior,
                 onTabSelected = { tab ->
                     handleNavigation(
                         navController = navController,
                         tab = tab,
                         isSheetOpen = isSheetOpen
                     )
-                }
+                },
+                scrollBehavior = scrollBehavior
             )
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),

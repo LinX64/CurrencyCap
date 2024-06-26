@@ -1,6 +1,6 @@
 package com.client.currencycap
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -9,7 +9,6 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import dev.chrisbanes.haze.HazeState
 import ui.components.main.BottomNavigationBar
@@ -26,27 +25,13 @@ private fun CardPreview() {
         DarkBackground {
             Column(
                 modifier = Modifier.fillMaxSize(),
-                verticalArrangement = androidx.compose.foundation.layout.Arrangement.Bottom
+                verticalArrangement = Arrangement.Bottom
             ) {
                 BottomNavigationBar(
-                    hazeState = hazeState,
-                    scrollBehavior = scrollBehavior,
-                    onTabSelected = { tab ->
-
-                    }
+                    onTabSelected = { tab -> },
+                    scrollBehavior = scrollBehavior
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun DarkBackground(content: @Composable () -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black)
-    ) {
-        content()
     }
 }

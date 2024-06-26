@@ -3,12 +3,10 @@ package ui
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import kotlinx.coroutines.CoroutineScope
 import ui.components.main.LoggedInSection
@@ -25,14 +23,12 @@ internal fun App(
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
     val mainState by mainViewModel.state.collectAsStateWithLifecycle()
-    val hazeState = remember { HazeState() }
     when (mainState) {
         MainState.Loading -> SplashScreen()
         is MainState.LoggedIn -> {
             LoggedInSection(
-                navController = navController,
                 mainViewModel = mainViewModel,
-                hazeState = hazeState,
+                navController = navController,
                 scope = scope
             )
         }
@@ -41,7 +37,6 @@ internal fun App(
             NotLoggedInSection(
                 navController = navController,
                 mainViewModel = mainViewModel,
-                hazeState = hazeState,
                 scope = scope
             )
         }

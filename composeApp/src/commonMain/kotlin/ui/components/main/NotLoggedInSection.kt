@@ -44,11 +44,11 @@ import ui.screens.MainViewModel
 internal fun NotLoggedInSection(
     navController: NavHostController,
     mainViewModel: MainViewModel,
-    hazeState: HazeState,
     scope: CoroutineScope,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scaffoldState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState()
 ) {
+    val hazeState = remember { HazeState() }
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination?.route ?: ""
     val isSheetOpen = rememberSaveable { mutableStateOf(false) }
