@@ -26,7 +26,7 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
         Text(
             modifier = Modifier.padding(start = 16.dp, top = 16.dp),
             text = "Trending rates",
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
             color = CurrencyColors.White,
             fontWeight = FontWeight.Bold
         )

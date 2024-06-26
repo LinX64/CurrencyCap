@@ -15,10 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.see_all
-import currencycap.composeapp.generated.resources.today_top_movers
-import org.jetbrains.compose.resources.stringResource
 import ui.screens.overview.OverviewState
 
 @Composable
@@ -26,7 +22,7 @@ internal fun TodayTopMovers(
     overviewState: OverviewState
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
@@ -34,14 +30,16 @@ internal fun TodayTopMovers(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(Res.string.today_top_movers),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
+                text = "Today's Top Movers",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
             )
 
             Text(
-                text = stringResource(Res.string.see_all),
-                style = MaterialTheme.typography.bodyMedium
+                text = "See all",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
 

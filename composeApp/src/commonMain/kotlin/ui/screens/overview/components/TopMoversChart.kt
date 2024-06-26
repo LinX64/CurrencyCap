@@ -1,7 +1,6 @@
 package ui.screens.overview.components
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -15,16 +14,14 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 @Composable
 fun TopMoversChart(
     modifier: Modifier = Modifier,
+    lightLineColor: Color = Color.White,
+    lighterColor: Color = Color.White.copy(alpha = 0.1f),
     list: List<Float>
 ) {
-    val lightLineColor = Color.White
-    val lighterColor = Color.White.copy(alpha = 0.1f)
     val dotColor = Color.White
 
     Canvas(
-        modifier = Modifier
-            .fillMaxWidth()
-            .then(modifier)
+        modifier = modifier
     ) {
         val max = list.maxOrNull() ?: 0f
         val min = list.minOrNull() ?: 0f

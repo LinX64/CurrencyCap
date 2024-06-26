@@ -54,7 +54,7 @@ private fun appLightColorScheme(): ColorScheme = ColorScheme(
 
 private fun appDarkColorScheme(): ColorScheme = ColorScheme(
     primary = CurrencyColors.Lemon.primary,
-    onPrimary = CurrencyColors.White,
+    onPrimary = CurrencyColors.LemonGreen,
     primaryContainer = CurrencyColors.Lemon.light,
     onPrimaryContainer = CurrencyColors.White,
     inversePrimary = CurrencyColors.Lemon.dark,

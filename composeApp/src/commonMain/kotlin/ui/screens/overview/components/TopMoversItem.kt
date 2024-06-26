@@ -82,7 +82,7 @@ internal fun TopMoversItem(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ChangeIcon(maxSupply.toInt())
+            //ChangeIcon(maxSupply.toInt())
 
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,

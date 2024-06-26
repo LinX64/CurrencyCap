@@ -43,16 +43,15 @@ import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
-import dev.chrisbanes.haze.materials.HazeMaterials
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
 internal fun BottomNavigationBar(
     onTabSelected: (BottomBarTab) -> Unit,
-    scrollBehavior: TopAppBarScrollBehavior
+    scrollBehavior: TopAppBarScrollBehavior,
+    hazeState: HazeState
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
-    val hazeState = remember { HazeState() }
 
     Column(
         modifier = Modifier
@@ -70,8 +69,7 @@ internal fun BottomNavigationBar(
                 .height(94.dp)
                 .hazeChild(
                     state = hazeState,
-                    shape = MaterialTheme.shapes.large,
-                    style = HazeMaterials.regular(),
+                    shape = RoundedCornerShape(35.dp)
                 )
                 .border(
                     width = 1.dp,

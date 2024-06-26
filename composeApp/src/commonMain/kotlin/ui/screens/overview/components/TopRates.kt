@@ -37,8 +37,8 @@ internal fun TopRates(rates: OverviewState) {
             ) {
                 Text(
                     text = "Top rates",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
                 )
 

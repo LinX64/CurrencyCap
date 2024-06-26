@@ -1,25 +1,25 @@
 package ui.components.main
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BatchPrediction
-import androidx.compose.material.icons.filled.Newspaper
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.ui.graphics.vector.ImageVector
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.ic_home
+import currencycap.composeapp.generated.resources.ic_letters_ai
+import currencycap.composeapp.generated.resources.ic_news
+import currencycap.composeapp.generated.resources.ic_user_normal
+import org.jetbrains.compose.resources.DrawableResource
 import ui.navigation.NavRoutes
 
 sealed class BottomBarTab(
     val title: String,
-    val icon: ImageVector? = null,
+    val icon: DrawableResource? = null,
 ) {
     data object Overview : BottomBarTab(
         title = NavRoutes.HOME,
-        icon = Icons.Rounded.Home,
+        icon = Res.drawable.ic_home
     )
 
     data object News : BottomBarTab(
         title = NavRoutes.NEWS,
-        icon = Icons.Default.Newspaper
+        icon = Res.drawable.ic_news
     )
 
     data object Exchange : BottomBarTab(
@@ -28,12 +28,12 @@ sealed class BottomBarTab(
 
     data object AiPrediction : BottomBarTab(
         title = NavRoutes.AI_PREDICTION,
-        icon = Icons.Default.BatchPrediction,
+        icon = Res.drawable.ic_letters_ai
     )
 
     data object Profile : BottomBarTab(
         title = "Profile",
-        icon = Icons.Default.Person,
+        icon = Res.drawable.ic_user_normal
     )
 }
 

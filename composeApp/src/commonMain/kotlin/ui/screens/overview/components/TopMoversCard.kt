@@ -119,10 +119,10 @@ private fun BottomRow(
             fontSize = 14.sp
         )
 
-        ChangeIcon(
-            valueChange = 26,
-            isLoading = isLoading
-        )
+//        ChangeIcon(
+//            valueChange = 26,
+//            isLoading = isLoading
+//        )
     }
 }
 

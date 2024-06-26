@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import dev.chrisbanes.haze.HazeState
 import ui.components.main.BottomBarTab
 import ui.navigation.NavRoutes
 import ui.screens.ai_predict.navigation.aiPredictScreen
@@ -24,6 +25,7 @@ import ui.screens.search.navigation.searchScreen
 internal fun MainNavGraph(
     navController: NavHostController,
     padding: PaddingValues,
+    hazeState: HazeState,
     scrollBehavior: TopAppBarScrollBehavior,
     onNavigateToLanding: () -> Unit,
     onError: (message: String) -> Unit
@@ -35,7 +37,7 @@ internal fun MainNavGraph(
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
-        homeScreen(padding)
+        homeScreen(padding = padding, hazeState = hazeState)
         searchScreen(padding)
         aiPredictScreen(padding)
         exchangeScreen(padding = padding, onError = onError)
