@@ -52,7 +52,7 @@ import data.model.exchange.CurrencyCode
 import data.model.exchange.CurrencyType
 import org.jetbrains.compose.resources.painterResource
 import ui.screens.exchange.Currency
-import ui.screens.exchange.ExchangeViewEvent
+import ui.screens.exchange.HomeEvent
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -60,7 +60,7 @@ import ui.screens.exchange.ExchangeViewEvent
 fun CurrencyPicker(
     currencyList: List<Currency>,
     currencyType: CurrencyType,
-    onEvent: (ExchangeViewEvent) -> Unit,
+    onEvent: (HomeEvent) -> Unit,
     onDismiss: () -> Unit
 ) {
 

@@ -17,7 +17,7 @@ import di.koinViewModel
 import ui.components.ErrorView
 import ui.components.HorizontalLineWithDot
 import ui.components.SearchViewHeader
-import ui.screens.overview.components.MainHeader
+import ui.screens.overview.components.PortfolioSection
 import ui.screens.overview.components.TodayTopMovers
 import ui.screens.overview.components.TopRates
 import ui.screens.overview.components.TrendingCryptoCurrencies
@@ -44,7 +44,7 @@ internal fun OverviewScreen(
     ) {
         item { SearchViewHeader() }
         item { HorizontalLineWithDot() }
-        item { MainHeader(state) }
+        item { PortfolioSection() }
         item { HorizontalLineWithDot() }
         item { TodayTopMovers(state) }
         //item { WatchList(state) } // todo

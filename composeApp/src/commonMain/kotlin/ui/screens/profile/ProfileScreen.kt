@@ -27,11 +27,11 @@ import ui.screens.profile.components.ProfileCard
 
 @Composable
 internal fun ProfileScreen(
-    profileViewModel: ProfileViewModel = koinViewModel<ProfileViewModel>(),
     padding: PaddingValues,
     onNavigateToLanding: () -> Unit,
     onError: (message: String) -> Unit,
-    hazeState: HazeState
+    hazeState: HazeState,
+    profileViewModel: ProfileViewModel = koinViewModel<ProfileViewModel>(),
 ) {
     val state by profileViewModel.viewState.collectAsStateWithLifecycle()
 
@@ -52,11 +52,7 @@ internal fun ProfileScreen(
             when (state) {
                 is ProfileState.Success -> {
                     val profileState = state as ProfileState.Success
-                    ProfileCard(
-                        name = profileState.user.name ?: "",
-                        email = profileState.user.email ?: "",
-                        phone = profileState.user.phoneNumber ?: "",
-                    )
+                    ProfileCard()
                 }
 
                 ProfileState.Loading -> CenteredColumn {

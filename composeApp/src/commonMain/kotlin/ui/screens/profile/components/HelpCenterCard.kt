@@ -38,7 +38,9 @@ internal fun HelpCenterCard() {
                         .height(20.dp)
                         .background(Color(0xFF1E88E5))
                 )
+
                 Spacer(modifier = Modifier.width(10.dp))
+
                 Text(
                     text = "Help center",
                     fontWeight = FontWeight.Bold,

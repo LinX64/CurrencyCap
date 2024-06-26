@@ -25,7 +25,7 @@ internal fun TodayTopMovers(
         modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {

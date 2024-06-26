@@ -31,7 +31,7 @@ internal fun SearchViewHeader(
 ) {
     val hazeState = remember { HazeState() }
     Box(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth()
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -62,7 +62,8 @@ internal fun SearchViewHeader(
             }
 
             Card(
-                modifier = Modifier.wrapContentSize(),
+                modifier = Modifier.wrapContentSize()
+                    .padding(horizontal = 16.dp),
                 shape = RoundedCornerShape(35.dp),
             ) {
                 IconButton(onClick = { /*TODO*/ }) {

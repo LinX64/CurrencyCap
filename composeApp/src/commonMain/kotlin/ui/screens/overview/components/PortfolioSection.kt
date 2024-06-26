@@ -1,4 +1,4 @@
-package com.client.currencycap
+package ui.screens.overview.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -33,11 +33,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ui.screens.overview.components.TopMoversChart
-import ui.screens.overview.components.mockAssetInfo
 
 @Composable
 fun PortfolioSection() {
@@ -130,16 +127,6 @@ fun PortfolioSection() {
                 tint = Color(0xFF00DA74),
                 modifier = Modifier.size(24.dp)
             )
-        }
-    }
-}
-
-@Preview(showBackground = true, device = "id:pixel_3a")
-@Composable
-private fun PortfolioPreview() {
-    KoinPreview {
-        DarkBackground {
-            PortfolioSection()
         }
     }
 }
