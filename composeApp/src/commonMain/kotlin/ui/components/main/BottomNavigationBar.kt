@@ -39,13 +39,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.blur
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Brush
@@ -61,8 +57,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
+import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
+import dev.chrisbanes.haze.materials.HazeMaterials
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
 internal fun BottomNavigationBar(
     hazeState: HazeState,
@@ -100,13 +98,14 @@ internal fun BottomNavigationBar(
                 .height(94.dp)
                 .hazeChild(
                     state = hazeState,
-                    shape = RoundedCornerShape(35.dp)
+                    shape = MaterialTheme.shapes.large,
+                    style = HazeMaterials.regular(),
                 )
                 .border(
                     width = 1.dp,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = .3f),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),
                     shape = RoundedCornerShape(35.dp)
-                ),
+                )
         ) {
             BottomBar(
                 tabs,
@@ -117,30 +116,12 @@ internal fun BottomNavigationBar(
                 }
             )
 
-            Canvas(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(RoundedCornerShape(35.dp))
-                    .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
-            ) {
-                val tabWidth = size.width / tabs.size
-                drawCircle(
-                    color = animatedColor.copy(alpha = .6f),
-                    radius = size.height / 2,
-                    center = Offset(
-                        (tabWidth * animatedSelectedTabIndex) + tabWidth / 2,
-                        size.height / 2
-                    )
-                )
-            }
-
             /**
              * This adds a dashed line to the bottom bar
              */
             Canvas(
                 modifier = Modifier
                     .fillMaxSize()
-                    .clip(RoundedCornerShape(35.dp))
             ) {
                 val path = Path().apply {
                     addRoundRect(RoundRect(size.toRect(), CornerRadius(size.height)))
@@ -149,7 +130,7 @@ internal fun BottomNavigationBar(
                 val tabWidth = size.width / tabs.size
 
                 drawPath(
-                    path,
+                    path = path,
                     brush = Brush.horizontalGradient(
                         colors = listOf(
                             animatedColor.copy(alpha = 0f),
@@ -239,7 +220,7 @@ private fun BottomBar(
                 ) {
                     val isItemSelected = if (selectedTab == tabs.indexOf(tab)) {
                         Modifier.alpha(1f)
-                    } else Modifier.alpha(.35f)
+                    } else Modifier.alpha(.70f)
 
                     if (tab.icon != null) {
                         Icon(
@@ -264,97 +245,3 @@ private fun BottomBar(
         }
     }
 }
-
-//@Composable
-//internal fun BottomNavigationBar(
-//    hazeState: HazeState,
-//    onTabSelected: (BottomBarTab) -> Unit
-//) {
-//    var selectedTabIndex by remember { mutableIntStateOf(0) }
-//    Box(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(horizontal = 32.dp, vertical = 16.dp)
-//            .height(64.dp)
-//            .hazeChild(state = hazeState, shape = CircleShape)
-//            .border(
-//                width = 2.dp,
-//                color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),
-//                shape = CircleShape
-//            )
-//    ) {
-//        BottomBarTabs(
-//            tabs,
-//            selectedTab = selectedTabIndex,
-//            onTabSelected = {
-//                selectedTabIndex = tabs.indexOf(it)
-//                onTabSelected(it)
-//            }
-//        )
-//
-//        val animatedSelectedTabIndex by animateFloatAsState(
-//            targetValue = selectedTabIndex.toFloat(), label = "animatedSelectedTabIndex",
-//            animationSpec = spring(
-//                stiffness = Spring.StiffnessLow,
-//                dampingRatio = Spring.DampingRatioLowBouncy,
-//            )
-//        )
-//
-//        val animatedColor by animateColorAsState(
-//            targetValue = tabs[selectedTabIndex].color,
-//            label = "animatedColor",
-//            animationSpec = spring(
-//                stiffness = Spring.StiffnessLow,
-//            )
-//        )
-//
-//        Canvas(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .clip(CircleShape)
-//                .blur(50.dp, edgeTreatment = BlurredEdgeTreatment.Unbounded)
-//        ) {
-//            val tabWidth = size.width / tabs.size
-//            drawCircle(
-//                color = animatedColor.copy(alpha = .6f),
-//                radius = size.height / 2,
-//                center = Offset(
-//                    (tabWidth * animatedSelectedTabIndex) + tabWidth / 2,
-//                    size.height / 2
-//                )
-//            )
-//        }
-//
-//        Canvas(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .clip(CircleShape)
-//        ) {
-//            val path = Path().apply {
-//                addRoundRect(RoundRect(size.toRect(), CornerRadius(size.height)))
-//            }
-//            val length = PathMeasure().apply { setPath(path, false) }.length
-//            val tabWidth = size.width / tabs.size
-//
-//            drawPath(
-//                path,
-//                brush = Brush.horizontalGradient(
-//                    colors = listOf(
-//                        animatedColor.copy(alpha = 0f),
-//                        animatedColor.copy(alpha = 1f),
-//                        animatedColor.copy(alpha = 1f),
-//                        animatedColor.copy(alpha = 0f),
-//                    ),
-//                    startX = tabWidth * animatedSelectedTabIndex,
-//                    endX = tabWidth * (animatedSelectedTabIndex + 1),
-//                ),
-//                style = Stroke(
-//                    width = 6f,
-//                    pathEffect = PathEffect.dashPathEffect(
-//                        intervals = floatArrayOf(length / 2, length)
-//                    )
-//                )
-//            )
-//        }
-//    }
-//}

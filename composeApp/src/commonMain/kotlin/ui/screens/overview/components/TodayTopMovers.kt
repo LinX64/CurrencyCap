@@ -50,7 +50,7 @@ internal fun TodayTopMovers(
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             if (overviewState is OverviewState.Success) {
                 items(overviewState.topMovers.size) {
