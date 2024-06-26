@@ -51,7 +51,6 @@ internal fun BottomNavigationBar(
     hazeState: HazeState
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -111,10 +110,12 @@ private fun UnderDashedLine(
         modifier = Modifier.fillMaxSize()
     ) {
         val path = Path().apply {
-            addRoundRect(RoundRect(size.toRect(), CornerRadius(size.height)))
+            addRoundRect(RoundRect(size.toRect(), CornerRadius(35.dp.toPx())))
         }
         val length = PathMeasure().apply { setPath(path, false) }.length
         val tabWidth = size.width / tabs.size
+        val selectedTabLeft = tabWidth * animatedSelectedTabIndex
+        val selectedTabRight = selectedTabLeft + tabWidth
 
         drawPath(
             path = path,
@@ -125,8 +126,8 @@ private fun UnderDashedLine(
                     animatedColor.copy(alpha = 1f),
                     animatedColor.copy(alpha = 0f),
                 ),
-                startX = tabWidth * animatedSelectedTabIndex,
-                endX = tabWidth * (animatedSelectedTabIndex + 1),
+                startX = selectedTabLeft,
+                endX = selectedTabRight
             ),
             style = Stroke(
                 width = 6f,
