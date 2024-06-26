@@ -26,10 +26,10 @@ internal fun TodayTopMovers(
     overviewState: OverviewState
 ) {
     Column(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -50,12 +50,14 @@ internal fun TodayTopMovers(
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             if (overviewState is OverviewState.Success) {
-                items(overviewState.topMovers.size) {
+                items(2) {
                     val topMovers = overviewState.topMovers[it]
                     TopMoversCard(
+                        name = topMovers.name,
+                        fullName = topMovers.fullName,
                         isLoading = false,
                     )
                 }
@@ -65,6 +67,8 @@ internal fun TodayTopMovers(
                 items(4) {
                     TopMoversCard(
                         isLoading = true,
+                        name = "",
+                        fullName = ""
                     )
                 }
             }

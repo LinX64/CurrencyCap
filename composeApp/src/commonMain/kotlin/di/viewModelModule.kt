@@ -8,6 +8,7 @@ import ui.screens.auth.login.LoginViewModel
 import ui.screens.auth.register.RegisterViewModel
 import ui.screens.auth.reset_password.ResetPasswordViewModel
 import ui.screens.exchange.ExchangeViewModel
+import ui.screens.news.NewsViewModel
 import ui.screens.overview.OverviewViewModel
 import ui.screens.profile.ProfileViewModel
 import ui.screens.search.SearchViewModel
@@ -16,13 +17,14 @@ val viewModelModule = module {
     single { MainViewModel(get()) }
     single { OverviewViewModel(get()) }
     single { ExchangeViewModel(get(), get()) }
-    single { AiPredictViewModel() }
+    single { AiPredictViewModel() } // TODO
     single { SearchViewModel(get()) }
     single { LoginViewModel(get(), get()) }
     single { RegisterViewModel(get(), get()) }
     single { ProfileViewModel(get(), get()) }
     single { FillProfileViewModel(get()) }
     single { ResetPasswordViewModel(get()) }
+    single { NewsViewModel() } // TODO
 }
 
 val previewModule = module {

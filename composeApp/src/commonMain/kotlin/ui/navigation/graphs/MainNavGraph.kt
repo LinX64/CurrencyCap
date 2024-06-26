@@ -14,6 +14,7 @@ import ui.components.main.BottomBarTab
 import ui.navigation.NavRoutes
 import ui.screens.ai_predict.navigation.aiPredictScreen
 import ui.screens.exchange.navigation.exchangeScreen
+import ui.screens.news.navigation.newsScreen
 import ui.screens.overview.navigation.homeScreen
 import ui.screens.profile.navigation.profileScreen
 import ui.screens.search.navigation.searchScreen
@@ -43,6 +44,7 @@ internal fun MainNavGraph(
             onNavigateToLanding = onNavigateToLanding,
             onError = onError
         )
+        newsScreen(padding)
     }
 }
 

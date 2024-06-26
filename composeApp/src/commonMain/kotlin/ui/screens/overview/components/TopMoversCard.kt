@@ -33,13 +33,15 @@ import dev.chrisbanes.haze.materials.HazeMaterials
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 internal fun TopMoversCard(
-    isLoading: Boolean
+    isLoading: Boolean,
+    name: String,
+    fullName: String
 ) {
     val hazeState = remember { HazeState() }
     MaterialsCard(
         modifier = Modifier
             .padding(8.dp)
-            .width(200.dp)
+            .width(180.dp)
             .wrapContentHeight()
             .hazeChild(
                 state = hazeState,
@@ -53,36 +55,43 @@ internal fun TopMoversCard(
         ) {
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                text = "OMG",
+                text = name,
                 color = Color.White,
                 fontSize = 18.sp,
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                maxLines = 1
             )
+
             Spacer(modifier = Modifier.height(8.dp))
+
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                text = "OMG USD",
-                color = Color.White,
+                text = fullName,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                maxLines = 1
             )
+
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = "$2,199.24",
                 color = Color.Gray,
                 fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                maxLines = 1
             )
+
             Spacer(modifier = Modifier.height(16.dp))
 
             TopMoversChart(
                 modifier = if (isLoading) getPlaceHolder(
                     Modifier
                         .fillMaxWidth()
-                        .height(40.dp)
+                        .height(60.dp)
                         .width(40.dp),
                 ) else Modifier
                     .fillMaxWidth()
-                    .height(40.dp)
+                    .height(60.dp)
                     .width(40.dp),
                 list = mockAssetInfo.lastDayChange
             )
@@ -97,8 +106,7 @@ internal fun TopMoversCard(
 @Composable
 private fun BottomRow(
     isLoading: Boolean,
-
-    ) {
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
