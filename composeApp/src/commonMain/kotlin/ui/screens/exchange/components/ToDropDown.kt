@@ -65,6 +65,9 @@ private fun HandleToDropDown(
     val options = rates.getTextFieldOptions()
     var expanded by remember { mutableStateOf(false) }
     var selectedOptionText by remember { mutableStateOf(options[1]) }
+
+    var searchQuery by remember { mutableStateOf("") }
+    val filteredOptions = options.filter { it.contains(searchQuery, ignoreCase = true) }
     val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
 
     LaunchedEffect(Unit) {
