@@ -123,6 +123,9 @@ private fun ExchangeCard(
                 modifier = modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
+                Spacer(modifier = Modifier.height(16.dp))
+
                 Image(
                     modifier = Modifier.size(84.dp),
                     painter = painterResource(Res.drawable.exchange_illustration),
