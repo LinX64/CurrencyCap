@@ -4,7 +4,7 @@ import data.model.User
 import dev.gitlive.firebase.auth.FirebaseAuth
 import dev.gitlive.firebase.auth.PhoneAuthCredential
 import dev.gitlive.firebase.auth.PhoneAuthProvider
-import domain.repository.AuthService
+import domain.repository.AuthServiceRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -12,10 +12,10 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class AuthServiceImpl(
+class AuthServiceRepositoryImpl(
     private val auth: FirebaseAuth,
     private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-) : AuthService {
+) : AuthServiceRepository {
 
     override val currentUserId: String
         get() = auth.currentUser?.uid.orEmpty()

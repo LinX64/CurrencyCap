@@ -2,7 +2,7 @@ package ui.screens.auth.fill_profile
 
 import androidx.lifecycle.viewModelScope
 import data.model.User
-import domain.repository.AuthService
+import domain.repository.AuthServiceRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
@@ -13,7 +13,7 @@ import ui.screens.auth.fill_profile.FillProfileViewEvent.OnSignUpClick
 import ui.screens.auth.fill_profile.FillProfileViewEvent.OnSkipClicked
 
 internal class FillProfileViewModel(
-    private val authService: AuthService
+    private val authServiceRepository: AuthServiceRepository
 ) : MviViewModel<FillProfileViewEvent, FillProfileState, FillProfileNavigationEffect>(FillProfileState.Idle) {
 
     val name: MutableStateFlow<String> = MutableStateFlow("")
@@ -37,8 +37,8 @@ internal class FillProfileViewModel(
         )
 
         viewModelScope.launch {
-            authService.updateCurrentUser(updatedUser)
-            authService
+            authServiceRepository.updateCurrentUser(updatedUser)
+            authServiceRepository
         }
 
         setEffect(NavigateToMarketOverview)

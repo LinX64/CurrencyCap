@@ -3,7 +3,7 @@ package ui.screens.profile
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import domain.repository.AuthService
+import domain.repository.AuthServiceRepository
 import domain.repository.UserPreferences
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -13,7 +13,7 @@ import ui.screens.profile.ProfileViewEvent.OnHelpCenterCardClicked
 import ui.screens.profile.ProfileViewEvent.OnProfileCardClicked
 
 internal class ProfileViewModel(
-    private val authService: AuthService,
+    private val authServiceRepository: AuthServiceRepository,
     private val userPreferences: UserPreferences
 ) : MviViewModel<ProfileViewEvent, ProfileState, ProfileNavigationEffect>(ProfileState.Idle) {
 
@@ -38,7 +38,7 @@ internal class ProfileViewModel(
             delay(2000)
 
             userPreferences.clear()
-            authService.deleteAccount()
+            authServiceRepository.deleteAccount()
 
             setState { ProfileState.Idle }
             setEffect(ProfileNavigationEffect.NavigateToLanding)
@@ -46,7 +46,7 @@ internal class ProfileViewModel(
     }
 
     private fun fetchProfile() {
-        val user = authService.currentUser
+        val user = authServiceRepository.currentUser
 
         viewModelScope.launch {
             user.collect { user ->

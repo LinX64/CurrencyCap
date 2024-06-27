@@ -84,8 +84,6 @@ internal fun ExchangeScreen(
 //    }
 }
 
-fun dummyCurrencyList(): List<Currency> = listOf(Currency("USD", 1.0), Currency("IRR", 1.0))
-
 @Composable
 private fun ExchangeCard(
     modifier: Modifier = Modifier,
@@ -101,7 +99,7 @@ private fun ExchangeCard(
     if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
         CurrencyPicker(
             hazeState = hazeState,
-            currencyList = dummyCurrencyList(),
+            currencyList = state.currencyRates,
             currencyType = selectedCurrencyType,
             onEvent = { event ->
                 exchangeViewModel.onEvent(event)
