@@ -42,7 +42,10 @@ import di.koinViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.BlurColumn
+import ui.components.HandleNavigationEffect
 import ui.components.main.BaseBlurLazyColumn
+import ui.screens.exchange.ExchangeViewEvent.OnAmountValueChanged
+import ui.screens.exchange.ExchangeViewEvent.OnSwitchCurrencies
 import ui.screens.exchange.components.AmountInput
 import ui.screens.exchange.components.CurrencyInputs
 import ui.screens.exchange.components.CurrencyPicker
@@ -70,24 +73,24 @@ internal fun ExchangeScreen(
             ExchangeCard(
                 state = state,
                 hazeState = hazeState,
-                exchangeViewModel = exchangeViewModel,
+                viewModel = exchangeViewModel,
                 onError = onError
             )
         }
         item { Disclaimer() }
     }
 
-//    HandleNavigationEffect(exchangeViewModel) { effect ->
-//        when (effect) {
-//            is ExchangeNavigationEffect.ShowSnakeBar -> onError(effect.message)
-//        }
-//    }
+    HandleNavigationEffect(exchangeViewModel) { effect ->
+        when (effect) {
+            is ExchangeNavigationEffect.ShowSnakeBar -> onError(effect.message)
+        }
+    }
 }
 
 @Composable
 private fun ExchangeCard(
     modifier: Modifier = Modifier,
-    exchangeViewModel: ExchangeViewModel,
+    viewModel: ExchangeViewModel,
     state: ExchangeState.ExchangeUiState,
     hazeState: HazeState,
     onError: (String) -> Unit
@@ -102,7 +105,7 @@ private fun ExchangeCard(
             currencyList = state.currencyRates,
             currencyType = selectedCurrencyType,
             onEvent = { event ->
-                exchangeViewModel.handleEvent(event)
+                viewModel.handleEvent(event)
                 dialogOpened = false
                 selectedCurrencyType = CurrencyType.None
             },
@@ -135,7 +138,7 @@ private fun ExchangeCard(
                 CurrencyInputs(
                     source = state.sourceCurrency,
                     target = state.targetCurrency,
-                    onSwitch = { exchangeViewModel.handleEvent(ExchangeViewEvent.OnSwitchCurrencies) },
+                    onSwitch = { viewModel.handleEvent(OnSwitchCurrencies) },
                     onCurrencyTypeSelect = {
                         dialogOpened = true
                         selectedCurrencyType = it
@@ -144,7 +147,7 @@ private fun ExchangeCard(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 AmountInput(
-                    onAmountChange = { exchangeViewModel.handleEvent(ExchangeViewEvent.OnAmountValueChanged(it)) },
+                    onAmountChange = { viewModel.handleEvent(OnAmountValueChanged(it)) },
                     onErrorMessage = onError,
                     amount = state.targetCurrencyAmount
                 )

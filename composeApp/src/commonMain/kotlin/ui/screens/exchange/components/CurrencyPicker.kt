@@ -57,6 +57,7 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import ui.screens.exchange.ExchangeViewEvent
+import ui.screens.exchange.ExchangeViewEvent.OnSaveSelectedCurrencyCode
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -173,14 +174,7 @@ internal fun CurrencyPicker(
                         }
 
                         TextButton(
-                            onClick = {
-                                onEvent(
-                                    ExchangeViewEvent.OnSaveSelectedCurrencyCode(
-                                        currencyType,
-                                        selectedCurrencyCode
-                                    )
-                                )
-                            }
+                            onClick = { onEvent(OnSaveSelectedCurrencyCode(currencyType, selectedCurrencyCode)) }
                         ) {
                             Text(
                                 text = "Confirm",
@@ -196,7 +190,9 @@ internal fun CurrencyPicker(
 
 @Composable
 private fun CurrencyCodePickerView(
-    code: CurrencyCode, isSelected: Boolean, onSelect: (CurrencyCode) -> Unit
+    code: CurrencyCode,
+    isSelected: Boolean,
+    onSelect: (CurrencyCode) -> Unit
 ) {
     val saturation = remember { Animatable(if (isSelected) 1f else 0f) }
     val textColor = MaterialTheme.colorScheme.onSurface
