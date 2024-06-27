@@ -31,6 +31,7 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import org.jetbrains.compose.resources.painterResource
 import ui.navigation.NavRoutes
+import ui.screens.settings.navigation.navigateToSettingsScreen
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
@@ -53,19 +54,28 @@ internal fun AppTopBar(
             scrolledContainerColor = Color.Transparent,
         ),
         scrollBehavior = scrollBehavior,
-        actions = { ActionsMenu(currentDestination = currentDestination, onLogoutClick = onLogoutClick) }
+        actions = {
+            ActionsMenu(
+                currentDestination = currentDestination,
+                onLogoutClick = onLogoutClick,
+                navController = navController
+            )
+        }
     )
 }
 
 @Composable
 private fun ActionsMenu(
     currentDestination: String,
-    onLogoutClick: () -> Unit
+    onLogoutClick: () -> Unit,
+    navController: NavHostController
 ) {
     val expanded = remember { mutableStateOf(false) }
 
     if (currentDestination == NavRoutes.PROFILE) {
-        IconButton(onClick = { /* TODO */ }) {
+        IconButton(
+            onClick = { navController.navigateToSettingsScreen() }
+        ) {
             Icon(
                 painter = painterResource(Res.drawable.ic_settings),
                 contentDescription = "Settings"
