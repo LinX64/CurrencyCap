@@ -22,10 +22,10 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.switch_ic
+import data.model.exchange.Currency
 import data.model.exchange.CurrencyCode
 import data.model.exchange.CurrencyType
 import org.jetbrains.compose.resources.painterResource
-import ui.screens.exchange.Currency
 
 @Composable
 internal fun CurrencyInputs(

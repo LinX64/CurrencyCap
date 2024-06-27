@@ -1,6 +1,5 @@
 package ui.screens.exchange
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import data.model.exchange.CurrencyType
 import data.util.NetworkResult
@@ -14,21 +13,44 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import ui.common.MviViewModel
+import ui.screens.exchange.ExchangeViewEvent.OnAmountValueChanged
+import ui.screens.exchange.ExchangeViewEvent.OnFetchRates
+import ui.screens.exchange.ExchangeViewEvent.OnReadSourceCurrencyCode
+import ui.screens.exchange.ExchangeViewEvent.OnReadTargetCurrencyCode
+import ui.screens.exchange.ExchangeViewEvent.OnSaveSelectedCurrencyCode
+import ui.screens.exchange.ExchangeViewEvent.OnSwitchCurrencies
 
 internal class ExchangeViewModel(
     private val currencyRepository: CurrencyRepository,
     private val exchangeRepository: ExchangeRepository
-) : ViewModel() {
+) : MviViewModel<ExchangeViewEvent, ExchangeState, ExchangeNavigationEffect>(ExchangeState.Idle) {
 
-    private val _state = MutableStateFlow(HomeUiState())
+    private val _state = MutableStateFlow(ExchangeState.ExchangeUiState())
     val state = _state.asStateFlow()
     private val _updatedCurrencyValue: MutableStateFlow<String> = MutableStateFlow("")
 
     init {
-        onEvent(HomeEvent.FetchRates)
-        onEvent(HomeEvent.ReadSourceCurrencyCode)
-        onEvent(HomeEvent.ReadTargetCurrencyCode)
+        handleEvent(OnFetchRates)
+        handleEvent(OnReadSourceCurrencyCode)
+        handleEvent(OnReadTargetCurrencyCode)
 
+        updateCurrencySource()
+        convertCurrency()
+    }
+
+    override fun handleEvent(event: ExchangeViewEvent) {
+        when (event) {
+            is OnFetchRates -> fetchRates()
+            is OnReadSourceCurrencyCode -> readSourceCurrency()
+            is OnReadTargetCurrencyCode -> readTargetCurrency()
+            is OnSaveSelectedCurrencyCode -> saveSelectedCurrencyCode(event)
+            is OnSwitchCurrencies -> switchCurrencies()
+            is OnAmountValueChanged -> updateCurrencyValue(event.value)
+        }
+    }
+
+    private fun updateCurrencySource() {
         viewModelScope.launch {
             _updatedCurrencyValue.collect { value ->
                 _state.update {
@@ -36,12 +58,13 @@ internal class ExchangeViewModel(
                 }
             }
         }
+    }
+
+    private fun convertCurrency() {
         viewModelScope.launch {
-            state.collect {
+            state.collectLatest {
                 _state.update {
-                    it.copy(
-                        targetCurrencyAmount = convert(it.sourceCurrencyAmount).toString()
-                    )
+                    it.copy(targetCurrencyAmount = convert(it.sourceCurrencyAmount).toString())
                 }
             }
         }
@@ -63,26 +86,11 @@ internal class ExchangeViewModel(
         }
     }
 
-    fun onEvent(event: HomeEvent) {
-        when (event) {
-            is HomeEvent.FetchRates -> fetchRates()
-            is HomeEvent.ReadSourceCurrencyCode -> readSourceCurrency()
-            is HomeEvent.ReadTargetCurrencyCode -> readTargetCurrency()
-            is HomeEvent.SaveSelectedCurrencyCode -> {
-                if (event.currencyType is CurrencyType.Source) {
-                    saveSourceCurrencyCode(event.currencyCode.name)
-                } else if (event.currencyType is CurrencyType.Target) {
-                    saveTargetCurrencyCode(event.currencyCode.name)
-                }
-            }
-
-            is HomeEvent.SwitchCurrencies -> switchCurrencies()
-            is HomeEvent.NumberButtonClicked -> updateCurrencyValue(event.value)
-            is HomeEvent.OnAmountChanged -> {
-                _state.update {
-                    it.copy(sourceCurrencyAmount = event.amount)
-                }
-            }
+    private fun saveSelectedCurrencyCode(event: OnSaveSelectedCurrencyCode) {
+        if (event.currencyType is CurrencyType.Source) {
+            saveSourceCurrencyCode(event.currencyCode.name)
+        } else if (event.currencyType is CurrencyType.Target) {
+            saveTargetCurrencyCode(event.currencyCode.name)
         }
     }
 
@@ -93,17 +101,10 @@ internal class ExchangeViewModel(
                 when (result) {
                     is NetworkResult.Success -> {
                         val currencyRates = result.data.sortedBy { it.code }
-                        _state.update {
-                            it.copy(currencyRates = currencyRates)
-                        }
+                        _state.update { it.copy(currencyRates = currencyRates) }
                     }
 
-                    is NetworkResult.Error -> {
-                        _state.update {
-                            it.copy(currencyRates = emptyList())
-                        }
-                    }
-
+                    is NetworkResult.Error -> _state.update { it.copy(currencyRates = emptyList()) }
                     else -> Unit
                 }
             }
@@ -150,10 +151,11 @@ internal class ExchangeViewModel(
                                 this
                             }
                         }
-
                     }
             }
         }
+
+        // TODO: Check this and fix it
     }
 
     private fun saveSourceCurrencyCode(code: String) {

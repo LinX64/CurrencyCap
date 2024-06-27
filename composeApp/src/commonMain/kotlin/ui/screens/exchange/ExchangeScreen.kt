@@ -30,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -48,6 +47,7 @@ import ui.screens.exchange.components.AmountInput
 import ui.screens.exchange.components.CurrencyInputs
 import ui.screens.exchange.components.CurrencyPicker
 import ui.screens.exchange.components.Disclaimer
+import ui.screens.exchange.components.ResultAmountInput
 import util.exitTransition
 
 @Composable
@@ -88,7 +88,7 @@ internal fun ExchangeScreen(
 private fun ExchangeCard(
     modifier: Modifier = Modifier,
     exchangeViewModel: ExchangeViewModel,
-    state: HomeUiState,
+    state: ExchangeState.ExchangeUiState,
     hazeState: HazeState,
     onError: (String) -> Unit
 ) {
@@ -102,7 +102,7 @@ private fun ExchangeCard(
             currencyList = state.currencyRates,
             currencyType = selectedCurrencyType,
             onEvent = { event ->
-                exchangeViewModel.onEvent(event)
+                exchangeViewModel.handleEvent(event)
                 dialogOpened = false
                 selectedCurrencyType = CurrencyType.None
             },
@@ -135,7 +135,7 @@ private fun ExchangeCard(
                 CurrencyInputs(
                     source = state.sourceCurrency,
                     target = state.targetCurrency,
-                    onSwitch = { exchangeViewModel.onEvent(HomeEvent.SwitchCurrencies) },
+                    onSwitch = { exchangeViewModel.handleEvent(ExchangeViewEvent.OnSwitchCurrencies) },
                     onCurrencyTypeSelect = {
                         dialogOpened = true
                         selectedCurrencyType = it
@@ -144,9 +144,9 @@ private fun ExchangeCard(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 AmountInput(
-                    amountInputType = AmountInputType.SOURCE,
-                    onAmountChange = { exchangeViewModel.onEvent(HomeEvent.OnAmountChanged(it)) },
-                    onErrorMessage = onError
+                    onAmountChange = { exchangeViewModel.handleEvent(ExchangeViewEvent.OnAmountValueChanged(it)) },
+                    onErrorMessage = onError,
+                    amount = state.targetCurrencyAmount
                 )
             }
         }
@@ -163,7 +163,7 @@ private fun ExchangeCard(
                     .padding(horizontal = 16.dp),
                 color = Color.Blue
             )
-        } // check to see why this is not being shown
+        } // TODO: check to see why this is not being shown
 
         AnimatedVisibility(
             visible = state.sourceCurrencyAmount.isNotEmpty(),
@@ -171,10 +171,7 @@ private fun ExchangeCard(
             exit = fadeOut() + exitTransition()
         ) {
             BlurColumn {
-                ResultCard(
-                    state = state,
-                    amount = state.sourceCurrencyAmount // TODO: pass the converted amount here
-                )
+                ResultCard(state = state)
             }
         }
     }
@@ -182,23 +179,17 @@ private fun ExchangeCard(
 
 @Composable
 private fun ResultCard(
-    state: HomeUiState,
-    amount: String
+    state: ExchangeState.ExchangeUiState
 ) {
-    val formattedAmountWithCode = "${state.targetCurrency?.code} $amount"
     val formattedAmount = "1 ${state.targetCurrency?.code} = ${state.sourceCurrencyAmount} ${state.sourceCurrency?.code}"
 
     Column(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = formattedAmountWithCode,
-            style = LocalTextStyle.current.copy(
-                color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
-            )
+        ResultAmountInput(
+            amountInputType = AmountInputType.TARGET,
+            amount = state.targetCurrencyAmount
         )
 
         Spacer(modifier = Modifier.height(8.dp))
