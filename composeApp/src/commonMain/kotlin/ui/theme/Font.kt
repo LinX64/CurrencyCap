@@ -6,27 +6,26 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.titillium_web_bold
-import currencycap.composeapp.generated.resources.titillium_web_bold_italic
-import currencycap.composeapp.generated.resources.titillium_web_italic
-import currencycap.composeapp.generated.resources.titillium_web_medium
-import currencycap.composeapp.generated.resources.titillium_web_medium_italic
-import currencycap.composeapp.generated.resources.titillium_web_regular
+import currencycap.composeapp.generated.resources.lato_bold
+import currencycap.composeapp.generated.resources.lato_bold_italic
+import currencycap.composeapp.generated.resources.lato_light
+import currencycap.composeapp.generated.resources.lato_lightItalic
+import currencycap.composeapp.generated.resources.lato_regular
 import org.jetbrains.compose.resources.Font
 
 @Composable
-fun TitilliumWebFamily() = FontFamily(
-    Font(Res.font.titillium_web_regular),
-    Font(Res.font.titillium_web_italic, style = FontStyle.Italic),
-    Font(Res.font.titillium_web_medium, FontWeight.Medium),
-    Font(Res.font.titillium_web_medium_italic, FontWeight.Medium, style = FontStyle.Italic),
-    Font(Res.font.titillium_web_bold, FontWeight.Bold),
-    Font(Res.font.titillium_web_bold_italic, FontWeight.Bold, style = FontStyle.Italic)
+fun LatoFamily() = FontFamily(
+    Font(Res.font.lato_light),
+    Font(Res.font.lato_lightItalic, style = FontStyle.Italic),
+    Font(Res.font.lato_regular, FontWeight.Medium),
+    Font(Res.font.lato_regular, FontWeight.Medium, style = FontStyle.Italic),
+    Font(Res.font.lato_bold, FontWeight.Bold),
+    Font(Res.font.lato_bold_italic, FontWeight.Bold, style = FontStyle.Italic)
 )
 
 @Composable
-fun TitilliumWebTypography() = Typography().run {
-    val fontFamily = TitilliumWebFamily()
+fun LatoTypography() = Typography().run {
+    val fontFamily = LatoFamily()
     copy(
         displayLarge = displayLarge.copy(fontFamily = fontFamily),
         displayMedium = displayMedium.copy(fontFamily = fontFamily),

@@ -11,7 +11,8 @@ import androidx.compose.ui.unit.dp
 import data.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import ui.components.CenteredColumn
-import ui.screens.overview.OverviewScreen
+import ui.components.main.BaseBlurLazyColumn
+import ui.screens.news.components.NewsItem
 
 @Composable
 @Preview(showBackground = true)
@@ -21,13 +22,21 @@ private fun ExchangePreview() {
 
     KoinPreview {
         CenteredColumn {
-            OverviewScreen(
-                padding = PaddingValues(0.dp),
+            BaseBlurLazyColumn(
                 hazeState = hazeState,
-                onSearchCardClicked = { /* TODO */ }
-            )
+                padding = PaddingValues(0.dp),
+            ) {
+                items(10) {
+                    NewsItem(
+                        onClick = {},
+                    )
+                }
+            }
         }
     }
 }
+
+
+
 
 
