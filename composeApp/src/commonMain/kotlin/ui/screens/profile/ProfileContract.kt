@@ -19,4 +19,3 @@ sealed interface ProfileState {
 sealed interface ProfileNavigationEffect {
     data object NavigateToLanding : ProfileNavigationEffect
 }
-

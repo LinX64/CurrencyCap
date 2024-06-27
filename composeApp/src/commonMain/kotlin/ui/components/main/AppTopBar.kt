@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.ic_arrow_left
 import currencycap.composeapp.generated.resources.ic_logout
 import currencycap.composeapp.generated.resources.ic_settings
 import dev.chrisbanes.haze.HazeState
@@ -31,6 +32,7 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import org.jetbrains.compose.resources.painterResource
 import ui.navigation.NavRoutes
+import ui.screens.settings.navigation.navigateToSettingsScreen
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
@@ -41,6 +43,8 @@ internal fun AppTopBar(
     onLogoutClick: () -> Unit,
     hazeState: HazeState,
 ) {
+    val isSettingsScreen = currentDestination == NavRoutes.SETTINGS
+
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
             .hazeChild(
@@ -53,19 +57,40 @@ internal fun AppTopBar(
             scrolledContainerColor = Color.Transparent,
         ),
         scrollBehavior = scrollBehavior,
-        actions = { ActionsMenu(currentDestination = currentDestination, onLogoutClick = onLogoutClick) }
+        actions = {
+            ActionsMenu(
+                currentDestination = currentDestination,
+                onLogoutClick = onLogoutClick,
+                navController = navController
+            )
+        },
+        navigationIcon = {
+            if (isSettingsScreen) {
+                IconButton(
+                    onClick = { navController.navigateUp() }
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_arrow_left),
+                        contentDescription = "Back"
+                    )
+                }
+            }
+        }
     )
 }
 
 @Composable
 private fun ActionsMenu(
     currentDestination: String,
-    onLogoutClick: () -> Unit
+    onLogoutClick: () -> Unit,
+    navController: NavHostController
 ) {
     val expanded = remember { mutableStateOf(false) }
 
     if (currentDestination == NavRoutes.PROFILE) {
-        IconButton(onClick = { /* TODO */ }) {
+        IconButton(
+            onClick = { navController.navigateToSettingsScreen() }
+        ) {
             Icon(
                 painter = painterResource(Res.drawable.ic_settings),
                 contentDescription = "Settings"

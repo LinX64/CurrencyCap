@@ -14,6 +14,7 @@ object NavRoutes {
     const val PROFILE = "Profile"
 
     const val AI_PREDICTION = "AI Prediction"
+    const val SETTINGS = "Settings"
 
     const val LOGIN = "Login"
     const val REGISTER = "Register"

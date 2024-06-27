@@ -49,48 +49,52 @@ import org.jetbrains.compose.resources.painterResource
 internal fun BottomNavigationBar(
     onTabSelected: (BottomBarTab) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
-    hazeState: HazeState
+    hazeState: HazeState,
+    isSettingsScreen: Boolean
 ) {
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .padding(horizontal = 8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        CenteredExchangeButton(
-            onButtonClicked = {
-                selectedTabIndex = tabs.indexOf(BottomBarTab.Exchange)
-                onTabSelected(BottomBarTab.Exchange)
-            }
-        )
 
-        Box(
+    if (isSettingsScreen.not()) {
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
-                .height(94.dp)
-                .hazeChild(
-                    state = hazeState,
-                    shape = RoundedCornerShape(35.dp)
-                )
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),
-                    shape = RoundedCornerShape(35.dp)
-                )
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .padding(horizontal = 8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            BottomBar(
-                tabs = tabs,
-                selectedTab = selectedTabIndex,
-                onTabSelected = {
-                    selectedTabIndex = tabs.indexOf(it)
-                    onTabSelected(it)
+            CenteredExchangeButton(
+                onButtonClicked = {
+                    selectedTabIndex = tabs.indexOf(BottomBarTab.Exchange)
+                    onTabSelected(BottomBarTab.Exchange)
                 }
             )
 
-            UnderDashedLine(selectedTabIndex)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+                    .height(94.dp)
+                    .hazeChild(
+                        state = hazeState,
+                        shape = RoundedCornerShape(35.dp)
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),
+                        shape = RoundedCornerShape(35.dp)
+                    )
+            ) {
+                BottomBar(
+                    tabs = tabs,
+                    selectedTab = selectedTabIndex,
+                    onTabSelected = {
+                        selectedTabIndex = tabs.indexOf(it)
+                        onTabSelected(it)
+                    }
+                )
+
+                UnderDashedLine(selectedTabIndex)
+            }
         }
     }
 }

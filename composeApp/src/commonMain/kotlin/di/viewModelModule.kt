@@ -12,6 +12,7 @@ import ui.screens.news.NewsViewModel
 import ui.screens.overview.OverviewViewModel
 import ui.screens.profile.ProfileViewModel
 import ui.screens.search.SearchViewModel
+import ui.screens.settings.SettingsViewModel
 
 val viewModelModule = module {
     single { MainViewModel(get()) }
@@ -26,8 +27,9 @@ val viewModelModule = module {
     single { ResetPasswordViewModel(get()) }
     single { NewsViewModel() } // TODO
     single { BookmarksViewModel() } // TODO
+    single { SettingsViewModel(get(), get()) } // TODO
 }
 
 val previewModule = module {
-    single { ProfileViewModel(get(), get()) }
+    single { SettingsViewModel(get(), get()) }
 }
