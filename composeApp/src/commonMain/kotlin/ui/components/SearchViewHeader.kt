@@ -53,7 +53,10 @@ internal fun SearchViewHeader(
                     .padding(16.dp),
                 shape = RoundedCornerShape(25.dp),
             ) {
-                Row {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
                     Icon(
                         modifier = if (isLoading) getPlaceHolder(Modifier.padding(16.dp)) else Modifier.padding(16.dp),
                         imageVector = Icons.Default.Search,
@@ -71,12 +74,11 @@ internal fun SearchViewHeader(
             }
 
             Card(
-                modifier = Modifier
-                    .wrapContentSize(),
+                modifier = Modifier.wrapContentSize(),
                 shape = RoundedCornerShape(35.dp),
             ) {
                 IconButton(
-                    modifier = if (isLoading) getPlaceHolder(Modifier.size(48.dp)) else Modifier.size(48.dp),
+                    modifier = if (isLoading) getPlaceHolder(Modifier.size(64.dp)) else Modifier.size(64.dp),
                     onClick = { /*TODO*/ }) {
                     Icon(
                         imageVector = Icons.Default.Info,

@@ -32,7 +32,7 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
         )
 
         FlowColumn(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             if (rates is OverviewState.Success) {
