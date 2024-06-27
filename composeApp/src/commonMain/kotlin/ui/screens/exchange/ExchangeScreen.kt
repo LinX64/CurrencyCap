@@ -1,10 +1,13 @@
 package ui.screens.exchange
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -17,10 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.exchange_illustration
 import data.model.exchange.AmountInputType
 import data.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.BlurColumn
 import ui.components.main.BaseBlurLazyColumn
@@ -92,32 +98,43 @@ private fun ExchangeCard(
         )
     }
 
-    BlurColumn(
-        modifier = modifier.padding(24.dp)
-    ) {
-        CurrencyInputs(
-            source = Currency("USD", 1.0),
-            target = Currency("IRR", 1.0),
-            onSwitch = {
-                exchangeViewModel.onEvent(HomeEvent.SwitchCurrencies)
-            },
-            onCurrencyTypeSelect = {
-                dialogOpened = true
-                selectedCurrencyType = it
-            }
-        )
-        Spacer(modifier = Modifier.height(12.dp))
+    BlurColumn {
+        Column(
+            modifier = modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                modifier = Modifier.size(64.dp),
+                painter = painterResource(Res.drawable.exchange_illustration),
+                contentDescription = null
+            )
 
-        AmountInput(
-            amountInputType = AmountInputType.SOURCE,
-            amount = "100"
-        )
-        Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-        AmountInput(
-            amountInputType = AmountInputType.TARGET,
-            amount = "100"
-        )
+            CurrencyInputs(
+                source = Currency("USD", 1.0),
+                target = Currency("IRR", 1.0),
+                onSwitch = {
+                    exchangeViewModel.onEvent(HomeEvent.SwitchCurrencies)
+                },
+                onCurrencyTypeSelect = {
+                    dialogOpened = true
+                    selectedCurrencyType = it
+                }
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+
+            AmountInput(
+                amountInputType = AmountInputType.SOURCE,
+                amount = "100"
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+
+            AmountInput(
+                amountInputType = AmountInputType.TARGET,
+                amount = "100"
+            )
+        }
     }
 }
 

@@ -2,13 +2,10 @@ package ui.screens.overview.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +17,7 @@ import ui.screens.overview.OverviewState
 import ui.theme.colors.CurrencyColors
 import util.getIconBy
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun TrendingCryptoCurrencies(rates: OverviewState) {
     Column {
@@ -36,17 +34,12 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
             fontWeight = FontWeight.Bold
         )
 
-        LazyHorizontalGrid(
-            modifier = Modifier.fillMaxWidth()
-                .heightIn(max = 300.dp)
-                .widthIn(max = 370.dp, min = 350.dp),
-            rows = GridCells.Fixed(2),
-            contentPadding = PaddingValues(10.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+        FlowColumn(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             if (rates is OverviewState.Success) {
-                items(rates.cryptoRates.size) { index ->
+                rates.cryptoRates.forEachIndexed { index, rate ->
                     val symbol = rates.cryptoRates[index].symbol
 
                     RateHorizontalItem(
@@ -58,7 +51,7 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
             }
 
             if (rates is OverviewState.Loading) {
-                items(5) {
+                repeat(5) {
                     RateHorizontalItem(
                         icon = getIconBy(""),
                         rate = RateDto(

@@ -33,25 +33,7 @@ internal fun TopRates(rates: OverviewState) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                    text = "Top rates",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold
-                )
-
-                Text(
-                    modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                    text = "Iranian currency",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                )
-            }
+            TopRatesTitleSection(isLoading)
 
             Icon(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
@@ -93,6 +75,29 @@ internal fun TopRates(rates: OverviewState) {
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun TopRatesTitleSection(isLoading: Boolean) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
+            text = "Top rates",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Bold
+        )
+
+        Text(
+            modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
+            text = "Iranian currency",
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+        )
     }
 }
 

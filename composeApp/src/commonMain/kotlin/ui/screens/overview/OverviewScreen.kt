@@ -9,10 +9,14 @@ import di.koinViewModel
 import ui.components.ErrorView
 import ui.components.HorizontalLineWithDot
 import ui.components.SearchViewHeader
+import ui.components.HorizontalLineWithDot
+import ui.components.SearchViewHeader
 import ui.components.main.BaseBlurLazyColumn
 import ui.screens.overview.components.PortfolioSection
 import ui.screens.overview.components.TodayTopMovers
 import ui.components.main.BaseBlurLazyColumn
+import ui.screens.overview.components.PortfolioSection
+import ui.screens.overview.components.TodayTopMovers
 import ui.screens.overview.components.TopRates
 import ui.screens.overview.components.TrendingCryptoCurrencies
 

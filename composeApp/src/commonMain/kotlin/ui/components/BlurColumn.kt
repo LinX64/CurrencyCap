@@ -29,7 +29,7 @@ internal fun BlurColumn(
         ),
     ) {
         Column(
-            modifier = Modifier.padding(32.dp),
+            modifier = Modifier.padding(8.dp),
         ) {
             content()
         }

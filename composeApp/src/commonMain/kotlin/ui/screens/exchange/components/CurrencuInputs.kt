@@ -27,7 +27,7 @@ import org.jetbrains.compose.resources.painterResource
 import ui.screens.exchange.Currency
 
 @Composable
-fun CurrencyInputs(
+internal fun CurrencyInputs(
     source: Currency?,
     target: Currency?,
     onSwitch: () -> Unit,

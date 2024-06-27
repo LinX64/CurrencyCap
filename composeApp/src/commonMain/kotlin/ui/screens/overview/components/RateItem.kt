@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +29,9 @@ internal fun RateItem(
 ) {
     BlurColumn {
         Column(
-            modifier = modifier.padding(vertical = 16.dp, horizontal = 16.dp),
+            modifier = modifier
+                .padding(vertical = 16.dp, horizontal = 16.dp)
+                .wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -45,7 +48,7 @@ internal fun RateItem(
             }
 
             Text(
-                modifier = if (isLoading) getPlaceHolder(Modifier.padding(top = 4.dp)) else Modifier.padding(top = 4.dp),
+                modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = rate.code,
                 color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.bodyLarge
