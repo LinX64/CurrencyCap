@@ -26,23 +26,29 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.hazeChild
 
 @Composable
 internal fun VerticalBarCard(
     modifier: Modifier = Modifier,
-    onTabSelected: (VerticalBarTab) -> Unit
+    onTabSelected: (VerticalBarTab) -> Unit,
+    hazeState: HazeState
 ) {
-    var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
+    var selectedTabIndex by rememberSaveable { mutableIntStateOf(1) }
     Column(
         modifier = modifier
             .padding(horizontal = 8.dp)
-            .then(modifier),
+            .then(modifier)
+            .hazeChild(
+                state = hazeState,
+                shape = RoundedCornerShape(35.dp)
+            ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
             modifier = Modifier
-                .padding(bottom = 16.dp)
-                .width(78.dp)
+                .width(64.dp)
                 .height(150.dp)
                 .border(
                     width = 1.dp,

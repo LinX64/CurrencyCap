@@ -1,5 +1,9 @@
 package ui.screens.exchange
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -44,14 +48,15 @@ import ui.screens.exchange.components.AmountInput
 import ui.screens.exchange.components.CurrencyInputs
 import ui.screens.exchange.components.CurrencyPicker
 import ui.screens.exchange.components.Disclaimer
+import util.exitTransition
 
 @Composable
 @Preview
 internal fun ExchangeScreen(
     exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>(),
     padding: PaddingValues,
+    hazeState: HazeState,
     onError: (String) -> Unit,
-    hazeState: HazeState
 ) {
     val state by exchangeViewModel.state.collectAsStateWithLifecycle()
 
@@ -66,6 +71,7 @@ internal fun ExchangeScreen(
                 state = state,
                 hazeState = hazeState,
                 exchangeViewModel = exchangeViewModel,
+                onError = onError
             )
         }
         item { Disclaimer() }
@@ -85,7 +91,8 @@ private fun ExchangeCard(
     modifier: Modifier = Modifier,
     exchangeViewModel: ExchangeViewModel,
     state: HomeUiState,
-    hazeState: HazeState
+    hazeState: HazeState,
+    onError: (String) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     var dialogOpened by rememberSaveable { mutableStateOf(false) }
@@ -137,8 +144,8 @@ private fun ExchangeCard(
 
                 AmountInput(
                     amountInputType = AmountInputType.SOURCE,
-                    selectedCode = selectedCurrencyType.code,
                     onAmountChange = { exchangeViewModel.onEvent(HomeEvent.OnAmountChanged(it)) },
+                    onErrorMessage = onError
                 )
             }
         }
@@ -157,11 +164,17 @@ private fun ExchangeCard(
             )
         } // check to see why this is not being shown
 
-        BlurColumn {
-            ResultCard(
-                state = state,
-                amount = state.sourceCurrencyAmount // TODO: pass the converted amount here
-            )
+        AnimatedVisibility(
+            visible = state.sourceCurrencyAmount.isNotEmpty(),
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + exitTransition()
+        ) {
+            BlurColumn {
+                ResultCard(
+                    state = state,
+                    amount = state.sourceCurrencyAmount // TODO: pass the converted amount here
+                )
+            }
         }
     }
 }

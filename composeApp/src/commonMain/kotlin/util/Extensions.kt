@@ -38,3 +38,19 @@ fun List<RateDto>.getTextFieldOptions(): List<String> = this
         }.toString()
     }
     .toList()
+
+fun String.formatDecimalSeparator(): String {
+    val parts = this.split(".")
+    val integerPart = parts[0]
+    val formattedIntegerPart = integerPart.reversed()
+        .chunked(3)
+        .joinToString(",")
+        .reversed()
+
+    return if (parts.size > 1) {
+        val decimalPart = parts[1]
+        "$formattedIntegerPart.$decimalPart"
+    } else {
+        formattedIntegerPart
+    }
+}

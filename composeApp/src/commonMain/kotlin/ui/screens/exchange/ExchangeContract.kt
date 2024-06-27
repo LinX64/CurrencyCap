@@ -50,3 +50,8 @@ data class HomeUiState(
     val sourceCurrencyAmount: String = "0",
     val targetCurrencyAmount: String = "0"
 )
+
+data class Currency(
+    val code: String,
+    var value: Double
+)

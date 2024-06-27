@@ -2,10 +2,8 @@ package ui.screens.exchange.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
@@ -23,17 +21,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import data.model.exchange.AmountInputType
-import data.model.exchange.CurrencyCode
-import org.jetbrains.compose.resources.painterResource
 import ui.common.DecimalFormat
-import ui.common.formatDecimalSeparator
+import util.formatDecimalSeparator
 
 @Composable
 internal fun AmountInput(
     amountInputType: AmountInputType,
-    maxLength: Int = 12,
-    selectedCode: CurrencyCode,
-    onAmountChange: (String) -> Unit
+    maxLength: Int = 10,
+    onAmountChange: (String) -> Unit,
+    onErrorMessage: (String) -> Unit
 ) {
     var amountValue by rememberSaveable { mutableStateOf("") }
     val formattedAmount = if (amountValue.isNotEmpty()) {
@@ -46,10 +42,10 @@ internal fun AmountInput(
             .animateContentSize(),
         value = formattedAmount,
         onValueChange = {
-            if (it.isNotEmpty()) {
+            if (it.isNotEmpty() && it.length <= maxLength) {
                 amountValue = it
                 onAmountChange(it)
-            }
+            } else onErrorMessage("Invalid amount!")
         },
         colors = TextFieldDefaults.colors(
             focusedContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
@@ -68,14 +64,7 @@ internal fun AmountInput(
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Done
-        ),
-        leadingIcon = {
-            Icon(
-                modifier = Modifier.size(24.dp),
-                painter = painterResource(selectedCode.flag),
-                contentDescription = null
-            )
-        }
+        )
     )
 }
 

@@ -2,8 +2,8 @@ package ui.components.main
 
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.ic_home
-import currencycap.composeapp.generated.resources.ic_letters_ai
 import currencycap.composeapp.generated.resources.ic_news
+import currencycap.composeapp.generated.resources.ic_save
 import currencycap.composeapp.generated.resources.ic_user_normal
 import org.jetbrains.compose.resources.DrawableResource
 import ui.navigation.NavRoutes
@@ -26,9 +26,9 @@ sealed class BottomBarTab(
         title = NavRoutes.EXCHANGE,
     )
 
-    data object AiPrediction : BottomBarTab(
-        title = NavRoutes.AI_PREDICTION,
-        icon = Res.drawable.ic_letters_ai
+    data object Bookmarks : BottomBarTab(
+        title = NavRoutes.BOOKMARKS,
+        icon = Res.drawable.ic_save
     )
 
     data object Profile : BottomBarTab(
@@ -41,7 +41,7 @@ val tabs = listOf(
     BottomBarTab.Overview,
     BottomBarTab.News,
     BottomBarTab.Exchange,
-    BottomBarTab.AiPrediction,
+    BottomBarTab.Bookmarks,
     BottomBarTab.Profile
 )
 

@@ -12,12 +12,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-private const val FIAT = "fiat"
 
-data class Currency(
-    val code: String,
-    var value: Double
-)
 
 internal class ExchangeViewModel(
     private val mainRepository: MainRepository,
@@ -52,17 +47,20 @@ internal class ExchangeViewModel(
         }
     }
 
-
     private fun convert(amount: String): Double {
         val source = state.value.sourceCurrency?.value
         val target = state.value.targetCurrency?.value
 
-        val exchangeRate = if (source != null && target != null) {
-            target / source
-        } else 1.0
+        try {
+            val exchangeRate = if (source != null && target != null) {
+                target / source
+            } else 1.0
 
-        return if (amount.isEmpty()) 0.0
-        else amount.toDouble() * exchangeRate
+            return if (amount.isEmpty()) 0.0
+            else amount.toDouble() * exchangeRate
+        } catch (e: NumberFormatException) {
+            return 0.0
+        }
     }
 
     fun onEvent(event: HomeEvent) {
@@ -101,7 +99,6 @@ internal class ExchangeViewModel(
                         }
                     }
                 }
-
             }
         }
     }

@@ -1,6 +1,7 @@
 package ui.navigation
 
 object NavRoutes {
+    const val BOOKMARKS = "Bookmarks"
     const val WALLET = "Wallet"
     const val HOME = "Home"
     const val LANDING = "Landing"
