@@ -1,10 +1,10 @@
 package domain.repository
 
 import data.model.User
-import data.repository.auth.AuthServiceImpl.AuthState
+import data.repository.auth.AuthServiceRepositoryImpl.AuthState
 import kotlinx.coroutines.flow.Flow
 
-interface AuthService {
+interface AuthServiceRepository {
     val currentUserId: String
     val hasUser: Boolean
     val currentUser: Flow<User>

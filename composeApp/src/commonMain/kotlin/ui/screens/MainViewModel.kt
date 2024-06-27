@@ -3,7 +3,6 @@ package ui.screens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import domain.repository.UserPreferences
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -23,7 +22,7 @@ class MainViewModel(
         _state.value = MainState.Loading
 
         viewModelScope.launch {
-            delay(2000)
+            // delay(2000) TODO: Revert this change
 
             val userLoggedIn = userPreferences.isUserLoggedIn()
             if (userLoggedIn) {

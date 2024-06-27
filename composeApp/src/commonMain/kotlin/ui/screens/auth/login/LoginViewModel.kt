@@ -1,8 +1,8 @@
 package ui.screens.auth.login
 
 import androidx.lifecycle.viewModelScope
-import data.repository.auth.AuthServiceImpl.AuthState
-import domain.repository.AuthService
+import data.repository.auth.AuthServiceRepositoryImpl.AuthState
+import domain.repository.AuthServiceRepository
 import domain.repository.UserPreferences
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -19,7 +19,7 @@ import ui.screens.auth.login.LoginViewEvent.OnSignUpClick
 import util.validateEmail
 
 internal class LoginViewModel(
-    private val authService: AuthService,
+    private val authServiceRepository: AuthServiceRepository,
     private val userPreferences: UserPreferences
 ) : MviViewModel<LoginViewEvent, LoginState, LoginNavigationEffect>(LoginState.Idle) {
 
@@ -55,10 +55,10 @@ internal class LoginViewModel(
         }
 
         viewModelScope.launch {
-            val authState = authService.authenticate(email, password)
+            val authState = authServiceRepository.authenticate(email, password)
             when (authState) {
                 is AuthState.Success -> {
-                    userPreferences.saveUserUid(authService.currentUserId)
+                    userPreferences.saveUserUid(authServiceRepository.currentUserId)
                     setEffect(NavigateToMarketOverview)
 
                     setState { LoginState.Idle }

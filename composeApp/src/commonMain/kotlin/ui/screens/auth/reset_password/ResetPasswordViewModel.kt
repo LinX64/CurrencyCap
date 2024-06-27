@@ -1,7 +1,7 @@
 package ui.screens.auth.reset_password
 
 import androidx.lifecycle.viewModelScope
-import domain.repository.AuthService
+import domain.repository.AuthServiceRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
@@ -10,7 +10,7 @@ import ui.screens.auth.reset_password.ResetPasswordViewEvent.OnResetPasswordClic
 import util.validateEmail
 
 internal class ResetPasswordViewModel(
-    private val authService: AuthService
+    private val authServiceRepository: AuthServiceRepository
 ) : MviViewModel<ResetPasswordViewEvent, ResetPasswordState, ResetPasswordNavigationEffect>(ResetPasswordState.Idle) {
 
     val email: MutableStateFlow<String> = MutableStateFlow("")
@@ -36,7 +36,7 @@ internal class ResetPasswordViewModel(
         }
 
         viewModelScope.launch {
-            authService.sendRecoveryEmail(email)
+            authServiceRepository.sendRecoveryEmail(email)
 
             setState { ResetPasswordState.Success }
         }

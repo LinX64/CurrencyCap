@@ -16,7 +16,7 @@ import ui.screens.search.SearchViewModel
 val viewModelModule = module {
     single { MainViewModel(get()) }
     single { OverviewViewModel(get()) }
-    single { ExchangeViewModel(get(), get(), get()) }
+    single { ExchangeViewModel(get(), get()) }
     single { BookmarksViewModel() } // TODO
     single { SearchViewModel(get()) }
     single { LoginViewModel(get(), get()) }
