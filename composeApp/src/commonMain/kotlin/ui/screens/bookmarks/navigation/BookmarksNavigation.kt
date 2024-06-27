@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
 import ui.navigation.NavRoutes
-import ui.screens.ai_predict.BookmarksScreen
+import ui.screens.bookmarks.BookmarksScreen
 
 fun NavController.navigateToBookmarksScreen() = navigate(NavRoutes.BOOKMARKS)
 

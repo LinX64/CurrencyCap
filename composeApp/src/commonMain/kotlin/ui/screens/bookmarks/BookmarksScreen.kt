@@ -1,10 +1,13 @@
-package ui.screens.ai_predict
+package ui.screens.bookmarks
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,56 +18,68 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.feature_not_available
-import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.haze
 import di.koinViewModel
 import io.github.alexzhirkevich.compottie.LottieAnimation
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
-import io.github.alexzhirkevich.compottie.LottieConstants
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.stringResource
+import ui.components.main.BaseBlurLazyColumn
+import ui.screens.ai_predict.BookmarksViewModel
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 internal fun BookmarksScreen(
     padding: PaddingValues,
     aiPredictViewModel: BookmarksViewModel = koinViewModel<BookmarksViewModel>(),
     hazeState: HazeState
 ) {
+
+    BaseBlurLazyColumn(
+        hazeState = hazeState,
+        padding = padding,
+    ) {
+        // if no bookmark, then show this
+
+        item {
+            NoBookmarks()
+        }
+    }
+}
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+private fun NoBookmarks() {
     var bytes by remember { mutableStateOf(ByteArray(0)) }
     val composition by rememberLottieComposition(LottieCompositionSpec.JsonString(bytes.decodeToString()))
 
-    LaunchedEffect(Unit) { bytes = Res.readBytes("files/coming_soon.json") }
+    LaunchedEffect(Unit) { bytes = Res.readBytes("files/no_bookmarks.json") }
 
     Column(
-        modifier = Modifier.fillMaxSize()
-            .padding(padding).haze(
-                state = hazeState,
-                style = HazeStyle(
-                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                    blurRadius = 35.dp,
-                    noiseFactor = HazeDefaults.noiseFactor
-                )
-            ),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LottieAnimation(
-            modifier = Modifier.padding(16.dp),
-            composition = composition,
-            iterations = LottieConstants.IterateForever
+            modifier = Modifier.padding(16.dp).size(150.dp),
+            composition = composition
         )
 
         Text(
-            modifier = Modifier.padding(16.dp),
-            text = stringResource(Res.string.feature_not_available),
-            style = MaterialTheme.typography.labelLarge,
+            text = "No bookmarks yet!",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = "Bookmark a coin or a news to see it here",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface
         )
     }
 }
