@@ -19,14 +19,15 @@ import ui.screens.overview.components.TrendingCryptoCurrencies
 internal fun OverviewScreen(
     overviewViewModel: OverviewViewModel = koinViewModel<OverviewViewModel>(),
     padding: PaddingValues,
-    hazeState: HazeState
+    hazeState: HazeState,
+    onSearchCardClicked: () -> Unit
 ) {
     val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
     BaseBlurLazyColumn(
         padding = padding,
         hazeState = hazeState
     ) {
-        item { SearchViewHeader(state) }
+        item { SearchViewHeader(state, onSearchCardClicked = onSearchCardClicked) }
         item { HorizontalLineWithDot() }
         item { PortfolioSection(state = state, hazeState = hazeState) }
         item { HorizontalLineWithDot() }

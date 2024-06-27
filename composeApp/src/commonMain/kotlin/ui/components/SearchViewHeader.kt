@@ -8,9 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,14 +19,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.ic_electric_lightbulb_thin
+import currencycap.composeapp.generated.resources.ic_search_normal
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
+import org.jetbrains.compose.resources.painterResource
 import ui.screens.overview.OverviewState
 import ui.screens.overview.components.getPlaceHolder
 
 @Composable
 internal fun SearchViewHeader(
-    state: OverviewState
+    state: OverviewState,
+    onSearchCardClicked: () -> Unit
 ) {
     val hazeState = remember { HazeState() }
     val isLoading = state is OverviewState.Loading
@@ -52,6 +54,7 @@ internal fun SearchViewHeader(
                     .haze(hazeState)
                     .padding(16.dp),
                 shape = RoundedCornerShape(25.dp),
+                onClick = onSearchCardClicked
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -59,7 +62,7 @@ internal fun SearchViewHeader(
                 ) {
                     Icon(
                         modifier = if (isLoading) getPlaceHolder(Modifier.padding(16.dp)) else Modifier.padding(16.dp),
-                        imageVector = Icons.Default.Search,
+                        painter = painterResource(Res.drawable.ic_search_normal),
                         contentDescription = "Search",
                         tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                     )
@@ -81,7 +84,7 @@ internal fun SearchViewHeader(
                     modifier = if (isLoading) getPlaceHolder(Modifier.size(64.dp)) else Modifier.size(64.dp),
                     onClick = { /*TODO*/ }) {
                     Icon(
-                        imageVector = Icons.Default.Info,
+                        painter = painterResource(Res.drawable.ic_electric_lightbulb_thin),
                         contentDescription = "Info",
                         tint = Color.Gray,
                         modifier = Modifier.size(24.dp)

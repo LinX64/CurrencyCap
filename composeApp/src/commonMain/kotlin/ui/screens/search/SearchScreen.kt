@@ -12,12 +12,17 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SearchBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
@@ -26,6 +31,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import domain.model.RateDto
+import kotlinx.coroutines.delay
 import ui.components.ErrorView
 import ui.screens.search.components.EmptyView
 import ui.screens.search.components.LeadingIcon
@@ -42,7 +48,10 @@ internal fun SearchScreen(
 ) {
     val state by searchViewModel.viewState.collectAsStateWithLifecycle()
     var text by rememberSaveable { mutableStateOf("") }
-    var expanded by rememberSaveable { mutableStateOf(false) }
+    var expanded by rememberSaveable { mutableStateOf(true) }
+    val showKeyboard = remember { mutableStateOf(true) }
+    val focusRequester = remember { FocusRequester() }
+    val keyboard = LocalSoftwareKeyboardController.current
 
     Column(
         modifier = Modifier.fillMaxSize().padding(padding),
@@ -56,7 +65,8 @@ internal fun SearchScreen(
             SearchBar(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .semantics { traversalIndex = 0f },
+                    .semantics { traversalIndex = 0f }
+                    .focusRequester(focusRequester),
                 active = expanded,
                 onActiveChange = { expanded = it },
                 onQueryChange = {
@@ -83,15 +93,22 @@ internal fun SearchScreen(
                 }
             }
 
-            // TODO: Show different tabs here
-
             SearchTabs()
+        }
+    }
+
+    LaunchedEffect(focusRequester) {
+        if (showKeyboard.equals(true)) {
+            focusRequester.requestFocus()
+            delay(100)
+            keyboard?.show()
         }
     }
 }
 
 @Composable
 private fun SearchTabs() {
+    // TODO: Show different tabs here
 
 }
 

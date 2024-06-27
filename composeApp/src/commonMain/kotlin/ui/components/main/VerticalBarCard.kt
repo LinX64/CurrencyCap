@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.hazeChild
+import dev.chrisbanes.haze.haze
 
 @Composable
 internal fun VerticalBarCard(
@@ -40,10 +40,7 @@ internal fun VerticalBarCard(
         modifier = modifier
             .padding(horizontal = 8.dp)
             .then(modifier)
-            .hazeChild(
-                state = hazeState,
-                shape = RoundedCornerShape(35.dp)
-            ),
+            .haze(hazeState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(

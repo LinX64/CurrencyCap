@@ -24,6 +24,7 @@ private fun ExchangePreview() {
             OverviewScreen(
                 padding = PaddingValues(0.dp),
                 hazeState = hazeState,
+                onSearchCardClicked = { /* TODO */ }
             )
         }
     }
