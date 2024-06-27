@@ -115,6 +115,7 @@ internal class ExchangeViewModel(
             currencyRepository.readTargetCurrencyCode().collectLatest { currencyCode ->
                 state.collect { uiState ->
                     val selectedCurrency = uiState.currencyRates.find { it.code == currencyCode.name }
+
                     selectedCurrency?.let { nonNullData ->
                         _state.update {
                             it.copy(targetCurrency = nonNullData)
@@ -163,7 +164,18 @@ internal class ExchangeViewModel(
 
     private fun readSourceCurrency() {
         viewModelScope.launch {
-            // todo
+            currencyRepository.readSourceCurrencyCode().collectLatest { currencyCode ->
+                state.collect { uiState ->
+                    val selectedCurrency = uiState.currencyRates.find { it.code == currencyCode.name }
+
+                    selectedCurrency?.let { nonNullData ->
+                        _state.update {
+                            it.copy(sourceCurrency = nonNullData)
+                        }
+                    }
+                }
+
+            }
         }
     }
 

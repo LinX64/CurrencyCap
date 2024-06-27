@@ -133,8 +133,8 @@ private fun ExchangeCard(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 CurrencyInputs(
-                    source = Currency("USD", 1.0),
-                    target = Currency("IRR", 1.0),
+                    source = state.sourceCurrency,
+                    target = state.targetCurrency,
                     onSwitch = { exchangeViewModel.onEvent(HomeEvent.SwitchCurrencies) },
                     onCurrencyTypeSelect = {
                         dialogOpened = true
