@@ -1,70 +1,77 @@
 package ui.screens.exchange.components
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import data.model.exchange.AmountInputType
+import data.model.exchange.CurrencyCode
+import org.jetbrains.compose.resources.painterResource
 import ui.common.DecimalFormat
 import ui.common.formatDecimalSeparator
 
 @Composable
-fun AmountInput(
+internal fun AmountInput(
     amountInputType: AmountInputType,
-    amount: String
+    maxLength: Int = 12,
+    selectedCode: CurrencyCode
 ) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.End
-    ) {
-        TextField(
-            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(size = 8.dp))
-                .animateContentSize()
-                .height(54.dp),
-            value = if (amount.isNotEmpty()) DecimalFormat().format(amount.toDouble()).formatDecimalSeparator() else "0",
-            onValueChange = {},
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.White.copy(alpha = 0.05f),
-                unfocusedContainerColor = Color.White.copy(alpha = 0.05f),
-                disabledContainerColor = Color.White.copy(alpha = 0.05f),
-                errorContainerColor = Color.White.copy(alpha = 0.05f),
-                focusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                cursorColor = Color.White,
-                unfocusedTextColor =
-                if (amountInputType == AmountInputType.SOURCE) {
-                    if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.inversePrimary
-                } else {
-                    Color.White
-                },
-                focusedTextColor = if (amountInputType == AmountInputType.SOURCE) {
-                    if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.inversePrimary
-                } else {
-                    Color.White
-                }
-            ),
-            textStyle = LocalTextStyle.current.copy(
-                fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.End
+    var amountValue by rememberSaveable { mutableStateOf("") }
+    val formattedAmount = if (amountValue.isNotEmpty()) {
+        DecimalFormat().format(amountValue.toDouble()).formatDecimalSeparator()
+    } else "0.0000"
+
+    TextField(
+        modifier = Modifier.fillMaxWidth()
+            .clip(RoundedCornerShape(35.dp))
+            .animateContentSize(),
+        value = formattedAmount,
+        onValueChange = {
+            if (it.isNotEmpty()) amountValue = it
+        },
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
+            unfocusedContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
+            disabledContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
+            errorContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
+            focusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            cursorColor = MaterialTheme.colorScheme.onSurface,
+        ),
+        textStyle = LocalTextStyle.current.copy(
+            fontSize = MaterialTheme.typography.titleLarge.fontSize,
+            fontWeight = FontWeight.Bold
+        ),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Number,
+            imeAction = ImeAction.Done
+        ),
+        leadingIcon = {
+            Icon(
+                modifier = Modifier.size(24.dp),
+                painter = painterResource(selectedCode.flag),
+                contentDescription = null
             )
-
-        )
-    }
-
+        },
+    )
 }
+

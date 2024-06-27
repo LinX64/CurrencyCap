@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.switch_ic
@@ -52,14 +53,16 @@ internal fun CurrencyInputs(
                 )
             }
         )
-        Spacer(modifier = Modifier.height(14.dp))
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         IconButton(
             modifier = Modifier
                 .padding(top = 24.dp)
                 .rotate(animatedRotation)
-//                .graphicsLayer {
-//                    rotationY = animatedRotation
-//                }
+                .graphicsLayer {
+                    rotationY = animatedRotation
+                }
             ,
             onClick = {
                 animationStarted = !animationStarted
@@ -72,7 +75,9 @@ internal fun CurrencyInputs(
                 tint = Color.White
             )
         }
-        Spacer(modifier = Modifier.height(14.dp))
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         CurrencyView(
             placeholder = "to",
             currency = target,

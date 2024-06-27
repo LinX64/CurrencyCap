@@ -29,9 +29,7 @@ internal class ExchangeViewModel(
     val state = _state.asStateFlow()
 
     private val _updatedCurrencyValue: MutableStateFlow<String> = MutableStateFlow("")
-
     val amountValue: MutableStateFlow<String> = MutableStateFlow("")
-    val convertedResult: MutableStateFlow<String> = MutableStateFlow("")
 
     init {
         onEvent(HomeEvent.ReadSourceCurrencyCode)
@@ -40,9 +38,7 @@ internal class ExchangeViewModel(
         viewModelScope.launch {
             _updatedCurrencyValue.collect { value ->
                 _state.update {
-                    it.copy(
-                        sourceCurrencyAmount = value,
-                    )
+                    it.copy(sourceCurrencyAmount = value)
                 }
             }
         }

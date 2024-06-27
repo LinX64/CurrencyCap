@@ -47,13 +47,14 @@ fun RowScope.CurrencyView(
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
             color = Color.White
         )
+
         Spacer(modifier = Modifier.height(4.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth()
-                .clip(RoundedCornerShape(size = 8.dp))
+                .clip(RoundedCornerShape(size = 35.dp))
                 .background(Color.White.copy(alpha = 0.05f))
-                .height(45.dp)
+                .height(64.dp)
                 .clickable {
                     currency?.let {
                         onClick(it)
@@ -72,7 +73,6 @@ fun RowScope.CurrencyView(
                         targetState = data,
                         transitionSpec = { transitionSpec() },
                     ) {
-
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
@@ -86,7 +86,9 @@ fun RowScope.CurrencyView(
                                 tint = Color.Unspecified,
                                 contentDescription = "Country Flag"
                             )
+
                             Spacer(modifier = Modifier.width(8.dp))
+
                             Text(
                                 text = CurrencyCode.valueOf(data.code).name,
                                 fontWeight = FontWeight.Bold,
@@ -94,7 +96,6 @@ fun RowScope.CurrencyView(
                                 color = Color.White
                             )
                         }
-
                     }
                 }
             }

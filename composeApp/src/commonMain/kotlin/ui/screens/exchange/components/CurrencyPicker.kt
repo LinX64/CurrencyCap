@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -27,6 +28,7 @@ import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -50,18 +52,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import data.model.exchange.CurrencyCode
 import data.model.exchange.CurrencyType
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import ui.screens.exchange.Currency
 import ui.screens.exchange.HomeEvent
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CurrencyPicker(
+internal fun CurrencyPicker(
     currencyList: List<Currency>,
     currencyType: CurrencyType,
     onEvent: (HomeEvent) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    hazeState: HazeState
 ) {
 
     val allCurrencies = remember(key1 = currencyList) {
@@ -76,105 +80,106 @@ fun CurrencyPicker(
     val textColor = MaterialTheme.colorScheme.onSurface
 
     BasicAlertDialog(
-        onDismissRequest = {
-            onDismiss()
-        },
+        modifier = Modifier.hazeChild(
+            state = hazeState,
+            shape = MaterialTheme.shapes.extraLarge
+        ),
+        onDismissRequest = { onDismiss() },
         content = {
-            Column(
+            Surface(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(surfaceColor)
-                    .padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                TextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(size = 16.dp)),
-                    value = searchQuery,
-                    onValueChange = { query ->
-                        searchQuery = query.uppercase()
-
-                        if (query.isNotEmpty()) {
-                            val filteredCurrencies = currencyList.filter {
-                                it.code.contains(query.uppercase())
-                            }
-                            allCurrencies.clear()
-                            allCurrencies.addAll(filteredCurrencies)
-                        } else {
-                            allCurrencies.clear()
-                            allCurrencies.addAll(currencyList)
-                        }
-                    },
-                    placeholder = {
-                        Text(
-                            text = "Search here",
-                            color = textColor.copy(alpha = 0.38f),
-                            fontSize = MaterialTheme.typography.bodySmall.fontSize
-                        )
-                    },
-                    singleLine = true,
-                    textStyle = TextStyle(
-                        color = textColor,
-                        fontSize = MaterialTheme.typography.bodySmall.fontSize
+                    .wrapContentHeight()
+                    .hazeChild(
+                        state = hazeState,
+                        shape = MaterialTheme.shapes.extraLarge,
                     ),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = textColor.copy(alpha = 0.1f),
-                        unfocusedContainerColor = textColor.copy(alpha = 0.1f),
-                        disabledContainerColor = textColor.copy(alpha = 0.1f),
-                        errorContainerColor = textColor.copy(alpha = 0.1f),
-                        focusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        cursorColor = textColor,
+                shape = MaterialTheme.shapes.extraLarge,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                contentColor = surfaceColor
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                        .clip(RoundedCornerShape(16.dp))
+                        .padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    TextField(
+                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(size = 16.dp)),
+                        value = searchQuery,
+                        onValueChange = { query ->
+                            searchQuery = query.uppercase()
+
+                            if (query.isNotEmpty()) {
+                                val filteredCurrencies = currencyList.filter {
+                                    it.code.contains(query.uppercase())
+                                }
+                                allCurrencies.clear()
+                                allCurrencies.addAll(filteredCurrencies)
+                            } else {
+                                allCurrencies.clear()
+                                allCurrencies.addAll(currencyList)
+                            }
+                        },
+                        placeholder = {
+                            Text(
+                                text = "Search here",
+                                color = textColor.copy(alpha = 0.38f),
+                                fontSize = MaterialTheme.typography.bodySmall.fontSize
+                            )
+                        },
+                        singleLine = true,
+                        textStyle = TextStyle(
+                            color = textColor, fontSize = MaterialTheme.typography.bodySmall.fontSize
+                        ),
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = textColor.copy(alpha = 0.1f),
+                            unfocusedContainerColor = textColor.copy(alpha = 0.1f),
+                            disabledContainerColor = textColor.copy(alpha = 0.1f),
+                            errorContainerColor = textColor.copy(alpha = 0.1f),
+                            focusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            cursorColor = textColor
+                        )
                     )
-                )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(20.dp))
 
-                if (allCurrencies.isNotEmpty()) {
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(300.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    if (allCurrencies.isNotEmpty()) {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxWidth().height(300.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(items = allCurrencies, key = { it.code }) { currency ->
+                                CurrencyCodePickerView(code = CurrencyCode.valueOf(currency.code),
+                                    isSelected = selectedCurrencyCode.name == currency.code,
+                                    onSelect = { selectedCurrencyCode = it })
+                            }
+                        }
+                    } else {
+                        //TODO: check this later
+                    }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End
                     ) {
-                        items(
-                            items = allCurrencies,
-                            key = { it.code }
-                        ) { currency ->
-                            CurrencyCodePickerView(
-                                code = CurrencyCode.valueOf(currency.code),
-                                isSelected = selectedCurrencyCode.name == currency.code,
-                                onSelect = { selectedCurrencyCode = it }
+                        TextButton(
+                            onClick = onDismiss
+                        ) {
+                            Text(
+                                text = "Cancel",
+                                color = textColor.copy(alpha = 0.38f)
                             )
                         }
-                    }
-                } else {
-                    //TODO
-                }
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    TextButton(
-                        onClick = onDismiss
-                    ) {
-                        Text(
-                            text = "Cancel",
-                            color = MaterialTheme.colorScheme.outline
-                        )
-                    }
-                    Spacer(modifier = Modifier.width(16.dp))
-                    TextButton(onClick = {
-                        // TODO: Update the currency type
-                    }) {
-                        Text(
-                            text = "Confirm",
-                            color = MaterialTheme.colorScheme.primary
-                        )
+                        TextButton(
+                            onClick = { onEvent(HomeEvent.SaveSelectedCurrencyCode(currencyType, selectedCurrencyCode)) }
+                        ) {
+                            Text(
+                                text = "Confirm",
+                                color = textColor
+                            )
+                        }
                     }
                 }
             }
@@ -184,9 +189,7 @@ fun CurrencyPicker(
 
 @Composable
 private fun CurrencyCodePickerView(
-    code: CurrencyCode,
-    isSelected: Boolean,
-    onSelect: (CurrencyCode) -> Unit
+    code: CurrencyCode, isSelected: Boolean, onSelect: (CurrencyCode) -> Unit
 ) {
     val saturation = remember { Animatable(if (isSelected) 1f else 0f) }
     val textColor = MaterialTheme.colorScheme.onSurface
@@ -202,15 +205,11 @@ private fun CurrencyCodePickerView(
     }
 
     val animatedAlpha by animateFloatAsState(
-        targetValue = if (isSelected) 1f else 0.5f,
-        animationSpec = tween(durationMillis = 300)
+        targetValue = if (isSelected) 1f else 0.5f, animationSpec = tween(durationMillis = 300)
     )
 
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(size = 8.dp))
-            .clickable { onSelect(code) }
+        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(size = 8.dp)).clickable { onSelect(code) }
             .padding(all = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -244,11 +243,7 @@ private fun CurrencyCodeSelector(isSelected: Boolean = false) {
         animationSpec = tween(durationMillis = 300)
     )
     Box(
-        modifier = Modifier
-            .size(18.dp)
-            .clip(CircleShape)
-            .background(animatedColor),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.size(18.dp).clip(CircleShape).background(animatedColor), contentAlignment = Alignment.Center
     ) {
         if (isSelected) {
             Icon(
