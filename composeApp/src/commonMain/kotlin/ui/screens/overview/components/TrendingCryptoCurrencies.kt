@@ -23,11 +23,8 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
     Column {
         Text(
             modifier = if (rates is OverviewState.Loading) getPlaceHolder(
-                Modifier.padding(
-                    vertical = 16.dp,
-                    horizontal = 8.dp
-                ),
-            ) else Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
+                Modifier.padding(top = 16.dp, start = 8.dp),
+            ) else Modifier.padding(top = 16.dp, start = 8.dp),
             text = "Trending rates",
             style = MaterialTheme.typography.titleMedium,
             color = CurrencyColors.White,

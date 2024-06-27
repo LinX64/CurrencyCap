@@ -9,7 +9,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalContext
-import org.koin.core.context.stopKoin
 import ui.App
 import ui.theme.AppM3Theme
 
@@ -37,11 +36,5 @@ class MainActivity : ComponentActivity() {
                 App()
             }
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        stopKoin()
     }
 }

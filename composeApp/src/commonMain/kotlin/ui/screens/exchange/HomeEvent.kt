@@ -6,6 +6,7 @@ import data.model.exchange.CurrencyType
 sealed class HomeEvent {
     data object FetchRates : HomeEvent()
     data object SwitchCurrencies : HomeEvent()
+    data class OnAmountChanged(val amount: String) : HomeEvent()
 
     data class SaveSelectedCurrencyCode(
         val currencyType: CurrencyType,

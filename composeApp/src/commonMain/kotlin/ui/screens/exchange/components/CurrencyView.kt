@@ -87,13 +87,13 @@ fun RowScope.CurrencyView(
                                 contentDescription = "Country Flag"
                             )
 
-                            Spacer(modifier = Modifier.width(8.dp))
+                            Spacer(modifier = Modifier.width(16.dp))
 
                             Text(
                                 text = CurrencyCode.valueOf(data.code).name,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = MaterialTheme.typography.titleLarge.fontSize,
-                                color = Color.White
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         }
                     }

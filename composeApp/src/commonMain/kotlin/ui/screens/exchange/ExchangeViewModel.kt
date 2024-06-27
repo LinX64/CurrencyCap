@@ -27,9 +27,7 @@ internal class ExchangeViewModel(
 
     private val _state = MutableStateFlow(HomeUiState())
     val state = _state.asStateFlow()
-
     private val _updatedCurrencyValue: MutableStateFlow<String> = MutableStateFlow("")
-    val amountValue: MutableStateFlow<String> = MutableStateFlow("")
 
     init {
         onEvent(HomeEvent.ReadSourceCurrencyCode)
@@ -70,17 +68,11 @@ internal class ExchangeViewModel(
     fun onEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.FetchRates -> {
-                // todo
+                // TODO()
             }
 
-            is HomeEvent.ReadSourceCurrencyCode -> {
-                readSourceCurrency()
-            }
-
-            is HomeEvent.ReadTargetCurrencyCode -> {
-                readTargetCurrency()
-            }
-
+            is HomeEvent.ReadSourceCurrencyCode -> readSourceCurrency()
+            is HomeEvent.ReadTargetCurrencyCode -> readTargetCurrency()
             is HomeEvent.SaveSelectedCurrencyCode -> {
                 if (event.currencyType is CurrencyType.Source) {
                     saveSourceCurrencyCode(event.currencyCode.name)
@@ -88,13 +80,12 @@ internal class ExchangeViewModel(
                     saveTargetCurrencyCode(event.currencyCode.name)
                 }
             }
-
-            is HomeEvent.SwitchCurrencies -> {
-                switchCurrencies()
-            }
-
-            is HomeEvent.NumberButtonClicked -> {
-                updateCurrencyValue(event.value)
+            is HomeEvent.SwitchCurrencies -> switchCurrencies()
+            is HomeEvent.NumberButtonClicked -> updateCurrencyValue(event.value)
+            is HomeEvent.OnAmountChanged -> {
+                _state.update {
+                    it.copy(sourceCurrencyAmount = event.amount)
+                }
             }
         }
     }
@@ -102,13 +93,11 @@ internal class ExchangeViewModel(
     private fun readTargetCurrency() {
         viewModelScope.launch {
             currencyRepository.readTargetCurrencyCode().collectLatest { currencyCode ->
-                state.collect { homeuiState ->
-                    val selectedCurrency = homeuiState.currencyRates.find { it.code == currencyCode.name }
+                state.collect { uiState ->
+                    val selectedCurrency = uiState.currencyRates.find { it.code == currencyCode.name }
                     selectedCurrency?.let { nonNullData ->
                         _state.update {
-                            it.copy(
-                                targetCurrency = nonNullData
-                            )
+                            it.copy(targetCurrency = nonNullData)
                         }
                     }
                 }

@@ -3,8 +3,6 @@ package ui.components.main
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
@@ -24,10 +22,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.ic_logout
+import currencycap.composeapp.generated.resources.ic_settings
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
+import org.jetbrains.compose.resources.painterResource
 import ui.navigation.NavRoutes
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
@@ -51,7 +53,6 @@ internal fun AppTopBar(
             scrolledContainerColor = Color.Transparent,
         ),
         scrollBehavior = scrollBehavior,
-        //navigationIcon = { AppNavigationIcon(navController = navController, currentDestination = currentDestination) },
         actions = { ActionsMenu(currentDestination = currentDestination, onLogoutClick = onLogoutClick) }
     )
 }
@@ -64,8 +65,19 @@ private fun ActionsMenu(
     val expanded = remember { mutableStateOf(false) }
 
     if (currentDestination == NavRoutes.PROFILE) {
-        IconButton(onClick = { expanded.value = !expanded.value }) {
-            Icon(Icons.Default.MoreVert, contentDescription = "More")
+        IconButton(onClick = { /* TODO */ }) {
+            Icon(
+                painter = painterResource(Res.drawable.ic_settings),
+                contentDescription = "Settings"
+            )
+        }
+
+        IconButton(
+            onClick = { expanded.value = !expanded.value }) {
+            Icon(
+                imageVector = Icons.Default.MoreVert,
+                contentDescription = "More"
+            )
         }
 
         DropdownMenu(
@@ -73,12 +85,18 @@ private fun ActionsMenu(
             onDismissRequest = { expanded.value = false }
         ) {
             DropdownMenuItem(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                modifier = Modifier.fillMaxWidth()
+                    .padding(horizontal = 16.dp),
                 onClick = {
                     onLogoutClick()
                     expanded.value = false
                 },
-                leadingIcon = { Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "Log out") },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_logout),
+                        contentDescription = "Log out"
+                    )
+                },
                 text = { Text("Log out") }
             )
         }
@@ -96,20 +114,5 @@ private fun AppTitle(currentDestination: String) {
     )
 }
 
-@Composable
-private fun AppNavigationIcon(
-    navController: NavHostController,
-    currentDestination: String
-) {
-    if (
-        currentDestination != NavRoutes.LANDING &&
-        currentDestination != NavRoutes.LOGIN &&
-        currentDestination != NavRoutes.HOME
-    ) {
-        IconButton(onClick = { navController.navigateUp() }) {
-            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-        }
-    }
-}
 
 

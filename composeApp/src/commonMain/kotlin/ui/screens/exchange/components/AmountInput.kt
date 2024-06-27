@@ -32,12 +32,13 @@ import ui.common.formatDecimalSeparator
 internal fun AmountInput(
     amountInputType: AmountInputType,
     maxLength: Int = 12,
-    selectedCode: CurrencyCode
+    selectedCode: CurrencyCode,
+    onAmountChange: (String) -> Unit
 ) {
     var amountValue by rememberSaveable { mutableStateOf("") }
     val formattedAmount = if (amountValue.isNotEmpty()) {
         DecimalFormat().format(amountValue.toDouble()).formatDecimalSeparator()
-    } else "0.0000"
+    } else ""
 
     TextField(
         modifier = Modifier.fillMaxWidth()
@@ -45,7 +46,10 @@ internal fun AmountInput(
             .animateContentSize(),
         value = formattedAmount,
         onValueChange = {
-            if (it.isNotEmpty()) amountValue = it
+            if (it.isNotEmpty()) {
+                amountValue = it
+                onAmountChange(it)
+            }
         },
         colors = TextFieldDefaults.colors(
             focusedContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
@@ -71,7 +75,7 @@ internal fun AmountInput(
                 painter = painterResource(selectedCode.flag),
                 contentDescription = null
             )
-        },
+        }
     )
 }
 
