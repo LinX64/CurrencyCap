@@ -8,12 +8,8 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import ui.components.ErrorView
 import ui.components.HorizontalLineWithDot
-import ui.components.SearchViewHeader
 import ui.components.main.BaseBlurLazyColumn
 import ui.screens.overview.components.PortfolioSection
-import ui.screens.overview.components.TodayTopMovers
-import ui.screens.overview.components.TopRates
-import ui.screens.overview.components.TrendingCryptoCurrencies
 
 @Composable
 internal fun OverviewScreen(
@@ -26,13 +22,13 @@ internal fun OverviewScreen(
         padding = padding,
         hazeState = hazeState
     ) {
-        item { SearchViewHeader(state) }
+        // item { SearchViewHeader(state) }
         item { HorizontalLineWithDot() }
-        item { PortfolioSection(state) }
-        item { HorizontalLineWithDot() }
-        item { TodayTopMovers(state) }
-        item { TopRates(state) }
-        item { TrendingCryptoCurrencies(state) }
+        item { PortfolioSection(state = state, hazeState = hazeState) }
+//        item { HorizontalLineWithDot() }
+//        item { TodayTopMovers(state) }
+//        item { TopRates(state) }
+//        item { TrendingCryptoCurrencies(state) }
     }
 
     when (state) {

@@ -32,9 +32,7 @@ internal fun ProfileCard(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        BlurColumn(
-            modifier = modifier.padding(horizontal = 16.dp)
-        ) {
+        BlurColumn {
             Column(
                 modifier = Modifier.padding(25.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,

@@ -38,7 +38,7 @@ internal fun ProfileScreen(
         item {
             when (state) {
                 is ProfileState.Success -> {
-                    val profileState = state as ProfileState.Success
+                    /// state as ProfileState.Success
                     ProfileCard()
                 }
 

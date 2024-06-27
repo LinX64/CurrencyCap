@@ -1,13 +1,12 @@
 package ui.screens.overview.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -35,20 +34,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.chrisbanes.haze.HazeState
+import ui.components.main.VerticalBarCard
 import ui.screens.overview.OverviewState
 
 @Composable
 fun PortfolioSection(
     state: OverviewState,
-    usd: String = "USD"
+    usd: String = "USD",
+    hazeState: HazeState
 ) {
     val isLoading = state is OverviewState.Loading
     var expanded by remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp)
+        modifier = Modifier.padding(horizontal = 8.dp)
     ) {
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
@@ -73,16 +73,18 @@ fun PortfolioSection(
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            Box {
+            Box(
+                modifier = Modifier.fillMaxHeight()
+            ) {
                 Button(
                     onClick = { expanded = !expanded },
                     modifier = if (isLoading) getPlaceHolder(
                         Modifier
                             .height(30.dp)
-                            .clip(RoundedCornerShape(50))
+                            .clip(RoundedCornerShape(35))
                     ) else Modifier
                         .height(30.dp)
-                        .clip(RoundedCornerShape(50)),
+                        .clip(RoundedCornerShape(35)),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF202020)),
                     contentPadding = PaddingValues(8.dp),
 
@@ -106,9 +108,6 @@ fun PortfolioSection(
                 DropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
-                    modifier = Modifier
-                        .background(Color(0xFF202020))
-                        .clip(RoundedCornerShape(8.dp)),
                 ) {
                     DropdownMenuItem(
                         text = { Text("USD") },
@@ -119,8 +118,14 @@ fun PortfolioSection(
                     )
                     // Add more currency options here
                 }
+
+                VerticalBarCard(
+                    modifier = Modifier.align(Alignment.CenterEnd),
+                    onTabSelected = { /* TODO */ },
+                )
             }
         }
+
         Spacer(modifier = Modifier.height(8.dp))
 
         Row(

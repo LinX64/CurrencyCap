@@ -34,9 +34,7 @@ import ui.components.DottedShape
 internal fun DeleteAccountCard(
     onDeleteAccountClicked: () -> Unit
 ) {
-    BlurColumn(
-        modifier = Modifier.padding(horizontal = 16.dp)
-    ) {
+    BlurColumn {
         Column(
             modifier = Modifier.padding(24.dp)
         ) {

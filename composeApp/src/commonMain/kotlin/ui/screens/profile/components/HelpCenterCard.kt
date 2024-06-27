@@ -22,9 +22,7 @@ import ui.components.DottedShape
 
 @Composable
 internal fun HelpCenterCard() {
-    BlurColumn(
-        modifier = Modifier.padding(horizontal = 16.dp)
-    ) {
+    BlurColumn {
         Column(
             modifier = Modifier.padding(24.dp)
         ) {
