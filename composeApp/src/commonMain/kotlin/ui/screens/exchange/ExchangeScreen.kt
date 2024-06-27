@@ -183,7 +183,7 @@ private fun ExchangeCard(
 }
 
 @Composable
-internal fun ResultCard(
+private fun ResultCard(
     state: HomeUiState,
     amount: String
 ) {

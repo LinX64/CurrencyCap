@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SearchBar
@@ -33,6 +32,7 @@ import di.koinViewModel
 import domain.model.RateDto
 import kotlinx.coroutines.delay
 import ui.components.ErrorView
+import ui.components.main.BaseBlurLazyColumn
 import ui.screens.search.components.EmptyView
 import ui.screens.search.components.LeadingIcon
 import ui.screens.search.components.SearchItem
@@ -84,10 +84,11 @@ internal fun SearchScreen(
                     })
                 }
             ) {
-                LazyColumn(
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+                BaseBlurLazyColumn(
+                    modifier = Modifier.semantics { traversalIndex = 1f },
+                    padding = padding,
                     verticalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.semantics { traversalIndex = 1f }
+                    hazeState = hazeState
                 ) {
                     searchResultContent(state, onRetryClicked = { searchViewModel.handleEvent(SearchEvent.OnRetryClicked(text)) })
                 }

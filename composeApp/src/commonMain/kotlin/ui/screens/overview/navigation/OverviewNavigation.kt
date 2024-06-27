@@ -8,7 +8,6 @@ import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
 import ui.navigation.NavRoutes
 import ui.screens.overview.OverviewScreen
-import ui.screens.search.navigation.navigateToSearchScreen
 
 fun NavController.navigateToOverviewScreen() = navigate(NavRoutes.HOME)
 
@@ -21,7 +20,11 @@ fun NavGraphBuilder.homeScreen(
         OverviewScreen(
             padding = padding,
             hazeState = hazeState,
-            onSearchCardClicked = { navController.navigateToSearchScreen() } // TODO: Add animation
+            onSearchCardClicked = {
+                navController.navigate(NavRoutes.EXPLORE) {
+                    popUpTo(NavRoutes.HOME) { inclusive = true }
+                }
+            } // TODO: Add animation
         )
     }
 }
