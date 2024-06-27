@@ -13,6 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.exchange_screen_disclaimer
+import currencycap.composeapp.generated.resources.exchange_screen_disclaimer_description
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun Disclaimer(
@@ -26,18 +30,18 @@ internal fun Disclaimer(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Disclaimer",
+            text = stringResource(Res.string.exchange_screen_disclaimer),
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "Exchange rates are indicative and may change according to market fluctuations. Rates provided by CoinCap.io.",
+            text = stringResource(Res.string.exchange_screen_disclaimer_description),
             style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             textAlign = TextAlign.Center
         )
     }
