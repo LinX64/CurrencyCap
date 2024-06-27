@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.ic_arrow_left
 import currencycap.composeapp.generated.resources.ic_logout
 import currencycap.composeapp.generated.resources.ic_settings
 import dev.chrisbanes.haze.HazeState
@@ -42,6 +43,8 @@ internal fun AppTopBar(
     onLogoutClick: () -> Unit,
     hazeState: HazeState,
 ) {
+    val isSettingsScreen = currentDestination == NavRoutes.SETTINGS
+
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
             .hazeChild(
@@ -60,6 +63,18 @@ internal fun AppTopBar(
                 onLogoutClick = onLogoutClick,
                 navController = navController
             )
+        },
+        navigationIcon = {
+            if (isSettingsScreen) {
+                IconButton(
+                    onClick = { navController.navigateUp() }
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_arrow_left),
+                        contentDescription = "Back"
+                    )
+                }
+            }
         }
     )
 }

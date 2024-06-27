@@ -21,6 +21,7 @@ import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ui.components.BottomSheet
+import ui.navigation.NavRoutes
 import ui.navigation.graphs.MainNavGraph
 import ui.navigation.graphs.handleNavigation
 import ui.screens.MainViewModel
@@ -39,6 +40,7 @@ internal fun LoggedInSection(
     val isSheetOpen = rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val hazeState = remember { HazeState() }
+    val isSettingsScreen = currentDestination == NavRoutes.SETTINGS
 
     Scaffold(
         topBar = {
@@ -60,7 +62,8 @@ internal fun LoggedInSection(
                     )
                 },
                 scrollBehavior = scrollBehavior,
-                hazeState = hazeState
+                hazeState = hazeState,
+                isSettingsScreen = isSettingsScreen
             )
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),

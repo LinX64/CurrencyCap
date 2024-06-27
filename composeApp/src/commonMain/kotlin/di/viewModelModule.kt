@@ -31,5 +31,5 @@ val viewModelModule = module {
 }
 
 val previewModule = module {
-    single { ProfileViewModel(get(), get()) }
+    single { SettingsViewModel(get(), get()) }
 }

@@ -20,6 +20,7 @@ import ui.screens.news.navigation.newsScreen
 import ui.screens.overview.navigation.homeScreen
 import ui.screens.profile.navigation.profileScreen
 import ui.screens.search.navigation.searchScreen
+import ui.screens.settings.navigation.settingsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,6 +60,13 @@ internal fun MainNavGraph(
             onNavigateToLanding = onNavigateToLanding,
             onError = onError,
             hazeState = hazeState
+        )
+
+        settingsScreen(
+            padding = padding,
+            onError = onError,
+            hazeState = hazeState,
+            onNavigateToLanding = onNavigateToLanding
         )
     }
 }
