@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import data.model.news.Article
 import ui.components.BlurColumn
 import ui.screens.overview.components.getPlaceHolder
 
@@ -30,11 +31,8 @@ import ui.screens.overview.components.getPlaceHolder
 internal fun NewsItem(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
-    title: String = "Peercoin Foundation is on the Verge of Cracking Off-Chain Smart Contracts (2 Apr)\n",
-    description: String = "Lurem episom Lurem episom Lurem episom Lurem episom Lurem episom Lurem episom Lurem episom ",
-    imageUrl: String = "https://play-lh.googleusercontent.com/kCKeckQNFF9P2470x4lF9v3OW_ZZtvk1SIo9RmvJDa6WtBboqfzyefEZ2_rwWRYgM_M",
-    sourceName: String = "CoinDesk",
-    onClick: () -> Unit,
+    article: Article,
+    onNewsItemClick: (id: String) -> Unit,
 ) {
     val roundedCornerShape = RoundedCornerShape(35.dp)
 
@@ -42,7 +40,7 @@ internal fun NewsItem(
         modifier = modifier.padding(vertical = 8.dp)
     ) {
         Card(
-            onClick = onClick,
+            onClick = { onNewsItemClick(article.source.id) },
             shape = RoundedCornerShape(35.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surface,
@@ -57,12 +55,12 @@ internal fun NewsItem(
                 FirstImageTextColumn(
                     isLoading = isLoading,
                     roundedCornerShape = roundedCornerShape,
-                    imageUrl = imageUrl,
-                    sourceName = sourceName,
+                    imageUrl = article.urlToImage,
+                    sourceName = article.source.name,
                 )
                 TextContentSection(
-                    title = title,
-                    description = description,
+                    title = article.title,
+                    description = article.description,
                     isLoading = isLoading,
                 )
             }
@@ -75,7 +73,7 @@ private fun FirstImageTextColumn(
     isLoading: Boolean,
     roundedCornerShape: RoundedCornerShape,
     imageUrl: String,
-    sourceName: String,
+    sourceName: String
 ) {
     Column(
         modifier = Modifier.fillMaxHeight(),

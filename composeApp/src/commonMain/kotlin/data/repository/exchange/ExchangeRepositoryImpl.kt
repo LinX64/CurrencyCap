@@ -1,6 +1,6 @@
 package data.repository.exchange
 
-import data.model.Rate
+import data.model.main.Rate
 import data.util.APIConst.BASE_URL
 import data.util.parseCurrencyRates
 import domain.repository.ExchangeRepository
