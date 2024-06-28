@@ -76,7 +76,7 @@ internal fun AppTopBar(
             )
         },
         navigationIcon = {
-            if (isSettingsScreen && newsDetailScreen) {
+            if (isSettingsScreen || newsDetailScreen) {
                 IconButton(onClick = { navController.navigateUp() }) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_arrow_left),

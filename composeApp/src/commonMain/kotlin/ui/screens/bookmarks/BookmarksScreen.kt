@@ -28,7 +28,6 @@ import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import ui.components.main.BaseBlurLazyColumn
-import ui.screens.ai_predict.BookmarksViewModel
 
 @Composable
 internal fun BookmarksScreen(
@@ -36,7 +35,7 @@ internal fun BookmarksScreen(
     aiPredictViewModel: BookmarksViewModel = koinViewModel<BookmarksViewModel>(),
     hazeState: HazeState
 ) {
-
+    val state by aiPredictViewModel.
     BaseBlurLazyColumn(
         hazeState = hazeState,
         padding = padding,

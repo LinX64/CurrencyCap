@@ -36,8 +36,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.exchange_illustration
-import data.model.exchange.AmountInputType
-import data.model.exchange.CurrencyType
+import data.remote.model.exchange.AmountInputType
+import data.remote.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import org.jetbrains.compose.resources.painterResource

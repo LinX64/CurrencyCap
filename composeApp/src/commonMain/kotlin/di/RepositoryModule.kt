@@ -1,13 +1,13 @@
 package di
 
 import CurrencyRepositoryImpl
-import data.repository.auth.AuthServiceRepositoryImpl
-import data.repository.datastore.app.AppPreferences
-import data.repository.datastore.app.AppPreferencesImpl
-import data.repository.datastore.user.UserPreferencesImpl
-import data.repository.exchange.ExchangeRepositoryImpl
-import data.repository.main.MainRepositoryImpl
-import data.repository.news.NewsRepositoryImpl
+import data.local.datastore.app.AppPreferences
+import data.local.datastore.app.AppPreferencesImpl
+import data.local.datastore.user.UserPreferencesImpl
+import data.remote.repository.auth.AuthServiceRepositoryImpl
+import data.remote.repository.exchange.ExchangeRepositoryImpl
+import data.remote.repository.main.MainRepositoryImpl
+import data.remote.repository.news.NewsRepositoryImpl
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
 import domain.repository.AuthServiceRepository

@@ -1,6 +1,6 @@
 package ui.screens.profile
 
-import data.model.User
+import data.remote.model.User
 import domain.model.DataDao
 
 sealed interface ProfileViewEvent {

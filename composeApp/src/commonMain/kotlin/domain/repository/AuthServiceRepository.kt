@@ -1,7 +1,7 @@
 package domain.repository
 
-import data.model.User
-import data.repository.auth.AuthServiceRepositoryImpl.AuthState
+import data.remote.model.User
+import data.remote.repository.auth.AuthServiceRepositoryImpl.AuthState
 import kotlinx.coroutines.flow.Flow
 
 interface AuthServiceRepository {

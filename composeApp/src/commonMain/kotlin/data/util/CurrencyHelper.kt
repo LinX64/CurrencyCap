@@ -1,10 +1,10 @@
 package data.util
 
-import data.model.main.BonbastRate
-import data.model.main.Crypto
-import data.model.main.Currencies
-import data.model.main.Market
-import data.model.main.Rate
+import data.remote.model.main.BonbastRate
+import data.remote.model.main.Crypto
+import data.remote.model.main.Currencies
+import data.remote.model.main.Market
+import data.remote.model.main.Rate
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement

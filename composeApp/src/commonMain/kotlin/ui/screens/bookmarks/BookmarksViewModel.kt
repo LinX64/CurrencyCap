@@ -1,7 +1,12 @@
-package ui.screens.ai_predict
+package ui.screens.bookmarks
 
-import androidx.lifecycle.ViewModel
+import ui.common.MviViewModel
 
-class BookmarksViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class BookmarksViewModel(
+    private val bookmarksRepository: BookmarksRepository
+) : MviViewModel<BookmarksViewEvent, BookmarksState, BookmarksNavigationEffect>(BookmarksState.Idle) {
+
+    override fun handleEvent(event: BookmarksViewEvent) {
+        TODO("Not yet implemented")
+    }
 }

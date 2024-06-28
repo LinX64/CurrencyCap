@@ -1,7 +1,7 @@
 package ui.screens.auth.fill_profile
 
 import androidx.lifecycle.viewModelScope
-import data.model.User
+import data.remote.model.User
 import domain.repository.AuthServiceRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch

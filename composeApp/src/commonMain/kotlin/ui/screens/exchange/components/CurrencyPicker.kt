@@ -50,9 +50,9 @@ import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import data.model.exchange.Currency
-import data.model.exchange.CurrencyCode
-import data.model.exchange.CurrencyType
+import data.remote.model.exchange.Currency
+import data.remote.model.exchange.CurrencyCode
+import data.remote.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource

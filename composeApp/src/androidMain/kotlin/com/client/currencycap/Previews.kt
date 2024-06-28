@@ -8,7 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import data.model.exchange.CurrencyType
+import data.remote.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import ui.screens.news.news_detail.NewsDetailScreen
 

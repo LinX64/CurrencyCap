@@ -1,6 +1,6 @@
 package ui.screens.news.news_detail
 
-import data.model.news.Article
+import data.remote.model.news.Article
 
 sealed interface NewsDetailViewEvent {
     data class FetchNews(val url: String) : NewsDetailViewEvent

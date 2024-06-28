@@ -1,6 +1,6 @@
 package domain.repository
 
-import data.model.news.Article
+import data.remote.model.news.Article
 import kotlinx.coroutines.flow.Flow
 
 interface NewsRepository {

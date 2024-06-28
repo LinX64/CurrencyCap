@@ -1,6 +1,6 @@
 package ui.screens.settings
 
-import data.model.User
+import data.remote.model.User
 
 sealed interface SettingsViewEvent {
 }

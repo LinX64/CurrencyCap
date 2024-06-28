@@ -2,8 +2,8 @@ package util
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import data.repository.datastore.app.AppPreferences
-import data.repository.datastore.app.AppPreferencesImpl
+import data.local.datastore.app.AppPreferences
+import data.local.datastore.app.AppPreferencesImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.plus

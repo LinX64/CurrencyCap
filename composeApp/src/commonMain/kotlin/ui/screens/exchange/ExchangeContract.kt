@@ -1,9 +1,9 @@
 package ui.screens.exchange
 
 import androidx.compose.ui.graphics.Color
-import data.model.exchange.Currency
-import data.model.exchange.CurrencyCode
-import data.model.exchange.CurrencyType
+import data.remote.model.exchange.Currency
+import data.remote.model.exchange.CurrencyCode
+import data.remote.model.exchange.CurrencyType
 
 sealed interface ExchangeViewEvent {
     data object OnFetchRates : ExchangeViewEvent
