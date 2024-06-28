@@ -24,7 +24,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import data.model.news.Article
-import ui.components.BlurColumn
+import ui.components.GlassCard
 import ui.screens.overview.components.getPlaceHolder
 
 @Composable
@@ -34,7 +34,7 @@ internal fun NewsItem(
     article: Article,
     onNewsItemClick: (url: String) -> Unit,
 ) {
-    BlurColumn(
+    GlassCard(
         modifier = modifier.padding(vertical = 8.dp)
     ) {
         Card(

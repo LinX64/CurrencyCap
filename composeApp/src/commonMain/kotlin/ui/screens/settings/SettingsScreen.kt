@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
-import ui.components.BlurColumn
+import ui.components.GlassCard
 import ui.screens.settings.components.SettingsGeneralItem
 import ui.screens.settings.components.SettingsHeaderText
 import ui.screens.settings.components.SettingsMoreItem
@@ -53,7 +53,7 @@ private fun SettingsContent() {
         modifier = Modifier.fillMaxSize().padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        BlurColumn(
+        GlassCard(
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
@@ -68,7 +68,7 @@ private fun SettingsContent() {
             }
         }
 
-        BlurColumn(
+        GlassCard(
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
@@ -83,7 +83,7 @@ private fun SettingsContent() {
             }
         }
 
-        BlurColumn(
+        GlassCard(
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(

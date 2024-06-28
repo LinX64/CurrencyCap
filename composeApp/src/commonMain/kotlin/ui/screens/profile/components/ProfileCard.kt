@@ -19,7 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import ui.components.BlurColumn
+import ui.components.GlassCard
 
 @Composable
 internal fun ProfileCard(
@@ -32,7 +32,7 @@ internal fun ProfileCard(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        BlurColumn {
+        GlassCard {
             Column(
                 modifier = Modifier.padding(25.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,

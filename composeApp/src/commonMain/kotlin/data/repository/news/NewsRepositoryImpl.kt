@@ -6,7 +6,6 @@ import data.util.APIConst.NEWS_URL
 import data.util.retryOnIOException
 import domain.repository.NewsRepository
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.Dispatchers
@@ -29,8 +28,9 @@ class NewsRepositoryImpl(
         .retryOnIOException()
 
     override fun getArticleByUrl(url: String): Flow<Article> = flow {
-        val response = httpClient.get(NEWS_URL).body<List<Article>>()
-        emit(response.first { it.url == url })
+        val responseText: String = httpClient.get(NEWS_URL).bodyAsText()
+        val articles: List<Article> = Json.decodeFromString(News.serializer(), responseText).articles
+        emit(articles.first { it.url == url })
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()

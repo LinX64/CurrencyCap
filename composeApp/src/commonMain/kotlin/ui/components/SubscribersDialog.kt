@@ -38,7 +38,7 @@ internal fun SubscribersScreenOr(
         bytes = Res.readBytes("files/premium.json")
     }
 
-    BlurColumn(
+    GlassCard(
         modifier = modifier.padding(16.dp)
     ) {
         Column(

@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun BlurColumn(
+internal fun GlassCard(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(8.dp),
     content: @Composable () -> Unit
@@ -31,7 +31,8 @@ internal fun BlurColumn(
         ),
     ) {
         Column(
-            modifier = Modifier.padding(contentPadding)
+            modifier = Modifier
+                .padding(contentPadding)
                 .wrapContentSize()
         ) {
             content()

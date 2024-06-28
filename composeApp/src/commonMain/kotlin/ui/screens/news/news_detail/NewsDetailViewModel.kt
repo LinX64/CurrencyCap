@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import ui.common.MviViewModel
 import ui.screens.news.news_detail.NewsDetailViewEvent.FetchNews
+import ui.screens.news.news_detail.NewsDetailViewEvent.OnReadMoreClick
 
 class NewsDetailViewModel(
     private val newsRepository: NewsRepository,
@@ -20,7 +21,12 @@ class NewsDetailViewModel(
     override fun handleEvent(event: NewsDetailViewEvent) {
         when (event) {
             is FetchNews -> fetchNews(event.url)
+            is OnReadMoreClick -> handleReadMoreClick(event.url)
         }
+    }
+
+    private fun handleReadMoreClick(url: String) {
+        // TODO: Should open the article in a browser
     }
 
     private fun fetchNews(url: String) {

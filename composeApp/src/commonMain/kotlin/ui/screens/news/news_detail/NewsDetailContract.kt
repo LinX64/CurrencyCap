@@ -4,6 +4,7 @@ import data.model.news.Article
 
 sealed interface NewsDetailViewEvent {
     data class FetchNews(val url: String) : NewsDetailViewEvent
+    data class OnReadMoreClick(val url: String) : NewsDetailViewEvent
 }
 
 sealed interface NewsDetailState {

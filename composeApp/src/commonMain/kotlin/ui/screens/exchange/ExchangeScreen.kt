@@ -42,7 +42,7 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import ui.components.BlurColumn
+import ui.components.GlassCard
 import ui.components.main.BaseBlurLazyColumn
 import ui.screens.exchange.components.AmountInput
 import ui.screens.exchange.components.CurrencyInputs
@@ -116,7 +116,7 @@ private fun ExchangeCard(
     Column(
         modifier = modifier.fillMaxSize()
     ) {
-        BlurColumn {
+        GlassCard {
             Column(
                 modifier = modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -170,7 +170,7 @@ private fun ExchangeCard(
             enter = fadeIn() + expandVertically(),
             exit = fadeOut() + exitTransition()
         ) {
-            BlurColumn {
+            GlassCard {
                 ResultCard(
                     state = state,
                     amount = state.sourceCurrencyAmount // TODO: pass the converted amount here

@@ -18,7 +18,7 @@ import currencycap.composeapp.generated.resources.baseline_monetization_on_48
 import domain.model.BonbastRateDto
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
-import ui.components.BlurColumn
+import ui.components.GlassCard
 
 @Composable
 internal fun RateItem(
@@ -27,7 +27,7 @@ internal fun RateItem(
     icon: String,
     rate: BonbastRateDto
 ) {
-    BlurColumn {
+    GlassCard {
         Column(
             modifier = modifier
                 .padding(vertical = 16.dp, horizontal = 16.dp)

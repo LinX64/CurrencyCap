@@ -17,7 +17,8 @@ fun NavController.navigateToNewsDetailScreen() = navigate(NavRoutes.NEWS_DETAIL)
 fun NavGraphBuilder.newsDetailScreen(
     padding: PaddingValues,
     hazeState: HazeState,
-    navController: NavHostController
+    navController: NavHostController,
+    onError: (String) -> Unit
 ) {
     composable(
         route = "${NavRoutes.NEWS_DETAIL}/{encodedUrl}",
@@ -29,7 +30,8 @@ fun NavGraphBuilder.newsDetailScreen(
         NewsDetailScreen(
             padding = padding,
             hazeState = hazeState,
-            url = decodedUrl
+            url = decodedUrl,
+            onError = onError
         )
     }
 }
