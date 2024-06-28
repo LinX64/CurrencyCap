@@ -1,6 +1,6 @@
 package domain.model
 
-import data.model.Rating
+import data.model.main.Rating
 
 data class CryptoDto(
     val algorithm: String,

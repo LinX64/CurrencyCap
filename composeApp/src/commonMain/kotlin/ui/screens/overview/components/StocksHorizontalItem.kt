@@ -23,7 +23,7 @@ import currencycap.composeapp.generated.resources.baseline_monetization_on_48
 import domain.model.RateDto
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
-import ui.components.BlurColumn
+import ui.components.GlassCard
 import ui.theme.colors.CurrencyColors
 
 @Composable
@@ -33,7 +33,7 @@ internal fun StocksHorizontalItem(
     rate: RateDto,
     isLoading: Boolean = false
 ) {
-    BlurColumn {
+    GlassCard {
         Row(
             modifier = modifier
                 .fillMaxWidth()

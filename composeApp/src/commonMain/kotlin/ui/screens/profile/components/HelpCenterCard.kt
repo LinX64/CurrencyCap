@@ -17,12 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import ui.components.BlurColumn
 import ui.components.DottedShape
+import ui.components.GlassCard
 
 @Composable
 internal fun HelpCenterCard() {
-    BlurColumn {
+    GlassCard {
         Column(
             modifier = Modifier.padding(24.dp)
         ) {

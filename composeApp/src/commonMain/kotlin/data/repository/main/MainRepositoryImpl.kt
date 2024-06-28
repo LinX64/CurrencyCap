@@ -1,10 +1,12 @@
 package data.repository.main
 
-import data.model.toBonbastRateDomain
-import data.model.toCryptoDomain
-import data.model.toMarketDomain
-import data.model.toRateDomain
+import data.model.main.toBonbastRateDomain
+import data.model.main.toCryptoDomain
+import data.model.main.toMarketDomain
+import data.model.main.toRateDomain
+import data.model.news.Article
 import data.util.APIConst.BASE_URL
+import data.util.APIConst.NEWS_URL
 import data.util.parseCurrencyRates
 import data.util.retryOnIOException
 import domain.model.CurrenciesDto
@@ -39,12 +41,18 @@ class MainRepositoryImpl(
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
 
-
     override fun search(query: String): Flow<List<RateDto>> = flow {
         val plainResponse = httpClient.get(BASE_URL).body<String>()
         val currencies = parseCurrencyRates(plainResponse)
 
         emit(currencies.rates.toRateDomain())
+    }
+        .flowOn(Dispatchers.IO)
+        .retryOnIOException()
+
+    override fun getNews(): Flow<List<Article>> = flow {
+        val response = httpClient.get(NEWS_URL).body<List<Article>>()
+        emit(response)
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()

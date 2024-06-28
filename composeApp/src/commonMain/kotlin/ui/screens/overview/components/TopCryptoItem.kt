@@ -23,7 +23,7 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import domain.model.RateDto
 import ui.common.formatCurrentTotal
-import ui.components.BlurColumn
+import ui.components.GlassCard
 import util.getIconBy
 
 data class CryptoCardData(
@@ -46,7 +46,7 @@ internal fun TopCryptoItem(
     dataDao: RateDto,
     isLoading: Boolean = false
 ) {
-    BlurColumn {
+    GlassCard {
         Card(
             modifier = modifier
                 .size(cardSize)

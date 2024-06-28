@@ -47,3 +47,4 @@ actual class DecimalFormat {
         return formatter.stringFromNumber(NSNumber(double))!!
     }
 }
+

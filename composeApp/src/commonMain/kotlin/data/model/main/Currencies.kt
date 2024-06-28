@@ -1,4 +1,4 @@
-package data.model
+package data.model.main
 
 import domain.model.BonbastRateDto
 import domain.model.CryptoDto

@@ -7,12 +7,14 @@ import data.repository.datastore.app.AppPreferencesImpl
 import data.repository.datastore.user.UserPreferencesImpl
 import data.repository.exchange.ExchangeRepositoryImpl
 import data.repository.main.MainRepositoryImpl
+import data.repository.news.NewsRepositoryImpl
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
 import domain.repository.AuthServiceRepository
 import domain.repository.CurrencyRepository
 import domain.repository.ExchangeRepository
 import domain.repository.MainRepository
+import domain.repository.NewsRepository
 import domain.repository.UserPreferences
 import org.koin.dsl.module
 
@@ -26,4 +28,5 @@ val repositoryModule = module {
     single<AppPreferences> { AppPreferencesImpl(get()) }
     single<CurrencyRepository> { CurrencyRepositoryImpl(get()) }
     single<ExchangeRepository> { ExchangeRepositoryImpl(get()) }
+    single<NewsRepository> { NewsRepositoryImpl(get()) }
 }
