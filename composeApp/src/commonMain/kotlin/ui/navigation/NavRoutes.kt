@@ -9,6 +9,7 @@ object NavRoutes {
     const val EXCHANGE = "Exchange"
     const val MARKET = "Market"
     const val NEWS = "News"
+    const val NEWS_DETAIL = "News Detail"
     const val WATCHLIST = "Watchlist"
     const val EXPLORE = "Explore"
     const val PROFILE = "Profile"

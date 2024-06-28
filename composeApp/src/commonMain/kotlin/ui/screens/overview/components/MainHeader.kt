@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import ui.components.BlurColumn
+import ui.components.GlassCard
 import ui.screens.overview.OverviewState
 
 @Composable
@@ -86,7 +86,7 @@ private fun CircleCard(
 ) {
     val isColorRed = data.valueChange < 0
 
-    BlurColumn {
+    GlassCard {
         Row(
             modifier = Modifier.padding(6.dp),
             verticalAlignment = Alignment.CenterVertically

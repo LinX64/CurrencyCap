@@ -26,7 +26,7 @@ import currencycap.composeapp.generated.resources.baseline_monetization_on_48
 import domain.model.RateDto
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
-import ui.components.BlurColumn
+import ui.components.GlassCard
 import ui.theme.colors.CurrencyColors
 
 data class AssetInfo(
@@ -63,7 +63,7 @@ internal fun RateHorizontalItem(
     isLoading: Boolean = false,
     assetInfo: AssetInfo = mockAssetInfo,
 ) {
-    BlurColumn {
+    GlassCard {
         Row(
             modifier = modifier
                 .width(350.dp)

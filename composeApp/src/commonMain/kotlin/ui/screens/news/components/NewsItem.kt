@@ -23,26 +23,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import ui.components.BlurColumn
+import data.model.news.Article
+import ui.components.GlassCard
 import ui.screens.overview.components.getPlaceHolder
 
 @Composable
 internal fun NewsItem(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
-    title: String = "Peercoin Foundation is on the Verge of Cracking Off-Chain Smart Contracts (2 Apr)\n",
-    description: String = "Lurem episom Lurem episom Lurem episom Lurem episom Lurem episom Lurem episom Lurem episom ",
-    imageUrl: String = "https://play-lh.googleusercontent.com/kCKeckQNFF9P2470x4lF9v3OW_ZZtvk1SIo9RmvJDa6WtBboqfzyefEZ2_rwWRYgM_M",
-    sourceName: String = "CoinDesk",
-    onClick: () -> Unit,
+    article: Article,
+    onNewsItemClick: (url: String) -> Unit,
 ) {
-    val roundedCornerShape = RoundedCornerShape(35.dp)
-
-    BlurColumn(
+    GlassCard(
         modifier = modifier.padding(vertical = 8.dp)
     ) {
         Card(
-            onClick = onClick,
+            onClick = { onNewsItemClick(article.url) },
             shape = RoundedCornerShape(35.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surface,
@@ -56,13 +52,12 @@ internal fun NewsItem(
             ) {
                 FirstImageTextColumn(
                     isLoading = isLoading,
-                    roundedCornerShape = roundedCornerShape,
-                    imageUrl = imageUrl,
-                    sourceName = sourceName,
+                    imageUrl = article.urlToImage,
+                    sourceName = article.source.name,
                 )
                 TextContentSection(
-                    title = title,
-                    description = description,
+                    title = article.title,
+                    description = article.description,
                     isLoading = isLoading,
                 )
             }
@@ -73,10 +68,11 @@ internal fun NewsItem(
 @Composable
 private fun FirstImageTextColumn(
     isLoading: Boolean,
-    roundedCornerShape: RoundedCornerShape,
-    imageUrl: String,
-    sourceName: String,
+    imageUrl: String? = null,
+    sourceName: String
 ) {
+    val roundedCornerShape = RoundedCornerShape(35.dp)
+
     Column(
         modifier = Modifier.fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -91,6 +87,9 @@ private fun FirstImageTextColumn(
                 .size(64.dp)
                 .clip(roundedCornerShape),
             model = imageUrl,
+            onError = {
+                // TODO: Handle error
+            },
             contentDescription = null
         )
 

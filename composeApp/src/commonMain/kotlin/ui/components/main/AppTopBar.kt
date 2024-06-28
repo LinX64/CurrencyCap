@@ -41,17 +41,28 @@ internal fun AppTopBar(
     navController: NavHostController,
     scrollBehavior: TopAppBarScrollBehavior,
     onLogoutClick: () -> Unit,
-    hazeState: HazeState,
+    hazeState: HazeState
 ) {
     val isSettingsScreen = currentDestination == NavRoutes.SETTINGS
+    val newsDetailScreen = currentDestination.startsWith(NavRoutes.NEWS_DETAIL)
 
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
             .hazeChild(
                 state = hazeState,
-                style = HazeMaterials.regular(MaterialTheme.colorScheme.surface),
+                style = HazeMaterials.regular(MaterialTheme.colorScheme.surface)
             ),
-        title = { AppTitle(currentDestination = currentDestination) },
+        title = {
+            if (newsDetailScreen.not()) {
+                Text(
+                    text = currentDestination,
+                    maxLines = 1,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.Transparent,
             scrolledContainerColor = Color.Transparent,
@@ -65,13 +76,12 @@ internal fun AppTopBar(
             )
         },
         navigationIcon = {
-            if (isSettingsScreen) {
-                IconButton(
-                    onClick = { navController.navigateUp() }
-                ) {
+            if (isSettingsScreen && newsDetailScreen) {
+                IconButton(onClick = { navController.navigateUp() }) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_arrow_left),
-                        contentDescription = "Back"
+                        contentDescription = "Back",
+                        tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
             }
@@ -127,17 +137,5 @@ private fun ActionsMenu(
         }
     }
 }
-
-@Composable
-private fun AppTitle(currentDestination: String) {
-    Text(
-        text = currentDestination,
-        maxLines = 1,
-        style = MaterialTheme.typography.titleLarge,
-        color = Color.White,
-        fontWeight = FontWeight.Bold
-    )
-}
-
 
 

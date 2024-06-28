@@ -21,13 +21,14 @@ internal fun BaseBlurLazyColumn(
     modifier: Modifier = Modifier,
     padding: PaddingValues,
     hazeState: HazeState,
+    contentPadding: PaddingValues = PaddingValues(16.dp),
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     content: LazyListScope.() -> Unit
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize()
-            .padding(horizontal = 16.dp)
+            .padding(contentPadding)
             .haze(
                 state = hazeState,
                 style = HazeStyle(
