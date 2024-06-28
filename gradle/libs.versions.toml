@@ -35,7 +35,7 @@ coroutines = "1.8.1"
 urlencoderLib = "1.5.0"
 
 datastore = "1.1.1"
-realm = "1.16.0"
+realm = "2.0.0"
 
 [libraries]
 # AndroidX

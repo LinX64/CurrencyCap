@@ -6,9 +6,9 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.realm.plugin)
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.gms)
-    alias(libs.plugins.realm.plugin)
 }
 
 kotlin {
