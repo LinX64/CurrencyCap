@@ -9,32 +9,27 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import data.model.exchange.AmountInputType
 import ui.common.DecimalFormat
 import util.formatDecimalSeparator
 
 @Composable
 internal fun AmountInput(
-    amountInputType: AmountInputType,
     maxLength: Int = 10,
     onAmountChange: (String) -> Unit,
-    onErrorMessage: (String) -> Unit
+    onErrorMessage: (String) -> Unit,
+    amount: String
 ) {
-    var amountValue by rememberSaveable { mutableStateOf("") }
-    val formattedAmount = if (amountValue.isNotEmpty()) {
-        DecimalFormat().format(amountValue.toDouble()).formatDecimalSeparator()
-    } else ""
+    val formattedAmount = if (amount.isNotEmpty()) {
+        DecimalFormat().format(amount.toDouble()).formatDecimalSeparator()
+    } else "0"
 
     TextField(
         modifier = Modifier.fillMaxWidth()
@@ -43,7 +38,6 @@ internal fun AmountInput(
         value = formattedAmount,
         onValueChange = {
             if (it.isNotEmpty() && it.length <= maxLength) {
-                amountValue = it
                 onAmountChange(it)
             } else onErrorMessage("Invalid amount!")
         },
@@ -59,11 +53,12 @@ internal fun AmountInput(
         ),
         textStyle = LocalTextStyle.current.copy(
             fontSize = MaterialTheme.typography.titleLarge.fontSize,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.End
         ),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
-            imeAction = ImeAction.Done
+            imeAction = ImeAction.Done,
         )
     )
 }

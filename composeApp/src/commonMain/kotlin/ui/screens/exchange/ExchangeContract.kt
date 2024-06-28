@@ -1,22 +1,37 @@
 package ui.screens.exchange
 
 import androidx.compose.ui.graphics.Color
-import domain.model.RateDto
+import data.model.exchange.Currency
+import data.model.exchange.CurrencyCode
+import data.model.exchange.CurrencyType
 
 sealed interface ExchangeViewEvent {
-    data class OnAmountChange(val amount: String) : ExchangeViewEvent
-    data object OnSwapClick : ExchangeViewEvent
-    data object OnConvertClick : ExchangeViewEvent
-    data object OnSwitchCurrency : ExchangeViewEvent
+    data object OnFetchRates : ExchangeViewEvent
+    data object OnSwitchCurrencies : ExchangeViewEvent
 
-    data object ReadSourceCurrencyCode : ExchangeViewEvent
-    data object ReadTargetCurrencyCode : ExchangeViewEvent
+    data class OnSaveSelectedCurrencyCode(
+        val currencyType: CurrencyType,
+        val currencyCode: CurrencyCode
+    ) : ExchangeViewEvent
+
+    data object OnReadSourceCurrencyCode : ExchangeViewEvent
+    data object OnReadTargetCurrencyCode : ExchangeViewEvent
+    data class OnAmountValueChanged(val value: String) : ExchangeViewEvent
 }
 
 sealed interface ExchangeState {
-    data object Loading : ExchangeState
-    data class Success(val rates: List<RateDto>) : ExchangeState
-    data class Error(val message: String) : ExchangeState
+
+    data object Idle : ExchangeState
+
+    data class ExchangeUiState(
+        val rateState: RateStatus = RateStatus.Idle,
+        val loading: Boolean = false,
+        val sourceCurrency: Currency? = null,
+        val targetCurrency: Currency? = null,
+        val currencyRates: List<Currency> = emptyList(),
+        val sourceCurrencyAmount: String = "0",
+        val targetCurrencyAmount: String = "0"
+    )
 }
 
 sealed interface ExchangeNavigationEffect {
@@ -40,18 +55,3 @@ enum class RateStatus(
         color = Color(0xFFFF0000)
     )
 }
-
-data class HomeUiState(
-    val rateState: RateStatus = RateStatus.Idle,
-    val loading: Boolean = false,
-    val sourceCurrency: Currency? = null,
-    val targetCurrency: Currency? = null,
-    val currencyRates: List<Currency> = emptyList(),
-    val sourceCurrencyAmount: String = "0",
-    val targetCurrencyAmount: String = "0"
-)
-
-data class Currency(
-    val code: String,
-    var value: Double
-)

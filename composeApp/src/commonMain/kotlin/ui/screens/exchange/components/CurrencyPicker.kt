@@ -50,20 +50,21 @@ import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import data.model.exchange.Currency
 import data.model.exchange.CurrencyCode
 import data.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
-import ui.screens.exchange.Currency
-import ui.screens.exchange.HomeEvent
+import ui.screens.exchange.ExchangeViewEvent
+import ui.screens.exchange.ExchangeViewEvent.OnSaveSelectedCurrencyCode
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CurrencyPicker(
     currencyList: List<Currency>,
     currencyType: CurrencyType,
-    onEvent: (HomeEvent) -> Unit,
+    onEvent: (ExchangeViewEvent) -> Unit,
     onDismiss: () -> Unit,
     hazeState: HazeState
 ) {
@@ -173,7 +174,7 @@ internal fun CurrencyPicker(
                         }
 
                         TextButton(
-                            onClick = { onEvent(HomeEvent.SaveSelectedCurrencyCode(currencyType, selectedCurrencyCode)) }
+                            onClick = { onEvent(OnSaveSelectedCurrencyCode(currencyType, selectedCurrencyCode)) }
                         ) {
                             Text(
                                 text = "Confirm",
@@ -189,7 +190,9 @@ internal fun CurrencyPicker(
 
 @Composable
 private fun CurrencyCodePickerView(
-    code: CurrencyCode, isSelected: Boolean, onSelect: (CurrencyCode) -> Unit
+    code: CurrencyCode,
+    isSelected: Boolean,
+    onSelect: (CurrencyCode) -> Unit
 ) {
     val saturation = remember { Animatable(if (isSelected) 1f else 0f) }
     val textColor = MaterialTheme.colorScheme.onSurface

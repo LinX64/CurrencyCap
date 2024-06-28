@@ -1,5 +1,6 @@
 package data.repository.exchange
 
+import data.model.exchange.Currency
 import data.model.main.Rate
 import data.util.APIConst.BASE_URL
 import data.util.parseCurrencyRates
@@ -12,7 +13,6 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import ui.screens.exchange.Currency
 
 class ExchangeRepositoryImpl(
     private val httpClient: HttpClient

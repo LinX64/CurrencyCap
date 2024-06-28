@@ -31,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -44,11 +43,15 @@ import di.koinViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.GlassCard
+import ui.components.HandleNavigationEffect
 import ui.components.main.BaseBlurLazyColumn
+import ui.screens.exchange.ExchangeViewEvent.OnAmountValueChanged
+import ui.screens.exchange.ExchangeViewEvent.OnSwitchCurrencies
 import ui.screens.exchange.components.AmountInput
 import ui.screens.exchange.components.CurrencyInputs
 import ui.screens.exchange.components.CurrencyPicker
 import ui.screens.exchange.components.Disclaimer
+import ui.screens.exchange.components.ResultAmountInput
 import util.exitTransition
 
 @Composable
@@ -71,25 +74,25 @@ internal fun ExchangeScreen(
             ExchangeCard(
                 state = state,
                 hazeState = hazeState,
-                exchangeViewModel = exchangeViewModel,
+                viewModel = exchangeViewModel,
                 onError = onError
             )
         }
         item { Disclaimer() }
     }
 
-//    HandleNavigationEffect(exchangeViewModel) { effect ->
-//        when (effect) {
-//            is ExchangeNavigationEffect.ShowSnakeBar -> onError(effect.message)
-//        }
-//    }
+    HandleNavigationEffect(exchangeViewModel) { effect ->
+        when (effect) {
+            is ExchangeNavigationEffect.ShowSnakeBar -> onError(effect.message)
+        }
+    }
 }
 
 @Composable
 private fun ExchangeCard(
     modifier: Modifier = Modifier,
-    exchangeViewModel: ExchangeViewModel,
-    state: HomeUiState,
+    viewModel: ExchangeViewModel,
+    state: ExchangeState.ExchangeUiState,
     hazeState: HazeState,
     onError: (String) -> Unit
 ) {
@@ -103,7 +106,7 @@ private fun ExchangeCard(
             currencyList = state.currencyRates,
             currencyType = selectedCurrencyType,
             onEvent = { event ->
-                exchangeViewModel.onEvent(event)
+                viewModel.handleEvent(event)
                 dialogOpened = false
                 selectedCurrencyType = CurrencyType.None
             },
@@ -135,9 +138,9 @@ private fun ExchangeCard(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 CurrencyInputs(
-                    source = Currency("USD", 1.0),
-                    target = Currency("IRR", 1.0),
-                    onSwitch = { exchangeViewModel.onEvent(HomeEvent.SwitchCurrencies) },
+                    source = state.sourceCurrency,
+                    target = state.targetCurrency,
+                    onSwitch = { viewModel.handleEvent(OnSwitchCurrencies) },
                     onCurrencyTypeSelect = {
                         dialogOpened = true
                         selectedCurrencyType = it
@@ -146,9 +149,9 @@ private fun ExchangeCard(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 AmountInput(
-                    amountInputType = AmountInputType.SOURCE,
-                    onAmountChange = { exchangeViewModel.onEvent(HomeEvent.OnAmountChanged(it)) },
-                    onErrorMessage = onError
+                    onAmountChange = { viewModel.handleEvent(OnAmountValueChanged(it)) },
+                    onErrorMessage = onError,
+                    amount = state.targetCurrencyAmount
                 )
             }
         }
@@ -165,7 +168,7 @@ private fun ExchangeCard(
                     .padding(horizontal = 16.dp),
                 color = Color.Blue
             )
-        } // check to see why this is not being shown
+        } // TODO: check to see why this is not being shown
 
         AnimatedVisibility(
             visible = state.sourceCurrencyAmount.isNotEmpty(),
@@ -175,7 +178,6 @@ private fun ExchangeCard(
             GlassCard {
                 ResultCard(
                     state = state,
-                    amount = state.sourceCurrencyAmount // TODO: pass the converted amount here
                 )
             }
         }
@@ -184,23 +186,17 @@ private fun ExchangeCard(
 
 @Composable
 private fun ResultCard(
-    state: HomeUiState,
-    amount: String
+    state: ExchangeState.ExchangeUiState
 ) {
-    val formattedAmountWithCode = "${state.targetCurrency?.code} $amount"
     val formattedAmount = "1 ${state.targetCurrency?.code} = ${state.sourceCurrencyAmount} ${state.sourceCurrency?.code}"
 
     Column(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = formattedAmountWithCode,
-            style = LocalTextStyle.current.copy(
-                color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
-            )
+        ResultAmountInput(
+            amountInputType = AmountInputType.TARGET,
+            amount = state.targetCurrencyAmount
         )
 
         Spacer(modifier = Modifier.height(8.dp))
