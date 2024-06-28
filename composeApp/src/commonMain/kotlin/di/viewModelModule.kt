@@ -2,6 +2,7 @@ package di
 
 import org.koin.dsl.module
 import ui.screens.MainViewModel
+import ui.screens.ai_predict.AiPredictViewModel
 import ui.screens.ai_predict.BookmarksViewModel
 import ui.screens.auth.fill_profile.FillProfileViewModel
 import ui.screens.auth.login.LoginViewModel
@@ -28,6 +29,7 @@ val viewModelModule = module {
     single { NewsViewModel() } // TODO
     single { BookmarksViewModel() } // TODO
     single { SettingsViewModel(get(), get()) } // TODO
+    single { AiPredictViewModel() } // TODO
 }
 
 val previewModule = module {

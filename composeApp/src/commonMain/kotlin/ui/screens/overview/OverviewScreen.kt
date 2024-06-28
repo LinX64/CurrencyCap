@@ -27,7 +27,7 @@ internal fun OverviewScreen(
         padding = padding,
         hazeState = hazeState
     ) {
-        item { SearchViewHeader(state, onSearchCardClicked = onSearchCardClicked) }
+        item { SearchViewHeader(state = state, onSearchCardClicked = onSearchCardClicked) }
         item { HorizontalLineWithDot() }
         item { PortfolioSection(state = state, hazeState = hazeState) }
         item { HorizontalLineWithDot() }
