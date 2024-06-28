@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
@@ -35,7 +36,7 @@ internal fun BookmarksScreen(
     aiPredictViewModel: BookmarksViewModel = koinViewModel<BookmarksViewModel>(),
     hazeState: HazeState
 ) {
-    val state by aiPredictViewModel.
+    val state by aiPredictViewModel.viewState.collectAsStateWithLifecycle()
     BaseBlurLazyColumn(
         hazeState = hazeState,
         padding = padding,

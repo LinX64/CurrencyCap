@@ -27,7 +27,7 @@ import ui.screens.overview.components.getPlaceHolder
 import util.convertDateFormat
 
 @Composable
-internal fun NewsDetailHeader(
+internal fun NewsDetailContent(
     article: Article,
     isLoading: Boolean = false,
     imageUrl: String? = null,

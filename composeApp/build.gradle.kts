@@ -37,7 +37,7 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             implementation(libs.koin.android)
-            //implementation(libs.ktor.client.okhttp)
+            implementation(libs.ktor.client.okhttp)
             implementation(libs.kotlinx.coroutines.android)
             implementation(compose.preview)
 
@@ -80,6 +80,8 @@ kotlin {
             // Data
             implementation(libs.bundles.datastore)
             implementation(libs.bundles.ktor)
+
+            implementation(libs.kotlinx.serialization)
 
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.lifecycle.runtime.compose)

@@ -20,18 +20,21 @@ class NewsRepositoryImpl(
 ) : NewsRepository {
 
     override fun getNews(): Flow<List<Article>> = flow {
-        val responseText: String = httpClient.get(NEWS_URL).bodyAsText()
-        val news: News = Json.decodeFromString(News.serializer(), responseText)
-        emit(news.articles)
+        val responseText = getPlainNewsResponse()
+        val articles = Json.decodeFromString(News.serializer(), responseText).articles
+        emit(articles)
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
 
     override fun getArticleByUrl(url: String): Flow<Article> = flow {
-        val responseText: String = httpClient.get(NEWS_URL).bodyAsText()
+        val responseText = getPlainNewsResponse()
         val articles: List<Article> = Json.decodeFromString(News.serializer(), responseText).articles
-        emit(articles.first { it.url == url })
+        emit(articles.first { it.url.contains(url) })
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
+
+
+    private suspend fun getPlainNewsResponse() = httpClient.get(NEWS_URL).bodyAsText()
 }

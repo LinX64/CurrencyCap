@@ -66,7 +66,6 @@ private fun getDummyNewsItem(): Article = Article(
     title = "Lorem ipsum dolor sit amet, consectetur adipiscing",
     url = "url",
     urlToImage = "urlToImage",
-    isBookmarked = isBookmarked
 )
 
 

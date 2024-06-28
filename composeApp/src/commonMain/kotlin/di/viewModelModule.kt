@@ -1,5 +1,6 @@
 package di
 
+import androidx.lifecycle.SavedStateHandle
 import org.koin.dsl.module
 import ui.screens.MainViewModel
 import ui.screens.ai_predict.AiPredictViewModel
@@ -20,7 +21,7 @@ val viewModelModule = module {
     single { MainViewModel(get()) }
     single { OverviewViewModel(get()) }
     single { ExchangeViewModel(get(), get()) }
-    single { BookmarksViewModel() } // TODO
+    single { BookmarksViewModel() }
     single { SearchViewModel(get()) }
     single { LoginViewModel(get(), get()) }
     single { RegisterViewModel(get(), get()) }
@@ -28,12 +29,12 @@ val viewModelModule = module {
     single { FillProfileViewModel(get()) }
     single { ResetPasswordViewModel(get()) }
     single { NewsViewModel(get()) }
-    single { NewsDetailViewModel(get()) }
-    single { BookmarksViewModel() } // TODO
-    single { SettingsViewModel(get(), get()) } // TODO
-    single { AiPredictViewModel() } // TODO
+    single { NewsDetailViewModel(get(), SavedStateHandle(emptyMap())) }
+    single { BookmarksViewModel() }
+    single { SettingsViewModel(get(), get()) }
+    single { AiPredictViewModel() }
 }
 
 val previewModule = module {
-    single { SettingsViewModel(get(), get()) }
+    single { NewsDetailViewModel(get(), SavedStateHandle(get())) }
 }

@@ -1,6 +1,7 @@
 package di
 
 import CurrencyRepositoryImpl
+import data.local.database.ArticleLocalDataSourceImpl
 import data.local.datastore.app.AppPreferences
 import data.local.datastore.app.AppPreferencesImpl
 import data.local.datastore.user.UserPreferencesImpl
@@ -10,6 +11,7 @@ import data.remote.repository.main.MainRepositoryImpl
 import data.remote.repository.news.NewsRepositoryImpl
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
+import domain.repository.ArticleLocalDataSource
 import domain.repository.AuthServiceRepository
 import domain.repository.CurrencyRepository
 import domain.repository.ExchangeRepository
@@ -29,4 +31,7 @@ val repositoryModule = module {
     single<CurrencyRepository> { CurrencyRepositoryImpl(get()) }
     single<ExchangeRepository> { ExchangeRepositoryImpl(get()) }
     single<NewsRepository> { NewsRepositoryImpl(get()) }
+
+    // Local repositories
+    single<ArticleLocalDataSource> { ArticleLocalDataSourceImpl(get()) }
 }

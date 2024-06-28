@@ -24,14 +24,13 @@ data class Article(
     @SerialName("publishedAt")
     val publishedAt: String,
     @SerialName("source")
-    val source: Source? = null,
+    val source: Source,
     @SerialName("title")
     val title: String,
     @SerialName("url")
     val url: String,
     @SerialName("urlToImage")
     val urlToImage: String? = null,
-    val isBookmarked: Boolean
 )
 
 @Serializable

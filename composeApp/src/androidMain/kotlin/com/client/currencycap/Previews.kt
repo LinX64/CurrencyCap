@@ -2,13 +2,9 @@ package com.client.currencycap
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import data.remote.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import ui.screens.news.news_detail.NewsDetailScreen
 
@@ -16,13 +12,11 @@ import ui.screens.news.news_detail.NewsDetailScreen
 @Preview(showBackground = true)
 private fun ExchangePreview() {
     val hazeState = remember { HazeState() }
-    var selectedCurrencyType: CurrencyType by remember { mutableStateOf(CurrencyType.None) }
 
     KoinPreview {
         NewsDetailScreen(
             padding = PaddingValues(0.dp),
             hazeState = hazeState,
-            url = "https://www.google.com",
             onError = {}
         )
     }

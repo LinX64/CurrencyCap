@@ -4,7 +4,7 @@ import data.remote.model.news.Article
 
 sealed interface NewsDetailViewEvent {
     data class FetchNews(val url: String) : NewsDetailViewEvent
-    data class OnReadMoreClick(val url: String) : NewsDetailViewEvent
+    data object OnReadMoreClick : NewsDetailViewEvent
 }
 
 sealed interface NewsDetailState {
@@ -15,6 +15,6 @@ sealed interface NewsDetailState {
 }
 
 sealed interface NewsDetailNavigationEffect {
-    data object NavigateToNewsDetailDetail : NewsDetailNavigationEffect
+    data class OpenBrowser(val url: String) : NewsDetailNavigationEffect
 }
 
