@@ -58,7 +58,7 @@ internal fun AppTopBar(
                     text = currentDestination,
                     maxLines = 1,
                     style = MaterialTheme.typography.titleLarge,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
                 )
             }
