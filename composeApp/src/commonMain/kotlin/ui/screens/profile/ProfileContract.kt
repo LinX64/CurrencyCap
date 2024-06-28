@@ -1,12 +1,12 @@
 package ui.screens.profile
 
 import data.remote.model.User
-import domain.model.DataDao
+import domain.model.main.Data
 
 sealed interface ProfileViewEvent {
     data class OnDeleteAccountCardClicked(val uid: String) : ProfileViewEvent
-    data class OnHelpCenterCardClicked(val data: DataDao) : ProfileViewEvent
-    data class OnProfileCardClicked(val data: DataDao) : ProfileViewEvent
+    data class OnHelpCenterCardClicked(val data: Data) : ProfileViewEvent
+    data class OnProfileCardClicked(val data: Data) : ProfileViewEvent
 }
 
 sealed interface ProfileState {

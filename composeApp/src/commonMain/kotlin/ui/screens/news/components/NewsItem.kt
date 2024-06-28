@@ -23,7 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import data.remote.model.news.Article
+import domain.model.Article
 import ui.components.GlassCard
 import ui.screens.overview.components.getPlaceHolder
 
@@ -53,7 +53,7 @@ internal fun NewsItem(
                 FirstImageTextColumn(
                     isLoading = isLoading,
                     imageUrl = article.urlToImage,
-                    sourceName = article.source.name,
+                    sourceName = article.sourceDto.name,
                 )
                 TextContentSection(
                     title = article.title,

@@ -1,10 +1,10 @@
-package domain.model
+package domain.model.main
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DataDao(
+data class Data(
     @SerialName("currencySymbol")
     val currencySymbol: String? = null,
     @SerialName("id")

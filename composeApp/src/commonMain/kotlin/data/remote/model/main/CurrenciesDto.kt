@@ -1,36 +1,34 @@
-package data.remote.model
+package data.remote.model.main
 
-import data.remote.model.main.Rating
-import data.remote.model.main.Weiss
-import domain.model.BonbastRateDto
-import domain.model.CryptoDto
-import domain.model.MarketDto
-import domain.model.RateDto
+import domain.model.main.BonbastRate
+import domain.model.main.Crypto
+import domain.model.main.Market
+import domain.model.main.Rate
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Currencies(
+data class CurrenciesDto(
     @SerialName("bonbast")
-    val bonbast: List<BonbastRate>,
+    val bonbast: List<BonbastRateDto>,
     @SerialName("crypto")
-    val crypto: List<Crypto>,
+    val crypto: List<CryptoDto>,
     @SerialName("markets")
-    val markets: List<Market>,
+    val market: List<MarketDto>,
     @SerialName("rates")
-    val rates: List<Rate>
+    val rates: List<RateDto>
 )
 
-internal fun List<BonbastRate>.toBonbastRateDomain(): List<BonbastRateDto> = map {
-    BonbastRateDto(
+internal fun List<BonbastRateDto>.toBonbastRateDomain(): List<BonbastRate> = map {
+    BonbastRate(
         code = it.code,
         sell = it.sell,
         buy = it.buy
     )
 }
 
-internal fun List<Crypto>.toCryptoDomain(): List<CryptoDto> = map {
-    CryptoDto(
+internal fun List<CryptoDto>.toCryptoDomain(): List<Crypto> = map {
+    Crypto(
         algorithm = it.algorithm,
         assetLaunchDate = it.assetLaunchDate,
         blockNumber = it.blockNumber,
@@ -45,11 +43,11 @@ internal fun List<Crypto>.toCryptoDomain(): List<CryptoDto> = map {
         name = it.name,
         netHashesPerSecond = it.netHashesPerSecond,
         proofType = it.proofType,
-        rating = Rating(
-            weiss = Weiss(
-                marketPerformanceRating = it.rating.weiss.marketPerformanceRating,
-                rating = it.rating.weiss.rating,
-                technologyAdoptionRating = it.rating.weiss.technologyAdoptionRating
+        ratingDto = RatingDto(
+            weissDto = WeissDto(
+                marketPerformanceRating = it.ratingDto.weissDto.marketPerformanceRating,
+                rating = it.ratingDto.weissDto.rating,
+                technologyAdoptionRating = it.ratingDto.weissDto.technologyAdoptionRating
             )
         ),
         type = it.type,
@@ -57,8 +55,8 @@ internal fun List<Crypto>.toCryptoDomain(): List<CryptoDto> = map {
     )
 }
 
-internal fun List<Market>.toMarketDomain(): List<MarketDto> = map {
-    MarketDto(
+internal fun List<MarketDto>.toMarketDomain(): List<Market> = map {
+    Market(
         baseId = it.baseId,
         baseSymbol = it.baseSymbol,
         exchangeId = it.exchangeId,
@@ -74,8 +72,8 @@ internal fun List<Market>.toMarketDomain(): List<MarketDto> = map {
     )
 }
 
-internal fun List<Rate>.toRateDomain(): List<RateDto> = map {
-    RateDto(
+internal fun List<RateDto>.toRateDomain(): List<Rate> = map {
+    Rate(
         id = it.id,
         rateUsd = it.rateUsd,
         symbol = it.symbol,

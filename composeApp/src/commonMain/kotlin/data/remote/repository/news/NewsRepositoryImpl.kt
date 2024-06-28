@@ -1,9 +1,11 @@
 package data.remote.repository.news
 
-import data.remote.model.news.Article
-import data.remote.model.news.News
+import data.remote.model.news.ArticleDto
+import data.remote.model.news.NewsDto
+import data.remote.model.news.toDomain
 import data.util.APIConst.NEWS_URL
 import data.util.retryOnIOException
+import domain.model.Article
 import domain.repository.NewsRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
@@ -21,7 +23,7 @@ class NewsRepositoryImpl(
 
     override fun getNews(): Flow<List<Article>> = flow {
         val responseText = getPlainNewsResponse()
-        val articles = Json.decodeFromString(News.serializer(), responseText).articles
+        val articles = Json.decodeFromString(NewsDto.serializer(), responseText).articles.toDomain()
         emit(articles)
     }
         .flowOn(Dispatchers.IO)
@@ -29,12 +31,17 @@ class NewsRepositoryImpl(
 
     override fun getArticleByUrl(url: String): Flow<Article> = flow {
         val responseText = getPlainNewsResponse()
-        val articles: List<Article> = Json.decodeFromString(News.serializer(), responseText).articles
-        emit(articles.first { it.url.contains(url) })
+        val articles: List<ArticleDto> = Json.decodeFromString(NewsDto.serializer(), responseText).articles
+
+        val matchedArticle = articles
+            .find { it.url == url }
+            ?.toDomain()
+            ?: throw NoSuchElementException("No article found with URL: $url")
+
+        emit(matchedArticle)
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
-
 
     private suspend fun getPlainNewsResponse() = httpClient.get(NEWS_URL).bodyAsText()
 }

@@ -3,10 +3,10 @@ package ui.screens.news
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import data.remote.model.news.Article
-import data.remote.model.news.Source
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
+import domain.model.Article
+import domain.model.Source
 import ui.components.HandleNavigationEffect
 import ui.components.main.BaseBlurLazyColumn
 import ui.screens.news.components.NewsItem
@@ -54,12 +54,12 @@ internal fun NewsScreen(
     }
 }
 
-private fun getDummyNewsItem(): Article = Article(
+private fun getDummyNewsItem() = Article(
     author = "author",
     content = "content",
     description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididu",
     publishedAt = "publishedAt",
-    source = Source(
+    sourceDto = Source(
         id = "id",
         name = "CoinDesk"
     ),

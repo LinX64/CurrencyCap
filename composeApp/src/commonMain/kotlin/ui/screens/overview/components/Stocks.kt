@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import domain.model.RateDto
+import domain.model.main.Rate
 import ui.screens.overview.OverviewState
 import ui.theme.colors.CurrencyColors
 import util.getIconBy
@@ -65,7 +65,7 @@ internal fun Stocks(overviewState: OverviewState) {
                     StocksHorizontalItem(
                         icon = "",
                         isLoading = true,
-                        rate = RateDto(
+                        rate = Rate(
                             currencySymbol = "",
                             id = "",
                             symbol = "",

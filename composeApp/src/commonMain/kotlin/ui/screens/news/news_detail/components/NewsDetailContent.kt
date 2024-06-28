@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import data.remote.model.news.Article
+import domain.model.Article
 import ui.components.GlassCard
 import ui.screens.overview.components.getPlaceHolder
 import util.convertDateFormat
@@ -83,7 +83,7 @@ internal fun NewsDetailContent(
             ) {
                 Text(
                     modifier = loadingPlaceHolderModifier,
-                    text = article.source.name,
+                    text = article.sourceDto.name,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                     textAlign = TextAlign.Center

@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.baseline_monetization_on_48
-import domain.model.RateDto
+import domain.model.main.Rate
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.components.GlassCard
@@ -30,7 +30,7 @@ import ui.theme.colors.CurrencyColors
 internal fun StocksHorizontalItem(
     modifier: Modifier = Modifier,
     icon: String,
-    rate: RateDto,
+    rate: Rate,
     isLoading: Boolean = false
 ) {
     GlassCard {
@@ -67,7 +67,7 @@ internal fun StocksHorizontalItem(
 @Composable
 private fun FirstColumn(
     modifier: Modifier = Modifier,
-    rate: RateDto,
+    rate: Rate,
     isLoading: Boolean = false
 ) {
     Column(

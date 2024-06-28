@@ -2,18 +2,24 @@ package ui.screens.news.news_detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import data.remote.model.news.toEntity
 import data.util.NetworkResult
 import data.util.asResult
+import domain.model.Article
+import domain.repository.ArticleLocalDataSource
 import domain.repository.NewsRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import ui.common.MviViewModel
 import ui.screens.news.news_detail.NewsDetailViewEvent.FetchNews
+import ui.screens.news.news_detail.NewsDetailViewEvent.OnBookmarkClick
 import ui.screens.news.news_detail.NewsDetailViewEvent.OnReadMoreClick
 
 class NewsDetailViewModel(
     private val newsRepository: NewsRepository,
+    private val articleLocalDataSource: ArticleLocalDataSource,
     savedStateHandle: SavedStateHandle
 ) : MviViewModel<NewsDetailViewEvent, NewsDetailState, NewsDetailNavigationEffect>(NewsDetailState.Loading) {
 
@@ -27,6 +33,13 @@ class NewsDetailViewModel(
         when (event) {
             is FetchNews -> fetchNews(event.url)
             is OnReadMoreClick -> setEffect(NewsDetailNavigationEffect.OpenBrowser(url))
+            is OnBookmarkClick -> handleOnBookmarkClick(event.article)
+        }
+    }
+
+    private fun handleOnBookmarkClick(article: Article) {
+        viewModelScope.launch {
+            articleLocalDataSource.insertArticle(article.toEntity())
         }
     }
 

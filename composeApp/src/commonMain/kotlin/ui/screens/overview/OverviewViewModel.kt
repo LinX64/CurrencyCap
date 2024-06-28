@@ -1,8 +1,8 @@
 package ui.screens.overview
 
 import androidx.lifecycle.viewModelScope
-import domain.model.CryptoDto
-import domain.model.RateDto
+import domain.model.main.Crypto
+import domain.model.main.Rate
 import domain.repository.MainRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapNotNull
@@ -60,11 +60,11 @@ class OverviewViewModel(
         }
     }
 
-    private fun filterByCrypto(rates: List<RateDto>) = rates
+    private fun filterByCrypto(rates: List<Rate>) = rates
         .sortedBy { it.currencySymbol }
         .filter { it.type == CRYPTO }
 
-    private fun mapToTopMovers(rates: List<CryptoDto>) = rates
+    private fun mapToTopMovers(rates: List<Crypto>) = rates
         .sortedByDescending { it.name }
         .take(4)
         .sortedBy { it.fullName }

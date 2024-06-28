@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.gms)
+    alias(libs.plugins.realm.plugin)
 }
 
 kotlin {

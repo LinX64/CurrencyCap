@@ -1,7 +1,7 @@
 package util
 
 import data.util.APIConst
-import domain.model.RateDto
+import domain.model.main.Rate
 import ui.common.getCountryFlag
 import ui.common.getCountryName
 
@@ -21,7 +21,7 @@ fun String.validateEmail(): Boolean {
     return emailRegex.matches(this)
 }
 
-fun List<RateDto>.getTextFieldOptions(): List<String> = this
+fun List<Rate>.getTextFieldOptions(): List<String> = this
     .asSequence()
     .map { it.symbol }
     .sorted()

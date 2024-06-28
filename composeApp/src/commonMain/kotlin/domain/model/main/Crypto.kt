@@ -1,8 +1,8 @@
-package domain.model
+package domain.model.main
 
-import data.remote.model.main.Rating
+import data.remote.model.main.RatingDto
 
-data class CryptoDto(
+data class Crypto(
     val algorithm: String,
     val assetLaunchDate: String,
     val blockNumber: Int,
@@ -17,7 +17,7 @@ data class CryptoDto(
     val name: String,
     val netHashesPerSecond: Double,
     val proofType: String,
-    val rating: Rating,
+    val ratingDto: RatingDto,
     val type: Int,
     val url: String
 )

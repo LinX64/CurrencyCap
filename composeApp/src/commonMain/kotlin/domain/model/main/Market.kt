@@ -1,6 +1,6 @@
-package domain.model
+package domain.model.main
 
-data class MarketDto(
+data class Market(
     val baseId: String,
     val baseSymbol: String,
     val exchangeId: String,

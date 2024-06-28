@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
-import domain.model.RateDto
+import domain.model.main.Rate
 import io.github.alexzhirkevich.compottie.LottieAnimation
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.LottieConstants
@@ -75,15 +75,15 @@ internal fun ErrorView(
 }
 
 
-fun getDummyRates(): List<RateDto> {
+fun getDummyRates(): List<Rate> {
     return listOf(
-        RateDto(
+        Rate(
             id = "facilisi", rateUsd = "sententiae", symbol = "voluptaria", type = "netus", currencySymbol = null
         ),
-        RateDto(
+        Rate(
             id = "facilisi", rateUsd = "sententiae", symbol = "voluptaria", type = "netus", currencySymbol = null
         ),
-        RateDto(
+        Rate(
             id = "facilisi", rateUsd = "sententiae", symbol = "voluptaria", type = "netus", currencySymbol = null
         )
     )

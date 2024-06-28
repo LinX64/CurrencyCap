@@ -1,7 +1,7 @@
 package data.remote.repository.exchange
 
 import data.remote.model.exchange.Currency
-import data.remote.model.main.Rate
+import data.remote.model.main.RateDto
 import data.util.APIConst.BASE_URL
 import data.util.parseCurrencyRates
 import domain.repository.ExchangeRepository
@@ -39,7 +39,7 @@ class ExchangeRepositoryImpl(
         "SSP", "SZL", "SHP"
     )
 
-    private fun isRecognizedSymbol(it: Rate) = it.symbol !in unrecognizedSymbols
+    private fun isRecognizedSymbol(it: RateDto) = it.symbol !in unrecognizedSymbols
 
     private companion object {
         const val FIAT = "fiat"

@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
-import domain.model.RateDto
+import domain.model.main.Rate
 import kotlinx.coroutines.delay
 import ui.components.ErrorView
 import ui.components.main.BaseBlurLazyColumn
@@ -120,7 +120,7 @@ private fun LazyListScope.searchResultContent(
     is SearchState.Loading -> {
         items(5) {
             SearchItem(
-                rate = RateDto(
+                rate = Rate(
                     symbol = "USD",
                     rateUsd = "1.0",
                     currencySymbol = "USD",

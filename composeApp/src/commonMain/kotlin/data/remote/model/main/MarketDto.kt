@@ -1,10 +1,10 @@
-package data.remote.model
+package data.remote.model.main
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Market(
+data class MarketDto(
     @SerialName("baseId")
     val baseId: String,
     @SerialName("baseSymbol")

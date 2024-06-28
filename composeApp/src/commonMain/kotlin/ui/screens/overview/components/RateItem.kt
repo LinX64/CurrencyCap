@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.baseline_monetization_on_48
-import domain.model.BonbastRateDto
+import domain.model.main.BonbastRate
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.components.GlassCard
@@ -25,7 +25,7 @@ internal fun RateItem(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
     icon: String,
-    rate: BonbastRateDto
+    rate: BonbastRate
 ) {
     GlassCard {
         Column(

@@ -29,12 +29,12 @@ val viewModelModule = module {
     single { FillProfileViewModel(get()) }
     single { ResetPasswordViewModel(get()) }
     single { NewsViewModel(get()) }
-    single { NewsDetailViewModel(get(), SavedStateHandle(emptyMap())) }
+    single { NewsDetailViewModel(get(), get(), SavedStateHandle(emptyMap())) }
     single { BookmarksViewModel() }
     single { SettingsViewModel(get(), get()) }
     single { AiPredictViewModel() }
 }
 
 val previewModule = module {
-    single { NewsDetailViewModel(get(), SavedStateHandle(get())) }
+    single { NewsDetailViewModel(get(), get(), SavedStateHandle(emptyMap())) }
 }

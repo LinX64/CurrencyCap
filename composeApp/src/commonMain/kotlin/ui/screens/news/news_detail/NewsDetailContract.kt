@@ -1,10 +1,11 @@
 package ui.screens.news.news_detail
 
-import data.remote.model.news.Article
+import domain.model.Article
 
 sealed interface NewsDetailViewEvent {
     data class FetchNews(val url: String) : NewsDetailViewEvent
     data object OnReadMoreClick : NewsDetailViewEvent
+    data class OnBookmarkClick(val article: Article) : NewsDetailViewEvent
 }
 
 sealed interface NewsDetailState {

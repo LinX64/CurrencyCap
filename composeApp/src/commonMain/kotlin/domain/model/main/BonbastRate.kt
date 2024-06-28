@@ -1,8 +1,5 @@
-package data.remote.model
+package domain.model.main
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class BonbastRate(
     val code: String,
     val sell: Double,

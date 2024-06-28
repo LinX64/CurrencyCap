@@ -11,13 +11,13 @@ class ArticleLocalDataSourceImpl(
     private val realm: Realm
 ) : ArticleLocalDataSource {
 
-    override suspend fun insertCurrencyData(currency: ArticleEntity) {
+    override suspend fun insertArticle(article: ArticleEntity) {
         realm.write {
-            copyToRealm(currency)
+            copyToRealm(article)
         }
     }
 
-    override fun readCurrencyData(): Flow<List<ArticleEntity>> {
+    override fun readArticles(): Flow<List<ArticleEntity>> {
         return realm.query<ArticleEntity>()
             .asFlow()
             .map { result ->
@@ -27,8 +27,8 @@ class ArticleLocalDataSourceImpl(
 
     override suspend fun cleanUp() {
         return realm.write {
-            val currencyCollection = this.query<ArticleEntity>()
-            delete(currencyCollection)
+            val articles = this.query<ArticleEntity>()
+            delete(articles)
         }
     }
 }

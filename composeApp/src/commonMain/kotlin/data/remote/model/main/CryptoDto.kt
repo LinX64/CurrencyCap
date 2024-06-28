@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Crypto(
+data class CryptoDto(
     @SerialName("Algorithm")
     val algorithm: String,
     @SerialName("AssetLaunchDate")
@@ -34,7 +34,7 @@ data class Crypto(
     @SerialName("ProofType")
     val proofType: String,
     @SerialName("Rating")
-    val rating: Rating,
+    val ratingDto: RatingDto,
     @SerialName("Type")
     val type: Int,
     @SerialName("Url")

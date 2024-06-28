@@ -1,7 +1,7 @@
 package data.local.model
 
-import data.remote.model.news.Article
-import data.remote.model.news.Source
+import data.remote.model.news.ArticleDto
+import data.remote.model.news.SourceDto
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
 import kotlinx.serialization.Serializable
@@ -20,7 +20,7 @@ open class ArticleEntity : RealmObject {
     var isBookmarked: Boolean = false
 }
 
-fun ArticleEntity.toDomain() = Article(
+fun ArticleEntity.toDomain() = ArticleDto(
     title = title,
     author = author,
     content = content,
@@ -28,5 +28,5 @@ fun ArticleEntity.toDomain() = Article(
     publishedAt = publishedAt,
     url = url,
     urlToImage = urlToImage,
-    source = Source(name = sourceName)
+    sourceDto = SourceDto(name = sourceName)
 )

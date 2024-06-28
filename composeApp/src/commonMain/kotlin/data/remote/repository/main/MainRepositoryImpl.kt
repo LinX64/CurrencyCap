@@ -4,13 +4,13 @@ import data.remote.model.main.toBonbastRateDomain
 import data.remote.model.main.toCryptoDomain
 import data.remote.model.main.toMarketDomain
 import data.remote.model.main.toRateDomain
-import data.remote.model.news.Article
+import data.remote.model.news.ArticleDto
 import data.util.APIConst.BASE_URL
 import data.util.APIConst.NEWS_URL
 import data.util.parseCurrencyRates
 import data.util.retryOnIOException
-import domain.model.CurrenciesDto
-import domain.model.RateDto
+import domain.model.main.Currencies
+import domain.model.main.Rate
 import domain.repository.MainRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -25,15 +25,15 @@ class MainRepositoryImpl(
     private val httpClient: HttpClient
 ) : MainRepository {
 
-    override fun getAllRates(): Flow<CurrenciesDto> = flow {
+    override fun getAllRates(): Flow<Currencies> = flow {
         val plainResponse = httpClient.get(BASE_URL).body<String>()
         val currencies = parseCurrencyRates(plainResponse)
 
         emit(
-            CurrenciesDto(
+            Currencies(
                 bonbast = currencies.bonbast.toBonbastRateDomain(),
                 crypto = currencies.crypto.toCryptoDomain(),
-                markets = currencies.markets.toMarketDomain(),
+                markets = currencies.market.toMarketDomain(),
                 rates = currencies.rates.toRateDomain()
             )
         )
@@ -41,7 +41,7 @@ class MainRepositoryImpl(
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
 
-    override fun search(query: String): Flow<List<RateDto>> = flow {
+    override fun search(query: String): Flow<List<Rate>> = flow {
         val plainResponse = httpClient.get(BASE_URL).body<String>()
         val currencies = parseCurrencyRates(plainResponse)
 
@@ -50,8 +50,8 @@ class MainRepositoryImpl(
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
 
-    override fun getNews(): Flow<List<Article>> = flow {
-        val response = httpClient.get(NEWS_URL).body<List<Article>>()
+    override fun getNews(): Flow<List<ArticleDto>> = flow {
+        val response = httpClient.get(NEWS_URL).body<List<ArticleDto>>()
         emit(response)
     }
         .flowOn(Dispatchers.IO)

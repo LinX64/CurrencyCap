@@ -4,13 +4,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Rating(
+data class RatingDto(
     @SerialName("Weiss")
-    val weiss: Weiss
+    val weissDto: WeissDto
 )
 
 @Serializable
-data class Weiss(
+data class WeissDto(
     @SerialName("MarketPerformanceRating")
     val marketPerformanceRating: String,
     @SerialName("Rating")

@@ -17,7 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import domain.model.BonbastRateDto
+import domain.model.main.BonbastRate
 import ui.screens.overview.OverviewState
 import util.getIconBy
 
@@ -65,7 +65,7 @@ internal fun TopRates(rates: OverviewState) {
                         isLoading = true,
                         icon = "",
                         rate = listOf(
-                            BonbastRateDto(
+                            BonbastRate(
                                 code = "",
                                 sell = 0.0,
                                 buy = 0.0,

@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.baseline_monetization_on_48
-import domain.model.RateDto
+import domain.model.main.Rate
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.components.GlassCard
@@ -59,7 +59,7 @@ val mockAssetInfo = AssetInfo(
 internal fun RateHorizontalItem(
     modifier: Modifier = Modifier,
     icon: String,
-    rate: RateDto,
+    rate: Rate,
     isLoading: Boolean = false,
     assetInfo: AssetInfo = mockAssetInfo,
 ) {
@@ -106,7 +106,7 @@ internal fun RateHorizontalItem(
 @Composable
 private fun FirstHorizontalColumn(
     modifier: Modifier = Modifier,
-    rate: RateDto,
+    rate: Rate,
     isLoading: Boolean = false
 ) {
     Column(
