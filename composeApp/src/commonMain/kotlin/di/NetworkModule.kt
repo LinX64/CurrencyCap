@@ -7,6 +7,7 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.resources.Resources
 import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -20,6 +21,7 @@ val httpClientModule = module {
                     json = Json {
                         ignoreUnknownKeys = true
                         isLenient = true
+                        coerceInputValues = true
                     },
                     contentType = ContentType.Application.Json
                 )
@@ -32,10 +34,21 @@ val httpClientModule = module {
                     }
                 }
             }
-            install(HttpCache)
             install(HttpTimeout) {
                 requestTimeoutMillis = 15000
             }
+            install(HttpCache)
+            install(Resources)
+
+//            defaultRequest {
+//                url {
+//                    host = APIConst.NEWS_URL
+//                    protocol = URLProtocol.HTTPS
+//                    contentType(ContentType.Application.Json)
+//                }
+//            }
+
+            // TODO
         }
     }
 }

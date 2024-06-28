@@ -64,6 +64,7 @@ kotlin {
             implementation(libs.kotlinx.serialization)
             implementation(libs.kotlin.serialization)
             implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.resources)
 
             implementation(libs.androidx.data.store.core)
             implementation(libs.androidx.startup)

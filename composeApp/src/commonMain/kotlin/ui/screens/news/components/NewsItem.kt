@@ -32,7 +32,7 @@ internal fun NewsItem(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
     article: Article,
-    onNewsItemClick: (id: String) -> Unit,
+    onNewsItemClick: (url: String) -> Unit,
 ) {
     val roundedCornerShape = RoundedCornerShape(35.dp)
 
@@ -40,7 +40,7 @@ internal fun NewsItem(
         modifier = modifier.padding(vertical = 8.dp)
     ) {
         Card(
-            onClick = { onNewsItemClick(article.source.id) },
+            onClick = { onNewsItemClick(article.url) },
             shape = RoundedCornerShape(35.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surface,
@@ -72,7 +72,7 @@ internal fun NewsItem(
 private fun FirstImageTextColumn(
     isLoading: Boolean,
     roundedCornerShape: RoundedCornerShape,
-    imageUrl: String,
+    imageUrl: String? = null,
     sourceName: String
 ) {
     Column(
@@ -89,6 +89,9 @@ private fun FirstImageTextColumn(
                 .size(64.dp)
                 .clip(roundedCornerShape),
             model = imageUrl,
+            onError = {
+
+            },
             contentDescription = null
         )
 

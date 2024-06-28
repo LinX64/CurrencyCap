@@ -1,4 +1,4 @@
-package ui.screens.news
+package ui.screens.news.news_detail
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
@@ -9,45 +9,39 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import ui.components.HandleNavigationEffect
 import ui.components.main.BaseBlurLazyColumn
-import ui.screens.news.components.NewsItem
 
 @Composable
-internal fun NewsScreen(
+internal fun NewsDetailScreen(
     padding: PaddingValues,
-    newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
-    hazeState: HazeState,
-    onNewsItemClick: (url: String) -> Unit
+    newsDetailViewModel: NewsDetailViewModel = koinViewModel<NewsDetailViewModel>(),
+    hazeState: HazeState
 ) {
-    val state = newsViewModel.viewState.collectAsStateWithLifecycle()
+    val state = newsDetailViewModel.viewState.collectAsStateWithLifecycle()
 
     BaseBlurLazyColumn(
         hazeState = hazeState,
         padding = padding
     ) {
-        if (state.value is NewsState.Success) {
-            val articles = (state.value as NewsState.Success).news
-            items(articles.size) { newsItem ->
-                NewsItem(
-                    article = articles[newsItem],
-                    onNewsItemClick = { url -> onNewsItemClick(url) }
-                )
-            }
-        }
+        if (state.value is NewsDetailState.Success) {
+            val article = (state.value as NewsDetailState.Success).article
 
-        if (state.value is NewsState.Loading) {
-            items(10) {
-                NewsItem(
-                    isLoading = true,
-                    article = getDummyNewsItem(),
-                    onNewsItemClick = { sourceId -> }
-                )
+            item {
+                // NewsDetailHeader(article = article)
+            }
+
+            item {
+                // NewsDetailContent(article = article)
             }
         }
     }
 
-    HandleNavigationEffect(newsViewModel) { effect ->
+    if (state.value is NewsDetailState.Loading) {
+
+    }
+
+    HandleNavigationEffect(newsDetailViewModel) { effect ->
         when (effect) {
-            is NewsNavigationEffect.NavigateToNewsDetail -> {
+            is NewsDetailNavigationEffect.NavigateToNewsDetailDetail -> {
                 /*TODO*/
             }
         }

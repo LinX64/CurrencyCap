@@ -9,6 +9,7 @@ import ui.screens.auth.register.RegisterViewModel
 import ui.screens.auth.reset_password.ResetPasswordViewModel
 import ui.screens.exchange.ExchangeViewModel
 import ui.screens.news.NewsViewModel
+import ui.screens.news.news_detail.NewsDetailViewModel
 import ui.screens.overview.OverviewViewModel
 import ui.screens.profile.ProfileViewModel
 import ui.screens.search.SearchViewModel
@@ -25,7 +26,8 @@ val viewModelModule = module {
     single { ProfileViewModel(get(), get()) }
     single { FillProfileViewModel(get()) }
     single { ResetPasswordViewModel(get()) }
-    single { NewsViewModel(get()) } // TODO
+    single { NewsViewModel(get()) }
+    single { NewsDetailViewModel(get(), get()) }
     single { BookmarksViewModel() } // TODO
     single { SettingsViewModel(get(), get()) } // TODO
 }

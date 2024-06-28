@@ -54,3 +54,13 @@ fun String.formatDecimalSeparator(): String {
         formattedIntegerPart
     }
 }
+
+fun encodeUrl(url: String): String {
+    return url.replace("/", "%2F")
+        .replace(":", "%3A")
+        .replace("?", "%3F")
+        .replace("&", "%26")
+        .replace("=", "%3D")
+        .replace("#", "%23")
+        .replace(" ", "%20")
+}

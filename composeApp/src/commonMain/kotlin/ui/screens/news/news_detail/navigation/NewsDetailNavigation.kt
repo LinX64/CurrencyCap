@@ -4,28 +4,27 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import dev.chrisbanes.haze.HazeState
 import ui.navigation.NavRoutes
-import ui.screens.news.NewsScreen
-import util.encodeUrl
 
-fun NavController.navigateToNewsScreen() = navigate(NavRoutes.NEWS)
+fun NavController.navigateToNewsDetailScreen() = navigate(NavRoutes.NEWS_DETAIL)
 
-fun NavGraphBuilder.newsScreen(
+fun NavGraphBuilder.newsDetailScreen(
     padding: PaddingValues,
     hazeState: HazeState,
     navController: NavHostController
 ) {
-    composable(NavRoutes.NEWS) {
-        NewsScreen(
+    composable(
+        route = "${NavRoutes.NEWS_DETAIL}/{url}",
+        arguments = listOf(navArgument("url") { type = NavType.StringType })
+    ) {
+        newsDetailScreen(
             padding = padding,
             hazeState = hazeState,
-            onNewsItemClick = { url ->
-                val encodedUrl = encodeUrl(url)
-                navController.navigate("${NavRoutes.NEWS_DETAIL}/$encodedUrl")
-            }
+            navController = navController
         )
     }
 }
-
