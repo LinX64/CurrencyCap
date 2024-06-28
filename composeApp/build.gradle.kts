@@ -69,6 +69,8 @@ kotlin {
             implementation(libs.androidx.data.store.core)
             implementation(libs.androidx.startup)
 
+            implementation(libs.urlencoder.lib)
+
             // Firebase SDk
             implementation(libs.firebase.auth)
 

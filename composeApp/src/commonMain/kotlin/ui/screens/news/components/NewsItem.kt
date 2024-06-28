@@ -34,8 +34,6 @@ internal fun NewsItem(
     article: Article,
     onNewsItemClick: (url: String) -> Unit,
 ) {
-    val roundedCornerShape = RoundedCornerShape(35.dp)
-
     BlurColumn(
         modifier = modifier.padding(vertical = 8.dp)
     ) {
@@ -54,7 +52,6 @@ internal fun NewsItem(
             ) {
                 FirstImageTextColumn(
                     isLoading = isLoading,
-                    roundedCornerShape = roundedCornerShape,
                     imageUrl = article.urlToImage,
                     sourceName = article.source.name,
                 )
@@ -71,10 +68,11 @@ internal fun NewsItem(
 @Composable
 private fun FirstImageTextColumn(
     isLoading: Boolean,
-    roundedCornerShape: RoundedCornerShape,
     imageUrl: String? = null,
     sourceName: String
 ) {
+    val roundedCornerShape = RoundedCornerShape(35.dp)
+
     Column(
         modifier = Modifier.fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -90,7 +88,7 @@ private fun FirstImageTextColumn(
                 .clip(roundedCornerShape),
             model = imageUrl,
             onError = {
-
+                // TODO: Handle error
             },
             contentDescription = null
         )

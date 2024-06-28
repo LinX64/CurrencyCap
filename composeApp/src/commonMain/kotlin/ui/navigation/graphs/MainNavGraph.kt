@@ -16,8 +16,8 @@ import ui.navigation.NavRoutes
 import ui.screens.ai_predict.navigation.aiPredictScreen
 import ui.screens.bookmarks.navigation.bookmarksScreen
 import ui.screens.exchange.navigation.exchangeScreen
-import ui.screens.news.navigation.newsDetailScreen
 import ui.screens.news.navigation.newsScreen
+import ui.screens.news.news_detail.navigation.newsDetailScreen
 import ui.screens.overview.navigation.homeScreen
 import ui.screens.profile.navigation.profileScreen
 import ui.screens.search.navigation.searchScreen

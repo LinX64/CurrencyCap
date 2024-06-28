@@ -9,8 +9,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import data.model.exchange.CurrencyType
+import data.model.news.Article
 import dev.chrisbanes.haze.HazeState
-import ui.screens.settings.SettingsScreen
+import ui.components.main.BaseBlurLazyColumn
+import ui.screens.news.news_detail.NewsDetailHeader
+import ui.screens.news.news_detail.getDummyNewsItem
 
 @Composable
 @Preview(showBackground = true)
@@ -19,12 +22,28 @@ private fun ExchangePreview() {
     var selectedCurrencyType: CurrencyType by remember { mutableStateOf(CurrencyType.None) }
 
     KoinPreview {
-        SettingsScreen(
-            padding = PaddingValues(16.dp),
-            onNavigateToLanding = {},
-            onError = {},
-            hazeState = hazeState,
+        NewsDetail(
+            padding = PaddingValues(0.dp),
+            hazeState = hazeState
         )
     }
 }
+
+@Composable
+fun NewsDetail(
+    padding: PaddingValues,
+    hazeState: HazeState,
+    article: Article = getDummyNewsItem()
+) {
+    BaseBlurLazyColumn(
+        hazeState = hazeState,
+        padding = padding,
+        contentPadding = PaddingValues(8.dp)
+    ) {
+        item {
+            NewsDetailHeader(article = article)
+        }
+    }
+}
+
 

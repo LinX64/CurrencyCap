@@ -64,3 +64,25 @@ fun encodeUrl(url: String): String {
         .replace("#", "%23")
         .replace(" ", "%20")
 }
+
+fun convertDateFormat(inputDate: String): String {
+    val (year, month, day) = inputDate.split("T")[0].split("-")
+    val monthName = when (month) {
+        "01" -> "Jan"
+        "02" -> "Feb"
+        "03" -> "Mar"
+        "04" -> "Apr"
+        "05" -> "May"
+        "06" -> "Jun"
+        "07" -> "Jul"
+        "08" -> "Aug"
+        "09" -> "Sep"
+        "10" -> "Oct"
+        "11" -> "Nov"
+        "12" -> "Dec"
+        else -> throw IllegalArgumentException("Invalid month: $month")
+    }
+
+    val formattedDay = day.toInt().toString()
+    return "$formattedDay $monthName, $year"
+}

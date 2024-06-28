@@ -27,7 +27,7 @@ val viewModelModule = module {
     single { FillProfileViewModel(get()) }
     single { ResetPasswordViewModel(get()) }
     single { NewsViewModel(get()) }
-    single { NewsDetailViewModel(get(), get()) }
+    single { NewsDetailViewModel(get()) }
     single { BookmarksViewModel() } // TODO
     single { SettingsViewModel(get(), get()) } // TODO
 }

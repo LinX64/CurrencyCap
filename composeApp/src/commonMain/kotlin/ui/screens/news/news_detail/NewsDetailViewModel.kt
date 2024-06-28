@@ -1,6 +1,5 @@
 package ui.screens.news.news_detail
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import data.util.NetworkResult
 import data.util.asResult
@@ -12,13 +11,10 @@ import ui.screens.news.news_detail.NewsDetailViewEvent.FetchNews
 
 class NewsDetailViewModel(
     private val newsRepository: NewsRepository,
-    private val savedStateHandle: SavedStateHandle
 ) : MviViewModel<NewsDetailViewEvent, NewsDetailState, NewsDetailNavigationEffect>(NewsDetailState.Loading) {
 
-    private val url: String = savedStateHandle.get<String>("url") ?: ""
-
     init {
-        handleEvent(FetchNews(url))
+        handleEvent(FetchNews("https://readwrite.com/new-crypto-presale-pepe-unchained-goes-live-what-is-pepu-meme-token/"))
     }
 
     override fun handleEvent(event: NewsDetailViewEvent) {
