@@ -43,7 +43,6 @@ import di.koinViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.GlassCard
-import ui.components.BlurColumn
 import ui.components.HandleNavigationEffect
 import ui.components.main.BaseBlurLazyColumn
 import ui.screens.exchange.ExchangeViewEvent.OnAmountValueChanged
@@ -179,7 +178,6 @@ private fun ExchangeCard(
             GlassCard {
                 ResultCard(
                     state = state,
-                    amount = state.sourceCurrencyAmount // TODO: pass the converted amount here
                 )
             }
         }
