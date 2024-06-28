@@ -35,7 +35,7 @@ internal fun MainNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.EXCHANGE,
+        startDestination = NavRoutes.HOME,
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
