@@ -63,7 +63,7 @@ internal fun NewsItem(
                 FirstImageTextColumn(
                     isLoading = isLoading,
                     imageUrl = article.urlToImage,
-                    sourceName = article.sourceDto.name,
+                    sourceName = article.source.name,
                 )
                 TextContentSection(
                     title = article.title,

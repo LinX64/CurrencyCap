@@ -17,7 +17,8 @@ internal fun NewsDetailScreen(
     padding: PaddingValues,
     hazeState: HazeState,
     newsDetailViewModel: NewsDetailViewModel = koinViewModel<NewsDetailViewModel>(),
-    onError: (String) -> Unit
+    onError: (String) -> Unit,
+    decodedUrl: String
 ) {
     val state = newsDetailViewModel.viewState.collectAsStateWithLifecycle()
     BaseGlassLazyColumn(
