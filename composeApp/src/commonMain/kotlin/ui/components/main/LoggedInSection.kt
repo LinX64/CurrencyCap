@@ -62,7 +62,7 @@ internal fun LoggedInSection(
         modifier = Modifier.fillMaxSize()
     ) { paddingValues ->
         MainNavGraph(
-            appState = appState,
+            navController = navController,
             padding = paddingValues,
             hazeState = hazeState,
             scrollBehavior = scrollBehavior,

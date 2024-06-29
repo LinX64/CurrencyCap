@@ -3,12 +3,11 @@ package ui.screens.news.news_detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import data.util.NetworkResult
-import data.util.asResult
 import domain.repository.NewsRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import ui.common.MviViewModel
-import ui.navigation.ENCODED_URL
+import ui.navigation.util.ENCODED_URL
 import ui.screens.news.news_detail.NewsDetailViewEvent.FetchNews
 import ui.screens.news.news_detail.NewsDetailViewEvent.OnReadMoreClick
 

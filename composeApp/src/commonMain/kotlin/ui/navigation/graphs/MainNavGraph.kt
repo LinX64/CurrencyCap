@@ -7,9 +7,9 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import dev.chrisbanes.haze.HazeState
-import ui.components.main.LoggedInAppState
 import ui.navigation.util.NavRoutes
 import ui.screens.ai_predict.navigation.aiPredictScreen
 import ui.screens.bookmarks.navigation.bookmarksScreen
@@ -24,14 +24,13 @@ import ui.screens.settings.navigation.settingsScreen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MainNavGraph(
-    appState: LoggedInAppState,
+    navController: NavHostController,
     padding: PaddingValues,
     hazeState: HazeState,
     scrollBehavior: TopAppBarScrollBehavior,
     onNavigateToLanding: () -> Unit,
-    onError: (message: String) -> Unit
+    onError: (message: String) -> Unit,
 ) {
-    val navController = appState.navController
     NavHost(
         navController = navController,
         startDestination = NavRoutes.OVERVIEW,
