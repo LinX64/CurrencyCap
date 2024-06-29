@@ -35,7 +35,19 @@ data class ArticleDto(
     val url: String,
     @SerialName("urlToImage")
     val urlToImage: String? = null,
-)
+) {
+    fun toEntity(): ArticleEntity {
+        return ArticleEntity().apply {
+            this.url = this@ArticleDto.url
+            this.title = this@ArticleDto.title
+            this.description = this@ArticleDto.description
+            this.author = this@ArticleDto.author ?: ""
+            this.publishedAt = this@ArticleDto.publishedAt
+            this.sourceName = this@ArticleDto.sourceDto.name
+            this.urlToImage = this@ArticleDto.urlToImage ?: ""
+        }
+    }
+}
 
 @Serializable
 data class SourceDto(
@@ -59,7 +71,7 @@ fun ArticleDto.toDomain(): Article {
         content = content,
         description = description,
         publishedAt = publishedAt,
-        sourceDto = sourceDto.toDomain(),
+        source = sourceDto.toDomain(),
         title = title,
         url = url,
         urlToImage = urlToImage
@@ -81,7 +93,7 @@ fun Article.toEntity() = ArticleEntity().apply {
     description = this@toEntity.description
     author = this@toEntity.author.orEmpty()
     publishedAt = this@toEntity.publishedAt
-    sourceName = this@toEntity.sourceDto.name
+    sourceName = this@toEntity.source.name
     urlToImage = this@toEntity.urlToImage.orEmpty()
     isBookmarked = this@toEntity.isBookmarked
 }

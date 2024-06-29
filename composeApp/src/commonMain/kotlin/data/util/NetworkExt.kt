@@ -5,45 +5,48 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.retryWhen
 import okio.IOException
+import kotlin.math.pow
+import kotlin.random.Random
 
-fun <T> Flow<T>.retryOnIOException(
+inline fun <T> Flow<T>.retryOnIOException(
     maxRetries: Int = 60,
-    retryDelay: Long = 2000L
+    initialRetryDelay: Long = 2000L,
+    maxRetryDelay: Long = 30000L
 ): Flow<T> = retryWhen { cause, attempt ->
     if (cause is IOException && attempt < maxRetries) {
+        val exponentialDelay = initialRetryDelay * 2.0.pow(attempt.toDouble()).toLong()
+        val retryDelay = (exponentialDelay + Random.nextLong(-exponentialDelay / 2, exponentialDelay / 2)).coerceAtMost(maxRetryDelay)
         delay(retryDelay)
-        return@retryWhen true
-    } else {
-        return@retryWhen false
-    }
-}
+        true
+    } else false
+} // TODO: Consider adding internet connection check
 
-inline fun <ResultType, RequestType> networkBoundNetworkResult(
+internal inline fun <ResultType, RequestType> cacheDataOrFetchOnline(
     crossinline query: () -> Flow<ResultType>,
     crossinline fetch: suspend () -> RequestType,
     crossinline saveFetchResult: suspend (RequestType) -> Unit,
     crossinline onFetchFailed: (Throwable) -> Unit = { },
-    crossinline shouldFetch: (ResultType) -> Boolean = { true }
+    crossinline shouldFetch: (ResultType?) -> Boolean = { true }
 ): Flow<NetworkResult<ResultType>> = channelFlow {
-    try {
-        send(NetworkResult.Loading())
-        val data = query().first()
+    send(NetworkResult.Loading(null))
 
-        if (shouldFetch(data)) {
-            val request = fetch()
+    val queryFlow = query()
+    queryFlow.collect { localData ->
+        send(NetworkResult.Success(localData))
 
-            saveFetchResult(request)
-            query().collect { send(NetworkResult.Success(it)) }
-        } else {
-            query().collect { send(NetworkResult.Success(it)) }
+        if (shouldFetch(localData)) {
+            try {
+                val fetchedData = fetch()
+                saveFetchResult(fetchedData)
+                // The updated data will be emitted in the next iteration of this collect
+            } catch (e: Exception) {
+                onFetchFailed(e)
+                send(NetworkResult.Error(e, localData))
+            }
         }
-    } catch (e: Exception) {
-        onFetchFailed(e)
-        query().collect { send(NetworkResult.Error(e, it)) }
     }
 }
     .flowOn(Dispatchers.IO)

@@ -7,8 +7,8 @@ import data.util.asResult
 import domain.repository.NewsRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import ui.common.MviViewModel
+import ui.navigation.ENCODED_URL
 import ui.screens.news.news_detail.NewsDetailViewEvent.FetchNews
 import ui.screens.news.news_detail.NewsDetailViewEvent.OnReadMoreClick
 
@@ -17,11 +17,10 @@ class NewsDetailViewModel(
     savedStateHandle: SavedStateHandle
 ) : MviViewModel<NewsDetailViewEvent, NewsDetailState, NewsDetailNavigationEffect>(NewsDetailState.Loading) {
 
-    val url: String = savedStateHandle.get<String>("url") ?: ""
-    private val encodedUrl: String = UrlEncoderUtil.encode(url)
+    val url: String = savedStateHandle.get<String>(ENCODED_URL) ?: ""
 
     init {
-        handleEvent(FetchNews(encodedUrl))
+        handleEvent(FetchNews(url))
     }
 
     override fun handleEvent(event: NewsDetailViewEvent) {
@@ -33,7 +32,6 @@ class NewsDetailViewModel(
 
     private fun fetchNews(url: String) {
         newsRepository.getArticleByUrl(url)
-            .asResult()
             .map { result ->
                 when (result) {
                     is NetworkResult.Success -> setState { NewsDetailState.Success(result.data) }

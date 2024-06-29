@@ -31,7 +31,7 @@ fun ArticleEntity.toDomain() = Article(
     publishedAt = publishedAt,
     url = url,
     urlToImage = urlToImage,
-    sourceDto = Source(name = sourceName)
+    source = Source(name = sourceName)
 )
 
 fun List<ArticleEntity>.toDomain() = map(ArticleEntity::toDomain)

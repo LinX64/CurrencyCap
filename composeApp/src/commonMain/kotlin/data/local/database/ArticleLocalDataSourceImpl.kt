@@ -35,6 +35,12 @@ class ArticleLocalDataSourceImpl(
         }
     }
 
+    override fun getArticleByUrl(url: String): Flow<Article> {
+        return realm.query<ArticleEntity>("url == $0", url)
+            .asFlow()
+            .map { it.list.first().toDomain() }
+    }
+
     override suspend fun insertArticles(articles: List<ArticleEntity>) {
         realm.write {
             articles.map { copyToRealm(it) }

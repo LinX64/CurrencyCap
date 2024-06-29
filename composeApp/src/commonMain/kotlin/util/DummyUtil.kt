@@ -8,7 +8,7 @@ internal fun getDummyNewsItem() = Article(
     content = "Pepe’s global popularity has led to the launch of Pepe Unchained, an enhanced version that has quickly trended as a high-potential presale project that could be the best alternative to PEPE.\\r\\nThe pro… [+6203 chars]\"",
     description = "epe’s global popularity has led to the launch of Pepe Unchained, an enhanced version that has quickly trended as a… Continue reading New Crypto Presale Pepe Unchained Goes Live – What Is PEPU Meme Token\\nThe post New Crypto Presale Pepe Unchained Goes Live – …",
     publishedAt = "2024-06-23T14:24:37Z",
-    sourceDto = Source(
+    source = Source(
         id = "id",
         name = "CoinDesk"
     ),

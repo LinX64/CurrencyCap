@@ -82,6 +82,7 @@ kotlin {
             implementation(libs.bundles.ktor)
 
             implementation(libs.kotlinx.serialization)
+            implementation(libs.kachetor)
 
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.lifecycle.runtime.compose)
