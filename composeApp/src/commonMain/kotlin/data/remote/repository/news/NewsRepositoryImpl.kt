@@ -33,14 +33,14 @@ class NewsRepositoryImpl(
             // TODO: Implement a check for stale data
         },
         saveFetchResult = { responseText ->
-            val articles: List<ArticleDto> = Json.decodeFromString(NewsDto.serializer(), responseText).articles
+            val articles: List<ArticleDto> = parseNewsResponse(responseText)
             articleLocalDataSource.insertArticles(articles.toEntity())
         }
     )
 
     override fun getArticleByUrl(url: String): Flow<Article> = flow {
         val responseText = getPlainNewsResponse()
-        val articles: List<ArticleDto> = Json.decodeFromString(NewsDto.serializer(), responseText).articles
+        val articles: List<ArticleDto> = parseNewsResponse(responseText)
 
         val matchedArticle = articles
             .find { it.url.contains(url) }
@@ -53,4 +53,8 @@ class NewsRepositoryImpl(
         .retryOnIOException()
 
     private suspend fun getPlainNewsResponse() = httpClient.get(NEWS_URL).bodyAsText()
+
+    private fun parseNewsResponse(responseText: String): List<ArticleDto> {
+        return Json.decodeFromString(NewsDto.serializer(), responseText).articles
+    }
 }

@@ -9,19 +9,21 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.retryWhen
 import okio.IOException
 
-fun <T> Flow<T>.retryOnIOException(
+inline fun <T> Flow<T>.retryOnIOException(
     maxRetries: Int = 60,
-    retryDelay: Long = 2000L
+    initialRetryDelay: Long = 2000L,
+    maxRetryDelay: Long = 30000L
 ): Flow<T> = retryWhen { cause, attempt ->
     if (cause is IOException && attempt < maxRetries) {
+        val retryDelay = (initialRetryDelay * (1 shl (attempt.coerceAtMost(5).toInt()))).coerceAtMost(maxRetryDelay)
         delay(retryDelay)
-        return@retryWhen true
+        true
     } else {
-        return@retryWhen false
+        false
     }
 }
 
-inline fun <ResultType, RequestType> cacheDataOrFetchOnline(
+internal inline fun <ResultType, RequestType> cacheDataOrFetchOnline(
     crossinline query: () -> Flow<ResultType>,
     crossinline fetch: suspend () -> RequestType,
     crossinline saveFetchResult: suspend (RequestType) -> Unit,
