@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
+import org.koin.core.parameter.parametersOf
 import ui.components.HandleNavigationEffect
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.news.news_detail.NewsDetailNavigationEffect.OpenBrowser
@@ -16,11 +17,12 @@ import util.getDummyNewsItem
 internal fun NewsDetailScreen(
     padding: PaddingValues,
     hazeState: HazeState,
-    newsDetailViewModel: NewsDetailViewModel = koinViewModel<NewsDetailViewModel>(),
+    decodedUrl: String,
+    newsDetailViewModel: NewsDetailViewModel = koinViewModel { parametersOf(decodedUrl) },
     onError: (String) -> Unit,
-    decodedUrl: String
 ) {
     val state = newsDetailViewModel.viewState.collectAsStateWithLifecycle()
+
     BaseGlassLazyColumn(
         hazeState = hazeState,
         padding = padding,
