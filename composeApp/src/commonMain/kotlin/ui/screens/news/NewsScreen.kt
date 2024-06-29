@@ -7,7 +7,7 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import ui.components.HandleNavigationEffect
 import ui.components.NewsItem
-import ui.components.main.BaseBlurLazyColumn
+import ui.components.main.BaseGlassLazyColumn
 import ui.screens.news.NewsViewEvent.OnBookmarkArticle
 import util.getDummyNewsItem
 
@@ -21,7 +21,7 @@ internal fun NewsScreen(
 ) {
     val state = newsViewModel.viewState.collectAsStateWithLifecycle()
 
-    BaseBlurLazyColumn(
+    BaseGlassLazyColumn(
         hazeState = hazeState,
         padding = padding
     ) {

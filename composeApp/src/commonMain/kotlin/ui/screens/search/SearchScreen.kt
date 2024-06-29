@@ -32,7 +32,7 @@ import di.koinViewModel
 import domain.model.main.Rate
 import kotlinx.coroutines.delay
 import ui.components.ErrorView
-import ui.components.main.BaseBlurLazyColumn
+import ui.components.main.BaseGlassLazyColumn
 import ui.screens.search.components.EmptyView
 import ui.screens.search.components.LeadingIcon
 import ui.screens.search.components.SearchItem
@@ -84,7 +84,7 @@ internal fun SearchScreen(
                     })
                 }
             ) {
-                BaseBlurLazyColumn(
+                BaseGlassLazyColumn(
                     modifier = Modifier.semantics { traversalIndex = 1f },
                     padding = padding,
                     verticalArrangement = Arrangement.spacedBy(8.dp),

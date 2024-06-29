@@ -6,7 +6,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import ui.components.HandleNavigationEffect
-import ui.components.main.BaseBlurLazyColumn
+import ui.components.main.BaseGlassLazyColumn
 import ui.screens.news.news_detail.NewsDetailNavigationEffect.OpenBrowser
 import ui.screens.news.news_detail.NewsDetailViewEvent.OnReadMoreClick
 import ui.screens.news.news_detail.components.NewsDetailContent
@@ -20,7 +20,7 @@ internal fun NewsDetailScreen(
     onError: (String) -> Unit
 ) {
     val state = newsDetailViewModel.viewState.collectAsStateWithLifecycle()
-    BaseBlurLazyColumn(
+    BaseGlassLazyColumn(
         hazeState = hazeState,
         padding = padding,
     ) {

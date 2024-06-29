@@ -12,7 +12,7 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import ui.components.CenteredColumn
 import ui.components.HandleNavigationEffect
-import ui.components.main.BaseBlurLazyColumn
+import ui.components.main.BaseGlassLazyColumn
 import ui.screens.profile.ProfileNavigationEffect.NavigateToLanding
 import ui.screens.profile.ProfileViewEvent.OnDeleteAccountCardClicked
 import ui.screens.profile.components.DeleteAccountCard
@@ -29,7 +29,7 @@ internal fun ProfileScreen(
 ) {
     val state by profileViewModel.viewState.collectAsStateWithLifecycle()
 
-    BaseBlurLazyColumn(
+    BaseGlassLazyColumn(
         padding = padding,
         hazeState = hazeState,
         verticalArrangement = Arrangement.spacedBy(16.dp),
