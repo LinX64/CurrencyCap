@@ -17,10 +17,11 @@ class NewsDetailViewModel(
     savedStateHandle: SavedStateHandle
 ) : MviViewModel<NewsDetailViewEvent, NewsDetailState, NewsDetailNavigationEffect>(NewsDetailState.Loading) {
 
-    val url: String = UrlEncoderUtil.decode(savedStateHandle.get<String>("url") ?: "")
+    val url: String = savedStateHandle.get<String>("url") ?: ""
+    private val encodedUrl: String = UrlEncoderUtil.encode(url)
 
     init {
-        handleEvent(FetchNews(url))
+        handleEvent(FetchNews(encodedUrl))
     }
 
     override fun handleEvent(event: NewsDetailViewEvent) {
@@ -37,9 +38,7 @@ class NewsDetailViewModel(
                 when (result) {
                     is NetworkResult.Success -> setState { NewsDetailState.Success(result.data) }
                     is NetworkResult.Error -> setState {
-                        NewsDetailState.Error(
-                            result.throwable.message ?: "Error while fetching news"
-                        )
+                        NewsDetailState.Error(result.throwable.message ?: "Error while fetching news")
                     }
 
                     else -> setState { NewsDetailState.Loading }

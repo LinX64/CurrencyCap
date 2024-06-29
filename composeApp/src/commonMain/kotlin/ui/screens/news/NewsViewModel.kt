@@ -33,10 +33,7 @@ class NewsViewModel(
         newsRepository.getNews()
             .map { result ->
                 when (result) {
-                    is NetworkResult.Success -> {
-                        setState { NewsState.Success(result.data) }
-                    }
-
+                    is NetworkResult.Success -> setState { NewsState.Success(result.data) }
                     is NetworkResult.Error -> {
                         val news = result.data ?: emptyList()
                         setState { NewsState.Error(message = result.throwable.message ?: "", news = news) }
