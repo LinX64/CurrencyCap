@@ -27,7 +27,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-internal fun SubscribersScreenOr(
+internal fun SubscribersScreen(
     modifier: Modifier = Modifier
 ) {
     var bytes by remember { mutableStateOf(ByteArray(0)) }
