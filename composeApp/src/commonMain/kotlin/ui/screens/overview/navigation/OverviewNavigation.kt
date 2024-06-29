@@ -4,25 +4,26 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.NavRoutes
+import ui.navigation.util.NavRoutes
 import ui.screens.overview.OverviewScreen
 
-fun NavController.navigateToOverviewScreen() = navigate(NavRoutes.HOME)
+fun NavController.navigateToOverviewScreen(navOptions: NavOptions) = navigate(NavRoutes.OVERVIEW, navOptions)
 
 fun NavGraphBuilder.homeScreen(
     padding: PaddingValues,
     hazeState: HazeState,
     navController: NavHostController
 ) {
-    composable(NavRoutes.HOME) {
+    composable(NavRoutes.OVERVIEW) {
         OverviewScreen(
             padding = padding,
             hazeState = hazeState,
             onSearchCardClicked = {
                 navController.navigate(NavRoutes.EXPLORE) {
-                    popUpTo(NavRoutes.HOME) { inclusive = true }
+                    popUpTo(NavRoutes.OVERVIEW) { inclusive = true }
                 }
             } // TODO: Add animation
         )

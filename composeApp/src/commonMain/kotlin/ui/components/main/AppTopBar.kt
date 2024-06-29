@@ -31,20 +31,20 @@ import dev.chrisbanes.haze.hazeChild
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import org.jetbrains.compose.resources.painterResource
-import ui.navigation.NavRoutes
+import ui.navigation.util.NavRoutes
 import ui.screens.settings.navigation.navigateToSettingsScreen
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
 internal fun AppTopBar(
-    currentDestination: String,
+    currentDestination: String?,
     navController: NavHostController,
     scrollBehavior: TopAppBarScrollBehavior,
-    onLogoutClick: () -> Unit,
-    hazeState: HazeState
+    hazeState: HazeState,
+    onLogoutClick: () -> Unit
 ) {
     val isSettingsScreen = currentDestination == NavRoutes.SETTINGS
-    val newsDetailScreen = currentDestination.startsWith(NavRoutes.NEWS_DETAIL)
+    val isNewsDetailScreen = currentDestination?.startsWith(NavRoutes.NEWS_DETAIL)
 
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
@@ -53,7 +53,7 @@ internal fun AppTopBar(
                 style = HazeMaterials.regular(MaterialTheme.colorScheme.surface)
             ),
         title = {
-            if (newsDetailScreen.not()) {
+            if (isNewsDetailScreen?.not() == true) {
                 Text(
                     text = currentDestination,
                     maxLines = 1,
@@ -76,7 +76,7 @@ internal fun AppTopBar(
             )
         },
         navigationIcon = {
-            if (isSettingsScreen || newsDetailScreen) {
+            if (isSettingsScreen || isNewsDetailScreen == true) {
                 IconButton(onClick = { navController.navigateUp() }) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_arrow_left),
@@ -91,7 +91,7 @@ internal fun AppTopBar(
 
 @Composable
 private fun ActionsMenu(
-    currentDestination: String,
+    currentDestination: String?,
     onLogoutClick: () -> Unit,
     navController: NavHostController
 ) {

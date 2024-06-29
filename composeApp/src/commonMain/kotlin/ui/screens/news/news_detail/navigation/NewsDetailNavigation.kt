@@ -9,8 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import dev.chrisbanes.haze.HazeState
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
-import ui.navigation.ENCODED_URL
-import ui.navigation.NavRoutes
+import ui.navigation.util.ENCODED_URL
+import ui.navigation.util.NavRoutes
 import ui.screens.news.news_detail.NewsDetailScreen
 
 fun NavController.navigateToNewsDetailScreen() = navigate(NavRoutes.NEWS_DETAIL)

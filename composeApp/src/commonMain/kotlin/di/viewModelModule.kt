@@ -2,7 +2,7 @@ package di
 
 import androidx.lifecycle.SavedStateHandle
 import org.koin.dsl.module
-import ui.navigation.ENCODED_URL
+import ui.navigation.util.ENCODED_URL
 import ui.screens.MainViewModel
 import ui.screens.ai_predict.AiPredictViewModel
 import ui.screens.auth.fill_profile.FillProfileViewModel

@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.NavRoutes
+import ui.navigation.util.NavRoutes
 import ui.screens.settings.SettingsScreen
 
 fun NavController.navigateToSettingsScreen() = navigate(NavRoutes.SETTINGS)

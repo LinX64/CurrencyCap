@@ -5,14 +5,12 @@ import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import dev.chrisbanes.haze.HazeState
-import ui.components.main.BottomBarTab
-import ui.navigation.NavRoutes
+import ui.navigation.util.NavRoutes
 import ui.screens.ai_predict.navigation.aiPredictScreen
 import ui.screens.bookmarks.navigation.bookmarksScreen
 import ui.screens.exchange.navigation.exchangeScreen
@@ -31,11 +29,11 @@ internal fun MainNavGraph(
     hazeState: HazeState,
     scrollBehavior: TopAppBarScrollBehavior,
     onNavigateToLanding: () -> Unit,
-    onError: (message: String) -> Unit
+    onError: (message: String) -> Unit,
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.HOME,
+        startDestination = NavRoutes.OVERVIEW,
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
@@ -56,8 +54,7 @@ internal fun MainNavGraph(
         newsScreen(
             padding = padding,
             hazeState = hazeState,
-            navController = navController,
-            onError = onError
+            navController = navController
         )
 
         newsDetailScreen(
@@ -86,24 +83,5 @@ internal fun MainNavGraph(
             hazeState = hazeState,
             onNavigateToLanding = onNavigateToLanding
         )
-    }
-}
-
-internal fun handleNavigation(
-    navController: NavHostController,
-    tab: BottomBarTab,
-    isSheetOpen: MutableState<Boolean>
-) {
-//    val isAiPredictionTab = tab.route == NavRoutes.AI_PREDICTION
-//    isSheetOpen.value = isAiPredictionTab
-//    if (isAiPredictionTab) return
-
-    navController.navigate(tab.title) {
-        navController.graph.startDestinationRoute?.let { startDestinationRoute ->
-            popUpTo(startDestinationRoute) {
-                saveState = true
-            }
-        }
-        restoreState = true
     }
 }

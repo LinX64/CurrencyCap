@@ -4,19 +4,19 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
-import ui.navigation.NavRoutes
+import ui.navigation.util.NavRoutes
 import ui.screens.news.NewsScreen
 
-fun NavController.navigateToNewsScreen() = navigate(NavRoutes.NEWS)
+fun NavController.navigateToNewsScreen(navOptions: NavOptions) = navigate(NavRoutes.NEWS, navOptions)
 
 fun NavGraphBuilder.newsScreen(
     padding: PaddingValues,
     hazeState: HazeState,
-    navController: NavHostController,
-    onError: (message: String) -> Unit
+    navController: NavHostController
 ) {
     composable(NavRoutes.NEWS) {
         NewsScreen(

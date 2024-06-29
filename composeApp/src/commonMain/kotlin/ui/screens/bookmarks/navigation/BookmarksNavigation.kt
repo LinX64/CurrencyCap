@@ -3,12 +3,13 @@ package ui.screens.bookmarks.navigation
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.NavRoutes
+import ui.navigation.util.NavRoutes
 import ui.screens.bookmarks.BookmarksScreen
 
-fun NavController.navigateToBookmarksScreen() = navigate(NavRoutes.BOOKMARKS)
+fun NavController.navigateToBookmarksScreen(navOptions: NavOptions) = navigate(NavRoutes.BOOKMARKS, navOptions)
 
 fun NavGraphBuilder.bookmarksScreen(
     padding: PaddingValues,
@@ -22,7 +23,8 @@ fun NavGraphBuilder.bookmarksScreen(
             onBookmarkItemClick = { url -> navController.navigate(NavRoutes.NEWS_DETAIL + "/$url") },
             onExploreNewsClick = {
                 navController.navigate(NavRoutes.NEWS) {
-                    popUpTo(NavRoutes.BOOKMARKS) { inclusive = true }
+                    popUpTo(navController.graph.startDestinationRoute!!)
+                    launchSingleTop = true
                 }
             }
         )

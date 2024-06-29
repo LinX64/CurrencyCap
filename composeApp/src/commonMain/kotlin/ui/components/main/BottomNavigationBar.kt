@@ -22,6 +22,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -38,6 +39,8 @@ import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.ic_arrow_up_down
 import dev.chrisbanes.haze.HazeState
@@ -50,9 +53,19 @@ internal fun BottomNavigationBar(
     onTabSelected: (BottomBarTab) -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
     hazeState: HazeState,
-    isSettingsScreen: Boolean
+    isSettingsScreen: Boolean,
+    navController: NavHostController
 ) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
+
+    LaunchedEffect(currentRoute) {
+        val newIndex = tabs.indexOfFirst { it.route == currentRoute }
+        if (newIndex != -1) {
+            selectedTabIndex = newIndex
+        }
+    }
 
     if (isSettingsScreen.not()) {
         Column(
@@ -63,10 +76,7 @@ internal fun BottomNavigationBar(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CenteredExchangeButton(
-                onButtonClicked = {
-                    selectedTabIndex = tabs.indexOf(BottomBarTab.Exchange)
-                    onTabSelected(BottomBarTab.Exchange)
-                }
+                onButtonClicked = { onTabSelected(BottomBarTab.Exchange) }
             )
 
             Box(
