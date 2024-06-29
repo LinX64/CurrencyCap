@@ -12,7 +12,7 @@ import androidx.compose.ui.window.Dialog
 internal fun BaseBlurDialog(
     showDialog: Boolean = true,
     onDismissRequest: () -> Unit,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     if (showDialog) {
         Dialog(onDismissRequest = onDismissRequest) {

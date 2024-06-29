@@ -17,10 +17,10 @@ internal fun ClickableCard(
     isCardSelected: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    val cardColor =
-        if (isCardSelected) MaterialTheme.colorScheme.surface.copy(alpha = 0.6f) else MaterialTheme.colorScheme.onSurface.copy(
-            alpha = 0.1f
-        )
+    val cardColor = if (isCardSelected) {
+        MaterialTheme.colorScheme.surface.copy(alpha = 0.6f)
+    } else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
+
     Card(
         modifier = modifier
             .fillMaxWidth()

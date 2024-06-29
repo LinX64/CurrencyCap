@@ -19,7 +19,12 @@ fun NavGraphBuilder.bookmarksScreen(
         BookmarksScreen(
             padding = padding,
             hazeState = hazeState,
-            onBookmarkItemClick = { url -> navController.navigate(NavRoutes.NEWS_DETAIL + "/$url") }
+            onBookmarkItemClick = { url -> navController.navigate(NavRoutes.NEWS_DETAIL + "/$url") },
+            onExploreNewsClick = {
+                navController.navigate(NavRoutes.NEWS) {
+                    popUpTo(NavRoutes.BOOKMARKS) { inclusive = true }
+                }
+            }
         )
     }
 }

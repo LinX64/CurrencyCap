@@ -1,6 +1,6 @@
 package domain.repository
 
-import data.remote.model.exchange.CurrencyCode
+import data.local.model.exchange.CurrencyCode
 import kotlinx.coroutines.flow.Flow
 
 interface CurrencyRepository {

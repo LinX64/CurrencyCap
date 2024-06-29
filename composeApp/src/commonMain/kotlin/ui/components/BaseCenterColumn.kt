@@ -7,7 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun BaseCenterColumn(
+internal fun BaseCenterColumn(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {

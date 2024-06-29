@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmarks
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,6 +33,7 @@ internal fun BookmarksScreen(
     padding: PaddingValues,
     bookmarksViewModel: BookmarksViewModel = koinViewModel<BookmarksViewModel>(),
     hazeState: HazeState,
+    onExploreNewsClick: () -> Unit,
     onBookmarkItemClick: (url: String) -> Unit
 ) {
     val state by bookmarksViewModel.viewState.collectAsStateWithLifecycle()
@@ -38,7 +41,7 @@ internal fun BookmarksScreen(
         hazeState = hazeState,
         padding = padding,
         isEmpty = state is BookmarksState.NoBookmarks,
-        emptyContent = { NoBookmarks() },
+        emptyContent = { NoBookmarks(onExploreNewsClick = onExploreNewsClick) },
         content = {
             if (state is BookmarksState.Success) {
                 val articles = (state as BookmarksState.Success).articles
@@ -59,7 +62,9 @@ internal fun BookmarksScreen(
 }
 
 @Composable
-private fun NoBookmarks() {
+private fun NoBookmarks(
+    onExploreNewsClick: () -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -68,8 +73,7 @@ private fun NoBookmarks() {
             modifier = Modifier.size(64.dp),
             imageVector = Icons.Default.Bookmarks,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurface,
-
+            tint = MaterialTheme.colorScheme.onSurface
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -86,12 +90,25 @@ private fun NoBookmarks() {
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = "Bookmark a news to see it here",
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
+            text = "Start curating your news. Bookmark articles to see them here.",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            minLines = 2
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            onClick = onExploreNewsClick,
+        ) {
+            Text(
+                text = "Explore News",
+                color = MaterialTheme.colorScheme.surface
+            )
+        }
     }
 }
 

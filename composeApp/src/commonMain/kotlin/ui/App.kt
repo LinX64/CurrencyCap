@@ -20,7 +20,7 @@ import ui.screens.splash.SplashScreen
 internal fun App(
     mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
     navController: NavHostController = rememberNavController(),
-    scope: CoroutineScope = rememberCoroutineScope(),
+    scope: CoroutineScope = rememberCoroutineScope()
 ) {
     val mainState by mainViewModel.state.collectAsStateWithLifecycle()
     when (mainState) {

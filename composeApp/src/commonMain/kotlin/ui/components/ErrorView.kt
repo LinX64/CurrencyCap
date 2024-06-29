@@ -32,7 +32,8 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 @Composable
 internal fun ErrorView(
     modifier: Modifier = Modifier,
-    message: String,
+    title: String = "Something went wrong",
+    message: String = "Please check your internet connection and try again",
     onRetry: () -> Unit
 ) {
     var bytes by remember { mutableStateOf(ByteArray(0)) }
@@ -57,7 +58,7 @@ internal fun ErrorView(
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "Opps! Something went wrong",
+            text = title,
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold,
@@ -68,7 +69,7 @@ internal fun ErrorView(
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "Please check your internet connection and try again",
+            text = message,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             textAlign = TextAlign.Center

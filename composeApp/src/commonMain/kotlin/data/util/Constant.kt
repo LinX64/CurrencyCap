@@ -2,7 +2,7 @@ package data.util
 
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import data.remote.model.exchange.CurrencyCode
+import data.local.model.exchange.CurrencyCode
 
 object Constant {
     val keyTitle = stringPreferencesKey("testTitle")

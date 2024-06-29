@@ -11,6 +11,7 @@ import ui.components.ErrorView
 import ui.components.NewsItem
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.news.NewsViewEvent.OnBookmarkArticle
+import ui.screens.news.NewsViewEvent.OnRetry
 import util.getDummyNewsItem
 
 @Composable
@@ -25,11 +26,11 @@ internal fun NewsScreen(
     BaseGlassLazyColumn(
         hazeState = hazeState,
         padding = padding,
-        isEmpty = state.value is NewsState.Error,
+        isEmpty = state.value is NewsState.Empty,
         emptyContent = {
             ErrorView(
                 message = "An error occurred",
-                onRetry = { newsViewModel.handleEvent(NewsViewEvent.OnRetry) }
+                onRetry = { newsViewModel.handleEvent(OnRetry) }
             )
         }
     ) {
@@ -48,10 +49,10 @@ private fun LazyListScope.newsScreenContent(
             NewsItem(
                 article = articles[index],
                 onNewsItemClick = { onNewsItemClick(articles[index].url) },
+                shouldShowBookmark = articles[index].isBookmarked,
                 onBookmarkClick = { isBookmarked ->
                     newsViewModel.handleEvent(OnBookmarkArticle(articles[index], isBookmarked))
-                },
-                shouldShowBookmark = articles[index].isBookmarked
+                }
             )
         }
     }

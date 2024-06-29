@@ -25,8 +25,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import data.remote.model.exchange.Currency
-import data.remote.model.exchange.CurrencyCode
+import data.local.model.exchange.Currency
+import data.local.model.exchange.CurrencyCode
 import org.jetbrains.compose.resources.painterResource
 import util.enterTransition
 import util.exitTransition
