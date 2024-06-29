@@ -31,12 +31,10 @@ private fun appLightColorScheme(): ColorScheme = ColorScheme(
     onTertiary = CurrencyColors.White,
     tertiaryContainer = CurrencyColors.Green.light,
     onTertiaryContainer = CurrencyColors.White,
-
     error = CurrencyColors.Red.primary,
     onError = CurrencyColors.White,
     errorContainer = CurrencyColors.Red.light,
     onErrorContainer = CurrencyColors.White,
-
     background = CurrencyColors.White,
     onBackground = CurrencyColors.Black,
     surface = CurrencyColors.White,
@@ -46,7 +44,6 @@ private fun appLightColorScheme(): ColorScheme = ColorScheme(
     surfaceTint = CurrencyColors.Black,
     inverseSurface = CurrencyColors.DarkGray,
     inverseOnSurface = CurrencyColors.White,
-
     outline = CurrencyColors.Gray,
     outlineVariant = CurrencyColors.DarkGray,
     scrim = CurrencyColors.ExtraDarkGray.copy(alpha = 0.8f)
@@ -66,12 +63,10 @@ private fun appDarkColorScheme(): ColorScheme = ColorScheme(
     onTertiary = CurrencyColors.White,
     tertiaryContainer = CurrencyColors.Green.light,
     onTertiaryContainer = CurrencyColors.White,
-
     error = CurrencyColors.Red.primary,
     onError = CurrencyColors.White,
     errorContainer = CurrencyColors.Red.light,
     onErrorContainer = CurrencyColors.White,
-
     background = CurrencyColors.Black,
     onBackground = CurrencyColors.White,
     surface = CurrencyColors.Black,
@@ -81,7 +76,6 @@ private fun appDarkColorScheme(): ColorScheme = ColorScheme(
     surfaceTint = CurrencyColors.White,
     inverseSurface = CurrencyColors.LightGray,
     inverseOnSurface = CurrencyColors.Black,
-
     outline = CurrencyColors.Gray,
     outlineVariant = CurrencyColors.LightGray,
     scrim = CurrencyColors.ExtraLightGray.copy(alpha = 0.8f)
