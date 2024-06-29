@@ -15,7 +15,8 @@ fun NavController.navigateToNewsScreen() = navigate(NavRoutes.NEWS)
 fun NavGraphBuilder.newsScreen(
     padding: PaddingValues,
     hazeState: HazeState,
-    navController: NavHostController
+    navController: NavHostController,
+    onError: (message: String) -> Unit
 ) {
     composable(NavRoutes.NEWS) {
         NewsScreen(

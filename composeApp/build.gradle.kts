@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.realm.plugin)
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.gms)
 }
@@ -46,7 +47,6 @@ kotlin {
             implementation(libs.firebase.firestore)
             implementation(libs.firebase.auth)
 
-            implementation(libs.androidx.data.store.core)
             api(libs.androidx.startup)
 
             implementation(libs.androidx.activity.compose)
@@ -61,17 +61,12 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(compose.materialIconsExtended)
 
-            implementation(libs.kotlinx.serialization)
-            implementation(libs.kotlin.serialization)
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.client.resources)
-
-            implementation(libs.androidx.data.store.core)
             implementation(libs.androidx.startup)
+            implementation(libs.kotlinx.serialization)
 
             implementation(libs.urlencoder.lib)
+            implementation(libs.mongodb.realm)
 
-            // Firebase SDk
             implementation(libs.firebase.auth)
 
             // UI
@@ -79,30 +74,29 @@ kotlin {
             implementation(libs.haze.material)
             implementation(libs.compottie)
             implementation(libs.placeholder.material3)
-
             implementation(libs.coil)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
 
-            //implementation(libs.mvi.compose.common)
+            // Data
+            implementation(libs.bundles.datastore)
+            implementation(libs.bundles.ktor)
+
+            implementation(libs.kotlinx.serialization)
+
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.lifecycle.runtime.compose)
             implementation(libs.navigation.compose)
 
-            implementation(libs.bundles.ktor)
-            implementation(libs.ktor.client.logging)
-
             api(libs.koin.core)
             implementation(libs.koin.compose)
-            implementation(libs.lifecycle.viewmodel)
+            implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.navigation.compose)
         }
 
         iosMain.dependencies {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.darwin)
-
-            implementation(libs.androidx.data.store.core)
         }
     }
 }

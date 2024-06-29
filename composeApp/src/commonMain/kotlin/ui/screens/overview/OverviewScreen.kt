@@ -9,7 +9,7 @@ import di.koinViewModel
 import ui.components.ErrorView
 import ui.components.HorizontalLineWithDot
 import ui.components.SearchViewHeader
-import ui.components.main.BaseBlurLazyColumn
+import ui.components.main.BaseGlassLazyColumn
 import ui.screens.overview.components.PortfolioSection
 import ui.screens.overview.components.TodayTopMovers
 import ui.screens.overview.components.TopRates
@@ -23,7 +23,7 @@ internal fun OverviewScreen(
     onSearchCardClicked: () -> Unit
 ) {
     val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
-    BaseBlurLazyColumn(
+    BaseGlassLazyColumn(
         padding = padding,
         hazeState = hazeState
     ) {
@@ -39,7 +39,7 @@ internal fun OverviewScreen(
     when (state) {
         is OverviewState.Error -> {
             val message = (state as OverviewState.Error).message
-            ErrorView(message = message, onRetryClicked = { /* TODO */ })
+            ErrorView(message = message, onRetry = { /* TODO */ })
         }
 
         else -> Unit

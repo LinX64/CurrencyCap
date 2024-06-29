@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.baseline_monetization_on_48
-import domain.model.RateDto
+import domain.model.main.Rate
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.components.GlassCard
@@ -32,7 +32,7 @@ import util.getIconBy
 @Composable
 internal fun SearchItem(
     modifier: Modifier = Modifier,
-    rate: RateDto,
+    rate: Rate,
     isLoading: Boolean = false
 ) {
     GlassCard {
@@ -69,7 +69,7 @@ internal fun SearchItem(
 @Composable
 private fun FirstColumn(
     modifier: Modifier = Modifier,
-    rate: RateDto,
+    rate: Rate,
     isLoading: Boolean = false
 ) {
     Column(

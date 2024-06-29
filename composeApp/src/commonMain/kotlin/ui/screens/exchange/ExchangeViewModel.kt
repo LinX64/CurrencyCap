@@ -1,7 +1,7 @@
 package ui.screens.exchange
 
 import androidx.lifecycle.viewModelScope
-import data.model.exchange.CurrencyType
+import data.remote.model.exchange.CurrencyType
 import data.util.NetworkResult
 import data.util.asResult
 import domain.repository.CurrencyRepository

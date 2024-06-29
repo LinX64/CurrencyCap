@@ -1,10 +1,10 @@
 package data.util
 
-import data.model.main.BonbastRate
-import data.model.main.Crypto
-import data.model.main.Currencies
-import data.model.main.Market
-import data.model.main.Rate
+import data.remote.model.main.BonbastRateDto
+import data.remote.model.main.CryptoDto
+import data.remote.model.main.CurrenciesDto
+import data.remote.model.main.MarketDto
+import data.remote.model.main.RateDto
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
@@ -13,7 +13,7 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
-internal fun parseCurrencyRates(jsonString: String): Currencies {
+internal fun parseCurrencyRates(jsonString: String): CurrenciesDto {
     val jsonElement = Json.parseToJsonElement(jsonString).jsonObject
 
     // Converting bonbast fields
@@ -23,25 +23,25 @@ internal fun parseCurrencyRates(jsonString: String): Currencies {
             rateObject.entries.firstOrNull()?.let { (key, value) ->
                 val sell = value.jsonObject["sell"]?.jsonPrimitive?.doubleOrNull ?: return@let null
                 val buy = value.jsonObject["buy"]?.jsonPrimitive?.doubleOrNull ?: return@let null
-                BonbastRate(code = key, sell = sell, buy = buy)
+                BonbastRateDto(code = key, sell = sell, buy = buy)
             }
         } else throw IllegalStateException("Expected JsonObject but got ${rateObject::class.simpleName}")
     }
 
     // Extracting and converting other fields
     val crypto = jsonElement["crypto"]?.jsonArray ?: throw IllegalStateException("crypto field is missing")
-    val cryptoList = crypto.map { Json.decodeFromJsonElement<Crypto>(it) }
+    val cryptoList = crypto.map { Json.decodeFromJsonElement<CryptoDto>(it) }
 
     val markets = jsonElement["markets"]?.jsonArray ?: throw IllegalStateException("markets field is missing")
-    val marketsList = markets.map { Json.decodeFromJsonElement<Market>(it) }
+    val marketsList = markets.map { Json.decodeFromJsonElement<MarketDto>(it) }
 
     val rates = jsonElement["rates"]?.jsonArray ?: throw IllegalStateException("rates field is missing")
-    val ratesList = rates.map { Json.decodeFromJsonElement<Rate>(it) }
+    val ratesList = rates.map { Json.decodeFromJsonElement<RateDto>(it) }
 
-    return Currencies(
+    return CurrenciesDto(
         bonbast = bonbastRates,
         crypto = cryptoList,
-        markets = marketsList,
+        market = marketsList,
         rates = ratesList
     )
 }

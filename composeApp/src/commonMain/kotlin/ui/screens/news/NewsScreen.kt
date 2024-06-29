@@ -1,15 +1,17 @@
 package ui.screens.news
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import data.model.news.Article
-import data.model.news.Source
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
-import ui.components.HandleNavigationEffect
-import ui.components.main.BaseBlurLazyColumn
-import ui.screens.news.components.NewsItem
+import ui.components.ErrorView
+import ui.components.NewsItem
+import ui.components.main.BaseGlassLazyColumn
+import ui.screens.news.NewsViewEvent.OnBookmarkArticle
+import util.getDummyNewsItem
 
 @Composable
 internal fun NewsScreen(
@@ -20,53 +22,64 @@ internal fun NewsScreen(
 ) {
     val state = newsViewModel.viewState.collectAsStateWithLifecycle()
 
-    BaseBlurLazyColumn(
+    BaseGlassLazyColumn(
         hazeState = hazeState,
-        padding = padding
+        padding = padding,
+        isEmpty = state.value is NewsState.Error,
+        emptyContent = {
+            ErrorView(
+                message = "An error occurred",
+                onRetry = { newsViewModel.handleEvent(NewsViewEvent.OnRetry) }
+            )
+        }
     ) {
-        if (state.value is NewsState.Success) {
-            val articles = (state.value as NewsState.Success).news
-            items(articles.size) { newsItem ->
-                NewsItem(
-                    article = articles[newsItem],
-                    onNewsItemClick = { url -> onNewsItemClick(url) }
-                )
-            }
-        }
-
-        if (state.value is NewsState.Loading) {
-            items(10) {
-                NewsItem(
-                    isLoading = true,
-                    article = getDummyNewsItem(),
-                    onNewsItemClick = { sourceId -> }
-                )
-            }
-        }
-    }
-
-    HandleNavigationEffect(newsViewModel) { effect ->
-        when (effect) {
-            is NewsNavigationEffect.NavigateToNewsDetail -> {
-                /*TODO*/
-            }
-        }
+        newsScreenContent(state, newsViewModel, onNewsItemClick)
     }
 }
 
-private fun getDummyNewsItem(): Article = Article(
-    source = Source(
-        id = "id",
-        name = "CoinDesk"
-    ),
-    author = "author",
-    title = "Lorem ipsum dolor sit amet, consectetur adipiscing",
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididu",
-    url = "url",
-    urlToImage = "urlToImage",
-    publishedAt = "publishedAt",
-    content = "content"
-)
+private fun LazyListScope.newsScreenContent(
+    state: State<NewsState>,
+    newsViewModel: NewsViewModel,
+    onNewsItemClick: (url: String) -> Unit
+) = when (val currentState = state.value) {
+    is NewsState.Success -> {
+        val articles = currentState.news
+        items(articles.size) { index ->
+            NewsItem(
+                article = articles[index],
+                onNewsItemClick = { onNewsItemClick(articles[index].url) },
+                onBookmarkClick = { isBookmarked ->
+                    newsViewModel.handleEvent(OnBookmarkArticle(articles[index], isBookmarked))
+                },
+                shouldShowBookmark = articles[index].isBookmarked
+            )
+        }
+    }
 
+    is NewsState.Loading -> {
+        items(10) {
+            NewsItem(
+                isLoading = true,
+                article = getDummyNewsItem(),
+                onNewsItemClick = { },
+                onBookmarkClick = { },
+                shouldShowBookmark = false
+            )
+        }
+    }
+
+    is NewsState.Error -> {
+        items(currentState.news.size) { index ->
+            NewsItem(
+                article = currentState.news[index],
+                onNewsItemClick = { onNewsItemClick(currentState.news[index].url) },
+                onBookmarkClick = { newsViewModel.handleEvent(OnBookmarkArticle(currentState.news[index], false)) },
+                shouldShowBookmark = currentState.news[index].isBookmarked
+            )
+        }
+    }
+
+    else -> Unit
+}
 
 

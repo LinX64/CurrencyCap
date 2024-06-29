@@ -10,8 +10,16 @@ import ui.screens.bookmarks.BookmarksScreen
 
 fun NavController.navigateToBookmarksScreen() = navigate(NavRoutes.BOOKMARKS)
 
-fun NavGraphBuilder.bookmarksScreen(padding: PaddingValues, hazeState: HazeState) {
+fun NavGraphBuilder.bookmarksScreen(
+    padding: PaddingValues,
+    hazeState: HazeState,
+    navController: NavController
+) {
     composable(NavRoutes.BOOKMARKS) {
-        BookmarksScreen(padding = padding, hazeState = hazeState)
+        BookmarksScreen(
+            padding = padding,
+            hazeState = hazeState,
+            onBookmarkItemClick = { url -> navController.navigate(NavRoutes.NEWS_DETAIL + "/$url") }
+        )
     }
 }

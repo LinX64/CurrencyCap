@@ -1,10 +1,10 @@
 package ui.screens.news.news_detail
 
-import data.model.news.Article
+import domain.model.Article
 
 sealed interface NewsDetailViewEvent {
     data class FetchNews(val url: String) : NewsDetailViewEvent
-    data class OnReadMoreClick(val url: String) : NewsDetailViewEvent
+    data object OnReadMoreClick : NewsDetailViewEvent
 }
 
 sealed interface NewsDetailState {
@@ -15,6 +15,6 @@ sealed interface NewsDetailState {
 }
 
 sealed interface NewsDetailNavigationEffect {
-    data object NavigateToNewsDetailDetail : NewsDetailNavigationEffect
+    data class OpenBrowser(val url: String) : NewsDetailNavigationEffect
 }
 

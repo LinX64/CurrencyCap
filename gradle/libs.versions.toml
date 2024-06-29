@@ -34,22 +34,26 @@ ktor = "2.3.12"
 coroutines = "1.8.1"
 urlencoderLib = "1.5.0"
 
+datastore = "1.1.1"
+realm = "2.0.0"
+
 [libraries]
+# AndroidX
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModel" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModel" }
 androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
+androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
+
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 haze = { group = "dev.chrisbanes.haze", name = "haze", version.ref = "haze" }
 haze-material = { group = "dev.chrisbanes.haze", name = "haze-materials", version.ref = "haze-material" }
 compottie = { group = "io.github.alexzhirkevich", name = "compottie", version.ref = "compottie" }
 placeholder-material3 = { group = "com.eygraber", name = "compose-placeholder-material3", version.ref = "placeholder-material3" }
 
+# Firebase
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
 firebase-auth = { module = "dev.gitlive:firebase-auth", version.ref = "firebaseAuth" }
-
-androidx-data-store-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "androidx-data-store" }
-androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 
 lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
@@ -62,13 +66,19 @@ coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor", ve
 # Network
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
+# Ktor
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
-kotlin-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
-ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-client-resources = { module = "io.ktor:ktor-client-resources", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+
+datastore-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
+datastore-okio = { module = "androidx.datastore:datastore-core-okio", version.ref = "datastore" }
 
 # Koin
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -76,8 +86,21 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin-compose" }
 urlencoder-lib = { module = "net.thauvin.erik.urlencoder:urlencoder-lib", version.ref = "urlencoderLib" }
 
+mongodb-realm = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
+
 [bundles]
-ktor = ["ktor-client-core", "ktor-client-content-negotiation"]
+ktor = [
+    "ktor-client-core",
+    "ktor-client-resources",
+    "ktor-client-content-negotiation",
+    "ktor-serialization-kotlinx-json",
+    "ktor-client-logging"
+]
+
+datastore = [
+    "datastore-core",
+    "datastore-okio"
+]
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -89,3 +112,4 @@ kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerfPlugin" }
 gms = { id = "com.google.gms.google-services", version.ref = "gmsPlugin" }
+realm-plugin = { id = "io.realm.kotlin", version.ref = "realm" }

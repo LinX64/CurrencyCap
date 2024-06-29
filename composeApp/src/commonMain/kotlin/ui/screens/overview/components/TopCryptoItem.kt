@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
-import domain.model.RateDto
+import domain.model.main.Rate
 import ui.common.formatCurrentTotal
 import ui.components.GlassCard
 import util.getIconBy
@@ -43,7 +43,7 @@ internal fun TopCryptoItem(
     modifier: Modifier = Modifier,
     cardBackground: Color = Color.Transparent,
     cardSize: Dp = 150.dp,
-    dataDao: RateDto,
+    dataDao: Rate,
     isLoading: Boolean = false
 ) {
     GlassCard {

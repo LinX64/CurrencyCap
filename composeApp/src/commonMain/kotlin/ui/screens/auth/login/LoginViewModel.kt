@@ -1,7 +1,7 @@
 package ui.screens.auth.login
 
 import androidx.lifecycle.viewModelScope
-import data.repository.auth.AuthServiceRepositoryImpl.AuthState
+import data.remote.repository.auth.AuthServiceRepositoryImpl.AuthState
 import domain.repository.AuthServiceRepository
 import domain.repository.UserPreferences
 import kotlinx.coroutines.flow.MutableStateFlow

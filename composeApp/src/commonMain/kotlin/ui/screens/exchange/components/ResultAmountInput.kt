@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import data.model.exchange.AmountInputType
+import data.remote.model.exchange.AmountInputType
 import ui.common.DecimalFormat
 import util.formatDecimalSeparator
 

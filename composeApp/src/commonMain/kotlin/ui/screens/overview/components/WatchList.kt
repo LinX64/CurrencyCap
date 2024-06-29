@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import domain.model.RateDto
+import domain.model.main.Rate
 import ui.screens.overview.OverviewState
 
 @Composable
@@ -90,7 +90,7 @@ internal fun WatchList(
                 items(5) {
                     TopCryptoItem(
                         isLoading = true,
-                        dataDao = RateDto(
+                        dataDao = Rate(
                             currencySymbol = "",
                             id = "",
                             symbol = "",

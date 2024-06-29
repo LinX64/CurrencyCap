@@ -6,21 +6,21 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import ui.components.HandleNavigationEffect
-import ui.components.main.BaseBlurLazyColumn
+import ui.components.main.BaseGlassLazyColumn
+import ui.screens.news.news_detail.NewsDetailNavigationEffect.OpenBrowser
 import ui.screens.news.news_detail.NewsDetailViewEvent.OnReadMoreClick
-import ui.screens.news.news_detail.components.NewsDetailHeader
+import ui.screens.news.news_detail.components.NewsDetailContent
 import util.getDummyNewsItem
 
 @Composable
 internal fun NewsDetailScreen(
     padding: PaddingValues,
-    newsDetailViewModel: NewsDetailViewModel = koinViewModel<NewsDetailViewModel>(),
     hazeState: HazeState,
-    url: String,
+    newsDetailViewModel: NewsDetailViewModel = koinViewModel<NewsDetailViewModel>(),
     onError: (String) -> Unit
 ) {
     val state = newsDetailViewModel.viewState.collectAsStateWithLifecycle()
-    BaseBlurLazyColumn(
+    BaseGlassLazyColumn(
         hazeState = hazeState,
         padding = padding,
     ) {
@@ -28,10 +28,10 @@ internal fun NewsDetailScreen(
             is NewsDetailState.Success -> {
                 val article = (state.value as NewsDetailState.Success).article
                 item {
-                    NewsDetailHeader(
+                    NewsDetailContent(
                         article = article,
                         imageUrl = article.urlToImage,
-                        onReadMoreClick = { newsDetailViewModel.handleEvent(OnReadMoreClick(url)) }
+                        onReadMoreClick = { newsDetailViewModel.handleEvent(OnReadMoreClick) }
                     )
                 }
             }
@@ -39,7 +39,7 @@ internal fun NewsDetailScreen(
             is NewsDetailState.Error -> onError((state.value as NewsDetailState.Error).message)
             is NewsDetailState.Loading -> {
                 item {
-                    NewsDetailHeader(
+                    NewsDetailContent(
                         article = getDummyNewsItem(),
                         isLoading = true,
                         onReadMoreClick = { }
@@ -53,7 +53,7 @@ internal fun NewsDetailScreen(
 
     HandleNavigationEffect(newsDetailViewModel) { effect ->
         when (effect) {
-            is NewsDetailNavigationEffect.NavigateToNewsDetailDetail -> {
+            is OpenBrowser -> {
                 /*TODO*/
             }
         }
