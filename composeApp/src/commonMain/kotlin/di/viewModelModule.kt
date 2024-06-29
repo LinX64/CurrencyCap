@@ -21,20 +21,19 @@ val viewModelModule = module {
     single { MainViewModel(get()) }
     single { OverviewViewModel(get()) }
     single { ExchangeViewModel(get(), get()) }
-    single { BookmarksViewModel() }
+    single { BookmarksViewModel(get()) }
     single { SearchViewModel(get()) }
     single { LoginViewModel(get(), get()) }
     single { RegisterViewModel(get(), get()) }
     single { ProfileViewModel(get(), get()) }
     single { FillProfileViewModel(get()) }
     single { ResetPasswordViewModel(get()) }
-    single { NewsViewModel(get()) }
-    single { NewsDetailViewModel(get(), get(), SavedStateHandle(emptyMap())) }
-    single { BookmarksViewModel() }
+    single { NewsViewModel(get(), get()) }
+    single { NewsDetailViewModel(get(), SavedStateHandle(emptyMap())) }
     single { SettingsViewModel(get(), get()) }
     single { AiPredictViewModel() }
 }
 
 val previewModule = module {
-    single { NewsDetailViewModel(get(), get(), SavedStateHandle(emptyMap())) }
+    single { NewsDetailViewModel(get(), SavedStateHandle(emptyMap())) }
 }

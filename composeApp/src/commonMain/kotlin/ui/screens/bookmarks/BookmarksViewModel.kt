@@ -1,12 +1,43 @@
 package ui.screens.bookmarks
 
+import androidx.lifecycle.viewModelScope
+import domain.model.Article
+import domain.repository.ArticleLocalDataSource
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import ui.common.MviViewModel
+import ui.screens.bookmarks.BookmarksViewEvent.OnLoadBookmarks
 
 class BookmarksViewModel(
-    //private val bookmarksRepository: BookmarksRepository
+    private val articleLocalDataSource: ArticleLocalDataSource
 ) : MviViewModel<BookmarksViewEvent, BookmarksState, BookmarksNavigationEffect>(BookmarksState.Idle) {
 
+    init {
+        handleEvent(OnLoadBookmarks)
+    }
+
     override fun handleEvent(event: BookmarksViewEvent) {
-        TODO("Not yet implemented")
+        when (event) {
+            OnLoadBookmarks -> onLoadBookmarks()
+            is BookmarksViewEvent.OnRemoveBookmarkClick -> removeBookmark(event.article)
+        }
+    }
+
+    private fun removeBookmark(article: Article) {
+        viewModelScope.launch {
+            articleLocalDataSource.removeArticle(article)
+        }
+    }
+
+    private fun onLoadBookmarks() {
+        articleLocalDataSource.readArticles()
+            .map { articles ->
+                when {
+                    articles.isEmpty() -> setState { BookmarksState.NoBookmarks }
+                    else -> setState { BookmarksState.Success(articles) }
+                }
+            }
+            .launchIn(viewModelScope)
     }
 }

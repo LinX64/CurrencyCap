@@ -1,6 +1,8 @@
 package data.local.database
 
 import data.local.model.ArticleEntity
+import data.local.model.toDomain
+import domain.model.Article
 import domain.repository.ArticleLocalDataSource
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
@@ -12,17 +14,20 @@ class ArticleLocalDataSourceImpl(
 ) : ArticleLocalDataSource {
 
     override suspend fun insertArticle(article: ArticleEntity) {
+        realm.write { copyToRealm(article) }
+    }
+
+    override suspend fun removeArticle(article: Article) {
         realm.write {
-            copyToRealm(article)
+            val articleEntity = this.query<ArticleEntity>("url == $0", article.url).first()
+            delete(articleEntity)
         }
     }
 
-    override fun readArticles(): Flow<List<ArticleEntity>> {
+    override fun readArticles(): Flow<List<Article>> {
         return realm.query<ArticleEntity>()
             .asFlow()
-            .map { result ->
-                result.list
-            }
+            .map { it.list.map(ArticleEntity::toDomain) }
     }
 
     override suspend fun cleanUp() {

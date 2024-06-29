@@ -1,16 +1,22 @@
 package ui.screens.news
 
 import androidx.lifecycle.viewModelScope
+import data.remote.model.news.toEntity
 import data.util.NetworkResult
 import data.util.asResult
+import domain.model.Article
+import domain.repository.ArticleLocalDataSource
 import domain.repository.NewsRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import ui.common.MviViewModel
 import ui.screens.news.NewsViewEvent.FetchNews
+import ui.screens.news.NewsViewEvent.OnBookmarkArticle
 
 class NewsViewModel(
-    private val newsRepository: NewsRepository
+    private val newsRepository: NewsRepository,
+    private val articleLocalDataSource: ArticleLocalDataSource
 ) : MviViewModel<NewsViewEvent, NewsState, NewsNavigationEffect>(NewsState.Loading) {
 
     init {
@@ -20,6 +26,7 @@ class NewsViewModel(
     override fun handleEvent(event: NewsViewEvent) {
         when (event) {
             FetchNews -> fetchNews()
+            is OnBookmarkArticle -> handleOnBookmarkClick(event.article)
         }
     }
 
@@ -37,5 +44,13 @@ class NewsViewModel(
                 }
             }
             .launchIn(viewModelScope)
+    }
+
+    private fun handleOnBookmarkClick(article: Article, isBookmarked: Boolean = true) {
+        viewModelScope.launch {
+            articleLocalDataSource.insertArticle(
+                article = article.copy(isBookmarked = isBookmarked).toEntity()
+            )
+        }
     }
 }

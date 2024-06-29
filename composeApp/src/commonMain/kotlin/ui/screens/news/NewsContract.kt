@@ -4,6 +4,7 @@ import domain.model.Article
 
 sealed interface NewsViewEvent {
     data object FetchNews : NewsViewEvent
+    data class OnBookmarkArticle(val article: Article) : NewsViewEvent
 }
 
 sealed interface NewsState {

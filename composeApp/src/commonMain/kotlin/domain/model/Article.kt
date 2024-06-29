@@ -8,5 +8,6 @@ data class Article(
     val sourceDto: Source,
     val title: String,
     val url: String,
-    val urlToImage: String? = null
+    val urlToImage: String? = null,
+    val isBookmarked: Boolean = false
 )

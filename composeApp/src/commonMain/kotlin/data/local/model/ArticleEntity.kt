@@ -18,6 +18,9 @@ open class ArticleEntity : RealmObject {
     var urlToImage: String = ""
     var sourceName: String = ""
     var isBookmarked: Boolean = false
+
+    // Temporary workaround for [K2] IllegalStateException: Multiple plugins generated nested...
+    companion object
 }
 
 fun ArticleEntity.toDomain() = Article(
@@ -30,3 +33,5 @@ fun ArticleEntity.toDomain() = Article(
     urlToImage = urlToImage,
     sourceDto = Source(name = sourceName)
 )
+
+fun List<ArticleEntity>.toDomain() = map(ArticleEntity::toDomain)

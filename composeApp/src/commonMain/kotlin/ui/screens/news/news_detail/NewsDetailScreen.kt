@@ -8,6 +8,7 @@ import di.koinViewModel
 import ui.components.HandleNavigationEffect
 import ui.components.main.BaseBlurLazyColumn
 import ui.screens.news.news_detail.NewsDetailNavigationEffect.OpenBrowser
+import ui.screens.news.news_detail.NewsDetailViewEvent.OnReadMoreClick
 import ui.screens.news.news_detail.components.NewsDetailContent
 import util.getDummyNewsItem
 
@@ -30,10 +31,7 @@ internal fun NewsDetailScreen(
                     NewsDetailContent(
                         article = article,
                         imageUrl = article.urlToImage,
-                        onReadMoreClick = {
-                            // newsDetailViewModel.handleEvent(OnReadMoreClick) todo revert this later
-                            newsDetailViewModel.handleEvent(NewsDetailViewEvent.OnBookmarkClick(article))
-                        }
+                        onReadMoreClick = { newsDetailViewModel.handleEvent(OnReadMoreClick) }
                     )
                 }
             }

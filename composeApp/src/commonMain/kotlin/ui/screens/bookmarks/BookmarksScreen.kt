@@ -27,24 +27,44 @@ import di.koinViewModel
 import io.github.alexzhirkevich.compottie.LottieAnimation
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
+import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import ui.components.NewsItem
 import ui.components.main.BaseBlurLazyColumn
+import ui.screens.bookmarks.BookmarksViewEvent.OnRemoveBookmarkClick
 
 @Composable
 internal fun BookmarksScreen(
     padding: PaddingValues,
-    aiPredictViewModel: BookmarksViewModel = koinViewModel<BookmarksViewModel>(),
-    hazeState: HazeState
+    bookmarksViewModel: BookmarksViewModel = koinViewModel<BookmarksViewModel>(),
+    hazeState: HazeState,
+    onBookmarkItemClick: (url: String) -> Unit
 ) {
-    val state by aiPredictViewModel.viewState.collectAsStateWithLifecycle()
+    val state by bookmarksViewModel.viewState.collectAsStateWithLifecycle()
     BaseBlurLazyColumn(
         hazeState = hazeState,
         padding = padding,
     ) {
-        // if no bookmark, then show this
+        when (state) {
+            BookmarksState.Idle -> Unit
+            BookmarksState.NoBookmarks -> {
+                item { NoBookmarks() }
+            }
 
-        item {
-            NoBookmarks()
+            is BookmarksState.Success -> {
+                val articles = (state as BookmarksState.Success).articles
+                items(articles.size) { index ->
+                    NewsItem(
+                        article = articles[index],
+                        shouldShowBookmark = true,
+                        onNewsItemClick = {
+                            val encodedUrl = UrlEncoderUtil.encode(articles[index].url)
+                            onBookmarkItemClick(encodedUrl)
+                        },
+                        onBookmarkClick = { bookmarksViewModel.handleEvent(OnRemoveBookmarkClick(articles[index])) }
+                    )
+                }
+            }
         }
     }
 }

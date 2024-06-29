@@ -47,7 +47,11 @@ internal fun MainNavGraph(
         )
         searchScreen(padding = padding, hazeState = hazeState)
         aiPredictScreen(padding = padding, hazeState = hazeState)
-        bookmarksScreen(padding = padding, hazeState = hazeState)
+        bookmarksScreen(
+            padding = padding,
+            hazeState = hazeState,
+            navController = navController
+        )
 
         newsScreen(
             padding = padding,

@@ -34,7 +34,7 @@ class NewsRepositoryImpl(
         val articles: List<ArticleDto> = Json.decodeFromString(NewsDto.serializer(), responseText).articles
 
         val matchedArticle = articles
-            .find { it.url == url }
+            .find { it.url.contains(url) }
             ?.toDomain()
             ?: throw NoSuchElementException("No article found with URL: $url")
 

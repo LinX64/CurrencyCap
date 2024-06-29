@@ -8,8 +8,9 @@ import di.koinViewModel
 import domain.model.Article
 import domain.model.Source
 import ui.components.HandleNavigationEffect
+import ui.components.NewsItem
 import ui.components.main.BaseBlurLazyColumn
-import ui.screens.news.components.NewsItem
+import ui.screens.news.NewsViewEvent.OnBookmarkArticle
 
 @Composable
 internal fun NewsScreen(
@@ -26,10 +27,12 @@ internal fun NewsScreen(
     ) {
         if (state.value is NewsState.Success) {
             val articles = (state.value as NewsState.Success).news
-            items(articles.size) { newsItem ->
+            items(articles.size) { index ->
                 NewsItem(
-                    article = articles[newsItem],
-                    onNewsItemClick = { url -> onNewsItemClick(url) }
+                    article = articles[index],
+                    onNewsItemClick = { onNewsItemClick(articles[index].url) },
+                    onBookmarkClick = { newsViewModel.handleEvent(OnBookmarkArticle(articles[index])) },
+                    shouldShowBookmark = articles[index].isBookmarked
                 )
             }
         }
@@ -39,7 +42,9 @@ internal fun NewsScreen(
                 NewsItem(
                     isLoading = true,
                     article = getDummyNewsItem(),
-                    onNewsItemClick = { sourceId -> }
+                    onNewsItemClick = { },
+                    onBookmarkClick = { },
+                    shouldShowBookmark = true
                 )
             }
         }
