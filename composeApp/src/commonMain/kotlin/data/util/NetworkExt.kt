@@ -5,7 +5,6 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.retryWhen
 import okio.IOException
@@ -29,20 +28,22 @@ inline fun <ResultType, RequestType> offlineFirst(
     crossinline onFetchFailed: (Throwable) -> Unit = { },
     crossinline shouldFetch: (ResultType?) -> Boolean = { true }
 ): Flow<NetworkResult<ResultType>> = channelFlow {
-    send(NetworkResult.Loading())
+    send(NetworkResult.Loading(null))
 
-    try {
-        val initialData = query().first()
+    val queryFlow = query()
+    queryFlow.collect { localData ->
+        send(NetworkResult.Success(localData))
 
-        if (shouldFetch(initialData)) {
-            val request = fetch()
-            saveFetchResultToDB(request)
-            query().collect { send(NetworkResult.Success(it)) }
-        } else send(NetworkResult.Success(initialData))
-
-    } catch (e: Exception) {
-        onFetchFailed(e)
-        query().collect { send(NetworkResult.Error(e, it)) }
+        if (shouldFetch(localData)) {
+            try {
+                val fetchedData = fetch()
+                saveFetchResultToDB(fetchedData)
+                // The updated data will be emitted in the next iteration of this collect
+            } catch (e: Exception) {
+                onFetchFailed(e)
+                send(NetworkResult.Error(e, localData))
+            }
+        }
     }
 }
     .flowOn(Dispatchers.IO)
