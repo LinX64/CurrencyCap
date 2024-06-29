@@ -5,7 +5,7 @@ import data.remote.model.news.NewsDto
 import data.remote.model.news.toDomain
 import data.remote.model.news.toEntity
 import data.util.APIConst.NEWS_URL
-import data.util.offlineFirst
+import data.util.cacheDataOrFetchOnline
 import data.util.retryOnIOException
 import domain.model.Article
 import domain.repository.ArticleLocalDataSource
@@ -25,14 +25,14 @@ class NewsRepositoryImpl(
     private val articleLocalDataSource: ArticleLocalDataSource
 ) : NewsRepository {
 
-    override fun getNews() = offlineFirst(
+    override fun getNews() = cacheDataOrFetchOnline(
         query = { articleLocalDataSource.getArticles() },
         fetch = { getPlainNewsResponse() },
-        shouldFetch = { data ->
-            data?.isEmpty() == true
+        shouldFetch = { localArticles ->
+            localArticles?.isEmpty() == true
             // TODO: Implement a check for stale data
         },
-        saveFetchResultToDB = { responseText ->
+        saveFetchResult = { responseText ->
             val articles: List<ArticleDto> = Json.decodeFromString(NewsDto.serializer(), responseText).articles
             articleLocalDataSource.insertArticles(articles.toEntity())
         }

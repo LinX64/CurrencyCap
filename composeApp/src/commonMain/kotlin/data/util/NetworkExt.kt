@@ -21,10 +21,10 @@ fun <T> Flow<T>.retryOnIOException(
     }
 }
 
-inline fun <ResultType, RequestType> offlineFirst(
+inline fun <ResultType, RequestType> cacheDataOrFetchOnline(
     crossinline query: () -> Flow<ResultType>,
     crossinline fetch: suspend () -> RequestType,
-    crossinline saveFetchResultToDB: suspend (RequestType) -> Unit,
+    crossinline saveFetchResult: suspend (RequestType) -> Unit,
     crossinline onFetchFailed: (Throwable) -> Unit = { },
     crossinline shouldFetch: (ResultType?) -> Boolean = { true }
 ): Flow<NetworkResult<ResultType>> = channelFlow {
@@ -37,7 +37,7 @@ inline fun <ResultType, RequestType> offlineFirst(
         if (shouldFetch(localData)) {
             try {
                 val fetchedData = fetch()
-                saveFetchResultToDB(fetchedData)
+                saveFetchResult(fetchedData)
                 // The updated data will be emitted in the next iteration of this collect
             } catch (e: Exception) {
                 onFetchFailed(e)
