@@ -22,25 +22,24 @@ fun <T> Flow<T>.retryOnIOException(
     }
 }
 
-inline fun <ResultType, RequestType> networkBoundNetworkResult(
+inline fun <ResultType, RequestType> offlineFirst(
     crossinline query: () -> Flow<ResultType>,
     crossinline fetch: suspend () -> RequestType,
-    crossinline saveFetchResult: suspend (RequestType) -> Unit,
+    crossinline saveFetchResultToDB: suspend (RequestType) -> Unit,
     crossinline onFetchFailed: (Throwable) -> Unit = { },
-    crossinline shouldFetch: (ResultType) -> Boolean = { true }
+    crossinline shouldFetch: (ResultType?) -> Boolean = { true }
 ): Flow<NetworkResult<ResultType>> = channelFlow {
+    send(NetworkResult.Loading())
+
     try {
-        send(NetworkResult.Loading())
-        val data = query().first()
+        val initialData = query().first()
 
-        if (shouldFetch(data)) {
+        if (shouldFetch(initialData)) {
             val request = fetch()
+            saveFetchResultToDB(request)
+            query().collect { send(NetworkResult.Success(it)) }
+        } else send(NetworkResult.Success(initialData))
 
-            saveFetchResult(request)
-            query().collect { send(NetworkResult.Success(it)) }
-        } else {
-            query().collect { send(NetworkResult.Success(it)) }
-        }
     } catch (e: Exception) {
         onFetchFailed(e)
         query().collect { send(NetworkResult.Error(e, it)) }
