@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import ui.common.MviViewModel
 import ui.screens.news.NewsViewEvent.FetchNews
 import ui.screens.news.NewsViewEvent.OnBookmarkArticle
+import ui.screens.news.NewsViewEvent.OnRetry
 
 class NewsViewModel(
     private val newsRepository: NewsRepository,
@@ -25,6 +26,7 @@ class NewsViewModel(
     override fun handleEvent(event: NewsViewEvent) {
         when (event) {
             FetchNews -> fetchNews()
+            OnRetry -> fetchNews()
             is OnBookmarkArticle -> handleOnBookmarkClick(event.article, event.isBookmarked)
         }
     }

@@ -4,6 +4,7 @@ import domain.model.Article
 
 sealed interface NewsViewEvent {
     data object FetchNews : NewsViewEvent
+    data object OnRetry : NewsViewEvent
 
     data class OnBookmarkArticle(
         val article: Article,
@@ -22,7 +23,4 @@ sealed interface NewsState {
     ) : NewsState
 }
 
-sealed interface NewsNavigationEffect {
-    data object NavigateToNewsDetail : NewsNavigationEffect
-}
-
+sealed interface NewsNavigationEffect

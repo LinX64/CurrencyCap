@@ -22,7 +22,6 @@ fun NavGraphBuilder.newsScreen(
         NewsScreen(
             padding = padding,
             hazeState = hazeState,
-            onError = onError,
             onNewsItemClick = { url ->
                 val encodedUrl = UrlEncoderUtil.encode(url)
                 navController.navigate("${NavRoutes.NEWS_DETAIL}/$encodedUrl")

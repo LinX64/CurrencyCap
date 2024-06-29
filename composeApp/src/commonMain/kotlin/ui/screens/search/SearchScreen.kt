@@ -144,7 +144,7 @@ private fun LazyListScope.searchResultContent(
         item {
             ErrorView(
                 message = state.message,
-                onRetryClicked = onRetryClicked
+                onRetry = onRetryClicked
             )
         }
     }
