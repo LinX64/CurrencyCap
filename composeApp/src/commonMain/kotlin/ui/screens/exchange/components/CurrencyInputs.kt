@@ -62,8 +62,7 @@ internal fun CurrencyInputs(
                 .rotate(animatedRotation)
                 .graphicsLayer {
                     rotationY = animatedRotation
-                }
-            ,
+                },
             onClick = {
                 animationStarted = !animationStarted
                 onSwitch()

@@ -38,6 +38,7 @@ actual fun String.getCountryFlag(): String {
 actual fun getSettingsPreferencesPath(): String {
     return NSFileManager.defaultManager.currentDirectoryPath + "/" + SETTINGS_PREFERENCES
 }
+
 actual class DecimalFormat {
     actual fun format(double: Double): String {
         val formatter = NSNumberFormatter()
