@@ -24,6 +24,12 @@ class ArticleLocalDataSourceImpl(
         }
     }
 
+    override suspend fun insertArticles(articles: List<ArticleEntity>) {
+        realm.write {
+            articles.map { copyToRealm(it) }
+        }
+    }
+
     override fun readArticles(): Flow<List<Article>> {
         return realm.query<ArticleEntity>()
             .asFlow()
