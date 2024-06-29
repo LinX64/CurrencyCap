@@ -1,6 +1,6 @@
 package data.remote.repository.exchange
 
-import data.remote.model.exchange.Currency
+import data.local.model.exchange.Currency
 import data.remote.model.main.RateDto
 import data.util.APIConst.BASE_URL
 import data.util.parseCurrencyRates

@@ -1,4 +1,4 @@
-package data.remote.model.exchange
+package data.local.model.exchange
 
 sealed class CurrencyType(val code: CurrencyCode) {
     data class Source(val currencyCode: CurrencyCode) : CurrencyType(currencyCode)

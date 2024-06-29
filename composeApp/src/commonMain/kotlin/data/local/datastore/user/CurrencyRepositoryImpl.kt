@@ -1,7 +1,7 @@
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import data.remote.model.exchange.CurrencyCode
+import data.local.model.exchange.CurrencyCode
 import data.util.Constant
 import domain.repository.CurrencyRepository
 import kotlinx.coroutines.flow.Flow

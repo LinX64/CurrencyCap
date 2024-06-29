@@ -1,4 +1,4 @@
-package data.remote.model.exchange
+package data.local.model.exchange
 
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.afghanistan
