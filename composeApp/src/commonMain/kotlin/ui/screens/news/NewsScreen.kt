@@ -11,6 +11,7 @@ import ui.components.ErrorView
 import ui.components.NewsItem
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.news.NewsViewEvent.OnBookmarkArticle
+import ui.screens.news.NewsViewEvent.OnRetry
 import util.getDummyNewsItem
 
 @Composable
@@ -29,7 +30,7 @@ internal fun NewsScreen(
         emptyContent = {
             ErrorView(
                 message = "An error occurred",
-                onRetry = { newsViewModel.handleEvent(NewsViewEvent.OnRetry) }
+                onRetry = { newsViewModel.handleEvent(OnRetry) }
             )
         }
     ) {
