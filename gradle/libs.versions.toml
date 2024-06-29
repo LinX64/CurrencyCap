@@ -6,6 +6,7 @@ android-targetSdk = "34"
 androidx-activityCompose = "1.9.0"
 androidxLifecycle = "2.8.2"
 compose-plugin = "1.6.11"
+kachetor = "1.0.0"
 kotlin = "2.0.0"
 koin = "3.6.0-alpha3"
 koin-compose = "1.1.5"
@@ -44,6 +45,7 @@ androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmode
 androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 
+kachetor = { module = "com.vipulasri.kachetor:kachetor", version.ref = "kachetor" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 haze = { group = "dev.chrisbanes.haze", name = "haze", version.ref = "haze" }
 haze-material = { group = "dev.chrisbanes.haze", name = "haze-materials", version.ref = "haze-material" }

@@ -1,7 +1,9 @@
 package di
 
+import com.vipulasri.kachetor.KachetorStorage
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
+import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
@@ -37,9 +39,9 @@ val httpClientModule = module {
                 requestTimeoutMillis = 15000
             }
             install(Resources)
-//            install(HttpCache) {
-//                publicStorage(KachetorStorage(50 * 1024 * 1024))
-//            }
+            install(HttpCache) {
+                publicStorage(KachetorStorage(50 * 1024 * 1024))
+            }
         }
     }
 }
