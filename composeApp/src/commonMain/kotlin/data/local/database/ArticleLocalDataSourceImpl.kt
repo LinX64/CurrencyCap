@@ -16,19 +16,15 @@ class ArticleLocalDataSourceImpl(
     override suspend fun insertArticle(article: ArticleEntity) {
         realm.write { copyToRealm(article) }
     }
+
     override suspend fun updateArticle(article: ArticleEntity) {
         realm.writeBlocking {
-            val existingArticle = query<ArticleEntity>("url == $0", article.url).first().find()
-
-            if (existingArticle != null) {
-                existingArticle.apply {
+            query<ArticleEntity>("url == $0", article.url)
+                .first()
+                .find()
+                ?.apply {
                     isBookmarked = article.isBookmarked
-                    println("Article updated in local: ${article.isBookmarked}")
-                }
-            } else {
-                println("Article not found: $article")
-                copyToRealm(article)
-            }
+                } ?: copyToRealm(article)
         }
     }
 
