@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface NewsRepository {
     fun getNews(): Flow<NetworkResult<List<Article>>>
-    fun getArticleByUrl(url: String): Flow<Article>
+    fun getArticleByUrl(url: String): Flow<NetworkResult<Article>>
 }
