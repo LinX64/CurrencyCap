@@ -8,7 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.NavRoutes
+import ui.navigation.util.NavRoutes
 import ui.screens.news.news_detail.NewsDetailScreen
 
 fun NavController.navigateToNewsDetailScreen() = navigate(NavRoutes.NEWS_DETAIL)

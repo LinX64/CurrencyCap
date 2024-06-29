@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.NavRoutes
+import ui.navigation.util.NavRoutes
 import ui.screens.search.SearchScreen
 
 fun NavController.navigateToSearchScreen() = navigate(NavRoutes.EXPLORE)

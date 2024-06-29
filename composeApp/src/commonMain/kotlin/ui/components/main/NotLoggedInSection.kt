@@ -35,8 +35,8 @@ import dev.chrisbanes.haze.materials.HazeMaterials
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ui.components.BottomSheet
-import ui.navigation.NavRoutes
 import ui.navigation.graphs.AuthNavGraph
+import ui.navigation.util.NavRoutes
 import ui.screens.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

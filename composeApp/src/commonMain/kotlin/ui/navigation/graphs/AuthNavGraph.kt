@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import ui.navigation.NavRoutes
+import ui.navigation.util.NavRoutes
 import ui.screens.auth.fill_profile.navigation.fillProfileScreen
 import ui.screens.auth.login.navigation.loginScreen
 import ui.screens.auth.register.navigation.registerScreen
