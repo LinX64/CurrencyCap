@@ -21,6 +21,8 @@ sealed interface NewsState {
         val message: String,
         val news: List<Article>
     ) : NewsState
+
+    data object Empty : NewsState
 }
 
 sealed interface NewsNavigationEffect

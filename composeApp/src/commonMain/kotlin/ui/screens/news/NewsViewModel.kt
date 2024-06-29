@@ -25,9 +25,9 @@ class NewsViewModel(
 
     override fun handleEvent(event: NewsViewEvent) {
         when (event) {
+            is OnBookmarkArticle -> handleOnBookmarkClick(event.article, event.isBookmarked)
             FetchNews -> fetchNews()
             OnRetry -> fetchNews()
-            is OnBookmarkArticle -> handleOnBookmarkClick(event.article, event.isBookmarked)
         }
     }
 
@@ -38,7 +38,8 @@ class NewsViewModel(
                     is NetworkResult.Success -> setState { NewsState.Success(result.data) }
                     is NetworkResult.Error -> {
                         val news = result.data ?: emptyList()
-                        setState { NewsState.Error(message = result.throwable.message ?: "", news = news) }
+                        val message = result.throwable.message ?: ""
+                        if (news.isEmpty()) NewsState.Empty else NewsState.Error(message, news)
                     }
 
                     else -> setState { NewsState.Loading }
