@@ -14,7 +14,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -28,12 +27,12 @@ import ui.screens.MainViewModel
 internal fun LoggedInSection(
     appState: LoggedInAppState = rememberLoggedInAppState(),
     mainViewModel: MainViewModel,
-    navController: NavHostController,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scaffoldState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState(),
     scope: CoroutineScope
 ) {
     val currentDestination = appState.currentDestination?.route
+    val navController = appState.navController
     val isSheetOpen = rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val hazeState = remember { HazeState() }

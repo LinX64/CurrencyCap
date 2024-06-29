@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
@@ -42,9 +43,9 @@ import ui.screens.MainViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun NotLoggedInSection(
-    navController: NavHostController,
-    mainViewModel: MainViewModel,
     scope: CoroutineScope,
+    mainViewModel: MainViewModel,
+    navController: NavHostController = rememberNavController(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scaffoldState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState()
 ) {
