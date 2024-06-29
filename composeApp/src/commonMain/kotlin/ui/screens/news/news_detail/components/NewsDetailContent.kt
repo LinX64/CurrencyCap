@@ -83,7 +83,7 @@ internal fun NewsDetailContent(
             ) {
                 Text(
                     modifier = loadingPlaceHolderModifier,
-                    text = article.sourceDto.name,
+                    text = article.source.name,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                     textAlign = TextAlign.Center

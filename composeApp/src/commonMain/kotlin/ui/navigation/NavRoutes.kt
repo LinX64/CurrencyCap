@@ -22,3 +22,5 @@ object NavRoutes {
     const val FILL_PROFILE = "Fill Profile"
     const val RESET_PASSWORD = "Forgot Password"
 }
+
+const val ENCODED_URL = "encodedUrl"

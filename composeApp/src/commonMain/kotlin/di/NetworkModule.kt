@@ -1,5 +1,6 @@
 package di
 
+import com.vipulasri.kachetor.KachetorStorage
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.cache.HttpCache
@@ -37,18 +38,10 @@ val httpClientModule = module {
             install(HttpTimeout) {
                 requestTimeoutMillis = 15000
             }
-            install(HttpCache)
             install(Resources)
-
-//            defaultRequest {
-//                url {
-//                    host = APIConst.NEWS_URL
-//                    protocol = URLProtocol.HTTPS
-//                    contentType(ContentType.Application.Json)
-//                }
-//            }
-
-            // TODO
+            install(HttpCache) {
+                publicStorage(KachetorStorage(50 * 1024 * 1024))
+            }
         }
     }
 }

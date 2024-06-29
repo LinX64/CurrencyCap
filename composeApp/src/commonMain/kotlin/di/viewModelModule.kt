@@ -2,6 +2,7 @@ package di
 
 import androidx.lifecycle.SavedStateHandle
 import org.koin.dsl.module
+import ui.navigation.ENCODED_URL
 import ui.screens.MainViewModel
 import ui.screens.ai_predict.AiPredictViewModel
 import ui.screens.auth.fill_profile.FillProfileViewModel
@@ -29,9 +30,10 @@ val viewModelModule = module {
     single { FillProfileViewModel(get()) }
     single { ResetPasswordViewModel(get()) }
     single { NewsViewModel(get(), get()) }
-    single { NewsDetailViewModel(get(), SavedStateHandle(emptyMap())) }
     single { SettingsViewModel(get(), get()) }
     single { AiPredictViewModel() }
+
+    factory { (url: String) -> NewsDetailViewModel(get(), SavedStateHandle(mapOf(ENCODED_URL to url))) }
 }
 
 val previewModule = module {
