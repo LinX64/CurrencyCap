@@ -5,19 +5,19 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
-import domain.model.Article
-import domain.model.Source
 import ui.components.HandleNavigationEffect
 import ui.components.NewsItem
 import ui.components.main.BaseBlurLazyColumn
 import ui.screens.news.NewsViewEvent.OnBookmarkArticle
+import util.getDummyNewsItem
 
 @Composable
 internal fun NewsScreen(
     padding: PaddingValues,
     newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
     hazeState: HazeState,
-    onNewsItemClick: (url: String) -> Unit
+    onNewsItemClick: (url: String) -> Unit,
+    onError: (message: String) -> Unit
 ) {
     val state = newsViewModel.viewState.collectAsStateWithLifecycle()
 
@@ -25,28 +25,48 @@ internal fun NewsScreen(
         hazeState = hazeState,
         padding = padding
     ) {
-        if (state.value is NewsState.Success) {
-            val articles = (state.value as NewsState.Success).news
-            items(articles.size) { index ->
-                NewsItem(
-                    article = articles[index],
-                    onNewsItemClick = { onNewsItemClick(articles[index].url) },
-                    onBookmarkClick = { newsViewModel.handleEvent(OnBookmarkArticle(articles[index])) },
-                    shouldShowBookmark = articles[index].isBookmarked
-                )
+        when (val currentState = state.value) {
+            is NewsState.Success -> {
+                val articles = currentState.news
+                items(articles.size) { index ->
+                    NewsItem(
+                        article = articles[index],
+                        onNewsItemClick = { onNewsItemClick(articles[index].url) },
+                        onBookmarkClick = { isBookmarked ->
+                            newsViewModel.handleEvent(OnBookmarkArticle(articles[index], isBookmarked))
+                        },
+                        shouldShowBookmark = articles[index].isBookmarked
+                    )
+                }
             }
-        }
 
-        if (state.value is NewsState.Loading) {
-            items(10) {
-                NewsItem(
-                    isLoading = true,
-                    article = getDummyNewsItem(),
-                    onNewsItemClick = { },
-                    onBookmarkClick = { },
-                    shouldShowBookmark = true
-                )
+            is NewsState.Loading -> {
+                items(10) {
+                    NewsItem(
+                        isLoading = true,
+                        article = getDummyNewsItem(),
+                        onNewsItemClick = { },
+                        onBookmarkClick = { },
+                        shouldShowBookmark = false
+                    )
+                }
             }
+
+            is NewsState.Error -> {
+                //onError(currentState.message)
+                // TODO: Show message once
+                // Show cached news
+                items(currentState.news.size) { index ->
+                    NewsItem(
+                        article = currentState.news[index],
+                        onNewsItemClick = { onNewsItemClick(currentState.news[index].url) },
+                        onBookmarkClick = { newsViewModel.handleEvent(OnBookmarkArticle(currentState.news[index], false)) },
+                        shouldShowBookmark = currentState.news[index].isBookmarked
+                    )
+                }
+            }
+
+            else -> Unit
         }
     }
 
@@ -58,20 +78,3 @@ internal fun NewsScreen(
         }
     }
 }
-
-private fun getDummyNewsItem() = Article(
-    author = "author",
-    content = "content",
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididu",
-    publishedAt = "publishedAt",
-    sourceDto = Source(
-        id = "id",
-        name = "CoinDesk"
-    ),
-    title = "Lorem ipsum dolor sit amet, consectetur adipiscing",
-    url = "url",
-    urlToImage = "urlToImage",
-)
-
-
-

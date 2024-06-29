@@ -3,9 +3,12 @@ package data.remote.repository.news
 import data.remote.model.news.ArticleDto
 import data.remote.model.news.NewsDto
 import data.remote.model.news.toDomain
+import data.remote.model.news.toEntity
 import data.util.APIConst.NEWS_URL
+import data.util.networkBoundNetworkResult
 import data.util.retryOnIOException
 import domain.model.Article
+import domain.repository.ArticleLocalDataSource
 import domain.repository.NewsRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
@@ -18,16 +21,18 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.serialization.json.Json
 
 class NewsRepositoryImpl(
-    private val httpClient: HttpClient
+    private val httpClient: HttpClient,
+    private val articleLocalDataSource: ArticleLocalDataSource
 ) : NewsRepository {
 
-    override fun getNews(): Flow<List<Article>> = flow {
-        val responseText = getPlainNewsResponse()
-        val articles = Json.decodeFromString(NewsDto.serializer(), responseText).articles.toDomain()
-        emit(articles)
-    }
-        .flowOn(Dispatchers.IO)
-        .retryOnIOException()
+    override fun getNews() = networkBoundNetworkResult(
+        query = { articleLocalDataSource.getArticles() },
+        fetch = { getPlainNewsResponse() },
+        saveFetchResult = { responseText ->
+            val articles: List<ArticleDto> = Json.decodeFromString(NewsDto.serializer(), responseText).articles
+            articleLocalDataSource.insertArticles(articles.toEntity())
+        }
+    )
 
     override fun getArticleByUrl(url: String): Flow<Article> = flow {
         val responseText = getPlainNewsResponse()

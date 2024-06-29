@@ -56,7 +56,8 @@ internal fun MainNavGraph(
         newsScreen(
             padding = padding,
             hazeState = hazeState,
-            navController = navController
+            navController = navController,
+            onError = onError
         )
 
         newsDetailScreen(

@@ -75,26 +75,27 @@ fun List<ArticleDto>.toDomain(): List<Article> {
     return map { it.toDomain() }
 }
 
-fun Article.toDomain() = ArticleDto(
-    author = author,
-    content = content,
-    description = description,
-    publishedAt = publishedAt,
-    sourceDto = SourceDto(
-        id = sourceDto.id,
-        name = sourceDto.name
-    ),
-    title = title,
-    url = url,
-    urlToImage = urlToImage
-)
-
 fun Article.toEntity() = ArticleEntity().apply {
     url = this@toEntity.url
     title = this@toEntity.title
     description = this@toEntity.description
     author = this@toEntity.author.orEmpty()
     publishedAt = this@toEntity.publishedAt
-    sourceName = this@toEntity.sourceDto?.name.orEmpty()
+    sourceName = this@toEntity.sourceDto.name
     urlToImage = this@toEntity.urlToImage.orEmpty()
+    isBookmarked = this@toEntity.isBookmarked
+}
+
+fun List<ArticleDto>.toEntity(): List<ArticleEntity> {
+    return map { dto ->
+        ArticleEntity().apply {
+            url = dto.url
+            title = dto.title
+            description = dto.description
+            author = dto.author.orEmpty()
+            publishedAt = dto.publishedAt
+            sourceName = dto.sourceDto.name
+            urlToImage = dto.urlToImage.orEmpty()
+        }
+    }
 }

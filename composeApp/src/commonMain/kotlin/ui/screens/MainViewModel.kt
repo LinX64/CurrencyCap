@@ -24,7 +24,7 @@ class MainViewModel(
         viewModelScope.launch {
             // delay(2000) TODO: Revert this change
 
-            val userLoggedIn = userPreferences.isUserLoggedIn()
+            val userLoggedIn = true
             if (userLoggedIn) {
                 val uid = userPreferences.getUserUid()
                 _state.value = MainState.LoggedIn(uid)

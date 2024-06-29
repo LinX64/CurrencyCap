@@ -48,8 +48,8 @@ class SearchViewModel(
                 .onEach { result ->
                     setState {
                         when (result) {
-                            is NetworkResult.Error -> SearchState.Error(result.exception.message ?: "")
-                            NetworkResult.Loading -> SearchState.Loading
+                            is NetworkResult.Error -> SearchState.Error(result.throwable.message ?: "")
+                            is NetworkResult.Loading -> SearchState.Loading
                             is NetworkResult.Success -> {
                                 if (result.data.isNotEmpty()) {
                                     SearchState.Success(result.data)

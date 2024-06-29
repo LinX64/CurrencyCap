@@ -31,7 +31,7 @@ class BookmarksViewModel(
     }
 
     private fun onLoadBookmarks() {
-        articleLocalDataSource.readArticles()
+        articleLocalDataSource.getBookmarkedArticles()
             .map { articles ->
                 when {
                     articles.isEmpty() -> setState { BookmarksState.NoBookmarks }

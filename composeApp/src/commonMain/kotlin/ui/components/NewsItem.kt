@@ -33,6 +33,7 @@ import currencycap.composeapp.generated.resources.ic_bookmark_not_filled
 import domain.model.Article
 import org.jetbrains.compose.resources.painterResource
 import ui.screens.overview.components.getPlaceHolder
+import util.convertDateFormat
 
 @Composable
 internal fun NewsItem(
@@ -41,7 +42,7 @@ internal fun NewsItem(
     article: Article,
     shouldShowBookmark: Boolean,
     onNewsItemClick: () -> Unit,
-    onBookmarkClick: () -> Unit
+    onBookmarkClick: (isBookmarked: Boolean) -> Unit
 ) {
     GlassCard(
         modifier = modifier.padding(vertical = 8.dp)
@@ -127,8 +128,8 @@ private fun TextContentSection(
     description: String,
     isLoading: Boolean,
     date: String,
-    onBookmarkClick: () -> Unit,
-    shouldShowBookmark: Boolean = false
+    shouldShowBookmark: Boolean = false,
+    onBookmarkClick: (isBookmarked: Boolean) -> Unit
 ) {
     val isBookmarked = rememberSaveable { mutableStateOf(shouldShowBookmark) }
     val bookmarkIconColor = if (isBookmarked.value) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
@@ -143,7 +144,7 @@ private fun TextContentSection(
         IconButton(
             onClick = {
                 isBookmarked.value = !isBookmarked.value
-                onBookmarkClick()
+                onBookmarkClick(isBookmarked.value)
             },
             modifier = Modifier
                 .size(24.dp)
@@ -157,6 +158,7 @@ private fun TextContentSection(
         }
 
         Text(
+            modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
             text = title,
             style = MaterialTheme.typography.bodyLarge,
             maxLines = 2,
@@ -167,7 +169,7 @@ private fun TextContentSection(
 
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-            text = date,
+            text = convertDateFormat(date),
             style = MaterialTheme.typography.bodyMedium,
             maxLines = 3,
             overflow = TextOverflow.Ellipsis,

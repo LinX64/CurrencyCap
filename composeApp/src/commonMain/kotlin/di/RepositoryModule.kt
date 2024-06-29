@@ -30,7 +30,7 @@ val repositoryModule = module {
     single<AppPreferences> { AppPreferencesImpl(get()) }
     single<CurrencyRepository> { CurrencyRepositoryImpl(get()) }
     single<ExchangeRepository> { ExchangeRepositoryImpl(get()) }
-    single<NewsRepository> { NewsRepositoryImpl(get()) }
+    single<NewsRepository> { NewsRepositoryImpl(get(), get()) }
 
     // Local repositories
     single<ArticleLocalDataSource> { ArticleLocalDataSourceImpl(get()) }

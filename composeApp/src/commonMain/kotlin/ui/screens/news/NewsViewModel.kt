@@ -3,7 +3,6 @@ package ui.screens.news
 import androidx.lifecycle.viewModelScope
 import data.remote.model.news.toEntity
 import data.util.NetworkResult
-import data.util.asResult
 import domain.model.Article
 import domain.repository.ArticleLocalDataSource
 import domain.repository.NewsRepository
@@ -26,18 +25,21 @@ class NewsViewModel(
     override fun handleEvent(event: NewsViewEvent) {
         when (event) {
             FetchNews -> fetchNews()
-            is OnBookmarkArticle -> handleOnBookmarkClick(event.article)
+            is OnBookmarkArticle -> handleOnBookmarkClick(event.article, event.isBookmarked)
         }
     }
 
     private fun fetchNews() {
         newsRepository.getNews()
-            .asResult()
             .map { result ->
                 when (result) {
-                    is NetworkResult.Success -> setState { NewsState.Success(result.data) }
+                    is NetworkResult.Success -> {
+                        setState { NewsState.Success(result.data) }
+                    }
+
                     is NetworkResult.Error -> {
-                        setState { NewsState.Error(result.exception.message ?: "Error while fetching news") }
+                        val news = result.data ?: emptyList()
+                        setState { NewsState.Error(message = result.throwable.message ?: "", news = news) }
                     }
 
                     else -> setState { NewsState.Loading }
@@ -46,11 +48,10 @@ class NewsViewModel(
             .launchIn(viewModelScope)
     }
 
-    private fun handleOnBookmarkClick(article: Article, isBookmarked: Boolean = true) {
+    private fun handleOnBookmarkClick(article: Article, isBookmarked: Boolean) {
         viewModelScope.launch {
-            articleLocalDataSource.insertArticle(
-                article = article.copy(isBookmarked = isBookmarked).toEntity()
-            )
+            val updatedArticle = article.copy(isBookmarked = isBookmarked)
+            articleLocalDataSource.updateArticle(updatedArticle.toEntity())
         }
     }
 }

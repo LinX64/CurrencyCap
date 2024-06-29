@@ -38,7 +38,7 @@ class NewsDetailViewModel(
                     is NetworkResult.Success -> setState { NewsDetailState.Success(result.data) }
                     is NetworkResult.Error -> setState {
                         NewsDetailState.Error(
-                            result.exception.message ?: "Error while fetching news"
+                            result.throwable.message ?: "Error while fetching news"
                         )
                     }
 

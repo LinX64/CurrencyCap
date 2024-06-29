@@ -16,6 +16,21 @@ class ArticleLocalDataSourceImpl(
     override suspend fun insertArticle(article: ArticleEntity) {
         realm.write { copyToRealm(article) }
     }
+    override suspend fun updateArticle(article: ArticleEntity) {
+        realm.writeBlocking {
+            val existingArticle = query<ArticleEntity>("url == $0", article.url).first().find()
+
+            if (existingArticle != null) {
+                existingArticle.apply {
+                    isBookmarked = article.isBookmarked
+                    println("Article updated in local: ${article.isBookmarked}")
+                }
+            } else {
+                println("Article not found: $article")
+                copyToRealm(article)
+            }
+        }
+    }
 
     override suspend fun removeArticle(article: Article) {
         realm.write {
@@ -30,8 +45,14 @@ class ArticleLocalDataSourceImpl(
         }
     }
 
-    override fun readArticles(): Flow<List<Article>> {
+    override fun getArticles(): Flow<List<Article>> {
         return realm.query<ArticleEntity>()
+            .asFlow()
+            .map { it.list.map(ArticleEntity::toDomain) }
+    }
+
+    override fun getBookmarkedArticles(): Flow<List<Article>> {
+        return realm.query<ArticleEntity>("isBookmarked == $0", true)
             .asFlow()
             .map { it.list.map(ArticleEntity::toDomain) }
     }
