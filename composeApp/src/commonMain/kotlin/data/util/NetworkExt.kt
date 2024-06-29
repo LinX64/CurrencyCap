@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.retryWhen
 import okio.IOException
+import kotlin.math.pow
+import kotlin.random.Random
 
 inline fun <T> Flow<T>.retryOnIOException(
     maxRetries: Int = 60,
@@ -15,13 +17,12 @@ inline fun <T> Flow<T>.retryOnIOException(
     maxRetryDelay: Long = 30000L
 ): Flow<T> = retryWhen { cause, attempt ->
     if (cause is IOException && attempt < maxRetries) {
-        val retryDelay = (initialRetryDelay * (1 shl (attempt.coerceAtMost(5).toInt()))).coerceAtMost(maxRetryDelay)
+        val exponentialDelay = initialRetryDelay * 2.0.pow(attempt.toDouble()).toLong()
+        val retryDelay = (exponentialDelay + Random.nextLong(-exponentialDelay / 2, exponentialDelay / 2)).coerceAtMost(maxRetryDelay)
         delay(retryDelay)
         true
-    } else {
-        false
-    }
-}
+    } else false
+} // TODO: Consider adding internet connection check
 
 internal inline fun <ResultType, RequestType> cacheDataOrFetchOnline(
     crossinline query: () -> Flow<ResultType>,

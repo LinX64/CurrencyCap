@@ -32,7 +32,6 @@ class NewsDetailViewModel(
 
     private fun fetchNews(url: String) {
         newsRepository.getArticleByUrl(url)
-            .asResult()
             .map { result ->
                 when (result) {
                     is NetworkResult.Success -> setState { NewsDetailState.Success(result.data) }
