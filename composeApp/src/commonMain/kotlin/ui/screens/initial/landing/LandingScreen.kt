@@ -68,14 +68,14 @@ internal fun LandingScreen(
             Spacer(modifier = Modifier.height(80.dp))
 
             PrimaryButton(
-                onButtonClick = onLoginClick,
+                onButtonClick = onSignUpClick,
                 text = "Create an Account"
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             SecondaryButton(
-                onButtonClick = onSignUpClick,
+                onButtonClick = onLoginClick,
                 text = "Log In"
             )
 

@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
 import ui.components.BaseCenterColumn
 import ui.components.HandleNavigationEffect
+import ui.components.PrimaryButton
 import ui.screens.initial.get_verified.GetVerifiedPhoneNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.get_verified.GetVerifiedPhoneViewEvent.OnCodeChanged
 import ui.screens.initial.get_verified.GetVerifiedPhoneViewEvent.OnFinishSignUpClick
@@ -101,19 +100,10 @@ private fun GetVerifiedPhoneForm(
 
             Spacer(modifier = modifier.height(32.dp))
 
-            Button(
-                onClick = onFinishSignUpClick,
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(52.dp),
-                shape = RoundedCornerShape(10.dp),
-            ) {
-                Text(
-                    text = "Finish Sign Up",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.surface
-                )
-            }
+            PrimaryButton(
+                text = "Finish Sign Up",
+                onButtonClick = onFinishSignUpClick
+            )
         }
     }
 }
