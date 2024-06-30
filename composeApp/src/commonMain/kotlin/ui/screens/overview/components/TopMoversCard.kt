@@ -29,13 +29,14 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
+import domain.model.main.Crypto
+import ui.common.formatToPrice
 
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 internal fun TopMoversCard(
     isLoading: Boolean,
-    name: String,
-    fullName: String
+    topMovers: Crypto
 ) {
     val hazeState = remember { HazeState() }
     MaterialsCard(
@@ -54,7 +55,7 @@ internal fun TopMoversCard(
         ) {
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                text = name,
+                text = topMovers.symbol,
                 color = Color.White,
                 fontSize = 18.sp,
                 textAlign = TextAlign.Start,
@@ -65,22 +66,41 @@ internal fun TopMoversCard(
 
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                text = fullName,
+                text = topMovers.name,
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = MaterialTheme.typography.titleLarge.fontSize,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1
             )
 
+            val formattedPrice = formatToPrice(topMovers.currentPrice)
+            val formattedCurrentPrice = "$${formattedPrice}"
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                text = "$2,199.24",
+                text = formattedCurrentPrice,
                 color = Color.Gray,
                 fontSize = MaterialTheme.typography.titleMedium.fontSize,
                 maxLines = 1
             )
 
             Spacer(modifier = Modifier.height(16.dp))
+
+            val changeData = listOf(
+                topMovers.priceChange24h.toFloat(),
+                topMovers.priceChangePercentage24h.toFloat()
+            )
+
+            val supplyData = listOf(
+                topMovers.circulatingSupply.toFloat(),
+                topMovers.totalSupply?.toFloat(),
+                topMovers.maxSupply?.toFloat()
+            )
+
+            val priceData = listOf(
+                topMovers.low24h.toFloat(),
+                topMovers.currentPrice.toFloat(),
+                topMovers.high24h.toFloat()
+            )
 
             TopMoversChart(
                 modifier = if (isLoading) getPlaceHolder(
@@ -92,12 +112,15 @@ internal fun TopMoversCard(
                     .fillMaxWidth()
                     .height(60.dp)
                     .width(40.dp),
-                list = mockAssetInfo.lastDayChange
+                list = priceData
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            BottomRow(isLoading = isLoading)
+            BottomRow(
+                topMovers = topMovers,
+                isLoading = isLoading
+            )
         }
     }
 }
@@ -105,23 +128,27 @@ internal fun TopMoversCard(
 @Composable
 private fun BottomRow(
     isLoading: Boolean,
+    topMovers: Crypto
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        val formattedPriceChange = formatToPrice(topMovers.priceChange24h)
+        val formattedChange = "+${formattedPriceChange}%"
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-            text = "+26.46 %",
+            text = formattedChange,
             color = Color.Green,
             fontSize = 14.sp
         )
 
-//        ChangeIcon(
-//            valueChange = 26,
-//            isLoading = isLoading
-//        )
+        ChangeIcon(
+            valueChange = topMovers.priceChange24h,
+            isPositive = topMovers.priceChange24h > 0,
+            isLoading = isLoading
+        )
     }
 }
 

@@ -6,11 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowUpward
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.baseline_monetization_on_48
-import domain.model.main.Rate
+import domain.model.main.Crypto
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.components.GlassCard
@@ -58,15 +54,14 @@ val mockAssetInfo = AssetInfo(
 @Composable
 internal fun RateHorizontalItem(
     modifier: Modifier = Modifier,
-    icon: String,
-    rate: Rate,
+    crypto: Crypto,
     isLoading: Boolean = false,
     assetInfo: AssetInfo = mockAssetInfo,
 ) {
     GlassCard {
         Row(
             modifier = modifier
-                .width(350.dp)
+                .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -76,7 +71,7 @@ internal fun RateHorizontalItem(
             } else {
                 AsyncImage(
                     modifier = Modifier.size(48.dp).clip(RoundedCornerShape(55.dp)),
-                    model = icon,
+                    model = crypto.image,
                     placeholder = painterResource(Res.drawable.baseline_monetization_on_48),
                     error = painterResource(Res.drawable.baseline_monetization_on_48),
                     contentDescription = null
@@ -88,7 +83,7 @@ internal fun RateHorizontalItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                FirstHorizontalColumn(rate = rate, isLoading = isLoading)
+                FirstHorizontalColumn(crypto = crypto, isLoading = isLoading)
 
 //                PerformanceChart(
 //                    modifier = Modifier.height(40.dp).width(80.dp),
@@ -97,7 +92,7 @@ internal fun RateHorizontalItem(
 
                 // TODO: add PerformanceChart
 
-                EndHorizontalComponents(isLoading = isLoading)
+                EndHorizontalComponents(crypto = crypto, isLoading = isLoading)
             }
         }
     }
@@ -106,7 +101,7 @@ internal fun RateHorizontalItem(
 @Composable
 private fun FirstHorizontalColumn(
     modifier: Modifier = Modifier,
-    rate: Rate,
+    crypto: Crypto,
     isLoading: Boolean = false
 ) {
     Column(
@@ -114,13 +109,13 @@ private fun FirstHorizontalColumn(
     ) {
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-            text = rate.symbol,
+            text = crypto.symbol,
             color = Color.White,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold
         )
 
-        val formattedRate = if (rate.rateUsd.isNotBlank()) formatToPrice(rate.rateUsd.toDouble()) else ""
+        val formattedRate = formatToPrice(crypto.currentPrice)
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
             text = "$$formattedRate",
@@ -134,7 +129,8 @@ private fun FirstHorizontalColumn(
 @Composable
 private fun EndHorizontalComponents(
     modifier: Modifier = Modifier,
-    isLoading: Boolean
+    isLoading: Boolean,
+    crypto: Crypto
 ) {
     Row(
         modifier = modifier.fillMaxWidth().padding(horizontal = 10.dp),
@@ -144,9 +140,10 @@ private fun EndHorizontalComponents(
         Column(
             horizontalAlignment = Alignment.End
         ) {
+            val formattedRate = "$${crypto.priceChangePercentage24h}"
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                text = "$898.5",
+                text = formattedRate,
                 color = Color.White,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold
@@ -157,18 +154,17 @@ private fun EndHorizontalComponents(
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
 
-                // TODO: add upward arrow icon and downward arrow icon
-                Icon(
-                    modifier = if (isLoading) getPlaceHolder(Modifier.size(16.dp)) else Modifier,
-                    imageVector = Icons.Default.ArrowUpward,
-                    contentDescription = null,
-                    tint = CurrencyColors.Text_Green
+                ChangeIcon(
+                    valueChange = crypto.priceChangePercentage24h,
+                    isPositive = crypto.priceChangePercentage24h > 0
                 )
 
+                val formattedPriceChange = formatToPrice(crypto.priceChangePercentage24h)
+                val priceChange24Hour = "$formattedPriceChange%"
                 Text(
                     modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                    text = "1.2%",
-                    color = CurrencyColors.Text_Green,
+                    text = priceChange24Hour,
+                    color = if (crypto.priceChangePercentage24h > 0) CurrencyColors.Green.primary else CurrencyColors.Red.primary,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
                 )

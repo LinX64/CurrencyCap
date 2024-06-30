@@ -2,7 +2,6 @@ package ui.screens.overview
 
 import androidx.lifecycle.viewModelScope
 import domain.model.main.Crypto
-import domain.model.main.Rate
 import domain.repository.MainRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapNotNull
@@ -34,15 +33,14 @@ class OverviewViewModel(
             val rates = mainRepository.getAllRates()
 
             val bonbastRates = rates.mapNotNull { it.bonbast }.first()
-            val cryptoRates = rates.mapNotNull { it.crypto }.first().sortedBy { it.name } // todo: use this for details maybe
+            val cryptoRates = rates.mapNotNull { it.crypto }.first().sortedBy { it.name }
             val markets = rates.mapNotNull { it.markets }.first()
             val fiatRates = rates.mapNotNull { it.rates }.first().filter { it.type == FIAT }
             val topMovers = rates.mapNotNull { it.crypto }.first().let(::mapToTopMovers)
-            val cryptoFiatRates = rates.mapNotNull { it.rates }.first().let(::filterByCrypto)
 
             when {
                 bonbastRates.isEmpty() ||
-                        cryptoFiatRates.isEmpty() ||
+                        cryptoRates.isEmpty() ||
                         markets.isEmpty() ||
                         fiatRates.isEmpty() ||
                         topMovers.isEmpty() -> setState { OverviewState.Error("Failed to load rates") }
@@ -50,7 +48,7 @@ class OverviewViewModel(
                 else -> setState {
                     Success(
                         bonbastRates = bonbastRates,
-                        cryptoRates = cryptoFiatRates,
+                        cryptoRates = cryptoRates,
                         markets = markets,
                         fiatRates = fiatRates,
                         topMovers = topMovers
@@ -60,14 +58,10 @@ class OverviewViewModel(
         }
     }
 
-    private fun filterByCrypto(rates: List<Rate>) = rates
-        .sortedBy { it.currencySymbol }
-        .filter { it.type == CRYPTO }
-
     private fun mapToTopMovers(rates: List<Crypto>) = rates
         .sortedByDescending { it.name }
         .take(4)
-        .sortedBy { it.fullName }
+        .sortedBy { it.currentPrice }
 
     private fun refreshRates() {
         viewModelScope.launch {

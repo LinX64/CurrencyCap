@@ -1,23 +1,29 @@
 package domain.model.main
 
-import data.remote.model.main.RatingDto
-
 data class Crypto(
-    val algorithm: String,
-    val assetLaunchDate: String,
-    val blockNumber: Int,
-    val blockReward: Double,
-    val blockTime: Double,
-    val documentType: String,
-    val fullName: String,
+    val ath: Double,
+    val athChangePercentage: Double,
+    val athDate: String,
+    val atl: Double,
+    val atlChangePercentage: Double,
+    val atlDate: String,
+    val circulatingSupply: Double,
+    val currentPrice: Double,
+    val fullyDilutedValuation: Long? = null,
+    val high24h: Double,
     val id: String,
-    val imageUrl: String,
-    val internal: String,
-    val maxSupply: Double,
+    val image: String,
+    val lastUpdated: String,
+    val low24h: Double,
+    val marketCap: Long,
+    val marketCapChange24h: Double,
+    val marketCapChangePercentage24h: Double,
+    val marketCapRank: Int,
+    val maxSupply: Double? = null,
     val name: String,
-    val netHashesPerSecond: Double,
-    val proofType: String,
-    val ratingDto: RatingDto,
-    val type: Int,
-    val url: String
+    val priceChange24h: Double,
+    val priceChangePercentage24h: Double,
+    val symbol: String,
+    val totalSupply: Double? = null,
+    val totalVolume: Double
 )

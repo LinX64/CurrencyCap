@@ -22,7 +22,7 @@ class MainViewModel(
         _state.value = MainState.Loading
 
         viewModelScope.launch {
-            // delay(2000) TODO: Revert this change
+            // delay(1500) TODO: Revert this change
 
             val userLoggedIn = true
             if (userLoggedIn) {
