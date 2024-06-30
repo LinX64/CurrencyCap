@@ -37,5 +37,5 @@ val viewModelModule = module {
 }
 
 val previewModule = module {
-    single { NewsDetailViewModel(get(), SavedStateHandle(emptyMap())) }
+    single { OverviewViewModel(get()) }
 }

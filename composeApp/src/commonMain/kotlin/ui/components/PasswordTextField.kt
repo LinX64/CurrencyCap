@@ -20,6 +20,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
@@ -39,6 +40,7 @@ internal fun PasswordTextField(
     val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
 
     TextField(
+        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(35.dp)),
         value = password.value,
         onValueChange = {
             password.value = it
@@ -61,7 +63,6 @@ internal fun PasswordTextField(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
         ),
-        modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(
