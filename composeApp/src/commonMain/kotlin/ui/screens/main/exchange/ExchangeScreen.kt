@@ -57,8 +57,6 @@ internal fun ExchangeScreen(
 ) {
     val state by exchangeViewModel.viewState.collectAsStateWithLifecycle()
 
-
-
     BaseGlassLazyColumn(
         padding = padding,
         hazeState = hazeState,
@@ -105,6 +103,7 @@ private fun ExchangeCard(
     LaunchedEffect(Unit) {
         if (amount.isEmpty()) {
             amount = DEFAULT_VALUE
+            viewModel.handleEvent(OnConvert(amount))
         }
     }
 

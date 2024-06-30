@@ -1,6 +1,7 @@
 package ui.screens.main.exchange
 
 import androidx.lifecycle.viewModelScope
+import data.local.model.exchange.CurrencyCode
 import data.local.model.exchange.CurrencyType
 import data.util.NetworkResult
 import data.util.asResult
@@ -59,7 +60,9 @@ internal class ExchangeViewModel(
             .launchIn(viewModelScope)
     }
 
-    private fun readCurrencySource() {
+    private fun readCurrencySource(
+        defaultCurrencySourceCode: CurrencyCode = CurrencyCode.USD
+    ) {
         viewModelScope.launch {
             currencyRepository.readSourceCurrencyCode().collectLatest { currencyCode ->
                 viewState.collectLatest { currentState ->
@@ -75,7 +78,9 @@ internal class ExchangeViewModel(
         }
     }
 
-    private fun readCurrencyTarget() {
+    private fun readCurrencyTarget(
+        defaultCurrencyTargetCode: CurrencyCode = CurrencyCode.EUR
+    ) {
         viewModelScope.launch {
             currencyRepository.readTargetCurrencyCode().collectLatest { currencyCode ->
                 viewState.collectLatest { currentState ->
