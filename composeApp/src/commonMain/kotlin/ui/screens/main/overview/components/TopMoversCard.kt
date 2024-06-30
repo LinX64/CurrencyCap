@@ -31,6 +31,7 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import domain.model.main.Crypto
 import ui.common.formatToPrice
+import ui.theme.colors.CurrencyColors
 
 @OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
@@ -41,7 +42,7 @@ internal fun TopMoversCard(
     val hazeState = remember { HazeState() }
     MaterialsCard(
         modifier = Modifier
-            .width(165.dp)
+            .width(175.dp)
             .wrapContentHeight()
             .hazeChild(
                 state = hazeState,
@@ -78,7 +79,7 @@ internal fun TopMoversCard(
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = formattedCurrentPrice,
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 fontSize = MaterialTheme.typography.titleMedium.fontSize,
                 maxLines = 1
             )
@@ -140,8 +141,8 @@ private fun BottomRow(
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
             text = formattedChange,
-            color = Color.Green,
-            fontSize = 14.sp
+            color = CurrencyColors.Green.primary,
+            fontSize = MaterialTheme.typography.titleMedium.fontSize,
         )
 
         ChangeIcon(

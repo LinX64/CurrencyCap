@@ -22,8 +22,8 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
     Column {
         Text(
             modifier = if (rates is OverviewState.Loading) getPlaceHolder(
-                Modifier.padding(top = 16.dp, start = 8.dp),
-            ) else Modifier.padding(top = 16.dp, start = 8.dp),
+                Modifier.padding(start = 8.dp),
+            ) else Modifier.padding(start = 8.dp),
             text = "Trending rates",
             style = MaterialTheme.typography.titleMedium,
             color = CurrencyColors.White,
@@ -31,11 +31,11 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
         )
 
         FlowColumn(
-            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             if (rates is OverviewState.Success) {
-                rates.cryptoRates.forEachIndexed { index, rate ->
+                rates.cryptoRates.take(50).forEachIndexed { index, rate -> // Takes only 50 items TODO: Add pagination
                     RateHorizontalItem(
                         crypto = rates.cryptoRates[index],
                         isLoading = false

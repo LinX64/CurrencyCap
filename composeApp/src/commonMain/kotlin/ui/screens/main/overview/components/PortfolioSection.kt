@@ -50,7 +50,7 @@ internal fun PortfolioSection(
     var expanded by remember { mutableStateOf(false) }
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         Column(
