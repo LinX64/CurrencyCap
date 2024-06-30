@@ -3,8 +3,10 @@ package ui.screens.main.settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -13,11 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
-import di.koinViewModel
 import ui.components.GlassCard
+import ui.screens.main.profile.components.HelpCenterItem
 import ui.screens.main.settings.components.SettingsGeneralItem
 import ui.screens.main.settings.components.SettingsHeaderText
-import ui.screens.main.settings.components.SettingsMoreItem
 
 @Composable
 internal fun SettingsScreen(
@@ -25,7 +26,7 @@ internal fun SettingsScreen(
     onNavigateToLanding: () -> Unit,
     onError: (message: String) -> Unit,
     hazeState: HazeState,
-    settingsViewModel: SettingsViewModel = koinViewModel<SettingsViewModel>()
+    //settingsViewModel: SettingsViewModel = koinViewModel<SettingsViewModel>()
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -59,46 +60,33 @@ private fun SettingsContent(
         modifier = Modifier.fillMaxSize().padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        GlassCard(
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        GlassCard {
             Column(
-                modifier = Modifier.padding(24.dp)
+                modifier = Modifier.padding(16.dp)
             ) {
-                SettingsHeaderText("Account Settings")
+                SettingsHeaderText("General")
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    SettingsMoreItem(text = "Edit Profile", onClick = { /* Handle switch change */ })
-                    SettingsGeneralItem(text = "Dark Mode", onSwitchChange = { /* Handle switch change */ })
                     SettingsGeneralItem(text = "Push Notifications", onSwitchChange = { /* Handle switch change */ })
+                    HelpCenterItem(text = "Edit Profile", onButtonClick = onContactUsClick)
+                    // SettingsGeneralItem(text = "Dark Mode", onSwitchChange = { /* Handle switch change */ })
+
+                    HelpCenterItem(text = "Change Password", onButtonClick = onContactUsClick)
                 }
             }
         }
 
-        GlassCard(
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        GlassCard {
             Column(
-                modifier = Modifier.padding(24.dp)
+                modifier = Modifier.padding(16.dp)
             ) {
                 SettingsHeaderText("Policies")
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    SettingsMoreItem(text = "About Us", onClick = { /* Handle click */ })
-                    SettingsMoreItem(text = "Privacy Policy", onClick = { /* Handle click */ })
-                    SettingsMoreItem(text = "Terms of conditions", onClick = { /* Handle click */ })
-                }
-            }
-        }
 
-        GlassCard(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column(
-                modifier = Modifier.padding(24.dp)
-            ) {
-                SettingsHeaderText("Support")
+                Spacer(modifier = Modifier.height(8.dp))
+
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    SettingsMoreItem(text = "Contact Us", onClick = onContactUsClick)
-                    // SettingsMoreItem(text = "FAQs", onClick = { /* Handle click */ })
+                    HelpCenterItem(text = "About Us", onButtonClick = { /* Handle click */ })
+                    HelpCenterItem(text = "Privacy Policy", onButtonClick = { /* Handle click */ })
+                    HelpCenterItem(text = "Terms of conditions", onButtonClick = { /* Handle click */ })
                 }
             }
         }

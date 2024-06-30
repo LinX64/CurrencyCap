@@ -1,26 +1,32 @@
 package com.client.currencycap
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.chrisbanes.haze.HazeState
 import ui.components.CenteredColumn
-import ui.screens.initial.get_verified.components.CodeTextField
+import ui.screens.main.settings.SettingsScreen
 
 @Composable
 @Preview(showBackground = true)
 private fun ExchangePreview() {
+    val hazeState = remember { HazeState() }
+
     KoinPreview {
         CenteredColumn {
             Column(
-                modifier = Modifier.padding(32.dp)
+                modifier = Modifier.padding(0.dp)
             ) {
-                CodeTextField(
-                    value = "filll",
-                    length = 6,
-                    onValueChange = { },
+                SettingsScreen(
+                    padding = PaddingValues(0.dp),
+                    onNavigateToLanding = { /*TODO*/ },
+                    onError = {},
+                    hazeState = hazeState
                 )
             }
         }

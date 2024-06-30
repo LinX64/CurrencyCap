@@ -8,6 +8,7 @@ import data.local.model.exchange.CurrencyType
 sealed interface ExchangeViewEvent {
     data object OnFetchRates : ExchangeViewEvent
     data object OnSwitchCurrencies : ExchangeViewEvent
+    data class OnConvertClicked(val amount: Double) : ExchangeViewEvent
 
     data class OnSaveSelectedCurrencyCode(
         val currencyType: CurrencyType,
@@ -16,21 +17,20 @@ sealed interface ExchangeViewEvent {
 
     data object OnReadSourceCurrencyCode : ExchangeViewEvent
     data object OnReadTargetCurrencyCode : ExchangeViewEvent
-    data class OnAmountValueChanged(val value: String) : ExchangeViewEvent
 }
 
 sealed interface ExchangeState {
-
     data object Idle : ExchangeState
 
     data class ExchangeUiState(
+        val isLoading: Boolean = false,
         val rateState: RateStatus = RateStatus.Idle,
-        val loading: Boolean = false,
         val sourceCurrency: Currency? = null,
         val targetCurrency: Currency? = null,
+        val convertedAmount: Double = 0.0,
         val currencyRates: List<Currency> = emptyList(),
-        val sourceCurrencyAmount: String = "0",
-        val targetCurrencyAmount: String = "0"
+        val sourceCurrencyAmount: CurrencyCode = CurrencyCode.USD,
+        val targetCurrencyAmount: CurrencyCode = CurrencyCode.EUR
     )
 }
 

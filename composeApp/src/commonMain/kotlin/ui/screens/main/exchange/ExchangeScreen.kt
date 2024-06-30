@@ -1,6 +1,10 @@
 package ui.screens.main.exchange
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.AnimationVector1D
+import androidx.compose.animation.core.TwoWayConverter
+import androidx.compose.animation.core.animateValueAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -16,7 +20,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
@@ -32,11 +35,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.exchange_illustration
-import data.local.model.exchange.AmountInputType
 import data.local.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
@@ -45,13 +46,11 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.GlassCard
 import ui.components.HandleNavigationEffect
 import ui.components.main.BaseGlassLazyColumn
-import ui.screens.main.exchange.ExchangeViewEvent.OnAmountValueChanged
 import ui.screens.main.exchange.ExchangeViewEvent.OnSwitchCurrencies
 import ui.screens.main.exchange.components.AmountInput
 import ui.screens.main.exchange.components.CurrencyInputs
 import ui.screens.main.exchange.components.CurrencyPicker
 import ui.screens.main.exchange.components.Disclaimer
-import ui.screens.main.exchange.components.ResultAmountInput
 import util.exitTransition
 
 @Composable
@@ -88,6 +87,8 @@ internal fun ExchangeScreen(
     }
 }
 
+private const val DEFAULT_VALUE = "100.00"
+
 @Composable
 private fun ExchangeCard(
     modifier: Modifier = Modifier,
@@ -99,6 +100,7 @@ private fun ExchangeCard(
     val keyboardController = LocalSoftwareKeyboardController.current
     var dialogOpened by rememberSaveable { mutableStateOf(false) }
     var selectedCurrencyType: CurrencyType by remember { mutableStateOf(CurrencyType.None) }
+    var amount by rememberSaveable { mutableStateOf(DEFAULT_VALUE) }
 
     if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
         CurrencyPicker(
@@ -149,9 +151,12 @@ private fun ExchangeCard(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 AmountInput(
-                    onAmountChange = { viewModel.handleEvent(OnAmountValueChanged(it)) },
+                    amount = amount,
                     onErrorMessage = onError,
-                    amount = state.targetCurrencyAmount
+                    onAmountChange = {
+                        amount = it
+                        viewModel.handleEvent(ExchangeViewEvent.OnConvertClicked(amount.toDouble()))
+                    }
                 )
             }
         }
@@ -171,15 +176,11 @@ private fun ExchangeCard(
         } // TODO: check to see why this is not being shown
 
         AnimatedVisibility(
-            visible = state.sourceCurrencyAmount.isNotEmpty(),
+            visible = amount.isNotEmpty() && amount != DEFAULT_VALUE,
             enter = fadeIn() + expandVertically(),
             exit = fadeOut() + exitTransition()
         ) {
-            GlassCard {
-                ResultCard(
-                    state = state,
-                )
-            }
+            GlassCard { ResultCard(state = state) }
         }
     }
 }
@@ -188,25 +189,31 @@ private fun ExchangeCard(
 private fun ResultCard(
     state: ExchangeState.ExchangeUiState
 ) {
-    val formattedAmount = "1 ${state.targetCurrency?.code} = ${state.sourceCurrencyAmount} ${state.sourceCurrency?.code}"
+    val convertedAmount = state.convertedAmount
+    val currencyConverterAnimation = object : TwoWayConverter<Double, AnimationVector1D> {
+        override val convertFromVector: (AnimationVector1D) -> Double = { vector ->
+            vector.value.toDouble()
+        }
+
+        override val convertToVector: (Double) -> AnimationVector1D = { value ->
+            AnimationVector1D(value.toFloat())
+        }
+    }
+
+    val animatedExchangeAmount by animateValueAsState(
+        targetValue = convertedAmount,
+        animationSpec = tween(300),
+        typeConverter = currencyConverterAnimation
+    )
 
     Column(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ResultAmountInput(
-            amountInputType = AmountInputType.TARGET,
-            amount = state.targetCurrencyAmount
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
         Text(
-            text = formattedAmount,
-            style = LocalTextStyle.current.copy(
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 14.sp
-            )
+            text = "${(animatedExchangeAmount * 100).toLong() / 100.0}",
+            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.titleLarge
         )
     }
 }

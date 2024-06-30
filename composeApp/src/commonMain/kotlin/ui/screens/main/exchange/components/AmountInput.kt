@@ -17,30 +17,25 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import ui.common.DecimalFormat
-import util.formatDecimalSeparator
 
 @Composable
 internal fun AmountInput(
     maxLength: Int = 10,
+    amount: String,
     onAmountChange: (String) -> Unit,
-    onErrorMessage: (String) -> Unit,
-    amount: String
+    onErrorMessage: (String) -> Unit
 ) {
-    val formattedAmount = if (amount.isNotEmpty()) {
-        DecimalFormat().format(amount.toDouble()).formatDecimalSeparator()
-    } else "0"
-
     TextField(
         modifier = Modifier.fillMaxWidth()
             .clip(RoundedCornerShape(35.dp))
             .animateContentSize(),
-        value = formattedAmount,
+        value = amount,
         onValueChange = {
-            if (it.isNotEmpty() && it.length <= maxLength) {
+            if (it.isNotEmpty()) {
                 onAmountChange(it)
-            } else onErrorMessage("Invalid amount!")
+            }
         },
+        singleLine = true,
         colors = TextFieldDefaults.colors(
             focusedContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
             unfocusedContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
@@ -54,10 +49,10 @@ internal fun AmountInput(
         textStyle = LocalTextStyle.current.copy(
             fontSize = MaterialTheme.typography.titleLarge.fontSize,
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.End
+            textAlign = TextAlign.Center,
         ),
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
+            keyboardType = KeyboardType.Decimal,
             imeAction = ImeAction.Done,
         )
     )

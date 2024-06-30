@@ -22,7 +22,7 @@ internal fun HelpCenterItem(
     onButtonClick: () -> Unit
 ) {
     Button(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
         onClick = onButtonClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
@@ -42,7 +42,6 @@ internal fun HelpCenterItem(
             )
 
             Icon(
-                modifier = Modifier.padding(start = 8.dp),
                 imageVector = Icons.Default.ChevronRight,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurface

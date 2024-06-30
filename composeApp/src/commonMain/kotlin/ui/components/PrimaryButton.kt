@@ -15,15 +15,17 @@ import androidx.compose.ui.unit.dp
 @Composable
 internal fun PrimaryButton(
     modifier: Modifier = Modifier,
+    text: String,
+    isEnabled: Boolean = true,
     onButtonClick: () -> Unit,
-    text: String
 ) {
     Button(
         onClick = onButtonClick,
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 16.dp),
+        enabled = isEnabled
     ) {
         Text(
             modifier = Modifier.padding(8.dp),
