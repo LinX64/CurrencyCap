@@ -1,5 +1,7 @@
 package util
 
+import androidx.compose.animation.core.AnimationVector1D
+import androidx.compose.animation.core.TwoWayConverter
 import data.util.APIConst
 
 internal fun Int.formatToPrice(): String = toString()
@@ -56,3 +58,12 @@ fun convertDateFormat(inputDate: String): String {
     return "$formattedDay $monthName, $year"
 }
 
+val currencyConverterAnimation = object : TwoWayConverter<Double, AnimationVector1D> {
+    override val convertFromVector: (AnimationVector1D) -> Double = { vector ->
+        vector.value.toDouble()
+    }
+
+    override val convertToVector: (Double) -> AnimationVector1D = { value ->
+        AnimationVector1D(value.toFloat())
+    }
+}

@@ -31,7 +31,7 @@ internal fun AmountInput(
             .animateContentSize(),
         value = amount,
         onValueChange = { newValue ->
-            if (newValue.isEmpty() || newValue.matches(Regex("^\\d*,?\\d*$"))) {
+            if (newValue.isEmpty() || newValue.matches(Regex("^\\d*.?\\d*$"))) {
                 onAmountChange(newValue)
             } else onErrorMessage("Invalid amount format")
         },
@@ -54,10 +54,4 @@ internal fun AmountInput(
             imeAction = ImeAction.Done
         )
     )
-}
-
-fun formatAmount(amount: String): String {
-    val reversed = amount.reversed()
-    val formatted = reversed.chunked(3).joinToString(".").reversed()
-    return if (formatted.isNotEmpty()) formatted else "0"
 }

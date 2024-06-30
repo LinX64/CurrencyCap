@@ -1,19 +1,10 @@
 package ui.screens.main.exchange
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.AnimationVector1D
-import androidx.compose.animation.core.TwoWayConverter
-import androidx.compose.animation.core.animateValueAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -54,9 +44,7 @@ import ui.screens.main.exchange.components.AmountInput
 import ui.screens.main.exchange.components.CurrencyInputs
 import ui.screens.main.exchange.components.CurrencyPicker
 import ui.screens.main.exchange.components.Disclaimer
-import util.exitTransition
-
-private const val DEFAULT_VALUE = "100"
+import ui.screens.main.exchange.components.ResultCard
 
 @Composable
 @Preview
@@ -102,7 +90,7 @@ private fun ExchangeCard(
     val keyboardController = LocalSoftwareKeyboardController.current
     var dialogOpened by rememberSaveable { mutableStateOf(false) }
     var selectedCurrencyType: CurrencyType by remember { mutableStateOf(CurrencyType.None) }
-    var amount by rememberSaveable { mutableStateOf("") }
+    var amount by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         if (amount.isEmpty()) {
@@ -172,7 +160,7 @@ private fun ExchangeCard(
             }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         Box(
             modifier = Modifier
@@ -189,61 +177,12 @@ private fun ExchangeCard(
             )
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        AnimatedVisibility(
-            visible = amount.isNotEmpty() && amount != DEFAULT_VALUE,
-            enter = fadeIn() + expandVertically(),
-            exit = fadeOut() + exitTransition()
-        ) {
-            GlassCard { ResultCard(state = state) }
-        }
+        ResultCard(state = state, amount = amount)
 
         Disclaimer()
     }
 }
 
-@Composable
-private fun ResultCard(
-    state: ExchangeState.ExchangeUiState
-) {
-    val convertedAmount = state.convertedAmount
-    val currencyConverterAnimation = object : TwoWayConverter<Double, AnimationVector1D> {
-        override val convertFromVector: (AnimationVector1D) -> Double = { vector ->
-            vector.value.toDouble()
-        }
-
-        override val convertToVector: (Double) -> AnimationVector1D = { value ->
-            AnimationVector1D(value.toFloat())
-        }
-    }
-
-    val animatedExchangeAmount by animateValueAsState(
-        targetValue = convertedAmount,
-        animationSpec = tween(300),
-        typeConverter = currencyConverterAnimation
-    )
-
-    Column(
-        modifier = Modifier.fillMaxWidth().padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row {
-            Text(
-                text = "${(animatedExchangeAmount * 100).toLong() / 100.0}",
-                color = MaterialTheme.colorScheme.onSurface,
-                style = MaterialTheme.typography.titleLarge
-            )
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            Text(
-                text = state.targetCurrency?.code.toString(),
-                color = MaterialTheme.colorScheme.onSurface,
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
-    }
-}
-
-
+private const val DEFAULT_VALUE = "100.0"

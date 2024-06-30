@@ -2,10 +2,13 @@ package ui.common
 
 import androidx.compose.runtime.Composable
 import di.SETTINGS_PREFERENCES
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.convert
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSLocale
 import platform.Foundation.NSNumber
 import platform.Foundation.NSNumberFormatter
+import platform.Foundation.NSNumberFormatterDecimalStyle
 import platform.Foundation.currentLocale
 import platform.Foundation.localeIdentifier
 
@@ -54,3 +57,11 @@ actual class DecimalFormat {
 actual fun SendMail(to: String, subject: String) {
     // TODO
 }
+
+@OptIn(ExperimentalForeignApi::class)
+actual fun Double.formatDecimal(maxFractionDigits: Int): String =
+    NSNumberFormatter().apply {
+        minimumFractionDigits = 0u
+        maximumFractionDigits = maxFractionDigits.convert()
+        numberStyle = NSNumberFormatterDecimalStyle
+    }.stringFromNumber(number = NSNumber(double = this)) ?: ""

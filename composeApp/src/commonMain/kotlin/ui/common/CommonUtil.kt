@@ -13,3 +13,4 @@ expect class DecimalFormat() {
 
 @Composable
 expect fun SendMail(to: String, subject: String)
+expect fun Double.formatDecimal(maxFractionDigits: Int = 2): String
