@@ -2,41 +2,60 @@ package data.remote.model.main
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonObject
 
 @Serializable
 data class CryptoDto(
-    @SerialName("Algorithm")
-    val algorithm: String,
-    @SerialName("AssetLaunchDate")
-    val assetLaunchDate: String,
-    @SerialName("BlockNumber")
-    val blockNumber: Int,
-    @SerialName("BlockReward")
-    val blockReward: Double,
-    @SerialName("BlockTime")
-    val blockTime: Double,
-    @SerialName("DocumentType")
-    val documentType: String,
-    @SerialName("FullName")
-    val fullName: String,
-    @SerialName("Id")
+    @SerialName("ath")
+    val ath: Double,
+    @SerialName("ath_change_percentage")
+    val athChangePercentage: Double,
+    @SerialName("ath_date")
+    val athDate: String,
+    @SerialName("atl")
+    val atl: Double,
+    @SerialName("atl_change_percentage")
+    val atlChangePercentage: Double,
+    @SerialName("atl_date")
+    val atlDate: String,
+    @SerialName("circulating_supply")
+    val circulatingSupply: Double,
+    @SerialName("current_price")
+    val currentPrice: Double,
+    @SerialName("fully_diluted_valuation")
+    val fullyDilutedValuation: Long? = null,
+    @SerialName("high_24h")
+    val high24h: Double,
+    @SerialName("id")
     val id: String,
-    @SerialName("ImageUrl")
-    val imageUrl: String,
-    @SerialName("Internal")
-    val `internal`: String,
-    @SerialName("MaxSupply")
-    val maxSupply: Double,
-    @SerialName("Name")
+    @SerialName("image")
+    val image: String,
+    @SerialName("last_updated")
+    val lastUpdated: String,
+    @SerialName("low_24h")
+    val low24h: Double,
+    @SerialName("market_cap")
+    val marketCap: Long,
+    @SerialName("market_cap_change_24h")
+    val marketCapChange24h: Double,
+    @SerialName("market_cap_change_percentage_24h")
+    val marketCapChangePercentage24h: Double,
+    @SerialName("market_cap_rank")
+    val marketCapRank: Int,
+    @SerialName("max_supply")
+    val maxSupply: Double? = null,
+    @SerialName("name")
     val name: String,
-    @SerialName("NetHashesPerSecond")
-    val netHashesPerSecond: Double,
-    @SerialName("ProofType")
-    val proofType: String,
-    @SerialName("Rating")
-    val ratingDto: RatingDto,
-    @SerialName("Type")
-    val type: Int,
-    @SerialName("Url")
-    val url: String
+    @SerialName("price_change_24h")
+    val priceChange24h: Double,
+    @SerialName("price_change_percentage_24h")
+    val priceChangePercentage24h: Double,
+    @SerialName("roi")
+    val roi: JsonObject? = null,
+    @SerialName("symbol")
+    val symbol: String,
+    @SerialName("total_supply")
+    val totalSupply: Double? = null,
+    @SerialName("total_volume")
+    val totalVolume: Double
 )

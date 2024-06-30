@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
@@ -98,13 +99,14 @@ private fun ResetPasswordContent(
             Spacer(modifier = modifier.height(32.dp))
 
             Button(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(35.dp))
+                    .height(52.dp),
                 onClick = {
                     keyboardController?.hide()
                     onResetPasswordClick()
                 },
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(52.dp),
                 shape = RoundedCornerShape(10.dp),
             ) {
                 Text(

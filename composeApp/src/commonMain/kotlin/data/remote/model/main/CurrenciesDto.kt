@@ -29,29 +29,31 @@ internal fun List<BonbastRateDto>.toBonbastRateDomain(): List<BonbastRate> = map
 
 internal fun List<CryptoDto>.toCryptoDomain(): List<Crypto> = map {
     Crypto(
-        algorithm = it.algorithm,
-        assetLaunchDate = it.assetLaunchDate,
-        blockNumber = it.blockNumber,
-        blockReward = it.blockReward,
-        blockTime = it.blockTime,
-        documentType = it.documentType,
-        fullName = it.fullName,
+        ath = it.ath,
+        athChangePercentage = it.athChangePercentage,
+        athDate = it.athDate,
+        atl = it.atl,
+        atlChangePercentage = it.atlChangePercentage,
+        atlDate = it.atlDate,
+        circulatingSupply = it.circulatingSupply,
+        currentPrice = it.currentPrice,
+        fullyDilutedValuation = it.fullyDilutedValuation,
+        high24h = it.high24h,
         id = it.id,
-        imageUrl = it.imageUrl,
-        internal = it.internal,
+        image = it.image,
+        lastUpdated = it.lastUpdated,
+        low24h = it.low24h,
+        marketCap = it.marketCap,
+        marketCapChange24h = it.marketCapChange24h,
+        marketCapChangePercentage24h = it.marketCapChangePercentage24h,
+        marketCapRank = it.marketCapRank,
         maxSupply = it.maxSupply,
         name = it.name,
-        netHashesPerSecond = it.netHashesPerSecond,
-        proofType = it.proofType,
-        ratingDto = RatingDto(
-            weissDto = WeissDto(
-                marketPerformanceRating = it.ratingDto.weissDto.marketPerformanceRating,
-                rating = it.ratingDto.weissDto.rating,
-                technologyAdoptionRating = it.ratingDto.weissDto.technologyAdoptionRating
-            )
-        ),
-        type = it.type,
-        url = it.url
+        priceChange24h = it.priceChange24h,
+        priceChangePercentage24h = it.priceChangePercentage24h,
+        symbol = it.symbol,
+        totalSupply = it.totalSupply,
+        totalVolume = it.totalVolume
     )
 }
 

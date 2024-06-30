@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
@@ -33,7 +34,7 @@ internal fun EmailTextField(
     val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
 
     TextField(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(35.dp)),
         value = email.value,
         onValueChange = {
             email.value = it

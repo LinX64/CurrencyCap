@@ -14,7 +14,8 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun ChangeIcon(
-    valueChange: Int = -18,
+    isPositive: Boolean,
+    valueChange: Double,
     isLoading: Boolean = false
 ) {
     val tint: Color

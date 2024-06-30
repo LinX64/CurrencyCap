@@ -17,7 +17,7 @@ sealed interface OverviewState {
 
     data class Success(
         val bonbastRates: List<BonbastRate>,
-        val cryptoRates: List<Rate>,
+        val cryptoRates: List<Crypto>,
         val markets: List<Market>,
         val fiatRates: List<Rate>,
         val topMovers: List<Crypto>
