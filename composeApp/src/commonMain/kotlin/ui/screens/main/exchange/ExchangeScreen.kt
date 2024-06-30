@@ -38,6 +38,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.GlassCard
 import ui.components.HandleNavigationEffect
 import ui.components.main.BaseGlassLazyColumn
+import ui.screens.main.exchange.ExchangeNavigationEffect.ShowSnakeBar
 import ui.screens.main.exchange.ExchangeViewEvent.OnConvertClicked
 import ui.screens.main.exchange.ExchangeViewEvent.OnSwitchCurrencies
 import ui.screens.main.exchange.components.AmountInput
@@ -54,7 +55,9 @@ internal fun ExchangeScreen(
     hazeState: HazeState,
     onError: (String) -> Unit,
 ) {
-    val state by exchangeViewModel.state.collectAsStateWithLifecycle()
+    val state by exchangeViewModel.viewState.collectAsStateWithLifecycle()
+
+
 
     BaseGlassLazyColumn(
         padding = padding,
@@ -63,18 +66,25 @@ internal fun ExchangeScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
-            ExchangeCard(
-                state = state,
-                hazeState = hazeState,
-                viewModel = exchangeViewModel,
-                onError = onError
-            )
+            when (state) {
+                is ExchangeUiState -> {
+                    val uiState = state as ExchangeUiState
+                    ExchangeCard(
+                        uiState = uiState,
+                        hazeState = hazeState,
+                        viewModel = exchangeViewModel,
+                        onError = onError
+                    )
+                }
+
+                is ExchangeState.Idle -> Unit
+            }
         }
     }
 
     HandleNavigationEffect(exchangeViewModel) { effect ->
         when (effect) {
-            is ExchangeNavigationEffect.ShowSnakeBar -> onError(effect.message)
+            is ShowSnakeBar -> onError(effect.message)
         }
     }
 }
@@ -83,7 +93,7 @@ internal fun ExchangeScreen(
 private fun ExchangeCard(
     modifier: Modifier = Modifier,
     viewModel: ExchangeViewModel,
-    state: ExchangeState.ExchangeUiState,
+    uiState: ExchangeUiState,
     hazeState: HazeState,
     onError: (String) -> Unit
 ) {
@@ -95,13 +105,14 @@ private fun ExchangeCard(
     LaunchedEffect(Unit) {
         if (amount.isEmpty()) {
             amount = DEFAULT_VALUE
+            viewModel.handleEvent(OnConvertClicked(amount))
         }
     }
 
     if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
         CurrencyPicker(
             hazeState = hazeState,
-            currencyList = state.currencyRates,
+            currencyList = uiState.currencyRates,
             currencyType = selectedCurrencyType,
             onEvent = { event ->
                 viewModel.handleEvent(event)
@@ -136,8 +147,8 @@ private fun ExchangeCard(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 CurrencyInputs(
-                    source = state.sourceCurrency,
-                    target = state.targetCurrency,
+                    source = uiState.sourceCurrency,
+                    target = uiState.targetCurrency,
                     onSwitch = { viewModel.handleEvent(OnSwitchCurrencies) },
                     onCurrencyTypeSelect = {
                         dialogOpened = true
@@ -165,7 +176,7 @@ private fun ExchangeCard(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp),
+                .height(24.dp),
             contentAlignment = Alignment.Center
         ) {
             VerticalDivider(
@@ -179,10 +190,12 @@ private fun ExchangeCard(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        ResultCard(state = state, amount = amount)
+        ResultCard(uiState = uiState, amount = amount)
+
+        Spacer(modifier = Modifier.height(32.dp))
 
         Disclaimer()
     }
 }
 
-private const val DEFAULT_VALUE = "100.0"
+private const val DEFAULT_VALUE = "100"

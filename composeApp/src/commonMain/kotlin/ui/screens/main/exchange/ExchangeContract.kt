@@ -1,5 +1,6 @@
 package ui.screens.main.exchange
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import data.local.model.exchange.Currency
 import data.local.model.exchange.CurrencyCode
@@ -15,28 +16,29 @@ sealed interface ExchangeViewEvent {
         val currencyCode: CurrencyCode
     ) : ExchangeViewEvent
 
-    data object OnReadSourceCurrencyCode : ExchangeViewEvent
-    data object OnReadTargetCurrencyCode : ExchangeViewEvent
+    data object OnReadCurrencySourceCode : ExchangeViewEvent
+    data object OnReadCurrencyTargetCode : ExchangeViewEvent
 }
 
 sealed interface ExchangeState {
     data object Idle : ExchangeState
-
-    data class ExchangeUiState(
-        val isLoading: Boolean = false,
-        val rateState: RateStatus = RateStatus.Idle,
-        val sourceCurrency: Currency? = null,
-        val targetCurrency: Currency? = null,
-        val convertedAmount: Double = 0.0,
-        val currencyRates: List<Currency> = emptyList(),
-        val sourceCurrencyAmount: CurrencyCode = CurrencyCode.USD,
-        val targetCurrencyAmount: CurrencyCode = CurrencyCode.EUR
-    )
 }
 
 sealed interface ExchangeNavigationEffect {
     data class ShowSnakeBar(val message: String) : ExchangeNavigationEffect
 }
+
+@Immutable
+data class ExchangeUiState(
+    val isLoading: Boolean = false,
+    val rateState: RateStatus = RateStatus.Idle,
+    val sourceCurrency: Currency? = null,
+    val targetCurrency: Currency? = null,
+    val convertedAmount: Double = 0.0,
+    val currencyRates: List<Currency> = emptyList(),
+    val sourceCurrencyAmount: CurrencyCode = CurrencyCode.USD,
+    val targetCurrencyAmount: CurrencyCode = CurrencyCode.EUR
+) : ExchangeState
 
 enum class RateStatus(
     val title: String,

@@ -20,24 +20,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ui.components.GlassCard
-import ui.screens.main.exchange.ExchangeState
+import ui.screens.main.exchange.ExchangeUiState
 import util.currencyConverterAnimation
 import util.exitTransition
 
 @Composable
 internal fun ResultCard(
-    state: ExchangeState.ExchangeUiState,
-    defaultValue: String = "100,0",
+    uiState: ExchangeUiState,
     amount: String
 ) {
     val animatedExchangeAmount by animateValueAsState(
-        targetValue = state.convertedAmount,
+        targetValue = uiState.convertedAmount,
         animationSpec = tween(300),
         typeConverter = currencyConverterAnimation
     )
 
     AnimatedVisibility(
-        visible = amount.isNotEmpty() && amount != defaultValue,
+        visible = amount.isNotEmpty(),
         enter = fadeIn() + expandVertically(),
         exit = fadeOut() + exitTransition()
     ) {
@@ -56,7 +55,7 @@ internal fun ResultCard(
                     Spacer(modifier = Modifier.width(8.dp))
 
                     Text(
-                        text = state.targetCurrency?.code.toString(),
+                        text = uiState.targetCurrency?.code.toString(),
                         color = MaterialTheme.colorScheme.onSurface,
                         style = MaterialTheme.typography.bodyMedium
                     )

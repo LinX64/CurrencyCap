@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import util.AmountVisualTransformation
 
 @Composable
 internal fun AmountInput(
@@ -52,6 +53,7 @@ internal fun AmountInput(
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Decimal,
             imeAction = ImeAction.Done
-        )
+        ),
+        visualTransformation = AmountVisualTransformation()
     )
 }
