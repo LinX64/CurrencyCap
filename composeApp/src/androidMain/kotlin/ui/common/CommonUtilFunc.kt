@@ -1,5 +1,9 @@
 package ui.common
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import di.SETTINGS_PREFERENCES
 import java.io.File
 import java.text.DecimalFormat
@@ -41,5 +45,23 @@ actual class DecimalFormat {
         df.maximumFractionDigits = 2
         df.isDecimalSeparatorAlwaysShown = false
         return df.format(double)
+    }
+}
+
+@Composable
+actual fun SendMail(to: String, subject: String) {
+    val context = LocalContext.current
+    try {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "message/rfc822"
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(to))
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+        }
+        val chooserIntent = Intent.createChooser(intent, "Send Email")
+        context.startActivity(chooserIntent)
+    } catch (e: ActivityNotFoundException) {
+        println("No email app found")
+    } catch (t: Throwable) {
+        println("Error sending email: ${t.message}")
     }
 }

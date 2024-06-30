@@ -5,11 +5,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import ui.navigation.util.NavRoutes
-import ui.screens.auth.fill_profile.navigation.fillProfileScreen
-import ui.screens.auth.login.navigation.loginScreen
-import ui.screens.auth.register.navigation.registerScreen
-import ui.screens.auth.reset_password.navigation.resetPasswordScreen
-import ui.screens.landing.navigation.landingScreen
+import ui.screens.initial.fill_profile.navigation.fillProfileScreen
+import ui.screens.initial.get_verified.navigation.getVerifiedPhoneScreen
+import ui.screens.initial.landing.navigation.landingScreen
+import ui.screens.initial.login.navigation.loginScreen
+import ui.screens.initial.register.navigation.registerScreen
+import ui.screens.initial.reset_password.navigation.resetPasswordScreen
 
 @Composable
 internal fun AuthNavGraph(
@@ -37,6 +38,12 @@ internal fun AuthNavGraph(
         )
 
         fillProfileScreen(
+            padding = padding,
+            onNavigateToMarketOverview = onLoginSuccess,
+            onError = onError
+        )
+
+        getVerifiedPhoneScreen(
             padding = padding,
             onNavigateToMarketOverview = onLoginSuccess,
             onError = onError

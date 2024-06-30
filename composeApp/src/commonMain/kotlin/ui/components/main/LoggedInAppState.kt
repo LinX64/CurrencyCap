@@ -20,11 +20,11 @@ import ui.navigation.util.NavRoutes.EXCHANGE
 import ui.navigation.util.NavRoutes.NEWS
 import ui.navigation.util.NavRoutes.OVERVIEW
 import ui.navigation.util.NavRoutes.PROFILE
-import ui.screens.bookmarks.navigation.navigateToBookmarksScreen
-import ui.screens.exchange.navigation.navigateToExchangeScreen
-import ui.screens.news.navigation.navigateToNewsScreen
-import ui.screens.overview.navigation.navigateToOverviewScreen
-import ui.screens.profile.navigation.navigateToProfileScreen
+import ui.screens.main.bookmarks.navigation.navigateToBookmarksScreen
+import ui.screens.main.exchange.navigation.navigateToExchangeScreen
+import ui.screens.main.news.navigation.navigateToNewsScreen
+import ui.screens.main.overview.navigation.navigateToOverviewScreen
+import ui.screens.main.profile.navigation.navigateToProfileScreen
 
 @Composable
 internal fun rememberLoggedInAppState(

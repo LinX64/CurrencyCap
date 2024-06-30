@@ -11,15 +11,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import dev.chrisbanes.haze.HazeState
 import ui.navigation.util.NavRoutes
-import ui.screens.ai_predict.navigation.aiPredictScreen
-import ui.screens.bookmarks.navigation.bookmarksScreen
-import ui.screens.exchange.navigation.exchangeScreen
-import ui.screens.news.navigation.newsScreen
-import ui.screens.news.news_detail.navigation.newsDetailScreen
-import ui.screens.overview.navigation.homeScreen
-import ui.screens.profile.navigation.profileScreen
-import ui.screens.search.navigation.searchScreen
-import ui.screens.settings.navigation.settingsScreen
+import ui.screens.main.ai_predict.navigation.aiPredictScreen
+import ui.screens.main.bookmarks.navigation.bookmarksScreen
+import ui.screens.main.exchange.navigation.exchangeScreen
+import ui.screens.main.news.navigation.newsScreen
+import ui.screens.main.news.news_detail.navigation.newsDetailScreen
+import ui.screens.main.overview.navigation.homeScreen
+import ui.screens.main.profile.navigation.profileScreen
+import ui.screens.main.search.navigation.searchScreen
+import ui.screens.main.settings.navigation.settingsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
