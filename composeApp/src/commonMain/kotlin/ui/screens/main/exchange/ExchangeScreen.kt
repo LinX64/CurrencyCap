@@ -39,7 +39,7 @@ import ui.components.GlassCard
 import ui.components.HandleNavigationEffect
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.exchange.ExchangeNavigationEffect.ShowSnakeBar
-import ui.screens.main.exchange.ExchangeViewEvent.OnConvertClicked
+import ui.screens.main.exchange.ExchangeViewEvent.OnConvert
 import ui.screens.main.exchange.ExchangeViewEvent.OnSwitchCurrencies
 import ui.screens.main.exchange.components.AmountInput
 import ui.screens.main.exchange.components.CurrencyInputs
@@ -105,7 +105,6 @@ private fun ExchangeCard(
     LaunchedEffect(Unit) {
         if (amount.isEmpty()) {
             amount = DEFAULT_VALUE
-            viewModel.handleEvent(OnConvertClicked(amount))
         }
     }
 
@@ -165,7 +164,7 @@ private fun ExchangeCard(
                     },
                     onAmountChange = {
                         amount = it
-                        viewModel.handleEvent(OnConvertClicked(amount))
+                        viewModel.handleEvent(OnConvert(amount))
                     }
                 )
             }

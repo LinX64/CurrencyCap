@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
-import ui.screens.main.exchange.ExchangeViewEvent.OnConvertClicked
+import ui.screens.main.exchange.ExchangeViewEvent.OnConvert
 import ui.screens.main.exchange.ExchangeViewEvent.OnFetchRates
 import ui.screens.main.exchange.ExchangeViewEvent.OnReadCurrencySourceCode
 import ui.screens.main.exchange.ExchangeViewEvent.OnReadCurrencyTargetCode
@@ -38,7 +38,7 @@ internal class ExchangeViewModel(
             is OnReadCurrencyTargetCode -> readCurrencyTarget()
             is OnSaveSelectedCurrencyCode -> saveSelectedCurrencyCode(event)
             is OnSwitchCurrencies -> switchCurrencies()
-            is OnConvertClicked -> convertCurrency(event.amount)
+            is OnConvert -> convertCurrency(event.amount)
         }
     }
 
@@ -121,7 +121,7 @@ internal class ExchangeViewModel(
             val target = currentState.targetCurrency
 
             val convertedValue = convertCurrenciesUseCase(amountDouble, source, target)
-            setState { ExchangeUiState(convertedAmount = convertedValue) }
+            setState { if (this is ExchangeUiState) copy(convertedAmount = convertedValue) else this }
         }
     }
 
