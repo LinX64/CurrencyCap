@@ -8,7 +8,7 @@ import data.local.model.exchange.CurrencyType
 sealed interface ExchangeViewEvent {
     data object OnFetchRates : ExchangeViewEvent
     data object OnSwitchCurrencies : ExchangeViewEvent
-    data class OnConvertClicked(val amount: Double) : ExchangeViewEvent
+    data class OnConvertClicked(val amount: String) : ExchangeViewEvent
 
     data class OnSaveSelectedCurrencyCode(
         val currencyType: CurrencyType,

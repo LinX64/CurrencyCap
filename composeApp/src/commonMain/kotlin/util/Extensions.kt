@@ -1,9 +1,6 @@
 package util
 
 import data.util.APIConst
-import domain.model.main.Rate
-import ui.common.getCountryFlag
-import ui.common.getCountryName
 
 internal fun Int.formatToPrice(): String = toString()
     .reversed()
@@ -21,24 +18,6 @@ fun String.validateEmail(): Boolean {
     return emailRegex.matches(this)
 }
 
-fun List<Rate>.getTextFieldOptions(): List<String> = this
-    .asSequence()
-    .map { it.symbol }
-    .sorted()
-    .map { symbol ->
-        val countryCode = symbol.take(2)
-        val countryName = countryCode.getCountryName()
-        val flag = countryCode.getCountryFlag()
-        StringBuilder().apply {
-            append(flag)
-            append("  ")
-            append(symbol)
-            append(" - ")
-            append(countryName)
-        }.toString()
-    }
-    .toList()
-
 fun String.formatDecimalSeparator(): String {
     val parts = this.split(".")
     val integerPart = parts[0]
@@ -53,16 +32,6 @@ fun String.formatDecimalSeparator(): String {
     } else {
         formattedIntegerPart
     }
-}
-
-fun encodeUrl(url: String): String {
-    return url.replace("/", "%2F")
-        .replace(":", "%3A")
-        .replace("?", "%3F")
-        .replace("&", "%26")
-        .replace("=", "%3D")
-        .replace("#", "%23")
-        .replace(" ", "%20")
 }
 
 fun convertDateFormat(inputDate: String): String {
@@ -86,5 +55,4 @@ fun convertDateFormat(inputDate: String): String {
     val formattedDay = day.toInt().toString()
     return "$formattedDay $monthName, $year"
 }
-
 

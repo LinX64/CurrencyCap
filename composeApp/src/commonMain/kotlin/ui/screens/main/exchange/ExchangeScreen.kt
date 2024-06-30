@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,6 +26,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,7 +34,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
@@ -46,12 +48,15 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.GlassCard
 import ui.components.HandleNavigationEffect
 import ui.components.main.BaseGlassLazyColumn
+import ui.screens.main.exchange.ExchangeViewEvent.OnConvertClicked
 import ui.screens.main.exchange.ExchangeViewEvent.OnSwitchCurrencies
 import ui.screens.main.exchange.components.AmountInput
 import ui.screens.main.exchange.components.CurrencyInputs
 import ui.screens.main.exchange.components.CurrencyPicker
 import ui.screens.main.exchange.components.Disclaimer
 import util.exitTransition
+
+private const val DEFAULT_VALUE = "100"
 
 @Composable
 @Preview
@@ -77,7 +82,6 @@ internal fun ExchangeScreen(
                 onError = onError
             )
         }
-        item { Disclaimer() }
     }
 
     HandleNavigationEffect(exchangeViewModel) { effect ->
@@ -86,8 +90,6 @@ internal fun ExchangeScreen(
         }
     }
 }
-
-private const val DEFAULT_VALUE = "100.00"
 
 @Composable
 private fun ExchangeCard(
@@ -100,7 +102,13 @@ private fun ExchangeCard(
     val keyboardController = LocalSoftwareKeyboardController.current
     var dialogOpened by rememberSaveable { mutableStateOf(false) }
     var selectedCurrencyType: CurrencyType by remember { mutableStateOf(CurrencyType.None) }
-    var amount by rememberSaveable { mutableStateOf(DEFAULT_VALUE) }
+    var amount by rememberSaveable { mutableStateOf("") }
+
+    LaunchedEffect(Unit) {
+        if (amount.isEmpty()) {
+            amount = DEFAULT_VALUE
+        }
+    }
 
     if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
         CurrencyPicker(
@@ -152,10 +160,13 @@ private fun ExchangeCard(
 
                 AmountInput(
                     amount = amount,
-                    onErrorMessage = onError,
+                    onErrorMessage = {
+                        keyboardController?.hide()
+                        onError(it)
+                    },
                     onAmountChange = {
                         amount = it
-                        viewModel.handleEvent(ExchangeViewEvent.OnConvertClicked(amount.toDouble()))
+                        viewModel.handleEvent(OnConvertClicked(amount))
                     }
                 )
             }
@@ -164,16 +175,21 @@ private fun ExchangeCard(
         Spacer(modifier = Modifier.height(24.dp))
 
         Box(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
             contentAlignment = Alignment.Center
         ) {
             VerticalDivider(
                 modifier = Modifier
-                    .width(1.dp)
-                    .padding(horizontal = 16.dp),
-                color = Color.Blue
+                    .fillMaxHeight()
+                    .width(1.dp),
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                thickness = 1.dp
             )
-        } // TODO: check to see why this is not being shown
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
 
         AnimatedVisibility(
             visible = amount.isNotEmpty() && amount != DEFAULT_VALUE,
@@ -182,6 +198,8 @@ private fun ExchangeCard(
         ) {
             GlassCard { ResultCard(state = state) }
         }
+
+        Disclaimer()
     }
 }
 
@@ -210,11 +228,21 @@ private fun ResultCard(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "${(animatedExchangeAmount * 100).toLong() / 100.0}",
-            color = MaterialTheme.colorScheme.onSurface,
-            style = MaterialTheme.typography.titleLarge
-        )
+        Row {
+            Text(
+                text = "${(animatedExchangeAmount * 100).toLong() / 100.0}",
+                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.titleLarge
+            )
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Text(
+                text = state.targetCurrency?.code.toString(),
+                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
     }
 }
 

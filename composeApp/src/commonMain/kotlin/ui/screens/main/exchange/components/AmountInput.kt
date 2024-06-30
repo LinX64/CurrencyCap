@@ -30,31 +30,34 @@ internal fun AmountInput(
             .clip(RoundedCornerShape(35.dp))
             .animateContentSize(),
         value = amount,
-        onValueChange = {
-            if (it.isNotEmpty()) {
-                onAmountChange(it)
-            }
+        onValueChange = { newValue ->
+            if (newValue.isEmpty() || newValue.matches(Regex("^\\d*,?\\d*$"))) {
+                onAmountChange(newValue)
+            } else onErrorMessage("Invalid amount format")
         },
         singleLine = true,
         colors = TextFieldDefaults.colors(
             focusedContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
             unfocusedContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
             disabledContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
-            errorContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
             focusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            cursorColor = MaterialTheme.colorScheme.onSurface,
+            unfocusedIndicatorColor = Color.Transparent
         ),
         textStyle = LocalTextStyle.current.copy(
             fontSize = MaterialTheme.typography.titleLarge.fontSize,
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Center
         ),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Decimal,
-            imeAction = ImeAction.Done,
+            imeAction = ImeAction.Done
         )
     )
 }
 
+fun formatAmount(amount: String): String {
+    val reversed = amount.reversed()
+    val formatted = reversed.chunked(3).joinToString(".").reversed()
+    return if (formatted.isNotEmpty()) formatted else "0"
+}
