@@ -29,6 +29,6 @@ internal class GetVerifiedPhoneViewModel(
             return
         }
 
-        // TODO: Implement the logic to verify the code
+
     }
 }

@@ -21,7 +21,7 @@ internal fun AuthNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.GET_VERIFIED_PHONE
+        startDestination = NavRoutes.LANDING
     ) {
         landingScreen(navController)
 
@@ -39,8 +39,9 @@ internal fun AuthNavGraph(
 
         fillProfileScreen(
             padding = padding,
+            navController = navController,
+            onError = onError,
             onNavigateToMarketOverview = onLoginSuccess,
-            onError = onError
         )
 
         getVerifiedPhoneScreen(
