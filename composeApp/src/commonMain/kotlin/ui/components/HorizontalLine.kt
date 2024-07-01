@@ -7,6 +7,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
@@ -31,38 +32,41 @@ internal fun HorizontalLineWithDot() {
         ), label = ""
     )
 
-    Canvas(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp)
+    Row(
+        modifier = Modifier.fillMaxWidth()
     ) {
-        val canvasWidth = size.width
-        val canvasHeight = size.height / 2
+        Canvas(
+            modifier = Modifier.fillMaxWidth()
+                .height(20.dp)
+        ) {
+            val canvasWidth = size.width
+            val canvasHeight = size.height / 2
 
-        val path = Path().apply {
-            moveTo(0f, canvasHeight)
-            lineTo(canvasWidth, canvasHeight)
-        }
+            val path = Path().apply {
+                moveTo(0f, canvasHeight)
+                lineTo(canvasWidth, canvasHeight)
+            }
 
-        drawPath(
-            path = path,
-            brush = Brush.horizontalGradient(
-                colors = listOf(
-                    animatedColor.copy(alpha = 0f),
-                    animatedColor.copy(alpha = 1f),
-                    animatedColor.copy(alpha = 1f),
-                    animatedColor.copy(alpha = 0f)
+            drawPath(
+                path = path,
+                brush = Brush.horizontalGradient(
+                    colors = listOf(
+                        animatedColor.copy(alpha = 0f),
+                        animatedColor.copy(alpha = 1f),
+                        animatedColor.copy(alpha = 1f),
+                        animatedColor.copy(alpha = 0f)
+                    ),
+                    startX = 0f,
+                    endX = canvasWidth
                 ),
-                startX = 0f,
-                endX = canvasWidth
-            ),
-            style = Stroke(width = 3f)
-        )
+                style = Stroke(width = 3f)
+            )
 
-        drawCircle(
-            color = Color.White,
-            radius = 8f,
-            center = Offset(canvasWidth / 2, canvasHeight)
-        )
+            drawCircle(
+                color = Color.White,
+                radius = 8f,
+                center = Offset(canvasWidth / 2, canvasHeight)
+            )
+        }
     }
 }

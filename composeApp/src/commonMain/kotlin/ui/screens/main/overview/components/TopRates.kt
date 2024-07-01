@@ -44,7 +44,6 @@ internal fun TopRates(rates: OverviewState) {
 
         LazyHorizontalGrid(
             modifier = Modifier.fillMaxWidth()
-                .padding(top = 16.dp)
                 .heightIn(max = 180.dp),
             rows = GridCells.Fixed(1),
             horizontalArrangement = Arrangement.spacedBy(8.dp)

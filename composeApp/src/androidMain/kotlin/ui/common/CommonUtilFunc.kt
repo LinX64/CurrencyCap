@@ -65,3 +65,11 @@ actual fun SendMail(to: String, subject: String) {
         println("Error sending email: ${t.message}")
     }
 }
+
+actual fun Double.formatDecimal(maxFractionDigits: Int): String =
+    DecimalFormat().apply {
+        isGroupingUsed = false
+        minimumFractionDigits = 0
+        maximumFractionDigits = maxFractionDigits
+        isDecimalSeparatorAlwaysShown = false
+    }.format(this)

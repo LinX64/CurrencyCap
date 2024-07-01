@@ -25,7 +25,7 @@ internal fun Disclaimer(
     val uriHandler = LocalUriHandler.current
 
     Column(
-        modifier = modifier.padding(horizontal = 20.dp, vertical = 16.dp),
+        modifier = modifier.padding(vertical = 16.dp),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

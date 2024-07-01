@@ -17,49 +17,43 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import ui.common.DecimalFormat
-import util.formatDecimalSeparator
+import util.AmountVisualTransformation
 
 @Composable
 internal fun AmountInput(
     maxLength: Int = 10,
+    amount: String,
     onAmountChange: (String) -> Unit,
-    onErrorMessage: (String) -> Unit,
-    amount: String
+    onErrorMessage: (String) -> Unit
 ) {
-    val formattedAmount = if (amount.isNotEmpty()) {
-        DecimalFormat().format(amount.toDouble()).formatDecimalSeparator()
-    } else "0"
-
     TextField(
         modifier = Modifier.fillMaxWidth()
             .clip(RoundedCornerShape(35.dp))
             .animateContentSize(),
-        value = formattedAmount,
-        onValueChange = {
-            if (it.isNotEmpty() && it.length <= maxLength) {
-                onAmountChange(it)
-            } else onErrorMessage("Invalid amount!")
+        value = amount,
+        onValueChange = { newValue ->
+            if (newValue.isEmpty() || newValue.matches(Regex("^\\d*.?\\d*$"))) {
+                onAmountChange(newValue)
+            } else onErrorMessage("Invalid amount format")
         },
+        singleLine = true,
         colors = TextFieldDefaults.colors(
             focusedContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
             unfocusedContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
             disabledContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
-            errorContainerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
             focusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            cursorColor = MaterialTheme.colorScheme.onSurface,
+            unfocusedIndicatorColor = Color.Transparent
         ),
         textStyle = LocalTextStyle.current.copy(
             fontSize = MaterialTheme.typography.titleLarge.fontSize,
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.End
+            textAlign = TextAlign.Center
         ),
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = ImeAction.Done,
-        )
+            keyboardType = KeyboardType.Decimal,
+            imeAction = ImeAction.Done
+        ),
+        visualTransformation = AmountVisualTransformation()
     )
 }
-
