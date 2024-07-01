@@ -19,6 +19,7 @@ object NavRoutes {
     const val LOGIN = "Login"
     const val REGISTER = "Register"
     const val FILL_PROFILE = "Fill Profile"
+    const val GET_VERIFIED_PHONE = "Get Verified by Phone"
     const val RESET_PASSWORD = "Forgot Password"
 }
 

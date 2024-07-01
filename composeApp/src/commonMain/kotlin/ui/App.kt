@@ -11,7 +11,7 @@ import ui.components.main.LoggedInSection
 import ui.components.main.NotLoggedInSection
 import ui.screens.MainState
 import ui.screens.MainViewModel
-import ui.screens.splash.SplashScreen
+import ui.screens.initial.splash.SplashScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

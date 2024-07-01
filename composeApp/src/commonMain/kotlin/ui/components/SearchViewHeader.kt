@@ -25,8 +25,8 @@ import currencycap.composeapp.generated.resources.ic_search_normal
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.haze
 import org.jetbrains.compose.resources.painterResource
-import ui.screens.overview.OverviewState
-import ui.screens.overview.components.getPlaceHolder
+import ui.screens.main.overview.OverviewState
+import ui.screens.main.overview.components.getPlaceHolder
 
 @Composable
 internal fun SearchViewHeader(

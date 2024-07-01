@@ -32,7 +32,7 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import org.jetbrains.compose.resources.painterResource
 import ui.navigation.util.NavRoutes
-import ui.screens.settings.navigation.navigateToSettingsScreen
+import ui.screens.main.settings.navigation.navigateToSettingsScreen
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable

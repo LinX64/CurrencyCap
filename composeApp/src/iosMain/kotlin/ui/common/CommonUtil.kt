@@ -1,5 +1,6 @@
 package ui.common
 
+import androidx.compose.runtime.Composable
 import di.SETTINGS_PREFERENCES
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSLocale
@@ -49,3 +50,7 @@ actual class DecimalFormat {
     }
 }
 
+@Composable
+actual fun SendMail(to: String, subject: String) {
+    // TODO
+}

@@ -45,7 +45,17 @@ class AuthServiceRepositoryImpl(
     }
 
     override suspend fun updateCurrentUser(user: User) {
-        auth.currentUser?.updateProfile(displayName = user.name)
+        launchWithAwait {
+            try {
+                auth.currentUser?.let { user ->
+                    user.updateEmail(user.email.toString())
+                    updatePhoneNumber(user.phoneNumber.toString())
+                    println("Profile updated successfully")
+                }
+            } catch (e: Exception) {
+                println("Error updating profile: ${e.message}")
+            }
+        }
     }
 
     override suspend fun updatePhoneNumber(phoneNumber: String) {
@@ -55,7 +65,13 @@ class AuthServiceRepositoryImpl(
 
     override suspend fun sendRecoveryEmail(email: String) = launchWithAwait { auth.sendPasswordResetEmail(email) }
 
-    override suspend fun deleteAccount() = launchWithAwait { auth.currentUser!!.delete() }
+    override suspend fun deleteAccount() = launchWithAwait {
+        try {
+            auth.currentUser!!.delete()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
     override suspend fun signOut() {
         if (auth.currentUser?.isAnonymous == true) {
