@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import ui.navigation.util.NavRoutes
 import ui.screens.initial.get_verified.GetVerifiedPhoneScreen
 
-fun NavController.navigateToGetVerifiedPhoneScreenScreen() = navigate(NavRoutes.GET_VERIFIED_PHONE)
+fun NavController.navigateToGetVerifiedPhoneScreen() = navigate(NavRoutes.GET_VERIFIED_PHONE)
 
 fun NavGraphBuilder.getVerifiedPhoneScreen(
     padding: PaddingValues,

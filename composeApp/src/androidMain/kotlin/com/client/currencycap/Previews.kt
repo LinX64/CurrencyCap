@@ -9,8 +9,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
 import ui.components.CenteredColumn
-import ui.screens.main.overview.OverviewState
-import ui.screens.main.overview.components.PortfolioSection
 
 @Composable
 @Preview(showBackground = true)
@@ -22,10 +20,7 @@ private fun ExchangePreview() {
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
-                PortfolioSection(
-                    state = OverviewState.Loading,
-                    hazeState = hazeState
-                )
+
             }
         }
     }

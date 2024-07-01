@@ -21,7 +21,7 @@ internal fun AuthNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.LANDING
+        startDestination = NavRoutes.GET_VERIFIED_PHONE
     ) {
         landingScreen(navController)
 

@@ -96,7 +96,6 @@ private fun ActionsMenu(
     navController: NavHostController
 ) {
     val expanded = remember { mutableStateOf(false) }
-
     if (currentDestination == NavRoutes.PROFILE) {
         IconButton(
             onClick = { navController.navigateToSettingsScreen() }
