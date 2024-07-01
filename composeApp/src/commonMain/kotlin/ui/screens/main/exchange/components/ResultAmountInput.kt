@@ -35,7 +35,7 @@ internal fun ResultAmountInput(
             modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(size = 8.dp))
                 .animateContentSize()
                 .height(54.dp),
-            value = if (amount.isNotEmpty()) DecimalFormat().format(amount.toDouble()).formatDecimalSeparator() else "0",
+            value = if (amount.isNotEmpty()) DecimalFormat().format(amount.toDouble()).formatDecimalSeparator() else "0.0",
             readOnly = true,
             onValueChange = {},
             colors = TextFieldDefaults.colors(

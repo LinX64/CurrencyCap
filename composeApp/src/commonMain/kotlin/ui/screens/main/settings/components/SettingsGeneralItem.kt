@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
@@ -49,8 +50,7 @@ internal fun SettingsGeneralItem(
             )
 
             Switch(
-                modifier = Modifier
-                    .padding(0.dp),
+                modifier = Modifier.padding(20.dp).scale(1f),
                 checked = isSwitchChecked.value,
                 onCheckedChange = {
                     isSwitchChecked.value = it

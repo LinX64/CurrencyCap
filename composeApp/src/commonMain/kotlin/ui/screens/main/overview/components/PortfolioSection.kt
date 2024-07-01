@@ -47,7 +47,7 @@ internal fun PortfolioSection(
     val isLoading = state is OverviewState.Loading
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         Column(
