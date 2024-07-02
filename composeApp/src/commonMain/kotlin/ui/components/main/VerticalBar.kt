@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -20,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,12 +34,12 @@ internal fun VerticalBar(
 ) {
     CompositionLocalProvider(
         LocalTextStyle provides LocalTextStyle.current.copy(fontSize = 12.sp),
-        LocalContentColor provides Color.White
+        LocalContentColor provides MaterialTheme.colorScheme.onSurface
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp),
+                .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -53,7 +53,7 @@ internal fun VerticalBar(
                     visibilityThreshold = .000001f,
                     animationSpec = spring(
                         stiffness = Spring.StiffnessLow,
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        dampingRatio = Spring.DampingRatioMediumBouncy
                     ),
                     label = "scale"
                 )

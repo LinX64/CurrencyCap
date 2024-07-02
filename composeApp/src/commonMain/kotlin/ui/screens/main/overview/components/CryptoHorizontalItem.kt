@@ -109,7 +109,7 @@ private fun FirstHorizontalColumn(
     ) {
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-            text = crypto.symbol,
+            text = crypto.symbol.uppercase(),
             color = Color.White,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold
