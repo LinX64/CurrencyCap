@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ui.screens.main.overview.components.ChangeIcon
 import ui.screens.main.overview.components.TopMoversChart
 import ui.screens.main.overview.components.getPlaceHolder
 import ui.screens.main.overview.components.mockAssetInfo
@@ -105,11 +106,11 @@ internal fun InnerChartRow(
             fontSize = MaterialTheme.typography.bodyMedium.fontSize
         )
 
-//        ChangeIcon(
-//            isPositive = true,
-//            isLoading = isLoading,
-//            valueChange = 10.1
-//        )
+        ChangeIcon(
+            isPositive = true,
+            isLoading = isLoading,
+            valueChange = 10.1
+        )
     }
 }
 

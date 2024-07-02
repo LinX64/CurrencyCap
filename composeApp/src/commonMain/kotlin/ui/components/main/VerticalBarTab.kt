@@ -1,26 +1,28 @@
 package ui.components.main
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Accessibility
-import androidx.compose.ui.graphics.vector.ImageVector
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.ic_bitcoin
+import currencycap.composeapp.generated.resources.ic_chart
+import currencycap.composeapp.generated.resources.ic_news
+import org.jetbrains.compose.resources.DrawableResource
 
 sealed class VerticalBarTab(
     val title: String,
-    val icon: ImageVector,
+    val icon: DrawableResource,
 ) {
     data object STOCK : VerticalBarTab(
         title = "Stock",
-        icon = Icons.Filled.Accessibility//Res.drawable.ic_chart
+        icon = Res.drawable.ic_chart
     )
 
     data object CRYPTO : VerticalBarTab(
         title = "Crypto",
-        icon = Icons.Filled.Accessibility//Res.drawable.ic_bitcoin
+        icon = Res.drawable.ic_bitcoin
     )
 
     data object NEWS : VerticalBarTab(
         title = "News",
-        icon = Icons.Filled.Accessibility//Res.drawable.ic_news
+        icon = Res.drawable.ic_news
     )
 }
 
