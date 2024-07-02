@@ -74,7 +74,7 @@ internal fun BottomNavigationBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .nestedScroll(scrollBehavior.nestedScrollConnection)
-                .padding(horizontal = 8.dp),
+                .padding(horizontal = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CenteredExchangeButton(

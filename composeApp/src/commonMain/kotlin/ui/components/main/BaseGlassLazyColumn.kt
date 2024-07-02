@@ -49,7 +49,7 @@ internal fun BaseGlassLazyColumn(
                     .haze(
                         state = hazeState,
                         style = HazeStyle(
-                            tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                            tint = MaterialTheme.colorScheme.surface.copy(alpha = 0.1f),
                             blurRadius = 35.dp,
                             noiseFactor = HazeDefaults.noiseFactor
                         )

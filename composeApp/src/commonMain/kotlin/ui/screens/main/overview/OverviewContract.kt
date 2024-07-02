@@ -7,6 +7,7 @@ import domain.model.main.Rate
 
 sealed interface OverviewViewEvent {
     data object OnLoadRates : OverviewViewEvent
+    data object OnRetry : OverviewViewEvent
     data object OnRefreshRates : OverviewViewEvent
 }
 

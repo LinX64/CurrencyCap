@@ -24,7 +24,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun VerticalBar(
@@ -72,7 +71,7 @@ internal fun VerticalBar(
                     verticalArrangement = Arrangement.Center,
                 ) {
                     Icon(
-                        painter = painterResource(tab.icon),
+                        imageVector = tab.icon,
                         contentDescription = tab.title,
                         modifier = Modifier.size(24.dp)
                     )

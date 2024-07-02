@@ -10,6 +10,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -33,7 +34,7 @@ internal fun HorizontalLineWithDot() {
     )
 
     Row(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
     ) {
         Canvas(
             modifier = Modifier.fillMaxWidth()

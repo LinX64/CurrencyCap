@@ -2,6 +2,8 @@ package ui.screens.main.overview.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -47,11 +49,13 @@ internal fun RateItem(
                 )
             }
 
+            Spacer(modifier = Modifier.height(4.dp))
+
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = rate.code,
-                color = MaterialTheme.colorScheme.onSurface,
-                style = MaterialTheme.typography.bodyLarge
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = .6f),
+                style = MaterialTheme.typography.bodyLarge,
             )
 
             val formattedPrice = formatToPrice(rate.sell)

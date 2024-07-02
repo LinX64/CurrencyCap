@@ -10,6 +10,7 @@ import ui.components.ErrorView
 import ui.components.HorizontalLineWithDot
 import ui.components.SearchViewHeader
 import ui.components.main.BaseGlassLazyColumn
+import ui.screens.main.overview.OverviewViewEvent.OnRetry
 import ui.screens.main.overview.components.PortfolioSection
 import ui.screens.main.overview.components.TodayTopMovers
 import ui.screens.main.overview.components.TopRates
@@ -25,12 +26,11 @@ internal fun OverviewScreen(
     val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
     BaseGlassLazyColumn(
         padding = padding,
-        hazeState = hazeState
+        hazeState = hazeState,
     ) {
         item { SearchViewHeader(state = state, onSearchCardClicked = onSearchCardClicked) }
         item { HorizontalLineWithDot() }
         item { PortfolioSection(state = state, hazeState = hazeState) }
-        item { HorizontalLineWithDot() }
         item { TodayTopMovers(state) }
         item { TopRates(state) }
         item { TrendingCryptoCurrencies(state) }
@@ -39,7 +39,7 @@ internal fun OverviewScreen(
     when (state) {
         is OverviewState.Error -> {
             val message = (state as OverviewState.Error).message
-            ErrorView(message = message, onRetry = { /* TODO */ })
+            ErrorView(message = message, onRetry = { overviewViewModel.handleEvent(OnRetry) })
         }
 
         else -> Unit
