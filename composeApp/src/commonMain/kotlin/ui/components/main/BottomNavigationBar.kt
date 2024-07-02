@@ -46,6 +46,7 @@ import currencycap.composeapp.generated.resources.ic_arrow_up_down
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
+import ui.navigation.util.NavRoutes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,6 +60,7 @@ internal fun BottomNavigationBar(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
+    val isExploreScreen = currentRoute == NavRoutes.EXPLORE
 
     LaunchedEffect(currentRoute) {
         val newIndex = tabs.indexOfFirst { it.route == currentRoute }
@@ -67,7 +69,7 @@ internal fun BottomNavigationBar(
         }
     }
 
-    if (isSettingsScreen.not()) {
+    if (isSettingsScreen.not() && isExploreScreen.not()) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

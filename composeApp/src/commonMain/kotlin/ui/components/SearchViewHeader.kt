@@ -48,11 +48,11 @@ internal fun SearchViewHeader(
                     Modifier
                         .fillMaxWidth(0.8f)
                         .haze(hazeState)
-                        .padding(16.dp)
+                        .padding(8.dp)
                 ) else Modifier
                     .fillMaxWidth(0.8f)
                     .haze(hazeState)
-                    .padding(16.dp),
+                    .padding(8.dp),
                 shape = RoundedCornerShape(25.dp),
                 onClick = onSearchCardClicked
             ) {

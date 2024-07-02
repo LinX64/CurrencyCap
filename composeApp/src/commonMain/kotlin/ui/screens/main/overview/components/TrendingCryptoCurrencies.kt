@@ -12,9 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import domain.model.main.Crypto
 import ui.screens.main.overview.OverviewState
 import ui.theme.colors.CurrencyColors
+import util.getDummyCryptoItems
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -46,34 +46,8 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
             if (rates is OverviewState.Loading) {
                 repeat(5) {
                     RateHorizontalItem(
-                        crypto = Crypto(
-                            ath = 76.77,
-                            athChangePercentage = 78.79,
-                            athDate = "ornare",
-                            atl = 80.81,
-                            atlChangePercentage = 82.83,
-                            atlDate = "sententiae",
-                            circulatingSupply = 84.85,
-                            currentPrice = 86.87,
-                            fullyDilutedValuation = null,
-                            high24h = 88.89,
-                            id = "accusata",
-                            image = "similique",
-                            lastUpdated = "suspendisse",
-                            low24h = 90.91,
-                            marketCap = 2861,
-                            marketCapChange24h = 92.93,
-                            marketCapChangePercentage24h = 94.95,
-                            marketCapRank = 1879,
-                            maxSupply = null,
-                            name = "Becky Foreman",
-                            priceChange24h = 96.97,
-                            priceChangePercentage24h = 98.99,
-                            symbol = "sententiae",
-                            totalSupply = null,
-                            totalVolume = 100.101
-                        ),
-                        isLoading = true,
+                        crypto = getDummyCryptoItems()[it],
+                        isLoading = true
                     )
                 }
             }
