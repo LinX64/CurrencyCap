@@ -36,7 +36,7 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
         ) {
             if (rates is OverviewState.Success) {
                 rates.cryptoRates.take(50).forEachIndexed { index, rate -> // Takes only 50 items TODO: Add pagination
-                    RateHorizontalItem(
+                    CryptoHorizontalItem(
                         crypto = rates.cryptoRates[index],
                         isLoading = false
                     )
@@ -45,7 +45,7 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
 
             if (rates is OverviewState.Loading) {
                 repeat(5) {
-                    RateHorizontalItem(
+                    CryptoHorizontalItem(
                         crypto = getDummyCryptoItems()[it],
                         isLoading = true
                     )

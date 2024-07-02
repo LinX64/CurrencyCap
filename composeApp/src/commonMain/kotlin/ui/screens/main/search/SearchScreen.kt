@@ -32,7 +32,7 @@ import di.koinViewModel
 import kotlinx.coroutines.delay
 import ui.components.ErrorView
 import ui.components.main.BaseGlassLazyColumn
-import ui.screens.main.overview.components.RateHorizontalItem
+import ui.screens.main.overview.components.CryptoHorizontalItem
 import ui.screens.main.search.components.EmptyView
 import ui.screens.main.search.components.LeadingIcon
 import ui.screens.main.search.components.SearchPlaceHolder
@@ -122,7 +122,7 @@ private fun LazyListScope.searchResultContent(
         val result = state.cryptoList
         items(result.size) {
             val data = result[it]
-            RateHorizontalItem(
+            CryptoHorizontalItem(
                 crypto = data,
                 isLoading = false
             )
@@ -140,7 +140,7 @@ private fun LazyListScope.searchResultContent(
 
     is SearchState.Loading -> {
         items(5) {
-            RateHorizontalItem(
+            CryptoHorizontalItem(
                 isLoading = true,
                 crypto = getDummyCryptoItem()
             )

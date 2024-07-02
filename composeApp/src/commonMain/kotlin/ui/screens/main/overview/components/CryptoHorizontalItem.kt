@@ -52,7 +52,7 @@ val mockAssetInfo = AssetInfo(
 )
 
 @Composable
-internal fun RateHorizontalItem(
+internal fun CryptoHorizontalItem(
     modifier: Modifier = Modifier,
     crypto: Crypto,
     isLoading: Boolean = false,
@@ -155,6 +155,7 @@ private fun EndHorizontalComponents(
             ) {
 
                 ChangeIcon(
+                    isLoading = isLoading,
                     valueChange = crypto.priceChangePercentage24h,
                     isPositive = crypto.priceChangePercentage24h > 0
                 )
