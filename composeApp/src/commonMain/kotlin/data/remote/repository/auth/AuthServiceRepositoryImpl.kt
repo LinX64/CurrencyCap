@@ -44,6 +44,10 @@ class AuthServiceRepositoryImpl(
         AuthState.Error(e.message ?: "Could not create user!")
     }
 
+    private fun sendSmsCode(phoneNumber: String) {
+        //auth.
+    }
+
     override suspend fun updateCurrentUser(user: User) {
         launchWithAwait {
             try {

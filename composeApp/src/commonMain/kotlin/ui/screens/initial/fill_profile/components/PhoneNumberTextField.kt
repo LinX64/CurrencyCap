@@ -23,7 +23,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 internal fun PhoneNumberTextField(
     modifier: Modifier = Modifier,
-    onPhoneChanged: (String) -> Unit
+    onPhoneChanged: (String) -> Unit,
+    onError: (String) -> Unit
 ) {
     val phone = rememberSaveable { mutableStateOf("") }
     val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
@@ -31,8 +32,10 @@ internal fun PhoneNumberTextField(
         modifier = modifier.fillMaxWidth(),
         value = phone.value,
         onValueChange = {
-            phone.value = it
-            onPhoneChanged(it)
+            if (it.length <= 10) {
+                phone.value = it
+                onPhoneChanged(it)
+            } else onError("Phone number should be 10 digits")
         },
         colors = TextFieldDefaults.colors(
             focusedContainerColor = containerColor,

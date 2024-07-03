@@ -16,5 +16,6 @@ sealed interface FillProfileState {
 
 sealed interface FillProfileNavigationEffect {
     data object NavigateToMarketOverview : FillProfileNavigationEffect
+    data class NavigateToGetVerifiedPhone(val phoneNumber: String) : FillProfileNavigationEffect
 }
 

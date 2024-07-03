@@ -9,8 +9,8 @@ import data.util.APIConst.BASE_URL
 import data.util.APIConst.NEWS_URL
 import data.util.parseCurrencyRates
 import data.util.retryOnIOException
+import domain.model.main.Crypto
 import domain.model.main.Currencies
-import domain.model.main.Rate
 import domain.repository.MainRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -41,11 +41,12 @@ class MainRepositoryImpl(
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
 
-    override fun search(query: String): Flow<List<Rate>> = flow {
+    override fun search(query: String): Flow<List<Crypto>> = flow {
         val plainResponse = httpClient.get(BASE_URL).body<String>()
         val currencies = parseCurrencyRates(plainResponse)
 
-        emit(currencies.rates.toRateDomain())
+        val filteredCryptos = currencies.crypto.filter { it.symbol.startsWith(query, ignoreCase = true) }
+        emit(filteredCryptos.toCryptoDomain())
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()

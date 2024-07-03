@@ -12,8 +12,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -41,7 +44,8 @@ internal fun GetVerifiedPhoneScreen(
     ) {
         GetVerifiedPhoneForm(
             onFinishSignUpClick = { getVerifiedPhoneViewModel.handleEvent(OnFinishSignUpClick) },
-            onCodeChange = { code -> getVerifiedPhoneViewModel.handleEvent(OnCodeChanged(code)) }
+            onCodeChange = { code -> getVerifiedPhoneViewModel.handleEvent(OnCodeChanged(code)) },
+            onError = onError
         )
     }
 
@@ -61,8 +65,11 @@ internal fun GetVerifiedPhoneScreen(
 private fun GetVerifiedPhoneForm(
     modifier: Modifier = Modifier,
     onCodeChange: (String) -> Unit,
-    onFinishSignUpClick: () -> Unit
+    onFinishSignUpClick: () -> Unit,
+    onError: (String) -> Unit
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val code = remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -73,14 +80,16 @@ private fun GetVerifiedPhoneForm(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Enter your Code",
+            text = "Enter Verification Code",
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold
         )
 
+        Spacer(modifier = Modifier.height(8.dp))
+
         Text(
-            text = "We have sent a code to your phone number",
+            text = "We have sent you a verification code to your phone number",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Normal
@@ -93,15 +102,21 @@ private fun GetVerifiedPhoneForm(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CodeTextField(
-                value = "",
-                onValueChange = onCodeChange,
-                length = 6
+                value = code.value,
+                onValueChange = {
+                    code.value = it
+                    onCodeChange(it)
+                },
+                onError = {
+                    keyboardController?.hide()
+                    onError(it)
+                }
             )
 
             Spacer(modifier = modifier.height(32.dp))
 
             PrimaryButton(
-                text = "Finish Sign Up",
+                text = "Complete Sign Up",
                 onButtonClick = onFinishSignUpClick
             )
         }

@@ -1,7 +1,7 @@
 package ui.screens.main.search
 
+import domain.model.main.Crypto
 import domain.model.main.Data
-import domain.model.main.Rate
 
 sealed interface SearchEvent {
     data class OnSearchTextChanged(val query: String) : SearchEvent
@@ -16,6 +16,6 @@ sealed interface SearchState {
     data object Idle : SearchState
     data object Loading : SearchState
     data object Empty : SearchState
-    data class Success(val resultList: List<Rate>) : SearchState
+    data class Success(val cryptoList: List<Crypto>) : SearchState
     data class Error(val message: String) : SearchState
 }

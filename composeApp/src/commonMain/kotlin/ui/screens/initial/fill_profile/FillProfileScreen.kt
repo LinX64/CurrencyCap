@@ -8,27 +8,26 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
 import ui.components.BaseCenterColumn
 import ui.components.HandleNavigationEffect
+import ui.components.PrimaryButton
+import ui.components.SecondaryButton
+import ui.screens.initial.fill_profile.FillProfileNavigationEffect.NavigateToGetVerifiedPhone
 import ui.screens.initial.fill_profile.FillProfileNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnNameChanged
-import ui.screens.initial.fill_profile.FillProfileViewEvent.OnPhoneNumberChanged
-import ui.screens.initial.fill_profile.FillProfileViewEvent.OnSignUpClick
-import ui.screens.initial.fill_profile.FillProfileViewEvent.OnSkipClicked
 import ui.screens.initial.fill_profile.components.NameTextField
 import ui.screens.initial.fill_profile.components.PhoneNumberTextField
 
@@ -37,6 +36,7 @@ internal fun FillProfileScreen(
     padding: PaddingValues,
     fillProfileViewModel: FillProfileViewModel = koinViewModel<FillProfileViewModel>(),
     navigateToMarketOverview: () -> Unit,
+    navigateToGetVerificationCode: (String) -> Unit,
     onError: (message: String) -> Unit
 ) {
     val state by fillProfileViewModel.viewState.collectAsStateWithLifecycle()
@@ -46,16 +46,17 @@ internal fun FillProfileScreen(
             .padding(padding),
     ) {
         FillProfileForm(
+            onSkipClick = navigateToMarketOverview,
+            onVerifyPhoneNumberClick = navigateToGetVerificationCode,
+            onError = onError,
             onNameChanged = { fillProfileViewModel.handleEvent(OnNameChanged(it)) },
-            onFinishSignUpClick = { fillProfileViewModel.handleEvent(OnSignUpClick) },
-            onSkipClick = { fillProfileViewModel.handleEvent(OnSkipClicked) },
-            onPhoneNumberChanged = { fillProfileViewModel.handleEvent(OnPhoneNumberChanged(it)) }
         )
     }
 
     HandleNavigationEffect(viewModel = fillProfileViewModel) { effect ->
         when (effect) {
             is NavigateToMarketOverview -> navigateToMarketOverview()
+            is NavigateToGetVerifiedPhone -> navigateToGetVerificationCode(effect.phoneNumber)
         }
     }
 
@@ -69,10 +70,11 @@ internal fun FillProfileScreen(
 private fun FillProfileForm(
     modifier: Modifier = Modifier,
     onNameChanged: (String) -> Unit,
-    onPhoneNumberChanged: (String) -> Unit,
-    onFinishSignUpClick: () -> Unit,
-    onSkipClick: () -> Unit
+    onVerifyPhoneNumberClick: (String) -> Unit,
+    onSkipClick: () -> Unit,
+    onError: (String) -> Unit
 ) {
+    var phoneNumber by rememberSaveable { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -107,43 +109,23 @@ private fun FillProfileForm(
             Spacer(modifier = modifier.height(10.dp))
 
             PhoneNumberTextField(
-                onPhoneChanged = onPhoneNumberChanged
+                onPhoneChanged = { phoneNumber = it },
+                onError = onError
             )
 
             Spacer(modifier = modifier.height(32.dp))
 
-            Button(
-                onClick = onFinishSignUpClick,
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(52.dp),
-                shape = RoundedCornerShape(10.dp),
-            ) {
-                Text(
-                    text = "Verify Phone Number",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.surface
-                )
-            }
+            PrimaryButton(
+                onButtonClick = { onVerifyPhoneNumberClick(phoneNumber) },
+                text = "Verify Phone Number"
+            )
 
             Spacer(modifier = modifier.height(16.dp))
 
-            Button(
-                onClick = onSkipClick,
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(52.dp),
-                shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent
-                )
-            ) {
-                Text(
-                    text = "Skip",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-            }
+            SecondaryButton(
+                onButtonClick = onSkipClick,
+                text = "Skip"
+            )
         }
     }
 }

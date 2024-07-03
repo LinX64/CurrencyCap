@@ -29,15 +29,15 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
-import domain.model.main.Rate
 import kotlinx.coroutines.delay
 import ui.components.ErrorView
 import ui.components.main.BaseGlassLazyColumn
+import ui.screens.main.overview.components.CryptoHorizontalItem
 import ui.screens.main.search.components.EmptyView
 import ui.screens.main.search.components.LeadingIcon
-import ui.screens.main.search.components.SearchItem
 import ui.screens.main.search.components.SearchPlaceHolder
 import ui.screens.main.search.components.TrailingIcon
+import util.getDummyCryptoItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -81,12 +81,13 @@ internal fun SearchScreen(
                     TrailingIcon(expanded = expanded, onCloseClick = {
                         expanded = false
                         text = ""
+                        searchViewModel.handleEvent(SearchEvent.OnSearchTextChanged(""))
                     })
                 }
             ) {
                 BaseGlassLazyColumn(
                     modifier = Modifier.semantics { traversalIndex = 1f },
-                    padding = padding,
+                    padding = PaddingValues(0.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     hazeState = hazeState
                 ) {
@@ -117,26 +118,14 @@ private fun LazyListScope.searchResultContent(
     state: SearchState,
     onRetryClicked: () -> Unit
 ) = when (state) {
-    is SearchState.Loading -> {
-        items(5) {
-            SearchItem(
-                rate = Rate(
-                    symbol = "USD",
-                    rateUsd = "1.0",
-                    currencySymbol = "USD",
-                    id = "USD",
-                    type = "USD"
-                ),
-                isLoading = true
-            )
-        }
-    }
-
     is SearchState.Success -> {
-        val result = state.resultList
+        val result = state.cryptoList
         items(result.size) {
             val data = result[it]
-            SearchItem(rate = data)
+            CryptoHorizontalItem(
+                crypto = data,
+                isLoading = false
+            )
         }
     }
 
@@ -149,7 +138,15 @@ private fun LazyListScope.searchResultContent(
         }
     }
 
-    SearchState.Empty -> item { EmptyView() }
+    is SearchState.Loading -> {
+        items(5) {
+            CryptoHorizontalItem(
+                isLoading = true,
+                crypto = getDummyCryptoItem()
+            )
+        }
+    }
 
+    SearchState.Empty -> item { EmptyView() }
     else -> Unit
 }

@@ -24,3 +24,4 @@ object NavRoutes {
 }
 
 const val ENCODED_URL = "encodedUrl"
+const val PHONE_NUMBER = "phoneNumber"

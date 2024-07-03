@@ -39,8 +39,9 @@ internal fun AuthNavGraph(
 
         fillProfileScreen(
             padding = padding,
+            navController = navController,
+            onError = onError,
             onNavigateToMarketOverview = onLoginSuccess,
-            onError = onError
         )
 
         getVerifiedPhoneScreen(

@@ -45,6 +45,7 @@ internal fun AppTopBar(
 ) {
     val isSettingsScreen = currentDestination == NavRoutes.SETTINGS
     val isNewsDetailScreen = currentDestination?.startsWith(NavRoutes.NEWS_DETAIL)
+    val isExploreScreen = currentDestination == NavRoutes.EXPLORE
 
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
@@ -76,7 +77,7 @@ internal fun AppTopBar(
             )
         },
         navigationIcon = {
-            if (isSettingsScreen || isNewsDetailScreen == true) {
+            if (isSettingsScreen || isNewsDetailScreen == true || isExploreScreen) {
                 IconButton(onClick = { navController.navigateUp() }) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_arrow_left),
@@ -96,7 +97,6 @@ private fun ActionsMenu(
     navController: NavHostController
 ) {
     val expanded = remember { mutableStateOf(false) }
-
     if (currentDestination == NavRoutes.PROFILE) {
         IconButton(
             onClick = { navController.navigateToSettingsScreen() }

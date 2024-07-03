@@ -6,10 +6,8 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -18,7 +16,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -27,43 +24,34 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
 
 @Composable
 internal fun VerticalBarCard(
     modifier: Modifier = Modifier,
-    onTabSelected: (VerticalBarTab) -> Unit,
-    hazeState: HazeState
+    hazeState: HazeState,
+    onTabSelected: (Int) -> Unit,
 ) {
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(1) }
-    Column(
-        modifier = modifier
-            .padding(horizontal = 8.dp)
-            .then(modifier)
-            .haze(hazeState),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Box(
-            modifier = Modifier
-                .width(64.dp)
-                .height(150.dp)
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = .2f),
-                    shape = RoundedCornerShape(35.dp)
-                )
-        ) {
-            VerticalBar(
-                tabs = myTabs,
-                selectedTab = selectedTabIndex,
-                onTabSelected = {
-                    selectedTabIndex = myTabs.indexOf(it)
-                    onTabSelected(it)
-                }
+    Box(
+        modifier = Modifier.then(modifier)
+            .width(64.dp)
+            .height(150.dp)
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),
+                shape = RoundedCornerShape(35.dp)
             )
+    ) {
+        VerticalBar(
+            tabs = myTabs,
+            selectedTab = selectedTabIndex,
+            onTabSelected = {
+                selectedTabIndex = myTabs.indexOf(it)
+                onTabSelected(selectedTabIndex)
+            }
+        )
 
-            SidesDash(selectedTabIndex)
-        }
+        SidesDash(selectedTabIndex)
     }
 }
 

@@ -37,7 +37,10 @@ class SearchViewModel(
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     private fun search(query: String) {
         with(searchQuery) {
-            if (query.isEmpty()) setState { SearchState.Idle }
+            if (query.isEmpty()) {
+                setState { SearchState.Idle }
+                return
+            }
 
             value = query.trim()
             debounce(500)

@@ -10,8 +10,8 @@ import ui.common.MviViewModel
 import ui.screens.main.overview.OverviewState.Success
 import ui.screens.main.overview.OverviewViewEvent.OnLoadRates
 import ui.screens.main.overview.OverviewViewEvent.OnRefreshRates
+import ui.screens.main.overview.OverviewViewEvent.OnRetry
 
-private const val CRYPTO = "crypto"
 private const val FIAT = "fiat"
 
 class OverviewViewModel(
@@ -22,9 +22,12 @@ class OverviewViewModel(
         loadCombinedRates()
     }
 
-    override fun handleEvent(event: OverviewViewEvent) = when (event) {
-        is OnLoadRates -> loadCombinedRates()
-        is OnRefreshRates -> refreshRates()
+    override fun handleEvent(event: OverviewViewEvent) {
+        when (event) {
+            OnRetry -> loadCombinedRates()
+            is OnLoadRates -> loadCombinedRates()
+            is OnRefreshRates -> refreshRates()
+        }
     }
 
     private fun loadCombinedRates() {
