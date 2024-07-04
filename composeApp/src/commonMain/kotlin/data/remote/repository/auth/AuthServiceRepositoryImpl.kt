@@ -45,7 +45,6 @@ class AuthServiceRepositoryImpl(
     }
 
     private fun sendSmsCode(phoneNumber: String) {
-        //auth.
     }
 
     override suspend fun updateCurrentUser(user: User) {
