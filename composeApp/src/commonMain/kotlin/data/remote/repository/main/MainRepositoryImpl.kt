@@ -1,5 +1,6 @@
 package data.remote.repository.main
 
+import data.remote.model.main.CurrenciesDto
 import data.remote.model.main.toBonbastRateDomain
 import data.remote.model.main.toCryptoDomain
 import data.remote.model.main.toMarketDomain
@@ -26,8 +27,7 @@ class MainRepositoryImpl(
 ) : MainRepository {
 
     override fun getAllRates(): Flow<Currencies> = flow {
-        val plainResponse = httpClient.get(BASE_URL).body<String>()
-        val currencies = parseCurrencyRates(plainResponse)
+        val currencies = getCurrencies()
 
         emit(
             Currencies(
@@ -42,8 +42,7 @@ class MainRepositoryImpl(
         .retryOnIOException()
 
     override fun search(query: String): Flow<List<Crypto>> = flow {
-        val plainResponse = httpClient.get(BASE_URL).body<String>()
-        val currencies = parseCurrencyRates(plainResponse)
+        val currencies = getCurrencies()
 
         val filteredCryptos = currencies.crypto.filter { it.symbol.startsWith(query, ignoreCase = true) }
         emit(filteredCryptos.toCryptoDomain())
@@ -57,4 +56,9 @@ class MainRepositoryImpl(
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
+
+    private suspend fun getCurrencies(): CurrenciesDto {
+        val plainResponse = httpClient.get(BASE_URL).body<String>()
+        return parseCurrencyRates(plainResponse)
+    }
 }
