@@ -1,7 +1,9 @@
 package ui.screens.initial.get_verified
 
+import androidx.lifecycle.viewModelScope
 import domain.repository.AuthServiceRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import ui.common.MviViewModel
 import ui.screens.initial.get_verified.GetVerifiedPhoneState.Error
 import ui.screens.initial.get_verified.GetVerifiedPhoneState.Loading
@@ -29,6 +31,11 @@ internal class GetVerifiedPhoneViewModel(
             return
         }
 
+        viewModelScope.launch {
+            authServiceRepository.sendVerificationCodeToEmail(code.value)
 
+            setState { Loading }
+            setEffect(GetVerifiedPhoneNavigationEffect.NavigateToMarketOverview)
+        }
     }
 }

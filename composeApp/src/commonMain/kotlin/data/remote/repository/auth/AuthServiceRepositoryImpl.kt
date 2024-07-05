@@ -1,6 +1,8 @@
 package data.remote.repository.auth
 
 import data.remote.model.User
+import dev.gitlive.firebase.auth.ActionCodeSettings
+import dev.gitlive.firebase.auth.AndroidPackageName
 import dev.gitlive.firebase.auth.FirebaseAuth
 import dev.gitlive.firebase.auth.PhoneAuthCredential
 import dev.gitlive.firebase.auth.PhoneAuthProvider
@@ -44,7 +46,21 @@ class AuthServiceRepositoryImpl(
         AuthState.Error(e.message ?: "Could not create user!")
     }
 
-    private fun sendSmsCode(phoneNumber: String) {
+    override suspend fun sendVerificationCodeToEmail(email: String) {
+        try {
+            val actionCodeSettings = ActionCodeSettings(
+                url = "https://example.com/emailSignIn",
+                androidPackageName = AndroidPackageName(
+                    "com.client.currencycap",
+                    minimumVersion = "12"
+                ),
+                iOSBundleId = "com.client.currencycap.CurrencyCap",
+            )
+
+            auth.sendSignInLinkToEmail(email = email, actionCodeSettings = actionCodeSettings)
+        } catch (e: Exception) {
+            println("Error sending verification code: ${e.message}")
+        }
     }
 
     override suspend fun updateCurrentUser(user: User) {
