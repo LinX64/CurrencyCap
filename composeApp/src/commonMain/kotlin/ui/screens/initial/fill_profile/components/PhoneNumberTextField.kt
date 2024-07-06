@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -29,7 +30,7 @@ internal fun PhoneNumberTextField(
     val phone = rememberSaveable { mutableStateOf("") }
     val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
     TextField(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(35.dp)),
         value = phone.value,
         onValueChange = {
             if (it.length <= 10) {

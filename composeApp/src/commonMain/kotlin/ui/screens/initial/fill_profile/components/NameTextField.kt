@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
@@ -33,7 +34,7 @@ internal fun NameTextField(
     val focusManager = LocalFocusManager.current
 
     TextField(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(35.dp)),
         value = name.value,
         onValueChange = {
             name.value = it
@@ -57,7 +58,7 @@ internal fun NameTextField(
             )
         },
         placeholder = {
-            Text(text = "Name")
+            Text(text = "Full name")
         },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Text,

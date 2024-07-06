@@ -44,8 +44,8 @@ kotlin {
 
             // Firebase
             implementation(project.dependencies.platform(libs.firebase.bom))
-            implementation(libs.firebase.firestore)
             implementation(libs.firebase.auth)
+            implementation(libs.firebase.fireStore)
 
             api(libs.androidx.startup)
 
@@ -67,6 +67,7 @@ kotlin {
             implementation(libs.mongodb.realm)
 
             implementation(libs.firebase.auth)
+            implementation(libs.firebase.fireStore)
 
             // UI
             implementation(libs.haze)

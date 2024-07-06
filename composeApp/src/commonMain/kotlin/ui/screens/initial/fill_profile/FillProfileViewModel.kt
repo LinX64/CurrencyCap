@@ -1,12 +1,11 @@
 package ui.screens.initial.fill_profile
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import data.remote.model.User
-import domain.repository.AuthServiceRepository
-import kotlinx.coroutines.flow.MutableStateFlow
+import domain.repository.ProfileRepository
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
-import ui.screens.initial.fill_profile.FillProfileNavigationEffect.NavigateToGetVerifiedPhone
 import ui.screens.initial.fill_profile.FillProfileNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnNameChanged
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnPhoneNumberChanged
@@ -14,15 +13,15 @@ import ui.screens.initial.fill_profile.FillProfileViewEvent.OnSignUpClick
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnSkipClicked
 
 internal class FillProfileViewModel(
-    private val authServiceRepository: AuthServiceRepository
+    private val profileRepository: ProfileRepository
 ) : MviViewModel<FillProfileViewEvent, FillProfileState, FillProfileNavigationEffect>(FillProfileState.Idle) {
 
-    val name: MutableStateFlow<String> = MutableStateFlow("")
-    val phoneNumber: MutableStateFlow<String> = MutableStateFlow("")
+    private val fullName = mutableStateOf("")
+    private val phoneNumber = mutableStateOf("")
 
     override fun handleEvent(event: FillProfileViewEvent) {
         when (event) {
-            is OnNameChanged -> name.value = event.name
+            is OnNameChanged -> fullName.value = event.fullName
             is OnPhoneNumberChanged -> phoneNumber.value = event.phoneNumber
             OnSignUpClick -> onSignUpFinishClicked()
             OnSkipClicked -> setEffect(NavigateToMarketOverview)
@@ -32,15 +31,21 @@ internal class FillProfileViewModel(
     private fun onSignUpFinishClicked() {
         setState { FillProfileState.Loading }
 
+        if (fullName.value.isEmpty() || phoneNumber.value.isEmpty()) {
+            setState { FillProfileState.Error("Please fill all fields") }
+            return
+        }
+
         val updatedUser = User(
-            name = name.value
+            fullName = fullName.value,
+            phoneNumber = phoneNumber.value
         )
 
         viewModelScope.launch {
-            authServiceRepository.updateCurrentUser(updatedUser)
+            profileRepository.saveUserProfile(updatedUser)
         }
 
         setState { FillProfileState.Idle }
-        setEffect(NavigateToGetVerifiedPhone(phoneNumber.value))
+        setEffect(NavigateToMarketOverview)
     }
 }

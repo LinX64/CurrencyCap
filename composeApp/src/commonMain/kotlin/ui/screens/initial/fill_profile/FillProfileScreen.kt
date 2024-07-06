@@ -12,9 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -25,9 +22,10 @@ import ui.components.BaseCenterColumn
 import ui.components.HandleNavigationEffect
 import ui.components.PrimaryButton
 import ui.components.SecondaryButton
-import ui.screens.initial.fill_profile.FillProfileNavigationEffect.NavigateToGetVerifiedPhone
 import ui.screens.initial.fill_profile.FillProfileNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnNameChanged
+import ui.screens.initial.fill_profile.FillProfileViewEvent.OnPhoneNumberChanged
+import ui.screens.initial.fill_profile.FillProfileViewEvent.OnSignUpClick
 import ui.screens.initial.fill_profile.components.NameTextField
 import ui.screens.initial.fill_profile.components.PhoneNumberTextField
 
@@ -36,7 +34,6 @@ internal fun FillProfileScreen(
     padding: PaddingValues,
     fillProfileViewModel: FillProfileViewModel = koinViewModel<FillProfileViewModel>(),
     navigateToMarketOverview: () -> Unit,
-    navigateToGetVerificationCode: (String) -> Unit,
     onError: (message: String) -> Unit
 ) {
     val state by fillProfileViewModel.viewState.collectAsStateWithLifecycle()
@@ -47,16 +44,16 @@ internal fun FillProfileScreen(
     ) {
         FillProfileForm(
             onSkipClick = navigateToMarketOverview,
-            onVerifyPhoneNumberClick = navigateToGetVerificationCode,
             onError = onError,
             onNameChanged = { fillProfileViewModel.handleEvent(OnNameChanged(it)) },
+            onPhoneChanged = { fillProfileViewModel.handleEvent(OnPhoneNumberChanged(it)) },
+            onFinishSignUpClick = { fillProfileViewModel.handleEvent(OnSignUpClick) }
         )
     }
 
     HandleNavigationEffect(viewModel = fillProfileViewModel) { effect ->
         when (effect) {
             is NavigateToMarketOverview -> navigateToMarketOverview()
-            is NavigateToGetVerifiedPhone -> navigateToGetVerificationCode(effect.phoneNumber)
         }
     }
 
@@ -70,11 +67,11 @@ internal fun FillProfileScreen(
 private fun FillProfileForm(
     modifier: Modifier = Modifier,
     onNameChanged: (String) -> Unit,
-    onVerifyPhoneNumberClick: (String) -> Unit,
+    onPhoneChanged: (String) -> Unit,
+    onFinishSignUpClick: () -> Unit,
     onSkipClick: () -> Unit,
     onError: (String) -> Unit
 ) {
-    var phoneNumber by rememberSaveable { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -92,7 +89,7 @@ private fun FillProfileForm(
         )
 
         Text(
-            text = "Please fill in your name and phone number",
+            text = "Please fill in your Full Name and Phone number",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Normal
@@ -109,14 +106,14 @@ private fun FillProfileForm(
             Spacer(modifier = modifier.height(10.dp))
 
             PhoneNumberTextField(
-                onPhoneChanged = { phoneNumber = it },
+                onPhoneChanged = onPhoneChanged,
                 onError = onError
             )
 
             Spacer(modifier = modifier.height(32.dp))
 
             PrimaryButton(
-                onButtonClick = { onVerifyPhoneNumberClick(phoneNumber) },
+                onButtonClick = onFinishSignUpClick,
                 text = "Verify Phone Number"
             )
 
