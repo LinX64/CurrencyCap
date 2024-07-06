@@ -1,10 +1,5 @@
 package ui.components.main
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -34,40 +29,34 @@ internal fun BaseGlassLazyColumn(
     emptyContent: @Composable () -> Unit = {},
     content: LazyListScope.() -> Unit
 ) {
-    AnimatedVisibility(
-        visible = true,
-        enter = fadeIn() + expandVertically(),
-        exit = fadeOut() + shrinkVertically()
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
-        Box(
-            modifier = modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+                .padding(contentPadding)
+                .haze(
+                    state = hazeState,
+                    style = HazeStyle(
+                        tint = MaterialTheme.colorScheme.surface.copy(alpha = 0.1f),
+                        blurRadius = 35.dp,
+                        noiseFactor = HazeDefaults.noiseFactor
+                    )
+                ),
+            contentPadding = padding,
+            verticalArrangement = verticalArrangement,
+            horizontalAlignment = horizontalAlignment
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize()
-                    .padding(contentPadding)
-                    .haze(
-                        state = hazeState,
-                        style = HazeStyle(
-                            tint = MaterialTheme.colorScheme.surface.copy(alpha = 0.1f),
-                            blurRadius = 35.dp,
-                            noiseFactor = HazeDefaults.noiseFactor
-                        )
-                    ),
-                contentPadding = padding,
-                verticalArrangement = verticalArrangement,
-                horizontalAlignment = horizontalAlignment
-            ) {
-                content()
-            }
+            content()
+        }
 
-            if (isEmpty) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    emptyContent()
-                }
+        if (isEmpty) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                emptyContent()
             }
         }
     }

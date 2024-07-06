@@ -38,5 +38,5 @@ val viewModelModule = module {
 }
 
 val previewModule = module {
-    single { OverviewViewModel(get()) }
+    single { ExchangeViewModel(get(), get(), get()) }
 }

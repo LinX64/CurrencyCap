@@ -18,6 +18,7 @@ internal fun KoinPreview(
 ) {
     if (KoinPlatformTools.defaultContext().getOrNull() == null) {
         KoinApplication(application = {
+
             modules(
                 httpClientModule,
                 repositoryModule,
@@ -35,5 +36,7 @@ internal fun KoinPreview(
                 }
             }
         }
+    } else {
+        content()
     }
 }
