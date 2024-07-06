@@ -25,9 +25,9 @@ import ui.components.GlassCard
 internal fun ProfileCard(
     modifier: Modifier = Modifier,
     profileImage: String = "https://www.w3schools.com/howto/img_avatar.png",
-    name: String = "John Doe",
-    email: String = "ash.qxrz@hotmail.com",
-    phone: String = "+989123456789"
+    fullName: String,
+    email: String,
+    phone: String
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -47,7 +47,7 @@ internal fun ProfileCard(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = name,
+                    text = fullName,
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold

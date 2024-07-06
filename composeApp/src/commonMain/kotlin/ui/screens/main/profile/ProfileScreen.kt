@@ -40,7 +40,14 @@ internal fun ProfileScreen(
     ) {
         item {
             when (state) {
-                is ProfileState.Success -> ProfileCard()
+                is ProfileState.Success -> {
+                    val profileState = state as ProfileState.Success
+                    ProfileCard(
+                        fullName = profileState.user.fullName ?: "",
+                        email = profileState.user.email ?: "",
+                        phone = profileState.user.phoneNumber ?: ""
+                    )
+                }
                 else -> Unit
             }
         }

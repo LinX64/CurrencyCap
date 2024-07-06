@@ -26,7 +26,7 @@ class AuthServiceRepositoryImpl(
         get() = auth.currentUser != null
 
     override val currentUser: Flow<User> = auth.authStateChanged.map { user ->
-        user?.let { User(it.uid, it.isAnonymous) } ?: User()
+        user?.let { User(id = it.uid, isAnonymous = it.isAnonymous, email = user.email) } ?: User()
     }
 
     override suspend fun authenticate(
