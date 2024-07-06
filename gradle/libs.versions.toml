@@ -20,7 +20,7 @@ androidx-startup = "1.1.1"
 lifecycle = "2.8.0"
 
 # Firebase
-firebase-firestore = "25.0.0"
+firebase-firestore = "1.13.0"
 firebaseBom = "33.1.1"
 firebaseCrashlyticsPlugin = "3.0.2"
 firebasePerfPlugin = "1.4.2"
@@ -50,8 +50,8 @@ kachetor = { module = "com.vipulasri.kachetor:kachetor", version.ref = "kachetor
 
 # Firebase
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
 firebase-auth = { module = "dev.gitlive:firebase-auth", version.ref = "firebaseAuth" }
+firebase-fireStore = { module = "dev.gitlive:firebase-firestore", version.ref = "firebase-firestore" }
 
 # Jetbrains Compose
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
