@@ -78,6 +78,8 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
 
+            api(libs.compose.webview.multiplatform)
+
             // Data
             implementation(libs.bundles.datastore)
             implementation(libs.bundles.ktor)

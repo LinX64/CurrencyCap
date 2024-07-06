@@ -35,7 +35,7 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import ui.components.BottomSheet
+import ui.components.PrivacyBottomSheet
 import ui.navigation.graphs.AuthNavGraph
 import ui.navigation.util.NavRoutes
 import ui.screens.MainViewModel
@@ -76,11 +76,12 @@ internal fun NotLoggedInSection(
                 mainViewModel.onLoginSuccess()
                 navController.popBackStack()
             },
-            onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } }
+            onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
+            showPrivacyPolicyBottomSheet = { isSheetOpen.value = true }
         )
     }
 
-    if (isSheetOpen.value) BottomSheet(sheetState = scaffoldState)
+    if (isSheetOpen.value) PrivacyBottomSheet(sheetState = scaffoldState)
 }
 
 @Composable

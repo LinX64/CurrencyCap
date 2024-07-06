@@ -17,13 +17,17 @@ internal fun AuthNavGraph(
     padding: PaddingValues,
     navController: NavHostController,
     onLoginSuccess: () -> Unit,
+    showPrivacyPolicyBottomSheet: () -> Unit,
     onError: (message: String) -> Unit
 ) {
     NavHost(
         navController = navController,
         startDestination = NavRoutes.LANDING
     ) {
-        landingScreen(navController)
+        landingScreen(
+            navController = navController,
+            showPrivacyPolicyBottomSheet = showPrivacyPolicyBottomSheet
+        )
 
         loginScreen(
             padding = padding,
