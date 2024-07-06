@@ -50,11 +50,11 @@ import ui.screens.main.exchange.components.ResultCard
 @Composable
 @Preview
 internal fun ExchangeScreen(
-    exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>(),
     padding: PaddingValues,
     hazeState: HazeState,
     onError: (String) -> Unit,
 ) {
+    val exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>()
     val state by exchangeViewModel.viewState.collectAsStateWithLifecycle()
 
     BaseGlassLazyColumn(

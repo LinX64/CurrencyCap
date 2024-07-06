@@ -6,7 +6,6 @@ import domain.repository.AuthServiceRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
-import ui.screens.initial.fill_profile.FillProfileNavigationEffect.NavigateToGetVerifiedPhone
 import ui.screens.initial.fill_profile.FillProfileNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnNameChanged
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnPhoneNumberChanged
@@ -18,12 +17,13 @@ internal class FillProfileViewModel(
 ) : MviViewModel<FillProfileViewEvent, FillProfileState, FillProfileNavigationEffect>(FillProfileState.Idle) {
 
     val name: MutableStateFlow<String> = MutableStateFlow("")
-    val phoneNumber: MutableStateFlow<String> = MutableStateFlow("")
+    val lastName: MutableStateFlow<String> = MutableStateFlow("")
 
     override fun handleEvent(event: FillProfileViewEvent) {
         when (event) {
             is OnNameChanged -> name.value = event.name
-            is OnPhoneNumberChanged -> phoneNumber.value = event.phoneNumber
+            is OnPhoneNumberChanged -> lastName.value = event.phoneNumber
+            is FillProfileViewEvent.OnLastNameChanged -> lastName.value = event.lastName
             OnSignUpClick -> onSignUpFinishClicked()
             OnSkipClicked -> setEffect(NavigateToMarketOverview)
         }
@@ -41,6 +41,6 @@ internal class FillProfileViewModel(
         }
 
         setState { FillProfileState.Idle }
-        setEffect(NavigateToGetVerifiedPhone(phoneNumber.value))
+        //setEffect(NavigateToGetVerifiedPhone(lastName.value))
     }
 }

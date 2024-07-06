@@ -1,6 +1,6 @@
 package ui.screens.main.exchange
 
-import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 import data.local.model.exchange.Currency
 import data.local.model.exchange.CurrencyCode
@@ -28,7 +28,7 @@ sealed interface ExchangeNavigationEffect {
     data class ShowSnakeBar(val message: String) : ExchangeNavigationEffect
 }
 
-@Immutable
+@Stable
 data class ExchangeUiState(
     val isLoading: Boolean = false,
     val rateState: RateStatus = RateStatus.Idle,

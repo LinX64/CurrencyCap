@@ -89,7 +89,7 @@ private fun GetVerifiedPhoneForm(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "We have sent you a verification code to your phone number",
+            text = "We have sent you an email with a verification code",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Normal

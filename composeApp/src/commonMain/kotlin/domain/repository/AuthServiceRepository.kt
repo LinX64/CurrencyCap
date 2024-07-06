@@ -12,6 +12,8 @@ interface AuthServiceRepository {
     suspend fun authenticate(email: String, password: String): AuthState
     suspend fun signUpWithEmailAndPassword(email: String, password: String): AuthState
 
+    suspend fun sendVerificationCodeToEmail(email: String)
+
     suspend fun updateCurrentUser(user: User)
     suspend fun updatePhoneNumber(phoneNumber: String)
 
