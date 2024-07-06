@@ -27,7 +27,7 @@ val viewModelModule = module {
     single { SearchViewModel(get()) }
     single { LoginViewModel(get(), get()) }
     single { RegisterViewModel(get(), get()) }
-    single { ProfileViewModel(get(), get()) }
+    single { ProfileViewModel(get(), get(), get()) }
     single { GetVerifiedPhoneViewModel(get()) }
     single { ResetPasswordViewModel(get()) }
     single { NewsViewModel(get(), get()) }
