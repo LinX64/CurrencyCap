@@ -1,5 +1,6 @@
 package util
 
+import data.local.model.exchange.Currency
 import data.util.APIConst
 
 internal fun Int.formatToPrice(): String = toString()
@@ -55,3 +56,7 @@ fun convertDateFormat(inputDate: String): String {
     val formattedDay = day.toInt().toString()
     return "$formattedDay $monthName, $year"
 }
+
+internal fun normalizeRateUsd(currency: Currency): Double = if (currency.code == "USD") {
+    currency.value
+} else 1.0 / currency.value

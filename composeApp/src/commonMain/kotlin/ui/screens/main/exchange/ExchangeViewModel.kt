@@ -1,7 +1,9 @@
 package ui.screens.main.exchange
 
 import androidx.lifecycle.viewModelScope
-import data.local.model.exchange.CurrencyType
+import data.local.model.exchange.CurrencyType.None
+import data.local.model.exchange.CurrencyType.Source
+import data.local.model.exchange.CurrencyType.Target
 import data.util.NetworkResult
 import data.util.asResult
 import domain.repository.CurrencyRepository
@@ -93,9 +95,9 @@ internal class ExchangeViewModel(
 
     private fun saveSelectedCurrencyCode(event: OnSaveSelectedCurrencyCode) {
         when (event.currencyType) {
-            is CurrencyType.Source -> saveCurrencySourceCode(event.currencyCode.name)
-            is CurrencyType.Target -> saveCurrencyTargetCode(event.currencyCode.name)
-            CurrencyType.None -> Unit
+            is Source -> saveCurrencySourceCode(event.currencyCode.name)
+            is Target -> saveCurrencyTargetCode(event.currencyCode.name)
+            None -> Unit
         }
     }
 
