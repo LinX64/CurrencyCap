@@ -39,16 +39,17 @@ internal fun LandingScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .align(Alignment.BottomCenter),
+                .align(Alignment.BottomCenter)
+                .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
                 painter = painterResource(Res.drawable.logo),
                 contentDescription = "Logo",
-                modifier = Modifier.size(180.dp)
+                modifier = Modifier.size(220.dp)
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = "Welcome to CurrencyCap",

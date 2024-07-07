@@ -30,6 +30,7 @@ import ui.components.CenteredColumn
 import ui.components.HandleNavigationEffect
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToRegister
+import ui.screens.initial.login.LoginNavigationEffect.NavigateToResetPassword
 import ui.screens.initial.login.LoginViewEvent.OnEmailChanged
 import ui.screens.initial.login.LoginViewEvent.OnLoginClick
 import ui.screens.initial.login.LoginViewEvent.OnPasswordChanged
@@ -57,7 +58,7 @@ internal fun LoginScreen(
         when (effect) {
             is NavigateToMarketOverview -> navigateToMarketOverview()
             NavigateToRegister -> navigateToRegister()
-            LoginNavigationEffect.NavigateToResetPassword -> navigateToResetPassword()
+            NavigateToResetPassword -> navigateToResetPassword()
         }
     }
 

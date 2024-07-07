@@ -67,7 +67,7 @@ private fun SettingsContent(
                 SettingsHeaderText("General")
                 Column(modifier = Modifier.fillMaxWidth()) {
                     SettingsGeneralItem(text = "Push Notifications", onSwitchChange = { /* Handle switch change */ })
-                    HelpCenterItem(text = "Edit Profile", onButtonClick = onContactUsClick)
+                    //HelpCenterItem(text = "Edit Profile", onButtonClick = onContactUsClick)
                     // SettingsGeneralItem(text = "Dark Mode", onSwitchChange = { /* Handle switch change */ })
 
                     //HelpCenterItem(text = "Change Password", onButtonClick = onContactUsClick)

@@ -26,7 +26,6 @@ internal fun SecondaryButton(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .padding(horizontal = 16.dp)
     ) {
         Text(
             modifier = Modifier.padding(8.dp),

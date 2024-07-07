@@ -32,18 +32,15 @@ class MainViewModel(
         }
     }
 
-    fun logout() {
-        viewModelScope.launch {
-            userPreferences.clear()
-            _state.value = MainState.NotLoggedIn
-        }
-    }
-
     fun onLoginSuccess() {
         viewModelScope.launch {
             val uid = userPreferences.getUserUid()
             _state.value = MainState.LoggedIn(uid)
         }
+    }
+
+    fun navigateToLanding() {
+        _state.value = MainState.NotLoggedIn
     }
 }
 
