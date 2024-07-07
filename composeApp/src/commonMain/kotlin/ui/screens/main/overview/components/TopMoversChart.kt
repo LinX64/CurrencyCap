@@ -63,7 +63,7 @@ fun TopMoversChart(
             brush = Brush.verticalGradient(
                 colors = listOf(
                     lightLineColor.copy(alpha = 0.3f),
-                    lightLineColor.copy(alpha = 0.0f)
+                    lightLineColor.copy(alpha = 0.1f)
                 )
             )
         )

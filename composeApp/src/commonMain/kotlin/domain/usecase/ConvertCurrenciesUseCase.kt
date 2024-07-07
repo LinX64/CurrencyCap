@@ -9,10 +9,21 @@ class ConvertCurrenciesUseCase {
         targetCurrency: Currency?
     ): Double {
         if (amount == null || sourceCurrency == null || targetCurrency == null) {
-            return 0.0
+            return 1.0
         }
 
-        val exchangeRate = targetCurrency.value / sourceCurrency.value
+        val normalizedSourceRate = normalizeRateUsd(sourceCurrency)
+        val normalizedTargetRate = normalizeRateUsd(targetCurrency)
+
+        val exchangeRate = normalizedTargetRate / normalizedSourceRate
         return amount * exchangeRate
+    }
+
+    private fun normalizeRateUsd(currency: Currency): Double {
+        return if (currency.code == "USD") {
+            currency.value
+        } else {
+            1.0 / currency.value
+        }
     }
 }
