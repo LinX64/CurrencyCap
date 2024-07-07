@@ -1,10 +1,13 @@
 package ui.components
 
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,15 +31,16 @@ internal fun PrivacyPolicyBottomSheet(
     BottomSheetScaffold(
         modifier = modifier.fillMaxWidth(),
         scaffoldState = scaffoldState,
-        sheetPeekHeight = 300.dp,
-        containerColor = MaterialTheme.colorScheme.onSurface,
+        containerColor = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onSurface,
         sheetShape = RoundedCornerShape(topStart = 55.dp, topEnd = 55.dp),
         sheetContent = {
-            BoxWithConstraints(
+            Column(
                 Modifier
                     .navigationBarsPadding()
                     .padding(bottom = 10.dp)
+                    .heightIn(max = 700.dp)
+                    .verticalScroll(rememberScrollState())
             ) {
                 content()
             }
