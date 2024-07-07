@@ -21,6 +21,8 @@ object NavRoutes {
     const val FILL_PROFILE = "Fill Profile"
     const val GET_VERIFIED_PHONE = "Get Verified by Phone"
     const val RESET_PASSWORD = "Forgot Password"
+
+    const val PRIVACY_POLICY = "Privacy Policy"
 }
 
 const val ENCODED_URL = "encodedUrl"

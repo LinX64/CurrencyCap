@@ -8,11 +8,15 @@ import ui.screens.initial.landing.LandingScreen
 import ui.screens.initial.login.navigation.navigateToLoginScreen
 import ui.screens.initial.register.navigation.navigateToRegisterScreen
 
-fun NavGraphBuilder.landingScreen(navController: NavHostController) {
+fun NavGraphBuilder.landingScreen(
+    navController: NavHostController,
+    showPrivacyPolicyBottomSheet: () -> Unit
+) {
     composable(NavRoutes.LANDING) {
         LandingScreen(
             onLoginClick = { navController.navigateToLoginScreen() },
-            onSignUpClick = { navController.navigateToRegisterScreen() }
+            onSignUpClick = { navController.navigateToRegisterScreen() },
+            onPrivacyPolicyClick = showPrivacyPolicyBottomSheet
         )
     }
 }

@@ -70,7 +70,7 @@ private fun SettingsContent(
                     HelpCenterItem(text = "Edit Profile", onButtonClick = onContactUsClick)
                     // SettingsGeneralItem(text = "Dark Mode", onSwitchChange = { /* Handle switch change */ })
 
-                    HelpCenterItem(text = "Change Password", onButtonClick = onContactUsClick)
+                    //HelpCenterItem(text = "Change Password", onButtonClick = onContactUsClick)
                 }
             }
         }
@@ -86,7 +86,7 @@ private fun SettingsContent(
                 Column(modifier = Modifier.fillMaxWidth()) {
                     HelpCenterItem(text = "About Us", onButtonClick = { /* Handle click */ })
                     HelpCenterItem(text = "Privacy Policy", onButtonClick = { /* Handle click */ })
-                    HelpCenterItem(text = "Terms of conditions", onButtonClick = { /* Handle click */ })
+                    // HelpCenterItem(text = "Terms of conditions", onButtonClick = { /* Handle click */ })
                 }
             }
         }

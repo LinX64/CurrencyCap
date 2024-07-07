@@ -27,7 +27,8 @@ import ui.components.SecondaryButton
 internal fun LandingScreen(
     modifier: Modifier = Modifier,
     onLoginClick: () -> Unit,
-    onSignUpClick: () -> Unit
+    onSignUpClick: () -> Unit,
+    onPrivacyPolicyClick: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -85,7 +86,7 @@ internal fun LandingScreen(
                 text = "Privacy Policy",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                modifier = Modifier.clickable { /* TODO: Handle privacy policy click */ }
+                modifier = Modifier.clickable { onPrivacyPolicyClick() }
             )
         }
     }
