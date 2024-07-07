@@ -50,7 +50,7 @@ internal fun SettingsGeneralItem(
             )
 
             Switch(
-                modifier = Modifier.padding(20.dp).scale(1f),
+                modifier = Modifier.scale(0.8f),
                 checked = isSwitchChecked.value,
                 onCheckedChange = {
                     isSwitchChecked.value = it

@@ -68,4 +68,13 @@ internal class ProfileViewModel(
             }
         }
     }
+
+    fun logout() {
+        viewModelScope.launch {
+            userPreferences.clear()
+            setState { ProfileState.Idle }
+
+            setEffect(ProfileNavigationEffect.NavigateToLanding)
+        }
+    }
 }

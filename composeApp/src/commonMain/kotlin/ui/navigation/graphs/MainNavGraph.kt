@@ -38,13 +38,15 @@ internal fun MainNavGraph(
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
+        searchScreen(padding = padding, hazeState = hazeState)
+        aiPredictScreen(padding = padding, hazeState = hazeState)
+
         homeScreen(
             padding = padding,
             navController = navController,
-            hazeState = hazeState,
+            hazeState = hazeState
         )
-        searchScreen(padding = padding, hazeState = hazeState)
-        aiPredictScreen(padding = padding, hazeState = hazeState)
+
         bookmarksScreen(
             padding = padding,
             hazeState = hazeState,

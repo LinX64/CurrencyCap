@@ -94,7 +94,7 @@ internal fun InnerChartRow(
             ) else Modifier
                 .width(120.dp)
                 .height(60.dp),
-            lighterColor = CurrencyColors.Green.light,
+            lighterColor = CurrencyColors.Green.extraLight,
             lightLineColor = CurrencyColors.Green.primary,
             list = mockAssetInfo.lastDayChange
         )

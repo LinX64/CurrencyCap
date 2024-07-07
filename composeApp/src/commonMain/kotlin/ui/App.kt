@@ -27,7 +27,7 @@ internal fun App(
         is LoggedIn -> {
             LoggedInSection(
                 mainViewModel = mainViewModel,
-                scope = scope
+                scope = scope,
             )
         }
 

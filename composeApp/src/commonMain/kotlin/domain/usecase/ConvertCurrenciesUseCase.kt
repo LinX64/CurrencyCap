@@ -1,6 +1,7 @@
 package domain.usecase
 
 import data.local.model.exchange.Currency
+import util.normalizeRateUsd
 
 class ConvertCurrenciesUseCase {
     operator fun invoke(
@@ -9,10 +10,13 @@ class ConvertCurrenciesUseCase {
         targetCurrency: Currency?
     ): Double {
         if (amount == null || sourceCurrency == null || targetCurrency == null) {
-            return 0.0
+            return 1.0
         }
 
-        val exchangeRate = targetCurrency.value / sourceCurrency.value
+        val normalizedSourceRate = normalizeRateUsd(sourceCurrency)
+        val normalizedTargetRate = normalizeRateUsd(targetCurrency)
+
+        val exchangeRate = normalizedTargetRate / normalizedSourceRate
         return amount * exchangeRate
     }
 }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
@@ -23,6 +24,7 @@ import ui.components.GlassCard
 import ui.screens.main.exchange.ExchangeUiState
 import util.currencyConverterAnimation
 import util.exitTransition
+import util.normalizeRateUsd
 
 @Composable
 internal fun ResultCard(
@@ -34,6 +36,7 @@ internal fun ResultCard(
         animationSpec = tween(300),
         typeConverter = currencyConverterAnimation
     )
+
 
     AnimatedVisibility(
         visible = amount.isNotEmpty(),
@@ -60,6 +63,15 @@ internal fun ResultCard(
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                val normalizedAmount = uiState.targetCurrency?.let { normalizeRateUsd(it) }
+                Text(
+                    text = "1 ${uiState.sourceCurrency?.code} = $normalizedAmount ${uiState.targetCurrency?.code}",
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
         }
     }

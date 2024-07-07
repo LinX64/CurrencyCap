@@ -45,7 +45,6 @@ internal fun LoggedInSection(
                 hazeState = hazeState,
                 navController = navController,
                 scrollBehavior = scrollBehavior,
-                onLogoutClick = mainViewModel::logout
             )
         },
         bottomBar = {
@@ -66,7 +65,7 @@ internal fun LoggedInSection(
             padding = paddingValues,
             hazeState = hazeState,
             scrollBehavior = scrollBehavior,
-            onNavigateToLanding = { mainViewModel.logout() },
+            onNavigateToLanding = mainViewModel::navigateToLanding,
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } }
         )
     }

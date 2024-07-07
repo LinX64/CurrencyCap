@@ -53,7 +53,7 @@ internal fun SettingsScreen(
 }
 
 @Composable
-private fun SettingsContent(
+internal fun SettingsContent(
     onContactUsClick: () -> Unit
 ) {
     Column(
@@ -62,12 +62,12 @@ private fun SettingsContent(
     ) {
         GlassCard {
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(24.dp)
             ) {
                 SettingsHeaderText("General")
                 Column(modifier = Modifier.fillMaxWidth()) {
                     SettingsGeneralItem(text = "Push Notifications", onSwitchChange = { /* Handle switch change */ })
-                    HelpCenterItem(text = "Edit Profile", onButtonClick = onContactUsClick)
+                    //HelpCenterItem(text = "Edit Profile", onButtonClick = onContactUsClick)
                     // SettingsGeneralItem(text = "Dark Mode", onSwitchChange = { /* Handle switch change */ })
 
                     //HelpCenterItem(text = "Change Password", onButtonClick = onContactUsClick)
@@ -77,7 +77,7 @@ private fun SettingsContent(
 
         GlassCard {
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(24.dp)
             ) {
                 SettingsHeaderText("Policies")
 

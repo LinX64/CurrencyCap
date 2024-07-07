@@ -32,11 +32,17 @@ class AuthServiceRepositoryImpl(
     override suspend fun authenticate(
         email: String,
         password: String
-    ): AuthState = try {
-        val user = auth.signInWithEmailAndPassword(email, password).user
-        AuthState.Success(User(user!!.uid, user.isAnonymous))
-    } catch (e: Exception) {
-        AuthState.Error(e.message ?: "Could not authenticate user!")
+    ): AuthState {
+        return try {
+            val user = auth.signInWithEmailAndPassword(email, password).user
+
+            if (user?.uid?.isNotEmpty() == true) {
+                AuthState.Success(User(user.uid, user.isAnonymous))
+            } else AuthState.Error("Could not authenticate user!")
+
+        } catch (e: Exception) {
+            AuthState.Error(e.message ?: "Could not authenticate user!")
+        }
     }
 
     override suspend fun signUpWithEmailAndPassword(email: String, password: String): AuthState = try {
