@@ -60,10 +60,10 @@ internal fun AppTopBar(
         ),
         scrollBehavior = scrollBehavior,
         actions = {
-            ActionsMenu(
-                currentDestination = currentDestination,
-                navController = navController
-            )
+//            ActionsMenu(
+//                currentDestination = currentDestination,
+//                navController = navController
+//            )
         },
         navigationIcon = {
             if (isSettingsScreen || isNewsDetailScreen == true || isExploreScreen) {

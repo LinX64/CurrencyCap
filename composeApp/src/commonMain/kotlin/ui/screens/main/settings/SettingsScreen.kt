@@ -53,7 +53,7 @@ internal fun SettingsScreen(
 }
 
 @Composable
-private fun SettingsContent(
+internal fun SettingsContent(
     onContactUsClick: () -> Unit
 ) {
     Column(
@@ -62,7 +62,7 @@ private fun SettingsContent(
     ) {
         GlassCard {
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(24.dp)
             ) {
                 SettingsHeaderText("General")
                 Column(modifier = Modifier.fillMaxWidth()) {
@@ -77,7 +77,7 @@ private fun SettingsContent(
 
         GlassCard {
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(24.dp)
             ) {
                 SettingsHeaderText("Policies")
 
