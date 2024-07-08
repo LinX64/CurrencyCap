@@ -22,7 +22,8 @@ internal fun PortfolioSection(
     usd: String = "USD",
     hazeState: HazeState,
     scope: CoroutineScope = rememberCoroutineScope(),
-    tabs: List<String> = listOf("News", "Crypto", "Market")
+    tabs: List<String> = listOf("News", "Crypto", "Market"),
+    onNewsItemClick: (url: String) -> Unit
 ) {
     val isLoading = state is OverviewState.Loading
     val pagerState = rememberPagerState(
@@ -41,7 +42,8 @@ internal fun PortfolioSection(
                 isLoading = isLoading,
                 state = state,
                 pagerState = pagerState,
-                tabs = tabs
+                tabs = tabs,
+                onNewsItemClick = onNewsItemClick
             )
         }
 

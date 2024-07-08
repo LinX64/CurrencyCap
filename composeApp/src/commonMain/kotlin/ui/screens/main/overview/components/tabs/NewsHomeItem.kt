@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
@@ -27,7 +28,7 @@ internal fun NewsHomeItem(
         onClick = onClick
     ) {
         Column(
-            modifier = modifier.fillMaxWidth()
+            modifier = modifier.fillMaxWidth().padding(vertical = 4.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -46,6 +47,7 @@ internal fun NewsHomeItem(
                 Text(
                     text = newsItem.author ?: "Unknown",
                     style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
             }
 

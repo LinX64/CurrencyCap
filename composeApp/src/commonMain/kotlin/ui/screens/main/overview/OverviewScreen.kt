@@ -21,7 +21,8 @@ internal fun OverviewScreen(
     overviewViewModel: OverviewViewModel = koinViewModel<OverviewViewModel>(),
     padding: PaddingValues,
     hazeState: HazeState,
-    onSearchCardClicked: () -> Unit
+    onSearchCardClicked: () -> Unit,
+    onNewsItemClick: (url: String) -> Unit
 ) {
     val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
     BaseGlassLazyColumn(
@@ -30,7 +31,7 @@ internal fun OverviewScreen(
     ) {
         item { SearchViewHeader(state = state, onSearchCardClicked = onSearchCardClicked) }
         item { HorizontalLineWithDot() }
-        item { PortfolioSection(state = state, hazeState = hazeState) }
+        item { PortfolioSection(state = state, hazeState = hazeState, onNewsItemClick = onNewsItemClick) }
         item { TodayTopMovers(state) }
         item { TopRates(state) }
         item { TrendingCryptoCurrencies(state) }

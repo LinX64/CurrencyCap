@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,11 +25,15 @@ import ui.components.HandleNavigationEffect
 import ui.components.PrimaryButton
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.profile.ProfileNavigationEffect.NavigateToLanding
+import ui.screens.main.profile.ProfileNavigationEffect.OpenEmailApp
+import ui.screens.main.profile.ProfileState.Loading
+import ui.screens.main.profile.ProfileState.Success
 import ui.screens.main.profile.ProfileViewEvent.OnDeleteAccountCardClicked
 import ui.screens.main.profile.components.DeleteAccountCard
 import ui.screens.main.profile.components.HelpCenterCard
 import ui.screens.main.profile.components.ProfileCard
 import ui.theme.colors.CurrencyColors
+import util.getDummyUser
 
 @Composable
 internal fun ProfileScreen(
@@ -46,18 +49,17 @@ internal fun ProfileScreen(
     BaseGlassLazyColumn(
         padding = padding,
         hazeState = hazeState,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        isEmpty = state is ProfileState.Loading,
-        emptyContent = { CircularProgressIndicator() }
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         item {
-            if (state is ProfileState.Success) {
-                val profileState = state as ProfileState.Success
-                ProfileCard(
-                    fullName = profileState.user.fullName ?: "",
-                    email = profileState.user.email ?: "",
-                    phone = profileState.user.phoneNumber ?: ""
-                )
+            when (state) {
+                is Success -> {
+                    val profileState = (state as Success).user
+                    ProfileCard(user = profileState, isLoading = false)
+                }
+
+                is Loading -> ProfileCard(user = getDummyUser(), isLoading = true)
+                else -> Unit
             }
         }
         item {
@@ -82,7 +84,7 @@ internal fun ProfileScreen(
     HandleNavigationEffect(profileViewModel) { effect ->
         when (effect) {
             is NavigateToLanding -> onNavigateToLanding()
-            ProfileNavigationEffect.OpenEmailApp -> shouldGoToEmailApp.value = true
+            OpenEmailApp -> shouldGoToEmailApp.value = true
         }
     }
 

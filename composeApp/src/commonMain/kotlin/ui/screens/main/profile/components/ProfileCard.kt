@@ -18,16 +18,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import data.remote.model.User
 import ui.components.GlassCard
+import ui.screens.main.overview.components.getPlaceHolder
 
 @Composable
 internal fun ProfileCard(
     modifier: Modifier = Modifier,
-    profileImage: String = "https://www.w3schools.com/howto/img_avatar.png",
-    fullName: String,
-    email: String,
-    phone: String
+    profilePicture: String = "https://www.w3schools.com/howto/img_avatar.png",
+    user: User,
+    isLoading: Boolean = false
 ) {
+    val isLoadingModifier = if (isLoading) getPlaceHolder(Modifier) else Modifier
     Box(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -38,15 +40,18 @@ internal fun ProfileCard(
                 verticalArrangement = Arrangement.Center
             ) {
                 AsyncImage(
-                    modifier = Modifier.size(100.dp).clip(RoundedCornerShape(55)),
-                    model = profileImage,
+                    modifier = if (isLoading) getPlaceHolder(
+                        Modifier.size(100.dp).clip(RoundedCornerShape(55)),
+                    ) else Modifier.size(100.dp).clip(RoundedCornerShape(55)),
+                    model = profilePicture,
                     contentDescription = null
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = fullName,
+                    modifier = isLoadingModifier,
+                    text = user.fullName ?: "Unknown",
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
@@ -59,13 +64,15 @@ internal fun ProfileCard(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = email,
+                        modifier = isLoadingModifier,
+                        text = user.email ?: "Unknown",
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurface
                     )
 
                     Text(
-                        text = phone,
+                        modifier = isLoadingModifier,
+                        text = user.phoneNumber ?: "Unknown",
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurface
                     )
