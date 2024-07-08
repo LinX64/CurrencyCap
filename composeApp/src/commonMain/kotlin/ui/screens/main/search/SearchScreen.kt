@@ -33,6 +33,8 @@ import kotlinx.coroutines.delay
 import ui.components.ErrorView
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.overview.components.CryptoHorizontalItem
+import ui.screens.main.search.SearchEvent.OnRetryClicked
+import ui.screens.main.search.SearchEvent.OnSearchTextChanged
 import ui.screens.main.search.components.EmptyView
 import ui.screens.main.search.components.LeadingIcon
 import ui.screens.main.search.components.SearchPlaceHolder
@@ -71,7 +73,7 @@ internal fun SearchScreen(
                 onActiveChange = { expanded = it },
                 onQueryChange = {
                     text = it
-                    searchViewModel.handleEvent(SearchEvent.OnSearchTextChanged(it))
+                    searchViewModel.handleEvent(OnSearchTextChanged(it))
                 },
                 query = text,
                 placeholder = { SearchPlaceHolder() },
@@ -81,7 +83,7 @@ internal fun SearchScreen(
                     TrailingIcon(expanded = expanded, onCloseClick = {
                         expanded = false
                         text = ""
-                        searchViewModel.handleEvent(SearchEvent.OnSearchTextChanged(""))
+                        searchViewModel.handleEvent(OnSearchTextChanged(""))
                     })
                 }
             ) {
@@ -91,7 +93,7 @@ internal fun SearchScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     hazeState = hazeState
                 ) {
-                    searchResultContent(state, onRetryClicked = { searchViewModel.handleEvent(SearchEvent.OnRetryClicked(text)) })
+                    searchResultContent(state, onRetryClicked = { searchViewModel.handleEvent(OnRetryClicked(text)) })
                 }
             }
 
@@ -111,7 +113,6 @@ internal fun SearchScreen(
 @Composable
 private fun SearchTabs() {
     // TODO: Show different tabs here
-
 }
 
 private fun LazyListScope.searchResultContent(

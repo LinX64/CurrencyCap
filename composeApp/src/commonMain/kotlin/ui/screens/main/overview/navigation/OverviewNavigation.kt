@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
+import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import ui.navigation.util.NavRoutes
 import ui.screens.main.overview.OverviewScreen
 
@@ -25,7 +26,11 @@ fun NavGraphBuilder.homeScreen(
                 navController.navigate(NavRoutes.EXPLORE) {
                     popUpTo(NavRoutes.OVERVIEW) { inclusive = true }
                 }
-            } // TODO: Add animation
+            }, // TODO: Add animation
+            onNewsItemClick = { url ->
+                val encodedUrl = UrlEncoderUtil.encode(url)
+                navController.navigate(NavRoutes.NEWS_DETAIL + "/$encodedUrl")
+            }
         )
     }
 }

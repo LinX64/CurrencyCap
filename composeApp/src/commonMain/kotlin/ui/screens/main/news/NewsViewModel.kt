@@ -39,7 +39,7 @@ class NewsViewModel(
                     is NetworkResult.Error -> {
                         val news = result.data ?: emptyList()
                         val message = result.throwable.message ?: ""
-                        if (news.isEmpty()) NewsState.Empty else NewsState.Error(message, news)
+                        if (news.isNotEmpty()) setState { NewsState.Error(message, news) }
                     }
 
                     else -> setState { NewsState.Loading }

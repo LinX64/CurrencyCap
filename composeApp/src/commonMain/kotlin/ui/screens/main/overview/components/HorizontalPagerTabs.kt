@@ -1,6 +1,5 @@
 package ui.screens.main.overview.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,27 +19,29 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.tabs.CryptoContent
 import ui.screens.main.overview.components.tabs.MarketContent
 import ui.screens.main.overview.components.tabs.NewsContent
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun HorizontalPagerTabs(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
+    state: OverviewState,
     pagerState: PagerState,
-    tabs: List<String>
+    tabs: List<String>,
+    onNewsItemClick: (url: String) -> Unit
 ) {
     Column {
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.height(200.dp)
+            modifier = Modifier.height(230.dp)
         ) { page ->
             when (page) {
-                0 -> NewsContent()
-                1 -> CryptoContent()
-                2 -> MarketContent()
+                0 -> NewsContent(state = state, onNewsItemClick = onNewsItemClick)
+                1 -> CryptoContent(state = state)
+                2 -> MarketContent(state = state)
             }
         }
 
@@ -51,7 +52,6 @@ internal fun HorizontalPagerTabs(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HorizontalPagerDotIndicator(
     pagerState: PagerState,

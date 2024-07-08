@@ -1,5 +1,6 @@
 package util
 
+import data.remote.model.User
 import domain.model.Article
 import domain.model.Source
 import domain.model.main.Crypto
@@ -101,4 +102,11 @@ internal fun getDummyCryptoItems() = listOf(
         totalSupply = null,
         totalVolume = 100.101
     ),
+)
+
+internal fun getDummyUser() = User(
+    email = "email",
+    fullName = "fullName",
+    phoneNumber = "phoneNumber",
+    profilePicture = ""
 )
