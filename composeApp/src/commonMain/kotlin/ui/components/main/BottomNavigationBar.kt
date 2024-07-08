@@ -171,7 +171,7 @@ private fun CenteredExchangeButton(
             .offset(y = 40.dp)
             .size(76.dp)
             .background(
-                MaterialTheme.colorScheme.onSurface,
+                color = MaterialTheme.colorScheme.primary,
                 shape = RoundedCornerShape(32.dp)
             )
     ) {
