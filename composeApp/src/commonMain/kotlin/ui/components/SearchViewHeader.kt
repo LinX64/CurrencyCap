@@ -1,5 +1,6 @@
 package ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -14,7 +15,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,8 +22,6 @@ import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.ic_electric_lightbulb_thin
 import currencycap.composeapp.generated.resources.ic_search_normal
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
 import org.jetbrains.compose.resources.painterResource
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.getPlaceHolder
@@ -33,7 +31,6 @@ internal fun SearchViewHeader(
     state: OverviewState,
     onSearchCardClicked: () -> Unit
 ) {
-    val hazeState = remember { HazeState() }
     val isLoading = state is OverviewState.Loading
 
     Box(
@@ -47,14 +44,16 @@ internal fun SearchViewHeader(
                 modifier = if (isLoading) getPlaceHolder(
                     Modifier
                         .fillMaxWidth(0.8f)
-                        .haze(hazeState)
                         .padding(8.dp)
                 ) else Modifier
                     .fillMaxWidth(0.8f)
-                    .haze(hazeState)
                     .padding(8.dp),
                 shape = RoundedCornerShape(25.dp),
-                onClick = onSearchCardClicked
+                onClick = onSearchCardClicked,
+                border = BorderStroke(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),
+                )
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -76,21 +75,30 @@ internal fun SearchViewHeader(
                 }
             }
 
-            Card(
-                modifier = Modifier.wrapContentSize(),
-                shape = RoundedCornerShape(35.dp),
-            ) {
-                IconButton(
-                    modifier = if (isLoading) getPlaceHolder(Modifier.size(64.dp)) else Modifier.size(64.dp),
-                    onClick = { /*TODO*/ }) {
-                    Icon(
-                        painter = painterResource(Res.drawable.ic_electric_lightbulb_thin),
-                        contentDescription = "Info",
-                        tint = Color.Gray,
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
+            CircleButton(isLoading)
+        }
+    }
+}
+
+@Composable
+private fun CircleButton(isLoading: Boolean) {
+    Card(
+        modifier = Modifier.wrapContentSize(),
+        shape = RoundedCornerShape(35.dp),
+        border = BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),
+        )
+    ) {
+        IconButton(
+            modifier = if (isLoading) getPlaceHolder(Modifier.size(64.dp)) else Modifier.size(64.dp),
+            onClick = { /*TODO*/ }) {
+            Icon(
+                painter = painterResource(Res.drawable.ic_electric_lightbulb_thin),
+                contentDescription = "Info",
+                tint = Color.Gray,
+                modifier = Modifier.size(24.dp)
+            )
         }
     }
 }

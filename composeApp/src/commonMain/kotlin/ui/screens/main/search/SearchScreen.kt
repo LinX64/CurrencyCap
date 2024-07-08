@@ -111,7 +111,6 @@ internal fun SearchScreen(
 @Composable
 private fun SearchTabs() {
     // TODO: Show different tabs here
-
 }
 
 private fun LazyListScope.searchResultContent(

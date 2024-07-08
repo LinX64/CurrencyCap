@@ -1,6 +1,5 @@
 package ui.screens.main.overview.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -17,7 +16,6 @@ import kotlinx.coroutines.launch
 import ui.components.main.VerticalBarCard
 import ui.screens.main.overview.OverviewState
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun PortfolioSection(
     state: OverviewState,
@@ -35,12 +33,13 @@ internal fun PortfolioSection(
     Box {
         Row(
             modifier = Modifier
-                .padding(vertical = 16.dp, horizontal = 16.dp),
+                .padding(vertical = 16.dp, horizontal = 8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             HorizontalPagerTabs(
                 modifier = Modifier.weight(1f),
                 isLoading = isLoading,
+                state = state,
                 pagerState = pagerState,
                 tabs = tabs
             )
