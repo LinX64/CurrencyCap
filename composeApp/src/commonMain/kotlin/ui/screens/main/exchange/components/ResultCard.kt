@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ui.common.formatToPrice
 import ui.components.GlassCard
 import ui.screens.main.exchange.ExchangeUiState
 import util.currencyConverterAnimation
@@ -67,8 +68,10 @@ internal fun ResultCard(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 val normalizedAmount = uiState.targetCurrency?.let { normalizeRateUsd(it) }
+                val formattedAmount = normalizedAmount?.let { formatToPrice(it) } ?: "0.00"
+
                 Text(
-                    text = "1 ${uiState.sourceCurrency?.code} = $normalizedAmount ${uiState.targetCurrency?.code}",
+                    text = "1 ${uiState.sourceCurrency?.code} = $formattedAmount ${uiState.targetCurrency?.code}",
                     color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.bodySmall
                 )
