@@ -31,7 +31,8 @@ internal fun HorizontalPagerTabs(
     state: OverviewState,
     pagerState: PagerState,
     tabs: List<String>,
-    onNewsItemClick: (url: String) -> Unit
+    onNewsItemClick: (url: String) -> Unit,
+    onCryptoItemClick: (symbol: String) -> Unit
 ) {
     Column {
         HorizontalPager(
@@ -41,7 +42,7 @@ internal fun HorizontalPagerTabs(
             when (page) {
                 0 -> NewsTab(state = state, onNewsItemClick = onNewsItemClick)
                 1 -> CryptoContent(state = state)
-                2 -> MarketTab(state = state, onNewsItemClick = onNewsItemClick)
+                2 -> MarketTab(state = state, onCryptoItemClick = onCryptoItemClick)
             }
         }
 

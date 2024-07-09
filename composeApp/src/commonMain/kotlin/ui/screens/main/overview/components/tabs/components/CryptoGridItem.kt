@@ -1,5 +1,6 @@
 package ui.screens.main.overview.components.tabs.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,12 +26,14 @@ import util.formatNumber
 
 @Composable
 internal fun CryptoGridItem(
-    cryptoItem: Crypto
+    cryptoItem: Crypto,
+    onCryptoItemClick: (symbol: String) -> Unit
 ) {
     Column(
         modifier = Modifier
             .wrapContentWidth()
             .padding(8.dp)
+            .clickable { onCryptoItemClick(cryptoItem.symbol) }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically

@@ -13,10 +13,11 @@ import dev.chrisbanes.haze.HazeState
 import ui.navigation.util.NavRoutes
 import ui.screens.main.ai_predict.navigation.aiPredictScreen
 import ui.screens.main.bookmarks.navigation.bookmarksScreen
+import ui.screens.main.detail.navigation.detailScreen
 import ui.screens.main.exchange.navigation.exchangeScreen
 import ui.screens.main.news.navigation.newsScreen
 import ui.screens.main.news.news_detail.navigation.newsDetailScreen
-import ui.screens.main.overview.navigation.homeScreen
+import ui.screens.main.overview.navigation.overviewScreen
 import ui.screens.main.profile.navigation.profileScreen
 import ui.screens.main.search.navigation.searchScreen
 import ui.screens.main.settings.navigation.settingsScreen
@@ -41,7 +42,7 @@ internal fun MainNavGraph(
         searchScreen(padding = padding, hazeState = hazeState)
         aiPredictScreen(padding = padding, hazeState = hazeState)
 
-        homeScreen(
+        overviewScreen(
             padding = padding,
             navController = navController,
             hazeState = hazeState
@@ -63,6 +64,12 @@ internal fun MainNavGraph(
             padding = padding,
             hazeState = hazeState,
             navController = navController,
+            onError = onError
+        )
+
+        detailScreen(
+            padding = padding,
+            hazeState = hazeState,
             onError = onError
         )
 

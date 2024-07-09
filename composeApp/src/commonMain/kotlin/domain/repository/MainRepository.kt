@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MainRepository {
     fun getAllRates(): Flow<Currencies>
+    fun getCryptoBySymbol(symbol: String): Flow<Crypto>
     fun search(query: String): Flow<List<Crypto>>
     fun getNews(): Flow<List<ArticleDto>>
 }

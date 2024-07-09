@@ -3,6 +3,7 @@ package data.remote.repository.main
 import data.remote.model.main.CurrenciesDto
 import data.remote.model.main.toBonbastRateDomain
 import data.remote.model.main.toCryptoDomain
+import data.remote.model.main.toDomain
 import data.remote.model.main.toMarketDomain
 import data.remote.model.main.toRateDomain
 import data.remote.model.news.ArticleDto
@@ -37,6 +38,15 @@ class MainRepositoryImpl(
                 rates = currencies.rates.toRateDomain()
             )
         )
+    }
+        .flowOn(Dispatchers.IO)
+        .retryOnIOException()
+
+    override fun getCryptoBySymbol(symbol: String): Flow<Crypto> = flow {
+        val currencies = getCurrencies()
+
+        val crypto = currencies.crypto.first { it.symbol == symbol }
+        emit(crypto.toDomain())
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()

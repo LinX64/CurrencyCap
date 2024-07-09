@@ -38,42 +38,52 @@ internal fun CryptoContent(
             val cryptoRates = state.cryptoRates
             val bitcoinItem = cryptoRates.find { it.symbol == "btc" }
 
-            Column(
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                Text(
-                    modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                    text = "Bitcoin (BTC)",
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                    fontSize = MaterialTheme.typography.bodyLarge.fontSize,
-                    fontWeight = FontWeight.Bold
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                        text = "$${formatToPrice(bitcoinItem?.currentPrice ?: 0.0)}",
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    InnerDropDown(isLoading, usd)
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                InnerChartRow(isLoading = isLoading, cryptoRates = cryptoRates)
-            }
+            CryptoSuccessBody(isLoading, bitcoinItem, usd, cryptoRates)
         }
 
         else -> Unit
+    }
+}
+
+@Composable
+private fun CryptoSuccessBody(
+    isLoading: Boolean,
+    bitcoinItem: Crypto?,
+    usd: String,
+    cryptoRates: List<Crypto>
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        Text(
+            modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
+            text = "Bitcoin (BTC)",
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+            fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
+                text = "$${formatToPrice(bitcoinItem?.currentPrice ?: 0.0)}",
+                color = MaterialTheme.colorScheme.onSurface,
+                fontSize = MaterialTheme.typography.headlineLarge.fontSize,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            InnerDropDown(isLoading, usd)
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        InnerChartRow(isLoading = isLoading, cryptoRates = cryptoRates)
     }
 }
 
