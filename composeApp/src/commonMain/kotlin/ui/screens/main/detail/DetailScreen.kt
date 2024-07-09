@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -23,19 +22,24 @@ import coil3.compose.AsyncImage
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import domain.model.main.Crypto
+import org.koin.core.parameter.parametersOf
 import ui.common.formatToPrice
 import ui.components.GlassCard
+import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.profile.components.HelpCenterBaseGlassCard
 
 @Composable
 internal fun DetailRoute(
     padding: PaddingValues,
-    detailViewModel: DetailViewModel = koinViewModel<DetailViewModel>(),
-    hazeState: HazeState
+    symbol: String,
+    detailViewModel: DetailViewModel = koinViewModel { parametersOf(symbol) },
+    hazeState: HazeState,
 ) {
     val state by detailViewModel.viewState.collectAsStateWithLifecycle()
     DetailScreen(
-        state = state
+        state = state,
+        hazeState = hazeState,
+        padding = padding,
     )
 }
 
@@ -43,22 +47,48 @@ internal fun DetailRoute(
 internal fun DetailScreen(
     modifier: Modifier = Modifier,
     state: DetailState,
+    padding: PaddingValues,
+    hazeState: HazeState,
 ) {
     val isLoading = state is DetailState.Loading
     val isError = state is DetailState.Error
 
-    Column(
-        modifier = modifier.fillMaxSize(),
+    BaseGlassLazyColumn(
+        padding = padding,
+        hazeState = hazeState,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         when (state) {
             is DetailState.Success -> {
                 val crypto = state.crypto
-                DetailHeader(crypto, isLoading)
-                DetailBody(crypto, isLoading)
+
+                item { DetailHeader(crypto, isLoading) }
+                item { DetailBody(crypto, isLoading) }
+                item { DescriptionCard(crypto, isLoading) }
             }
 
             else -> Unit
+        }
+    }
+}
+
+@Composable
+private fun DescriptionCard(crypto: Crypto, loading: Boolean) {
+    HelpCenterBaseGlassCard(
+        title = "Description",
+        badgeColor = MaterialTheme.colorScheme.secondary
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 14.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+            )
         }
     }
 }
@@ -79,7 +109,7 @@ private fun DetailHeader(crypto: Crypto, isLoading: Boolean) {
                 modifier = Modifier
                     .size(100.dp)
                     .clip(CircleShape),
-                model = "https://www.cryptocompare.com/media/37746251/btc.png",
+                model = crypto.image,
                 contentDescription = null
             )
 
@@ -197,24 +227,6 @@ private fun DetailBody(crypto: Crypto, isLoading: Boolean) {
                     fontWeight = FontWeight.Bold
                 )
             }
-        }
-    }
-
-    HelpCenterBaseGlassCard(
-        title = "Description",
-        badgeColor = MaterialTheme.colorScheme.secondary
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 14.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Text(
-                text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-            )
         }
     }
 }

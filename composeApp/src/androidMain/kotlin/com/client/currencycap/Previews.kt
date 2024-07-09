@@ -4,8 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import dev.chrisbanes.haze.HazeState
-import ui.screens.main.detail.DetailScreen
-import util.getDummyCryptoItem
 
 //@Composable
 //@Preview(showBackground = true)
@@ -40,9 +38,7 @@ private fun DetailPreview() {
     val hazeState = remember { HazeState() }
 
     KoinPreview {
-        DetailScreen(
-            crypto = getDummyCryptoItem()
-        )
+
     }
 }
 

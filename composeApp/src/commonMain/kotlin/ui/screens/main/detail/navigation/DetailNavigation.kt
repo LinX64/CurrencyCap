@@ -27,10 +27,13 @@ fun NavGraphBuilder.detailScreen(
                 type = NavType.StringType
             }
         )
-    ) {
+    ) { backStackEntry ->
+        val symbol = backStackEntry.arguments?.getString(SYMBOL) ?: ""
+
         DetailRoute(
             padding = padding,
             hazeState = hazeState,
+            symbol = symbol,
         )
     }
 }
