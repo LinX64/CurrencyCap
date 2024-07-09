@@ -43,8 +43,8 @@ internal fun PrivacyPolicyBottomSheet(
     BottomSheetScaffold(
         modifier = modifier.fillMaxWidth(),
         scaffoldState = scaffoldState,
+        sheetPeekHeight = 0.dp,
         containerColor = MaterialTheme.colorScheme.surface,
-        contentColor = MaterialTheme.colorScheme.onSurface,
         sheetShape = RoundedCornerShape(topStart = 55.dp, topEnd = 55.dp),
         sheetContent = {
             Box {

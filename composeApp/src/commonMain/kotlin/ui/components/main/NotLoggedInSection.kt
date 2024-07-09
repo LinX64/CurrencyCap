@@ -96,7 +96,7 @@ private fun NotLoggedInTopAppBar(
         title = { },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.Transparent,
-            scrolledContainerColor = Color.Transparent,
+            scrolledContainerColor = Color.Transparent
         ),
         navigationIcon = {
             if (isNotLoggedIn(currentDestination)) {

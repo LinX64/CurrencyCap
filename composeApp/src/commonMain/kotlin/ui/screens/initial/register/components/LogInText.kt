@@ -1,9 +1,12 @@
 package ui.screens.initial.register.components
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -24,15 +27,16 @@ internal fun LogInText(
         pop()
     }
 
-    ClickableText(
+    Text(
         text = annotatedString,
-        style = MaterialTheme.typography.bodyMedium.copy(MaterialTheme.colorScheme.onSurface),
-        modifier = Modifier.padding(top = 16.dp),
-        onClick = { offset ->
-            annotatedString.getStringAnnotations(tag = "LogIn", start = offset, end = offset)
-                .firstOrNull()?.let {
-                    onLogInClick()
-                }
-        }
+        style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurface),
+        modifier = Modifier
+            .padding(top = 16.dp)
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) {
+                onLogInClick()
+            },
     )
 }
