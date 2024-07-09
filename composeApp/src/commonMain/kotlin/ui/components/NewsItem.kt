@@ -124,7 +124,6 @@ private fun TextContentSection(
     onBookmarkClick: (isBookmarked: Boolean) -> Unit
 ) {
     var isBookmarked by rememberSaveable { mutableStateOf(shouldShowBookmark) }
-    println("shouldShowBookmark $shouldShowBookmark")
     val bookmarkIconColor = if (isBookmarked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
     val bookmarkIcon = if (isBookmarked) Res.drawable.ic_bookmark_filled else Res.drawable.ic_bookmark_not_filled
 

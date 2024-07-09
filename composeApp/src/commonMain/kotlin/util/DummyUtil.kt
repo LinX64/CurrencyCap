@@ -22,6 +22,7 @@ internal fun getDummyNewsItem() = Article(
     title = "New Crypto Presale Pepe Unchained Goes Live – What Is PEPU Meme Token",
     url = "url",
     urlToImage = "https://readwrite.com/wp-content/uploads/2024/06/new-crypto-presale-pepe-unchained-goes-live.jpg",
+    isBookmarked = false
 )
 
 internal fun getDummyCryptoItem(): Crypto = Crypto(
