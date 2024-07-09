@@ -1,5 +1,6 @@
 package ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,24 +22,20 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import ui.screens.initial.privacy_policy.PrivacyPolicySection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun PrivacyPolicyBottomSheet(
     modifier: Modifier = Modifier,
     scaffoldState: BottomSheetScaffoldState,
+    scope: CoroutineScope,
     content: @Composable () -> Unit
 ) {
-    val scope = rememberCoroutineScope()
-
-    val coroutineScope = rememberCoroutineScope()
-    val hideModalBottomSheet: () -> Unit =
-        { coroutineScope.launch { scaffoldState.bottomSheetState.hide() } }
+    val hideModalBottomSheet: () -> Unit = { scope.launch { scaffoldState.bottomSheetState.hide() } }
 
     BottomSheetScaffold(
         modifier = modifier.fillMaxWidth(),
@@ -47,7 +44,11 @@ internal fun PrivacyPolicyBottomSheet(
         containerColor = MaterialTheme.colorScheme.surface,
         sheetShape = RoundedCornerShape(topStart = 55.dp, topEnd = 55.dp),
         sheetContent = {
-            Box {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.surface),
+            ) {
                 BottomSheetHeader(
                     title = "Privacy Policy",
                     onCloseClick = { hideModalBottomSheet() }
@@ -89,10 +90,4 @@ private fun BottomSheetHeader(
             )
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-internal fun PrivacyBottomSheet(sheetState: BottomSheetScaffoldState) {
-    PrivacyPolicyBottomSheet(scaffoldState = sheetState) { PrivacyPolicySection() }
 }
