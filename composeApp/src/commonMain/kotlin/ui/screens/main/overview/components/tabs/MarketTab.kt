@@ -22,7 +22,7 @@ import ui.screens.main.overview.components.tabs.components.CryptoGridItem
 @Composable
 internal fun MarketTab(
     state: OverviewState,
-    onNewsItemClick: (url: String) -> Unit
+    onCryptoItemClick: (symbol: String) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -47,7 +47,7 @@ internal fun MarketTab(
                     val cryptoRates = state.cryptoRates.sortedBy { it.marketCap }.take(4)
                     items(cryptoRates.size) { item ->
                         val cryptoItem = cryptoRates[item]
-                        CryptoGridItem(cryptoItem)
+                        CryptoGridItem(cryptoItem = cryptoItem, onCryptoItemClick = onCryptoItemClick)
                     }
                 }
 

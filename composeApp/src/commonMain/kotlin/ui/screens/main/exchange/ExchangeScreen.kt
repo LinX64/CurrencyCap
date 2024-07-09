@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -26,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
@@ -52,9 +54,9 @@ import ui.screens.main.exchange.components.ResultCard
 internal fun ExchangeScreen(
     padding: PaddingValues,
     hazeState: HazeState,
+    exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>(),
     onError: (String) -> Unit,
 ) {
-    val exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>()
     val state by exchangeViewModel.viewState.collectAsStateWithLifecycle()
 
     BaseGlassLazyColumn(
@@ -108,8 +110,7 @@ private fun ExchangeCard(
     }
 
     if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
-        CurrencyPicker(
-            hazeState = hazeState,
+        CurrencyPicker(hazeState = hazeState,
             currencyList = uiState.currencyRates,
             currencyType = selectedCurrencyType,
             onEvent = { event ->
@@ -120,8 +121,7 @@ private fun ExchangeCard(
             onDismiss = {
                 dialogOpened = false
                 selectedCurrencyType = CurrencyType.None
-            }
-        )
+            })
     }
 
     Column(
@@ -129,8 +129,7 @@ private fun ExchangeCard(
     ) {
         GlassCard {
             Column(
-                modifier = modifier.padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -144,43 +143,43 @@ private fun ExchangeCard(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                CurrencyInputs(
-                    source = uiState.sourceCurrency,
+                CurrencyInputs(source = uiState.sourceCurrency,
                     target = uiState.targetCurrency,
                     onSwitch = { viewModel.handleEvent(OnSwitchCurrencies) },
                     onCurrencyTypeSelect = {
                         dialogOpened = true
                         selectedCurrencyType = it
-                    }
-                )
+                    })
                 Spacer(modifier = Modifier.height(24.dp))
 
-                AmountInput(
-                    amount = amount,
-                    onErrorMessage = {
-                        keyboardController?.hide()
-                        onError(it)
-                    },
-                    onAmountChange = {
-                        amount = it
-                        viewModel.handleEvent(OnConvert(amount))
-                    }
+                Text(
+                    modifier = Modifier.padding(start = 12.dp),
+                    text = "Amount",
+                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    textAlign = TextAlign.Start
                 )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                AmountInput(amount = amount, onErrorMessage = {
+                    keyboardController?.hide()
+                    onError(it)
+                }, onAmountChange = {
+                    amount = it
+                    viewModel.handleEvent(OnConvert(amount))
+                })
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(24.dp),
+            modifier = Modifier.fillMaxWidth().height(24.dp),
             contentAlignment = Alignment.Center
         ) {
             VerticalDivider(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(1.dp),
+                modifier = Modifier.fillMaxHeight().width(1.dp),
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
                 thickness = 1.dp
             )

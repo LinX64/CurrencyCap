@@ -11,15 +11,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,40 +40,32 @@ internal fun NewsItem(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
     article: Article,
-    shouldShowBookmark: Boolean,
-    onNewsItemClick: () -> Unit,
+    shouldShowBookmark: Boolean = false,
+    onNewsItemClick: (url: String) -> Unit,
     onBookmarkClick: (isBookmarked: Boolean) -> Unit
 ) {
     GlassCard(
-        modifier = modifier.padding(vertical = 8.dp)
+        modifier = modifier.padding(vertical = 8.dp),
+        onCardClick = { onNewsItemClick(article.url) }
     ) {
-        Card(
-            onClick = onNewsItemClick,
-            shape = RoundedCornerShape(35.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface,
-                contentColor = MaterialTheme.colorScheme.onSurface,
-            )
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 8.dp, vertical = 8.dp),
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 8.dp, vertical = 8.dp),
-            ) {
-                FirstImageTextColumn(
-                    isLoading = isLoading,
-                    imageUrl = article.urlToImage,
-                    sourceName = article.source.name,
-                )
-                TextContentSection(
-                    title = article.title,
-                    description = article.description,
-                    date = article.publishedAt,
-                    isLoading = isLoading,
-                    shouldShowBookmark = shouldShowBookmark,
-                    onBookmarkClick = onBookmarkClick
-                )
-            }
+            FirstImageTextColumn(
+                isLoading = isLoading,
+                imageUrl = article.urlToImage,
+                sourceName = article.source.name,
+            )
+            TextContentSection(
+                title = article.title,
+                description = article.description,
+                date = article.publishedAt,
+                isLoading = isLoading,
+                shouldShowBookmark = shouldShowBookmark,
+                onBookmarkClick = onBookmarkClick
+            )
         }
     }
 }
@@ -131,9 +123,10 @@ private fun TextContentSection(
     shouldShowBookmark: Boolean = false,
     onBookmarkClick: (isBookmarked: Boolean) -> Unit
 ) {
-    val isBookmarked = rememberSaveable { mutableStateOf(shouldShowBookmark) }
-    val bookmarkIconColor = if (isBookmarked.value) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
-    val bookmarkIcon = if (isBookmarked.value) Res.drawable.ic_bookmark_filled else Res.drawable.ic_bookmark_not_filled
+    var isBookmarked by rememberSaveable { mutableStateOf(shouldShowBookmark) }
+    println("shouldShowBookmark $shouldShowBookmark")
+    val bookmarkIconColor = if (isBookmarked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+    val bookmarkIcon = if (isBookmarked) Res.drawable.ic_bookmark_filled else Res.drawable.ic_bookmark_not_filled
 
     Column(
         modifier = Modifier.padding(
@@ -143,8 +136,8 @@ private fun TextContentSection(
     ) {
         IconButton(
             onClick = {
-                isBookmarked.value = !isBookmarked.value
-                onBookmarkClick(isBookmarked.value)
+                isBookmarked = !isBookmarked
+                onBookmarkClick(isBookmarked)
             },
             modifier = Modifier
                 .size(24.dp)

@@ -45,7 +45,7 @@ fun RowScope.CurrencyView(
             modifier = Modifier.padding(start = 12.dp),
             text = placeholder,
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
-            color = Color.White
+            color = MaterialTheme.colorScheme.onSurface
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -53,7 +53,7 @@ fun RowScope.CurrencyView(
         Row(
             modifier = Modifier.fillMaxWidth()
                 .clip(RoundedCornerShape(size = 35.dp))
-                .background(Color.White.copy(alpha = 0.05f))
+                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f))
                 .height(64.dp)
                 .clickable {
                     currency?.let {

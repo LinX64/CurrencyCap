@@ -14,7 +14,7 @@ import ui.screens.main.overview.OverviewRoute
 
 fun NavController.navigateToOverviewScreen(navOptions: NavOptions) = navigate(NavRoutes.OVERVIEW, navOptions)
 
-fun NavGraphBuilder.homeScreen(
+fun NavGraphBuilder.overviewScreen(
     padding: PaddingValues,
     hazeState: HazeState,
     navController: NavHostController
@@ -32,7 +32,10 @@ fun NavGraphBuilder.homeScreen(
                 val encodedUrl = UrlEncoderUtil.encode(url)
                 navController.navigate(NavRoutes.NEWS_DETAIL + "/$encodedUrl")
             },
-            onCircleButtonClicked = { navController.navigateToAiPredictScreen() }
+            onCircleButtonClicked = { navController.navigateToAiPredictScreen() },
+            onCryptoItemClick = { symbol ->
+                navController.navigate(NavRoutes.CRYPTO_DETAIL + "/$symbol")
+            }
         )
     }
 }

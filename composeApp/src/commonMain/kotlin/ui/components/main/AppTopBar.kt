@@ -35,6 +35,7 @@ internal fun AppTopBar(
 ) {
     val isSettingsScreen = currentDestination == NavRoutes.SETTINGS
     val isNewsDetailScreen = currentDestination?.startsWith(NavRoutes.NEWS_DETAIL)
+    val isDetailScreen = currentDestination?.startsWith(NavRoutes.CRYPTO_DETAIL)
     val isExploreScreen = currentDestination == NavRoutes.EXPLORE
     val isAiScreen = currentDestination == NavRoutes.AI_PREDICTION
 
@@ -45,7 +46,7 @@ internal fun AppTopBar(
                 style = HazeMaterials.regular(MaterialTheme.colorScheme.surface)
             ),
         title = {
-            if (isNewsDetailScreen?.not() == true) {
+            if (isNewsDetailScreen?.not() == true && isDetailScreen?.not() == true) {
                 Text(
                     text = currentDestination,
                     maxLines = 1,
@@ -67,7 +68,12 @@ internal fun AppTopBar(
 //            )
         },
         navigationIcon = {
-            if (isSettingsScreen || isNewsDetailScreen == true || isExploreScreen || isAiScreen) {
+            if (isSettingsScreen ||
+                isNewsDetailScreen == true ||
+                isExploreScreen ||
+                isAiScreen ||
+                isDetailScreen == true
+            ) {
                 IconButton(onClick = { navController.navigateUp() }) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_arrow_left),

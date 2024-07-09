@@ -9,9 +9,14 @@ import data.util.asResult
 import domain.repository.CurrencyRepository
 import domain.repository.ExchangeRepository
 import domain.usecase.ConvertCurrenciesUseCase
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
 import ui.screens.main.exchange.ExchangeViewEvent.OnConvert
@@ -27,10 +32,13 @@ internal class ExchangeViewModel(
     private val convertCurrenciesUseCase: ConvertCurrenciesUseCase
 ) : MviViewModel<ExchangeViewEvent, ExchangeState, ExchangeNavigationEffect>(ExchangeUiState()) {
 
+    private val amountFlow = MutableStateFlow("")
+
     init {
         handleEvent(OnFetchRates)
         handleEvent(OnReadCurrencySourceCode)
         handleEvent(OnReadCurrencyTargetCode)
+        setupAmountObserver()
     }
 
     override fun handleEvent(event: ExchangeViewEvent) {
@@ -40,7 +48,7 @@ internal class ExchangeViewModel(
             is OnReadCurrencyTargetCode -> readCurrencyTarget()
             is OnSaveSelectedCurrencyCode -> saveSelectedCurrencyCode(event)
             is OnSwitchCurrencies -> switchCurrencies()
-            is OnConvert -> convertCurrency(event.amount)
+            is OnConvert -> amountFlow.value = event.amount
         }
     }
 
@@ -91,6 +99,15 @@ internal class ExchangeViewModel(
                 }
             }
         }
+    }
+
+    @OptIn(FlowPreview::class)
+    private fun setupAmountObserver() {
+        amountFlow
+            .debounce(300)
+            .distinctUntilChanged()
+            .onEach { convertCurrency(it) }
+            .launchIn(viewModelScope)
     }
 
     private fun saveSelectedCurrencyCode(event: OnSaveSelectedCurrencyCode) {

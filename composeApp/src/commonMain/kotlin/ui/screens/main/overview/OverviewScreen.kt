@@ -24,7 +24,8 @@ internal fun OverviewRoute(
     hazeState: HazeState,
     onSearchCardClicked: () -> Unit,
     onNewsItemClick: (url: String) -> Unit,
-    onCircleButtonClicked: () -> Unit
+    onCircleButtonClicked: () -> Unit,
+    onCryptoItemClick: (symbol: String) -> Unit
 ) {
     val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
 
@@ -35,7 +36,8 @@ internal fun OverviewRoute(
         onSearchCardClicked = onSearchCardClicked,
         onNewsItemClick = onNewsItemClick,
         onCircleButtonClicked = onCircleButtonClicked,
-        onRetry = { overviewViewModel.handleEvent(OnRetry) }
+        onCryptoItemClick = onCryptoItemClick,
+        onRetry = { overviewViewModel.handleEvent(OnRetry) },
     )
 }
 
@@ -48,7 +50,8 @@ internal fun OverviewScreen(
     onSearchCardClicked: () -> Unit,
     onNewsItemClick: (url: String) -> Unit,
     onCircleButtonClicked: () -> Unit,
-    onRetry: () -> Unit
+    onCryptoItemClick: (symbol: String) -> Unit,
+    onRetry: () -> Unit,
 ) {
     BaseGlassLazyColumn(
         padding = padding,
@@ -66,12 +69,13 @@ internal fun OverviewScreen(
             PortfolioSection(
                 state = state,
                 hazeState = hazeState,
-                onNewsItemClick = onNewsItemClick
+                onNewsItemClick = onNewsItemClick,
+                onCryptoItemClick = onCryptoItemClick
             )
         }
-        item { TodayTopMovers(state) }
+        item { TodayTopMovers(overviewState = state, onCryptoItemClick = onCryptoItemClick) }
         item { TopRates(state) }
-        item { TrendingCryptoCurrencies(state) }
+        item { TrendingCryptoCurrencies(overviewState = state, onCryptoItemClick) }
     }
 
     when (state) {

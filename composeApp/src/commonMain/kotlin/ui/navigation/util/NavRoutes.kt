@@ -23,7 +23,9 @@ object NavRoutes {
     const val RESET_PASSWORD = "Forgot Password"
 
     const val PRIVACY_POLICY = "Privacy Policy"
+    const val CRYPTO_DETAIL = "Crypto Detail"
 }
 
 const val ENCODED_URL = "encodedUrl"
 const val PHONE_NUMBER = "phoneNumber"
+const val SYMBOL = "symbol"

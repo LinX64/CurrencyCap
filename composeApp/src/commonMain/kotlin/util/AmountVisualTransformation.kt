@@ -4,39 +4,37 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
-import kotlin.math.max
 
-internal class AmountVisualTransformation : VisualTransformation {
-
+class AmountVisualTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
         val originalText = text.text
-        val formattedText = StringBuilder()
+        val formattedText = formatWithThousandSeparators(originalText)
 
-        originalText.reversed()
-            .chunked(3)
-            .joinToString(".")
-            .reversed().forEach {
-                formattedText.append(it)
-            }
-
-        val out = formattedText.toString()
-        val offsetTranslator = ThousandSeparatorOffsetMapping(originalText, out)
-        return TransformedText(AnnotatedString(out), offsetTranslator)
+        return TransformedText(
+            AnnotatedString(formattedText),
+            ThousandSeparatorsOffsetMapping(originalText, formattedText)
+        )
     }
 
-    private class ThousandSeparatorOffsetMapping(
-        private val original: String,
-        private val transformed: String
-    ) : OffsetMapping {
+    private fun formatWithThousandSeparators(text: String): String {
+        return text.reversed()
+            .chunked(3)
+            .joinToString(".")
+            .reversed()
+    }
 
+    private class ThousandSeparatorsOffsetMapping(
+        private val originalText: String,
+        private val formattedText: String
+    ) : OffsetMapping {
         override fun originalToTransformed(offset: Int): Int {
-            val adjustment = max(0, transformed.length - original.length)
-            return offset + adjustment
+            val separatorsBeforeOffset = (offset - 1) / 3
+            return (offset + separatorsBeforeOffset).coerceAtMost(formattedText.length)
         }
 
         override fun transformedToOriginal(offset: Int): Int {
-            val adjustment = max(0, transformed.length - original.length)
-            return offset - adjustment
+            val separatorsBeforeOffset = formattedText.take(offset).count { it == '.' }
+            return (offset - separatorsBeforeOffset).coerceAtMost(originalText.length)
         }
     }
 }

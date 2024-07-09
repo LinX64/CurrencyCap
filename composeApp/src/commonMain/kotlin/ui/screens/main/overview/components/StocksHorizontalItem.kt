@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -76,7 +75,7 @@ private fun FirstColumn(
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
             text = rate.symbol,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold
         )
@@ -106,7 +105,7 @@ private fun EndHorizontalComponent(
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = "$898.5",
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold
             )

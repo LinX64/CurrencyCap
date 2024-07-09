@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
+import ui.screens.main.news.NewsState.Error
+import ui.screens.main.news.NewsState.Loading
+import ui.screens.main.news.NewsState.Success
 import ui.screens.main.news.NewsViewEvent.FetchNews
 import ui.screens.main.news.NewsViewEvent.OnBookmarkArticle
 import ui.screens.main.news.NewsViewEvent.OnRetry
@@ -17,7 +20,7 @@ import ui.screens.main.news.NewsViewEvent.OnRetry
 class NewsViewModel(
     private val newsRepository: NewsRepository,
     private val articleLocalDataSource: ArticleLocalDataSource
-) : MviViewModel<NewsViewEvent, NewsState, NewsNavigationEffect>(NewsState.Loading) {
+) : MviViewModel<NewsViewEvent, NewsState, NewsNavigationEffect>(Loading) {
 
     init {
         handleEvent(FetchNews)
@@ -35,14 +38,16 @@ class NewsViewModel(
         newsRepository.getNews()
             .map { result ->
                 when (result) {
-                    is NetworkResult.Success -> setState { NewsState.Success(result.data) }
+                    is NetworkResult.Success -> setState { Success(result.data) }
                     is NetworkResult.Error -> {
                         val news = result.data ?: emptyList()
                         val message = result.throwable.message ?: ""
-                        if (news.isNotEmpty()) setState { NewsState.Error(message, news) }
+
+                        if (news.isNotEmpty()) setState { Success(news) }
+                        else setState { Error(message) }
                     }
 
-                    else -> setState { NewsState.Loading }
+                    else -> setState { Loading }
                 }
             }
             .launchIn(viewModelScope)

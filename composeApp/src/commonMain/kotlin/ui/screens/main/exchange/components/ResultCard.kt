@@ -38,7 +38,6 @@ internal fun ResultCard(
         typeConverter = currencyConverterAnimation
     )
 
-
     AnimatedVisibility(
         visible = amount.isNotEmpty(),
         enter = fadeIn() + expandVertically(),

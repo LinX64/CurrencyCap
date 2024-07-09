@@ -15,12 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import domain.model.main.Crypto
 import ui.screens.main.overview.OverviewState
+import util.getDummyCryptoItem
 
 @Composable
 internal fun TodayTopMovers(
-    overviewState: OverviewState
+    overviewState: OverviewState,
+    onCryptoItemClick: (String) -> Unit
 ) {
     val isLoading = overviewState is OverviewState.Loading
     Column(
@@ -64,7 +65,8 @@ internal fun TodayTopMovers(
                     val topMovers = overviewState.topMovers[it]
                     TopMoversCard(
                         topMovers = topMovers,
-                        isLoading = false
+                        isLoading = false,
+                        onClick = onCryptoItemClick
                     )
                 }
             }
@@ -73,33 +75,8 @@ internal fun TodayTopMovers(
                 items(2) {
                     TopMoversCard(
                         isLoading = true,
-                        topMovers = Crypto(
-                            ath = 128.129,
-                            athChangePercentage = 130.131,
-                            athDate = "mea",
-                            atl = 132.133,
-                            atlChangePercentage = 134.135,
-                            atlDate = "vix",
-                            circulatingSupply = 136.137,
-                            currentPrice = 138.139,
-                            fullyDilutedValuation = null,
-                            high24h = 140.141,
-                            id = "assueverit",
-                            image = "aliquam",
-                            lastUpdated = "civibus",
-                            low24h = 142.143,
-                            marketCap = 4527,
-                            marketCapChange24h = 144.145,
-                            marketCapChangePercentage24h = 146.147,
-                            marketCapRank = 2193,
-                            maxSupply = null,
-                            name = "Cheri Wright",
-                            priceChange24h = 148.149,
-                            priceChangePercentage24h = 150.151,
-                            symbol = "veri",
-                            totalSupply = null,
-                            totalVolume = 152.153
-                        )
+                        topMovers = getDummyCryptoItem(),
+                        onClick = { /* TODO */ }
                     )
                 }
             }

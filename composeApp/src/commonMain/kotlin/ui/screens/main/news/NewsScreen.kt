@@ -10,6 +10,9 @@ import di.koinViewModel
 import ui.components.ErrorView
 import ui.components.NewsItem
 import ui.components.main.BaseGlassLazyColumn
+import ui.screens.main.news.NewsState.Empty
+import ui.screens.main.news.NewsState.Loading
+import ui.screens.main.news.NewsState.Success
 import ui.screens.main.news.NewsViewEvent.OnBookmarkArticle
 import ui.screens.main.news.NewsViewEvent.OnRetry
 import util.getDummyNewsItem
@@ -26,7 +29,7 @@ internal fun NewsScreen(
     BaseGlassLazyColumn(
         hazeState = hazeState,
         padding = padding,
-        isEmpty = state.value is NewsState.Empty,
+        isEmpty = state.value is Empty,
         emptyContent = {
             ErrorView(
                 message = "An error occurred",
@@ -43,12 +46,13 @@ private fun LazyListScope.newsScreenContent(
     newsViewModel: NewsViewModel,
     onNewsItemClick: (url: String) -> Unit
 ) = when (val currentState = state.value) {
-    is NewsState.Success -> {
+
+    is Success -> {
         val articles = currentState.news
         items(articles.size) { index ->
             NewsItem(
                 article = articles[index],
-                onNewsItemClick = { onNewsItemClick(articles[index].url) },
+                onNewsItemClick = onNewsItemClick,
                 shouldShowBookmark = articles[index].isBookmarked,
                 onBookmarkClick = { isBookmarked ->
                     newsViewModel.handleEvent(OnBookmarkArticle(articles[index], isBookmarked))
@@ -57,25 +61,13 @@ private fun LazyListScope.newsScreenContent(
         }
     }
 
-    is NewsState.Loading -> {
+    is Loading -> {
         items(10) {
             NewsItem(
                 isLoading = true,
                 article = getDummyNewsItem(),
                 onNewsItemClick = { },
-                onBookmarkClick = { },
-                shouldShowBookmark = false
-            )
-        }
-    }
-
-    is NewsState.Error -> {
-        items(currentState.news.size) { index ->
-            NewsItem(
-                article = currentState.news[index],
-                onNewsItemClick = { onNewsItemClick(currentState.news[index].url) },
-                onBookmarkClick = { newsViewModel.handleEvent(OnBookmarkArticle(currentState.news[index], false)) },
-                shouldShowBookmark = currentState.news[index].isBookmarked
+                onBookmarkClick = { }
             )
         }
     }

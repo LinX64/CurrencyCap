@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -57,8 +56,11 @@ internal fun CryptoHorizontalItem(
     crypto: Crypto,
     isLoading: Boolean = false,
     assetInfo: AssetInfo = mockAssetInfo,
+    onClick: (String) -> Unit
 ) {
-    GlassCard {
+    GlassCard(
+        onCardClick = { onClick(crypto.symbol) }
+    ) {
         Row(
             modifier = modifier
                 .fillMaxWidth()
@@ -110,7 +112,7 @@ private fun FirstHorizontalColumn(
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
             text = crypto.symbol.uppercase(),
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold
         )
@@ -144,7 +146,7 @@ private fun EndHorizontalComponents(
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = formattedRate,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold
             )

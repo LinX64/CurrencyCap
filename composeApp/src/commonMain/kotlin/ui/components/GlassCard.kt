@@ -18,7 +18,8 @@ import androidx.compose.ui.unit.dp
 internal fun GlassCard(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(8.dp),
-    content: @Composable () -> Unit
+    onCardClick: () -> Unit = {},
+    content: @Composable () -> Unit,
 ) {
     Card(
         modifier = Modifier.wrapContentSize()
@@ -29,6 +30,7 @@ internal fun GlassCard(
             containerColor = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.onSurface
         ),
+        onClick = onCardClick
     ) {
         Column(
             modifier = Modifier
