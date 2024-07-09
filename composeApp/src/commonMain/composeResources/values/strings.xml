@@ -5,7 +5,8 @@
     <string name="top_losers">Top Losers</string>
     <string name="see_all">See All</string>
     <string name="top_gainers">Top Gainers</string>
-    <string name="feature_not_available">This feature is not available yet</string>
+    <string name="feature_not_available">This feature is not available yet!</string>
+    <string name="feature_not_available_description">We are working hard to bring this feature to you soon. Stay tuned!</string>
     <string name="delete_your_account_warning">IMPORTANT: This action is irreversible and will delete all your data. Please proceed with caution!</string>
     <string name="delete_account">Delete Account</string>
 
