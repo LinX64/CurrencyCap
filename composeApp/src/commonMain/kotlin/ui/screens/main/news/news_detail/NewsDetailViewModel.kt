@@ -8,13 +8,17 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import ui.common.MviViewModel
 import ui.navigation.util.ENCODED_URL
+import ui.screens.main.news.news_detail.NewsDetailNavigationEffect.OpenBrowser
+import ui.screens.main.news.news_detail.NewsDetailState.Error
+import ui.screens.main.news.news_detail.NewsDetailState.Loading
+import ui.screens.main.news.news_detail.NewsDetailState.Success
 import ui.screens.main.news.news_detail.NewsDetailViewEvent.FetchNews
 import ui.screens.main.news.news_detail.NewsDetailViewEvent.OnReadMoreClick
 
 class NewsDetailViewModel(
     private val newsRepository: NewsRepository,
     savedStateHandle: SavedStateHandle
-) : MviViewModel<NewsDetailViewEvent, NewsDetailState, NewsDetailNavigationEffect>(NewsDetailState.Loading) {
+) : MviViewModel<NewsDetailViewEvent, NewsDetailState, NewsDetailNavigationEffect>(Loading) {
 
     val url: String = savedStateHandle.get<String>(ENCODED_URL) ?: ""
 
@@ -25,7 +29,7 @@ class NewsDetailViewModel(
     override fun handleEvent(event: NewsDetailViewEvent) {
         when (event) {
             is FetchNews -> fetchNews(event.url)
-            is OnReadMoreClick -> setEffect(NewsDetailNavigationEffect.OpenBrowser(url))
+            is OnReadMoreClick -> setEffect(OpenBrowser(event.url))
         }
     }
 
@@ -33,12 +37,12 @@ class NewsDetailViewModel(
         newsRepository.getArticleByUrl(url)
             .map { result ->
                 when (result) {
-                    is NetworkResult.Success -> setState { NewsDetailState.Success(result.data) }
+                    is NetworkResult.Success -> setState { Success(result.data) }
                     is NetworkResult.Error -> setState {
-                        NewsDetailState.Error(result.throwable.message ?: "Error while fetching news")
+                        Error(result.throwable.message ?: "Error while fetching news")
                     }
 
-                    else -> setState { NewsDetailState.Loading }
+                    else -> setState { Loading }
                 }
             }
             .launchIn(viewModelScope)
