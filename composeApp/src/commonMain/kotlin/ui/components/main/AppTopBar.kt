@@ -19,13 +19,11 @@ import currencycap.composeapp.generated.resources.ic_arrow_left
 import currencycap.composeapp.generated.resources.ic_settings
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
-import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
-import dev.chrisbanes.haze.materials.HazeMaterials
 import org.jetbrains.compose.resources.painterResource
 import ui.navigation.util.NavRoutes
 import ui.screens.main.settings.navigation.navigateToSettingsScreen
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun AppTopBar(
     currentDestination: String?,
@@ -41,10 +39,7 @@ internal fun AppTopBar(
 
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
-            .hazeChild(
-                state = hazeState,
-                style = HazeMaterials.regular(MaterialTheme.colorScheme.surface)
-            ),
+            .hazeChild(state = hazeState),
         title = {
             if (isNewsDetailScreen?.not() == true && isDetailScreen?.not() == true) {
                 Text(

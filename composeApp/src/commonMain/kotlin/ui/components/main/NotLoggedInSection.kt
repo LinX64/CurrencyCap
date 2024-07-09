@@ -10,7 +10,6 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -31,8 +30,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
-import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
-import dev.chrisbanes.haze.materials.HazeMaterials
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ui.components.PrivacyBottomSheet
@@ -85,7 +82,7 @@ internal fun NotLoggedInSection(
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 private fun NotLoggedInTopAppBar(
     currentDestination: String,
     navController: NavHostController,
@@ -95,10 +92,7 @@ private fun NotLoggedInTopAppBar(
 ) {
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
-            .hazeChild(
-                state = hazeState,
-                style = HazeMaterials.regular(MaterialTheme.colorScheme.surface)
-            ),
+            .hazeChild(state = hazeState),
         title = { },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.Transparent,
