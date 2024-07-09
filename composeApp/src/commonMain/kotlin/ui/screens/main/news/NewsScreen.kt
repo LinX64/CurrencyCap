@@ -48,9 +48,8 @@ private fun LazyListScope.newsScreenContent(
 ) = when (val currentState = state.value) {
 
     is Success -> {
-        val articles = currentState.news.sortedBy { it.isBookmarked }
+        val articles = currentState.news
         items(articles.size) { index ->
-            println("Is bookmarked: ${articles[index].isBookmarked}")
 
             NewsItem(
                 article = articles[index],

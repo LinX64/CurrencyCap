@@ -40,17 +40,6 @@ internal fun TodayTopMovers(
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
             )
-//
-//            TextButton(
-//                modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-//                onClick = { /* TODO */ }
-//            ) {
-//                Text(
-//                    text = "View All",
-//                    style = MaterialTheme.typography.bodyMedium,
-//                    color = MaterialTheme.colorScheme.onSurface
-//                )
-//            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
