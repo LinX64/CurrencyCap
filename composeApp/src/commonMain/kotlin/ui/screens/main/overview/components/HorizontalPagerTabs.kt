@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.tabs.CryptoContent
-import ui.screens.main.overview.components.tabs.MarketContent
-import ui.screens.main.overview.components.tabs.NewsContent
+import ui.screens.main.overview.components.tabs.MarketTab
+import ui.screens.main.overview.components.tabs.NewsTab
 
 @Composable
 internal fun HorizontalPagerTabs(
@@ -39,9 +39,9 @@ internal fun HorizontalPagerTabs(
             modifier = Modifier.height(230.dp)
         ) { page ->
             when (page) {
-                0 -> NewsContent(state = state, onNewsItemClick = onNewsItemClick)
+                0 -> NewsTab(state = state, onNewsItemClick = onNewsItemClick)
                 1 -> CryptoContent(state = state)
-                2 -> MarketContent(state = state, onNewsItemClick = onNewsItemClick)
+                2 -> MarketTab(state = state, onNewsItemClick = onNewsItemClick)
             }
         }
 

@@ -19,9 +19,10 @@ import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.OverviewState.Error
 import ui.screens.main.overview.OverviewState.Loading
 import ui.screens.main.overview.OverviewState.Success
+import ui.screens.main.overview.components.tabs.components.NewsHomeItem
 
 @Composable
-internal fun NewsContent(
+internal fun NewsTab(
     state: OverviewState,
     onNewsItemClick: (url: String) -> Unit
 ) {
