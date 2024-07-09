@@ -70,7 +70,10 @@ internal fun ExchangeScreen(
                 is ExchangeUiState -> {
                     val uiState = state as ExchangeUiState
                     ExchangeCard(
-                        uiState = uiState, hazeState = hazeState, viewModel = exchangeViewModel, onError = onError
+                        uiState = uiState,
+                        hazeState = hazeState,
+                        viewModel = exchangeViewModel,
+                        onError = onError
                     )
                 }
 
@@ -172,7 +175,8 @@ private fun ExchangeCard(
         Spacer(modifier = Modifier.height(16.dp))
 
         Box(
-            modifier = Modifier.fillMaxWidth().height(24.dp), contentAlignment = Alignment.Center
+            modifier = Modifier.fillMaxWidth().height(24.dp),
+            contentAlignment = Alignment.Center
         ) {
             VerticalDivider(
                 modifier = Modifier.fillMaxHeight().width(1.dp),
