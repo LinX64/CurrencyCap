@@ -2,8 +2,13 @@ package util
 
 import data.remote.model.User
 import domain.model.Article
+import domain.model.News
 import domain.model.Source
+import domain.model.main.BonbastRate
 import domain.model.main.Crypto
+import domain.model.main.Currencies
+import domain.model.main.Market
+import domain.model.main.Rate
 
 internal fun getDummyNewsItem() = Article(
     author = "Alvin Hemedez",
@@ -110,3 +115,50 @@ internal fun getDummyUser() = User(
     phoneNumber = "phoneNumber",
     profilePicture = ""
 )
+
+internal fun getDummyBonbastRates(): List<BonbastRate> = listOf(
+    BonbastRate(
+        code = "code", sell = 8.9, buy = 10.11,
+    )
+)
+
+internal fun getDummyMarketRates(): List<Market> = listOf(
+    Market(
+        baseId = "te",
+        baseSymbol = "brute",
+        exchangeId = "labores",
+        percentExchangeVolume = "sociis",
+        priceQuote = "invidunt",
+        priceUsd = "nostrum",
+        quoteId = "id",
+        quoteSymbol = "per",
+        rank = "iudicabit",
+        tradesCount24Hr = null,
+        updated = 3698,
+        volumeUsd24Hr = "adipisci"
+    )
+)
+
+internal fun getDummyRatesItem(): List<Rate> = listOf(
+    Rate(
+        id = "vero", rateUsd = "ultricies", symbol = "animal", type = "proin", currencySymbol = null
+    )
+)
+
+internal fun getDummyNews(): List<News> = listOf(
+    News(
+        articles = listOf(
+            getDummyNewsItem()
+        ),
+        status = "status",
+        totalResults = 1
+    )
+)
+
+internal fun getDummyCurrencies(): Currencies = Currencies(
+    bonbast = getDummyBonbastRates(),
+    crypto = getDummyCryptoItems(),
+    markets = getDummyMarketRates(),
+    rates = getDummyRatesItem()
+)
+

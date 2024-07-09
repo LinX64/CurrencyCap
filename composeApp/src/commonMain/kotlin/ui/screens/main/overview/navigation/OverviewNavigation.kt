@@ -9,7 +9,8 @@ import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import ui.navigation.util.NavRoutes
-import ui.screens.main.overview.OverviewScreen
+import ui.screens.main.ai_predict.navigation.navigateToAiPredictScreen
+import ui.screens.main.overview.OverviewRoute
 
 fun NavController.navigateToOverviewScreen(navOptions: NavOptions) = navigate(NavRoutes.OVERVIEW, navOptions)
 
@@ -19,7 +20,7 @@ fun NavGraphBuilder.homeScreen(
     navController: NavHostController
 ) {
     composable(NavRoutes.OVERVIEW) {
-        OverviewScreen(
+        OverviewRoute(
             padding = padding,
             hazeState = hazeState,
             onSearchCardClicked = {
@@ -30,7 +31,8 @@ fun NavGraphBuilder.homeScreen(
             onNewsItemClick = { url ->
                 val encodedUrl = UrlEncoderUtil.encode(url)
                 navController.navigate(NavRoutes.NEWS_DETAIL + "/$encodedUrl")
-            }
+            },
+            onCircleButtonClicked = { navController.navigateToAiPredictScreen() }
         )
     }
 }

@@ -61,6 +61,7 @@ internal fun BottomNavigationBar(
     val currentRoute = navBackStackEntry?.destination?.route
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
     val isExploreScreen = currentRoute == NavRoutes.EXPLORE
+    val isAirScreen = currentRoute == NavRoutes.AI_PREDICTION
 
     LaunchedEffect(currentRoute) {
         val newIndex = tabs.indexOfFirst { it.route == currentRoute }
@@ -69,7 +70,7 @@ internal fun BottomNavigationBar(
         }
     }
 
-    if (isSettingsScreen.not() && isExploreScreen.not()) {
+    if (isSettingsScreen.not() && isExploreScreen.not() && isAirScreen.not()) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

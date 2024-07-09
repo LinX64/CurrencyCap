@@ -1,5 +1,7 @@
 package domain.model.main
 
+import androidx.compose.ui.graphics.Color
+
 data class Crypto(
     val ath: Double,
     val athChangePercentage: Double,
@@ -25,5 +27,6 @@ data class Crypto(
     val priceChangePercentage24h: Double,
     val symbol: String,
     val totalSupply: Double? = null,
-    val totalVolume: Double
+    val totalVolume: Double,
+    val color: Color? = null
 )

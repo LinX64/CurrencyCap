@@ -60,3 +60,27 @@ fun convertDateFormat(inputDate: String): String {
 internal fun normalizeRateUsd(currency: Currency): Double = if (currency.code == "USD") {
     currency.value
 } else 1.0 / currency.value
+
+fun formatNumber(number: Number): String {
+    val num = number.toDouble()
+    return when {
+        num >= 1_000_000_000 -> {
+            val billions = num / 1_000_000_000
+            "${(billions * 10).toInt() / 10.0}B"
+        }
+
+        num >= 1_000_000 -> {
+            val millions = num / 1_000_000
+            "${(millions * 10).toInt() / 10.0}M"
+        }
+
+        num >= 1_000 -> {
+            val thousands = num / 1_000
+            "${(thousands * 10).toInt() / 10.0}K"
+        }
+
+        else -> {
+            "${(num * 100).toInt() / 100.0}"
+        }
+    }
+}

@@ -41,7 +41,7 @@ internal fun HorizontalPagerTabs(
             when (page) {
                 0 -> NewsContent(state = state, onNewsItemClick = onNewsItemClick)
                 1 -> CryptoContent(state = state)
-                2 -> MarketContent(state = state)
+                2 -> MarketContent(state = state, onNewsItemClick = onNewsItemClick)
             }
         }
 
