@@ -87,6 +87,8 @@ private fun NoBookmarks(
             textAlign = TextAlign.Center
         )
 
+        Spacer(modifier = Modifier.height(4.dp))
+
         Text(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
             text = "Start curating your news. Bookmark articles to see them here.",

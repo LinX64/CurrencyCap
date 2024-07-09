@@ -3,6 +3,7 @@ package ui.screens.main.overview
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
@@ -17,32 +18,64 @@ import ui.screens.main.overview.components.TopRates
 import ui.screens.main.overview.components.TrendingCryptoCurrencies
 
 @Composable
-internal fun OverviewScreen(
+internal fun OverviewRoute(
     overviewViewModel: OverviewViewModel = koinViewModel<OverviewViewModel>(),
     padding: PaddingValues,
     hazeState: HazeState,
     onSearchCardClicked: () -> Unit,
-    onNewsItemClick: (url: String) -> Unit
+    onNewsItemClick: (url: String) -> Unit,
+    onCircleButtonClicked: () -> Unit
 ) {
     val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
+
+    OverviewScreen(
+        padding = padding,
+        state = state,
+        hazeState = hazeState,
+        onSearchCardClicked = onSearchCardClicked,
+        onNewsItemClick = onNewsItemClick,
+        onCircleButtonClicked = onCircleButtonClicked,
+        onRetry = { overviewViewModel.handleEvent(OnRetry) }
+    )
+}
+
+@Composable
+internal fun OverviewScreen(
+    modifier: Modifier = Modifier,
+    padding: PaddingValues,
+    state: OverviewState,
+    hazeState: HazeState,
+    onSearchCardClicked: () -> Unit,
+    onNewsItemClick: (url: String) -> Unit,
+    onCircleButtonClicked: () -> Unit,
+    onRetry: () -> Unit
+) {
     BaseGlassLazyColumn(
         padding = padding,
         hazeState = hazeState,
     ) {
-        item { SearchViewHeader(state = state, onSearchCardClicked = onSearchCardClicked) }
+        item {
+            SearchViewHeader(
+                state = state,
+                onSearchCardClicked = onSearchCardClicked,
+                onCircleButtonClicked = onCircleButtonClicked
+            )
+        }
         item { HorizontalLineWithDot() }
-        item { PortfolioSection(state = state, hazeState = hazeState, onNewsItemClick = onNewsItemClick) }
+        item {
+            PortfolioSection(
+                state = state,
+                hazeState = hazeState,
+                onNewsItemClick = onNewsItemClick
+            )
+        }
         item { TodayTopMovers(state) }
         item { TopRates(state) }
         item { TrendingCryptoCurrencies(state) }
     }
 
     when (state) {
-        is OverviewState.Error -> {
-            val message = (state as OverviewState.Error).message
-            ErrorView(message = message, onRetry = { overviewViewModel.handleEvent(OnRetry) })
-        }
-
+        is OverviewState.Error -> ErrorView(message = state.message, onRetry = onRetry)
         else -> Unit
     }
 }

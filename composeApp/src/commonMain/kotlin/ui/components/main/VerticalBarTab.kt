@@ -10,9 +10,9 @@ sealed class VerticalBarTab(
     val title: String,
     val icon: DrawableResource,
 ) {
-    data object STOCK : VerticalBarTab(
-        title = "Stock",
-        icon = Res.drawable.ic_chart
+    data object NEWS : VerticalBarTab(
+        title = "News",
+        icon = Res.drawable.ic_news
     )
 
     data object CRYPTO : VerticalBarTab(
@@ -20,14 +20,14 @@ sealed class VerticalBarTab(
         icon = Res.drawable.ic_bitcoin
     )
 
-    data object NEWS : VerticalBarTab(
-        title = "News",
-        icon = Res.drawable.ic_news
+    data object STOCK : VerticalBarTab(
+        title = "Stock",
+        icon = Res.drawable.ic_chart
     )
 }
 
 internal val myTabs = listOf(
-    VerticalBarTab.STOCK,
+    VerticalBarTab.NEWS,
     VerticalBarTab.CRYPTO,
-    VerticalBarTab.NEWS
+    VerticalBarTab.STOCK
 )

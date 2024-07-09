@@ -1,4 +1,4 @@
-package ui.screens.main.overview.components.tabs
+package ui.screens.main.overview.components.tabs.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

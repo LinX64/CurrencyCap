@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.ic_electric_lightbulb_thin
+import currencycap.composeapp.generated.resources.ic_letters_ai
 import currencycap.composeapp.generated.resources.ic_search_normal
 import org.jetbrains.compose.resources.painterResource
 import ui.screens.main.overview.OverviewState
@@ -29,7 +29,8 @@ import ui.screens.main.overview.components.getPlaceHolder
 @Composable
 internal fun SearchViewHeader(
     state: OverviewState,
-    onSearchCardClicked: () -> Unit
+    onSearchCardClicked: () -> Unit,
+    onCircleButtonClicked: () -> Unit
 ) {
     val isLoading = state is OverviewState.Loading
 
@@ -75,13 +76,16 @@ internal fun SearchViewHeader(
                 }
             }
 
-            CircleButton(isLoading)
+            CircleButton(isLoading = isLoading, onCircleButtonClicked = onCircleButtonClicked)
         }
     }
 }
 
 @Composable
-private fun CircleButton(isLoading: Boolean) {
+private fun CircleButton(
+    isLoading: Boolean = false,
+    onCircleButtonClicked: () -> Unit
+) {
     Card(
         modifier = Modifier.wrapContentSize(),
         shape = RoundedCornerShape(35.dp),
@@ -92,9 +96,10 @@ private fun CircleButton(isLoading: Boolean) {
     ) {
         IconButton(
             modifier = if (isLoading) getPlaceHolder(Modifier.size(64.dp)) else Modifier.size(64.dp),
-            onClick = { /*TODO*/ }) {
+            onClick = onCircleButtonClicked
+        ) {
             Icon(
-                painter = painterResource(Res.drawable.ic_electric_lightbulb_thin),
+                painter = painterResource(Res.drawable.ic_letters_ai),
                 contentDescription = "Info",
                 tint = Color.Gray,
                 modifier = Modifier.size(24.dp)
