@@ -18,10 +18,13 @@ import util.getDummyCryptoItems
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-internal fun TrendingCryptoCurrencies(rates: OverviewState) {
+internal fun TrendingCryptoCurrencies(
+    overviewState: OverviewState,
+    onCryptoItemClick: (String) -> Unit
+) {
     Column {
         Text(
-            modifier = if (rates is OverviewState.Loading) getPlaceHolder(
+            modifier = if (overviewState is OverviewState.Loading) getPlaceHolder(
                 Modifier.padding(start = 8.dp),
             ) else Modifier.padding(start = 8.dp),
             text = "Trending rates",
@@ -34,20 +37,23 @@ internal fun TrendingCryptoCurrencies(rates: OverviewState) {
             modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            if (rates is OverviewState.Success) {
-                rates.cryptoRates.take(50).forEachIndexed { index, rate -> // Takes only 50 items TODO: Add pagination
-                    CryptoHorizontalItem(
-                        crypto = rates.cryptoRates[index],
-                        isLoading = false
-                    )
-                }
+            if (overviewState is OverviewState.Success) {
+                overviewState.cryptoRates.take(50)
+                    .forEachIndexed { index, rate -> // Takes only 50 items TODO: Add pagination
+                        CryptoHorizontalItem(
+                            crypto = overviewState.cryptoRates[index],
+                            isLoading = false,
+                            onClick = onCryptoItemClick
+                        )
+                    }
             }
 
-            if (rates is OverviewState.Loading) {
+            if (overviewState is OverviewState.Loading) {
                 repeat(5) {
                     CryptoHorizontalItem(
                         crypto = getDummyCryptoItems()[it],
-                        isLoading = true
+                        isLoading = true,
+                        onClick = { /* TODO: Navigate to detail screen */ }
                     )
                 }
             }

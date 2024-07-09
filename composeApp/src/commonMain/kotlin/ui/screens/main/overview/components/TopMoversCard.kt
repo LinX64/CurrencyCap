@@ -27,17 +27,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
-import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import domain.model.main.Crypto
 import ui.common.formatToPrice
 import ui.theme.colors.CurrencyColors
 
-@OptIn(ExperimentalHazeMaterialsApi::class)
 @Composable
 internal fun TopMoversCard(
     isLoading: Boolean,
-    topMovers: Crypto
+    topMovers: Crypto,
+    onClick: (String) -> Unit
 ) {
     val hazeState = remember { HazeState() }
     MaterialsCard(
@@ -57,7 +56,7 @@ internal fun TopMoversCard(
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 text = topMovers.symbol,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 18.sp,
                 textAlign = TextAlign.Start,
                 maxLines = 1

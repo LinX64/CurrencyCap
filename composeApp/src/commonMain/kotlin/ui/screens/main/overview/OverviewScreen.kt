@@ -73,9 +73,9 @@ internal fun OverviewScreen(
                 onCryptoItemClick = onCryptoItemClick
             )
         }
-        item { TodayTopMovers(state) }
+        item { TodayTopMovers(overviewState = state, onCryptoItemClick = onCryptoItemClick) }
         item { TopRates(state) }
-        item { TrendingCryptoCurrencies(state) }
+        item { TrendingCryptoCurrencies(overviewState = state, onCryptoItemClick) }
     }
 
     when (state) {

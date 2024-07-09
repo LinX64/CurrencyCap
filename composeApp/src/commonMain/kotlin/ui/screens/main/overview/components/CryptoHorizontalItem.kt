@@ -56,8 +56,11 @@ internal fun CryptoHorizontalItem(
     crypto: Crypto,
     isLoading: Boolean = false,
     assetInfo: AssetInfo = mockAssetInfo,
+    onClick: (String) -> Unit
 ) {
-    GlassCard {
+    GlassCard(
+        onCardClick = { onClick(crypto.symbol) }
+    ) {
         Row(
             modifier = modifier
                 .fillMaxWidth()

@@ -24,9 +24,9 @@ class NewsRepositoryImpl(
     override fun getNews(): Flow<NetworkResult<List<Article>>> = cacheDataOrFetchOnline(
         query = { articleLocalDataSource.getArticles() },
         fetch = { getPlainNewsResponse() },
-        shouldFetch = { localArticles -> localArticles?.isEmpty() == true }, // TODO: Implement a check for stale data
+        shouldFetch = { localArticles -> localArticles.isNullOrEmpty() },
         saveFetchResult = { responseText ->
-            val articles: List<ArticleDto> = parseNewsResponse(responseText)
+            val articles: List<ArticleDto> = parseArticlesResponse(responseText)
             articleLocalDataSource.insertArticles(articles.toEntity())
         }
     )
@@ -42,13 +42,13 @@ class NewsRepositoryImpl(
 
     private suspend fun getPlainNewsResponse() = httpClient.get(NEWS_URL).bodyAsText()
 
-    private fun parseNewsResponse(responseText: String): List<ArticleDto> {
+    private fun parseArticlesResponse(responseText: String): List<ArticleDto> {
         return Json.decodeFromString(NewsDto.serializer(), responseText).articles
     }
 
     private suspend fun fetchArticleByUrl(url: String): Article {
         val responseText = getPlainNewsResponse()
-        val articles: List<ArticleDto> = parseNewsResponse(responseText)
+        val articles: List<ArticleDto> = parseArticlesResponse(responseText)
 
         val matchedArticle = articles
             .find { it.url.contains(url) }
