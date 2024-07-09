@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,7 +41,7 @@ internal fun SplashScreen(modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            CircularProgressIndicator(color = Color.White)
+            CircularProgressIndicator(color = MaterialTheme.colorScheme.onSurface)
         }
     }
 }

@@ -1,6 +1,7 @@
 package ui.screens.main.overview.components
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -14,11 +15,11 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 @Composable
 fun TopMoversChart(
     modifier: Modifier = Modifier,
-    lightLineColor: Color = Color.White,
-    lighterColor: Color = Color.White.copy(alpha = 0.1f),
+    lightLineColor: Color = MaterialTheme.colorScheme.onSurface,
+    lighterColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
     list: List<Float>
 ) {
-    val dotColor = Color.White
+    val dotColor = MaterialTheme.colorScheme.onSurface
 
     Canvas(
         modifier = modifier
