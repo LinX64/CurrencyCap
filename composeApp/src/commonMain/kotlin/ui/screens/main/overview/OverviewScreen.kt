@@ -75,11 +75,7 @@ internal fun OverviewScreen(
     }
 
     when (state) {
-        is OverviewState.Error -> {
-            val message = state.message
-            ErrorView(message = message, onRetry = onRetry)
-        }
-
+        is OverviewState.Error -> ErrorView(message = state.message, onRetry = onRetry)
         else -> Unit
     }
 }
