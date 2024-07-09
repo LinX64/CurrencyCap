@@ -74,7 +74,8 @@ fun ArticleDto.toDomain(): Article {
         source = sourceDto.toDomain(),
         title = title,
         url = url,
-        urlToImage = urlToImage
+        urlToImage = urlToImage,
+        isBookmarked = false
     )
 }
 

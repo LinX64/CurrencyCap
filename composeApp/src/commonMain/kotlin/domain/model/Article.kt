@@ -11,7 +11,7 @@ data class Article(
     val title: String,
     val url: String,
     val urlToImage: String? = null,
-    val isBookmarked: Boolean = false
+    val isBookmarked: Boolean
 )
 
 fun List<Article>.toEntity(): List<ArticleEntity> = map { article ->

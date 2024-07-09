@@ -24,12 +24,6 @@ class BookmarksViewModel(
         }
     }
 
-    private fun removeBookmark(article: Article) {
-        viewModelScope.launch {
-            articleLocalDataSource.removeArticle(article)
-        }
-    }
-
     private fun onLoadBookmarks() {
         articleLocalDataSource.getBookmarkedArticles()
             .map { articles ->
@@ -39,5 +33,11 @@ class BookmarksViewModel(
                 }
             }
             .launchIn(viewModelScope)
+    }
+
+    private fun removeBookmark(article: Article) {
+        viewModelScope.launch {
+            articleLocalDataSource.removeArticle(article)
+        }
     }
 }
