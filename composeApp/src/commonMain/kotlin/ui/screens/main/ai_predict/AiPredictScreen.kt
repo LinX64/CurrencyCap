@@ -22,10 +22,7 @@ import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.feature_not_available
 import currencycap.composeapp.generated.resources.feature_not_available_description
-import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.haze
 import di.koinViewModel
 import io.github.alexzhirkevich.compottie.LottieAnimation
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
@@ -48,14 +45,7 @@ internal fun AiPredictScreen(
 
     Column(
         modifier = Modifier.fillMaxSize()
-            .padding(padding).haze(
-                state = hazeState,
-                style = HazeStyle(
-                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-                    blurRadius = 35.dp,
-                    noiseFactor = HazeDefaults.noiseFactor
-                )
-            ),
+            .padding(padding),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
