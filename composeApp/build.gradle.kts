@@ -42,12 +42,12 @@ kotlin {
             implementation(libs.kotlinx.coroutines.android)
             implementation(compose.preview)
 
+            api(libs.androidx.startup)
+
             // Firebase
             implementation(project.dependencies.platform(libs.firebase.bom))
             implementation(libs.firebase.auth)
             implementation(libs.firebase.fireStore)
-
-            api(libs.androidx.startup)
 
             implementation(libs.androidx.activity.compose)
         }
@@ -60,12 +60,14 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(compose.materialIconsExtended)
 
-            implementation(libs.androidx.startup)
-            implementation(libs.kotlinx.serialization)
+            implementation(libs.navigation.compose)
+            implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.lifecycle.runtime.compose)
+            implementation(libs.androidx.lifecycle.viewmodel)
 
+            implementation(libs.androidx.startup)
             implementation(libs.urlencoder.lib)
             implementation(libs.mongodb.realm)
-
             implementation(libs.firebase.auth)
             implementation(libs.firebase.fireStore)
 
@@ -76,24 +78,15 @@ kotlin {
             implementation(libs.coil)
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
-
             api(libs.compose.webview.multiplatform)
 
             // Data
             implementation(libs.bundles.datastore)
             implementation(libs.bundles.ktor)
-
             implementation(libs.kotlinx.serialization)
             implementation(libs.kachetor)
-
-            implementation(libs.lifecycle.viewmodel.compose)
-            implementation(libs.lifecycle.runtime.compose)
-            implementation(libs.navigation.compose)
-
             api(libs.koin.core)
             implementation(libs.koin.compose)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.navigation.compose)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.core)
@@ -127,6 +120,11 @@ android {
 
     buildTypes {
         getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+        getByName("debug") {
             isMinifyEnabled = false
         }
     }

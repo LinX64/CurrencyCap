@@ -37,8 +37,6 @@ internal class LoginViewModel(
     }
 
     private fun authenticate(email: String, password: String) {
-        setState { LoginState.Loading }
-
         if (email.isEmpty()) {
             setState { Error("Email must not be empty") }
             return
@@ -53,6 +51,8 @@ internal class LoginViewModel(
             setState { Error("Invalid email format") }
             return
         }
+
+        setState { LoginState.Loading }
 
         viewModelScope.launch {
             val authState = authServiceRepository.authenticate(email, password)
