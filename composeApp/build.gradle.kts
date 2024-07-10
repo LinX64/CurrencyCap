@@ -42,6 +42,8 @@ kotlin {
             implementation(libs.kotlinx.coroutines.android)
             implementation(compose.preview)
 
+            api(libs.androidx.startup)
+
             // Firebase
             implementation(project.dependencies.platform(libs.firebase.bom))
             implementation(libs.firebase.auth)
@@ -63,6 +65,7 @@ kotlin {
             implementation(libs.lifecycle.runtime.compose)
             implementation(libs.androidx.lifecycle.viewmodel)
 
+            implementation(libs.androidx.startup)
             implementation(libs.urlencoder.lib)
             implementation(libs.mongodb.realm)
             implementation(libs.firebase.auth)
