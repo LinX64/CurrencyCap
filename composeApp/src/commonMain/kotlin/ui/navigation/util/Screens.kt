@@ -1,22 +1,22 @@
 package ui.navigation.util
 
 import kotlinx.serialization.Serializable
-import ui.navigation.util.NavRoutes.AI_PREDICTION
-import ui.navigation.util.NavRoutes.BOOKMARKS
-import ui.navigation.util.NavRoutes.CRYPTO_DETAIL
-import ui.navigation.util.NavRoutes.EXCHANGE
-import ui.navigation.util.NavRoutes.EXPLORE
-import ui.navigation.util.NavRoutes.FILL_PROFILE
-import ui.navigation.util.NavRoutes.GET_VERIFIED_PHONE
-import ui.navigation.util.NavRoutes.LANDING
-import ui.navigation.util.NavRoutes.LOGIN
-import ui.navigation.util.NavRoutes.NEWS
-import ui.navigation.util.NavRoutes.NEWS_DETAIL
-import ui.navigation.util.NavRoutes.OVERVIEW
-import ui.navigation.util.NavRoutes.PROFILE
-import ui.navigation.util.NavRoutes.REGISTER
-import ui.navigation.util.NavRoutes.RESET_PASSWORD
-import ui.navigation.util.NavRoutes.SETTINGS
+import ui.navigation.util.ScreenRoutes.AI_PREDICTION
+import ui.navigation.util.ScreenRoutes.BOOKMARKS
+import ui.navigation.util.ScreenRoutes.CRYPTO_DETAIL
+import ui.navigation.util.ScreenRoutes.EXCHANGE
+import ui.navigation.util.ScreenRoutes.EXPLORE
+import ui.navigation.util.ScreenRoutes.FILL_PROFILE
+import ui.navigation.util.ScreenRoutes.GET_VERIFIED_PHONE
+import ui.navigation.util.ScreenRoutes.LANDING
+import ui.navigation.util.ScreenRoutes.LOGIN
+import ui.navigation.util.ScreenRoutes.NEWS
+import ui.navigation.util.ScreenRoutes.NEWS_DETAIL
+import ui.navigation.util.ScreenRoutes.OVERVIEW
+import ui.navigation.util.ScreenRoutes.PROFILE
+import ui.navigation.util.ScreenRoutes.REGISTER
+import ui.navigation.util.ScreenRoutes.RESET_PASSWORD
+import ui.navigation.util.ScreenRoutes.SETTINGS
 
 @Serializable
 sealed class Screens(val route: String) {

@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.util.NavRoutes
+import ui.navigation.util.Screens.CryptoDetail
 import ui.navigation.util.Screens.Explore
 import ui.screens.main.search.SearchScreen
 
@@ -22,7 +22,7 @@ fun NavGraphBuilder.searchScreen(
             padding = padding,
             hazeState = hazeState,
             onCryptoItemClick = { symbol ->
-                navController.navigate(NavRoutes.CRYPTO_DETAIL + "/$symbol")
+                navController.navigate(route = CryptoDetail(symbol))
             }
         )
     }

@@ -8,14 +8,14 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
-import ui.navigation.util.Screens
 import ui.navigation.util.Screens.CryptoDetail
 import ui.navigation.util.Screens.Explore
+import ui.navigation.util.Screens.NewsDetail
 import ui.navigation.util.Screens.Overview
 import ui.screens.main.ai_predict.navigation.navigateToAiPredictScreen
 import ui.screens.main.overview.OverviewRoute
 
-fun NavController.navigateToOverviewScreen(navOptions: NavOptions) = navigate(Overview, navOptions)
+fun NavController.navigateToOverviewScreen(navOptions: NavOptions) = navigate(Overview.route, navOptions)
 
 fun NavGraphBuilder.overviewScreen(
     padding: PaddingValues,
@@ -33,7 +33,7 @@ fun NavGraphBuilder.overviewScreen(
             },
             onNewsItemClick = { url ->
                 val encodedUrl = UrlEncoderUtil.encode(url)
-                navController.navigate(route = Screens.NewsDetail(encodedUrl))
+                navController.navigate(route = NewsDetail(encodedUrl))
             },
             onCircleButtonClicked = { navController.navigateToAiPredictScreen() },
             onCryptoItemClick = { symbol ->

@@ -9,30 +9,30 @@ import org.jetbrains.compose.resources.DrawableResource
 import ui.navigation.util.Screens
 
 sealed class BottomBarTab(
-    val screen: Screens,
+    val route: String,
     val icon: DrawableResource? = null,
 ) {
     data object Overview : BottomBarTab(
-        screen = Screens.Overview,
+        route = Screens.Overview.route,
         icon = Res.drawable.ic_home
     )
 
     data object News : BottomBarTab(
-        screen = Screens.News,
+        route = Screens.News.route,
         icon = Res.drawable.ic_news
     )
 
     data object Exchange : BottomBarTab(
-        screen = Screens.Exchange,
+        route = Screens.Exchange.route,
     )
 
     data object Bookmarks : BottomBarTab(
-        screen = Screens.Bookmarks,
+        route = Screens.Bookmarks.route,
         icon = Res.drawable.ic_save
     )
 
     data object Profile : BottomBarTab(
-        screen = Screens.Profile,
+        route = Screens.Profile.route,
         icon = Res.drawable.ic_user_normal
     )
 }

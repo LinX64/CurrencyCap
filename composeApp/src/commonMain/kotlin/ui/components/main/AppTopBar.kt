@@ -16,13 +16,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.ic_arrow_left
-import currencycap.composeapp.generated.resources.ic_settings
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
-import ui.navigation.util.NavRoutes
-import ui.navigation.util.Screens
-import ui.screens.main.settings.navigation.navigateToSettingsScreen
+import ui.navigation.util.Screens.AIPredict
+import ui.navigation.util.Screens.CryptoDetail
+import ui.navigation.util.Screens.Explore
+import ui.navigation.util.Screens.NewsDetail
+import ui.navigation.util.Screens.Settings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,11 +33,11 @@ internal fun AppTopBar(
     scrollBehavior: TopAppBarScrollBehavior,
     hazeState: HazeState
 ) {
-    val isSettingsScreen = currentDestination == Screens.Settings.route
-    val isNewsDetailScreen = currentDestination?.startsWith(NavRoutes.NEWS_DETAIL)
-    val isDetailScreen = currentDestination?.startsWith(NavRoutes.CRYPTO_DETAIL)
-    val isExploreScreen = currentDestination == NavRoutes.EXPLORE
-    val isAiScreen = currentDestination == NavRoutes.AI_PREDICTION
+    val isSettingsScreen = currentDestination == Settings.route
+    val isNewsDetailScreen = currentDestination?.startsWith(NewsDetail("").route)
+    val isDetailScreen = currentDestination?.startsWith(CryptoDetail("").route)
+    val isExploreScreen = currentDestination == Explore.route
+    val isAiScreen = currentDestination == AIPredict.route
 
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
@@ -57,12 +58,6 @@ internal fun AppTopBar(
             scrolledContainerColor = Color.Transparent,
         ),
         scrollBehavior = scrollBehavior,
-        actions = {
-//            ActionsMenu(
-//                currentDestination = currentDestination,
-//                navController = navController
-//            )
-        },
         navigationIcon = {
             if (isSettingsScreen ||
                 isNewsDetailScreen == true ||
@@ -81,22 +76,4 @@ internal fun AppTopBar(
         }
     )
 }
-
-@Composable
-private fun ActionsMenu(
-    currentDestination: String?,
-    navController: NavHostController
-) {
-    if (currentDestination == NavRoutes.PROFILE) {
-        IconButton(
-            onClick = { navController.navigateToSettingsScreen() }
-        ) {
-            Icon(
-                painter = painterResource(Res.drawable.ic_settings),
-                contentDescription = "Settings"
-            )
-        }
-    }
-}
-
 

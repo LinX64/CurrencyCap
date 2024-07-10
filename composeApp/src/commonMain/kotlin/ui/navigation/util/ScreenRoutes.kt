@@ -1,6 +1,6 @@
 package ui.navigation.util
 
-object NavRoutes {
+object ScreenRoutes {
     const val OVERVIEW = "Overview"
     const val NEWS = "News"
     const val EXCHANGE = "Exchange"

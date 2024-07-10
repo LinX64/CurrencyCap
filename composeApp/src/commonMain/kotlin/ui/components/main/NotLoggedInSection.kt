@@ -34,7 +34,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ui.components.PrivacyPolicyBottomSheet
 import ui.navigation.graphs.AuthNavGraph
-import ui.navigation.util.NavRoutes
+import ui.navigation.util.ScreenRoutes
 import ui.screens.MainViewModel
 import ui.screens.initial.privacy_policy.PrivacyPolicySection
 
@@ -115,7 +115,7 @@ private fun NotLoggedInTopAppBar(
     )
 }
 
-private fun isNotLoggedIn(currentDestination: String): Boolean = (currentDestination != NavRoutes.LANDING)
-        && (currentDestination != NavRoutes.LOGIN)
-        && (currentDestination != NavRoutes.REGISTER)
+private fun isNotLoggedIn(currentDestination: String): Boolean = (currentDestination != ScreenRoutes.LANDING)
+        && (currentDestination != ScreenRoutes.LOGIN)
+        && (currentDestination != ScreenRoutes.REGISTER)
 

@@ -46,7 +46,9 @@ import currencycap.composeapp.generated.resources.ic_arrow_up_down
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
-import ui.navigation.util.NavRoutes
+import ui.navigation.util.Screens.AIPredict
+import ui.navigation.util.Screens.CryptoDetail
+import ui.navigation.util.Screens.Explore
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,20 +60,21 @@ internal fun BottomNavigationBar(
     navController: NavHostController
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
-    val isExploreScreen = currentRoute == NavRoutes.EXPLORE
-    val isAirScreen = currentRoute == NavRoutes.AI_PREDICTION
-    val isDetailScreen = currentRoute?.startsWith(NavRoutes.CRYPTO_DETAIL) == true
+
+    val currentRoute = navBackStackEntry?.destination?.route
+    val isExploreScreen = currentRoute == Explore.route
+    val isAIScreen = currentRoute == AIPredict.route
+    val isDetailScreen = currentRoute?.startsWith(CryptoDetail("").route) == true
 
     LaunchedEffect(currentRoute) {
-        val newIndex = tabs.indexOfFirst { it.screen.route == currentRoute }
+        val newIndex = tabs.indexOfFirst { it.route == currentRoute }
         if (newIndex != -1) {
             selectedTabIndex = newIndex
         }
     }
 
-    if (isSettingsScreen.not() && isExploreScreen.not() && isAirScreen.not() && isDetailScreen.not()) {
+    if (isSettingsScreen.not() && isExploreScreen.not() && isAIScreen.not() && isDetailScreen.not()) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
