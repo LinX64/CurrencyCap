@@ -16,11 +16,10 @@ fun NavController.navigateToDetailScreen(navOptions: NavOptions) = navigate(NavR
 
 fun NavGraphBuilder.detailScreen(
     padding: PaddingValues,
-    onError: (String) -> Unit,
     hazeState: HazeState
 ) {
     composable(
-        route = NavRoutes.CRYPTO_DETAIL + "/{$SYMBOL}",
+        route = "${NavRoutes.CRYPTO_DETAIL}/{$SYMBOL}",
         arguments = listOf(
             navArgument(SYMBOL) {
                 nullable = false

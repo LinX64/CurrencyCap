@@ -75,10 +75,11 @@ internal fun DetailScreen(
     }
 }
 
-
-
 @Composable
-private fun DetailHeader(crypto: Crypto, isLoading: Boolean) {
+private fun DetailHeader(
+    crypto: Crypto,
+    isLoading: Boolean
+) {
     GlassCard(
         modifier = Modifier.fillMaxWidth()
     ) {

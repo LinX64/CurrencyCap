@@ -73,8 +73,7 @@ internal fun MainNavGraph(
 
         detailScreen(
             padding = padding,
-            hazeState = hazeState,
-            onError = onError
+            hazeState = hazeState
         )
 
         exchangeScreen(

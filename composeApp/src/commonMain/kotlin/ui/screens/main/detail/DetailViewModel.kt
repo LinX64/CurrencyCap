@@ -1,7 +1,9 @@
 package ui.screens.main.detail
 
 import androidx.lifecycle.SavedStateHandle
-import data.util.NetworkResult
+import data.util.NetworkResult.Error
+import data.util.NetworkResult.Loading
+import data.util.NetworkResult.Success
 import data.util.asResult
 import domain.repository.MainRepository
 import kotlinx.coroutines.flow.map
@@ -31,9 +33,9 @@ class DetailViewModel(
             .asResult()
             .map {
                 when (it) {
-                    is NetworkResult.Loading -> setState { DetailState.Loading }
-                    is NetworkResult.Success -> setState { DetailState.Success(it.data) }
-                    is NetworkResult.Error -> setState {
+                    is Loading -> setState { DetailState.Loading }
+                    is Success -> setState { DetailState.Success(it.data) }
+                    is Error -> setState {
                         DetailState.Error(it.throwable.message ?: "An error occurred")
                     }
                 }
