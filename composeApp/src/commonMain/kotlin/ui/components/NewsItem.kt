@@ -46,6 +46,7 @@ internal fun NewsItem(
 ) {
     GlassCard(
         modifier = modifier.padding(vertical = 8.dp),
+        shouldBeClickable = true,
         onCardClick = { onNewsItemClick(article.url) }
     ) {
         Row(
