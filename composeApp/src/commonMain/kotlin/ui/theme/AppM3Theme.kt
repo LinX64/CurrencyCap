@@ -47,6 +47,13 @@ private fun appLightColorScheme(): ColorScheme = ColorScheme(
     outline = CurrencyColors.Gray,
     outlineVariant = CurrencyColors.DarkGray,
     scrim = CurrencyColors.ExtraDarkGray.copy(alpha = 0.8f),
+    surfaceBright = CurrencyColors.White,
+    surfaceDim = CurrencyColors.ExtraLightGray,
+    surfaceContainer = CurrencyColors.White,
+    surfaceContainerHigh = CurrencyColors.ExtraLightGray,
+    surfaceContainerHighest = CurrencyColors.LightGray,
+    surfaceContainerLow = CurrencyColors.Gray,
+    surfaceContainerLowest = CurrencyColors.DarkGray
 )
 
 private fun appDarkColorScheme(): ColorScheme = ColorScheme(
@@ -79,4 +86,11 @@ private fun appDarkColorScheme(): ColorScheme = ColorScheme(
     outline = CurrencyColors.Gray,
     outlineVariant = CurrencyColors.LightGray,
     scrim = CurrencyColors.ExtraLightGray.copy(alpha = 0.8f),
+    surfaceBright = CurrencyColors.Black,
+    surfaceDim = CurrencyColors.ExtraDarkGray,
+    surfaceContainer = CurrencyColors.Black,
+    surfaceContainerHigh = CurrencyColors.ExtraDarkGray,
+    surfaceContainerHighest = CurrencyColors.DarkGray,
+    surfaceContainerLow = CurrencyColors.Gray,
+    surfaceContainerLowest = CurrencyColors.LightGray
 )

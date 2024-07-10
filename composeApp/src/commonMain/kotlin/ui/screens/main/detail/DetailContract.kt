@@ -17,6 +17,4 @@ sealed interface DetailState {
     data class Error(val message: String) : DetailState
 }
 
-sealed interface DetailNavigationEffect {
-
-}
+sealed interface DetailNavigationEffect
