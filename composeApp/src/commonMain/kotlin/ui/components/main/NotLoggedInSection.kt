@@ -81,8 +81,8 @@ internal fun NotLoggedInSection(
 
     if (isSheetOpen.value) {
         PrivacyPolicyBottomSheet(
-            scaffoldState = scaffoldState,
-            scope = scope
+            isVisible = isSheetOpen.value,
+            onDismissRequest = { isSheetOpen.value = false }
         ) { PrivacyPolicySection() }
     }
 }

@@ -35,7 +35,7 @@ internal fun VerticalBarCard(
     Box(
         modifier = Modifier.then(modifier)
             .width(64.dp)
-            .height(150.dp)
+            .height(160.dp)
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),

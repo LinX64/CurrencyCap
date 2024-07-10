@@ -50,9 +50,7 @@ internal fun PortfolioSection(
         }
 
         VerticalBarCard(
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(8.dp),
+            modifier = Modifier.align(Alignment.TopEnd).padding(end = 8.dp),
             hazeState = hazeState,
             onTabSelected = { index ->
                 scope.launch {
