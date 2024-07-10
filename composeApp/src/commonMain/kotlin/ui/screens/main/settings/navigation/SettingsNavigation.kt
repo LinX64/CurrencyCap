@@ -5,11 +5,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.Screens.Settings
-import ui.navigation.util.NavRoutes
+import ui.navigation.util.Screens.Settings
 import ui.screens.main.settings.SettingsScreen
 
-fun NavController.navigateToSettingsScreen() = navigate(NavRoutes.SETTINGS)
+fun NavController.navigateToSettingsScreen() = navigate(Settings)
 
 fun NavGraphBuilder.settingsScreen(
     padding: PaddingValues,

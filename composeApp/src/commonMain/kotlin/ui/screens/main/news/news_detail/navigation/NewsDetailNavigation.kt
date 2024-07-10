@@ -7,12 +7,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import dev.chrisbanes.haze.HazeState
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
-import ui.navigation.Screens
-import ui.navigation.Screens.NewsDetail
-import ui.navigation.util.NavRoutes
+import ui.navigation.util.Screens.NewsDetail
 import ui.screens.main.news.news_detail.NewsDetailScreen
 
-fun NavController.navigateToNewsDetailScreen() = navigate(NavRoutes.NEWS_DETAIL)
+fun NavController.navigateToNewsDetailScreen() = navigate(NewsDetail)
 
 fun NavGraphBuilder.newsDetailScreen(
     padding: PaddingValues,
@@ -20,8 +18,8 @@ fun NavGraphBuilder.newsDetailScreen(
     onError: (String) -> Unit
 ) {
     composable<NewsDetail> { backStackEntry ->
-        val profile: Screens.Profile = backStackEntry.toRoute()
-        val decodedUrl = UrlEncoderUtil.decode(profile.url)
+        val newsDetail: NewsDetail = backStackEntry.toRoute()
+        val decodedUrl = UrlEncoderUtil.decode(newsDetail.url)
 
         NewsDetailScreen(
             padding = padding,

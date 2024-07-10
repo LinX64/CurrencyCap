@@ -6,11 +6,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.Screens.Explore
 import ui.navigation.util.NavRoutes
+import ui.navigation.util.Screens.Explore
 import ui.screens.main.search.SearchScreen
 
-fun NavController.navigateToSearchScreen() = navigate(NavRoutes.EXPLORE)
+fun NavController.navigateToSearchScreen() = navigate(Explore)
 
 fun NavGraphBuilder.searchScreen(
     padding: PaddingValues,

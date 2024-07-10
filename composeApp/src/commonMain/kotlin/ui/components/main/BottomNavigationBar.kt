@@ -65,7 +65,7 @@ internal fun BottomNavigationBar(
     val isDetailScreen = currentRoute?.startsWith(NavRoutes.CRYPTO_DETAIL) == true
 
     LaunchedEffect(currentRoute) {
-        val newIndex = tabs.indexOfFirst { it.route == currentRoute }
+        val newIndex = tabs.indexOfFirst { it.screen.route == currentRoute }
         if (newIndex != -1) {
             selectedTabIndex = newIndex
         }

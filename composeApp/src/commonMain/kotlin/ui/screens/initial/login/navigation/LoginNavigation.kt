@@ -5,12 +5,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import ui.navigation.util.NavRoutes
+import ui.navigation.util.Screens.Login
 import ui.screens.initial.login.LoginScreen
 import ui.screens.initial.register.navigation.navigateToRegisterScreen
 import ui.screens.initial.reset_password.navigation.navigateToResetPassword
 
-fun NavController.navigateToLoginScreen() = navigate(NavRoutes.LOGIN)
+fun NavController.navigateToLoginScreen() = navigate(Login)
 
 fun NavGraphBuilder.loginScreen(
     padding: PaddingValues,
@@ -18,7 +18,7 @@ fun NavGraphBuilder.loginScreen(
     onLoginSuccess: () -> Unit,
     onError: (message: String) -> Unit
 ) {
-    composable(NavRoutes.LOGIN) {
+    composable<Login> {
         LoginScreen(
             padding = padding,
             onError = onError,

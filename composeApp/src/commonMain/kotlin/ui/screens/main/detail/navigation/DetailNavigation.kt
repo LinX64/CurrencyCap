@@ -7,11 +7,10 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.Screens.CryptoDetail
-import ui.navigation.util.NavRoutes
+import ui.navigation.util.Screens.CryptoDetail
 import ui.screens.main.detail.DetailRoute
 
-fun NavController.navigateToDetailScreen(navOptions: NavOptions) = navigate(NavRoutes.CRYPTO_DETAIL, navOptions)
+fun NavController.navigateToDetailScreen(navOptions: NavOptions) = navigate(CryptoDetail, navOptions)
 
 fun NavGraphBuilder.detailScreen(
     padding: PaddingValues,

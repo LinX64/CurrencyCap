@@ -4,17 +4,17 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import ui.navigation.util.NavRoutes
+import ui.navigation.util.Screens.FillProfile
 import ui.screens.initial.fill_profile.FillProfileScreen
 
-fun NavController.navigateToFillProfileScreen() = navigate(NavRoutes.FILL_PROFILE)
+fun NavController.navigateToFillProfileScreen() = navigate(FillProfile)
 
 fun NavGraphBuilder.fillProfileScreen(
     padding: PaddingValues,
     onNavigateToMarketOverview: () -> Unit,
     onError: (message: String) -> Unit
 ) {
-    composable(NavRoutes.FILL_PROFILE) {
+    composable<FillProfile> {
         FillProfileScreen(
             padding = padding,
             onError = onError,

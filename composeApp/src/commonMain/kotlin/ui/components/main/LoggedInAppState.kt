@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -15,11 +14,6 @@ import ui.components.main.BottomBarTab.Exchange
 import ui.components.main.BottomBarTab.News
 import ui.components.main.BottomBarTab.Overview
 import ui.components.main.BottomBarTab.Profile
-import ui.navigation.util.NavRoutes.BOOKMARKS
-import ui.navigation.util.NavRoutes.EXCHANGE
-import ui.navigation.util.NavRoutes.NEWS
-import ui.navigation.util.NavRoutes.OVERVIEW
-import ui.navigation.util.NavRoutes.PROFILE
 import ui.screens.main.bookmarks.navigation.navigateToBookmarksScreen
 import ui.screens.main.exchange.navigation.navigateToExchangeScreen
 import ui.screens.main.news.navigation.navigateToNewsScreen
@@ -43,16 +37,6 @@ internal class LoggedInAppState(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    val currentTopLevelDestination: BottomBarTab?
-        @Composable get() = when (currentDestination?.route) {
-            OVERVIEW -> Overview
-            NEWS -> News
-            EXCHANGE -> Exchange
-            BOOKMARKS -> Bookmarks
-            PROFILE -> Profile
-            else -> null
-        }
-
     fun navigateToTopLevelDestination(topLevelDestination: BottomBarTab) {
         val topLevelNavOptions = navOptions {
             navController.graph.findStartDestination().route?.let { startRoute ->
@@ -72,9 +56,4 @@ internal class LoggedInAppState(
             Profile -> navController.navigateToProfileScreen(topLevelNavOptions)
         }
     }
-
-    fun NavDestination?.isTopLevelDestinationInHierarchy(destination: BottomBarTab) =
-        this?.hierarchy?.any {
-            it.route?.contains(destination.route, true) ?: false
-        } ?: false
 }

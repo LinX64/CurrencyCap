@@ -8,12 +8,14 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
-import ui.navigation.Screens.Overview
-import ui.navigation.util.NavRoutes
+import ui.navigation.util.Screens
+import ui.navigation.util.Screens.CryptoDetail
+import ui.navigation.util.Screens.Explore
+import ui.navigation.util.Screens.Overview
 import ui.screens.main.ai_predict.navigation.navigateToAiPredictScreen
 import ui.screens.main.overview.OverviewRoute
 
-fun NavController.navigateToOverviewScreen(navOptions: NavOptions) = navigate(NavRoutes.OVERVIEW, navOptions)
+fun NavController.navigateToOverviewScreen(navOptions: NavOptions) = navigate(Overview, navOptions)
 
 fun NavGraphBuilder.overviewScreen(
     padding: PaddingValues,
@@ -25,17 +27,17 @@ fun NavGraphBuilder.overviewScreen(
             padding = padding,
             hazeState = hazeState,
             onSearchCardClicked = {
-                navController.navigate(NavRoutes.EXPLORE) {
-                    popUpTo(NavRoutes.OVERVIEW) { inclusive = true }
+                navController.navigate(Explore) {
+                    popUpTo(Overview) { inclusive = true }
                 }
-            }, // TODO: Add animation
+            },
             onNewsItemClick = { url ->
                 val encodedUrl = UrlEncoderUtil.encode(url)
-                navController.navigate(NavRoutes.NEWS_DETAIL + "/$encodedUrl")
+                navController.navigate(route = Screens.NewsDetail(encodedUrl))
             },
             onCircleButtonClicked = { navController.navigateToAiPredictScreen() },
             onCryptoItemClick = { symbol ->
-                navController.navigate(NavRoutes.CRYPTO_DETAIL + "/$symbol")
+                navController.navigate(route = CryptoDetail(symbol))
             }
         )
     }

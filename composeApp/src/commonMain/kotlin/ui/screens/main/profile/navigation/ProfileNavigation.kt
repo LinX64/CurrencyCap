@@ -6,11 +6,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.Screens.Profile
-import ui.navigation.util.NavRoutes
+import ui.navigation.util.Screens.Profile
 import ui.screens.main.profile.ProfileScreen
 
-fun NavController.navigateToProfileScreen(navOptions: NavOptions) = navigate(NavRoutes.PROFILE, navOptions)
+fun NavController.navigateToProfileScreen(navOptions: NavOptions) = navigate(Profile, navOptions)
 
 fun NavGraphBuilder.profileScreen(
     padding: PaddingValues,
