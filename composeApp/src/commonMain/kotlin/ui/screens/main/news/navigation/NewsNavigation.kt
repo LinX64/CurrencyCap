@@ -8,6 +8,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
+import ui.navigation.Screens.News
 import ui.navigation.util.NavRoutes
 import ui.screens.main.news.NewsScreen
 
@@ -18,7 +19,7 @@ fun NavGraphBuilder.newsScreen(
     hazeState: HazeState,
     navController: NavHostController
 ) {
-    composable(NavRoutes.NEWS) {
+    composable<News> {
         NewsScreen(
             padding = padding,
             hazeState = hazeState,

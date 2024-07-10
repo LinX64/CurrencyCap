@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
+import ui.navigation.Screens.Bookmarks
 import ui.navigation.util.NavRoutes
 import ui.screens.main.bookmarks.BookmarksScreen
 
@@ -16,7 +17,7 @@ fun NavGraphBuilder.bookmarksScreen(
     hazeState: HazeState,
     navController: NavController
 ) {
-    composable(NavRoutes.BOOKMARKS) {
+    composable<Bookmarks> {
         BookmarksScreen(
             padding = padding,
             hazeState = hazeState,

@@ -44,7 +44,11 @@ internal fun MainNavGraph(
             navController = navController,
             hazeState = hazeState
         )
-        aiPredictScreen(padding = padding, hazeState = hazeState)
+
+        aiPredictScreen(
+            padding = padding,
+            hazeState = hazeState
+        )
 
         overviewScreen(
             padding = padding,
@@ -67,7 +71,6 @@ internal fun MainNavGraph(
         newsDetailScreen(
             padding = padding,
             hazeState = hazeState,
-            navController = navController,
             onError = onError
         )
 

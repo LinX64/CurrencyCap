@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
+import ui.navigation.Screens.Exchange
 import ui.navigation.util.NavRoutes
 import ui.screens.main.exchange.ExchangeScreen
 
@@ -16,7 +17,7 @@ fun NavGraphBuilder.exchangeScreen(
     onError: (String) -> Unit,
     hazeState: HazeState
 ) {
-    composable(NavRoutes.EXCHANGE) {
+    composable<Exchange> {
         ExchangeScreen(
             padding = padding,
             onError = onError,

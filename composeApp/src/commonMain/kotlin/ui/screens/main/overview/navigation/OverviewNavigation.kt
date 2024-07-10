@@ -8,6 +8,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
+import ui.navigation.Screens.Overview
 import ui.navigation.util.NavRoutes
 import ui.screens.main.ai_predict.navigation.navigateToAiPredictScreen
 import ui.screens.main.overview.OverviewRoute
@@ -19,7 +20,7 @@ fun NavGraphBuilder.overviewScreen(
     hazeState: HazeState,
     navController: NavHostController
 ) {
-    composable(NavRoutes.OVERVIEW) {
+    composable<Overview> {
         OverviewRoute(
             padding = padding,
             hazeState = hazeState,
