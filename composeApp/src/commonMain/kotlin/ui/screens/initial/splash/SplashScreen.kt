@@ -36,7 +36,7 @@ internal fun SplashScreen(modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(Res.drawable.logo),
                 contentDescription = null,
-                modifier = Modifier.size(120.dp),
+                modifier = Modifier.size(180.dp),
                 contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.height(16.dp))
