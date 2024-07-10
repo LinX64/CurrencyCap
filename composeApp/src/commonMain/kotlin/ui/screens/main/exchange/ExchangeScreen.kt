@@ -129,7 +129,8 @@ private fun ExchangeCard(
     ) {
         GlassCard {
             Column(
-                modifier = modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally
+                modifier = modifier.padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -162,20 +163,25 @@ private fun ExchangeCard(
 
                 Spacer(modifier = Modifier.height(4.dp))
 
-                AmountInput(amount = amount, onErrorMessage = {
-                    keyboardController?.hide()
-                    onError(it)
-                }, onAmountChange = {
-                    amount = it
-                    viewModel.handleEvent(OnConvert(amount))
-                })
+                AmountInput(
+                    amount = amount,
+                    onErrorMessage = {
+                        keyboardController?.hide()
+                        onError(it)
+                    },
+                    onAmountChange = {
+                        amount = it
+                        viewModel.handleEvent(OnConvert(amount))
+                    }
+                )
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Box(
-            modifier = Modifier.fillMaxWidth().height(24.dp),
+            modifier = Modifier.fillMaxWidth()
+                .height(24.dp),
             contentAlignment = Alignment.Center
         ) {
             VerticalDivider(

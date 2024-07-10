@@ -106,7 +106,7 @@ internal class ExchangeViewModel(
         amountFlow
             .debounce(300)
             .distinctUntilChanged()
-            .onEach { convertCurrency(it) }
+            .onEach(::convertCurrency)
             .launchIn(viewModelScope)
     }
 
@@ -129,6 +129,9 @@ internal class ExchangeViewModel(
                 saveCurrencySourceCode(target.code)
             }
         }
+
+        // Update the UI
+        convertCurrency(amountFlow.value)
     }
 
     private fun convertCurrency(amount: String) {
@@ -145,14 +148,10 @@ internal class ExchangeViewModel(
     }
 
     private fun saveCurrencySourceCode(code: String) {
-        viewModelScope.launch {
-            currencyRepository.saveSourceCurrencyCode(code)
-        }
+        viewModelScope.launch { currencyRepository.saveSourceCurrencyCode(code) }
     }
 
     private fun saveCurrencyTargetCode(code: String) {
-        viewModelScope.launch {
-            currencyRepository.saveTargetCurrencyCode(code)
-        }
+        viewModelScope.launch { currencyRepository.saveTargetCurrencyCode(code) }
     }
 }

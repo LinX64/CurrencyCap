@@ -48,7 +48,7 @@ private fun LazyListScope.newsScreenContent(
 ) = when (val currentState = state.value) {
 
     is Success -> {
-        val articles = currentState.news.sortedBy { it.publishedAt }.reversed()
+        val articles = currentState.news
         items(articles.size) { index ->
 
             NewsItem(

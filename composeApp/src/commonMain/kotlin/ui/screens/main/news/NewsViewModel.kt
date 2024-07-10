@@ -38,9 +38,9 @@ class NewsViewModel(
         newsRepository.getNews()
             .map { result ->
                 when (result) {
-                    is NetworkResult.Success -> setState { Success(result.data) }
+                    is NetworkResult.Success -> setState { Success(result.data.sortedBy { it.publishedAt }.reversed()) }
                     is NetworkResult.Error -> {
-                        val news = result.data ?: emptyList()
+                        val news = result.data?.sortedBy { it.publishedAt }?.reversed() ?: emptyList()
                         val message = result.throwable.message ?: ""
 
                         if (news.isNotEmpty()) setState { Success(news) }
