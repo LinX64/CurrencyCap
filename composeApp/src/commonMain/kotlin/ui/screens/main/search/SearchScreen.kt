@@ -95,7 +95,7 @@ internal fun SearchScreen(
                     hazeState = hazeState
                 ) {
                     searchResultContent(
-                        state,
+                        state = state,
                         onRetryClicked = { searchViewModel.handleEvent(OnRetryClicked(text)) },
                         onCryptoItemClick = onCryptoItemClick
                     )
