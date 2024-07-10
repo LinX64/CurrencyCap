@@ -64,11 +64,10 @@ internal fun DetailScreen(
         when (state) {
             is DetailState.Success -> {
                 val crypto = state.crypto
-                val description = state.cryptoDescription
 
                 item { DetailHeader(crypto, isLoading) }
                 item { DetailBody(crypto, isLoading) }
-                item { DescriptionCard(description, isLoading) }
+                //item { DescriptionCard(description, isLoading) } TODO: fix this
             }
 
             else -> Unit

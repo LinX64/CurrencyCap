@@ -1,13 +1,10 @@
 package ui.screens.main.detail
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
-import data.util.NetworkResult.Loading
-import data.util.NetworkResult.Success
+import data.util.NetworkResult
 import data.util.asResult
 import domain.repository.MainRepository
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.map
 import ui.common.MviViewModel
 import ui.navigation.util.SYMBOL
 import ui.screens.main.detail.DetailViewEvent.OnLoadCryptoInfo
@@ -25,29 +22,21 @@ class DetailViewModel(
 
     override fun handleEvent(event: DetailViewEvent) {
         when (event) {
-            OnLoadCryptoInfo -> onLoadCryptoInfo()
+            OnLoadCryptoInfo -> onLoadCryptoDetail()
         }
     }
 
-    private fun onLoadCryptoInfo() {
-        viewModelScope.launch {
-            val name = mainRepository.getCryptoNameBySymbol(symbol).lowercase()
-            val cryptoDetailFlow = mainRepository.getCryptoBySymbol(symbol).asResult()
-            val cryptoInfoFlow = mainRepository.getCryptoInfoBySymbol(name).asResult()
-
-            combine(cryptoDetailFlow, cryptoInfoFlow) { detail, info ->
-                when {
-                    detail is Loading || info is Loading -> DetailState.Loading
-                    detail is Success && info is Success -> DetailState.Success(
-                        crypto = detail.data,
-                        cryptoDescription = info.data.en
-                    )
-
-                    else -> DetailState.Error("Failed to load crypto info")
+    private fun onLoadCryptoDetail() {
+        mainRepository.getCryptoBySymbol(symbol)
+            .asResult()
+            .map {
+                when (it) {
+                    is NetworkResult.Loading -> setState { DetailState.Loading }
+                    is NetworkResult.Success -> setState { DetailState.Success(it.data) }
+                    is NetworkResult.Error -> setState {
+                        DetailState.Error(it.throwable.message ?: "An error occurred")
+                    }
                 }
-            }.collect { state ->
-                setState { state }
             }
-        }
     }
 }
