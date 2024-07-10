@@ -19,18 +19,21 @@ internal fun GlassCard(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(8.dp),
     onCardClick: () -> Unit = {},
+    shouldBeClickable: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     Card(
         modifier = Modifier.wrapContentSize()
             .then(modifier),
         shape = RoundedCornerShape(35.dp),
-        border = BorderStroke(1.dp, Color.Gray.copy(alpha = 0.2f)),
+        border = BorderStroke(1.dp, Color.Gray.copy(alpha = 0.1f)),
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent,
-            contentColor = MaterialTheme.colorScheme.onSurface
+            contentColor = MaterialTheme.colorScheme.onSurface,
+            disabledContainerColor = Color.Transparent
         ),
-        onClick = onCardClick
+        onClick = onCardClick,
+        enabled = shouldBeClickable
     ) {
         Column(
             modifier = Modifier

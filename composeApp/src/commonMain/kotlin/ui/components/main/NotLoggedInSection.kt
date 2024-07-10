@@ -32,10 +32,11 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import ui.components.PrivacyBottomSheet
+import ui.components.PrivacyPolicyBottomSheet
 import ui.navigation.graphs.AuthNavGraph
 import ui.navigation.util.NavRoutes
 import ui.screens.MainViewModel
+import ui.screens.initial.privacy_policy.PrivacyPolicySection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -78,7 +79,12 @@ internal fun NotLoggedInSection(
         )
     }
 
-    if (isSheetOpen.value) PrivacyBottomSheet(sheetState = scaffoldState)
+    if (isSheetOpen.value) {
+        PrivacyPolicyBottomSheet(
+            isVisible = isSheetOpen.value,
+            onDismissRequest = { isSheetOpen.value = false }
+        ) { PrivacyPolicySection() }
+    }
 }
 
 @Composable

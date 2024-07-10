@@ -39,8 +39,7 @@ internal fun MarketTab(
         LazyVerticalGrid(
             modifier = Modifier.fillMaxSize().height(220.dp),
             columns = GridCells.Fixed(2),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             when (state) {
                 is Success -> {

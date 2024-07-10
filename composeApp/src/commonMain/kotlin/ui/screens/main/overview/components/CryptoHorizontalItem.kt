@@ -59,6 +59,7 @@ internal fun CryptoHorizontalItem(
     onClick: (String) -> Unit
 ) {
     GlassCard(
+        shouldBeClickable = true,
         onCardClick = { onClick(crypto.symbol) }
     ) {
         Row(

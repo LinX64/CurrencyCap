@@ -39,6 +39,7 @@ internal fun TopMoversCard(
         modifier = Modifier
             .padding(end = 8.dp)
             .wrapContentHeight(),
+        shouldBeClickable = true,
         onCardClick = { onClick(topMovers.symbol) }
     ) {
         Column(

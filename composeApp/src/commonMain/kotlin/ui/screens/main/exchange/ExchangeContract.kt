@@ -30,7 +30,6 @@ sealed interface ExchangeNavigationEffect {
 
 @Stable
 data class ExchangeUiState(
-    val isLoading: Boolean = false,
     val rateState: RateStatus = RateStatus.Idle,
     val sourceCurrency: Currency? = null,
     val targetCurrency: Currency? = null,

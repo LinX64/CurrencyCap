@@ -29,6 +29,7 @@ import ui.common.formatToPrice
 import ui.components.GlassCard
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.profile.components.HelpCenterBaseGlassCard
+import ui.theme.colors.CurrencyColors
 
 @Composable
 internal fun DetailRoute(
@@ -53,7 +54,6 @@ internal fun DetailScreen(
     hazeState: HazeState,
 ) {
     val isLoading = state is DetailState.Loading
-    val isError = state is DetailState.Error
 
     BaseGlassLazyColumn(
         padding = padding,
@@ -134,7 +134,10 @@ private fun DetailHeader(crypto: Crypto, isLoading: Boolean) {
 }
 
 @Composable
-private fun DetailBody(crypto: Crypto, isLoading: Boolean) {
+private fun DetailBody(
+    crypto: Crypto,
+    isLoading: Boolean
+) {
     HelpCenterBaseGlassCard(title = "Stats") {
         Column(
             modifier = Modifier
@@ -170,10 +173,12 @@ private fun DetailBody(crypto: Crypto, isLoading: Boolean) {
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
 
+                val textColor =
+                    if (crypto.priceChangePercentage24h > 0) CurrencyColors.Green.primary else CurrencyColors.Red.primary
                 Text(
                     text = "${crypto.priceChangePercentage24h}%",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = textColor,
                     fontWeight = FontWeight.Bold
                 )
             }

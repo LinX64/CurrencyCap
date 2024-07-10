@@ -53,7 +53,7 @@ internal fun SearchViewHeader(
                 onClick = onSearchCardClicked,
                 border = BorderStroke(
                     width = 1.dp,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),
+                    color = Color.Gray.copy(alpha = .1f)
                 )
             ) {
                 Row(
@@ -91,7 +91,7 @@ private fun CircleButton(
         shape = RoundedCornerShape(35.dp),
         border = BorderStroke(
             width = 1.dp,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),
+            color = Color.Gray.copy(alpha = .1f)
         )
     ) {
         IconButton(

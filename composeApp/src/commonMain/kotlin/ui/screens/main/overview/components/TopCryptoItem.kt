@@ -46,7 +46,9 @@ internal fun TopCryptoItem(
     dataDao: Rate,
     isLoading: Boolean = false
 ) {
-    GlassCard {
+    GlassCard(
+        shouldBeClickable = true
+    ) {
         Card(
             modifier = modifier
                 .size(cardSize)
