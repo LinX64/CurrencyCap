@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import ui.navigation.util.Screens.Register
+import ui.navigation.util.Register
 import ui.screens.initial.fill_profile.navigation.navigateToFillProfileScreen
 import ui.screens.initial.login.navigation.navigateToLoginScreen
 import ui.screens.initial.register.RegisterScreen

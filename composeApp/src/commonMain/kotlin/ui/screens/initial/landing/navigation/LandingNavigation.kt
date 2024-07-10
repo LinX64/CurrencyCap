@@ -3,7 +3,7 @@ package ui.screens.initial.landing.navigation
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import ui.navigation.util.Screens.Landing
+import ui.navigation.util.Landing
 import ui.screens.initial.landing.LandingScreen
 import ui.screens.initial.login.navigation.navigateToLoginScreen
 import ui.screens.initial.register.navigation.navigateToRegisterScreen

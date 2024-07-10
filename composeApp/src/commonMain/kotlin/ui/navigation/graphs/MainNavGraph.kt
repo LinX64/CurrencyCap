@@ -10,7 +10,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.util.Screens.Overview
+import ui.navigation.util.Overview
 import ui.screens.main.ai_predict.navigation.aiPredictScreen
 import ui.screens.main.bookmarks.navigation.bookmarksScreen
 import ui.screens.main.detail.navigation.detailScreen

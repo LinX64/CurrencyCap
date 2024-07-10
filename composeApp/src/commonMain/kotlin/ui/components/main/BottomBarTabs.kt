@@ -6,33 +6,33 @@ import currencycap.composeapp.generated.resources.ic_news
 import currencycap.composeapp.generated.resources.ic_save
 import currencycap.composeapp.generated.resources.ic_user_normal
 import org.jetbrains.compose.resources.DrawableResource
-import ui.navigation.util.Screens
+import ui.navigation.util.ScreenRoutes
 
 sealed class BottomBarTab(
     val route: String,
     val icon: DrawableResource? = null,
 ) {
     data object Overview : BottomBarTab(
-        route = Screens.Overview.route,
+        route = ScreenRoutes.OVERVIEW,
         icon = Res.drawable.ic_home
     )
 
     data object News : BottomBarTab(
-        route = Screens.News.route,
+        route = ScreenRoutes.NEWS,
         icon = Res.drawable.ic_news
     )
 
     data object Exchange : BottomBarTab(
-        route = Screens.Exchange.route,
+        route = ScreenRoutes.EXCHANGE,
     )
 
     data object Bookmarks : BottomBarTab(
-        route = Screens.Bookmarks.route,
+        route = ScreenRoutes.BOOKMARKS,
         icon = Res.drawable.ic_save
     )
 
     data object Profile : BottomBarTab(
-        route = Screens.Profile.route,
+        route = ScreenRoutes.PROFILE,
         icon = Res.drawable.ic_user_normal
     )
 }

@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.util.Screens.Exchange
+import ui.navigation.util.Exchange
 import ui.screens.main.exchange.ExchangeScreen
 
 fun NavController.navigateToExchangeScreen(navOptions: NavOptions) = navigate(Exchange, navOptions)

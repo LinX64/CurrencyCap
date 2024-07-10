@@ -46,9 +46,10 @@ import currencycap.composeapp.generated.resources.ic_arrow_up_down
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
-import ui.navigation.util.Screens.AIPredict
-import ui.navigation.util.Screens.CryptoDetail
-import ui.navigation.util.Screens.Explore
+import ui.navigation.util.AIPredict
+import ui.navigation.util.CryptoDetail
+import ui.navigation.util.Explore
+import ui.navigation.util.ScreenRoutes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,9 +64,9 @@ internal fun BottomNavigationBar(
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
     val currentRoute = navBackStackEntry?.destination?.route
-    val isExploreScreen = currentRoute == Explore.route
-    val isAIScreen = currentRoute == AIPredict.route
-    val isDetailScreen = currentRoute?.startsWith(CryptoDetail("").route) == true
+    val isExploreScreen = currentRoute == ScreenRoutes.EXPLORE
+    val isAIScreen = currentRoute == ScreenRoutes.AI_PREDICTION
+    val isDetailScreen = currentRoute?.startsWith(ScreenRoutes.CRYPTO_DETAIL) == true
 
     LaunchedEffect(currentRoute) {
         val newIndex = tabs.indexOfFirst { it.route == currentRoute }

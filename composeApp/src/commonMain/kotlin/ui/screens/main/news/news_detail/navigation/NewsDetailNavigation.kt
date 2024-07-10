@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import dev.chrisbanes.haze.HazeState
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
-import ui.navigation.util.Screens.NewsDetail
+import ui.navigation.util.NewsDetail
 import ui.screens.main.news.news_detail.NewsDetailScreen
 
 fun NavGraphBuilder.newsDetailScreen(
