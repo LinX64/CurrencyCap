@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign.Companion.Justify
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
@@ -63,10 +64,11 @@ internal fun DetailScreen(
         when (state) {
             is DetailState.Success -> {
                 val crypto = state.crypto
+                val description = state.cryptoDescription
 
                 item { DetailHeader(crypto, isLoading) }
                 item { DetailBody(crypto, isLoading) }
-                item { DescriptionCard(crypto, isLoading) }
+                item { DescriptionCard(description, isLoading) }
             }
 
             else -> Unit
@@ -74,29 +76,7 @@ internal fun DetailScreen(
     }
 }
 
-@Composable
-private fun DescriptionCard(
-    crypto: Crypto,
-    loading: Boolean
-) {
-    HelpCenterBaseGlassCard(
-        title = "Description",
-        badgeColor = MaterialTheme.colorScheme.secondary
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 14.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Text(
-                text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-            )
-        }
-    }
-}
+
 
 @Composable
 private fun DetailHeader(crypto: Crypto, isLoading: Boolean) {
@@ -154,7 +134,6 @@ private fun DetailBody(
             ) {
                 Text(
                     text = "Market Cap",
-                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
 
@@ -172,7 +151,6 @@ private fun DetailBody(
             ) {
                 Text(
                     text = "Volume",
-                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
 
@@ -192,7 +170,6 @@ private fun DetailBody(
             ) {
                 Text(
                     text = "24h High",
-                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
 
@@ -210,7 +187,6 @@ private fun DetailBody(
             ) {
                 Text(
                     text = "24h Low",
-                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
 
@@ -228,7 +204,6 @@ private fun DetailBody(
             ) {
                 Text(
                     text = "All Time High",
-                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
 
@@ -239,6 +214,30 @@ private fun DetailBody(
                     fontWeight = FontWeight.Bold
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun DescriptionCard(
+    description: String,
+    loading: Boolean
+) {
+    HelpCenterBaseGlassCard(
+        title = "Description",
+        badgeColor = MaterialTheme.colorScheme.secondary
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 14.dp),
+        ) {
+            Text(
+                text = description,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                textAlign = Justify,
+                maxLines = 24
+            )
         }
     }
 }

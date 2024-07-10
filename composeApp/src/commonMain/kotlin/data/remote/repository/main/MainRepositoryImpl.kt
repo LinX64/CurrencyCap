@@ -1,6 +1,8 @@
 package data.remote.repository.main
 
 import data.remote.model.main.CurrenciesDto
+import data.remote.model.main.Description
+import data.remote.model.main.KoinGeckoResponse
 import data.remote.model.main.toBonbastRateDomain
 import data.remote.model.main.toCryptoDomain
 import data.remote.model.main.toDomain
@@ -8,6 +10,7 @@ import data.remote.model.main.toMarketDomain
 import data.remote.model.main.toRateDomain
 import data.remote.model.news.ArticleDto
 import data.util.APIConst.BASE_URL
+import data.util.APIConst.CRYPTO_INFO_URL
 import data.util.APIConst.NEWS_URL
 import data.util.parseCurrencyRates
 import data.util.retryOnIOException
@@ -17,11 +20,13 @@ import domain.repository.MainRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.serialization.json.Json
 
 class MainRepositoryImpl(
     private val httpClient: HttpClient
@@ -50,6 +55,23 @@ class MainRepositoryImpl(
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
+
+    override fun getCryptoInfoBySymbol(symbol: String): Flow<Description> = flow {
+        val jsonString = httpClient.get("$CRYPTO_INFO_URL/$symbol").bodyAsText()
+        val json = Json {
+            ignoreUnknownKeys = true
+            coerceInputValues = true
+        }
+        val partialResponse = json.decodeFromString<KoinGeckoResponse>(jsonString)
+        emit(partialResponse.description)
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getCryptoNameBySymbol(symbol: String): String {
+        val currencies = getCurrencies()
+
+        val cryptoName = currencies.crypto.first { it.symbol == symbol }.name
+        return cryptoName
+    }
 
     override fun search(query: String): Flow<List<Crypto>> = flow {
         val currencies = getCurrencies()
