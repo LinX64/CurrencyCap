@@ -75,7 +75,10 @@ internal fun DetailScreen(
 }
 
 @Composable
-private fun DescriptionCard(crypto: Crypto, loading: Boolean) {
+private fun DescriptionCard(
+    crypto: Crypto,
+    loading: Boolean
+) {
     HelpCenterBaseGlassCard(
         title = "Description",
         badgeColor = MaterialTheme.colorScheme.secondary
