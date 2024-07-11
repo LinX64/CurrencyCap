@@ -1,5 +1,8 @@
 package domain.model.main
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class Market(
     val baseId: String,
     val baseSymbol: String,

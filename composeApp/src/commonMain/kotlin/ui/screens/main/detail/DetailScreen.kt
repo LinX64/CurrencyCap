@@ -42,14 +42,13 @@ internal fun DetailRoute(
     val state by detailViewModel.viewState.collectAsStateWithLifecycle()
     DetailScreen(
         state = state,
-        hazeState = hazeState,
         padding = padding,
+        hazeState = hazeState,
     )
 }
 
 @Composable
 internal fun DetailScreen(
-    modifier: Modifier = Modifier,
     state: DetailState,
     padding: PaddingValues,
     hazeState: HazeState,
