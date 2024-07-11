@@ -8,10 +8,10 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
-import ui.navigation.util.CryptoDetail
-import ui.navigation.util.Explore
-import ui.navigation.util.NewsDetail
-import ui.navigation.util.Overview
+import ui.navigation.util.Screen.CryptoDetail
+import ui.navigation.util.Screen.Explore
+import ui.navigation.util.Screen.NewsDetail
+import ui.navigation.util.Screen.Overview
 import ui.screens.main.ai_predict.navigation.navigateToAiPredictScreen
 import ui.screens.main.overview.OverviewRoute
 
@@ -33,11 +33,11 @@ fun NavGraphBuilder.overviewScreen(
             },
             onNewsItemClick = { url ->
                 val encodedUrl = UrlEncoderUtil.encode(url)
-                navController.navigate(route = NewsDetail(encodedUrl))
+                navController.navigate(NewsDetail(encodedUrl))
             },
             onCircleButtonClicked = { navController.navigateToAiPredictScreen() },
             onCryptoItemClick = { symbol ->
-                navController.navigate(route = CryptoDetail(symbol))
+                navController.navigate(CryptoDetail(symbol))
             }
         )
     }

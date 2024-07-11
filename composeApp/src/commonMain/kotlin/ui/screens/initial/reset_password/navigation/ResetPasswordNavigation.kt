@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import ui.navigation.util.ResetPassword
+import ui.navigation.util.Screen.ResetPassword
 import ui.screens.initial.login.navigation.navigateToLoginScreen
 import ui.screens.initial.reset_password.ResetPasswordScreen
 

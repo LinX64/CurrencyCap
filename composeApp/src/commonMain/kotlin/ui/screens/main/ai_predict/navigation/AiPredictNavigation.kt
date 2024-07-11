@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.util.AIPredict
+import ui.navigation.util.Screen.AIPredict
 import ui.screens.main.ai_predict.AiPredictScreen
 
 fun NavController.navigateToAiPredictScreen() = navigate(AIPredict)

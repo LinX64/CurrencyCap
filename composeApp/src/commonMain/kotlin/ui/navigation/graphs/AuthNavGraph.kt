@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import ui.navigation.util.Landing
+import ui.navigation.util.Screen.Landing
 import ui.screens.initial.fill_profile.navigation.fillProfileScreen
 import ui.screens.initial.get_verified.navigation.getVerifiedPhoneScreen
 import ui.screens.initial.landing.navigation.landingScreen

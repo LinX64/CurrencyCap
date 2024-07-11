@@ -6,8 +6,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.util.CryptoDetail
-import ui.navigation.util.Explore
+import ui.navigation.util.Screen.CryptoDetail
+import ui.navigation.util.Screen.Explore
 import ui.screens.main.search.SearchScreen
 
 fun NavController.navigateToSearchScreen() = navigate(Explore)
