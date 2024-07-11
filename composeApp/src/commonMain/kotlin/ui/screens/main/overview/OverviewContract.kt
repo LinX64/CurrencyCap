@@ -1,5 +1,6 @@
 package ui.screens.main.overview
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import domain.model.Article
 import domain.model.main.BonbastRate
@@ -26,6 +27,7 @@ sealed interface OverviewState {
         val news: ImmutableList<Article>
     ) : OverviewState
 
+    @Immutable
     data class Error(val message: String) : OverviewState
 }
 
