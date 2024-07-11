@@ -19,12 +19,7 @@ import currencycap.composeapp.generated.resources.ic_arrow_left
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
-import ui.navigation.util.AIPredict
-import ui.navigation.util.CryptoDetail
-import ui.navigation.util.Explore
-import ui.navigation.util.NewsDetail
 import ui.navigation.util.ScreenRoutes
-import ui.navigation.util.Settings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
