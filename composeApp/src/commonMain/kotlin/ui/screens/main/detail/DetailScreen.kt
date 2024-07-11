@@ -35,15 +35,15 @@ import ui.theme.colors.CurrencyColors
 @Composable
 internal fun DetailRoute(
     padding: PaddingValues,
-    symbol: String,
-    detailViewModel: DetailViewModel = koinViewModel { parametersOf(symbol) },
     hazeState: HazeState,
+    symbol: String,
+    detailViewModel: DetailViewModel = koinViewModel { parametersOf(symbol) }
 ) {
     val state by detailViewModel.viewState.collectAsStateWithLifecycle()
     DetailScreen(
         state = state,
         padding = padding,
-        hazeState = hazeState,
+        hazeState = hazeState
     )
 }
 

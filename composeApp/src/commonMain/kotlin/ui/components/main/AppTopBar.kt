@@ -51,25 +51,46 @@ internal fun AppTopBar(
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.Transparent,
-            scrolledContainerColor = Color.Transparent,
+            scrolledContainerColor = Color.Transparent
         ),
         scrollBehavior = scrollBehavior,
         navigationIcon = {
-            if (isSettingsScreen ||
-                isNewsDetailScreen == true ||
-                isExploreScreen ||
-                isAiScreen ||
-                isDetailScreen == true
-            ) {
-                IconButton(onClick = { navController.navigateUp() }) {
-                    Icon(
-                        painter = painterResource(Res.drawable.ic_arrow_left),
-                        contentDescription = "Back",
-                        tint = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-            }
+            NavigationIcon(
+                isSettingsScreen,
+                isNewsDetailScreen,
+                isExploreScreen,
+                isAiScreen,
+                isDetailScreen,
+                navController
+            )
         }
     )
+}
+
+@Composable
+private fun NavigationIcon(
+    isSettingsScreen: Boolean,
+    isNewsDetailScreen: Boolean?,
+    isExploreScreen: Boolean,
+    isAiScreen: Boolean,
+    isDetailScreen: Boolean?,
+    navController: NavHostController
+) {
+    if (isSettingsScreen ||
+        isNewsDetailScreen == true ||
+        isExploreScreen ||
+        isAiScreen ||
+        isDetailScreen == true
+    ) {
+        IconButton(
+            onClick = navController::navigateUp
+        ) {
+            Icon(
+                painter = painterResource(Res.drawable.ic_arrow_left),
+                contentDescription = "Back",
+                tint = MaterialTheme.colorScheme.onSurface
+            )
+        }
+    }
 }
 

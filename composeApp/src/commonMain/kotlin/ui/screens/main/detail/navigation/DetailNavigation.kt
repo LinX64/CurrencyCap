@@ -19,7 +19,7 @@ fun NavGraphBuilder.detailScreen(
         DetailRoute(
             padding = padding,
             hazeState = hazeState,
-            symbol = symbol,
+            symbol = symbol
         )
     }
 }

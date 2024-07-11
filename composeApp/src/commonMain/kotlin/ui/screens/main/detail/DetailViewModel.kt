@@ -1,11 +1,13 @@
 package ui.screens.main.detail
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import data.util.NetworkResult.Error
 import data.util.NetworkResult.Loading
 import data.util.NetworkResult.Success
 import data.util.asResult
 import domain.repository.MainRepository
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import ui.common.MviViewModel
 import ui.navigation.util.SYMBOL
@@ -40,5 +42,6 @@ class DetailViewModel(
                     }
                 }
             }
+            .launchIn(viewModelScope)
     }
 }
