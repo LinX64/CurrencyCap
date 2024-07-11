@@ -2,7 +2,6 @@ package util
 
 import data.remote.model.User
 import domain.model.Article
-import domain.model.News
 import domain.model.Source
 import domain.model.main.BonbastRate
 import domain.model.main.Crypto
@@ -143,16 +142,6 @@ internal fun getDummyMarketRates(): List<Market> = listOf(
 internal fun getDummyRatesItem(): List<Rate> = listOf(
     Rate(
         id = "vero", rateUsd = "ultricies", symbol = "animal", type = "proin", currencySymbol = null
-    )
-)
-
-internal fun getDummyNews(): List<News> = listOf(
-    News(
-        articles = listOf(
-            getDummyNewsItem()
-        ),
-        status = "status",
-        totalResults = 1
     )
 )
 
