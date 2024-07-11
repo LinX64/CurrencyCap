@@ -1,5 +1,6 @@
 package ui.theme
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ fun AppM3Theme(
     )
 }
 
+@VisibleForTesting
 private fun appLightColorScheme(): ColorScheme = ColorScheme(
     primary = CurrencyColors.Green.primary,
     onPrimary = CurrencyColors.White,
@@ -56,6 +58,7 @@ private fun appLightColorScheme(): ColorScheme = ColorScheme(
     surfaceContainerLowest = CurrencyColors.DarkGray
 )
 
+@VisibleForTesting
 private fun appDarkColorScheme(): ColorScheme = ColorScheme(
     primary = CurrencyColors.Lemon.primary,
     onPrimary = CurrencyColors.LemonGreen,

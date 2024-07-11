@@ -45,7 +45,10 @@ internal fun BookmarksScreen(
         content = {
             if (state is BookmarksState.Success) {
                 val articles = (state as BookmarksState.Success).articles
-                items(articles.size) { index ->
+                items(
+                    count = articles.size,
+                    key = { articles[it].url }
+                ) { index ->
                     NewsItem(
                         article = articles[index],
                         shouldShowBookmark = true,

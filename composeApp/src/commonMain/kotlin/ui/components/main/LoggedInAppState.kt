@@ -22,11 +22,9 @@ import ui.screens.main.profile.navigation.navigateToProfileScreen
 
 @Composable
 internal fun rememberLoggedInAppState(
-    navController: NavHostController = rememberNavController(),
-): LoggedInAppState {
-    return remember(navController) {
-        LoggedInAppState(navController = navController)
-    }
+    navController: NavHostController = rememberNavController()
+): LoggedInAppState = remember(navController) {
+    LoggedInAppState(navController = navController)
 }
 
 @Stable

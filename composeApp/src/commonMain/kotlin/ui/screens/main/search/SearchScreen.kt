@@ -126,9 +126,12 @@ private fun LazyListScope.searchResultContent(
     onCryptoItemClick: (String) -> Unit
 ) = when (state) {
     is SearchState.Success -> {
-        val result = state.cryptoList
-        items(result.size) {
-            val data = result[it]
+        val cryptoItems = state.cryptoList
+        items(
+            count = cryptoItems.size,
+            key = { cryptoItems[it].id }
+        ) {
+            val data = cryptoItems[it]
             CryptoHorizontalItem(
                 crypto = data,
                 isLoading = false,
