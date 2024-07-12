@@ -45,11 +45,11 @@ internal fun SearchViewHeader(
             modifier = if (isLoading) getPlaceHolder(
                 Modifier.fillMaxWidth(0.8f)
             ) else Modifier.fillMaxWidth(0.8f),
-            shape = RoundedCornerShape(25.dp),
+            shape = RoundedCornerShape(35.dp),
             onClick = onSearchCardClicked,
             border = BorderStroke(
                 width = 1.dp,
-                color = Color.Gray.copy(alpha = .1f)
+                color = Color.Gray.copy(alpha = .1f),
             ),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surface
