@@ -2,14 +2,16 @@ package ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -34,50 +36,48 @@ internal fun SearchViewHeader(
 ) {
     val isLoading = state is OverviewState.Loading
 
-    Box(
-        modifier = Modifier.fillMaxWidth()
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically,
+        Card(
+            modifier = if (isLoading) getPlaceHolder(
+                Modifier.fillMaxWidth(0.8f)
+            ) else Modifier.fillMaxWidth(0.8f),
+            shape = RoundedCornerShape(25.dp),
+            onClick = onSearchCardClicked,
+            border = BorderStroke(
+                width = 1.dp,
+                color = Color.Gray.copy(alpha = .1f)
+            ),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            )
         ) {
-            Card(
-                modifier = if (isLoading) getPlaceHolder(
-                    Modifier
-                        .fillMaxWidth(0.8f)
-                        .padding(8.dp)
-                ) else Modifier
-                    .fillMaxWidth(0.8f)
-                    .padding(8.dp),
-                shape = RoundedCornerShape(25.dp),
-                onClick = onSearchCardClicked,
-                border = BorderStroke(
-                    width = 1.dp,
-                    color = Color.Gray.copy(alpha = .1f)
-                )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Icon(
-                        modifier = if (isLoading) getPlaceHolder(Modifier.padding(16.dp)) else Modifier.padding(16.dp),
-                        painter = painterResource(Res.drawable.ic_search_normal),
-                        contentDescription = "Search",
-                        tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                    )
+                Icon(
+                    modifier = if (isLoading) getPlaceHolder(Modifier.padding(16.dp)) else Modifier.padding(16.dp),
+                    painter = painterResource(Res.drawable.ic_search_normal),
+                    contentDescription = "Search",
+                    tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                )
 
-                    Text(
-                        modifier = if (isLoading) getPlaceHolder(Modifier.padding(16.dp)) else Modifier.padding(16.dp),
-                        text = "Type to search",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                    )
-                }
+                Text(
+                    modifier = if (isLoading) getPlaceHolder(Modifier.padding(16.dp)) else Modifier.padding(16.dp),
+                    text = "Type to search",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                )
             }
-
-            CircleButton(isLoading = isLoading, onCircleButtonClicked = onCircleButtonClicked)
         }
+
+        Spacer(modifier = Modifier.width(8.dp))
+
+        CircleButton(isLoading = isLoading, onCircleButtonClicked = onCircleButtonClicked)
     }
 }
 
@@ -92,6 +92,9 @@ private fun CircleButton(
         border = BorderStroke(
             width = 1.dp,
             color = Color.Gray.copy(alpha = .1f)
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         IconButton(

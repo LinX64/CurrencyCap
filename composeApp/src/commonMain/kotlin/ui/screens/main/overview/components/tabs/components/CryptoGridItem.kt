@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import domain.model.main.Crypto
+import ui.components.GlassCard
 import util.formatNumber
 
 @Composable
@@ -29,12 +28,13 @@ internal fun CryptoGridItem(
     cryptoItem: Crypto,
     onCryptoItemClick: (symbol: String) -> Unit
 ) {
-    Card(
-        modifier = Modifier.padding(end = 16.dp),
-        onClick = { onCryptoItemClick(cryptoItem.symbol) },
+    GlassCard(
+        modifier = Modifier.padding(end = 8.dp),
+        isClickable = true,
+        onCardClick = { onCryptoItemClick(cryptoItem.symbol) },
     ) {
         Column(
-            modifier = Modifier.wrapContentSize()
+            modifier = Modifier.size(width = 190.dp, height = 80.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
@@ -71,13 +71,19 @@ internal fun CryptoGridItem(
                             text = "$${formatNumber(cryptoItem.currentPrice)}",
                             color = MaterialTheme.colorScheme.onSurface,
                             fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                            fontWeight = FontWeight.Medium
+                            fontWeight = FontWeight.Medium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
+
+                        Spacer(modifier = Modifier.width(4.dp))
 
                         Text(
                             text = "MC: $${formatNumber(cryptoItem.marketCap)}",
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
-                            fontSize = MaterialTheme.typography.bodySmall.fontSize
+                            fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
                 }

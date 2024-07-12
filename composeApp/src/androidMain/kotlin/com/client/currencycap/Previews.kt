@@ -1,9 +1,13 @@
 package com.client.currencycap
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import dev.chrisbanes.haze.HazeState
+import ui.components.SearchViewHeader
+import ui.screens.main.overview.OverviewState
 
 //@Composable
 //@Preview(showBackground = true)
@@ -38,7 +42,15 @@ private fun DetailPreview() {
     val hazeState = remember { HazeState() }
 
     KoinPreview {
-
+        Column(
+            verticalArrangement = Arrangement.Center
+        ) {
+            SearchViewHeader(
+                state = OverviewState.Loading,
+                onSearchCardClicked = { },
+                onCircleButtonClicked = {}
+            )
+        }
     }
 }
 
