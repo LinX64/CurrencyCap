@@ -3,7 +3,6 @@ package ui.components.main
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
-import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -14,6 +13,11 @@ import ui.components.main.BottomBarTab.Exchange
 import ui.components.main.BottomBarTab.News
 import ui.components.main.BottomBarTab.Overview
 import ui.components.main.BottomBarTab.Profile
+import ui.navigation.util.ScreenRoutes.BOOKMARKS
+import ui.navigation.util.ScreenRoutes.EXCHANGE
+import ui.navigation.util.ScreenRoutes.NEWS
+import ui.navigation.util.ScreenRoutes.OVERVIEW
+import ui.navigation.util.ScreenRoutes.PROFILE
 import ui.screens.main.bookmarks.navigation.navigateToBookmarksScreen
 import ui.screens.main.exchange.navigation.navigateToExchangeScreen
 import ui.screens.main.news.navigation.navigateToNewsScreen
@@ -31,9 +35,9 @@ internal fun rememberLoggedInAppState(
 internal class LoggedInAppState(
     val navController: NavHostController
 ) {
-    val currentDestination: NavDestination?
+    val currentDestination: String?
         @Composable get() = navController
-            .currentBackStackEntryAsState().value?.destination
+            .currentBackStackEntryAsState().value?.destination?.route
 
     fun navigateToTopLevelDestination(topLevelDestination: BottomBarTab) {
         val topLevelNavOptions = navOptions {
@@ -52,6 +56,18 @@ internal class LoggedInAppState(
             Exchange -> navController.navigateToExchangeScreen(topLevelNavOptions)
             Bookmarks -> navController.navigateToBookmarksScreen(topLevelNavOptions)
             Profile -> navController.navigateToProfileScreen(topLevelNavOptions)
+        }
+    }
+
+    private fun getTabFromRoute(route: String?): String? {
+        println("route: $route") // ui.navigation.util.Screen.Overview
+        return when (route) {
+            OVERVIEW -> Overview.screen
+            NEWS -> News.screen
+            EXCHANGE -> Exchange.screen
+            BOOKMARKS -> Bookmarks.screen
+            PROFILE -> Profile.screen
+            else -> null
         }
     }
 }

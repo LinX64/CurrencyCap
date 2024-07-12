@@ -31,7 +31,7 @@ internal fun LoggedInSection(
     scaffoldState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState(),
     scope: CoroutineScope
 ) {
-    val currentDestination = appState.currentDestination?.route
+    val currentDestination = appState.currentDestination
     val navController = appState.navController
     val isSheetOpen = rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -49,7 +49,7 @@ internal fun LoggedInSection(
         },
         bottomBar = {
             BottomNavigationBar(
-                navController = navController,
+                currentDestination = currentDestination,
                 scrollBehavior = scrollBehavior,
                 hazeState = hazeState,
                 isSettingsScreen = isSettingsScreen,

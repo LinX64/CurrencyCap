@@ -39,8 +39,6 @@ import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.ic_arrow_up_down
 import dev.chrisbanes.haze.HazeState
@@ -51,22 +49,20 @@ import ui.navigation.util.ScreenRoutes
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun BottomNavigationBar(
-    onTabSelected: (BottomBarTab) -> Unit,
+    currentDestination: String?,
     scrollBehavior: TopAppBarScrollBehavior,
     hazeState: HazeState,
     isSettingsScreen: Boolean,
-    navController: NavHostController
+    onTabSelected: (BottomBarTab) -> Unit
 ) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
-    val currentRoute = navBackStackEntry?.destination?.route
-    val isExploreScreen = currentRoute == ScreenRoutes.EXPLORE
-    val isAIScreen = currentRoute == ScreenRoutes.AI_PREDICTION
-    val isDetailScreen = currentRoute?.startsWith(ScreenRoutes.CRYPTO_DETAIL) == true
+    val isExploreScreen = currentDestination == ScreenRoutes.EXPLORE
+    val isAIScreen = currentDestination == ScreenRoutes.AI_PREDICTION
+    val isDetailScreen = currentDestination?.startsWith(ScreenRoutes.CRYPTO_DETAIL) == true
 
-    LaunchedEffect(currentRoute) {
-        val newIndex = tabs.indexOfFirst { it.route == currentRoute }
+    LaunchedEffect(currentDestination) {
+        val newIndex = tabs.indexOfFirst { it.screen == currentDestination }
         if (newIndex != -1) {
             selectedTabIndex = newIndex
         }
