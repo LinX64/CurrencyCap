@@ -18,7 +18,7 @@ import ui.screens.main.news.NewsViewEvent.OnRetry
 import util.getDummyNewsItem
 
 @Composable
-internal fun NewsScreen(
+internal fun NewsRoute(
     padding: PaddingValues,
     newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
     hazeState: HazeState,
@@ -26,6 +26,23 @@ internal fun NewsScreen(
 ) {
     val state = newsViewModel.viewState.collectAsStateWithLifecycle()
 
+    NewsScreen(
+        padding = padding,
+        state = state,
+        newsViewModel = newsViewModel,
+        hazeState = hazeState,
+        onNewsItemClick = onNewsItemClick
+    )
+}
+
+@Composable
+internal fun NewsScreen(
+    padding: PaddingValues,
+    state: State<NewsState>,
+    newsViewModel: NewsViewModel,
+    hazeState: HazeState,
+    onNewsItemClick: (url: String) -> Unit
+) {
     BaseGlassLazyColumn(
         hazeState = hazeState,
         padding = padding,

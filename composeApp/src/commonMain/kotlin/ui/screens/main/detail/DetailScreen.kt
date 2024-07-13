@@ -29,6 +29,7 @@ import org.koin.core.parameter.parametersOf
 import ui.common.formatToPrice
 import ui.components.GlassCard
 import ui.components.main.BaseGlassLazyColumn
+import ui.screens.main.overview.components.getPlaceHolder
 import ui.screens.main.profile.components.HelpCenterBaseGlassCard
 import ui.theme.colors.CurrencyColors
 
@@ -65,7 +66,7 @@ internal fun DetailScreen(
                 val crypto = state.crypto
 
                 item { DetailHeader(crypto, isLoading) }
-                item { DetailBody(crypto, isLoading) }
+                item { DetailBody(crypto) }
                 //item { DescriptionCard(description, isLoading) } TODO: fix this
             }
 
@@ -89,10 +90,16 @@ private fun DetailHeader(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            AsyncImage(
-                modifier = Modifier
+            val isLoadingModifier = if (isLoading) getPlaceHolder(
+                Modifier
                     .size(100.dp)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+            ) else Modifier
+                .size(100.dp)
+                .clip(CircleShape)
+
+            AsyncImage(
+                modifier = isLoadingModifier,
                 model = crypto.image,
                 contentDescription = null
             )
@@ -117,8 +124,7 @@ private fun DetailHeader(
 
 @Composable
 private fun DetailBody(
-    crypto: Crypto,
-    isLoading: Boolean
+    crypto: Crypto
 ) {
     HelpCenterBaseGlassCard(title = "Stats") {
         Column(
