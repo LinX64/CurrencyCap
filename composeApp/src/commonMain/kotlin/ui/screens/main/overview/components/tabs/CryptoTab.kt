@@ -23,7 +23,6 @@ import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.ChangeIcon
 import ui.screens.main.overview.components.TopMoversChart
 import ui.screens.main.overview.components.getPlaceHolder
-import ui.screens.main.overview.components.mockAssetInfo
 import ui.theme.colors.CurrencyColors
 import util.formatNumber
 
@@ -99,6 +98,12 @@ internal fun InnerChartRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        val priceData = listOf(
+            cryptoRates[0].low24h.toFloat(),
+            cryptoRates[0].currentPrice.toFloat(),
+            cryptoRates[0].high24h.toFloat()
+        )
+
         TopMoversChart(
             modifier = if (isLoading) getPlaceHolder(
                 Modifier
@@ -109,7 +114,7 @@ internal fun InnerChartRow(
                 .height(60.dp),
             lighterColor = CurrencyColors.Green.extraLight,
             lightLineColor = CurrencyColors.Green.primary,
-            list = mockAssetInfo.lastDayChange
+            list = priceData
         )
 
         Column(

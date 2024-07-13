@@ -66,7 +66,6 @@ internal fun OverviewScreen(
         item {
             PortfolioSection(
                 state = state,
-                hazeState = hazeState,
                 onNewsItemClick = onNewsItemClick,
                 onCryptoItemClick = onCryptoItemClick
             )
