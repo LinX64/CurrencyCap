@@ -26,11 +26,8 @@ import ui.screens.main.overview.components.tabs.NewsTab
 
 @Composable
 internal fun HorizontalPagerTabs(
-    modifier: Modifier = Modifier,
-    isLoading: Boolean = false,
     state: OverviewState,
     pagerState: PagerState,
-    tabs: List<String>,
     onNewsItemClick: (url: String) -> Unit,
     onCryptoItemClick: (symbol: String) -> Unit
 ) {
@@ -57,7 +54,6 @@ internal fun HorizontalPagerTabs(
 private fun HorizontalPagerDotIndicator(
     pagerState: PagerState,
     pageCount: Int,
-    modifier: Modifier = Modifier,
     activeColor: Color = Color.DarkGray,
     inactiveColor: Color = Color.LightGray,
     indicatorSize: Dp = 8.dp,

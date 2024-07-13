@@ -36,7 +36,6 @@ import data.local.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.GlassCard
 import ui.components.HandleNavigationEffect
 import ui.components.main.BaseGlassLazyColumn
@@ -50,15 +49,37 @@ import ui.screens.main.exchange.components.Disclaimer
 import ui.screens.main.exchange.components.ResultCard
 
 @Composable
-@Preview
+internal fun ExchangeRoute(
+    padding: PaddingValues,
+    hazeState: HazeState,
+    viewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>(),
+    onError: (String) -> Unit,
+) {
+    val state by viewModel.viewState.collectAsStateWithLifecycle()
+
+    ExchangeScreen(
+        padding = padding,
+        hazeState = hazeState,
+        state = state,
+        onError = onError,
+        handleEvent = viewModel::handleEvent
+    )
+
+    HandleNavigationEffect(viewModel) { effect ->
+        when (effect) {
+            is ShowSnakeBar -> onError(effect.message)
+        }
+    }
+}
+
+@Composable
 internal fun ExchangeScreen(
     padding: PaddingValues,
     hazeState: HazeState,
-    exchangeViewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>(),
     onError: (String) -> Unit,
+    state: ExchangeState,
+    handleEvent: (ExchangeViewEvent) -> Unit
 ) {
-    val state by exchangeViewModel.viewState.collectAsStateWithLifecycle()
-
     BaseGlassLazyColumn(
         padding = padding,
         hazeState = hazeState,
@@ -68,12 +89,11 @@ internal fun ExchangeScreen(
         item {
             when (state) {
                 is ExchangeUiState -> {
-                    val uiState = state as ExchangeUiState
                     ExchangeCard(
-                        uiState = uiState,
+                        uiState = state,
                         hazeState = hazeState,
-                        viewModel = exchangeViewModel,
-                        onError = onError
+                        onError = onError,
+                        handleEvent = handleEvent
                     )
                 }
 
@@ -81,21 +101,15 @@ internal fun ExchangeScreen(
             }
         }
     }
-
-    HandleNavigationEffect(exchangeViewModel) { effect ->
-        when (effect) {
-            is ShowSnakeBar -> onError(effect.message)
-        }
-    }
 }
 
 @Composable
 private fun ExchangeCard(
     modifier: Modifier = Modifier,
-    viewModel: ExchangeViewModel,
     uiState: ExchangeUiState,
     hazeState: HazeState,
-    onError: (String) -> Unit
+    onError: (String) -> Unit,
+    handleEvent: (ExchangeViewEvent) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     var dialogOpened by rememberSaveable { mutableStateOf(false) }
@@ -105,7 +119,7 @@ private fun ExchangeCard(
     LaunchedEffect(Unit) {
         if (amount.isEmpty()) {
             amount = DEFAULT_VALUE
-            viewModel.handleEvent(OnConvert(amount))
+            handleEvent(OnConvert(DEFAULT_VALUE))
         }
     }
 
@@ -114,7 +128,7 @@ private fun ExchangeCard(
             currencyList = uiState.currencyRates,
             currencyType = selectedCurrencyType,
             onEvent = { event ->
-                viewModel.handleEvent(event)
+                handleEvent(event)
                 dialogOpened = false
                 selectedCurrencyType = CurrencyType.None
             },
@@ -146,7 +160,7 @@ private fun ExchangeCard(
 
                 CurrencyInputs(source = uiState.sourceCurrency,
                     target = uiState.targetCurrency,
-                    onSwitch = { viewModel.handleEvent(OnSwitchCurrencies) },
+                    onSwitch = { handleEvent(OnSwitchCurrencies) },
                     onCurrencyTypeSelect = {
                         dialogOpened = true
                         selectedCurrencyType = it
@@ -171,7 +185,7 @@ private fun ExchangeCard(
                     },
                     onAmountChange = {
                         amount = it
-                        viewModel.handleEvent(OnConvert(amount))
+                        handleEvent(OnConvert(amount))
                     }
                 )
             }

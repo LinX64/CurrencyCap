@@ -10,7 +10,7 @@ import dev.chrisbanes.haze.HazeState
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import ui.navigation.util.Screen.News
 import ui.navigation.util.Screen.NewsDetail
-import ui.screens.main.news.NewsScreen
+import ui.screens.main.news.NewsRoute
 
 fun NavController.navigateToNewsScreen(navOptions: NavOptions) = navigate(News, navOptions)
 
@@ -20,7 +20,7 @@ fun NavGraphBuilder.newsScreen(
     navController: NavHostController
 ) {
     composable<News> {
-        NewsScreen(
+        NewsRoute(
             padding = padding,
             hazeState = hazeState,
             onNewsItemClick = { url ->

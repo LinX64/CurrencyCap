@@ -7,7 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
 import ui.navigation.util.Screen.Exchange
-import ui.screens.main.exchange.ExchangeScreen
+import ui.screens.main.exchange.ExchangeRoute
 
 fun NavController.navigateToExchangeScreen(navOptions: NavOptions) = navigate(Exchange, navOptions)
 
@@ -17,10 +17,10 @@ fun NavGraphBuilder.exchangeScreen(
     hazeState: HazeState
 ) {
     composable<Exchange> {
-        ExchangeScreen(
+        ExchangeRoute(
             padding = padding,
+            hazeState = hazeState,
             onError = onError,
-            hazeState = hazeState
         )
     }
 }
