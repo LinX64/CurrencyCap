@@ -45,6 +45,7 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import ui.navigation.util.ScreenRoutes
+import ui.theme.colors.CurrencyColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -164,21 +165,28 @@ private fun UnderDashedLine(
 private fun CenteredExchangeButton(
     onButtonClicked: () -> Unit
 ) {
+    val gradient = Brush.horizontalGradient(
+        colors = listOf(
+            CurrencyColors.Muted_Teal.primary,
+            CurrencyColors.Green.primary
+        )
+    )
+
     IconButton(
         onClick = onButtonClicked,
         modifier = Modifier
             .offset(y = 40.dp)
             .size(76.dp)
             .background(
-                color = MaterialTheme.colorScheme.primary,
-                shape = RoundedCornerShape(32.dp)
+                brush = gradient,
+                shape = RoundedCornerShape(33.dp)
             )
     ) {
         Icon(
             modifier = Modifier.size(48.dp),
             painter = painterResource(Res.drawable.ic_arrow_up_down),
             contentDescription = "Exchange",
-            tint = MaterialTheme.colorScheme.surface
+            tint = MaterialTheme.colorScheme.onSurface
         )
     }
 }

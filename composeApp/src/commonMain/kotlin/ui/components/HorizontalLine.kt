@@ -1,6 +1,7 @@
 package ui.components
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,6 +17,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun HorizontalLineWithDot() {
+    val dark = isSystemInDarkTheme()
+    val isDarkTheme = if (dark) Color.White else Color.Black
+
     Row(
         modifier = Modifier.fillMaxWidth()
             .padding(vertical = 8.dp)
@@ -48,7 +52,7 @@ internal fun HorizontalLineWithDot() {
             )
 
             drawCircle(
-                color = Color.White,
+                color = isDarkTheme,
                 radius = 8f,
                 center = Offset(canvasWidth / 2, canvasHeight)
             )

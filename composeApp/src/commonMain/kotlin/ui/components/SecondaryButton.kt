@@ -1,5 +1,6 @@
 package ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,24 +11,38 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ui.theme.colors.CurrencyColors
 
 @Composable
 internal fun SecondaryButton(
     modifier: Modifier = Modifier,
     text: String,
-    textColor: Color = MaterialTheme.colorScheme.surface,
+    textColor: Color = MaterialTheme.colorScheme.onSurface,
     onButtonClick: () -> Unit,
 ) {
+    val gradient = Brush.horizontalGradient(
+        colors = listOf(
+            CurrencyColors.Green.primary,
+            CurrencyColors.Yellow.kindaLight
+        )
+    )
+
     Button(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp)),
+            .clip(RoundedCornerShape(8.dp))
+            .background(
+                brush = gradient,
+                shape = RoundedCornerShape(35.dp)
+            )
+            .clip(RoundedCornerShape(35.dp)),
         onClick = onButtonClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.secondary
+            containerColor = Color.Transparent
         )
     ) {
         Text(

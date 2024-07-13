@@ -21,7 +21,7 @@ fun AppM3Theme(
 @VisibleForTesting
 private fun appLightColorScheme(): ColorScheme = ColorScheme(
     primary = CurrencyColors.Green.primary,
-    onPrimary = CurrencyColors.White,
+    onPrimary = CurrencyColors.Gray.copy(alpha = 0.9f),
     primaryContainer = CurrencyColors.Blue.light,
     onPrimaryContainer = CurrencyColors.White,
     inversePrimary = CurrencyColors.Muted_Teal.dark,
@@ -33,7 +33,7 @@ private fun appLightColorScheme(): ColorScheme = ColorScheme(
     onTertiary = CurrencyColors.White,
     tertiaryContainer = CurrencyColors.Green.light,
     onTertiaryContainer = CurrencyColors.White,
-    background = CurrencyColors.White,
+    background = CurrencyColors.Gray.copy(alpha = 0.4f),
     onBackground = CurrencyColors.Black,
     surface = CurrencyColors.White,
     onSurface = CurrencyColors.Black,

@@ -43,7 +43,6 @@ private fun DetailPreview() {
             onLoginClick = { /*TODO*/ },
             onSignUpClick = { /*TODO*/ }
         ) {
-
         }
     }
 }
