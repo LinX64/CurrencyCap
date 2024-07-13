@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun PrivacyPolicyBottomSheet(
-    modifier: Modifier = Modifier,
     isVisible: Boolean,
     onDismissRequest: () -> Unit,
     content: @Composable () -> Unit
