@@ -37,6 +37,8 @@ internal class LoginViewModel(
     }
 
     private fun authenticate(email: String, password: String) {
+        setState { LoginState.Loading }
+
         if (email.isEmpty()) {
             setState { Error("Email must not be empty") }
             return
@@ -52,16 +54,13 @@ internal class LoginViewModel(
             return
         }
 
-        setState { LoginState.Loading }
-
         viewModelScope.launch {
             val authState = authServiceRepository.authenticate(email, password)
             when (authState) {
+                AuthState.Loading -> setState { LoginState.Loading }
                 is AuthState.Success -> {
                     userPreferences.saveUserUid(authServiceRepository.currentUserId)
                     setEffect(NavigateToMarketOverview)
-
-                    setState { LoginState.Idle }
                 }
 
                 is AuthState.Error -> setState { Error("Invalid email or password") }

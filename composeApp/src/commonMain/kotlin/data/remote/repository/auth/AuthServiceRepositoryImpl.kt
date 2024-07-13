@@ -9,10 +9,12 @@ import dev.gitlive.firebase.auth.PhoneAuthProvider
 import domain.repository.AuthServiceRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 class AuthServiceRepositoryImpl(
     private val auth: FirebaseAuth,
@@ -32,14 +34,15 @@ class AuthServiceRepositoryImpl(
     override suspend fun authenticate(
         email: String,
         password: String
-    ): AuthState {
-        return try {
+    ): AuthState = withContext(Dispatchers.IO) {
+        AuthState.Loading
+
+        try {
             val user = auth.signInWithEmailAndPassword(email, password).user
-
-            if (user?.uid?.isNotEmpty() == true) {
-                AuthState.Success(User(user.uid, user.isAnonymous))
-            } else AuthState.Error("Could not authenticate user!")
-
+            val uid = user?.uid
+            if (uid?.isNotEmpty() == true) {
+                AuthState.Success(User(id = user.uid, isAnonymous = user.isAnonymous))
+            } else AuthState.Error("Username or password is incorrect!")
         } catch (e: Exception) {
             AuthState.Error(e.message ?: "Could not authenticate user!")
         }
@@ -114,6 +117,7 @@ class AuthServiceRepositoryImpl(
     }
 
     sealed class AuthState {
+        data object Loading : AuthState()
         data class Success(val user: User) : AuthState()
         data class Error(val message: String) : AuthState()
     }
