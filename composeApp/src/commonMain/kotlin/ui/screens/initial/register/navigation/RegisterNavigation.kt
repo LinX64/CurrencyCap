@@ -13,13 +13,15 @@ fun NavController.navigateToRegisterScreen() = navigate(Register)
 
 fun NavGraphBuilder.registerScreen(
     navController: NavHostController,
-    onError: (message: String) -> Unit
+    onError: (message: String) -> Unit,
+    onTermsOfServiceClick: () -> Unit
 ) {
     composable<Register> {
         RegisterScreen(
             onNavigateToFillProfile = { navController.navigateToFillProfileScreen() },
             navigateToLogin = { navController.navigateToLoginScreen() },
-            onError = onError
+            onError = onError,
+            onTermsOfServiceClick = onTermsOfServiceClick
         )
     }
 }

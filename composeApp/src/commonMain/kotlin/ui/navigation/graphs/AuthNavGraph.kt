@@ -38,7 +38,8 @@ internal fun AuthNavGraph(
 
         registerScreen(
             navController = navController,
-            onError = onError
+            onError = onError,
+            onTermsOfServiceClick = showPrivacyPolicyBottomSheet
         )
 
         fillProfileScreen(

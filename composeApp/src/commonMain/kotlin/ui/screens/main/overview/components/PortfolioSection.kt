@@ -10,7 +10,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ui.components.main.VerticalBarCard
@@ -19,8 +18,6 @@ import ui.screens.main.overview.OverviewState
 @Composable
 internal fun PortfolioSection(
     state: OverviewState,
-    usd: String = "USD",
-    hazeState: HazeState,
     scope: CoroutineScope = rememberCoroutineScope(),
     tabs: List<String> = listOf("News", "Crypto", "Market"),
     onNewsItemClick: (url: String) -> Unit,
@@ -39,11 +36,8 @@ internal fun PortfolioSection(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             HorizontalPagerTabs(
-                modifier = Modifier.weight(1f),
-                isLoading = isLoading,
                 state = state,
                 pagerState = pagerState,
-                tabs = tabs,
                 onNewsItemClick = onNewsItemClick,
                 onCryptoItemClick = onCryptoItemClick
             )

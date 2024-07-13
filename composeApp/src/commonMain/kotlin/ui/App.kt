@@ -33,8 +33,8 @@ internal fun App(
 
         is NotLoggedIn -> {
             NotLoggedInSection(
-                mainViewModel = mainViewModel,
-                scope = scope
+                scope = scope,
+                mainViewModel = mainViewModel
             )
         }
 

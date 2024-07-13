@@ -24,7 +24,7 @@ import ui.screens.MainViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LoggedInSection(
-    appState: LoggedInAppState = rememberLoggedInAppState(),
+    appState: AppState = rememberAppState(),
     mainViewModel: MainViewModel,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scaffoldState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState(),

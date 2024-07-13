@@ -27,7 +27,6 @@ fun TopMoversChart(
         val max = list.maxOrNull() ?: 0f
         val min = list.minOrNull() ?: 0f
         val highestIndex = list.indexOf(max)
-        val lowestIndex = list.indexOf(min)
 
         val sizeWidthPerPair = if (list.size > 1) size.width / (list.size - 1) else size.width
 

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -15,19 +14,14 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import kotlinx.coroutines.CoroutineScope
@@ -41,15 +35,14 @@ import ui.screens.initial.privacy_policy.PrivacyPolicySection
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun NotLoggedInSection(
+    appState: AppState = rememberAppState(),
     scope: CoroutineScope,
     mainViewModel: MainViewModel,
-    navController: NavHostController = rememberNavController(),
-    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    scaffoldState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState()
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 ) {
     val hazeState = remember { HazeState() }
-    val currentBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = currentBackStackEntry?.destination?.route ?: ""
+    val currentDestination = appState.currentDestination
+    val navController = appState.navController
     val isSheetOpen = rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
@@ -58,9 +51,8 @@ internal fun NotLoggedInSection(
             NotLoggedInTopAppBar(
                 currentDestination = currentDestination,
                 navController = navController,
-                isSheetOpen = isSheetOpen,
-                scrollBehavior = scrollBehavior,
-                hazeState = hazeState
+                hazeState = hazeState,
+                scrollBehavior = scrollBehavior
             )
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
@@ -90,9 +82,8 @@ internal fun NotLoggedInSection(
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 private fun NotLoggedInTopAppBar(
-    currentDestination: String,
+    currentDestination: String?,
     navController: NavHostController,
-    isSheetOpen: MutableState<Boolean>,
     hazeState: HazeState,
     scrollBehavior: TopAppBarScrollBehavior
 ) {
@@ -104,18 +95,26 @@ private fun NotLoggedInTopAppBar(
             containerColor = Color.Transparent,
             scrolledContainerColor = Color.Transparent
         ),
-        navigationIcon = {
-            if (isNotLoggedIn(currentDestination)) {
-                IconButton(onClick = { navController.navigateUp() }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
-                }
-            }
-        },
+        navigationIcon = { NavigationIcon(currentDestination, navController) },
         scrollBehavior = scrollBehavior
     )
 }
 
-private fun isNotLoggedIn(currentDestination: String): Boolean = (currentDestination != ScreenRoutes.LANDING)
+@Composable
+private fun NavigationIcon(
+    currentDestination: String?,
+    navController: NavHostController
+) {
+    currentDestination ?: return
+
+    if (isNavigationIconVisible(currentDestination)) {
+        IconButton(onClick = { navController.navigateUp() }) {
+            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+        }
+    }
+}
+
+private fun isNavigationIconVisible(currentDestination: String) = (currentDestination != ScreenRoutes.LANDING)
         && (currentDestination != ScreenRoutes.LOGIN)
         && (currentDestination != ScreenRoutes.REGISTER)
 
