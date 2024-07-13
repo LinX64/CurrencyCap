@@ -20,14 +20,14 @@ import ui.screens.main.overview.navigation.navigateToOverviewScreen
 import ui.screens.main.profile.navigation.navigateToProfileScreen
 
 @Composable
-internal fun rememberLoggedInAppState(
+internal fun rememberAppState(
     navController: NavHostController = rememberNavController()
-): LoggedInAppState = remember(navController) {
-    LoggedInAppState(navController = navController)
+): AppState = remember(navController) {
+    AppState(navController = navController)
 }
 
 @Stable
-internal class LoggedInAppState(
+internal class AppState(
     val navController: NavHostController
 ) {
     val currentDestination: String?

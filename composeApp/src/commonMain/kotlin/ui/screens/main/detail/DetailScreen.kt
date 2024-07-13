@@ -179,7 +179,7 @@ private fun DetailBody(
                 )
 
                 Text(
-                    text = formatToPrice(crypto.high24h),
+                    text = "$${formatToPrice(crypto.high24h)}",
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
@@ -196,7 +196,7 @@ private fun DetailBody(
                 )
 
                 Text(
-                    text = formatToPrice(crypto.low24h),
+                    text = "$${formatToPrice(crypto.low24h)}",
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
@@ -213,7 +213,7 @@ private fun DetailBody(
                 )
 
                 Text(
-                    text = formatToPrice(crypto.ath),
+                    text = "$${formatToPrice(crypto.ath)}",
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
