@@ -1,40 +1,53 @@
 package ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import ui.theme.colors.CurrencyColors
 
 @Composable
 internal fun PrimaryButton(
     modifier: Modifier = Modifier,
     text: String,
-    colors: ButtonColors = ButtonDefaults.buttonColors(
-        contentColor = MaterialTheme.colorScheme.surface,
-        containerColor = MaterialTheme.colorScheme.primary
-    ),
-    textColor: Color = MaterialTheme.colorScheme.surface,
+    textPadding: Dp = 4.dp,
+    textColor: Color = MaterialTheme.colorScheme.onSurface,
     isEnabled: Boolean = true,
     onButtonClick: () -> Unit,
 ) {
+    val gradient = Brush.horizontalGradient(
+        colors = listOf(
+            CurrencyColors.Muted_Teal.primary,
+            CurrencyColors.Green.primary
+        )
+    )
+
     Button(
         onClick = onButtonClick,
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
+            .background(
+                brush = gradient,
+                shape = RoundedCornerShape(35.dp)
+            )
+            .clip(RoundedCornerShape(35.dp))
             .then(modifier),
         enabled = isEnabled,
-        colors = colors
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.Transparent
+        )
     ) {
         Text(
             modifier = Modifier.padding(8.dp),

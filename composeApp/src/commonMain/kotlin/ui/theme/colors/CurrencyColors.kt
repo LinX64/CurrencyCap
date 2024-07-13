@@ -91,4 +91,34 @@ object CurrencyColors {
         dark = Color(0xFF0C7A56),
         extraDark = Color(0xFF085239),
     )
+
+    val Muted_Teal = ColorShades(
+        extraLight = Color(0xFFABF5F0),
+        light = Color(0xFF87F5F0),
+        kindaLight = Color(0xFF62F5F0),
+        primary = Color(0xFF008080),
+        kindaDark = Color(0xFF33CCB8),
+        dark = Color(0xFF248F8F),
+        extraDark = Color(0xFF145252),
+    )
+
+    val Muted_Blue = ColorShades(
+        extraLight = Color(0xFFABD0F5),
+        light = Color(0xFF87BEF5),
+        kindaLight = Color(0xFF62ABF5),
+        primary = Color(0xFF1C58F2),
+        kindaDark = Color(0xFF3380CC),
+        dark = Color(0xFF24598F),
+        extraDark = Color(0xFF153352),
+    )
+
+    val Grey = ColorShades(
+        extraLight = Color(0xFFE0E0E0),
+        light = Color(0xFFB0B0B0),
+        kindaLight = Color(0xFF808080),
+        primary = Color(0xFF606060),
+        kindaDark = Color(0xFF404040),
+        dark = Color(0xFF202020),
+        extraDark = Color(0xFF101010),
+    )
 }

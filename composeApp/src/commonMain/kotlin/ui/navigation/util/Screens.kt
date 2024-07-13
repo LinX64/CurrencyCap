@@ -11,7 +11,7 @@ sealed interface Screen {
     data class NewsDetail(val url: String)
 
     @Serializable
-    data object AIPredict
+    data object AIPrediction
 
     @Serializable
     data object Explore

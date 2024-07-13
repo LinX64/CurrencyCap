@@ -20,7 +20,8 @@ fun NavController.navigateToOverviewScreen(navOptions: NavOptions) = navigate(Ov
 fun NavGraphBuilder.overviewScreen(
     padding: PaddingValues,
     hazeState: HazeState,
-    navController: NavHostController
+    navController: NavHostController,
+    onError: (message: String) -> Unit
 ) {
     composable<Overview> {
         OverviewRoute(
@@ -38,7 +39,8 @@ fun NavGraphBuilder.overviewScreen(
             onCircleButtonClicked = { navController.navigateToAiPredictScreen() },
             onCryptoItemClick = { symbol ->
                 navController.navigate(CryptoDetail(symbol))
-            }
+            },
+            onError = onError
         )
     }
 }

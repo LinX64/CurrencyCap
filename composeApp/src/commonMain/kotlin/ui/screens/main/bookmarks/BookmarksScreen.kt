@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmarks
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,6 +24,7 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import ui.components.NewsItem
+import ui.components.SecondaryButton
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.bookmarks.BookmarksViewEvent.OnRemoveBookmarkClick
 
@@ -103,15 +103,12 @@ private fun NoBookmarks(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            onClick = onExploreNewsClick,
-        ) {
-            Text(
-                text = "Explore News",
-                color = MaterialTheme.colorScheme.surface
-            )
-        }
+        SecondaryButton(
+            modifier = Modifier
+                .padding(horizontal = 32.dp),
+            text = "Explore News",
+            onButtonClick = onExploreNewsClick
+        )
     }
 }
 

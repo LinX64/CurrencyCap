@@ -113,8 +113,8 @@ private fun FillProfileForm(
             Spacer(modifier = modifier.height(32.dp))
 
             PrimaryButton(
-                onButtonClick = onFinishSignUpClick,
-                text = "Verify Phone Number"
+                text = "Verify Phone Number",
+                onButtonClick = onFinishSignUpClick
             )
 
             Spacer(modifier = modifier.height(16.dp))

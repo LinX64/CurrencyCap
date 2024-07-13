@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,11 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.contact_email
+import currencycap.composeapp.generated.resources.support_request
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import ui.common.SendMail
 import ui.components.HandleNavigationEffect
-import ui.components.PrimaryButton
+import ui.components.SecondaryButton
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.profile.ProfileNavigationEffect.NavigateToLanding
 import ui.screens.main.profile.ProfileNavigationEffect.OpenEmailApp
@@ -32,7 +35,6 @@ import ui.screens.main.profile.ProfileViewEvent.OnDeleteAccountCardClicked
 import ui.screens.main.profile.components.DeleteAccountCard
 import ui.screens.main.profile.components.HelpCenterCard
 import ui.screens.main.profile.components.ProfileCard
-import ui.theme.colors.CurrencyColors
 import util.getDummyUser
 
 @Composable
@@ -94,7 +96,10 @@ internal fun ProfileScreen(
     }
 
     if (shouldGoToEmailApp.value) {
-        SendMail("ash.wxrz@hotmail.com", "Support Request")
+        SendMail(
+            to = Res.string.contact_email.key,
+            subject = Res.string.support_request.key
+        )
     }
 }
 
@@ -121,12 +126,9 @@ private fun AppNameInfoCard(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        PrimaryButton(
+        SecondaryButton(
+            modifier = Modifier.fillMaxWidth(),
             text = "Sign Out",
-            colors = ButtonDefaults.buttonColors(
-                containerColor = CurrencyColors.Orange.primary,
-                contentColor = MaterialTheme.colorScheme.onSurface
-            ),
             onButtonClick = onSignOutClicked
         )
     }

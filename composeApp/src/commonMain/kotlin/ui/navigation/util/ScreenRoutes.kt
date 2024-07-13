@@ -6,7 +6,7 @@ object ScreenRoutes {
     const val EXCHANGE = "Exchange"
     const val BOOKMARKS = "Bookmarks"
     const val PROFILE = "Profile"
-    const val AI_PREDICTION = "AI Prediction"
+    const val AI_PREDICTION = "AIPredict"
     const val SETTINGS = "Settings"
 
     const val LANDING = "Landing"

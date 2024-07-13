@@ -40,4 +40,9 @@
     <string name="search_hint">Search</string>
     <string name="search_hint_no_results">No results found</string>
 
+    <string name="no_internet_connection">No Internet Connection Available!</string>
+
+    <string name="support_request">Support Request</string>
+    <string name="contact_email">ash.wxrz@hotmail.com</string>
+
 </resources>
