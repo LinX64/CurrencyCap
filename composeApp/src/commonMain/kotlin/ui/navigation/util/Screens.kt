@@ -1,110 +1,58 @@
 package ui.navigation.util
 
-import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.ai_prediction
-import currencycap.composeapp.generated.resources.bookmarks
-import currencycap.composeapp.generated.resources.crypto_details
-import currencycap.composeapp.generated.resources.exchange
-import currencycap.composeapp.generated.resources.explore
-import currencycap.composeapp.generated.resources.fill_profile
-import currencycap.composeapp.generated.resources.forgot_password
-import currencycap.composeapp.generated.resources.get_verified
-import currencycap.composeapp.generated.resources.landing
-import currencycap.composeapp.generated.resources.login
-import currencycap.composeapp.generated.resources.news
-import currencycap.composeapp.generated.resources.news_detail
-import currencycap.composeapp.generated.resources.overview
-import currencycap.composeapp.generated.resources.profile
-import currencycap.composeapp.generated.resources.register
-import currencycap.composeapp.generated.resources.settings
 import kotlinx.serialization.Serializable
-import org.jetbrains.compose.resources.StringResource
 
-@Serializable
 sealed interface Screen {
-    val route: StringResource
 
     @Serializable
-    data object Overview : Screen {
-        override val route: StringResource = Res.string.overview
-    }
+    data object Overview
 
     @Serializable
-    data class NewsDetail(val url: String) : Screen {
-        override val route: StringResource = Res.string.news_detail
-    }
+    data class NewsDetail(val url: String)
 
     @Serializable
-    data object AIPredict : Screen {
-        override val route: StringResource = Res.string.ai_prediction
-    }
+    data object AIPredict
 
     @Serializable
-    data object Explore : Screen {
-        override val route: StringResource = Res.string.explore
-    }
+    data object Explore
 
     @Serializable
-    data class CryptoDetail(val symbol: String) : Screen {
-        override val route: StringResource = Res.string.crypto_details
-    }
+    data class CryptoDetail(val symbol: String)
 
     @Serializable
-    data object News : Screen {
-        override val route: StringResource = Res.string.news
-    }
+    data object News
 
     @Serializable
-    data object Bookmarks : Screen {
-        override val route: StringResource = Res.string.bookmarks
-    }
+    data object Bookmarks
 
     @Serializable
-    data object Exchange : Screen {
-        override val route: StringResource = Res.string.exchange
-    }
+    data object Exchange
 
     @Serializable
-    data object Profile : Screen {
-        override val route: StringResource = Res.string.profile
-    }
+    data object Profile
 
     @Serializable
-    data object Settings : Screen {
-        override val route: StringResource = Res.string.settings
-    }
+    data object Settings
 
     /**
      * Initial screens
      */
 
     @Serializable
-    data object Landing : Screen {
-        override val route: StringResource = Res.string.landing
-    }
+    data object Landing
 
     @Serializable
-    data object Login : Screen {
-        override val route: StringResource = Res.string.login
-    }
+    data object Login
 
     @Serializable
-    data object Register : Screen {
-        override val route: StringResource = Res.string.register
-    }
+    data object Register
 
     @Serializable
-    data object ResetPassword : Screen {
-        override val route: StringResource = Res.string.forgot_password
-    }
+    data object ResetPassword
 
     @Serializable
-    data object FillProfile : Screen {
-        override val route: StringResource = Res.string.fill_profile
-    }
+    data object FillProfile
 
     @Serializable
-    data object GetVerifiedPhone : Screen {
-        override val route: StringResource = Res.string.get_verified
-    }
+    data object GetVerifiedPhone
 }

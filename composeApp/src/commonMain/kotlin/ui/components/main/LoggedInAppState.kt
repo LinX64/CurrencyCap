@@ -32,7 +32,7 @@ internal class LoggedInAppState(
 ) {
     val currentDestination: String?
         @Composable get() = navController
-            .currentBackStackEntryAsState().value?.destination?.route?.let { getTabFromRoute(it) }
+            .currentBackStackEntryAsState().value?.destination?.route.let { getTabFromRoute(it) }
 
     fun navigateToTopLevelDestination(topLevelDestination: BottomBarTab) {
         val topLevelNavOptions = navOptions {
@@ -57,6 +57,8 @@ internal class LoggedInAppState(
     // TODO: Temporary solution
     private fun getTabFromRoute(route: String?): String? {
         val simpleRoute = route?.replace("ui.navigation.util.Screen.", "")
-        return BottomBarTab.entries.find { it.route.key == simpleRoute }?.route?.key
+        val key = BottomBarTab.entries.find { it.route == simpleRoute }?.route
+        println("key: $key")
+        return BottomBarTab.entries.find { it.route == simpleRoute }?.route
     }
 }
