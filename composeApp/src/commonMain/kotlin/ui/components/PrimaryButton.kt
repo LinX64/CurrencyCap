@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,10 +21,6 @@ import ui.theme.colors.CurrencyColors
 internal fun PrimaryButton(
     modifier: Modifier = Modifier,
     text: String,
-    colors: ButtonColors = ButtonDefaults.buttonColors(
-        contentColor = MaterialTheme.colorScheme.surface,
-        containerColor = MaterialTheme.colorScheme.primary
-    ),
     textColor: Color = MaterialTheme.colorScheme.onSurface,
     isEnabled: Boolean = true,
     onButtonClick: () -> Unit,

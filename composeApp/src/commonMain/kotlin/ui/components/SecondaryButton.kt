@@ -1,7 +1,6 @@
 package ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -14,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ui.theme.colors.CurrencyColors
 
@@ -21,19 +21,19 @@ import ui.theme.colors.CurrencyColors
 internal fun SecondaryButton(
     modifier: Modifier = Modifier,
     text: String,
+    textPadding: Dp = 4.dp,
     textColor: Color = MaterialTheme.colorScheme.onSurface,
     onButtonClick: () -> Unit,
 ) {
     val gradient = Brush.horizontalGradient(
         colors = listOf(
-            CurrencyColors.Green.primary,
-            CurrencyColors.Yellow.kindaLight
+            CurrencyColors.Purple.primary,
+            CurrencyColors.Purple.light
         )
     )
 
     Button(
         modifier = modifier
-            .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
             .background(
                 brush = gradient,
@@ -46,7 +46,7 @@ internal fun SecondaryButton(
         )
     ) {
         Text(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(textPadding),
             text = text,
             color = textColor,
             style = MaterialTheme.typography.bodyLarge,

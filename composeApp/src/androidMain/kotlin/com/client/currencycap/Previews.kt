@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import dev.chrisbanes.haze.HazeState
-import ui.screens.initial.landing.LandingScreen
+import ui.screens.main.profile.components.HelpCenterItem
 
 //@Composable
 //@Preview(showBackground = true)
@@ -39,11 +39,10 @@ private fun DetailPreview() {
     val hazeState = remember { HazeState() }
 
     KoinPreview {
-        LandingScreen(
-            onLoginClick = { /*TODO*/ },
-            onSignUpClick = { /*TODO*/ }
-        ) {
-        }
+        HelpCenterItem(
+            text = "Help Center",
+            onButtonClick = {}
+        )
     }
 }
 
