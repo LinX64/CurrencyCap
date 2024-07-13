@@ -19,7 +19,11 @@ import currencycap.composeapp.generated.resources.ic_arrow_left
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
-import ui.navigation.util.ScreenRoutes
+import ui.navigation.util.ScreenRoutes.AI_PREDICTION
+import ui.navigation.util.ScreenRoutes.CRYPTO_DETAIL
+import ui.navigation.util.ScreenRoutes.EXPLORE
+import ui.navigation.util.ScreenRoutes.NEWS_DETAIL
+import ui.navigation.util.ScreenRoutes.SETTINGS
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,11 +33,11 @@ internal fun AppTopBar(
     scrollBehavior: TopAppBarScrollBehavior,
     hazeState: HazeState
 ) {
-    val isSettingsScreen = currentDestination == ScreenRoutes.SETTINGS
-    val isNewsDetailScreen = currentDestination?.startsWith(ScreenRoutes.NEWS_DETAIL)
-    val isDetailScreen = currentDestination?.startsWith(ScreenRoutes.CRYPTO_DETAIL)
-    val isExploreScreen = currentDestination == ScreenRoutes.EXPLORE
-    val isAiScreen = currentDestination == ScreenRoutes.AI_PREDICTION
+    val isSettingsScreen = currentDestination == SETTINGS
+    val isNewsDetailScreen = currentDestination?.startsWith(NEWS_DETAIL)
+    val isDetailScreen = currentDestination?.startsWith(CRYPTO_DETAIL)
+    val isExploreScreen = currentDestination == EXPLORE
+    val isAiScreen = currentDestination == AI_PREDICTION
 
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()

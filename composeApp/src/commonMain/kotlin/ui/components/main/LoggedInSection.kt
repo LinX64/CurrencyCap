@@ -19,7 +19,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ui.components.BottomSheet
 import ui.navigation.graphs.MainNavGraph
-import ui.navigation.util.ScreenRoutes
 import ui.screens.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,7 +35,6 @@ internal fun LoggedInSection(
     val isSheetOpen = rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val hazeState = remember { HazeState() }
-    val isSettingsScreen = currentDestination == ScreenRoutes.SETTINGS
 
     Scaffold(
         topBar = {
@@ -52,7 +50,6 @@ internal fun LoggedInSection(
                 currentDestination = currentDestination,
                 scrollBehavior = scrollBehavior,
                 hazeState = hazeState,
-                isSettingsScreen = isSettingsScreen,
                 onTabSelected = { tab -> appState.navigateToTopLevelDestination(tab) }
             )
         },

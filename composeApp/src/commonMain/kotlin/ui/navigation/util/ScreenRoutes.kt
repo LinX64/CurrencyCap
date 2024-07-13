@@ -11,7 +11,7 @@ object ScreenRoutes {
 
     const val LANDING = "Landing"
     const val MARKET = "Market"
-    const val NEWS_DETAIL = "News Detail"
+    const val NEWS_DETAIL = "NewsDetail"
     const val WATCHLIST = "Watchlist"
     const val EXPLORE = "Explore"
 
@@ -22,7 +22,7 @@ object ScreenRoutes {
     const val RESET_PASSWORD = "Forgot Password"
 
     const val PRIVACY_POLICY = "Privacy Policy"
-    const val CRYPTO_DETAIL = "Crypto Detail"
+    const val CRYPTO_DETAIL = "CryptoDetail"
 }
 
 const val ENCODED_URL = "encodedUrl"

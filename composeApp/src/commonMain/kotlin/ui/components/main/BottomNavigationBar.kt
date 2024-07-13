@@ -52,7 +52,6 @@ internal fun BottomNavigationBar(
     currentDestination: String?,
     scrollBehavior: TopAppBarScrollBehavior,
     hazeState: HazeState,
-    isSettingsScreen: Boolean,
     onTabSelected: (BottomBarTab) -> Unit
 ) {
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
@@ -60,6 +59,7 @@ internal fun BottomNavigationBar(
     val isExploreScreen = currentDestination == ScreenRoutes.EXPLORE
     val isAIScreen = currentDestination == ScreenRoutes.AI_PREDICTION
     val isDetailScreen = currentDestination?.startsWith(ScreenRoutes.CRYPTO_DETAIL) == true
+    val isSettingsScreen = currentDestination == ScreenRoutes.SETTINGS
 
     LaunchedEffect(currentDestination) {
         val newIndex = tabs.indexOfFirst { it.name == currentDestination }
