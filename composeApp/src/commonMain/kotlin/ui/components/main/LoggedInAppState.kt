@@ -57,8 +57,6 @@ internal class LoggedInAppState(
     // TODO: Temporary solution
     private fun getTabFromRoute(route: String?): String? {
         val simpleRoute = route?.replace("ui.navigation.util.Screen.", "")
-        val key = BottomBarTab.entries.find { it.route == simpleRoute }?.route
-        println("key: $key")
         return BottomBarTab.entries.find { it.route == simpleRoute }?.route
     }
 }
