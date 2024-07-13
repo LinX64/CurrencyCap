@@ -50,8 +50,7 @@ internal fun PortfolioSection(
         }
 
         VerticalBarCard(
-            modifier = Modifier.align(Alignment.TopEnd).padding(end = 8.dp),
-            hazeState = hazeState,
+            modifier = Modifier.align(Alignment.TopEnd),
             onTabSelected = { index ->
                 scope.launch {
                     pagerState.animateScrollToPage(index)

@@ -8,23 +8,24 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
-import ui.navigation.util.NavRoutes
+import ui.navigation.util.Screen.News
+import ui.navigation.util.Screen.NewsDetail
 import ui.screens.main.news.NewsScreen
 
-fun NavController.navigateToNewsScreen(navOptions: NavOptions) = navigate(NavRoutes.NEWS, navOptions)
+fun NavController.navigateToNewsScreen(navOptions: NavOptions) = navigate(News, navOptions)
 
 fun NavGraphBuilder.newsScreen(
     padding: PaddingValues,
     hazeState: HazeState,
     navController: NavHostController
 ) {
-    composable(NavRoutes.NEWS) {
+    composable<News> {
         NewsScreen(
             padding = padding,
             hazeState = hazeState,
             onNewsItemClick = { url ->
                 val encodedUrl = UrlEncoderUtil.encode(url)
-                navController.navigate(NavRoutes.NEWS_DETAIL + "/$encodedUrl")
+                navController.navigate(route = NewsDetail(encodedUrl))
             }
         )
     }

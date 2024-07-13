@@ -49,8 +49,10 @@ private fun LazyListScope.newsScreenContent(
 
     is Success -> {
         val articles = currentState.news
-        items(articles.size) { index ->
-
+        items(
+            count = articles.size,
+            key = { articles[it].url }
+        ) { index ->
             NewsItem(
                 article = articles[index],
                 onNewsItemClick = onNewsItemClick,

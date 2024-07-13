@@ -5,18 +5,18 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import ui.navigation.util.NavRoutes
+import ui.navigation.util.Screen.ResetPassword
 import ui.screens.initial.login.navigation.navigateToLoginScreen
 import ui.screens.initial.reset_password.ResetPasswordScreen
 
-fun NavController.navigateToResetPassword() = navigate(NavRoutes.RESET_PASSWORD)
+fun NavController.navigateToResetPassword() = navigate(ResetPassword)
 
 fun NavGraphBuilder.resetPasswordScreen(
     navController: NavHostController,
     padding: PaddingValues,
     onError: (message: String) -> Unit
 ) {
-    composable(NavRoutes.RESET_PASSWORD) {
+    composable<ResetPassword> {
         ResetPasswordScreen(
             padding = padding,
             onMessage = onError,

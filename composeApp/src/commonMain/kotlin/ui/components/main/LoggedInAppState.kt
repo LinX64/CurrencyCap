@@ -3,8 +3,6 @@ package ui.components.main
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
-import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -15,11 +13,6 @@ import ui.components.main.BottomBarTab.Exchange
 import ui.components.main.BottomBarTab.News
 import ui.components.main.BottomBarTab.Overview
 import ui.components.main.BottomBarTab.Profile
-import ui.navigation.util.NavRoutes.BOOKMARKS
-import ui.navigation.util.NavRoutes.EXCHANGE
-import ui.navigation.util.NavRoutes.NEWS
-import ui.navigation.util.NavRoutes.OVERVIEW
-import ui.navigation.util.NavRoutes.PROFILE
 import ui.screens.main.bookmarks.navigation.navigateToBookmarksScreen
 import ui.screens.main.exchange.navigation.navigateToExchangeScreen
 import ui.screens.main.news.navigation.navigateToNewsScreen
@@ -28,30 +21,18 @@ import ui.screens.main.profile.navigation.navigateToProfileScreen
 
 @Composable
 internal fun rememberLoggedInAppState(
-    navController: NavHostController = rememberNavController(),
-): LoggedInAppState {
-    return remember(navController) {
-        LoggedInAppState(navController = navController)
-    }
+    navController: NavHostController = rememberNavController()
+): LoggedInAppState = remember(navController) {
+    LoggedInAppState(navController = navController)
 }
 
 @Stable
 internal class LoggedInAppState(
     val navController: NavHostController
 ) {
-    val currentDestination: NavDestination?
+    val currentDestination: String?
         @Composable get() = navController
-            .currentBackStackEntryAsState().value?.destination
-
-    val currentTopLevelDestination: BottomBarTab?
-        @Composable get() = when (currentDestination?.route) {
-            OVERVIEW -> Overview
-            NEWS -> News
-            EXCHANGE -> Exchange
-            BOOKMARKS -> Bookmarks
-            PROFILE -> Profile
-            else -> null
-        }
+            .currentBackStackEntryAsState().value?.destination?.route.let { getTabFromRoute(it) }
 
     fun navigateToTopLevelDestination(topLevelDestination: BottomBarTab) {
         val topLevelNavOptions = navOptions {
@@ -73,8 +54,11 @@ internal class LoggedInAppState(
         }
     }
 
-    fun NavDestination?.isTopLevelDestinationInHierarchy(destination: BottomBarTab) =
-        this?.hierarchy?.any {
-            it.route?.contains(destination.route, true) ?: false
-        } ?: false
+    // TODO: Temporary solution
+    private fun getTabFromRoute(route: String?): String? {
+        val simpleRoute = route?.replace("ui.navigation.util.Screen.", "")
+
+        val tabRoute = BottomBarTab.entries.find { it.route == simpleRoute }?.route
+        return tabRoute ?: simpleRoute
+    }
 }

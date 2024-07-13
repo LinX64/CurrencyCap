@@ -47,7 +47,7 @@ internal fun TopCryptoItem(
     isLoading: Boolean = false
 ) {
     GlassCard(
-        shouldBeClickable = true
+        isClickable = true
     ) {
         Card(
             modifier = modifier

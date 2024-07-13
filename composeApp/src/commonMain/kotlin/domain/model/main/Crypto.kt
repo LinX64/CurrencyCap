@@ -1,5 +1,8 @@
 package domain.model.main
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class Crypto(
     val ath: Double,
     val athChangePercentage: Double,

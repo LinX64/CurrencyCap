@@ -5,6 +5,7 @@ import data.util.NetworkResult
 import domain.model.main.Crypto
 import domain.repository.MainRepository
 import domain.repository.NewsRepository
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -40,11 +41,11 @@ class OverviewViewModel(
         }
 
         combine(ratesFlow, newsFlow) { rates, news ->
-            val bonbastRates = rates.bonbast
-            val cryptoRates = rates.crypto.sortedBy { it.name }
-            val markets = rates.markets
-            val fiatRates = rates.rates.filter { it.type == FIAT }
-            val topMovers = rates.crypto.let(::mapToTopMovers)
+            val bonbastRates = rates.bonbast.toImmutableList()
+            val cryptoRates = rates.crypto.sortedBy { it.name }.toImmutableList()
+            val markets = rates.markets.toImmutableList()
+            val fiatRates = rates.rates.filter { it.type == FIAT }.toImmutableList()
+            val topMovers = rates.crypto.let(::mapToTopMovers).toImmutableList()
 
             when {
                 bonbastRates.isEmpty() ||
@@ -62,7 +63,7 @@ class OverviewViewModel(
                         markets = markets,
                         fiatRates = fiatRates,
                         topMovers = topMovers,
-                        news = news
+                        news = news.toImmutableList()
                     )
                 }
             }

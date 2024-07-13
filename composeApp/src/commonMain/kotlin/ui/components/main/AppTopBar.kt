@@ -16,12 +16,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.ic_arrow_left
-import currencycap.composeapp.generated.resources.ic_settings
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
-import ui.navigation.util.NavRoutes
-import ui.screens.main.settings.navigation.navigateToSettingsScreen
+import ui.navigation.util.ScreenRoutes.AI_PREDICTION
+import ui.navigation.util.ScreenRoutes.CRYPTO_DETAIL
+import ui.navigation.util.ScreenRoutes.EXPLORE
+import ui.navigation.util.ScreenRoutes.NEWS_DETAIL
+import ui.navigation.util.ScreenRoutes.SETTINGS
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,11 +33,11 @@ internal fun AppTopBar(
     scrollBehavior: TopAppBarScrollBehavior,
     hazeState: HazeState
 ) {
-    val isSettingsScreen = currentDestination == NavRoutes.SETTINGS
-    val isNewsDetailScreen = currentDestination?.startsWith(NavRoutes.NEWS_DETAIL)
-    val isDetailScreen = currentDestination?.startsWith(NavRoutes.CRYPTO_DETAIL)
-    val isExploreScreen = currentDestination == NavRoutes.EXPLORE
-    val isAiScreen = currentDestination == NavRoutes.AI_PREDICTION
+    val isSettingsScreen = currentDestination == SETTINGS
+    val isNewsDetailScreen = currentDestination?.startsWith(NEWS_DETAIL)
+    val isDetailScreen = currentDestination?.startsWith(CRYPTO_DETAIL)
+    val isExploreScreen = currentDestination == EXPLORE
+    val isAiScreen = currentDestination == AI_PREDICTION
 
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
@@ -53,49 +55,46 @@ internal fun AppTopBar(
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.Transparent,
-            scrolledContainerColor = Color.Transparent,
+            scrolledContainerColor = Color.Transparent
         ),
         scrollBehavior = scrollBehavior,
-        actions = {
-//            ActionsMenu(
-//                currentDestination = currentDestination,
-//                navController = navController
-//            )
-        },
         navigationIcon = {
-            if (isSettingsScreen ||
-                isNewsDetailScreen == true ||
-                isExploreScreen ||
-                isAiScreen ||
-                isDetailScreen == true
-            ) {
-                IconButton(onClick = { navController.navigateUp() }) {
-                    Icon(
-                        painter = painterResource(Res.drawable.ic_arrow_left),
-                        contentDescription = "Back",
-                        tint = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-            }
+            NavigationIcon(
+                isSettingsScreen,
+                isNewsDetailScreen,
+                isExploreScreen,
+                isAiScreen,
+                isDetailScreen,
+                navController
+            )
         }
     )
 }
 
 @Composable
-private fun ActionsMenu(
-    currentDestination: String?,
+private fun NavigationIcon(
+    isSettingsScreen: Boolean,
+    isNewsDetailScreen: Boolean?,
+    isExploreScreen: Boolean,
+    isAiScreen: Boolean,
+    isDetailScreen: Boolean?,
     navController: NavHostController
 ) {
-    if (currentDestination == NavRoutes.PROFILE) {
+    if (isSettingsScreen ||
+        isNewsDetailScreen == true ||
+        isExploreScreen ||
+        isAiScreen ||
+        isDetailScreen == true
+    ) {
         IconButton(
-            onClick = { navController.navigateToSettingsScreen() }
+            onClick = navController::navigateUp
         ) {
             Icon(
-                painter = painterResource(Res.drawable.ic_settings),
-                contentDescription = "Settings"
+                painter = painterResource(Res.drawable.ic_arrow_left),
+                contentDescription = "Back",
+                tint = MaterialTheme.colorScheme.onSurface
             )
         }
     }
 }
-
 

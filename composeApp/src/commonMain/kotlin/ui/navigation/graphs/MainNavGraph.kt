@@ -10,7 +10,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.util.NavRoutes
+import ui.navigation.util.Screen.Overview
 import ui.screens.main.ai_predict.navigation.aiPredictScreen
 import ui.screens.main.bookmarks.navigation.bookmarksScreen
 import ui.screens.main.detail.navigation.detailScreen
@@ -34,7 +34,7 @@ internal fun MainNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.OVERVIEW,
+        startDestination = Overview,
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
@@ -44,7 +44,11 @@ internal fun MainNavGraph(
             navController = navController,
             hazeState = hazeState
         )
-        aiPredictScreen(padding = padding, hazeState = hazeState)
+
+        aiPredictScreen(
+            padding = padding,
+            hazeState = hazeState
+        )
 
         overviewScreen(
             padding = padding,
@@ -67,14 +71,12 @@ internal fun MainNavGraph(
         newsDetailScreen(
             padding = padding,
             hazeState = hazeState,
-            navController = navController,
             onError = onError
         )
 
         detailScreen(
             padding = padding,
-            hazeState = hazeState,
-            onError = onError
+            hazeState = hazeState
         )
 
         exchangeScreen(

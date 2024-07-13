@@ -39,39 +39,36 @@ import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.ic_arrow_up_down
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
-import ui.navigation.util.NavRoutes
+import ui.navigation.util.ScreenRoutes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun BottomNavigationBar(
-    onTabSelected: (BottomBarTab) -> Unit,
+    currentDestination: String?,
     scrollBehavior: TopAppBarScrollBehavior,
     hazeState: HazeState,
-    isSettingsScreen: Boolean,
-    navController: NavHostController
+    onTabSelected: (BottomBarTab) -> Unit
 ) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
-    val isExploreScreen = currentRoute == NavRoutes.EXPLORE
-    val isAirScreen = currentRoute == NavRoutes.AI_PREDICTION
-    val isDetailScreen = currentRoute?.startsWith(NavRoutes.CRYPTO_DETAIL) == true
 
-    LaunchedEffect(currentRoute) {
-        val newIndex = tabs.indexOfFirst { it.route == currentRoute }
+    val isExploreScreen = currentDestination == ScreenRoutes.EXPLORE
+    val isAIScreen = currentDestination == ScreenRoutes.AI_PREDICTION
+    val isDetailScreen = currentDestination?.startsWith(ScreenRoutes.CRYPTO_DETAIL) == true
+    val isSettingsScreen = currentDestination == ScreenRoutes.SETTINGS
+
+    LaunchedEffect(currentDestination) {
+        val newIndex = tabs.indexOfFirst { it.name == currentDestination }
         if (newIndex != -1) {
             selectedTabIndex = newIndex
         }
     }
 
-    if (isSettingsScreen.not() && isExploreScreen.not() && isAirScreen.not() && isDetailScreen.not()) {
+    if (isSettingsScreen.not() && isExploreScreen.not() && isAIScreen.not() && isDetailScreen.not()) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

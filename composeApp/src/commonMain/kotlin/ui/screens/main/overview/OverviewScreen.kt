@@ -3,7 +3,6 @@ package ui.screens.main.overview
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
@@ -43,7 +42,6 @@ internal fun OverviewRoute(
 
 @Composable
 internal fun OverviewScreen(
-    modifier: Modifier = Modifier,
     padding: PaddingValues,
     state: OverviewState,
     hazeState: HazeState,

@@ -19,7 +19,7 @@ internal fun GlassCard(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(8.dp),
     onCardClick: () -> Unit = {},
-    shouldBeClickable: Boolean = false,
+    isClickable: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     Card(
@@ -33,7 +33,7 @@ internal fun GlassCard(
             disabledContainerColor = Color.Transparent
         ),
         onClick = onCardClick,
-        enabled = shouldBeClickable
+        enabled = isClickable
     ) {
         Column(
             modifier = Modifier

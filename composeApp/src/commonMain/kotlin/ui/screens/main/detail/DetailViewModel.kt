@@ -2,14 +2,16 @@ package ui.screens.main.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import data.util.NetworkResult
+import data.util.NetworkResult.Error
+import data.util.NetworkResult.Loading
+import data.util.NetworkResult.Success
 import data.util.asResult
 import domain.repository.MainRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import ui.common.MviViewModel
 import ui.navigation.util.SYMBOL
-import ui.screens.main.detail.DetailViewEvent.OnLoadCryptoDetail
+import ui.screens.main.detail.DetailViewEvent.OnLoadCryptoInfo
 
 class DetailViewModel(
     private val mainRepository: MainRepository,
@@ -19,12 +21,12 @@ class DetailViewModel(
     val symbol: String = savedStateHandle.get<String>(SYMBOL) ?: ""
 
     init {
-        handleEvent(OnLoadCryptoDetail)
+        handleEvent(OnLoadCryptoInfo)
     }
 
     override fun handleEvent(event: DetailViewEvent) {
         when (event) {
-            OnLoadCryptoDetail -> onLoadCryptoDetail()
+            OnLoadCryptoInfo -> onLoadCryptoDetail()
         }
     }
 
@@ -33,9 +35,9 @@ class DetailViewModel(
             .asResult()
             .map {
                 when (it) {
-                    is NetworkResult.Loading -> setState { DetailState.Loading }
-                    is NetworkResult.Success -> setState { DetailState.Success(it.data) }
-                    is NetworkResult.Error -> setState {
+                    is Loading -> setState { DetailState.Loading }
+                    is Success -> setState { DetailState.Success(it.data) }
+                    is Error -> setState {
                         DetailState.Error(it.throwable.message ?: "An error occurred")
                     }
                 }

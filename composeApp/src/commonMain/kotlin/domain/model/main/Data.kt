@@ -1,5 +1,8 @@
 package domain.model.main
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class Data(
     val currencySymbol: String? = null,
     val id: String,

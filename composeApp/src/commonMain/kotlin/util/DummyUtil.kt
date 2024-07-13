@@ -2,13 +2,14 @@ package util
 
 import data.remote.model.User
 import domain.model.Article
-import domain.model.News
 import domain.model.Source
 import domain.model.main.BonbastRate
 import domain.model.main.Crypto
 import domain.model.main.Currencies
 import domain.model.main.Market
 import domain.model.main.Rate
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 internal fun getDummyNewsItem() = Article(
     author = "Alvin Hemedez",
@@ -53,7 +54,7 @@ internal fun getDummyCryptoItem(): Crypto = Crypto(
     totalVolume = 100.101
 )
 
-internal fun getDummyCryptoItems() = listOf(
+internal fun getDummyCryptoItems() = persistentListOf(
     Crypto(
         ath = 76.77,
         athChangePercentage = 78.79,
@@ -117,13 +118,13 @@ internal fun getDummyUser() = User(
     profilePicture = ""
 )
 
-internal fun getDummyBonbastRates(): List<BonbastRate> = listOf(
+internal fun getDummyBonbastRates(): ImmutableList<BonbastRate> = persistentListOf(
     BonbastRate(
         code = "code", sell = 8.9, buy = 10.11,
     )
 )
 
-internal fun getDummyMarketRates(): List<Market> = listOf(
+internal fun getDummyMarketRates(): ImmutableList<Market> = persistentListOf(
     Market(
         baseId = "te",
         baseSymbol = "brute",
@@ -140,19 +141,9 @@ internal fun getDummyMarketRates(): List<Market> = listOf(
     )
 )
 
-internal fun getDummyRatesItem(): List<Rate> = listOf(
+internal fun getDummyRatesItem(): ImmutableList<Rate> = persistentListOf(
     Rate(
         id = "vero", rateUsd = "ultricies", symbol = "animal", type = "proin", currencySymbol = null
-    )
-)
-
-internal fun getDummyNews(): List<News> = listOf(
-    News(
-        articles = listOf(
-            getDummyNewsItem()
-        ),
-        status = "status",
-        totalResults = 1
     )
 )
 

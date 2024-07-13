@@ -71,6 +71,8 @@ kotlin {
             implementation(libs.firebase.auth)
             implementation(libs.firebase.fireStore)
 
+            implementation(libs.kotlinx.collections.immutable)
+
             // UI
             implementation(libs.haze)
             implementation(libs.compottie)

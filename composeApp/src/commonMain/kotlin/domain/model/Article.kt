@@ -1,7 +1,9 @@
 package domain.model
 
+import androidx.compose.runtime.Immutable
 import data.local.model.ArticleEntity
 
+@Immutable
 data class Article(
     val author: String? = null,
     val content: String,
