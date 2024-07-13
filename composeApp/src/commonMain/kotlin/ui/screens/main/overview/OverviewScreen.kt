@@ -73,10 +73,5 @@ internal fun OverviewScreen(
         item { TopRates(state) }
         item { TrendingCryptoCurrencies(overviewState = state, onCryptoItemClick) }
     }
-
-    when (state) {
-        is OverviewState.Error -> onError(state.message)
-        else -> Unit
-    }
 }
 

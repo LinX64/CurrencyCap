@@ -5,16 +5,16 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.util.Screen.AIPredict
+import ui.navigation.util.Screen.AIPrediction
 import ui.screens.main.ai_predict.AiPredictScreen
 
-fun NavController.navigateToAiPredictScreen() = navigate(AIPredict)
+fun NavController.navigateToAiPredictScreen() = navigate(AIPrediction)
 
 fun NavGraphBuilder.aiPredictScreen(
     padding: PaddingValues,
     hazeState: HazeState
 ) {
-    composable<AIPredict> {
+    composable<AIPrediction> {
         AiPredictScreen(
             padding = padding,
             hazeState = hazeState

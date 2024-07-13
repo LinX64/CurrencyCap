@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ui.common.formatToPrice
 import ui.components.GlassCard
@@ -52,7 +53,8 @@ internal fun ResultCard(
                     Text(
                         text = "${(animatedExchangeAmount * 100).toLong() / 100.0}",
                         color = MaterialTheme.colorScheme.onSurface,
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
                     )
 
                     Spacer(modifier = Modifier.width(8.dp))
@@ -60,7 +62,8 @@ internal fun ResultCard(
                     Text(
                         text = uiState.targetCurrency?.code.toString(),
                         color = MaterialTheme.colorScheme.onSurface,
-                        style = MaterialTheme.typography.bodyMedium
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
                     )
                 }
 
