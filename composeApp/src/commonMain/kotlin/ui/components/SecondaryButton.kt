@@ -34,12 +34,12 @@ internal fun SecondaryButton(
 
     Button(
         modifier = modifier
-            .clip(RoundedCornerShape(8.dp))
             .background(
                 brush = gradient,
                 shape = RoundedCornerShape(35.dp)
             )
-            .clip(RoundedCornerShape(35.dp)),
+            .clip(RoundedCornerShape(35.dp))
+            .then(modifier),
         onClick = onButtonClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent

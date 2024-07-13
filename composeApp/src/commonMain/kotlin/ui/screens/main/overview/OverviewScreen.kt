@@ -6,11 +6,9 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
-import ui.components.ErrorView
 import ui.components.HorizontalLineWithDot
 import ui.components.SearchViewHeader
 import ui.components.main.BaseGlassLazyColumn
-import ui.screens.main.overview.OverviewViewEvent.OnRetry
 import ui.screens.main.overview.components.PortfolioSection
 import ui.screens.main.overview.components.TodayTopMovers
 import ui.screens.main.overview.components.TopRates
@@ -24,7 +22,8 @@ internal fun OverviewRoute(
     onSearchCardClicked: () -> Unit,
     onNewsItemClick: (url: String) -> Unit,
     onCircleButtonClicked: () -> Unit,
-    onCryptoItemClick: (symbol: String) -> Unit
+    onCryptoItemClick: (symbol: String) -> Unit,
+    onError: (message: String) -> Unit,
 ) {
     val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
 
@@ -36,7 +35,7 @@ internal fun OverviewRoute(
         onNewsItemClick = onNewsItemClick,
         onCircleButtonClicked = onCircleButtonClicked,
         onCryptoItemClick = onCryptoItemClick,
-        onRetry = { overviewViewModel.handleEvent(OnRetry) },
+        onError = onError,
     )
 }
 
@@ -49,7 +48,7 @@ internal fun OverviewScreen(
     onNewsItemClick: (url: String) -> Unit,
     onCircleButtonClicked: () -> Unit,
     onCryptoItemClick: (symbol: String) -> Unit,
-    onRetry: () -> Unit,
+    onError: (message: String) -> Unit,
 ) {
     BaseGlassLazyColumn(
         padding = padding,
@@ -76,7 +75,7 @@ internal fun OverviewScreen(
     }
 
     when (state) {
-        is OverviewState.Error -> ErrorView(message = state.message, onRetry = onRetry)
+        is OverviewState.Error -> onError(state.message)
         else -> Unit
     }
 }

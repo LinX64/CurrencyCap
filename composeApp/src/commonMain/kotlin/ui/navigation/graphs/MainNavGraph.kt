@@ -53,7 +53,8 @@ internal fun MainNavGraph(
         overviewScreen(
             padding = padding,
             navController = navController,
-            hazeState = hazeState
+            hazeState = hazeState,
+            onError = onError
         )
 
         bookmarksScreen(
