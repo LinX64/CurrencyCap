@@ -13,11 +13,6 @@ import ui.components.main.BottomBarTab.Exchange
 import ui.components.main.BottomBarTab.News
 import ui.components.main.BottomBarTab.Overview
 import ui.components.main.BottomBarTab.Profile
-import ui.navigation.util.ScreenRoutes.BOOKMARKS
-import ui.navigation.util.ScreenRoutes.EXCHANGE
-import ui.navigation.util.ScreenRoutes.NEWS
-import ui.navigation.util.ScreenRoutes.OVERVIEW
-import ui.navigation.util.ScreenRoutes.PROFILE
 import ui.screens.main.bookmarks.navigation.navigateToBookmarksScreen
 import ui.screens.main.exchange.navigation.navigateToExchangeScreen
 import ui.screens.main.news.navigation.navigateToNewsScreen
@@ -37,7 +32,7 @@ internal class LoggedInAppState(
 ) {
     val currentDestination: String?
         @Composable get() = navController
-            .currentBackStackEntryAsState().value?.destination?.route
+            .currentBackStackEntryAsState().value?.destination?.route?.let { getTabFromRoute(it) }
 
     fun navigateToTopLevelDestination(topLevelDestination: BottomBarTab) {
         val topLevelNavOptions = navOptions {
@@ -59,15 +54,9 @@ internal class LoggedInAppState(
         }
     }
 
+    // TODO: Temporary solution
     private fun getTabFromRoute(route: String?): String? {
-        println("route: $route") // ui.navigation.util.Screen.Overview
-        return when (route) {
-            OVERVIEW -> Overview.screen
-            NEWS -> News.screen
-            EXCHANGE -> Exchange.screen
-            BOOKMARKS -> Bookmarks.screen
-            PROFILE -> Profile.screen
-            else -> null
-        }
+        val simpleRoute = route?.replace("ui.navigation.util.Screen.", "")
+        return BottomBarTab.entries.find { it.route.key == simpleRoute }?.route?.key
     }
 }

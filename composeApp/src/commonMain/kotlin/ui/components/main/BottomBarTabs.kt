@@ -1,25 +1,30 @@
 package ui.components.main
 
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.bookmarks
+import currencycap.composeapp.generated.resources.exchange
 import currencycap.composeapp.generated.resources.ic_home
 import currencycap.composeapp.generated.resources.ic_news
 import currencycap.composeapp.generated.resources.ic_save
 import currencycap.composeapp.generated.resources.ic_user_normal
+import currencycap.composeapp.generated.resources.news
+import currencycap.composeapp.generated.resources.overview
+import currencycap.composeapp.generated.resources.profile
 import org.jetbrains.compose.resources.DrawableResource
-import ui.navigation.util.ScreenRoutes
+import org.jetbrains.compose.resources.StringResource
 
 enum class BottomBarTab(
-    val screen: String,
+    val route: StringResource,
     val icon: DrawableResource? = null
 ) {
-    Overview(ScreenRoutes.OVERVIEW, Res.drawable.ic_home),
-    News(ScreenRoutes.NEWS, Res.drawable.ic_news),
-    Exchange(ScreenRoutes.EXCHANGE),
-    Bookmarks(ScreenRoutes.BOOKMARKS, Res.drawable.ic_save),
-    Profile(ScreenRoutes.PROFILE, Res.drawable.ic_user_normal)
+    Overview(Res.string.overview, Res.drawable.ic_home),
+    News(Res.string.news, Res.drawable.ic_news),
+    Exchange(Res.string.exchange),
+    Bookmarks(Res.string.bookmarks, Res.drawable.ic_save),
+    Profile(Res.string.profile, Res.drawable.ic_user_normal)
 }
 
-val tabs = listOf(
+internal val tabs = listOf(
     BottomBarTab.Overview,
     BottomBarTab.News,
     BottomBarTab.Exchange,

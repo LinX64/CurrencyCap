@@ -1,12 +1,6 @@
 package ui.navigation.util
 
 object ScreenRoutes {
-    const val OVERVIEW = "Overview"
-    const val NEWS = "News"
-    const val EXCHANGE = "Exchange"
-    const val BOOKMARKS = "Bookmarks"
-    const val PROFILE = "Profile"
-
     const val AI_PREDICTION = "AI Prediction"
     const val SETTINGS = "Settings"
 
