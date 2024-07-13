@@ -30,10 +30,8 @@ internal fun KoinPreview(
                 previewModule
             )
         }) {
-            AppM3Theme(dark = true) {
-                DarkBackground {
-                    content()
-                }
+            AppM3Theme(dark = false) {
+                content()
             }
         }
     } else {

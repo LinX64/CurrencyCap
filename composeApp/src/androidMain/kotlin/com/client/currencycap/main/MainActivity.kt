@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
             }
 
             // TODO: Add dark/light support
-            AppM3Theme(dark = true) {
+            AppM3Theme(dark = false) {
                 App()
             }
         }

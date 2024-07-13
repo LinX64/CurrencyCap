@@ -91,4 +91,14 @@ object CurrencyColors {
         dark = Color(0xFF0C7A56),
         extraDark = Color(0xFF085239),
     )
+
+    val Muted_Teal = ColorShades(
+        extraLight = Color(0xFFABF5F0),
+        light = Color(0xFF87F5F0),
+        kindaLight = Color(0xFF62F5F0),
+        primary = Color(0xFF008080),
+        kindaDark = Color(0xFF33CCB8),
+        dark = Color(0xFF248F8F),
+        extraDark = Color(0xFF145252),
+    )
 }

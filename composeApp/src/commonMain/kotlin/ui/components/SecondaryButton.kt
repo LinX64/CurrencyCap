@@ -17,20 +17,23 @@ import androidx.compose.ui.unit.dp
 @Composable
 internal fun SecondaryButton(
     modifier: Modifier = Modifier,
+    text: String,
+    textColor: Color = MaterialTheme.colorScheme.surface,
     onButtonClick: () -> Unit,
-    text: String
 ) {
     Button(
-        onClick = onButtonClick,
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3A3A3C)),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(8.dp)),
+        onClick = onButtonClick,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.secondary
+        )
     ) {
         Text(
             modifier = Modifier.padding(8.dp),
             text = text,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = textColor,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold
         )
