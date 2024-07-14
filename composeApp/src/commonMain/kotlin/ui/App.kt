@@ -1,6 +1,5 @@
 package ui
 
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -15,7 +14,6 @@ import ui.screens.MainState.NotLoggedIn
 import ui.screens.MainViewModel
 import ui.screens.initial.splash.SplashScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun App(
     mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),

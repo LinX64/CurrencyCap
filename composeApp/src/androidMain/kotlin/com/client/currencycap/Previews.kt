@@ -1,15 +1,14 @@
 package com.client.currencycap
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
+import ui.screens.main.news.components.DatePickerDialog
 
 //@Composable
 //@Preview(showBackground = true)
@@ -38,34 +37,26 @@ import dev.chrisbanes.haze.HazeState
 //    }
 //}
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview(showBackground = true)
 private fun DetailPreview() {
     val hazeState = remember { HazeState() }
+    val datePickerState = rememberDatePickerState(initialSelectedDateMillis = 1578096000000)
+    val showDialog = remember { mutableStateOf(false) }
 
     KoinPreview {
-        NewsFilterSection()
+        Column {
+            DatePickerDialog(
+                showDialog = showDialog,
+                datePickerState = datePickerState
+            )
+        }
     }
 }
 
-@Composable
-private fun NewsFilterSection(
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier
-            .padding(horizontal = 16.dp)
-    ) {
-        Text(
-            modifier = Modifier.padding(top = 16.dp),
-            text = "Filter by",
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
 
 
-    }
-}
 
 
 
