@@ -42,7 +42,10 @@ internal fun BaseDatePickerDialog(
     ) {
         DatePicker(
             state = datePickerState,
-            colors = DatePickerDefaults.colors(selectedDayContentColor = MaterialTheme.colorScheme.surface)
+            colors = DatePickerDefaults.colors(
+                selectedDayContentColor = MaterialTheme.colorScheme.surface,
+                selectedYearContentColor = MaterialTheme.colorScheme.surface,
+            )
         )
     }
 }

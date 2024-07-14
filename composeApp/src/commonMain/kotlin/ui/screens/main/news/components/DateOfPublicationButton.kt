@@ -23,7 +23,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import kotlinx.datetime.Clock
 import ui.components.base.GlassCard
+import util.DateUtils.convertMillisToDate
 
 @Composable
 internal fun DateOfPublicationButton() {
@@ -67,7 +69,8 @@ internal fun DateOfPublicationButton() {
 @Composable
 private fun StartDatePickerSection() {
     val showDialog = remember { mutableStateOf(false) }
-    val selectedDate = remember { mutableStateOf("") }
+    val defaultDate = convertMillisToDate(Clock.System.now().toEpochMilliseconds())
+    val selectedDate = remember { mutableStateOf(defaultDate) }
 
     Column {
         Text(
@@ -110,7 +113,8 @@ private fun StartDatePickerSection() {
 @Composable
 private fun EndDatePickerSection() {
     val showDialog = remember { mutableStateOf(false) }
-    val selectedDate = remember { mutableStateOf("") }
+    val defaultDate = convertMillisToDate(Clock.System.now().toEpochMilliseconds())
+    val selectedDate = remember { mutableStateOf(defaultDate) }
 
     Column {
         Text(
