@@ -6,7 +6,7 @@ object ScreenRoutes {
     const val EXCHANGE = "Exchange"
     const val BOOKMARKS = "Bookmarks"
     const val PROFILE = "Profile"
-    const val AI_PREDICTION = "AIPredict"
+    const val AI_PREDICTION = "AIPrediction"
     const val SETTINGS = "Settings"
 
     const val LANDING = "Landing"
@@ -28,3 +28,5 @@ object ScreenRoutes {
 const val ENCODED_URL = "encodedUrl"
 const val PHONE_NUMBER = "phoneNumber"
 const val SYMBOL = "symbol"
+const val START_DATE = "startDate"
+const val END_DATE = "endDate"

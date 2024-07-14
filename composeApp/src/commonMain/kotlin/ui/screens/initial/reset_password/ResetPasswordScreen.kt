@@ -24,7 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
 import ui.components.base.BaseCenterColumn
 import ui.components.base.EmailTextField
-import ui.components.base.PrimaryButton
+import ui.components.base.button.PrimaryButton
 import ui.screens.initial.reset_password.ResetPasswordState.Error
 import ui.screens.initial.reset_password.ResetPasswordViewEvent.OnEmailChanged
 import ui.screens.initial.reset_password.ResetPasswordViewEvent.OnResetPasswordClick

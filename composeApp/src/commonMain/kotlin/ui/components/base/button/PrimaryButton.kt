@@ -1,4 +1,4 @@
-package ui.components.base
+package ui.components.base.button
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +14,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ui.theme.colors.CurrencyColors
 
@@ -22,7 +21,6 @@ import ui.theme.colors.CurrencyColors
 internal fun PrimaryButton(
     modifier: Modifier = Modifier,
     text: String,
-    textPadding: Dp = 4.dp,
     textColor: Color = MaterialTheme.colorScheme.onSurface,
     isEnabled: Boolean = true,
     onButtonClick: () -> Unit,

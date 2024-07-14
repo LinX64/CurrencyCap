@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +26,7 @@ import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.LottieConstants
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import ui.components.base.button.SecondaryButton
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -77,25 +77,10 @@ internal fun ErrorView(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = "What we know: $message",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-            textAlign = TextAlign.Justify
+        SecondaryButton(
+            modifier = Modifier.padding(horizontal = 32.dp),
+            text = "Retry",
+            onButtonClick = onRetry
         )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        IconButton(
-            onClick = onRetry,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        ) {
-            Text(
-                text = "Retry",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-        }
     }
 }

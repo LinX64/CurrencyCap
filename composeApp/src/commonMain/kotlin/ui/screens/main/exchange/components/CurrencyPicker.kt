@@ -212,7 +212,9 @@ private fun CurrencyCodePickerView(
     )
 
     Row(
-        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(size = 8.dp)).clickable { onSelect(code) }
+        modifier = Modifier.fillMaxWidth()
+            .clip(RoundedCornerShape(size = 8.dp))
+            .clickable { onSelect(code) }
             .padding(all = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -246,7 +248,10 @@ private fun CurrencyCodeSelector(isSelected: Boolean = false) {
         animationSpec = tween(durationMillis = 300)
     )
     Box(
-        modifier = Modifier.size(18.dp).clip(CircleShape).background(animatedColor), contentAlignment = Alignment.Center
+        modifier = Modifier.size(18.dp)
+            .clip(CircleShape)
+            .background(animatedColor),
+        contentAlignment = Alignment.Center
     ) {
         if (isSelected) {
             Icon(

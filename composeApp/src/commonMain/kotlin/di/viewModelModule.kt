@@ -32,7 +32,7 @@ val viewModelModule = module {
     single { ProfileViewModel(get(), get(), get()) }
     single { GetVerifiedPhoneViewModel(get()) }
     single { ResetPasswordViewModel(get()) }
-    single { NewsViewModel(get(), get()) }
+    single { NewsViewModel(get(), get(), get()) }
     single { SettingsViewModel(get(), get()) }
     single { AiPredictViewModel() }
     single { FillProfileViewModel(get()) }
