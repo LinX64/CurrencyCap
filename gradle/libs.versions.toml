@@ -11,6 +11,7 @@ kotlin = "2.0.0"
 koin = "3.6.0-wasm-alpha2"
 koin-compose = "1.1.5"
 kotlinxCollectionsImmutable = "0.3.7"
+kotlinxDatetime = "0.6.0"
 lifecycleViewModel = "2.8.3"
 navigationCompose = "2.8.0-alpha08"
 haze = "0.7.3"
@@ -44,6 +45,7 @@ compose-webview-multiplatform = { module = "io.github.kevinnzou:compose-webview-
 haze = { group = "dev.chrisbanes.haze", name = "haze", version.ref = "haze" }
 compottie = { group = "io.github.alexzhirkevich", name = "compottie", version.ref = "compottie" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 placeholder-material3 = { group = "com.eygraber", name = "compose-placeholder-material3", version.ref = "placeholder-material3" }
 kachetor = { module = "com.vipulasri.kachetor:kachetor", version.ref = "kachetor" }
 

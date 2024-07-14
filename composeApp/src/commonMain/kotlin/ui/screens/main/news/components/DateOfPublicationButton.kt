@@ -67,6 +67,7 @@ internal fun DateOfPublicationButton() {
 @Composable
 private fun StartDatePickerSection() {
     val showDialog = remember { mutableStateOf(false) }
+    val selectedDate = remember { mutableStateOf("") }
 
     Column {
         Text(
@@ -88,7 +89,7 @@ private fun StartDatePickerSection() {
         ) {
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
-                text = "2021-01-01",
+                text = selectedDate.value,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
             )
@@ -97,8 +98,11 @@ private fun StartDatePickerSection() {
 
     if (showDialog.value) {
         BaseDatePickerDialog(
-            onCancelClick = { showDialog.value = false },
-            onOkClick = { showDialog.value = false }
+            onDismiss = { showDialog.value = false },
+            onDateSelected = {
+                showDialog.value = false
+                selectedDate.value = it
+            }
         )
     }
 }
@@ -106,6 +110,7 @@ private fun StartDatePickerSection() {
 @Composable
 private fun EndDatePickerSection() {
     val showDialog = remember { mutableStateOf(false) }
+    val selectedDate = remember { mutableStateOf("") }
 
     Column {
         Text(
@@ -126,7 +131,7 @@ private fun EndDatePickerSection() {
         ) {
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
-                text = "2021-01-01",
+                text = selectedDate.value,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
             )
@@ -135,8 +140,11 @@ private fun EndDatePickerSection() {
 
     if (showDialog.value) {
         BaseDatePickerDialog(
-            onCancelClick = { showDialog.value = false },
-            onOkClick = { showDialog.value = false }
+            onDismiss = { showDialog.value = false },
+            onDateSelected = {
+                showDialog.value = false
+                selectedDate.value = it
+            }
         )
     }
 }

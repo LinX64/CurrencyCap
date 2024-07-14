@@ -48,8 +48,8 @@ private fun DetailPreview() {
     KoinPreview {
         Column {
             BaseDatePickerDialog(
-                onCancelClick = { /*TODO*/ },
-                onOkClick = { /*TODO*/ }
+                onDismiss = { showDialog.value = false },
+                onDateSelected = { showDialog.value = false }
             )
         }
     }
