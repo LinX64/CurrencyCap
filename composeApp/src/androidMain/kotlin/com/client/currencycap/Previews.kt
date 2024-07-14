@@ -1,13 +1,15 @@
 package com.client.currencycap
 
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
-import ui.screens.main.exchange.ExchangeScreen
-import ui.screens.main.exchange.ExchangeUiState
 
 //@Composable
 //@Preview(showBackground = true)
@@ -42,15 +44,29 @@ private fun DetailPreview() {
     val hazeState = remember { HazeState() }
 
     KoinPreview {
-        ExchangeScreen(
-            state = ExchangeUiState(),
-            hazeState = hazeState,
-            padding = PaddingValues(0.dp),
-            onError = { /*TODO*/ },
-            handleEvent = {}
-        )
+        NewsFilterSection()
     }
 }
+
+@Composable
+private fun NewsFilterSection(
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .padding(horizontal = 16.dp)
+    ) {
+        Text(
+            modifier = Modifier.padding(top = 16.dp),
+            text = "Filter by",
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+
+
+    }
+}
+
 
 
 

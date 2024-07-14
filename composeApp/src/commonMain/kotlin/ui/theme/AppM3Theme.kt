@@ -13,7 +13,7 @@ fun AppM3Theme(
 ) {
     MaterialTheme(
         colorScheme = if (dark) appDarkColorScheme() else appLightColorScheme(),
-        typography = LatoTypography(),
+        typography = CurrencyTypography(),
         content = content
     )
 }
