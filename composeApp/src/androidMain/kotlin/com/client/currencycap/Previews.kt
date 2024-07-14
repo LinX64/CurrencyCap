@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import dev.chrisbanes.haze.HazeState
-import ui.screens.main.news.components.DatePickerDialog
+import ui.screens.main.news.components.BaseDatePickerDialog
 
 //@Composable
 //@Preview(showBackground = true)
@@ -47,9 +47,9 @@ private fun DetailPreview() {
 
     KoinPreview {
         Column {
-            DatePickerDialog(
-                showDialog = showDialog,
-                datePickerState = datePickerState
+            BaseDatePickerDialog(
+                onCancelClick = { /*TODO*/ },
+                onOkClick = { /*TODO*/ }
             )
         }
     }
