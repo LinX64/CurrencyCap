@@ -17,9 +17,11 @@ import androidx.compose.ui.Modifier
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import ui.components.BottomSheet
+import ui.components.base.BaseScaffoldBottomSheet
 import ui.navigation.graphs.MainNavGraph
 import ui.screens.MainViewModel
+import ui.screens.main.news.components.NewsFilterSection
+import ui.screens.main.subscribers.SubscribersSection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,9 +34,10 @@ internal fun LoggedInSection(
 ) {
     val currentDestination = appState.currentDestination
     val navController = appState.navController
-    val isSheetOpen = rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val hazeState = remember { HazeState() }
+    val isSubscribeBottomSheetVisible = rememberSaveable { mutableStateOf(false) }
+    val isNewsFilterBottomSheetVisible = rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -67,5 +70,11 @@ internal fun LoggedInSection(
         )
     }
 
-    if (isSheetOpen.value) BottomSheet(sheetState = scaffoldState)
+    if (isSubscribeBottomSheetVisible.value) {
+        BaseScaffoldBottomSheet { SubscribersSection() }
+    }
+
+    if (isNewsFilterBottomSheetVisible.value) {
+        BaseScaffoldBottomSheet { NewsFilterSection() }
+    }
 }

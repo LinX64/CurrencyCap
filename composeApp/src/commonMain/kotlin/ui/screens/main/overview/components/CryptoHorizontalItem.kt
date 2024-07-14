@@ -21,7 +21,7 @@ import currencycap.composeapp.generated.resources.baseline_monetization_on_48
 import domain.model.main.Crypto
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
-import ui.components.GlassCard
+import ui.components.base.GlassCard
 import ui.theme.colors.CurrencyColors
 
 data class AssetInfo(

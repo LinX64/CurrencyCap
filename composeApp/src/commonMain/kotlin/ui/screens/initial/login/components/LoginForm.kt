@@ -8,9 +8,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import ui.components.EmailTextField
-import ui.components.PasswordTextField
-import ui.components.PrimaryButton
+import ui.components.base.EmailTextField
+import ui.components.base.PasswordTextField
+import ui.components.base.PrimaryButton
 
 @Composable
 internal fun LoginForm(

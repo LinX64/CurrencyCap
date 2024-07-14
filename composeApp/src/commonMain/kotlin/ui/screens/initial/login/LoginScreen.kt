@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
-import ui.components.CenteredColumn
-import ui.components.HandleNavigationEffect
+import ui.components.base.CenteredColumn
+import ui.components.base.HandleNavigationEffect
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToRegister
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToResetPassword

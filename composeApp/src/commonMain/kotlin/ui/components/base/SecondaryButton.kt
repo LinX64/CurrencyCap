@@ -1,4 +1,4 @@
-package ui.components
+package ui.components.base
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding

@@ -26,11 +26,11 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import ui.components.PrivacyPolicyBottomSheet
+import ui.components.base.BaseModelBottomSheet
 import ui.navigation.graphs.AuthNavGraph
 import ui.navigation.util.ScreenRoutes
 import ui.screens.MainViewModel
-import ui.screens.initial.privacy_policy.PrivacyPolicySection
+import ui.screens.initial.landing.privacy_policy.PrivacyPolicySection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,7 +38,7 @@ internal fun NotLoggedInSection(
     appState: AppState = rememberAppState(),
     scope: CoroutineScope,
     mainViewModel: MainViewModel,
-    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
     val hazeState = remember { HazeState() }
     val currentDestination = appState.currentDestination
@@ -72,7 +72,7 @@ internal fun NotLoggedInSection(
     }
 
     if (isSheetOpen.value) {
-        PrivacyPolicyBottomSheet(
+        BaseModelBottomSheet(
             isVisible = isSheetOpen.value,
             onDismissRequest = { isSheetOpen.value = false }
         ) { PrivacyPolicySection() }

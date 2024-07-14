@@ -32,6 +32,7 @@ import currencycap.composeapp.generated.resources.ic_bookmark_filled
 import currencycap.composeapp.generated.resources.ic_bookmark_not_filled
 import domain.model.Article
 import org.jetbrains.compose.resources.painterResource
+import ui.components.base.GlassCard
 import ui.screens.main.overview.components.getPlaceHolder
 import util.convertDateFormat
 

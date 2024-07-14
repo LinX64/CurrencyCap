@@ -1,4 +1,4 @@
-package ui.components
+package ui.components.base
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun PrivacyPolicyBottomSheet(
+internal fun BaseModelBottomSheet(
     isVisible: Boolean,
     onDismissRequest: () -> Unit,
     content: @Composable () -> Unit

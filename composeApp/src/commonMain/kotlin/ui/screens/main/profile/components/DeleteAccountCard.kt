@@ -29,7 +29,7 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.delete_your_account_warning
 import org.jetbrains.compose.resources.stringResource
 import ui.components.DottedShape
-import ui.components.GlassCard
+import ui.components.base.GlassCard
 import ui.theme.colors.CurrencyColors
 
 @Composable

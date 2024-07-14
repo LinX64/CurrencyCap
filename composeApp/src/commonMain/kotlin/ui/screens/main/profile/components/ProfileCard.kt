@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import data.remote.model.User
-import ui.components.GlassCard
+import ui.components.base.GlassCard
 import ui.screens.main.overview.components.getPlaceHolder
 
 @Composable

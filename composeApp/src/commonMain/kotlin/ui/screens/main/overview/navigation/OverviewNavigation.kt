@@ -39,8 +39,7 @@ fun NavGraphBuilder.overviewScreen(
             onCircleButtonClicked = { navController.navigateToAiPredictScreen() },
             onCryptoItemClick = { symbol ->
                 navController.navigate(CryptoDetail(symbol))
-            },
-            onError = onError
+            }
         )
     }
 }
