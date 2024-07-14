@@ -2,13 +2,11 @@ package ui.components.main
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,7 +15,7 @@ import androidx.compose.ui.Modifier
 import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import ui.components.base.BaseScaffoldBottomSheet
+import ui.components.base.BaseModelBottomSheet
 import ui.navigation.graphs.MainNavGraph
 import ui.screens.MainViewModel
 import ui.screens.main.news.components.NewsFilterSection
@@ -29,7 +27,6 @@ internal fun LoggedInSection(
     appState: AppState = rememberAppState(),
     mainViewModel: MainViewModel,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    scaffoldState: BottomSheetScaffoldState = rememberBottomSheetScaffoldState(),
     scope: CoroutineScope
 ) {
     val currentDestination = appState.currentDestination
@@ -46,6 +43,7 @@ internal fun LoggedInSection(
                 hazeState = hazeState,
                 navController = navController,
                 scrollBehavior = scrollBehavior,
+                onFilterClick = { isNewsFilterBottomSheetVisible.value = true }
             )
         },
         bottomBar = {
@@ -70,11 +68,17 @@ internal fun LoggedInSection(
         )
     }
 
-    if (isSubscribeBottomSheetVisible.value) {
-        BaseScaffoldBottomSheet { SubscribersSection() }
+    BaseModelBottomSheet(
+        isVisible = isSubscribeBottomSheetVisible.value,
+        onDismiss = { isSubscribeBottomSheetVisible.value = false }
+    ) {
+        SubscribersSection()
     }
 
-    if (isNewsFilterBottomSheetVisible.value) {
-        BaseScaffoldBottomSheet { NewsFilterSection() }
+    BaseModelBottomSheet(
+        isVisible = isNewsFilterBottomSheetVisible.value,
+        onDismiss = { isNewsFilterBottomSheetVisible.value = false }
+    ) {
+        NewsFilterSection()
     }
 }

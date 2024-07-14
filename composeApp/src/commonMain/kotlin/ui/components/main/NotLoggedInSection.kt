@@ -74,7 +74,7 @@ internal fun NotLoggedInSection(
     if (isSheetOpen.value) {
         BaseModelBottomSheet(
             isVisible = isSheetOpen.value,
-            onDismissRequest = { isSheetOpen.value = false }
+            onDismiss = { isSheetOpen.value = false }
         ) { PrivacyPolicySection() }
     }
 }

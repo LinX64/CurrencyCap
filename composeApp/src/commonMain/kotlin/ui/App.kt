@@ -26,8 +26,8 @@ internal fun App(
         Loading -> SplashScreen()
         is LoggedIn -> {
             LoggedInSection(
-                scope = scope,
-                mainViewModel = mainViewModel
+                mainViewModel = mainViewModel,
+                scope = scope
             )
         }
 

@@ -35,7 +35,8 @@ internal fun AppTopBar(
     currentDestination: String?,
     navController: NavHostController,
     scrollBehavior: TopAppBarScrollBehavior,
-    hazeState: HazeState
+    hazeState: HazeState,
+    onFilterClick: () -> Unit
 ) {
     val isSettingsScreen = currentDestination == SETTINGS
     val isNewsDetailScreen = currentDestination?.startsWith(NEWS_DETAIL)
@@ -73,7 +74,9 @@ internal fun AppTopBar(
                 navController
             )
         },
-        actions = { Actions(isNewsScreen) }
+        actions = {
+            Actions(isNewsScreen = isNewsScreen, onFilterClick = onFilterClick)
+        }
     )
 }
 
@@ -105,13 +108,14 @@ private fun NavigationIcon(
 }
 
 @Composable
-private fun Actions(isNewsScreen: Boolean) {
+private fun Actions(
+    isNewsScreen: Boolean,
+    onFilterClick: () -> Unit
+) {
     if (isNewsScreen) {
         IconButton(
             modifier = Modifier.padding(end = 16.dp),
-            onClick = {
-
-            }
+            onClick = onFilterClick
         ) {
             Icon(
                 painter = painterResource(Res.drawable.ic_filter_search),
