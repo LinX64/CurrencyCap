@@ -25,11 +25,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
-import ui.components.CenteredColumn
-import ui.components.EmailTextField
-import ui.components.HandleNavigationEffect
-import ui.components.PasswordTextField
-import ui.components.PrimaryButton
+import ui.components.base.CenteredColumn
+import ui.components.base.EmailTextField
+import ui.components.base.HandleNavigationEffect
+import ui.components.base.PasswordTextField
+import ui.components.base.PrimaryButton
 import ui.screens.initial.register.RegisterNavigationEffect.NavigateToFillProfile
 import ui.screens.initial.register.RegisterViewEvent.OnEmailChanged
 import ui.screens.initial.register.RegisterViewEvent.OnPasswordChanged

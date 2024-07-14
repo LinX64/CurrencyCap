@@ -18,10 +18,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
-import ui.components.BaseCenterColumn
-import ui.components.HandleNavigationEffect
-import ui.components.PrimaryButton
-import ui.components.SecondaryButton
+import ui.components.base.BaseCenterColumn
+import ui.components.base.HandleNavigationEffect
+import ui.components.base.PrimaryButton
+import ui.components.base.SecondaryButton
 import ui.screens.initial.fill_profile.FillProfileNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnNameChanged
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnPhoneNumberChanged

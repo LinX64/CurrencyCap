@@ -23,7 +23,7 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import domain.model.main.Rate
 import ui.common.formatCurrentTotal
-import ui.components.GlassCard
+import ui.components.base.GlassCard
 import util.getIconBy
 
 data class CryptoCardData(

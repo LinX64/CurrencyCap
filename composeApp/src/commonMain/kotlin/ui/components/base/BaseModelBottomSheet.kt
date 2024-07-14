@@ -1,4 +1,4 @@
-package ui.components
+package ui.components.base
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -11,6 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,26 +20,23 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun PrivacyPolicyBottomSheet(
+internal fun BaseModelBottomSheet(
     isVisible: Boolean,
-    onDismissRequest: () -> Unit,
+    onDismiss: () -> Unit,
     content: @Composable () -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
+        skipPartiallyExpanded = true,
+        confirmValueChange = { it != SheetValue.PartiallyExpanded }
     )
 
     LaunchedEffect(isVisible) {
-        if (isVisible) {
-            sheetState.show()
-        } else {
-            sheetState.hide()
-        }
+        if (isVisible) sheetState.show() else sheetState.hide()
     }
 
     if (isVisible) {
         ModalBottomSheet(
-            onDismissRequest = onDismissRequest,
+            onDismissRequest = onDismiss,
             sheetState = sheetState,
             shape = RoundedCornerShape(topStart = 55.dp, topEnd = 55.dp),
             containerColor = MaterialTheme.colorScheme.surface,

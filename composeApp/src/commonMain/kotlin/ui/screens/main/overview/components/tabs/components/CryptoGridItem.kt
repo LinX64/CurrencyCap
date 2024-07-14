@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import domain.model.main.Crypto
-import ui.components.GlassCard
+import ui.components.base.GlassCard
 import util.formatNumber
 
 @Composable

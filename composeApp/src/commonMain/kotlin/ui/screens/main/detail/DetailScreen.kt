@@ -27,7 +27,7 @@ import di.koinViewModel
 import domain.model.main.Crypto
 import org.koin.core.parameter.parametersOf
 import ui.common.formatToPrice
-import ui.components.GlassCard
+import ui.components.base.GlassCard
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.overview.components.getPlaceHolder
 import ui.screens.main.profile.components.HelpCenterBaseGlassCard

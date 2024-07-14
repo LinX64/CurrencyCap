@@ -23,7 +23,6 @@ internal fun OverviewRoute(
     onNewsItemClick: (url: String) -> Unit,
     onCircleButtonClicked: () -> Unit,
     onCryptoItemClick: (symbol: String) -> Unit,
-    onError: (message: String) -> Unit,
 ) {
     val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
 
@@ -35,7 +34,6 @@ internal fun OverviewRoute(
         onNewsItemClick = onNewsItemClick,
         onCircleButtonClicked = onCircleButtonClicked,
         onCryptoItemClick = onCryptoItemClick,
-        onError = onError,
     )
 }
 
@@ -48,7 +46,6 @@ internal fun OverviewScreen(
     onNewsItemClick: (url: String) -> Unit,
     onCircleButtonClicked: () -> Unit,
     onCryptoItemClick: (symbol: String) -> Unit,
-    onError: (message: String) -> Unit,
 ) {
     BaseGlassLazyColumn(
         padding = padding,

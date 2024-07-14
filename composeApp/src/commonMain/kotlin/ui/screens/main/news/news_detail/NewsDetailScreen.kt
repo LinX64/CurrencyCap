@@ -7,7 +7,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import org.koin.core.parameter.parametersOf
-import ui.components.HandleNavigationEffect
+import ui.components.base.HandleNavigationEffect
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.news.news_detail.NewsDetailNavigationEffect.OpenBrowser
 import ui.screens.main.news.news_detail.NewsDetailState.Error

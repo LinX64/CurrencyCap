@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import ui.components.GlassCard
+import ui.components.base.GlassCard
 
 @Composable
 internal fun HelpCenterBaseGlassCard(

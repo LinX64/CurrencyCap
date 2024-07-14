@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import domain.model.Article
-import ui.components.GlassCard
+import ui.components.base.GlassCard
 import ui.screens.main.overview.components.getPlaceHolder
 import util.convertDateFormat
 

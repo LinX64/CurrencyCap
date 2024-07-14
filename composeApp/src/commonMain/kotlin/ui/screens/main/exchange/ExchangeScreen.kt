@@ -36,8 +36,8 @@ import data.local.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import org.jetbrains.compose.resources.painterResource
-import ui.components.GlassCard
-import ui.components.HandleNavigationEffect
+import ui.components.base.GlassCard
+import ui.components.base.HandleNavigationEffect
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.exchange.ExchangeNavigationEffect.ShowSnakeBar
 import ui.screens.main.exchange.ExchangeViewEvent.OnConvert

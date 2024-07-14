@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.logo
 import org.jetbrains.compose.resources.painterResource
-import ui.components.PrimaryButton
-import ui.components.SecondaryButton
+import ui.components.base.PrimaryButton
+import ui.components.base.SecondaryButton
 
 @Composable
 internal fun LandingScreen(

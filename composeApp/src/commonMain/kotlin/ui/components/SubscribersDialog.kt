@@ -24,6 +24,7 @@ import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import ui.components.base.GlassCard
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable

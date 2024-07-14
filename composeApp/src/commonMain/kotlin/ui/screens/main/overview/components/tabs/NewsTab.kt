@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import ui.components.CenteredColumn
+import ui.components.base.CenteredColumn
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.OverviewState.Error
 import ui.screens.main.overview.OverviewState.Loading

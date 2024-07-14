@@ -24,8 +24,8 @@ import currencycap.composeapp.generated.resources.support_request
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import ui.common.SendMail
-import ui.components.HandleNavigationEffect
-import ui.components.SecondaryButton
+import ui.components.base.HandleNavigationEffect
+import ui.components.base.SecondaryButton
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.profile.ProfileNavigationEffect.NavigateToLanding
 import ui.screens.main.profile.ProfileNavigationEffect.OpenEmailApp

@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import domain.model.main.Crypto
 import ui.common.formatToPrice
-import ui.components.GlassCard
+import ui.components.base.GlassCard
 import ui.theme.colors.CurrencyColors
 
 @Composable

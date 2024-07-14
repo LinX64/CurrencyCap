@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ui.common.formatToPrice
-import ui.components.GlassCard
+import ui.components.base.GlassCard
 import ui.screens.main.exchange.ExchangeUiState
 import util.currencyConverterAnimation
 import util.exitTransition
