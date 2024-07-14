@@ -1,26 +1,31 @@
 package ui.screens.main.news
 
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.viewModelScope
 import data.remote.model.news.toEntity
 import data.util.NetworkResult
 import domain.model.Article
 import domain.repository.ArticleLocalDataSource
 import domain.repository.NewsRepository
+import domain.repository.UserPreferences
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
+import ui.screens.main.news.NewsState.Empty
 import ui.screens.main.news.NewsState.Error
 import ui.screens.main.news.NewsState.Loading
 import ui.screens.main.news.NewsState.Success
 import ui.screens.main.news.NewsViewEvent.FetchNews
 import ui.screens.main.news.NewsViewEvent.OnBookmarkArticle
 import ui.screens.main.news.NewsViewEvent.OnRetry
+import util.convertToLocalDate
 
 class NewsViewModel(
     private val newsRepository: NewsRepository,
-    private val articleLocalDataSource: ArticleLocalDataSource
-) : MviViewModel<NewsViewEvent, NewsState, NewsNavigationEffect>(Loading) {
+    private val articleLocalDataSource: ArticleLocalDataSource,
+    private val userPreferences: UserPreferences
+) : MviViewModel<NewsViewEvent, NewsState, NewsNavigationEffect>(Loading), DefaultLifecycleObserver {
 
     init {
         handleEvent(FetchNews)
@@ -57,6 +62,30 @@ class NewsViewModel(
         viewModelScope.launch {
             val updatedArticle = article.copy(isBookmarked = isBookmarked)
             articleLocalDataSource.updateArticle(updatedArticle.toEntity())
+        }
+    }
+
+    fun saveSelectedDatesAndFilter(startDate: String, endDate: String) {
+        viewModelScope.launch {
+            userPreferences.saveUserSelectedDates(startDate, endDate)
+        }
+
+        filterNewsBy(startDate, endDate)
+    }
+
+    private fun filterNewsBy(startDate: String, endDate: String) {
+        val currentState = viewState.value
+        if (currentState is Success) {
+            val news = currentState.news
+            val filteredNews = news.filter { article ->
+                val articleDate = convertToLocalDate(article.publishedAt)
+                val formattedStartDate = convertToLocalDate(startDate)
+                val formattedEndDate = convertToLocalDate(endDate)
+
+                articleDate in formattedStartDate..formattedEndDate
+            }
+
+            setState { if (filteredNews.isNotEmpty()) Success(filteredNews) else Empty }
         }
     }
 }

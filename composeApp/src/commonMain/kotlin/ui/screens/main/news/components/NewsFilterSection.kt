@@ -24,6 +24,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,8 +39,12 @@ import ui.components.base.PrimarySmallIconButton
 @Composable
 internal fun NewsFilterSection(
     modifier: Modifier = Modifier,
-    onDoneClick: () -> Unit = {}
+    onCloseClick: () -> Unit,
+    onDoneClick: (startDate: String, endDate: String) -> Unit
 ) {
+    var selectedStartDate by remember { mutableStateOf("") }
+    var selectedEndDate by remember { mutableStateOf("") }
+
     Column(
         modifier = modifier
             .padding(horizontal = 16.dp, vertical = 16.dp),
@@ -54,11 +62,17 @@ internal fun NewsFilterSection(
 
         SourceButtonRow()
 
-        DateOfPublicationButton()
+        DateOfPublicationButton(
+            onStartDateSelected = { selectedStartDate = it },
+            onEndDateSelected = { selectedEndDate = it }
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        FooterHorizontalButtons()
+        FooterHorizontalButtons(
+            onCloseClick = onCloseClick,
+            onSetClick = { onDoneClick(selectedStartDate, selectedEndDate) }
+        )
     }
 }
 
@@ -104,8 +118,8 @@ private fun SourceButtonRow() {
 
 @Composable
 private fun FooterHorizontalButtons(
-    onCloseClick: () -> Unit = {},
-    onSetClick: () -> Unit = {}
+    onCloseClick: () -> Unit,
+    onSetClick: () -> Unit
 ) {
     Box(
         modifier = Modifier

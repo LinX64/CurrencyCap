@@ -2,6 +2,10 @@ package util
 
 import data.local.model.exchange.Currency
 import data.util.APIConst
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 internal fun Int.formatToPrice(): String = toString()
     .reversed()
@@ -82,5 +86,17 @@ fun formatNumber(number: Number): String {
         else -> {
             "${(num * 100).toInt() / 100.0}"
         }
+    }
+}
+
+fun convertToLocalDate(dateString: String): LocalDate {
+    return when {
+        dateString.contains('T') -> Instant.parse(dateString).toLocalDateTime(TimeZone.UTC).date
+        dateString.contains('.') -> {
+            val (day, month, year) = dateString.split('.').map { it.toInt() }
+            LocalDate(year, month, day)
+        }
+
+        else -> throw IllegalArgumentException("Unsupported date format")
     }
 }

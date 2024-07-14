@@ -28,7 +28,10 @@ import ui.components.base.GlassCard
 import util.DateUtils.convertMillisToDate
 
 @Composable
-internal fun DateOfPublicationButton() {
+internal fun DateOfPublicationButton(
+    onStartDateSelected: (String) -> Unit,
+    onEndDateSelected: (String) -> Unit
+) {
     GlassCard(
         isClickable = false
     ) {
@@ -59,15 +62,21 @@ internal fun DateOfPublicationButton() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            StartDatePickerSection()
+            StartDatePickerSection(
+                onDateSelected = onStartDateSelected
+            )
 
-            EndDatePickerSection()
+            EndDatePickerSection(
+                onDateSelected = onEndDateSelected
+            )
         }
     }
 }
 
 @Composable
-private fun StartDatePickerSection() {
+private fun StartDatePickerSection(
+    onDateSelected: (String) -> Unit
+) {
     val showDialog = remember { mutableStateOf(false) }
     val defaultDate = convertMillisToDate(Clock.System.now().toEpochMilliseconds())
     val selectedDate = remember { mutableStateOf(defaultDate) }
@@ -105,13 +114,16 @@ private fun StartDatePickerSection() {
             onDateSelected = {
                 showDialog.value = false
                 selectedDate.value = it
+                onDateSelected(selectedDate.value)
             }
         )
     }
 }
 
 @Composable
-private fun EndDatePickerSection() {
+private fun EndDatePickerSection(
+    onDateSelected: (String) -> Unit
+) {
     val showDialog = remember { mutableStateOf(false) }
     val defaultDate = convertMillisToDate(Clock.System.now().toEpochMilliseconds())
     val selectedDate = remember { mutableStateOf(defaultDate) }
@@ -148,6 +160,7 @@ private fun EndDatePickerSection() {
             onDateSelected = {
                 showDialog.value = false
                 selectedDate.value = it
+                onDateSelected(selectedDate.value)
             }
         )
     }

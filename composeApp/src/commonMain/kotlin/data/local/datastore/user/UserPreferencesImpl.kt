@@ -17,6 +17,8 @@ internal class UserPreferencesImpl(
         private const val IS_USER_LOGGED_IN = "is_user_logged_in"
         private val USER_UID_KEY = stringPreferencesKey("user_uid")
         private val isUserLoggedInKey = booleanPreferencesKey(IS_USER_LOGGED_IN)
+        private val USER_SELECTED_START_DATE_KEY = stringPreferencesKey("user_selected_start_date")
+        private val USER_SELECTED_END_DATE_KEY = stringPreferencesKey("user_selected_end_date")
     }
 
     override suspend fun isUserLoggedIn(): Boolean {
@@ -42,5 +44,21 @@ internal class UserPreferencesImpl(
         dataStore.edit { preferences ->
             preferences.clear()
         }
+    }
+
+    override suspend fun saveUserSelectedDates(startDate: String, endDate: String) {
+        dataStore.edit { preferences ->
+            preferences[USER_SELECTED_START_DATE_KEY] = startDate
+            preferences[USER_SELECTED_END_DATE_KEY] = endDate
+        }
+    }
+
+    override suspend fun getUserSelectedDates(): Pair<String, String> {
+        return dataStore.data.map { preferences ->
+            Pair(
+                preferences[USER_SELECTED_START_DATE_KEY] ?: "",
+                preferences[USER_SELECTED_END_DATE_KEY] ?: ""
+            )
+        }.first()
     }
 }

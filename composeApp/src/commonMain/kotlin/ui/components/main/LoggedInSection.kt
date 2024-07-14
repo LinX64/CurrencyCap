@@ -13,11 +13,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import dev.chrisbanes.haze.HazeState
+import di.koinViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ui.components.base.BaseModelBottomSheet
 import ui.navigation.graphs.MainNavGraph
 import ui.screens.MainViewModel
+import ui.screens.main.news.NewsViewModel
 import ui.screens.main.news.components.NewsFilterSection
 import ui.screens.main.subscribers.SubscribersSection
 
@@ -26,6 +28,7 @@ import ui.screens.main.subscribers.SubscribersSection
 internal fun LoggedInSection(
     appState: AppState = rememberAppState(),
     mainViewModel: MainViewModel,
+    newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scope: CoroutineScope
 ) {
@@ -33,8 +36,8 @@ internal fun LoggedInSection(
     val navController = appState.navController
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val hazeState = remember { HazeState() }
-    val isSubscribeBottomSheetVisible = rememberSaveable { mutableStateOf(false) }
-    val isNewsFilterBottomSheetVisible = rememberSaveable { mutableStateOf(false) }
+    val isSubscribeSheetVisible = rememberSaveable { mutableStateOf(false) }
+    val isNewsFilterSheetVisible = rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -43,7 +46,7 @@ internal fun LoggedInSection(
                 hazeState = hazeState,
                 navController = navController,
                 scrollBehavior = scrollBehavior,
-                onFilterClick = { isNewsFilterBottomSheetVisible.value = true }
+                onFilterClick = { isNewsFilterSheetVisible.value = true }
             )
         },
         bottomBar = {
@@ -69,16 +72,22 @@ internal fun LoggedInSection(
     }
 
     BaseModelBottomSheet(
-        isVisible = isSubscribeBottomSheetVisible.value,
-        onDismiss = { isSubscribeBottomSheetVisible.value = false }
+        isVisible = isSubscribeSheetVisible.value,
+        onDismiss = { isSubscribeSheetVisible.value = false }
     ) {
         SubscribersSection()
     }
 
     BaseModelBottomSheet(
-        isVisible = isNewsFilterBottomSheetVisible.value,
-        onDismiss = { isNewsFilterBottomSheetVisible.value = false }
+        isVisible = isNewsFilterSheetVisible.value,
+        onDismiss = { isNewsFilterSheetVisible.value = false }
     ) {
-        NewsFilterSection()
+        NewsFilterSection(
+            onCloseClick = { isNewsFilterSheetVisible.value = false },
+            onDoneClick = { startDate, endDate ->
+                isNewsFilterSheetVisible.value = false
+                newsViewModel.saveSelectedDatesAndFilter(startDate, endDate)
+            }
+        )
     }
 }
