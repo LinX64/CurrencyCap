@@ -145,7 +145,7 @@ private fun FooterHorizontalButtons(
             Card(
                 modifier = Modifier.wrapContentWidth(),
                 onClick = onCloseClick,
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 ),
