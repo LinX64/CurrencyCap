@@ -21,7 +21,6 @@ import util.AmountVisualTransformation
 
 @Composable
 internal fun AmountInput(
-    maxLength: Int = 10,
     amount: String,
     onAmountChange: (String) -> Unit,
     onErrorMessage: (String) -> Unit

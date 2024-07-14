@@ -179,13 +179,13 @@ private fun ExchangeCard(
 
                 AmountInput(
                     amount = amount,
-                    onErrorMessage = {
-                        keyboardController?.hide()
-                        onError(it)
-                    },
                     onAmountChange = {
                         amount = it
                         handleEvent(OnConvert(amount))
+                    },
+                    onErrorMessage = {
+                        keyboardController?.hide()
+                        onError(it)
                     }
                 )
             }

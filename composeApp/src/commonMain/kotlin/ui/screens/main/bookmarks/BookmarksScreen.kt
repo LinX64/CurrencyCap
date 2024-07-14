@@ -24,7 +24,7 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import ui.components.NewsItem
-import ui.components.base.SecondaryButton
+import ui.components.base.button.SecondaryButton
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.bookmarks.BookmarksViewEvent.OnRemoveBookmarkClick
 

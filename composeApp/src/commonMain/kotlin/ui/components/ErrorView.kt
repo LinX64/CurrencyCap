@@ -26,7 +26,7 @@ import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.LottieConstants
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import ui.components.base.SecondaryButton
+import ui.components.base.button.SecondaryButton
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable

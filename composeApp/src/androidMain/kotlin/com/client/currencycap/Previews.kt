@@ -11,9 +11,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ui.components.base.PrimaryButton
-import ui.components.base.PrimarySmallIconButton
-import ui.components.base.SecondaryButton
+import ui.components.base.button.PrimaryButton
+import ui.components.base.button.PrimarySmallIconButton
+import ui.components.base.button.SecondaryButton
 
 //@Composable
 //@Preview(showBackground = true)

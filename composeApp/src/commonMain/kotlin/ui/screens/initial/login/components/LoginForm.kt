@@ -10,7 +10,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import ui.components.base.EmailTextField
 import ui.components.base.PasswordTextField
-import ui.components.base.PrimaryButton
+import ui.components.base.button.PrimaryButton
 
 @Composable
 internal fun LoginForm(

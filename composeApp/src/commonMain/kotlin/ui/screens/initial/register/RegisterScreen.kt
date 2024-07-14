@@ -29,7 +29,7 @@ import ui.components.base.CenteredColumn
 import ui.components.base.EmailTextField
 import ui.components.base.HandleNavigationEffect
 import ui.components.base.PasswordTextField
-import ui.components.base.PrimaryButton
+import ui.components.base.button.PrimaryButton
 import ui.screens.initial.register.RegisterNavigationEffect.NavigateToFillProfile
 import ui.screens.initial.register.RegisterViewEvent.OnEmailChanged
 import ui.screens.initial.register.RegisterViewEvent.OnPasswordChanged

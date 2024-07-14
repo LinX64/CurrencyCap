@@ -34,7 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ui.components.base.GlassCard
-import ui.components.base.PrimarySmallIconButton
+import ui.components.base.button.PrimarySmallIconButton
 
 @Composable
 internal fun NewsFilterSection(

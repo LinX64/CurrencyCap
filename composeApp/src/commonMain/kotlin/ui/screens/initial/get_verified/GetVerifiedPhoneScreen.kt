@@ -23,7 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
 import ui.components.base.BaseCenterColumn
 import ui.components.base.HandleNavigationEffect
-import ui.components.base.PrimaryButton
+import ui.components.base.button.PrimaryButton
 import ui.screens.initial.get_verified.GetVerifiedPhoneNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.get_verified.GetVerifiedPhoneViewEvent.OnCodeChanged
 import ui.screens.initial.get_verified.GetVerifiedPhoneViewEvent.OnFinishSignUpClick

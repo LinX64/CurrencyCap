@@ -1,6 +1,7 @@
-package ui.components.base
+package ui.components.base.button
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -45,14 +46,14 @@ internal fun PrimarySmallIconButton(
                 shape = RoundedCornerShape(35.dp)
             )
             .clip(RoundedCornerShape(35.dp))
+            .clickable(onClick = onButtonClick)
             .then(modifier),
-        onClick = onButtonClick,
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent
         )
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
