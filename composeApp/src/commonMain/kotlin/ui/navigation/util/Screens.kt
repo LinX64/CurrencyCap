@@ -2,6 +2,7 @@ package ui.navigation.util
 
 import kotlinx.serialization.Serializable
 
+@Serializable
 sealed interface Screen {
 
     @Serializable

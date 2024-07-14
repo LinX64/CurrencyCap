@@ -112,6 +112,19 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+
+        ndk {
+            abiFilters.addAll(listOf("arm64-v8a"))
+        }
+
+        splits {
+            abi {
+                isEnable = true
+                reset()
+                isUniversalApk = false
+            }
+        }
+
     }
 
     packaging {
