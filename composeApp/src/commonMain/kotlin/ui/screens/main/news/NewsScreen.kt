@@ -49,7 +49,7 @@ internal fun NewsScreen(
         isEmpty = state.value is Empty,
         emptyContent = {
             ErrorView(
-                message = "An error occurred",
+                message = "An error occurred or we couldn't find any news with the selected dates",
                 onRetry = { newsViewModel.handleEvent(OnRetry) }
             )
         }
@@ -90,12 +90,6 @@ private fun LazyListScope.newsScreenContent(
                 onBookmarkClick = { }
             )
         }
-    }
-    is Empty -> item {
-        ErrorView(
-            message = "An error occurred or we couldn't find any news with the selected dates",
-            onRetry = { newsViewModel.handleEvent(OnRetry) }
-        )
     }
     else -> Unit
 }
