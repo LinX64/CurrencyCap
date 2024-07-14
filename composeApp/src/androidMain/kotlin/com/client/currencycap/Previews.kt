@@ -1,11 +1,19 @@
 package com.client.currencycap
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import dev.chrisbanes.haze.HazeState
-import ui.components.base.CenteredColumn
+import androidx.compose.ui.unit.dp
+import ui.components.base.PrimaryButton
 import ui.components.base.PrimarySmallIconButton
+import ui.components.base.SecondaryButton
 
 //@Composable
 //@Preview(showBackground = true)
@@ -36,12 +44,30 @@ import ui.components.base.PrimarySmallIconButton
 
 @Composable
 @Preview(showBackground = true)
-private fun DetailPreview() {
-    val hazeState = remember { HazeState() }
-
+private fun ButtonsPreview() {
     KoinPreview {
-        CenteredColumn {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            PrimaryButton(
+                text = "Add to Watchlist",
+                onButtonClick = {},
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             PrimarySmallIconButton(
+                text = "Add to Watchlist",
+                onButtonClick = {},
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            SecondaryButton(
                 text = "Add to Watchlist",
                 onButtonClick = {},
             )
