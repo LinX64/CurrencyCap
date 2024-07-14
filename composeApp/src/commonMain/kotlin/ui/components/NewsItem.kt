@@ -34,6 +34,7 @@ import domain.model.Article
 import org.jetbrains.compose.resources.painterResource
 import ui.components.base.GlassCard
 import ui.screens.main.overview.components.getPlaceHolder
+import ui.theme.colors.CurrencyColors
 import util.convertDateFormat
 
 @Composable
@@ -126,7 +127,7 @@ private fun TextContentSection(
     onBookmarkClick: (isBookmarked: Boolean) -> Unit
 ) {
     var isBookmarked by rememberSaveable { mutableStateOf(shouldShowBookmark) }
-    val bookmarkIconColor = if (isBookmarked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+    val bookmarkIconColor = if (isBookmarked) CurrencyColors.Yellow.primary else MaterialTheme.colorScheme.onSurface
     val bookmarkIcon = if (isBookmarked) Res.drawable.ic_bookmark_filled else Res.drawable.ic_bookmark_not_filled
 
     Column(

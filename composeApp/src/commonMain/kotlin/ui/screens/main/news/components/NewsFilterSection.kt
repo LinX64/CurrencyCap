@@ -1,8 +1,7 @@
 package ui.screens.main.news.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +17,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.Source
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -30,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ui.components.base.GlassCard
 import ui.components.base.PrimarySmallIconButton
-import ui.theme.colors.CurrencyColors
 
 @Composable
 internal fun NewsFilterSection(
@@ -128,20 +128,17 @@ private fun FooterHorizontalButtons(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                modifier = Modifier
-                    .wrapContentWidth()
-                    .border(
-                        width = 1.dp,
-                        color = CurrencyColors.Gray.copy(alpha = 0.5f),
-                        shape = RoundedCornerShape(35.dp)
-                    )
-                    .background(MaterialTheme.colorScheme.surface)
-                    .clickable { onCloseClick() }
+            Card(
+                modifier = Modifier.wrapContentWidth(),
+                onClick = onCloseClick,
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ),
+                shape = RoundedCornerShape(35.dp)
             ) {
                 Row(
-                    modifier = Modifier
-                        .padding(12.dp),
+                    modifier = Modifier.padding(12.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
