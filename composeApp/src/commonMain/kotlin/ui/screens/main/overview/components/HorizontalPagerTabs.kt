@@ -23,6 +23,8 @@ import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.tabs.CryptoContent
 import ui.screens.main.overview.components.tabs.MarketTab
 import ui.screens.main.overview.components.tabs.NewsTab
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun HorizontalPagerTabs(
@@ -56,13 +58,13 @@ private fun HorizontalPagerDotIndicator(
     pageCount: Int,
     activeColor: Color = Color.DarkGray,
     inactiveColor: Color = Color.LightGray,
-    indicatorSize: Dp = 8.dp,
-    spacing: Dp = 8.dp
+    indicatorSize: Dp = SPACER_PADDING_8,
+    spacing: Dp = SPACER_PADDING_8
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(CARD_CORNER_RADIUS),
         contentAlignment = Alignment.Center
     ) {
         Row(

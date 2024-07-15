@@ -17,7 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.fill_profile
+import currencycap.composeapp.generated.resources.please_fill_in_your_full_name
+import currencycap.composeapp.generated.resources.skip
+import currencycap.composeapp.generated.resources.verify_phone_number
 import di.koinViewModel
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.BaseCenterColumn
 import ui.components.base.HandleNavigationEffect
 import ui.components.base.button.PrimaryButton
@@ -28,6 +34,7 @@ import ui.screens.initial.fill_profile.FillProfileViewEvent.OnPhoneNumberChanged
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnSignUpClick
 import ui.screens.initial.fill_profile.components.NameTextField
 import ui.screens.initial.fill_profile.components.PhoneNumberTextField
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun FillProfileScreen(
@@ -79,17 +86,17 @@ private fun FillProfileForm(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         Text(
-            text = "Fill Profile",
+            text = stringResource(Res.string.fill_profile),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold
         )
 
         Text(
-            text = "Please fill in your Full Name and Phone number",
+            text = stringResource(Res.string.please_fill_in_your_full_name),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Normal
@@ -113,15 +120,15 @@ private fun FillProfileForm(
             Spacer(modifier = modifier.height(32.dp))
 
             PrimaryButton(
-                text = "Verify Phone Number",
+                text = stringResource(Res.string.verify_phone_number),
                 onButtonClick = onFinishSignUpClick
             )
 
-            Spacer(modifier = modifier.height(16.dp))
+            Spacer(modifier = modifier.height(CARD_CORNER_RADIUS))
 
             SecondaryButton(
                 onButtonClick = onSkipClick,
-                text = "Skip"
+                text = stringResource(Res.string.skip)
             )
         }
     }

@@ -8,6 +8,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.no_results_found
+import currencycap.composeapp.generated.resources.try_searching_for
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun EmptyView(modifier: Modifier = Modifier) {
@@ -17,12 +21,12 @@ internal fun EmptyView(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "No results found",
+            text = stringResource(Res.string.no_results_found),
             style = MaterialTheme.typography.titleSmall
         )
 
         Text(
-            text = "Try searching for something else",
+            text = stringResource(Res.string.try_searching_for),
             style = MaterialTheme.typography.bodySmall
         )
     }

@@ -13,11 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun GlassCard(
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(8.dp),
+    contentPadding: PaddingValues = PaddingValues(SPACER_PADDING_8),
     containerColor: Color = Color.Transparent,
     isClickable: Boolean = false,
     onCardClick: () -> Unit = {},
@@ -26,7 +28,7 @@ internal fun GlassCard(
     Card(
         modifier = Modifier.wrapContentSize()
             .then(modifier),
-        shape = RoundedCornerShape(35.dp),
+        shape = RoundedCornerShape(CARD_CORNER_RADIUS),
         border = BorderStroke(1.dp, Color.Gray.copy(alpha = 0.1f)),
         colors = CardDefaults.cardColors(
             containerColor = containerColor,

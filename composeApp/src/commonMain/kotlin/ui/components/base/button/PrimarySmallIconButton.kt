@@ -21,7 +21,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
 @Composable
@@ -43,9 +44,9 @@ internal fun PrimarySmallIconButton(
         modifier = Modifier
             .background(
                 brush = gradient,
-                shape = RoundedCornerShape(35.dp)
+                shape = RoundedCornerShape(CARD_CORNER_RADIUS)
             )
-            .clip(RoundedCornerShape(35.dp))
+            .clip(RoundedCornerShape(CARD_CORNER_RADIUS))
             .clickable(onClick = onButtonClick)
             .then(modifier),
         colors = CardDefaults.cardColors(
@@ -53,9 +54,9 @@ internal fun PrimarySmallIconButton(
         )
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier.padding(horizontal = CARD_CORNER_RADIUS, vertical = SPACER_PADDING_8),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_8)
         ) {
             Icon(
                 imageVector = icon,

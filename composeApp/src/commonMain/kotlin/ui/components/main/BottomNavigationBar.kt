@@ -45,6 +45,9 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import ui.navigation.util.ScreenRoutes
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.ICON_SIZE_48
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.colors.CurrencyColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,16 +87,16 @@ internal fun BottomNavigationBar(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                    .padding(bottom = SPACER_PADDING_16)
                     .height(94.dp)
                     .hazeChild(
                         state = hazeState,
-                        shape = RoundedCornerShape(35.dp)
+                        shape = RoundedCornerShape(CARD_CORNER_RADIUS)
                     )
                     .border(
                         width = 1.dp,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),
-                        shape = RoundedCornerShape(35.dp)
+                        shape = RoundedCornerShape(CARD_CORNER_RADIUS)
                     )
             ) {
                 BottomBar(
@@ -132,7 +135,7 @@ private fun UnderDashedLine(
         modifier = Modifier.fillMaxSize()
     ) {
         val path = Path().apply {
-            addRoundRect(RoundRect(size.toRect(), CornerRadius(35.dp.toPx())))
+            addRoundRect(RoundRect(size.toRect(), CornerRadius(CARD_CORNER_RADIUS.toPx())))
         }
         val length = PathMeasure().apply { setPath(path, false) }.length
         val tabWidth = size.width / tabs.size
@@ -183,7 +186,7 @@ private fun CenteredExchangeButton(
             )
     ) {
         Icon(
-            modifier = Modifier.size(48.dp),
+            modifier = Modifier.size(ICON_SIZE_48),
             painter = painterResource(Res.drawable.ic_arrow_up_down),
             contentDescription = "Exchange",
             tint = MaterialTheme.colorScheme.onSurface

@@ -19,6 +19,8 @@ import ui.components.base.GlassCard
 import ui.screens.main.profile.components.HelpCenterItem
 import ui.screens.main.settings.components.SettingsGeneralItem
 import ui.screens.main.settings.components.SettingsHeaderText
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun SettingsScreen(
@@ -57,8 +59,8 @@ internal fun SettingsContent(
     onContactUsClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.fillMaxSize().padding(CARD_CORNER_RADIUS),
+        verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
     ) {
         GlassCard {
             Column(
@@ -81,7 +83,7 @@ internal fun SettingsContent(
             ) {
                 SettingsHeaderText("Policies")
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
                 Column(modifier = Modifier.fillMaxWidth()) {
                     HelpCenterItem(text = "About Us", onButtonClick = { /* Handle click */ })

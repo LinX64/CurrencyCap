@@ -21,9 +21,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.read_more
 import domain.model.Article
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
 import ui.screens.main.overview.components.getPlaceHolder
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import util.convertDateFormat
 
 @Composable
@@ -34,7 +38,7 @@ internal fun NewsDetailContent(
     onReadMoreClick: (url: String) -> Unit
 ) {
     val loadingPlaceHolderModifier = if (isLoading) getPlaceHolder(Modifier.fillMaxWidth()) else Modifier.fillMaxWidth()
-    val roundedCornerShape = RoundedCornerShape(35.dp)
+    val roundedCornerShape = RoundedCornerShape(CARD_CORNER_RADIUS)
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -100,7 +104,7 @@ internal fun NewsDetailContent(
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
                 Text(
                     modifier = loadingPlaceHolderModifier,
@@ -110,7 +114,7 @@ internal fun NewsDetailContent(
                     textAlign = TextAlign.Justify
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
                 Column(
                     modifier = Modifier.fillMaxWidth(),
@@ -121,7 +125,7 @@ internal fun NewsDetailContent(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
-                            text = "Read More",
+                            text = stringResource(Res.string.read_more),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold

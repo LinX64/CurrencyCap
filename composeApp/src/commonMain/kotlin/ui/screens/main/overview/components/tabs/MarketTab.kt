@@ -18,6 +18,7 @@ import ui.components.base.CenteredColumn
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.OverviewState.Success
 import ui.screens.main.overview.components.tabs.components.CryptoGridItem
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun MarketTab(
@@ -34,12 +35,12 @@ internal fun MarketTab(
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
         LazyVerticalGrid(
             modifier = Modifier.fillMaxSize().height(220.dp),
             columns = GridCells.Fixed(2),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
         ) {
             when (state) {
                 is Success -> {

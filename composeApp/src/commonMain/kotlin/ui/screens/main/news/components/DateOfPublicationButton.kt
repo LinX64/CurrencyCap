@@ -24,8 +24,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.date_of_publication
+import currencycap.composeapp.generated.resources.end_date
+import currencycap.composeapp.generated.resources.start_date
 import kotlinx.datetime.Clock
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.DateUtils.convertMillisToDate
 
 @Composable
@@ -39,7 +46,7 @@ internal fun DateOfPublicationButton(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(SPACER_PADDING_8),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -48,10 +55,10 @@ internal fun DateOfPublicationButton(
                 contentDescription = null
             )
 
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(SPACER_PADDING_8))
 
             Text(
-                text = "Date of publication",
+                text = stringResource(Res.string.date_of_publication),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold
@@ -59,7 +66,7 @@ internal fun DateOfPublicationButton(
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
+            modifier = Modifier.fillMaxWidth().padding(SPACER_PADDING_8),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -84,21 +91,21 @@ private fun StartDatePickerSection(
 
     Column {
         Text(
-            modifier = Modifier.padding(8.dp),
-            text = "Start Date",
+            modifier = Modifier.padding(SPACER_PADDING_8),
+            text = stringResource(Res.string.start_date),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
             fontWeight = FontWeight.Bold
         )
         Card(
             modifier = Modifier
-                .padding(8.dp),
+                .padding(SPACER_PADDING_8),
             onClick = { showDialog.value = true },
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
             ),
-            shape = RoundedCornerShape(size = 35.dp)
+            shape = RoundedCornerShape(size = CARD_CORNER_RADIUS)
         ) {
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
@@ -131,20 +138,20 @@ private fun EndDatePickerSection(
 
     Column {
         Text(
-            modifier = Modifier.padding(8.dp),
-            text = "Start Date",
+            modifier = Modifier.padding(SPACER_PADDING_8),
+            text = stringResource(Res.string.end_date),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
             fontWeight = FontWeight.Bold
         )
         Card(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(SPACER_PADDING_8),
             onClick = { showDialog.value = true },
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
             ),
-            shape = RoundedCornerShape(size = 35.dp)
+            shape = RoundedCornerShape(size = CARD_CORNER_RADIUS)
         ) {
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),

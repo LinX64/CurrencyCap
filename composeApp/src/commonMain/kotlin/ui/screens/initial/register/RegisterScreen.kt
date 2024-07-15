@@ -35,6 +35,7 @@ import ui.screens.initial.register.RegisterViewEvent.OnEmailChanged
 import ui.screens.initial.register.RegisterViewEvent.OnPasswordChanged
 import ui.screens.initial.register.RegisterViewEvent.OnRegisterClick
 import ui.screens.initial.register.components.LogInText
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun RegisterScreen(
@@ -95,13 +96,13 @@ private fun RegisterContent(
             onEmailChanged = onEmailChanged
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         PasswordTextField(
             onPasswordChanged = onPasswordChanged
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         BySigningUpText(onTermsOfServiceClick = onTermsOfServiceClick)
 
@@ -115,7 +116,7 @@ private fun RegisterContent(
             }
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         LogInText(onLogInClick = navigateToLogin)
     }

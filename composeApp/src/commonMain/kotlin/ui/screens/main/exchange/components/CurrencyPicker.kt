@@ -58,6 +58,8 @@ import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import ui.screens.main.exchange.ExchangeViewEvent
 import ui.screens.main.exchange.ExchangeViewEvent.OnSaveSelectedCurrencyCode
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -100,12 +102,12 @@ internal fun CurrencyPicker(
             ) {
                 Column(
                     modifier = Modifier.fillMaxWidth()
-                        .clip(RoundedCornerShape(16.dp))
+                        .clip(RoundedCornerShape(CARD_CORNER_RADIUS))
                         .padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     TextField(
-                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(size = 16.dp)),
+                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(size = CARD_CORNER_RADIUS)),
                         value = searchQuery,
                         onValueChange = { query ->
                             searchQuery = query.uppercase()
@@ -148,7 +150,8 @@ internal fun CurrencyPicker(
 
                     if (allCurrencies.isNotEmpty()) {
                         LazyColumn(
-                            modifier = Modifier.fillMaxWidth().height(300.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
+                            modifier = Modifier.fillMaxWidth().height(300.dp),
+                            verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8)
                         ) {
                             items(items = allCurrencies, key = { it.code }) { currency ->
                                 CurrencyCodePickerView(code = CurrencyCode.valueOf(currency.code),
@@ -213,9 +216,9 @@ private fun CurrencyCodePickerView(
 
     Row(
         modifier = Modifier.fillMaxWidth()
-            .clip(RoundedCornerShape(size = 8.dp))
+            .clip(RoundedCornerShape(size = SPACER_PADDING_8))
             .clickable { onSelect(code) }
-            .padding(all = 8.dp),
+            .padding(all = SPACER_PADDING_8),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -226,7 +229,7 @@ private fun CurrencyCodePickerView(
                 contentDescription = "Currency Flag",
                 colorFilter = ColorFilter.colorMatrix(colorMatrix)
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(SPACER_PADDING_8))
             Text(
                 modifier = Modifier.alpha(animatedAlpha),
                 text = code.name,

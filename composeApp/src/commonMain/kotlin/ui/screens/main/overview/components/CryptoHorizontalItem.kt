@@ -22,6 +22,9 @@ import domain.model.main.Crypto
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.components.base.GlassCard
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.ICON_SIZE_48
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
 data class AssetInfo(
@@ -65,15 +68,15 @@ internal fun CryptoHorizontalItem(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(CARD_CORNER_RADIUS),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             if (isLoading) {
-                ItemPlaceHolder(modifier = Modifier.size(48.dp))
+                ItemPlaceHolder(modifier = Modifier.size(ICON_SIZE_48))
             } else {
                 AsyncImage(
-                    modifier = Modifier.size(48.dp).clip(RoundedCornerShape(55.dp)),
+                    modifier = Modifier.size(ICON_SIZE_48).clip(RoundedCornerShape(55.dp)),
                     model = crypto.image,
                     placeholder = painterResource(Res.drawable.baseline_monetization_on_48),
                     error = painterResource(Res.drawable.baseline_monetization_on_48),
@@ -108,7 +111,7 @@ private fun FirstHorizontalColumn(
     isLoading: Boolean = false
 ) {
     Column(
-        modifier = modifier.padding(start = 8.dp)
+        modifier = modifier.padding(start = SPACER_PADDING_8)
     ) {
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,

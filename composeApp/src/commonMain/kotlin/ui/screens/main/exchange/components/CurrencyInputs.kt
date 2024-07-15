@@ -26,6 +26,7 @@ import data.local.model.exchange.Currency
 import data.local.model.exchange.CurrencyCode
 import data.local.model.exchange.CurrencyType
 import org.jetbrains.compose.resources.painterResource
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun CurrencyInputs(
@@ -54,7 +55,7 @@ internal fun CurrencyInputs(
             }
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         IconButton(
             modifier = Modifier
@@ -75,7 +76,7 @@ internal fun CurrencyInputs(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         CurrencyView(
             placeholder = "To",

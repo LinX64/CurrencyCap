@@ -9,11 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ui.components.main.VerticalBarCard
 import ui.screens.main.overview.OverviewState
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun PortfolioSection(
@@ -32,7 +33,7 @@ internal fun PortfolioSection(
     Box {
         Row(
             modifier = Modifier
-                .padding(vertical = 16.dp, horizontal = 8.dp),
+                .padding(vertical = CARD_CORNER_RADIUS, horizontal = SPACER_PADDING_8),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             HorizontalPagerTabs(

@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import ui.components.base.EmailTextField
 import ui.components.base.PasswordTextField
 import ui.components.base.button.PrimaryButton
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun LoginForm(
@@ -25,7 +26,7 @@ internal fun LoginForm(
             onEmailChanged = onEmailChanged
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         PasswordTextField(
             onPasswordChanged = onPasswordChanged

@@ -55,6 +55,7 @@ class NewsViewModel(
                         setState { Success(result.data.sortedBy { it.publishedAt }.reversed()) }
                         getSources(result.data)
                     }
+
                     is NetworkResult.Error -> {
                         val news = result.data?.sortedBy { it.publishedAt }?.reversed() ?: emptyList()
                         val message = result.throwable.message ?: ""

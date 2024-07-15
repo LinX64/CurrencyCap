@@ -30,6 +30,8 @@ import currencycap.composeapp.generated.resources.delete_your_account_warning
 import org.jetbrains.compose.resources.stringResource
 import ui.components.DottedShape
 import ui.components.base.GlassCard
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
 @Composable
@@ -67,21 +69,21 @@ internal fun DeleteAccountCard(
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
             Button(
                 modifier = Modifier.fillMaxWidth()
-                    .padding(start = 16.dp)
+                    .padding(start = CARD_CORNER_RADIUS)
                     .background(
                         brush = gradient,
-                        shape = RoundedCornerShape(35.dp)
+                        shape = RoundedCornerShape(CARD_CORNER_RADIUS)
                     ),
                 onClick = { onDeleteAccountClicked() },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent,
                     contentColor = MaterialTheme.colorScheme.onSurface
                 ),
-                shape = RoundedCornerShape(35.dp)
+                shape = RoundedCornerShape(CARD_CORNER_RADIUS)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -96,7 +98,7 @@ internal fun DeleteAccountCard(
                     )
 
                     Icon(
-                        modifier = Modifier.padding(start = 8.dp),
+                        modifier = Modifier.padding(start = SPACER_PADDING_8),
                         imageVector = Icons.Default.ChevronRight,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onSurface
@@ -113,7 +115,7 @@ internal fun DeleteAccountCard(
                     .background(Color.Gray, shape = DottedShape(step = 10.dp))
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
             Text(
                 modifier = Modifier.fillMaxWidth(),

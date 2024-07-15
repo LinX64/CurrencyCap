@@ -16,6 +16,7 @@ import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun BaseGlassLazyColumn(
@@ -40,7 +41,7 @@ internal fun BaseGlassLazyColumn(
                     state = hazeState,
                     style = HazeStyle(
                         tint = MaterialTheme.colorScheme.surface.copy(alpha = 0.1f),
-                        blurRadius = 35.dp,
+                        blurRadius = CARD_CORNER_RADIUS,
                         noiseFactor = HazeDefaults.noiseFactor
                     )
                 ),

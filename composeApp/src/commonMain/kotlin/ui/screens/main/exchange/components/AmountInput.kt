@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import util.AmountVisualTransformation
 
 @Composable
@@ -27,7 +27,7 @@ internal fun AmountInput(
 ) {
     TextField(
         modifier = Modifier.fillMaxWidth()
-            .clip(RoundedCornerShape(35.dp))
+            .clip(RoundedCornerShape(CARD_CORNER_RADIUS))
             .animateContentSize(),
         value = amount,
         onValueChange = { newValue ->

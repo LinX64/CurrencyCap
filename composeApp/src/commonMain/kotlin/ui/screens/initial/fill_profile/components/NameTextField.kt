@@ -23,6 +23,10 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.full_name
+import org.jetbrains.compose.resources.stringResource
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun NameTextField(
@@ -34,7 +38,7 @@ internal fun NameTextField(
     val focusManager = LocalFocusManager.current
 
     TextField(
-        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(35.dp)),
+        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(CARD_CORNER_RADIUS)),
         value = name.value,
         onValueChange = {
             name.value = it
@@ -51,15 +55,13 @@ internal fun NameTextField(
         maxLines = 1,
         leadingIcon = {
             Icon(
-                modifier = modifier.padding(start = 16.dp),
+                modifier = modifier.padding(start = CARD_CORNER_RADIUS),
                 imageVector = Icons.Outlined.Person,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurface
             )
         },
-        placeholder = {
-            Text(text = "Full name")
-        },
+        placeholder = { Text(text = stringResource(Res.string.full_name)) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Text,
             imeAction = ImeAction.Next

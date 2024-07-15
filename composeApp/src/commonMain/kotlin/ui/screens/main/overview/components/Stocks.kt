@@ -12,9 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import domain.model.main.Rate
 import ui.screens.main.overview.OverviewState
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 import util.getIconBy
 
@@ -22,14 +23,14 @@ import util.getIconBy
 @Composable
 internal fun Stocks(overviewState: OverviewState) {
     Column(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+        modifier = Modifier.fillMaxWidth().padding(horizontal = CARD_CORNER_RADIUS)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(CARD_CORNER_RADIUS),
                 text = "Stocks",
                 style = MaterialTheme.typography.titleLarge,
                 color = CurrencyColors.White,
@@ -37,7 +38,7 @@ internal fun Stocks(overviewState: OverviewState) {
             )
 
             Text(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(CARD_CORNER_RADIUS),
                 text = "See all",
                 style = MaterialTheme.typography.titleMedium,
                 color = CurrencyColors.White,
@@ -47,8 +48,8 @@ internal fun Stocks(overviewState: OverviewState) {
 
         FlowColumn(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(CARD_CORNER_RADIUS),
+            verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8)
         ) {
             if (overviewState is OverviewState.Success) {
                 overviewState.fiatRates.take(10).forEach { rate ->
