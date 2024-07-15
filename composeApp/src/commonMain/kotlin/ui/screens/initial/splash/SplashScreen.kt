@@ -41,7 +41,7 @@ internal fun SplashScreen(modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            CircularProgressIndicator(color = MaterialTheme.colorScheme.onSurface)
+            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
         }
     }
 }

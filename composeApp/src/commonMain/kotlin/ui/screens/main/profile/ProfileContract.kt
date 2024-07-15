@@ -5,6 +5,7 @@ import data.remote.model.User
 sealed interface ProfileViewEvent {
     data class OnDeleteAccountCardClicked(val uid: String) : ProfileViewEvent
     data object OnSupportClicked : ProfileViewEvent
+    data object OnSignOutClicked : ProfileViewEvent
 }
 
 sealed interface ProfileState {
