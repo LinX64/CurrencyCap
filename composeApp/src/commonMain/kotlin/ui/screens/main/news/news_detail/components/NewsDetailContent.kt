@@ -21,7 +21,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.read_more
 import domain.model.Article
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
 import ui.screens.main.overview.components.getPlaceHolder
 import util.convertDateFormat
@@ -121,7 +124,7 @@ internal fun NewsDetailContent(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
-                            text = "Read More",
+                            text = stringResource(Res.string.read_more),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold

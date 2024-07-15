@@ -88,7 +88,6 @@ internal fun LoggedInSection(
             onCloseClick = { isNewsFilterSheetVisible.value = false },
             onDoneClick = { startDate, endDate, selectedSources ->
                 isNewsFilterSheetVisible.value = false
-
                 newsViewModel.handleEvent(OnSetClick(startDate, endDate, selectedSources))
             }
         )

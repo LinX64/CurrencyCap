@@ -21,19 +21,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.please_check_internet_connection
+import currencycap.composeapp.generated.resources.retry
+import currencycap.composeapp.generated.resources.something_went_wrong
 import io.github.alexzhirkevich.compottie.LottieAnimation
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.LottieConstants
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.button.SecondaryButton
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 internal fun ErrorView(
     modifier: Modifier = Modifier,
-    title: String = "Something went wrong",
-    message: String = "Please check your internet connection and try again",
+    title: String = stringResource(Res.string.something_went_wrong),
+    message: String = stringResource(Res.string.please_check_internet_connection),
     onRetry: () -> Unit
 ) {
     var bytes by remember { mutableStateOf(ByteArray(0)) }
@@ -79,7 +83,7 @@ internal fun ErrorView(
 
         SecondaryButton(
             modifier = Modifier.padding(horizontal = 32.dp),
-            text = "Retry",
+            text = stringResource(Res.string.retry),
             onButtonClick = onRetry
         )
     }

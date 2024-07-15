@@ -26,6 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.cancel
+import currencycap.composeapp.generated.resources.set
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.button.PrimarySmallIconButton
 
 @Composable
@@ -75,7 +79,7 @@ internal fun FooterHorizontalButtons(
                     )
 
                     Text(
-                        text = "Cancel",
+                        text = stringResource(Res.string.cancel),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
@@ -87,7 +91,7 @@ internal fun FooterHorizontalButtons(
 
             PrimarySmallIconButton(
                 modifier = Modifier.width(90.dp),
-                text = "Set",
+                text = stringResource(Res.string.set),
                 onButtonClick = onSetClick
             )
         }

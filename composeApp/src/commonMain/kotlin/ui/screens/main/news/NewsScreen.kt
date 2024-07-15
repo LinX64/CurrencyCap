@@ -5,8 +5,11 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.an_error_occurred
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
+import org.jetbrains.compose.resources.stringResource
 import ui.components.ErrorView
 import ui.components.NewsItem
 import ui.components.main.BaseGlassLazyColumn
@@ -49,7 +52,7 @@ internal fun NewsScreen(
         isEmpty = state.value is Empty,
         emptyContent = {
             ErrorView(
-                message = "An error occurred or we couldn't find any news with the selected dates",
+                message = stringResource(Res.string.an_error_occurred),
                 onRetry = { newsViewModel.handleEvent(OnRetry) }
             )
         }

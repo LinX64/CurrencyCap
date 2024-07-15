@@ -26,6 +26,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.source
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
 
 @Composable
@@ -59,7 +62,7 @@ internal fun ExpandableSourceButtonRow(
                     Spacer(modifier = Modifier.width(8.dp))
 
                     Text(
-                        text = "Source",
+                        text = stringResource(Res.string.source),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold

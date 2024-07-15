@@ -24,7 +24,10 @@ import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.ic_letters_ai
 import currencycap.composeapp.generated.resources.ic_search_normal
+import currencycap.composeapp.generated.resources.search
+import currencycap.composeapp.generated.resources.type_to_search
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.getPlaceHolder
 
@@ -62,13 +65,13 @@ internal fun SearchViewHeader(
                 Icon(
                     modifier = if (isLoading) getPlaceHolder(Modifier.padding(16.dp)) else Modifier.padding(16.dp),
                     painter = painterResource(Res.drawable.ic_search_normal),
-                    contentDescription = "Search",
+                    contentDescription = stringResource(Res.string.search),
                     tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                 )
 
                 Text(
                     modifier = if (isLoading) getPlaceHolder(Modifier.padding(16.dp)) else Modifier.padding(16.dp),
-                    text = "Type to search",
+                    text = stringResource(Res.string.type_to_search),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                 )

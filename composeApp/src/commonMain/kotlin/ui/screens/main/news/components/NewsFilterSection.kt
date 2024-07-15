@@ -15,7 +15,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.filter_by
 import kotlinx.datetime.Clock
+import org.jetbrains.compose.resources.stringResource
 import util.DateUtils.convertMillisToDate
 
 @Composable
@@ -37,7 +40,7 @@ internal fun NewsFilterSection(
     ) {
         Text(
             modifier = Modifier.padding(top = 16.dp),
-            text = "Filter by",
+            text = stringResource(Res.string.filter_by),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold
