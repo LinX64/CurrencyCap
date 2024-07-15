@@ -12,6 +12,7 @@ import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSURL
 import platform.Foundation.NSUserDomainMask
+import platform.Foundation.URLByAppendingPathComponent
 
 @OptIn(ExperimentalForeignApi::class)
 actual fun dataStorePreferences(
@@ -30,6 +31,8 @@ actual fun dataStorePreferences(
             create = false,
             error = null,
         )
-        (requireNotNull(documentDirectory).path + "/$SETTINGS_PREFERENCES")
+        requireNotNull(documentDirectory)
+            .URLByAppendingPathComponent(SETTINGS_PREFERENCES)
+            ?.path ?: error("Could not create settings file path")
     }
 )
