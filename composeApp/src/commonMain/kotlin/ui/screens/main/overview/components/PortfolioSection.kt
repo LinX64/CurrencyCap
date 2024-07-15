@@ -13,7 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ui.components.main.VerticalBarCard
 import ui.screens.main.overview.OverviewState
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -33,7 +33,7 @@ internal fun PortfolioSection(
     Box {
         Row(
             modifier = Modifier
-                .padding(vertical = CARD_CORNER_RADIUS, horizontal = SPACER_PADDING_8),
+                .padding(vertical = SPACER_PADDING_16, horizontal = SPACER_PADDING_8),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             HorizontalPagerTabs(

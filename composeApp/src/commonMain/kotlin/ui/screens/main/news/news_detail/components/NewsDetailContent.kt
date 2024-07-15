@@ -28,6 +28,7 @@ import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
 import ui.screens.main.overview.components.getPlaceHolder
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import util.convertDateFormat
 
 @Composable
@@ -104,7 +105,7 @@ internal fun NewsDetailContent(
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
+                Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
                 Text(
                     modifier = loadingPlaceHolderModifier,
@@ -114,7 +115,7 @@ internal fun NewsDetailContent(
                     textAlign = TextAlign.Justify
                 )
 
-                Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
+                Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
                 Column(
                     modifier = Modifier.fillMaxWidth(),

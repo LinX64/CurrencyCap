@@ -19,7 +19,7 @@ import ui.components.base.GlassCard
 import ui.screens.main.profile.components.HelpCenterItem
 import ui.screens.main.settings.components.SettingsGeneralItem
 import ui.screens.main.settings.components.SettingsHeaderText
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -59,7 +59,7 @@ internal fun SettingsContent(
     onContactUsClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(CARD_CORNER_RADIUS),
+        modifier = Modifier.fillMaxSize().padding(SPACER_PADDING_16),
         verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
     ) {
         GlassCard {

@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import ui.common.formatCurrentTotal
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.ICON_SIZE_48
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -63,7 +63,7 @@ internal fun TopMoversItem(
             }
         }
 
-        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,

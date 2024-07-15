@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 
 @Composable
 internal fun SwapButton(
@@ -25,7 +25,7 @@ internal fun SwapButton(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = CARD_CORNER_RADIUS).then(modifier),
+            .padding(vertical = SPACER_PADDING_16).then(modifier),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         IconButton(

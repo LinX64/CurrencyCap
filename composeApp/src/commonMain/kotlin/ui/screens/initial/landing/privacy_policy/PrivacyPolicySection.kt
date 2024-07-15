@@ -15,7 +15,7 @@ import com.multiplatform.webview.web.rememberWebViewState
 import currencycap.composeapp.generated.resources.Res
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @OptIn(ExperimentalResourceApi::class)
@@ -37,7 +37,7 @@ internal fun PrivacyPolicySection(
         WebView(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(vertical = SPACER_PADDING_8, horizontal = CARD_CORNER_RADIUS),
+                .padding(vertical = SPACER_PADDING_8, horizontal = SPACER_PADDING_16),
             state = state
         )
     }

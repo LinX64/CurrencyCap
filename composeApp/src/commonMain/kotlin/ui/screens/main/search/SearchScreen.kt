@@ -39,7 +39,7 @@ import ui.screens.main.search.components.EmptyView
 import ui.screens.main.search.components.LeadingIcon
 import ui.screens.main.search.components.SearchPlaceHolder
 import ui.screens.main.search.components.TrailingIcon
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.getDummyCryptoItem
 
@@ -64,7 +64,7 @@ internal fun SearchScreen(
     ) {
         Box(
             modifier = Modifier.fillMaxWidth()
-                .padding(horizontal = CARD_CORNER_RADIUS)
+                .padding(horizontal = SPACER_PADDING_16)
                 .semantics { isTraversalGroup = true }
         ) {
             SearchBar(

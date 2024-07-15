@@ -27,6 +27,7 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.full_name
 import org.jetbrains.compose.resources.stringResource
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 
 @Composable
 internal fun NameTextField(
@@ -55,7 +56,7 @@ internal fun NameTextField(
         maxLines = 1,
         leadingIcon = {
             Icon(
-                modifier = modifier.padding(start = CARD_CORNER_RADIUS),
+                modifier = modifier.padding(start = SPACER_PADDING_16),
                 imageVector = Icons.Outlined.Person,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurface

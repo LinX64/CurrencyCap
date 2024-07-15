@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 
 @Composable
 internal fun SettingsMoreItem(
@@ -26,7 +26,7 @@ internal fun SettingsMoreItem(
     ) {
         Text(
             modifier = Modifier.fillMaxWidth()
-                .padding(horizontal = CARD_CORNER_RADIUS),
+                .padding(horizontal = SPACER_PADDING_16),
             text = text,
             fontSize = MaterialTheme.typography.titleMedium.fontSize,
             color = MaterialTheme.colorScheme.onSurface
