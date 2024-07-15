@@ -8,6 +8,13 @@ sealed interface NewsViewEvent {
     data object OnRetry : NewsViewEvent
 
     @Stable
+    data class OnSetClick(
+        val startDate: String,
+        val endDate: String,
+        val selectedSources: Set<String>
+    ) : NewsViewEvent
+
+    @Stable
     data class OnBookmarkArticle(
         val article: Article,
         val isBookmarked: Boolean

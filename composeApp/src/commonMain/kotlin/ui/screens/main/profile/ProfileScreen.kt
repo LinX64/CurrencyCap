@@ -32,6 +32,7 @@ import ui.screens.main.profile.ProfileNavigationEffect.OpenEmailApp
 import ui.screens.main.profile.ProfileState.Loading
 import ui.screens.main.profile.ProfileState.Success
 import ui.screens.main.profile.ProfileViewEvent.OnDeleteAccountCardClicked
+import ui.screens.main.profile.ProfileViewEvent.OnSignOutClicked
 import ui.screens.main.profile.components.DeleteAccountCard
 import ui.screens.main.profile.components.HelpCenterCard
 import ui.screens.main.profile.components.ProfileCard
@@ -79,7 +80,7 @@ internal fun ProfileScreen(
             )
         }
         item {
-            AppNameInfoCard(onSignOutClicked = profileViewModel::logout)
+            AppNameInfoCard(onSignOutClicked = { profileViewModel.handleEvent(OnSignOutClicked) })
         }
     }
 

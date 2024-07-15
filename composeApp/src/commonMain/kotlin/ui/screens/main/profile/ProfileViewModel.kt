@@ -12,7 +12,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
+import ui.screens.main.profile.ProfileNavigationEffect.NavigateToLanding
+import ui.screens.main.profile.ProfileNavigationEffect.OpenEmailApp
 import ui.screens.main.profile.ProfileViewEvent.OnDeleteAccountCardClicked
+import ui.screens.main.profile.ProfileViewEvent.OnSignOutClicked
 import ui.screens.main.profile.ProfileViewEvent.OnSupportClicked
 
 internal class ProfileViewModel(
@@ -29,7 +32,8 @@ internal class ProfileViewModel(
 
     override fun handleEvent(event: ProfileViewEvent) {
         when (event) {
-            OnSupportClicked -> setEffect(ProfileNavigationEffect.OpenEmailApp)
+            OnSupportClicked -> setEffect(OpenEmailApp)
+            OnSignOutClicked -> logout()
             is OnDeleteAccountCardClicked -> handleDeleteAccount()
         }
     }
@@ -44,7 +48,7 @@ internal class ProfileViewModel(
             authServiceRepository.deleteAccount()
 
             setState { ProfileState.Idle }
-            setEffect(ProfileNavigationEffect.NavigateToLanding)
+            setEffect(NavigateToLanding)
         }
     }
 
@@ -69,12 +73,12 @@ internal class ProfileViewModel(
         }
     }
 
-    fun logout() {
+    private fun logout() {
         viewModelScope.launch {
             userPreferences.clear()
             setState { ProfileState.Idle }
 
-            setEffect(ProfileNavigationEffect.NavigateToLanding)
+            setEffect(NavigateToLanding)
         }
     }
 }

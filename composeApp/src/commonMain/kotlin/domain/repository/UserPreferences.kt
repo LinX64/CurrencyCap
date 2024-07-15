@@ -8,4 +8,7 @@ interface UserPreferences {
 
     suspend fun saveUserSelectedDates(startDate: String, endDate: String)
     suspend fun getUserSelectedDates(): Pair<String, String>
+
+    suspend fun saveUserSelectedSources(sources: Set<String>)
+    suspend fun getUserSelectedSources(): Set<String>
 }

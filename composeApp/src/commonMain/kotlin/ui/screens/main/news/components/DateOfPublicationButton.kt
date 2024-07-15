@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -79,7 +80,7 @@ private fun StartDatePickerSection(
 ) {
     val showDialog = remember { mutableStateOf(false) }
     val defaultDate = convertMillisToDate(Clock.System.now().toEpochMilliseconds())
-    val selectedDate = remember { mutableStateOf(defaultDate) }
+    val selectedDate = rememberSaveable { mutableStateOf(defaultDate) }
 
     Column {
         Text(
@@ -126,7 +127,7 @@ private fun EndDatePickerSection(
 ) {
     val showDialog = remember { mutableStateOf(false) }
     val defaultDate = convertMillisToDate(Clock.System.now().toEpochMilliseconds())
-    val selectedDate = remember { mutableStateOf(defaultDate) }
+    val selectedDate = rememberSaveable { mutableStateOf(defaultDate) }
 
     Column {
         Text(
