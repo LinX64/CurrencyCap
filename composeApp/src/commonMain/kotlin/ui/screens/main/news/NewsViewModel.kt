@@ -20,6 +20,7 @@ import ui.screens.main.news.NewsState.Success
 import ui.screens.main.news.NewsViewEvent.FetchNews
 import ui.screens.main.news.NewsViewEvent.OnBookmarkArticle
 import ui.screens.main.news.NewsViewEvent.OnRetry
+import ui.screens.main.news.NewsViewEvent.OnSetClick
 import util.convertToLocalDate
 
 class NewsViewModel(
@@ -36,9 +37,13 @@ class NewsViewModel(
 
     override fun handleEvent(event: NewsViewEvent) {
         when (event) {
-            is OnBookmarkArticle -> handleOnBookmarkClick(event.article, event.isBookmarked)
             FetchNews -> fetchNews()
             OnRetry -> fetchNews()
+            is OnBookmarkArticle -> handleOnBookmarkClick(event.article, event.isBookmarked)
+            is OnSetClick -> {
+                saveSelectedDatesAndFilter(event.startDate, event.endDate)
+                saveSelectedSources(event.selectedSources)
+            }
         }
     }
 
@@ -89,7 +94,7 @@ class NewsViewModel(
         }
     }
 
-    fun saveSelectedDatesAndFilter(startDate: String, endDate: String) {
+    private fun saveSelectedDatesAndFilter(startDate: String, endDate: String) {
         viewModelScope.launch {
             userPreferences.saveUserSelectedDates(startDate, endDate)
         }
@@ -105,7 +110,7 @@ class NewsViewModel(
         this.sources.value = sources
     }
 
-    fun saveSelectedSources(strings: Set<String>) {
+    private fun saveSelectedSources(strings: Set<String>) {
         viewModelScope.launch {
             userPreferences.saveUserSelectedSources(strings)
         }

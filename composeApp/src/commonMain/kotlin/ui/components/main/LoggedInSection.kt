@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import ui.components.base.BaseModelBottomSheet
 import ui.navigation.graphs.MainNavGraph
 import ui.screens.MainViewModel
+import ui.screens.main.news.NewsViewEvent.OnSetClick
 import ui.screens.main.news.NewsViewModel
 import ui.screens.main.news.components.NewsFilterSection
 import ui.screens.main.subscribers.SubscribersSection
@@ -88,8 +89,7 @@ internal fun LoggedInSection(
             onDoneClick = { startDate, endDate, selectedSources ->
                 isNewsFilterSheetVisible.value = false
 
-                newsViewModel.saveSelectedDatesAndFilter(startDate, endDate)
-                newsViewModel.saveSelectedSources(selectedSources)
+                newsViewModel.handleEvent(OnSetClick(startDate, endDate, selectedSources))
             }
         )
     }
