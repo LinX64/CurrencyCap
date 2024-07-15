@@ -59,7 +59,7 @@ internal class LoginViewModel(
             when (authState) {
                 AuthState.Loading -> setState { LoginState.Loading }
                 is AuthState.Success -> {
-                    userPreferences.saveUserUid(authServiceRepository.currentUserId)
+                    userPreferences.saveUserUid(authServiceRepository.currentUserId) // TODO: Issue with IOS
                     setEffect(NavigateToMarketOverview)
                 }
 

@@ -96,6 +96,8 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.darwin)
             implementation(libs.koin.core)
+
+            implementation(libs.bundles.datastore)
         }
     }
 }
