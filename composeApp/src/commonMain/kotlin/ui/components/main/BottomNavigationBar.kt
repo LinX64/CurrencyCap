@@ -46,6 +46,7 @@ import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import ui.navigation.util.ScreenRoutes
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.ICON_SIZE_48
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.colors.CurrencyColors
 
@@ -185,7 +186,7 @@ private fun CenteredExchangeButton(
             )
     ) {
         Icon(
-            modifier = Modifier.size(48.dp),
+            modifier = Modifier.size(ICON_SIZE_48),
             painter = painterResource(Res.drawable.ic_arrow_up_down),
             contentDescription = "Exchange",
             tint = MaterialTheme.colorScheme.onSurface

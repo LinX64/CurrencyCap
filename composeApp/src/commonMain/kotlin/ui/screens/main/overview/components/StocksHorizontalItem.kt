@@ -24,6 +24,7 @@ import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.components.base.GlassCard
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.ICON_SIZE_48
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
@@ -43,10 +44,10 @@ internal fun StocksHorizontalItem(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             if (isLoading) {
-                ItemPlaceHolder(modifier = Modifier.size(48.dp))
+                ItemPlaceHolder(modifier = Modifier.size(ICON_SIZE_48))
             } else {
                 AsyncImage(
-                    modifier = Modifier.size(48.dp),
+                    modifier = Modifier.size(ICON_SIZE_48),
                     model = icon,
                     contentDescription = null,
                     placeholder = painterResource(Res.drawable.baseline_monetization_on_48),

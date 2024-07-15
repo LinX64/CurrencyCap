@@ -24,6 +24,7 @@ import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import ui.common.formatCurrentTotal
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.ICON_SIZE_48
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -49,13 +50,13 @@ internal fun TopMoversItem(
         ) {
 
             SubcomposeAsyncImage(
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier.size(ICON_SIZE_48),
                 model = icon,
                 contentDescription = null,
                 contentScale = ContentScale.Inside
             ) {
                 if (isLoading) {
-                    ItemPlaceHolder(modifier = Modifier.size(48.dp))
+                    ItemPlaceHolder(modifier = Modifier.size(ICON_SIZE_48))
                 } else {
                     SubcomposeAsyncImageContent()
                 }
