@@ -23,6 +23,9 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.full_name
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun NameTextField(
@@ -57,9 +60,7 @@ internal fun NameTextField(
                 tint = MaterialTheme.colorScheme.onSurface
             )
         },
-        placeholder = {
-            Text(text = "Full name")
-        },
+        placeholder = { Text(text = stringResource(Res.string.full_name)) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Text,
             imeAction = ImeAction.Next

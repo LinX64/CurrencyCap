@@ -23,6 +23,9 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.email
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun EmailTextField(
@@ -57,7 +60,7 @@ internal fun EmailTextField(
         ),
         shape = RoundedCornerShape(10.dp),
         maxLines = 1,
-        label = { Text(text = "Email") },
+        label = { Text(text = stringResource(Res.string.email)) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next

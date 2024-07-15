@@ -20,9 +20,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.explore_news
+import currencycap.composeapp.generated.resources.no_bookmarks_description
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
+import org.jetbrains.compose.resources.stringResource
 import ui.components.NewsItem
 import ui.components.base.button.SecondaryButton
 import ui.components.main.BaseGlassLazyColumn
@@ -94,7 +98,7 @@ private fun NoBookmarks(
 
         Text(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
-            text = "Start curating your news. Bookmark articles to see them here.",
+            text = stringResource(Res.string.no_bookmarks_description),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             textAlign = TextAlign.Center,
@@ -106,7 +110,7 @@ private fun NoBookmarks(
         SecondaryButton(
             modifier = Modifier
                 .padding(horizontal = 32.dp),
-            text = "Explore News",
+            text = stringResource(Res.string.explore_news),
             onButtonClick = onExploreNewsClick
         )
     }

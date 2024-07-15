@@ -24,7 +24,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.date_of_publication
+import currencycap.composeapp.generated.resources.end_date
+import currencycap.composeapp.generated.resources.start_date
 import kotlinx.datetime.Clock
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
 import util.DateUtils.convertMillisToDate
 
@@ -51,7 +56,7 @@ internal fun DateOfPublicationButton(
             Spacer(modifier = Modifier.width(8.dp))
 
             Text(
-                text = "Date of publication",
+                text = stringResource(Res.string.date_of_publication),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold
@@ -85,7 +90,7 @@ private fun StartDatePickerSection(
     Column {
         Text(
             modifier = Modifier.padding(8.dp),
-            text = "Start Date",
+            text = stringResource(Res.string.start_date),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
             fontWeight = FontWeight.Bold
@@ -132,7 +137,7 @@ private fun EndDatePickerSection(
     Column {
         Text(
             modifier = Modifier.padding(8.dp),
-            text = "Start Date",
+            text = stringResource(Res.string.end_date),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
             fontWeight = FontWeight.Bold

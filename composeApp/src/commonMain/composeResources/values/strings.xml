@@ -54,6 +54,9 @@
     <string name="set">Set</string>
     <string name="clear">Clear</string>
     <string name="retry">Retry</string>
+    <string name="ok">OK</string>
+    <string name="email">Email</string>
+    <string name="full_name">Full Name</string>
 
     <string name="something_went_wrong">Something went wrong!</string>
     <string name="please_check_internet_connection">Please check your internet connection and try again.</string>
@@ -61,6 +64,17 @@
     <string name="read_more">Read More</string>
 
     <string name="type_to_search">Type to search</string>
-
     <string name="source">Source</string>
+
+    <string name="date_of_publication">Date of Publication</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+
+    <string name="please_fill_in_your_full_name">Please fill in your Full Name and Phone number</string>
+    <string name="verify_phone_number">Verify Phone Number</string>
+
+    <string name="skip">Skip</string>
+
+    <string name="no_bookmarks_description">Start curating your news. Bookmark articles to see them here.</string>
+    <string name="explore_news">Explore News</string>
 </resources>

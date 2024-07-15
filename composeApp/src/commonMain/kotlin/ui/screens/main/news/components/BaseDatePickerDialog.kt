@@ -14,7 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.cancel
+import currencycap.composeapp.generated.resources.ok
 import kotlinx.datetime.Clock
+import org.jetbrains.compose.resources.stringResource
 import util.DateUtils.convertMillisToDate
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,7 +68,7 @@ private fun ConfirmButton(
         modifier = Modifier.padding(8.dp)
     ) {
         Text(
-            text = "Ok",
+            text = stringResource(Res.string.ok),
             color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold
@@ -79,7 +83,7 @@ private fun DismissButton(onCancelClick: () -> Unit) {
         modifier = Modifier.padding(8.dp)
     ) {
         Text(
-            text = "Cancel",
+            text = stringResource(Res.string.cancel),
             color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.bodyLarge,
         )
