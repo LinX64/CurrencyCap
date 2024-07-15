@@ -20,10 +20,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import ui.common.formatToPrice
 import ui.components.base.GlassCard
 import ui.screens.main.exchange.ExchangeUiState
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.currencyConverterAnimation
 import util.exitTransition
 import util.normalizeRateUsd
@@ -46,7 +47,7 @@ internal fun ResultCard(
     ) {
         GlassCard {
             Column(
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                modifier = Modifier.fillMaxWidth().padding(CARD_CORNER_RADIUS),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row {
@@ -57,7 +58,7 @@ internal fun ResultCard(
                         fontWeight = FontWeight.Bold
                     )
 
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(SPACER_PADDING_8))
 
                     Text(
                         text = uiState.targetCurrency?.code.toString(),
@@ -67,7 +68,7 @@ internal fun ResultCard(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
                 val normalizedAmount = uiState.targetCurrency?.let { normalizeRateUsd(it) }
                 val formattedAmount = normalizedAmount?.let { formatToPrice(it) } ?: "0.00"

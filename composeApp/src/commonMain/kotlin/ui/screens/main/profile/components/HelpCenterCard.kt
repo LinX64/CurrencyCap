@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun HelpCenterCard(
@@ -18,7 +18,7 @@ internal fun HelpCenterCard(
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_8))
             HelpCenterItem(text = "Support", onButtonClick = onButtonClick)
         }
     }

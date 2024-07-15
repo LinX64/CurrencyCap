@@ -88,7 +88,7 @@ fun RowScope.CurrencyView(
                                 contentDescription = "Country Flag"
                             )
 
-                            Spacer(modifier = Modifier.width(16.dp))
+                            Spacer(modifier = Modifier.width(CARD_CORNER_RADIUS))
 
                             Text(
                                 text = CurrencyCode.valueOf(data.code).name,

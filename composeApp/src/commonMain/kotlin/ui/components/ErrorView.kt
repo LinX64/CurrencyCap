@@ -31,6 +31,7 @@ import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.button.SecondaryButton
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -69,7 +70,7 @@ internal fun ErrorView(
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
         Text(
             modifier = Modifier.fillMaxWidth(),

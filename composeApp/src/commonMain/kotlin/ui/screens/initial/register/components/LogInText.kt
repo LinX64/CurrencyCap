@@ -12,7 +12,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.dp
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun LogInText(
@@ -31,7 +31,7 @@ internal fun LogInText(
         text = annotatedString,
         style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurface),
         modifier = Modifier
-            .padding(top = 16.dp)
+            .padding(top = CARD_CORNER_RADIUS)
             .clickable(
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() }

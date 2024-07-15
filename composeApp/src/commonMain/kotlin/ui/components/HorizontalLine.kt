@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun HorizontalLineWithDot() {
@@ -22,7 +23,7 @@ internal fun HorizontalLineWithDot() {
 
     Row(
         modifier = Modifier.fillMaxWidth()
-            .padding(vertical = 8.dp)
+            .padding(vertical = SPACER_PADDING_8)
     ) {
         Canvas(
             modifier = Modifier.fillMaxWidth()

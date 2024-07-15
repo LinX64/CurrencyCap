@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import data.local.model.exchange.AmountInputType
 import ui.common.DecimalFormat
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.formatDecimalSeparator
 
 @Composable
@@ -32,7 +33,7 @@ internal fun ResultAmountInput(
         horizontalAlignment = Alignment.End
     ) {
         TextField(
-            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(size = 8.dp))
+            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(size = SPACER_PADDING_8))
                 .animateContentSize()
                 .height(54.dp),
             value = if (amount.isNotEmpty()) DecimalFormat().format(amount.toDouble()).formatDecimalSeparator() else "0.0",

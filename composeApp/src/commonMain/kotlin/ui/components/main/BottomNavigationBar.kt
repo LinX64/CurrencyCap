@@ -46,6 +46,7 @@ import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import ui.navigation.util.ScreenRoutes
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.colors.CurrencyColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,7 +86,7 @@ internal fun BottomNavigationBar(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                    .padding(bottom = SPACER_PADDING_16)
                     .height(94.dp)
                     .hazeChild(
                         state = hazeState,

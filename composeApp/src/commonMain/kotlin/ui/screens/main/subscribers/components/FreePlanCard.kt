@@ -14,6 +14,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ui.components.base.ClickableCard
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun FreePlanCard(
@@ -28,7 +30,7 @@ internal fun FreePlanCard(
     ClickableCard(onClick = onFreePlanClick, isCardSelected = isFreeCardSelected) {
         Column(
             modifier = modifier
-                .padding(horizontal = 16.dp, vertical = 16.dp),
+                .padding(horizontal = CARD_CORNER_RADIUS, vertical = CARD_CORNER_RADIUS),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -48,7 +50,7 @@ internal fun FreePlanCard(
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
             for (feature in features) {
                 FeatureItem(feature)

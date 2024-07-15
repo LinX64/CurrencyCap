@@ -6,7 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun FromSection() {
@@ -16,7 +16,7 @@ internal fun FromSection() {
         color = MaterialTheme.colorScheme.onSurface
     )
 
-    Spacer(modifier = Modifier.height(8.dp))
+    Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 }
 
 

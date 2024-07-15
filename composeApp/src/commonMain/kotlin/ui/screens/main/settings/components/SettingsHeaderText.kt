@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun SettingsHeaderText(
@@ -22,7 +23,7 @@ internal fun SettingsHeaderText(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(bottom = 8.dp)
+        modifier = Modifier.padding(bottom = SPACER_PADDING_8)
     ) {
         Box(
             modifier = Modifier

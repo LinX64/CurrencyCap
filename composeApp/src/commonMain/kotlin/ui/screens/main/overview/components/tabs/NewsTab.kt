@@ -20,6 +20,7 @@ import ui.screens.main.overview.OverviewState.Error
 import ui.screens.main.overview.OverviewState.Loading
 import ui.screens.main.overview.OverviewState.Success
 import ui.screens.main.overview.components.tabs.components.NewsHomeItem
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun NewsTab(
@@ -37,7 +38,7 @@ internal fun NewsTab(
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
         LazyColumn(
             modifier = Modifier.fillMaxWidth()

@@ -28,6 +28,8 @@ import ui.screens.initial.get_verified.GetVerifiedPhoneNavigationEffect.Navigate
 import ui.screens.initial.get_verified.GetVerifiedPhoneViewEvent.OnCodeChanged
 import ui.screens.initial.get_verified.GetVerifiedPhoneViewEvent.OnFinishSignUpClick
 import ui.screens.initial.get_verified.components.CodeTextField
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun GetVerifiedPhoneScreen(
@@ -77,7 +79,7 @@ private fun GetVerifiedPhoneForm(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         Text(
             text = "Enter Verification Code",
@@ -86,7 +88,7 @@ private fun GetVerifiedPhoneForm(
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
         Text(
             text = "We have sent you an email with a verification code",

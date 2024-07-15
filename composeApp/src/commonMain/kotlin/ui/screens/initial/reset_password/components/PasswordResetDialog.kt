@@ -26,6 +26,7 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun PasswordResetDialog(
@@ -47,14 +48,14 @@ internal fun PasswordResetDialog(
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(CARD_CORNER_RADIUS)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.End
                 ) {
 
                     Column(
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(CARD_CORNER_RADIUS)
                             .fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -64,18 +65,18 @@ internal fun PasswordResetDialog(
                             modifier = Modifier.size(64.dp)
                         )
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
                         Text(
                             modifier = Modifier
-                                .padding(16.dp)
+                                .padding(CARD_CORNER_RADIUS)
                                 .fillMaxWidth(),
                             text = "Reset password email was successfully sent! Please check your email.",
                             textAlign = TextAlign.Center
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
                     TextButton(
                         onClick = onOkClick

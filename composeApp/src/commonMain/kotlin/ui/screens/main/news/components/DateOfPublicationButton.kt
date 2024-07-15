@@ -32,6 +32,7 @@ import kotlinx.datetime.Clock
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.DateUtils.convertMillisToDate
 
 @Composable
@@ -45,7 +46,7 @@ internal fun DateOfPublicationButton(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp),
+                .padding(SPACER_PADDING_8),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -54,7 +55,7 @@ internal fun DateOfPublicationButton(
                 contentDescription = null
             )
 
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(SPACER_PADDING_8))
 
             Text(
                 text = stringResource(Res.string.date_of_publication),
@@ -65,7 +66,7 @@ internal fun DateOfPublicationButton(
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
+            modifier = Modifier.fillMaxWidth().padding(SPACER_PADDING_8),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -90,7 +91,7 @@ private fun StartDatePickerSection(
 
     Column {
         Text(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(SPACER_PADDING_8),
             text = stringResource(Res.string.start_date),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
@@ -98,7 +99,7 @@ private fun StartDatePickerSection(
         )
         Card(
             modifier = Modifier
-                .padding(8.dp),
+                .padding(SPACER_PADDING_8),
             onClick = { showDialog.value = true },
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface),
             colors = CardDefaults.cardColors(
@@ -137,14 +138,14 @@ private fun EndDatePickerSection(
 
     Column {
         Text(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(SPACER_PADDING_8),
             text = stringResource(Res.string.end_date),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
             fontWeight = FontWeight.Bold
         )
         Card(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(SPACER_PADDING_8),
             onClick = { showDialog.value = true },
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface),
             colors = CardDefaults.cardColors(

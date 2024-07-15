@@ -10,22 +10,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.exchange_screen_disclaimer
 import currencycap.composeapp.generated.resources.exchange_screen_disclaimer_description
 import org.jetbrains.compose.resources.stringResource
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun Disclaimer(
     modifier: Modifier = Modifier
 ) {
-    val uriHandler = LocalUriHandler.current
-
     Column(
-        modifier = modifier.padding(vertical = 16.dp),
+        modifier = modifier.padding(vertical = CARD_CORNER_RADIUS),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -36,7 +34,7 @@ internal fun Disclaimer(
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
         Text(
             text = stringResource(Res.string.exchange_screen_disclaimer_description),

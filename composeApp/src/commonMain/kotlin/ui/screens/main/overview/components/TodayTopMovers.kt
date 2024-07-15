@@ -14,8 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import ui.screens.main.overview.OverviewState
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.getDummyCryptoItem
 
 @Composable
@@ -26,7 +27,7 @@ internal fun TodayTopMovers(
     val isLoading = overviewState is OverviewState.Loading
     Column(
         modifier = Modifier.fillMaxWidth()
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = SPACER_PADDING_8),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -42,7 +43,7 @@ internal fun TodayTopMovers(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         LazyRow(
             modifier = Modifier.fillMaxWidth(),

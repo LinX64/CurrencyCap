@@ -19,6 +19,8 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.filter_by
 import kotlinx.datetime.Clock
 import org.jetbrains.compose.resources.stringResource
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.DateUtils.convertMillisToDate
 
 @Composable
@@ -35,11 +37,11 @@ internal fun NewsFilterSection(
 
     Column(
         modifier = modifier
-            .padding(horizontal = 16.dp, vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(horizontal = CARD_CORNER_RADIUS, vertical = CARD_CORNER_RADIUS),
+        verticalArrangement = Arrangement.spacedBy(CARD_CORNER_RADIUS)
     ) {
         Text(
-            modifier = Modifier.padding(top = 16.dp),
+            modifier = Modifier.padding(top = CARD_CORNER_RADIUS),
             text = stringResource(Res.string.filter_by),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface,
@@ -58,7 +60,7 @@ internal fun NewsFilterSection(
             onEndDateSelected = { selectedEndDate = it }
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
         FooterHorizontalButtons(
             onCloseClick = onCloseClick,

@@ -16,11 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun FeatureItem(text: String) {
     Row(
-        modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
+        modifier = Modifier.padding(horizontal = SPACER_PADDING_8, vertical = 2.dp),
         horizontalArrangement = Arrangement.Center
     ) {
         Icon(
@@ -30,7 +31,7 @@ internal fun FeatureItem(text: String) {
             tint = MaterialTheme.colorScheme.onSurface
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(SPACER_PADDING_8))
 
         Text(
             modifier = Modifier.fillMaxWidth(),

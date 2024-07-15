@@ -32,6 +32,7 @@ import currencycap.composeapp.generated.resources.set
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.button.PrimarySmallIconButton
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun FooterHorizontalButtons(
@@ -55,7 +56,7 @@ internal fun FooterHorizontalButtons(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = CARD_CORNER_RADIUS),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -71,7 +72,7 @@ internal fun FooterHorizontalButtons(
                 Row(
                     modifier = Modifier.padding(12.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Close,

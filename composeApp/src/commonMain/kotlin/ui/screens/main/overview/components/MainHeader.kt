@@ -17,6 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ui.components.base.GlassCard
 import ui.screens.main.overview.OverviewState
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun MainHeader(
@@ -26,7 +28,7 @@ internal fun MainHeader(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = CARD_CORNER_RADIUS)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -52,10 +54,10 @@ internal fun MainHeader(
 @Composable
 private fun FirstColumn() {
     Column(
-        modifier = Modifier.padding(top = 16.dp),
+        modifier = Modifier.padding(top = CARD_CORNER_RADIUS),
     ) {
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         Text(
             text = "Analytics",
@@ -64,7 +66,7 @@ private fun FirstColumn() {
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
         Text(
             text = "Stock performance",

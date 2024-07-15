@@ -22,6 +22,8 @@ import domain.model.main.Crypto
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.components.base.GlassCard
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
 data class AssetInfo(
@@ -65,7 +67,7 @@ internal fun CryptoHorizontalItem(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(CARD_CORNER_RADIUS),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -108,7 +110,7 @@ private fun FirstHorizontalColumn(
     isLoading: Boolean = false
 ) {
     Column(
-        modifier = modifier.padding(start = 8.dp)
+        modifier = modifier.padding(start = SPACER_PADDING_8)
     ) {
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,

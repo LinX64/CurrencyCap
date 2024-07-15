@@ -34,6 +34,7 @@ import ui.screens.initial.fill_profile.FillProfileViewEvent.OnPhoneNumberChanged
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnSignUpClick
 import ui.screens.initial.fill_profile.components.NameTextField
 import ui.screens.initial.fill_profile.components.PhoneNumberTextField
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun FillProfileScreen(
@@ -85,7 +86,7 @@ private fun FillProfileForm(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         Text(
             text = stringResource(Res.string.fill_profile),
@@ -123,7 +124,7 @@ private fun FillProfileForm(
                 onButtonClick = onFinishSignUpClick
             )
 
-            Spacer(modifier = modifier.height(16.dp))
+            Spacer(modifier = modifier.height(CARD_CORNER_RADIUS))
 
             SecondaryButton(
                 onButtonClick = onSkipClick,

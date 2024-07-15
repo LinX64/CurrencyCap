@@ -104,7 +104,7 @@ internal fun NewsDetailContent(
                     textAlign = TextAlign.Center
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
                 Text(
                     modifier = loadingPlaceHolderModifier,
@@ -114,7 +114,7 @@ internal fun NewsDetailContent(
                     textAlign = TextAlign.Justify
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
                 Column(
                     modifier = Modifier.fillMaxWidth(),

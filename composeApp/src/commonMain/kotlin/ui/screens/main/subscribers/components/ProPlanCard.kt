@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ui.components.base.ClickableCard
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun ProPlanCard(
@@ -36,7 +37,7 @@ internal fun ProPlanCard(
     ClickableCard(onClick = onProPlanClick, isCardSelected = isProCardSelected) {
         Column(
             modifier = modifier
-                .padding(16.dp)
+                .padding(CARD_CORNER_RADIUS)
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally

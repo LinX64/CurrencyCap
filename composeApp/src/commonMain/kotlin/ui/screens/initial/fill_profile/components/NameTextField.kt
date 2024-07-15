@@ -55,7 +55,7 @@ internal fun NameTextField(
         maxLines = 1,
         leadingIcon = {
             Icon(
-                modifier = modifier.padding(start = 16.dp),
+                modifier = modifier.padding(start = CARD_CORNER_RADIUS),
                 imageVector = Icons.Outlined.Person,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurface

@@ -94,6 +94,7 @@ private fun LazyListScope.newsScreenContent(
             )
         }
     }
+
     else -> Unit
 }
 

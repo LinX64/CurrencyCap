@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.logo
 import org.jetbrains.compose.resources.painterResource
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun SplashScreen(modifier: Modifier = Modifier) {
@@ -39,7 +40,7 @@ internal fun SplashScreen(modifier: Modifier = Modifier) {
                 modifier = Modifier.size(180.dp),
                 contentScale = ContentScale.Crop
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
             CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
         }

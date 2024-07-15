@@ -39,6 +39,8 @@ import ui.screens.main.search.components.EmptyView
 import ui.screens.main.search.components.LeadingIcon
 import ui.screens.main.search.components.SearchPlaceHolder
 import ui.screens.main.search.components.TrailingIcon
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.getDummyCryptoItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,7 +64,7 @@ internal fun SearchScreen(
     ) {
         Box(
             modifier = Modifier.fillMaxWidth()
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = CARD_CORNER_RADIUS)
                 .semantics { isTraversalGroup = true }
         ) {
             SearchBar(
@@ -91,7 +93,7 @@ internal fun SearchScreen(
                 BaseGlassLazyColumn(
                     modifier = Modifier.semantics { traversalIndex = 1f },
                     padding = PaddingValues(0.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
                     hazeState = hazeState
                 ) {
                     searchResultContent(

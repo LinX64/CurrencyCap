@@ -29,6 +29,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun PasswordTextField(
@@ -64,7 +65,7 @@ internal fun PasswordTextField(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
         ),
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(SPACER_PADDING_8),
         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,

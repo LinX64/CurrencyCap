@@ -47,6 +47,7 @@ import ui.screens.main.exchange.components.CurrencyInputs
 import ui.screens.main.exchange.components.CurrencyPicker
 import ui.screens.main.exchange.components.Disclaimer
 import ui.screens.main.exchange.components.ResultCard
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun ExchangeRoute(
@@ -143,11 +144,11 @@ private fun ExchangeCard(
     ) {
         GlassCard {
             Column(
-                modifier = modifier.padding(16.dp),
+                modifier = modifier.padding(CARD_CORNER_RADIUS),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
                 Image(
                     modifier = Modifier.size(84.dp),
@@ -191,7 +192,7 @@ private fun ExchangeCard(
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         Box(
             modifier = Modifier.fillMaxWidth()
@@ -205,7 +206,7 @@ private fun ExchangeCard(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         ResultCard(uiState = uiState, amount = amount)
 

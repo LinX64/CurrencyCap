@@ -35,6 +35,7 @@ import org.jetbrains.compose.resources.painterResource
 import ui.components.base.GlassCard
 import ui.screens.main.overview.components.getPlaceHolder
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 import util.convertDateFormat
 
@@ -48,14 +49,14 @@ internal fun NewsItem(
     onBookmarkClick: (isBookmarked: Boolean) -> Unit
 ) {
     GlassCard(
-        modifier = modifier.padding(vertical = 8.dp),
+        modifier = modifier.padding(vertical = SPACER_PADDING_8),
         isClickable = true,
         onCardClick = { onNewsItemClick(article.url) }
     ) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 8.dp, vertical = 8.dp),
+                .padding(horizontal = SPACER_PADDING_8, vertical = SPACER_PADDING_8),
         ) {
             FirstImageTextColumn(
                 isLoading = isLoading,
@@ -134,7 +135,7 @@ private fun TextContentSection(
     Column(
         modifier = Modifier.padding(
             horizontal = 16.dp,
-            vertical = 8.dp
+            vertical = SPACER_PADDING_8
         ),
     ) {
         IconButton(
@@ -161,7 +162,7 @@ private fun TextContentSection(
             overflow = TextOverflow.Ellipsis,
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
@@ -172,7 +173,7 @@ private fun TextContentSection(
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,

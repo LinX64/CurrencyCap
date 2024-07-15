@@ -50,7 +50,7 @@ internal fun PhoneNumberTextField(
         maxLines = 1,
         leadingIcon = {
             Icon(
-                modifier = modifier.padding(start = 16.dp),
+                modifier = modifier.padding(start = CARD_CORNER_RADIUS),
                 imageVector = Icons.Outlined.Phone,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurface
