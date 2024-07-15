@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import ui.screens.main.overview.OverviewState
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.getDummyCryptoItem
 
@@ -43,7 +43,7 @@ internal fun TodayTopMovers(
             )
         }
 
-        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
         LazyRow(
             modifier = Modifier.fillMaxWidth(),

@@ -15,7 +15,7 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.exchange_screen_disclaimer
 import currencycap.composeapp.generated.resources.exchange_screen_disclaimer_description
 import org.jetbrains.compose.resources.stringResource
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -23,7 +23,7 @@ internal fun Disclaimer(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.padding(vertical = CARD_CORNER_RADIUS),
+        modifier = modifier.padding(vertical = SPACER_PADDING_16),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

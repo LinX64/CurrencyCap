@@ -31,7 +31,7 @@ import ui.components.base.GlassCard
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.overview.components.getPlaceHolder
 import ui.screens.main.profile.components.HelpCenterBaseGlassCard
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
@@ -61,7 +61,7 @@ internal fun DetailScreen(
     BaseGlassLazyColumn(
         padding = padding,
         hazeState = hazeState,
-        verticalArrangement = Arrangement.spacedBy(CARD_CORNER_RADIUS)
+        verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_16)
     ) {
         when (state) {
             is DetailState.Success -> {
@@ -88,7 +88,7 @@ private fun DetailHeader(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(CARD_CORNER_RADIUS),
+                .padding(SPACER_PADDING_16),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8)
         ) {

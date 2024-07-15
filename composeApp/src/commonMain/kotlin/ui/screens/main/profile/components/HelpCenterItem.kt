@@ -17,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.colors.CurrencyColors
 
 @Composable
@@ -34,17 +34,17 @@ internal fun HelpCenterItem(
 
     Button(
         modifier = Modifier.fillMaxWidth()
-            .padding(start = CARD_CORNER_RADIUS)
+            .padding(start = SPACER_PADDING_16)
             .background(
                 brush = gradient,
-                shape = RoundedCornerShape(CARD_CORNER_RADIUS)
+                shape = RoundedCornerShape(SPACER_PADDING_16)
             ),
         onClick = onButtonClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.onSurface
         ),
-        shape = RoundedCornerShape(CARD_CORNER_RADIUS)
+        shape = RoundedCornerShape(SPACER_PADDING_16)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

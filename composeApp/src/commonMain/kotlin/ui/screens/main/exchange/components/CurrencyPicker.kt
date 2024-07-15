@@ -58,7 +58,7 @@ import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import ui.screens.main.exchange.ExchangeViewEvent
 import ui.screens.main.exchange.ExchangeViewEvent.OnSaveSelectedCurrencyCode
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -102,12 +102,12 @@ internal fun CurrencyPicker(
             ) {
                 Column(
                     modifier = Modifier.fillMaxWidth()
-                        .clip(RoundedCornerShape(CARD_CORNER_RADIUS))
+                        .clip(RoundedCornerShape(SPACER_PADDING_16))
                         .padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     TextField(
-                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(size = CARD_CORNER_RADIUS)),
+                        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(size = SPACER_PADDING_16)),
                         value = searchQuery,
                         onValueChange = { query ->
                             searchQuery = query.uppercase()

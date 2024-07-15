@@ -21,7 +21,7 @@ import coil3.compose.AsyncImage
 import data.remote.model.User
 import ui.components.base.GlassCard
 import ui.screens.main.overview.components.getPlaceHolder
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 
 @Composable
 internal fun ProfileCard(
@@ -48,7 +48,7 @@ internal fun ProfileCard(
                     contentDescription = null
                 )
 
-                Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
+                Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
                 Text(
                     modifier = isLoadingModifier,
@@ -58,7 +58,7 @@ internal fun ProfileCard(
                     fontWeight = FontWeight.Bold
                 )
 
-                Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
+                Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
                 Column(
                     modifier = Modifier.fillMaxWidth(),

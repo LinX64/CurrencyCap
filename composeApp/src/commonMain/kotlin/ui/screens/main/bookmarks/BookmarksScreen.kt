@@ -31,7 +31,7 @@ import ui.components.NewsItem
 import ui.components.base.button.SecondaryButton
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.bookmarks.BookmarksViewEvent.OnRemoveBookmarkClick
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 
 @Composable
 internal fun BookmarksScreen(
@@ -84,7 +84,7 @@ private fun NoBookmarks(
             tint = MaterialTheme.colorScheme.onSurface
         )
 
-        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
         Text(
             modifier = Modifier.fillMaxWidth(),
@@ -106,7 +106,7 @@ private fun NoBookmarks(
             minLines = 2
         )
 
-        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
         SecondaryButton(
             modifier = Modifier

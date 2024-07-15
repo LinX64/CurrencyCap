@@ -23,7 +23,7 @@ import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.tabs.CryptoContent
 import ui.screens.main.overview.components.tabs.MarketTab
 import ui.screens.main.overview.components.tabs.NewsTab
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -64,7 +64,7 @@ private fun HorizontalPagerDotIndicator(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(CARD_CORNER_RADIUS),
+            .padding(SPACER_PADDING_16),
         contentAlignment = Alignment.Center
     ) {
         Row(

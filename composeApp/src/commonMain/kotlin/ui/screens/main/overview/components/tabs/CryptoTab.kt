@@ -23,7 +23,7 @@ import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.ChangeIcon
 import ui.screens.main.overview.components.TopMoversChart
 import ui.screens.main.overview.components.getPlaceHolder
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 import util.formatNumber
@@ -82,7 +82,7 @@ private fun CryptoSuccessBody(
             InnerDropDown(isLoading, usd)
         }
 
-        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
         InnerChartRow(isLoading = isLoading, cryptoRates = cryptoRates)
     }
@@ -96,9 +96,9 @@ internal fun InnerChartRow(
     val isPositive = cryptoRates[0].priceChangePercentage24h > 0
 
     Row(
-        modifier = Modifier.padding(top = CARD_CORNER_RADIUS),
+        modifier = Modifier.padding(top = SPACER_PADDING_16),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(CARD_CORNER_RADIUS)
+        horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_16)
     ) {
         val priceData = listOf(
             cryptoRates[0].low24h.toFloat(),

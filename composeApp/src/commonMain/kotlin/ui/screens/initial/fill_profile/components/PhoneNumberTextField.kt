@@ -21,6 +21,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 
 @Composable
 internal fun PhoneNumberTextField(
@@ -50,7 +51,7 @@ internal fun PhoneNumberTextField(
         maxLines = 1,
         leadingIcon = {
             Icon(
-                modifier = modifier.padding(start = CARD_CORNER_RADIUS),
+                modifier = modifier.padding(start = SPACER_PADDING_16),
                 imageVector = Icons.Outlined.Phone,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurface

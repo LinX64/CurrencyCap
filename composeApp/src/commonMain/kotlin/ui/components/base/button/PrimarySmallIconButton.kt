@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
@@ -54,7 +55,7 @@ internal fun PrimarySmallIconButton(
         )
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = CARD_CORNER_RADIUS, vertical = SPACER_PADDING_8),
+            modifier = Modifier.padding(horizontal = SPACER_PADDING_16, vertical = SPACER_PADDING_8),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_8)
         ) {

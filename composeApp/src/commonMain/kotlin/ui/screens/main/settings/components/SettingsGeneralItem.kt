@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 
 @Composable
 internal fun SettingsGeneralItem(
@@ -40,7 +40,7 @@ internal fun SettingsGeneralItem(
     ) {
         Row(
             modifier = Modifier.fillMaxWidth()
-                .padding(horizontal = CARD_CORNER_RADIUS),
+                .padding(horizontal = SPACER_PADDING_16),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(

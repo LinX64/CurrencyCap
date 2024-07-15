@@ -27,7 +27,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import ui.screens.main.subscribers.components.FreePlanCard
 import ui.screens.main.subscribers.components.PremiumAccessOnly
 import ui.screens.main.subscribers.components.ProPlanCard
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @OptIn(ExperimentalResourceApi::class)
@@ -46,7 +46,7 @@ internal fun SubscribersSection(
         bytes = Res.readBytes("files/premium.json")
     }
 
-    LazyColumn(modifier = modifier.padding(CARD_CORNER_RADIUS)) {
+    LazyColumn(modifier = modifier.padding(SPACER_PADDING_16)) {
         item {
             PremiumAccessOnly(
                 modifier = modifier,
@@ -57,7 +57,7 @@ internal fun SubscribersSection(
 
         item {
             Text(
-                modifier = modifier.padding(horizontal = CARD_CORNER_RADIUS, vertical = SPACER_PADDING_8),
+                modifier = modifier.padding(horizontal = SPACER_PADDING_16, vertical = SPACER_PADDING_8),
                 text = "Select Your Plan",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface
@@ -101,7 +101,7 @@ private fun SubscribeButton(
 ) {
     Button(
         modifier = modifier.fillMaxWidth()
-            .padding(CARD_CORNER_RADIUS)
+            .padding(SPACER_PADDING_16)
             .height(52.dp),
         onClick = onSubscribeClick,
         shape = RoundedCornerShape(20.dp),

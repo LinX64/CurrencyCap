@@ -19,7 +19,7 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.filter_by
 import kotlinx.datetime.Clock
 import org.jetbrains.compose.resources.stringResource
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.DateUtils.convertMillisToDate
 
@@ -37,11 +37,11 @@ internal fun NewsFilterSection(
 
     Column(
         modifier = modifier
-            .padding(horizontal = CARD_CORNER_RADIUS, vertical = CARD_CORNER_RADIUS),
-        verticalArrangement = Arrangement.spacedBy(CARD_CORNER_RADIUS)
+            .padding(horizontal = SPACER_PADDING_16, vertical = SPACER_PADDING_16),
+        verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_16)
     ) {
         Text(
-            modifier = Modifier.padding(top = CARD_CORNER_RADIUS),
+            modifier = Modifier.padding(top = SPACER_PADDING_16),
             text = stringResource(Res.string.filter_by),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface,

@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import ui.common.formatToPrice
 import ui.components.base.GlassCard
 import ui.screens.main.exchange.ExchangeUiState
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.currencyConverterAnimation
 import util.exitTransition
@@ -47,7 +47,7 @@ internal fun ResultCard(
     ) {
         GlassCard {
             Column(
-                modifier = Modifier.fillMaxWidth().padding(CARD_CORNER_RADIUS),
+                modifier = Modifier.fillMaxWidth().padding(SPACER_PADDING_16),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row {

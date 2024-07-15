@@ -22,8 +22,8 @@ import domain.model.main.Crypto
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.components.base.GlassCard
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.ICON_SIZE_48
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
@@ -58,7 +58,6 @@ internal fun CryptoHorizontalItem(
     modifier: Modifier = Modifier,
     crypto: Crypto,
     isLoading: Boolean = false,
-    assetInfo: AssetInfo = mockAssetInfo,
     onClick: (String) -> Unit
 ) {
     GlassCard(
@@ -68,7 +67,7 @@ internal fun CryptoHorizontalItem(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(CARD_CORNER_RADIUS),
+                .padding(SPACER_PADDING_16),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

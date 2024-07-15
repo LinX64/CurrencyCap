@@ -29,6 +29,7 @@ import data.local.model.exchange.Currency
 import data.local.model.exchange.CurrencyCode
 import org.jetbrains.compose.resources.painterResource
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import util.enterTransition
 import util.exitTransition
 import util.transitionSpec
@@ -88,7 +89,7 @@ fun RowScope.CurrencyView(
                                 contentDescription = "Country Flag"
                             )
 
-                            Spacer(modifier = Modifier.width(CARD_CORNER_RADIUS))
+                            Spacer(modifier = Modifier.width(SPACER_PADDING_16))
 
                             Text(
                                 text = CurrencyCode.valueOf(data.code).name,

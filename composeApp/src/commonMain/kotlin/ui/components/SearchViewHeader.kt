@@ -66,18 +66,16 @@ internal fun SearchViewHeader(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Icon(
-                    modifier = if (isLoading) getPlaceHolder(Modifier.padding(SPACER_PADDING_16)) else Modifier.padding(
-                        CARD_CORNER_RADIUS
-                    ),
+                    modifier = if (isLoading) getPlaceHolder(Modifier.padding(SPACER_PADDING_16))
+                    else Modifier.padding(SPACER_PADDING_16),
                     painter = painterResource(Res.drawable.ic_search_normal),
                     contentDescription = stringResource(Res.string.search),
                     tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                 )
 
                 Text(
-                    modifier = if (isLoading) getPlaceHolder(Modifier.padding(CARD_CORNER_RADIUS)) else Modifier.padding(
-                        CARD_CORNER_RADIUS
-                    ),
+                    modifier = if (isLoading) getPlaceHolder(Modifier.padding(SPACER_PADDING_16))
+                    else Modifier.padding(SPACER_PADDING_16),
                     text = stringResource(Res.string.type_to_search),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)

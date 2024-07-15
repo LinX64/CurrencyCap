@@ -26,7 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import domain.model.main.Rate
 import ui.screens.main.overview.OverviewState
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -41,7 +41,7 @@ internal fun WatchList(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = Modifier.padding(horizontal = CARD_CORNER_RADIUS),
+                modifier = Modifier.padding(horizontal = SPACER_PADDING_16),
                 text = "Watchlist",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSurface,
@@ -78,7 +78,7 @@ internal fun WatchList(
         LazyVerticalGrid(
             modifier = Modifier.fillMaxWidth().heightIn(max = 400.dp),
             columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(CARD_CORNER_RADIUS),
+            contentPadding = PaddingValues(SPACER_PADDING_16),
             horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
             verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8)
         ) {

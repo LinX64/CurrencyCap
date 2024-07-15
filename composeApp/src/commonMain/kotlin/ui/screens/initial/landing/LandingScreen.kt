@@ -22,7 +22,7 @@ import currencycap.composeapp.generated.resources.logo
 import org.jetbrains.compose.resources.painterResource
 import ui.components.base.button.PrimaryButton
 import ui.components.base.button.SecondaryButton
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -35,14 +35,14 @@ internal fun LandingScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(CARD_CORNER_RADIUS),
+            .padding(SPACER_PADDING_16),
         contentAlignment = Alignment.Center
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .padding(horizontal = CARD_CORNER_RADIUS),
+                .padding(horizontal = SPACER_PADDING_16),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
@@ -76,7 +76,7 @@ internal fun LandingScreen(
                 onButtonClick = onSignUpClick
             )
 
-            Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
             SecondaryButton(
                 modifier = Modifier.fillMaxWidth(),

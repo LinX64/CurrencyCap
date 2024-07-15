@@ -29,7 +29,7 @@ import ui.screens.initial.reset_password.ResetPasswordState.Error
 import ui.screens.initial.reset_password.ResetPasswordViewEvent.OnEmailChanged
 import ui.screens.initial.reset_password.ResetPasswordViewEvent.OnResetPasswordClick
 import ui.screens.initial.reset_password.components.PasswordResetDialog
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 
 @Composable
 internal fun ResetPasswordScreen(
@@ -77,7 +77,7 @@ private fun ResetPasswordContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
         Text(
             text = "Reset Password",
