@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun PhoneNumberTextField(
@@ -30,7 +31,7 @@ internal fun PhoneNumberTextField(
     val phone = rememberSaveable { mutableStateOf("") }
     val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
     TextField(
-        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(35.dp)),
+        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(CARD_CORNER_RADIUS)),
         value = phone.value,
         onValueChange = {
             if (it.length <= 10) {

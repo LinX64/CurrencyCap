@@ -28,6 +28,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun PasswordTextField(
@@ -40,7 +41,7 @@ internal fun PasswordTextField(
     val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
 
     TextField(
-        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(35.dp)),
+        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(CARD_CORNER_RADIUS)),
         value = password.value,
         onValueChange = {
             password.value = it

@@ -27,6 +27,7 @@ import domain.model.Article
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
 import ui.screens.main.overview.components.getPlaceHolder
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import util.convertDateFormat
 
 @Composable
@@ -37,7 +38,7 @@ internal fun NewsDetailContent(
     onReadMoreClick: (url: String) -> Unit
 ) {
     val loadingPlaceHolderModifier = if (isLoading) getPlaceHolder(Modifier.fillMaxWidth()) else Modifier.fillMaxWidth()
-    val roundedCornerShape = RoundedCornerShape(35.dp)
+    val roundedCornerShape = RoundedCornerShape(CARD_CORNER_RADIUS)
 
     Column(
         modifier = Modifier.fillMaxWidth(),

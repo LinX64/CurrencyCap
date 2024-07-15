@@ -31,6 +31,7 @@ import currencycap.composeapp.generated.resources.cancel
 import currencycap.composeapp.generated.resources.set
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.button.PrimarySmallIconButton
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun FooterHorizontalButtons(
@@ -65,7 +66,7 @@ internal fun FooterHorizontalButtons(
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 ),
-                shape = RoundedCornerShape(35.dp)
+                shape = RoundedCornerShape(CARD_CORNER_RADIUS)
             ) {
                 Row(
                     modifier = Modifier.padding(12.dp),

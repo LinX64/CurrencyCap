@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun GlassCard(
@@ -26,7 +27,7 @@ internal fun GlassCard(
     Card(
         modifier = Modifier.wrapContentSize()
             .then(modifier),
-        shape = RoundedCornerShape(35.dp),
+        shape = RoundedCornerShape(CARD_CORNER_RADIUS),
         border = BorderStroke(1.dp, Color.Gray.copy(alpha = 0.1f)),
         colors = CardDefaults.cardColors(
             containerColor = containerColor,

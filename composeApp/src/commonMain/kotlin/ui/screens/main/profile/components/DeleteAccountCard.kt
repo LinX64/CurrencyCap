@@ -30,6 +30,7 @@ import currencycap.composeapp.generated.resources.delete_your_account_warning
 import org.jetbrains.compose.resources.stringResource
 import ui.components.DottedShape
 import ui.components.base.GlassCard
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.colors.CurrencyColors
 
 @Composable
@@ -74,14 +75,14 @@ internal fun DeleteAccountCard(
                     .padding(start = 16.dp)
                     .background(
                         brush = gradient,
-                        shape = RoundedCornerShape(35.dp)
+                        shape = RoundedCornerShape(CARD_CORNER_RADIUS)
                     ),
                 onClick = { onDeleteAccountClicked() },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent,
                     contentColor = MaterialTheme.colorScheme.onSurface
                 ),
-                shape = RoundedCornerShape(35.dp)
+                shape = RoundedCornerShape(CARD_CORNER_RADIUS)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),

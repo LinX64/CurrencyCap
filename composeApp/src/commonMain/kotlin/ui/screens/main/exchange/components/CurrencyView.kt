@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import data.local.model.exchange.Currency
 import data.local.model.exchange.CurrencyCode
 import org.jetbrains.compose.resources.painterResource
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import util.enterTransition
 import util.exitTransition
 import util.transitionSpec
@@ -52,7 +53,7 @@ fun RowScope.CurrencyView(
 
         Row(
             modifier = Modifier.fillMaxWidth()
-                .clip(RoundedCornerShape(size = 35.dp))
+                .clip(RoundedCornerShape(size = CARD_CORNER_RADIUS))
                 .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f))
                 .height(64.dp)
                 .clickable {

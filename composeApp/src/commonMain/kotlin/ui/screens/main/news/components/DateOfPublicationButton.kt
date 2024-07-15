@@ -31,6 +31,7 @@ import currencycap.composeapp.generated.resources.start_date
 import kotlinx.datetime.Clock
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import util.DateUtils.convertMillisToDate
 
 @Composable
@@ -103,7 +104,7 @@ private fun StartDatePickerSection(
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
             ),
-            shape = RoundedCornerShape(size = 35.dp)
+            shape = RoundedCornerShape(size = CARD_CORNER_RADIUS)
         ) {
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
@@ -149,7 +150,7 @@ private fun EndDatePickerSection(
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
             ),
-            shape = RoundedCornerShape(size = 35.dp)
+            shape = RoundedCornerShape(size = CARD_CORNER_RADIUS)
         ) {
             Text(
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),

@@ -30,6 +30,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.getPlaceHolder
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun SearchViewHeader(
@@ -48,7 +49,7 @@ internal fun SearchViewHeader(
             modifier = if (isLoading) getPlaceHolder(
                 Modifier.fillMaxWidth(0.8f)
             ) else Modifier.fillMaxWidth(0.8f),
-            shape = RoundedCornerShape(35.dp),
+            shape = RoundedCornerShape(CARD_CORNER_RADIUS),
             onClick = onSearchCardClicked,
             border = BorderStroke(
                 width = 1.dp,
@@ -91,7 +92,7 @@ private fun CircleButton(
 ) {
     Card(
         modifier = Modifier.wrapContentSize(),
-        shape = RoundedCornerShape(35.dp),
+        shape = RoundedCornerShape(CARD_CORNER_RADIUS),
         border = BorderStroke(
             width = 1.dp,
             color = Color.Gray.copy(alpha = .1f)

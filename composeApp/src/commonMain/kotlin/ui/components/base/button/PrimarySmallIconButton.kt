@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.colors.CurrencyColors
 
 @Composable
@@ -43,9 +44,9 @@ internal fun PrimarySmallIconButton(
         modifier = Modifier
             .background(
                 brush = gradient,
-                shape = RoundedCornerShape(35.dp)
+                shape = RoundedCornerShape(CARD_CORNER_RADIUS)
             )
-            .clip(RoundedCornerShape(35.dp))
+            .clip(RoundedCornerShape(CARD_CORNER_RADIUS))
             .clickable(onClick = onButtonClick)
             .then(modifier),
         colors = CardDefaults.cardColors(

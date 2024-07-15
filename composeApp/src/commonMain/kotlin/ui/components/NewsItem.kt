@@ -34,6 +34,7 @@ import domain.model.Article
 import org.jetbrains.compose.resources.painterResource
 import ui.components.base.GlassCard
 import ui.screens.main.overview.components.getPlaceHolder
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.colors.CurrencyColors
 import util.convertDateFormat
 
@@ -79,7 +80,7 @@ private fun FirstImageTextColumn(
     imageUrl: String? = null,
     sourceName: String
 ) {
-    val roundedCornerShape = RoundedCornerShape(35.dp)
+    val roundedCornerShape = RoundedCornerShape(CARD_CORNER_RADIUS)
 
     Column(
         modifier = Modifier.wrapContentHeight(),

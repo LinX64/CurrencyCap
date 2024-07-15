@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.full_name
 import org.jetbrains.compose.resources.stringResource
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun NameTextField(
@@ -37,7 +38,7 @@ internal fun NameTextField(
     val focusManager = LocalFocusManager.current
 
     TextField(
-        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(35.dp)),
+        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(CARD_CORNER_RADIUS)),
         value = name.value,
         onValueChange = {
             name.value = it
