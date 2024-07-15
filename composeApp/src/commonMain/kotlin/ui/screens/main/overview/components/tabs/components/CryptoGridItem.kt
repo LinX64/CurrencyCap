@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import domain.model.main.Crypto
 import ui.components.base.GlassCard
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.formatNumber
 
 @Composable
@@ -29,7 +30,7 @@ internal fun CryptoGridItem(
     onCryptoItemClick: (symbol: String) -> Unit
 ) {
     GlassCard(
-        modifier = Modifier.padding(end = 8.dp),
+        modifier = Modifier.padding(end = SPACER_PADDING_8),
         isClickable = true,
         onCardClick = { onCryptoItemClick(cryptoItem.symbol) },
     ) {

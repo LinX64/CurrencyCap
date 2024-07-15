@@ -26,7 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.cancel
+import currencycap.composeapp.generated.resources.set
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.button.PrimarySmallIconButton
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun FooterHorizontalButtons(
@@ -50,7 +56,7 @@ internal fun FooterHorizontalButtons(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = CARD_CORNER_RADIUS),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -61,12 +67,12 @@ internal fun FooterHorizontalButtons(
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 ),
-                shape = RoundedCornerShape(35.dp)
+                shape = RoundedCornerShape(CARD_CORNER_RADIUS)
             ) {
                 Row(
                     modifier = Modifier.padding(12.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Close,
@@ -75,7 +81,7 @@ internal fun FooterHorizontalButtons(
                     )
 
                     Text(
-                        text = "Cancel",
+                        text = stringResource(Res.string.cancel),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
@@ -87,7 +93,7 @@ internal fun FooterHorizontalButtons(
 
             PrimarySmallIconButton(
                 modifier = Modifier.width(90.dp),
-                text = "Set",
+                text = stringResource(Res.string.set),
                 onButtonClick = onSetClick
             )
         }

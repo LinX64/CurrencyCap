@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ui.components.base.GlassCard
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun HelpCenterBaseGlassCard(
@@ -30,7 +31,7 @@ internal fun HelpCenterBaseGlassCard(
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = CARD_CORNER_RADIUS)
             ) {
                 Box(
                     modifier = Modifier

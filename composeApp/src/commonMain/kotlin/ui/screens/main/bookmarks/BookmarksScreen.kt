@@ -20,13 +20,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.explore_news
+import currencycap.composeapp.generated.resources.no_bookmarks_description
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
+import org.jetbrains.compose.resources.stringResource
 import ui.components.NewsItem
 import ui.components.base.button.SecondaryButton
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.bookmarks.BookmarksViewEvent.OnRemoveBookmarkClick
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun BookmarksScreen(
@@ -79,7 +84,7 @@ private fun NoBookmarks(
             tint = MaterialTheme.colorScheme.onSurface
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         Text(
             modifier = Modifier.fillMaxWidth(),
@@ -94,19 +99,19 @@ private fun NoBookmarks(
 
         Text(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
-            text = "Start curating your news. Bookmark articles to see them here.",
+            text = stringResource(Res.string.no_bookmarks_description),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             textAlign = TextAlign.Center,
             minLines = 2
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         SecondaryButton(
             modifier = Modifier
                 .padding(horizontal = 32.dp),
-            text = "Explore News",
+            text = stringResource(Res.string.explore_news),
             onButtonClick = onExploreNewsClick
         )
     }

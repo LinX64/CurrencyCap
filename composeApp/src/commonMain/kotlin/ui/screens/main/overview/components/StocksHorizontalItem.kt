@@ -23,6 +23,9 @@ import domain.model.main.Rate
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.components.base.GlassCard
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.ICON_SIZE_48
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
 @Composable
@@ -36,15 +39,15 @@ internal fun StocksHorizontalItem(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(CARD_CORNER_RADIUS),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             if (isLoading) {
-                ItemPlaceHolder(modifier = Modifier.size(48.dp))
+                ItemPlaceHolder(modifier = Modifier.size(ICON_SIZE_48))
             } else {
                 AsyncImage(
-                    modifier = Modifier.size(48.dp),
+                    modifier = Modifier.size(ICON_SIZE_48),
                     model = icon,
                     contentDescription = null,
                     placeholder = painterResource(Res.drawable.baseline_monetization_on_48),
@@ -70,7 +73,7 @@ private fun FirstColumn(
     isLoading: Boolean = false
 ) {
     Column(
-        modifier = modifier.padding(start = 8.dp)
+        modifier = modifier.padding(start = SPACER_PADDING_8)
     ) {
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
@@ -117,7 +120,7 @@ private fun EndHorizontalComponent(
 
                 // TODO: add upward arrow icon and downward arrow icon
                 Icon(
-                    modifier = if (isLoading) getPlaceHolder(Modifier.size(16.dp)) else Modifier,
+                    modifier = if (isLoading) getPlaceHolder(Modifier.size(CARD_CORNER_RADIUS)) else Modifier,
                     imageVector = Icons.Default.ArrowUpward,
                     contentDescription = null,
                     tint = CurrencyColors.Text_Green

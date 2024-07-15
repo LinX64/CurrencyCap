@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.painterResource
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun BottomBar(
@@ -44,7 +45,7 @@ internal fun BottomBar(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp),
+                .padding(SPACER_PADDING_8),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             for (tab in tabs) {

@@ -31,6 +31,8 @@ import ui.components.base.GlassCard
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.overview.components.getPlaceHolder
 import ui.screens.main.profile.components.HelpCenterBaseGlassCard
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
 @Composable
@@ -59,7 +61,7 @@ internal fun DetailScreen(
     BaseGlassLazyColumn(
         padding = padding,
         hazeState = hazeState,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(CARD_CORNER_RADIUS)
     ) {
         when (state) {
             is DetailState.Success -> {
@@ -86,9 +88,9 @@ private fun DetailHeader(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(CARD_CORNER_RADIUS),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8)
         ) {
             val isLoadingModifier = if (isLoading) getPlaceHolder(
                 Modifier
@@ -104,7 +106,7 @@ private fun DetailHeader(
                 contentDescription = null
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
             Text(
                 text = crypto.name + " (" + crypto.symbol.uppercase() + ")",

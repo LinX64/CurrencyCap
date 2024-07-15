@@ -36,6 +36,7 @@ import ui.screens.initial.login.LoginViewEvent.OnPasswordChanged
 import ui.screens.initial.login.LoginViewEvent.OnResetPasswordClick
 import ui.screens.initial.login.components.LoginForm
 import ui.screens.initial.login.components.MadeWithLove
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun LoginScreen(
@@ -114,7 +115,7 @@ private fun Content(
                 onLoginClick = { loginViewModel.handleEvent(OnLoginClick(email, password)) }
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
             TextButton(onClick = { loginViewModel.handleEvent(OnResetPasswordClick) }) {
                 Text(
@@ -140,7 +141,7 @@ private fun Content(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 16.dp),
+                .padding(bottom = CARD_CORNER_RADIUS),
             contentAlignment = Alignment.BottomCenter
         ) {
             MadeWithLove()

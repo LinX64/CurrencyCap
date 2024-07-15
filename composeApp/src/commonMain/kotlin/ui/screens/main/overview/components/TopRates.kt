@@ -19,6 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import domain.model.main.BonbastRate
 import ui.screens.main.overview.OverviewState
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.getIconBy
 
 @Composable
@@ -27,7 +29,7 @@ internal fun TopRates(rates: OverviewState) {
 
     Column(
         modifier = Modifier.fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 16.dp),
+            .padding(horizontal = SPACER_PADDING_8, vertical = CARD_CORNER_RADIUS),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -44,10 +46,10 @@ internal fun TopRates(rates: OverviewState) {
 
         LazyHorizontalGrid(
             modifier = Modifier.fillMaxWidth()
-                .padding(top = 8.dp)
+                .padding(top = SPACER_PADDING_8)
                 .heightIn(max = 180.dp),
             rows = GridCells.Fixed(1),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_8)
         ) {
             if (rates is OverviewState.Success) {
                 items(rates.bonbastRates.size) { index ->

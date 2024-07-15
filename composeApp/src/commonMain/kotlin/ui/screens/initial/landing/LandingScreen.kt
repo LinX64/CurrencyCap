@@ -22,6 +22,8 @@ import currencycap.composeapp.generated.resources.logo
 import org.jetbrains.compose.resources.painterResource
 import ui.components.base.button.PrimaryButton
 import ui.components.base.button.SecondaryButton
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun LandingScreen(
@@ -33,14 +35,14 @@ internal fun LandingScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(CARD_CORNER_RADIUS),
         contentAlignment = Alignment.Center
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = CARD_CORNER_RADIUS),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
@@ -49,7 +51,7 @@ internal fun LandingScreen(
                 modifier = Modifier.size(220.dp)
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
             Text(
                 text = "Welcome to CurrencyCap",
@@ -58,7 +60,7 @@ internal fun LandingScreen(
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
             Text(
                 text = "Track your crypto investments with ease",
@@ -74,11 +76,11 @@ internal fun LandingScreen(
                 onButtonClick = onSignUpClick
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
             SecondaryButton(
                 modifier = Modifier.fillMaxWidth(),
-                textPadding = 8.dp,
+                textPadding = SPACER_PADDING_8,
                 onButtonClick = onLoginClick,
                 text = "Log In"
             )

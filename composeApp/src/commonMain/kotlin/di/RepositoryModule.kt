@@ -1,9 +1,9 @@
 package di
 
-import CurrencyRepositoryImpl
 import data.local.database.ArticleLocalDataSourceImpl
 import data.local.datastore.app.AppPreferences
 import data.local.datastore.app.AppPreferencesImpl
+import data.local.datastore.user.CurrencyRepositoryImpl
 import data.local.datastore.user.UserPreferencesImpl
 import data.remote.repository.auth.AuthServiceRepositoryImpl
 import data.remote.repository.exchange.ExchangeRepositoryImpl

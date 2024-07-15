@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import domain.model.Article
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun NewsHomeItem(
@@ -47,7 +48,7 @@ internal fun NewsHomeItem(
 
                 // TODO: Replace with image for news
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(SPACER_PADDING_8))
 
                 Text(
                     text = newsItem.author ?: "Unknown",

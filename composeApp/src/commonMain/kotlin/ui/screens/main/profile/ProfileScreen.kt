@@ -36,6 +36,7 @@ import ui.screens.main.profile.ProfileViewEvent.OnSignOutClicked
 import ui.screens.main.profile.components.DeleteAccountCard
 import ui.screens.main.profile.components.HelpCenterCard
 import ui.screens.main.profile.components.ProfileCard
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import util.getDummyUser
 
 @Composable
@@ -52,7 +53,7 @@ internal fun ProfileScreen(
     BaseGlassLazyColumn(
         padding = padding,
         hazeState = hazeState,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(CARD_CORNER_RADIUS)
     ) {
         item {
             when (state) {
@@ -109,7 +110,7 @@ private fun AppNameInfoCard(
     onSignOutClicked: () -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 32.dp),
+        modifier = Modifier.padding(horizontal = CARD_CORNER_RADIUS, vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(

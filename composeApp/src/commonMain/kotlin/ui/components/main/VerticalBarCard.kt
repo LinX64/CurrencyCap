@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun VerticalBarCard(
@@ -43,14 +44,14 @@ internal fun VerticalBarCard(
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),
-                shape = RoundedCornerShape(35.dp)
+                shape = RoundedCornerShape(CARD_CORNER_RADIUS)
             )
-            .clip(RoundedCornerShape(35.dp))
+            .clip(RoundedCornerShape(CARD_CORNER_RADIUS))
             .haze(
                 state = hazeState,
                 style = HazeStyle(
                     tint = MaterialTheme.colorScheme.primary,
-                    blurRadius = 35.dp,
+                    blurRadius = CARD_CORNER_RADIUS,
                     noiseFactor = 20f
                 )
             )

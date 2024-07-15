@@ -23,6 +23,9 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
 import ui.common.formatCurrentTotal
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.ICON_SIZE_48
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun TopMoversItem(
@@ -36,7 +39,7 @@ internal fun TopMoversItem(
     val isColorRed = remember { mutableStateOf(maxSupply < 0) }
 
     Column(
-        modifier = modifier.padding(8.dp),
+        modifier = modifier.padding(SPACER_PADDING_8),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Card(
@@ -47,20 +50,20 @@ internal fun TopMoversItem(
         ) {
 
             SubcomposeAsyncImage(
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier.size(ICON_SIZE_48),
                 model = icon,
                 contentDescription = null,
                 contentScale = ContentScale.Inside
             ) {
                 if (isLoading) {
-                    ItemPlaceHolder(modifier = Modifier.size(48.dp))
+                    ItemPlaceHolder(modifier = Modifier.size(ICON_SIZE_48))
                 } else {
                     SubcomposeAsyncImageContent()
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
 
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,

@@ -11,8 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import ui.screens.main.overview.OverviewState
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 import util.getDummyCryptoItems
 
@@ -25,8 +26,8 @@ internal fun TrendingCryptoCurrencies(
     Column {
         Text(
             modifier = if (overviewState is OverviewState.Loading) getPlaceHolder(
-                Modifier.padding(start = 8.dp),
-            ) else Modifier.padding(start = 8.dp),
+                Modifier.padding(start = SPACER_PADDING_8),
+            ) else Modifier.padding(start = SPACER_PADDING_8),
             text = "Trending rates",
             style = MaterialTheme.typography.titleMedium,
             color = CurrencyColors.White,
@@ -34,8 +35,8 @@ internal fun TrendingCryptoCurrencies(
         )
 
         FlowColumn(
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = CARD_CORNER_RADIUS),
+            verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
         ) {
             if (overviewState is OverviewState.Success) {
                 overviewState.cryptoRates.take(50)

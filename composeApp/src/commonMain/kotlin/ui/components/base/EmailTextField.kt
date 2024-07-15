@@ -23,6 +23,10 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.email
+import org.jetbrains.compose.resources.stringResource
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
 internal fun EmailTextField(
@@ -34,7 +38,7 @@ internal fun EmailTextField(
     val containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
 
     TextField(
-        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(35.dp)),
+        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(CARD_CORNER_RADIUS)),
         value = email.value,
         onValueChange = {
             email.value = it
@@ -57,7 +61,7 @@ internal fun EmailTextField(
         ),
         shape = RoundedCornerShape(10.dp),
         maxLines = 1,
-        label = { Text(text = "Email") },
+        label = { Text(text = stringResource(Res.string.email)) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next

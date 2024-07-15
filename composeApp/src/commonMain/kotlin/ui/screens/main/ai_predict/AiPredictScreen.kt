@@ -31,6 +31,7 @@ import io.github.alexzhirkevich.compottie.LottieConstants
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -51,7 +52,7 @@ internal fun AiPredictScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LottieAnimation(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(CARD_CORNER_RADIUS),
             composition = composition,
             iterations = LottieConstants.IterateForever
         )

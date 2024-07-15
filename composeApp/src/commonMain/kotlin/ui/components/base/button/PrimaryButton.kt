@@ -14,7 +14,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
 @Composable
@@ -38,9 +39,9 @@ internal fun PrimaryButton(
             .fillMaxWidth()
             .background(
                 brush = gradient,
-                shape = RoundedCornerShape(35.dp)
+                shape = RoundedCornerShape(CARD_CORNER_RADIUS)
             )
-            .clip(RoundedCornerShape(35.dp))
+            .clip(RoundedCornerShape(CARD_CORNER_RADIUS))
             .then(modifier),
         enabled = isEnabled,
         colors = ButtonDefaults.buttonColors(
@@ -48,7 +49,7 @@ internal fun PrimaryButton(
         )
     ) {
         Text(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(SPACER_PADDING_8),
             text = text,
             color = textColor,
             style = MaterialTheme.typography.bodyLarge,

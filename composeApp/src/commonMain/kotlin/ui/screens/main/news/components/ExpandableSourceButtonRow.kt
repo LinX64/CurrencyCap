@@ -26,7 +26,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.source
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun ExpandableSourceButtonRow(
@@ -44,7 +48,7 @@ internal fun ExpandableSourceButtonRow(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(SPACER_PADDING_8),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Row(
@@ -56,10 +60,10 @@ internal fun ExpandableSourceButtonRow(
                         contentDescription = null
                     )
 
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(SPACER_PADDING_8))
 
                     Text(
-                        text = "Source",
+                        text = stringResource(Res.string.source),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
@@ -76,7 +80,7 @@ internal fun ExpandableSourceButtonRow(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp)
+                        .padding(SPACER_PADDING_8)
                 ) {
                     sources.forEach { source ->
                         Row(
@@ -105,7 +109,7 @@ internal fun ExpandableSourceButtonRow(
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurface,
                                 fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(start = 8.dp)
+                                modifier = Modifier.padding(start = SPACER_PADDING_8)
                             )
                         }
                     }

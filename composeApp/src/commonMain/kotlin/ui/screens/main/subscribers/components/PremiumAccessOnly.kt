@@ -17,6 +17,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import io.github.alexzhirkevich.compottie.LottieAnimation
 import io.github.alexzhirkevich.compottie.LottieComposition
+import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun PremiumAccessOnly(
@@ -27,7 +29,7 @@ internal fun PremiumAccessOnly(
     Column(
         modifier = modifier
             .wrapContentSize()
-            .padding(16.dp),
+            .padding(CARD_CORNER_RADIUS),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -44,7 +46,7 @@ internal fun PremiumAccessOnly(
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
         Text(
             text = "Unlock exclusive features by subscribing to our Pro Plan.",
