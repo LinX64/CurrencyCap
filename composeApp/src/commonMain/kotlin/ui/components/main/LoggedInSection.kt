@@ -84,11 +84,12 @@ internal fun LoggedInSection(
     ) {
         NewsFilterSection(
             sources = newsViewModel.sources.value,
-            selectedSources = newsViewModel::saveSelectedSources,
             onCloseClick = { isNewsFilterSheetVisible.value = false },
-            onDoneClick = { startDate, endDate ->
+            onDoneClick = { startDate, endDate, selectedSources ->
                 isNewsFilterSheetVisible.value = false
+
                 newsViewModel.saveSelectedDatesAndFilter(startDate, endDate)
+                newsViewModel.saveSelectedSources(selectedSources)
             }
         )
     }

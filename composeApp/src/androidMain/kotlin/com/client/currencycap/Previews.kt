@@ -9,7 +9,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ui.screens.main.news.components.ExpandableSourceButtonRow
 
 //@Composable
 //@Preview(showBackground = true)
@@ -83,8 +82,6 @@ private fun ExpandablePreview() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            val sources = listOf("source1", "source2", "source3", "source4", "source5")
-            ExpandableSourceButtonRow(sources, selectedSourcesList = {})
         }
     }
 }

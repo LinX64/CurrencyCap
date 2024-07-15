@@ -1,30 +1,10 @@
 package ui.screens.main.news.components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.outlined.KeyboardArrowDown
-import androidx.compose.material.icons.outlined.KeyboardArrowUp
-import androidx.compose.material.icons.outlined.Source
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,24 +12,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import ui.components.base.GlassCard
-import ui.components.base.button.PrimarySmallIconButton
+import kotlinx.datetime.Clock
+import util.DateUtils.convertMillisToDate
 
 @Composable
 internal fun NewsFilterSection(
     modifier: Modifier = Modifier,
     sources: List<String>,
     onCloseClick: () -> Unit,
-    onDoneClick: (startDate: String, endDate: String) -> Unit,
-    selectedSources: (Set<String>) -> Unit
+    onDoneClick: (startDate: String, endDate: String, sources: Set<String>) -> Unit
 ) {
-    var selectedStartDate by remember { mutableStateOf("") }
-    var selectedEndDate by remember { mutableStateOf("") }
+    val defaultDate = convertMillisToDate(Clock.System.now().toEpochMilliseconds())
+    var selectedStartDate by remember { mutableStateOf(defaultDate) }
+    var selectedEndDate by remember { mutableStateOf(defaultDate) }
+    var selectedSources by remember { mutableStateOf(emptySet<String>()) }
 
     Column(
         modifier = modifier
@@ -66,7 +45,10 @@ internal fun NewsFilterSection(
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        ExpandableSourceButtonRow(sources = sources, selectedSourcesList = selectedSources)
+        ExpandableSourceButtonRow(
+            sources = sources,
+            selectedSourcesList = { selectedSources = it }
+        )
 
         DateOfPublicationButton(
             onStartDateSelected = { selectedStartDate = it },
@@ -77,161 +59,10 @@ internal fun NewsFilterSection(
 
         FooterHorizontalButtons(
             onCloseClick = onCloseClick,
-            onSetClick = { onDoneClick(selectedStartDate, selectedEndDate) }
+            onSetClick = { onDoneClick(selectedStartDate, selectedEndDate, selectedSources) }
         )
     }
 }
 
-@Composable
-internal fun ExpandableSourceButtonRow(
-    sources: List<String>,
-    selectedSourcesList: (Set<String>) -> Unit
-) {
-    var isExpanded by remember { mutableStateOf(false) }
-    var selectedSources by remember { mutableStateOf(setOf<String>()) }
 
-    Column {
-        GlassCard(
-            isClickable = true,
-            onCardClick = { isExpanded = !isExpanded }
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Source,
-                        tint = MaterialTheme.colorScheme.onSurface,
-                        contentDescription = null
-                    )
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    Text(
-                        text = "Source",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-
-                Icon(
-                    imageVector = if (isExpanded) Icons.Outlined.KeyboardArrowUp else Icons.Outlined.KeyboardArrowDown,
-                    tint = MaterialTheme.colorScheme.onSurface,
-                    contentDescription = null
-                )
-            }
-            AnimatedVisibility(visible = isExpanded) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                ) {
-                    sources.forEach { source ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Checkbox(
-                                checked = source in selectedSources,
-                                onCheckedChange = { isChecked ->
-                                    selectedSources = if (isChecked) {
-                                        selectedSources + source
-                                    } else {
-                                        selectedSources - source
-                                    }
-
-                                    selectedSourcesList(selectedSources)
-                                },
-                                colors = CheckboxDefaults.colors(
-                                    checkmarkColor = MaterialTheme.colorScheme.onSurface
-                                )
-                            )
-                            Text(
-                                text = source,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(start = 8.dp)
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun FooterHorizontalButtons(
-    onCloseClick: () -> Unit,
-    onSetClick: () -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp)
-            .background(Color.Black)
-    ) {
-        HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.Center),
-            thickness = 1.dp,
-            color = Color.DarkGray
-        )
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Card(
-                modifier = Modifier.wrapContentWidth(),
-                onClick = onCloseClick,
-                border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface
-                ),
-                shape = RoundedCornerShape(35.dp)
-            ) {
-                Row(
-                    modifier = Modifier.padding(12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Close,
-                        tint = MaterialTheme.colorScheme.onSurface,
-                        contentDescription = null
-                    )
-
-                    Text(
-                        text = "Cancel",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.width(24.dp))
-
-            PrimarySmallIconButton(
-                modifier = Modifier.width(90.dp),
-                text = "Set",
-                onButtonClick = onSetClick
-            )
-        }
-    }
-}
 

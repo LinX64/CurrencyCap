@@ -102,8 +102,6 @@ class NewsViewModel(
             .map { it.source.name }
             .distinct()
 
-        println("Sources: $sources")
-
         this.sources.value = sources
     }
 
