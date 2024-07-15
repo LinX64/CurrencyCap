@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import domain.model.main.BonbastRate
 import ui.screens.main.overview.OverviewState
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.getIconBy
 
@@ -29,7 +29,7 @@ internal fun TopRates(rates: OverviewState) {
 
     Column(
         modifier = Modifier.fillMaxWidth()
-            .padding(horizontal = SPACER_PADDING_8, vertical = CARD_CORNER_RADIUS),
+            .padding(horizontal = SPACER_PADDING_8, vertical = SPACER_PADDING_16),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

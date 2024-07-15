@@ -154,8 +154,8 @@ private fun LazyListScope.searchResultContent(
     is SearchState.Loading -> {
         items(5) {
             CryptoHorizontalItem(
-                isLoading = true,
                 crypto = getDummyCryptoItem(),
+                isLoading = true,
                 onClick = { }
             )
         }

@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import ui.screens.main.overview.OverviewState
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 import util.getDummyCryptoItems
@@ -35,7 +35,7 @@ internal fun TrendingCryptoCurrencies(
         )
 
         FlowColumn(
-            modifier = Modifier.fillMaxWidth().padding(top = CARD_CORNER_RADIUS),
+            modifier = Modifier.fillMaxWidth().padding(top = SPACER_PADDING_16),
             verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
         ) {
             if (overviewState is OverviewState.Success) {

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import domain.model.main.Crypto
 import ui.common.formatToPrice
 import ui.components.base.GlassCard
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
@@ -39,7 +39,7 @@ internal fun TopMoversCard(
         onCardClick = { onClick(topMovers.symbol) }
     ) {
         Column(
-            modifier = Modifier.padding(CARD_CORNER_RADIUS)
+            modifier = Modifier.padding(SPACER_PADDING_16)
                 .width(130.dp),
             horizontalAlignment = Alignment.Start
         ) {
@@ -73,7 +73,7 @@ internal fun TopMoversCard(
                 maxLines = 1
             )
 
-            Spacer(modifier = Modifier.height(CARD_CORNER_RADIUS))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
             val changeData = listOf(
                 topMovers.priceChange24h.toFloat(),

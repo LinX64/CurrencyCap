@@ -21,8 +21,8 @@ import domain.model.main.BonbastRate
 import org.jetbrains.compose.resources.painterResource
 import ui.common.formatToPrice
 import ui.components.base.GlassCard
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.ICON_SIZE_48
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -35,7 +35,7 @@ internal fun RateItem(
     GlassCard {
         Column(
             modifier = modifier
-                .padding(vertical = CARD_CORNER_RADIUS, horizontal = CARD_CORNER_RADIUS)
+                .padding(vertical = SPACER_PADDING_16, horizontal = SPACER_PADDING_16)
                 .wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8)
