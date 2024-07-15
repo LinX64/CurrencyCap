@@ -1,5 +1,6 @@
 package ui.screens.main.news.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,9 +17,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
+import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material.icons.outlined.Source
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -39,8 +43,10 @@ import ui.components.base.button.PrimarySmallIconButton
 @Composable
 internal fun NewsFilterSection(
     modifier: Modifier = Modifier,
+    sources: List<String>,
     onCloseClick: () -> Unit,
-    onDoneClick: (startDate: String, endDate: String) -> Unit
+    onDoneClick: (startDate: String, endDate: String) -> Unit,
+    selectedSources: (Set<String>) -> Unit
 ) {
     var selectedStartDate by remember { mutableStateOf("") }
     var selectedEndDate by remember { mutableStateOf("") }
@@ -60,7 +66,7 @@ internal fun NewsFilterSection(
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        SourceButtonRow()
+        ExpandableSourceButtonRow(sources = sources, selectedSourcesList = selectedSources)
 
         DateOfPublicationButton(
             onStartDateSelected = { selectedStartDate = it },
@@ -77,41 +83,88 @@ internal fun NewsFilterSection(
 }
 
 @Composable
-private fun SourceButtonRow() {
-    GlassCard(
-        isClickable = true,
-        onCardClick = {}
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+internal fun ExpandableSourceButtonRow(
+    sources: List<String>,
+    selectedSourcesList: (Set<String>) -> Unit
+) {
+    var isExpanded by remember { mutableStateOf(false) }
+    var selectedSources by remember { mutableStateOf(setOf<String>()) }
+
+    Column {
+        GlassCard(
+            isClickable = true,
+            onCardClick = { isExpanded = !isExpanded }
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Source,
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        contentDescription = null
+                    )
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    Text(
+                        text = "Source",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
                 Icon(
-                    imageVector = Icons.Outlined.Source,
+                    imageVector = if (isExpanded) Icons.Outlined.KeyboardArrowUp else Icons.Outlined.KeyboardArrowDown,
                     tint = MaterialTheme.colorScheme.onSurface,
                     contentDescription = null
                 )
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-                Text(
-                    text = "Source",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold
-                )
             }
+            AnimatedVisibility(visible = isExpanded) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    sources.forEach { source ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Checkbox(
+                                checked = source in selectedSources,
+                                onCheckedChange = { isChecked ->
+                                    selectedSources = if (isChecked) {
+                                        selectedSources + source
+                                    } else {
+                                        selectedSources - source
+                                    }
 
-            Icon(
-                imageVector = Icons.Outlined.KeyboardArrowDown,
-                tint = MaterialTheme.colorScheme.onSurface,
-                contentDescription = null
-            )
+                                    selectedSourcesList(selectedSources)
+                                },
+                                colors = CheckboxDefaults.colors(
+                                    checkmarkColor = MaterialTheme.colorScheme.onSurface
+                                )
+                            )
+                            Text(
+                                text = source,
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(start = 8.dp)
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }

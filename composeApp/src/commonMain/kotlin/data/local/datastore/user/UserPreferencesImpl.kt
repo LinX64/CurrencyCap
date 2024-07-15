@@ -19,6 +19,7 @@ internal class UserPreferencesImpl(
         private val isUserLoggedInKey = booleanPreferencesKey(IS_USER_LOGGED_IN)
         private val USER_SELECTED_START_DATE_KEY = stringPreferencesKey("user_selected_start_date")
         private val USER_SELECTED_END_DATE_KEY = stringPreferencesKey("user_selected_end_date")
+        private val USER_SELECTED_SOURCES_KEY = stringPreferencesKey("user_selected_sources")
     }
 
     override suspend fun isUserLoggedIn(): Boolean {
@@ -59,6 +60,18 @@ internal class UserPreferencesImpl(
                 preferences[USER_SELECTED_START_DATE_KEY] ?: "",
                 preferences[USER_SELECTED_END_DATE_KEY] ?: ""
             )
+        }.first()
+    }
+
+    override suspend fun saveUserSelectedSources(sources: Set<String>) {
+        dataStore.edit { preferences ->
+            preferences[USER_SELECTED_SOURCES_KEY] = sources.joinToString(",")
+        }
+    }
+
+    override suspend fun getUserSelectedSources(): Set<String> {
+        return dataStore.data.map { preferences ->
+            preferences[USER_SELECTED_SOURCES_KEY]?.split(",")?.toSet() ?: emptySet()
         }.first()
     }
 }
