@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -26,9 +26,9 @@ internal fun NewsFilterSection(
     onDoneClick: (startDate: String, endDate: String, sources: Set<String>) -> Unit
 ) {
     val defaultDate = convertMillisToDate(Clock.System.now().toEpochMilliseconds())
-    var selectedStartDate by remember { mutableStateOf(defaultDate) }
-    var selectedEndDate by remember { mutableStateOf(defaultDate) }
-    var selectedSources by remember { mutableStateOf(emptySet<String>()) }
+    var selectedStartDate by rememberSaveable { mutableStateOf(defaultDate) }
+    var selectedEndDate by rememberSaveable { mutableStateOf(defaultDate) }
+    var selectedSources by rememberSaveable { mutableStateOf(emptySet<String>()) }
 
     Column(
         modifier = modifier
