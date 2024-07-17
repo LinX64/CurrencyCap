@@ -47,17 +47,17 @@ internal fun ResultAmountInput(
                 focusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                cursorColor = Color.White,
+                cursorColor = MaterialTheme.colorScheme.onSurface,
                 unfocusedTextColor =
                 if (amountInputType == AmountInputType.SOURCE) {
                     if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.inversePrimary
                 } else {
-                    Color.White
+                    MaterialTheme.colorScheme.onSurface
                 },
                 focusedTextColor = if (amountInputType == AmountInputType.SOURCE) {
                     if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.inversePrimary
                 } else {
-                    Color.White
+                    MaterialTheme.colorScheme.onSurface
                 }
             ),
             textStyle = LocalTextStyle.current.copy(

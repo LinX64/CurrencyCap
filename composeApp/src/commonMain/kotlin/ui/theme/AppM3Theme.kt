@@ -1,24 +1,44 @@
 package ui.theme
 
 import androidx.annotation.VisibleForTesting
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.staticCompositionLocalOf
+import ui.theme.ThemeMode.DARK
+import ui.theme.ThemeMode.LIGHT
+import ui.theme.ThemeMode.SYSTEM
 import ui.theme.colors.CurrencyColors
 
 @Composable
+internal expect fun SystemAppearance(isDark: Boolean)
+
+@Composable
 fun AppM3Theme(
-    dark: Boolean,
+    themeMode: ThemeMode,
+    isDarkMode: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
+    val colorScheme = when (themeMode) {
+        SYSTEM -> if (isDarkMode) appDarkColorScheme() else appLightColorScheme()
+        LIGHT -> appLightColorScheme()
+        DARK -> appDarkColorScheme()
+    }
+
+    SystemAppearance(!isDarkMode)
+
     MaterialTheme(
-        colorScheme = if (dark) appDarkColorScheme() else appLightColorScheme(),
+        colorScheme = colorScheme,
         typography = CurrencyTypography(),
-        content = content
+        content = { Surface(content = content) }
     )
 }
 
 @VisibleForTesting
+@Stable
 private fun appLightColorScheme(): ColorScheme = ColorScheme(
     primary = CurrencyColors.Green.primary,
     onPrimary = CurrencyColors.Gray.copy(alpha = 0.9f),
@@ -33,7 +53,7 @@ private fun appLightColorScheme(): ColorScheme = ColorScheme(
     onTertiary = CurrencyColors.White,
     tertiaryContainer = CurrencyColors.Green.light,
     onTertiaryContainer = CurrencyColors.White,
-    background = CurrencyColors.Gray.copy(alpha = 0.4f),
+    background = CurrencyColors.White.copy(alpha = 0.4f),
     onBackground = CurrencyColors.Black,
     surface = CurrencyColors.White,
     onSurface = CurrencyColors.Black,
@@ -59,6 +79,7 @@ private fun appLightColorScheme(): ColorScheme = ColorScheme(
 )
 
 @VisibleForTesting
+@Stable
 private fun appDarkColorScheme(): ColorScheme = ColorScheme(
     primary = CurrencyColors.Lemon.primary,
     onPrimary = CurrencyColors.LemonGreen,
@@ -97,3 +118,18 @@ private fun appDarkColorScheme(): ColorScheme = ColorScheme(
     surfaceContainerLow = CurrencyColors.Gray,
     surfaceContainerLowest = CurrencyColors.LightGray
 )
+
+enum class ThemeMode {
+    SYSTEM,
+    LIGHT,
+    DARK
+}
+
+val LocalThemeMode = staticCompositionLocalOf { SYSTEM }
+
+@Composable
+fun isInDarkTheme(): Boolean = when (LocalThemeMode.current) {
+    DARK -> true
+    LIGHT -> false
+    else -> isSystemInDarkTheme()
+}

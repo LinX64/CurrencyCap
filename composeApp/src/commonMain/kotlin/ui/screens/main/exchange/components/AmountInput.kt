@@ -1,6 +1,5 @@
 package ui.screens.main.exchange.components
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -27,8 +26,7 @@ internal fun AmountInput(
 ) {
     TextField(
         modifier = Modifier.fillMaxWidth()
-            .clip(RoundedCornerShape(CARD_CORNER_RADIUS))
-            .animateContentSize(),
+            .clip(RoundedCornerShape(CARD_CORNER_RADIUS)),
         value = amount,
         onValueChange = { newValue ->
             if (newValue.isEmpty() || newValue.matches(Regex("^\\d*.?\\d*$"))) {

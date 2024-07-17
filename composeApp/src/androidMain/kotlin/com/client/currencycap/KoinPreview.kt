@@ -11,6 +11,7 @@ import di.viewModelModule
 import org.koin.compose.KoinApplication
 import org.koin.mp.KoinPlatformTools
 import ui.theme.AppM3Theme
+import ui.theme.ThemeMode
 
 @Composable
 internal fun KoinPreview(
@@ -30,7 +31,7 @@ internal fun KoinPreview(
                 previewModule
             )
         }) {
-            AppM3Theme(dark = true) {
+            AppM3Theme(themeMode = ThemeMode.DARK) {
                 DarkBackground {
                     content()
                 }

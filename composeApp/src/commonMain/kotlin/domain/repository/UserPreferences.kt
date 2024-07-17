@@ -11,4 +11,10 @@ interface UserPreferences {
 
     suspend fun saveUserSelectedSources(sources: Set<String>)
     suspend fun getUserSelectedSources(): Set<String>
+
+    suspend fun setDarkMode(isDarkMode: Boolean)
+    suspend fun isDarkMode(): Boolean
+
+    suspend fun setPushNotificationEnabled(isPushNotificationEnabled: Boolean)
+    suspend fun isPushNotificationEnabled(): Boolean
 }

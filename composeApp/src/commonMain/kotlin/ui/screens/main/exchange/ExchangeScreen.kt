@@ -165,7 +165,8 @@ private fun ExchangeCard(
                     onCurrencyTypeSelect = {
                         dialogOpened = true
                         selectedCurrencyType = it
-                    })
+                    }
+                )
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
