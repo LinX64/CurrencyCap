@@ -2,16 +2,28 @@ package ui.screens.main.settings
 
 import androidx.lifecycle.viewModelScope
 import domain.repository.UserPreferences
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
-import ui.screens.main.settings.SettingsState.IsDarkMode
 import ui.screens.main.settings.SettingsViewEvent.OnDarkModeSwitchChange
 import ui.screens.main.settings.SettingsViewEvent.OnGetThemeSettings
 import ui.screens.main.settings.SettingsViewEvent.OnPushNotificationSwitchChange
+import ui.theme.ThemeMode
 
 internal class SettingsViewModel(
     private val userPreferences: UserPreferences
 ) : MviViewModel<SettingsViewEvent, SettingsState, SettingsNavigationEffect>(SettingsState.Idle) {
+
+    val isDarkMode = userPreferences.isDarkMode()
+        .map { isDarkMode -> if (isDarkMode) ThemeMode.DARK else ThemeMode.LIGHT }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = ThemeMode.SYSTEM
+        )
 
     init {
         handleEvent(OnGetThemeSettings)
@@ -21,17 +33,17 @@ internal class SettingsViewModel(
         when (event) {
             OnGetThemeSettings -> onGetThemeSettings()
             is OnDarkModeSwitchChange -> onDarkModeSwitchChange(event.isDarkMode)
-            is OnPushNotificationSwitchChange -> onPushNotificationSwitchChange(event.isPushNotificationEnabled)
+            is OnPushNotificationSwitchChange -> onPushNotificationSwitchChange(event.isEnabled)
         }
     }
 
     private fun onGetThemeSettings() {
-        viewModelScope.launch {
-            when (val isDark = userPreferences.isDarkMode()) {
-                true -> setState { IsDarkMode(isDark) }
-                false -> setState { IsDarkMode(false) }
+        userPreferences.isDarkMode()
+            .map { isDarkMode ->
+                if (isDarkMode) setState { SettingsState.IsDarkMode(true) }
+                else setState { SettingsState.IsDarkMode(false) }
             }
-        }
+            .launchIn(viewModelScope)
     }
 
     private fun onDarkModeSwitchChange(isDarkMode: Boolean) {
@@ -40,9 +52,9 @@ internal class SettingsViewModel(
         }
     }
 
-    private fun onPushNotificationSwitchChange(isPushNotificationEnabled: Boolean) {
+    private fun onPushNotificationSwitchChange(isEnabled: Boolean) {
         viewModelScope.launch {
-            userPreferences.setPushNotificationEnabled(isPushNotificationEnabled)
+            userPreferences.setPushNotificationEnabled(isEnabled)
         }
     }
 }

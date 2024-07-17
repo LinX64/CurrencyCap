@@ -1,12 +1,14 @@
 package ui.screens
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import domain.repository.UserPreferences
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ui.theme.ThemeMode
 
@@ -16,20 +18,17 @@ class MainViewModel(
 
     private val _state = MutableStateFlow<MainState>(MainState.Idle)
     val state = _state.asStateFlow()
-    val isDarkMode = mutableStateOf(ThemeMode.SYSTEM)
+
+    val isDarkMode = userPreferences.isDarkMode()
+        .map { isDarkMode -> if (isDarkMode) ThemeMode.DARK else ThemeMode.LIGHT }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = ThemeMode.SYSTEM
+        )
 
     init {
         checkUserLoginStatus()
-        checkDarkModeStatus()
-    }
-
-    private fun checkDarkModeStatus() {
-        viewModelScope.launch {
-            when (userPreferences.isDarkMode()) {
-                true -> isDarkMode.value = ThemeMode.DARK
-                false -> isDarkMode.value = ThemeMode.LIGHT
-            }
-        }
     }
 
     private fun checkUserLoginStatus() {

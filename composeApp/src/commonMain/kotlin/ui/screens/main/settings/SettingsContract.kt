@@ -5,7 +5,7 @@ import data.remote.model.User
 sealed interface SettingsViewEvent {
     data object OnGetThemeSettings : SettingsViewEvent
     data class OnDarkModeSwitchChange(val isDarkMode: Boolean) : SettingsViewEvent
-    data class OnPushNotificationSwitchChange(val isPushNotificationEnabled: Boolean) : SettingsViewEvent
+    data class OnPushNotificationSwitchChange(val isEnabled: Boolean) : SettingsViewEvent
 }
 
 sealed interface SettingsState {

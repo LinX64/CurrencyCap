@@ -1,5 +1,7 @@
 package domain.repository
 
+import kotlinx.coroutines.flow.Flow
+
 interface UserPreferences {
     suspend fun isUserLoggedIn(): Boolean
     suspend fun saveUserUid(uid: String)
@@ -13,7 +15,7 @@ interface UserPreferences {
     suspend fun getUserSelectedSources(): Set<String>
 
     suspend fun setDarkMode(isDarkMode: Boolean)
-    suspend fun isDarkMode(): Boolean
+    fun isDarkMode(): Flow<Boolean>
 
     suspend fun setPushNotificationEnabled(isPushNotificationEnabled: Boolean)
     suspend fun isPushNotificationEnabled(): Boolean

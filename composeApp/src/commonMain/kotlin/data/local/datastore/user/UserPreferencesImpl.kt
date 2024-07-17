@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import domain.repository.UserPreferences
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
@@ -83,10 +84,10 @@ internal class UserPreferencesImpl(
         }
     }
 
-    override suspend fun isDarkMode(): Boolean {
+    override fun isDarkMode(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
             preferences[IS_DARK_MODE] ?: false
-        }.first()
+        }
     }
 
     override suspend fun setPushNotificationEnabled(isPushNotificationEnabled: Boolean) {
