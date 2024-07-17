@@ -19,7 +19,6 @@ import androidx.navigation.NavHostController
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.ic_arrow_left
 import currencycap.composeapp.generated.resources.ic_filter_search
-import currencycap.composeapp.generated.resources.ic_settings
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
@@ -136,16 +135,16 @@ private fun Actions(
         }
     }
 
-    if (isProfileScreen) {
-        IconButton(
-            modifier = Modifier.padding(end = 16.dp),
-            onClick = onSettingsClick
-        ) {
-            Icon(
-                painter = painterResource(Res.drawable.ic_settings),
-                contentDescription = "settings",
-                tint = MaterialTheme.colorScheme.onSurface
-            )
-        }
-    }
+//    if (isProfileScreen) {
+//        IconButton(
+//            modifier = Modifier.padding(end = 16.dp),
+//            onClick = onSettingsClick
+//        ) {
+//            Icon(
+//                painter = painterResource(Res.drawable.ic_settings),
+//                contentDescription = "settings",
+//                tint = MaterialTheme.colorScheme.onSurface
+//            )
+//        }
+//    } // TODO: Fix this whenever there is a solution for theme on IOS
 }

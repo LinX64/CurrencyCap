@@ -9,14 +9,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalContext
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import ui.App
-import ui.screens.MainViewModel
 import ui.theme.AppM3Theme
+import ui.theme.ThemeMode
 
 class MainActivity : ComponentActivity() {
 
-    private val mainViewModel: MainViewModel by viewModel()
+    //private val mainViewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +34,7 @@ class MainActivity : ComponentActivity() {
             }
 
             // TODO: Add dark/light support
-            AppM3Theme(
-                themeMode = mainViewModel.isDarkMode.value,
-            ) {
+            AppM3Theme(themeMode = ThemeMode.DARK) {
                 App()
             }
         }
