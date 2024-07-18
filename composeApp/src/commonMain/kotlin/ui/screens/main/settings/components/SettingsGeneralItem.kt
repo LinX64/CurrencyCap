@@ -11,8 +11,10 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -23,14 +25,15 @@ import ui.theme.AppDimensions.SPACER_PADDING_16
 @Composable
 internal fun SettingsGeneralItem(
     text: String,
-    onSwitchChange: (Boolean) -> Unit
+    isChecked: Boolean = false,
+    onSwitchChange: (Boolean) -> Unit,
 ) {
-    val isSwitchChecked = rememberSaveable { mutableStateOf(false) }
+    var isSwitchChecked by rememberSaveable { mutableStateOf(isChecked) }
 
     Card(
         onClick = {
-            isSwitchChecked.value = !isSwitchChecked.value
-            onSwitchChange(isSwitchChecked.value)
+            isSwitchChecked = !isSwitchChecked
+            onSwitchChange(isSwitchChecked)
         },
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(10.dp),
@@ -52,9 +55,9 @@ internal fun SettingsGeneralItem(
 
             Switch(
                 modifier = Modifier.scale(0.8f),
-                checked = isSwitchChecked.value,
+                checked = isSwitchChecked,
                 onCheckedChange = {
-                    isSwitchChecked.value = it
+                    isSwitchChecked = it
                     onSwitchChange(it)
                 },
                 colors = SwitchDefaults.colors(

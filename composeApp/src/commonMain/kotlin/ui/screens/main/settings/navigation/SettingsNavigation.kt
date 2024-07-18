@@ -6,21 +6,17 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
 import ui.navigation.util.Screen.Settings
-import ui.screens.main.settings.SettingsScreen
+import ui.screens.main.settings.SettingsRoute
 
 fun NavController.navigateToSettingsScreen() = navigate(Settings)
 
 fun NavGraphBuilder.settingsScreen(
     padding: PaddingValues,
-    onNavigateToLanding: () -> Unit,
-    onError: (message: String) -> Unit,
     hazeState: HazeState
 ) {
     composable<Settings> {
-        SettingsScreen(
+        SettingsRoute(
             padding = padding,
-            onNavigateToLanding = onNavigateToLanding,
-            onError = onError,
             hazeState = hazeState
         )
     }

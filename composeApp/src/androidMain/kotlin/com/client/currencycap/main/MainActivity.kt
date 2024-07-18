@@ -11,28 +11,30 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalContext
 import ui.App
 import ui.theme.AppM3Theme
+import ui.theme.ThemeMode
 
 class MainActivity : ComponentActivity() {
+
+    //private val mainViewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val statusBarLight = Color.BLACK
-            val isDarkMode = isSystemInDarkTheme()
+            val isDarkTheme = isSystemInDarkTheme()
             val context = LocalContext.current as ComponentActivity
 
-            DisposableEffect(isDarkMode) {
+            DisposableEffect(isDarkTheme) {
                 context.enableEdgeToEdge(
-                    statusBarStyle = if (!isDarkMode) {
-                        SystemBarStyle.dark(scrim = statusBarLight)
-                    } else SystemBarStyle.dark(statusBarLight)
+                    statusBarStyle = if (isDarkTheme)
+                        SystemBarStyle.dark(Color.TRANSPARENT)
+                    else SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
                 )
                 onDispose { }
             }
 
             // TODO: Add dark/light support
-            AppM3Theme(dark = true) {
+            AppM3Theme(themeMode = ThemeMode.DARK) {
                 App()
             }
         }

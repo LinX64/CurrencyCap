@@ -22,6 +22,8 @@ import currencycap.composeapp.generated.resources.ic_filter_search
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
+import ui.navigation.util.Screen.Settings
+import ui.navigation.util.ScreenRoutes
 import ui.navigation.util.ScreenRoutes.AI_PREDICTION
 import ui.navigation.util.ScreenRoutes.CRYPTO_DETAIL
 import ui.navigation.util.ScreenRoutes.EXPLORE
@@ -36,7 +38,7 @@ internal fun AppTopBar(
     navController: NavHostController,
     scrollBehavior: TopAppBarScrollBehavior,
     hazeState: HazeState,
-    onFilterClick: () -> Unit
+    onFilterClick: () -> Unit,
 ) {
     val isSettingsScreen = currentDestination == SETTINGS
     val isNewsDetailScreen = currentDestination?.startsWith(NEWS_DETAIL)
@@ -44,6 +46,7 @@ internal fun AppTopBar(
     val isExploreScreen = currentDestination == EXPLORE
     val isAiScreen = currentDestination == AI_PREDICTION
     val isNewsScreen = currentDestination == NEWS
+    val isProfileScreen = currentDestination == ScreenRoutes.PROFILE
 
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
@@ -75,7 +78,12 @@ internal fun AppTopBar(
             )
         },
         actions = {
-            Actions(isNewsScreen = isNewsScreen, onFilterClick = onFilterClick)
+            Actions(
+                isNewsScreen = isNewsScreen,
+                isProfileScreen = isProfileScreen,
+                onFilterClick = onFilterClick,
+                onSettingsClick = { navController.navigate(Settings) }
+            )
         }
     )
 }
@@ -110,7 +118,9 @@ private fun NavigationIcon(
 @Composable
 private fun Actions(
     isNewsScreen: Boolean,
-    onFilterClick: () -> Unit
+    isProfileScreen: Boolean,
+    onFilterClick: () -> Unit,
+    onSettingsClick: () -> Unit
 ) {
     if (isNewsScreen) {
         IconButton(
@@ -124,4 +134,17 @@ private fun Actions(
             )
         }
     }
+
+//    if (isProfileScreen) {
+//        IconButton(
+//            modifier = Modifier.padding(end = 16.dp),
+//            onClick = onSettingsClick
+//        ) {
+//            Icon(
+//                painter = painterResource(Res.drawable.ic_settings),
+//                contentDescription = "settings",
+//                tint = MaterialTheme.colorScheme.onSurface
+//            )
+//        }
+//    } // TODO: Fix this whenever there is a solution for theme on IOS
 }

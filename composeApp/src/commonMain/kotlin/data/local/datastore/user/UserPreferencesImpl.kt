@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import domain.repository.UserPreferences
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
@@ -20,6 +21,8 @@ internal class UserPreferencesImpl(
         private val USER_SELECTED_START_DATE_KEY = stringPreferencesKey("user_selected_start_date")
         private val USER_SELECTED_END_DATE_KEY = stringPreferencesKey("user_selected_end_date")
         private val USER_SELECTED_SOURCES_KEY = stringPreferencesKey("user_selected_sources")
+        private val IS_DARK_MODE = booleanPreferencesKey("is_dark_mode")
+        private val IS_PUSH_NOTIFICATION_ENABLED = booleanPreferencesKey("is_push_notification_enabled")
     }
 
     override suspend fun isUserLoggedIn(): Boolean {
@@ -72,6 +75,30 @@ internal class UserPreferencesImpl(
     override suspend fun getUserSelectedSources(): Set<String> {
         return dataStore.data.map { preferences ->
             preferences[USER_SELECTED_SOURCES_KEY]?.split(",")?.toSet() ?: emptySet()
+        }.first()
+    }
+
+    override suspend fun setDarkMode(isDarkMode: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[IS_DARK_MODE] = isDarkMode
+        }
+    }
+
+    override fun isDarkMode(): Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[IS_DARK_MODE] ?: false
+        }
+    }
+
+    override suspend fun setPushNotificationEnabled(isPushNotificationEnabled: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[IS_PUSH_NOTIFICATION_ENABLED] = isPushNotificationEnabled
+        }
+    }
+
+    override suspend fun isPushNotificationEnabled(): Boolean {
+        return dataStore.data.map { preferences ->
+            preferences[IS_PUSH_NOTIFICATION_ENABLED] ?: false
         }.first()
     }
 }

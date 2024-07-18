@@ -8,58 +8,80 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
+import di.koinViewModel
 import ui.components.base.GlassCard
+import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.profile.components.HelpCenterItem
+import ui.screens.main.settings.SettingsViewEvent.OnDarkModeSwitchChange
+import ui.screens.main.settings.SettingsViewEvent.OnPushNotificationSwitchChange
 import ui.screens.main.settings.components.SettingsGeneralItem
 import ui.screens.main.settings.components.SettingsHeaderText
-import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
+
+@Composable
+internal fun SettingsRoute(
+    padding: PaddingValues,
+    settingsViewModel: SettingsViewModel = koinViewModel<SettingsViewModel>(),
+    hazeState: HazeState,
+) {
+    val state by settingsViewModel.viewState.collectAsStateWithLifecycle()
+
+    SettingsScreen(
+        padding = padding,
+        hazeState = hazeState,
+        state = state,
+        onPushNotificationSwitchChange = { settingsViewModel.handleEvent(OnPushNotificationSwitchChange(it)) },
+        onDarkModeSwitchChange = { settingsViewModel.handleEvent(OnDarkModeSwitchChange(it)) },
+        onAboutUsClick = { /* Handle about us click */ },
+        onPrivacyPolicyClick = { /* Handle privacy policy click */ },
+    )
+}
+
 
 @Composable
 internal fun SettingsScreen(
     padding: PaddingValues,
-    onNavigateToLanding: () -> Unit,
-    onError: (message: String) -> Unit,
     hazeState: HazeState,
-    //settingsViewModel: SettingsViewModel = koinViewModel<SettingsViewModel>()
+    state: SettingsState,
+    onPushNotificationSwitchChange: (Boolean) -> Unit,
+    onDarkModeSwitchChange: (Boolean) -> Unit,
+    onAboutUsClick: () -> Unit,
+    onPrivacyPolicyClick: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize()
-            .padding(padding)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
+    BaseGlassLazyColumn(
+        padding = padding,
+        hazeState = hazeState
     ) {
-        SettingsContent(
-            onContactUsClick = { /* Handle click */ }
-        )
+        item {
+            GeneralCard(
+                isDarkMode = state is SettingsState.IsDarkMode,
+                onPushNotificationSwitchChange = onPushNotificationSwitchChange,
+                onDarkModeSwitchChange = onDarkModeSwitchChange,
+            )
+        }
+        item {
+            PoliciesCard(
+                onAboutUsClick = onAboutUsClick,
+                onPrivacyPolicyClick = onPrivacyPolicyClick,
+            )
+        }
     }
-//
-//    HandleNavigationEffect(settingsViewModel) { effect ->
-//        when (effect) {
-//            is NavigateToLanding -> onNavigateToLanding()
-//        }
-//    }
-
-//    when (state) {
-//        is SettingsState.Error -> onError((state as SettingsState.Error).message)
-//        else -> Unit
-//    }
-    // TODO: finish the implementation
 }
 
 @Composable
-internal fun SettingsContent(
-    onContactUsClick: () -> Unit
+private fun GeneralCard(
+    isDarkMode: Boolean,
+    onPushNotificationSwitchChange: (Boolean) -> Unit,
+    onDarkModeSwitchChange: (Boolean) -> Unit,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(SPACER_PADDING_16),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
     ) {
         GlassCard {
@@ -68,15 +90,28 @@ internal fun SettingsContent(
             ) {
                 SettingsHeaderText("General")
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    SettingsGeneralItem(text = "Push Notifications", onSwitchChange = { /* Handle switch change */ })
-                    //HelpCenterItem(text = "Edit Profile", onButtonClick = onContactUsClick)
-                    // SettingsGeneralItem(text = "Dark Mode", onSwitchChange = { /* Handle switch change */ })
+                    SettingsGeneralItem(text = "Push Notifications", onSwitchChange = onPushNotificationSwitchChange)
 
-                    //HelpCenterItem(text = "Change Password", onButtonClick = onContactUsClick)
+                    SettingsGeneralItem(
+                        text = "Dark Mode",
+                        isChecked = isDarkMode,
+                        onSwitchChange = onDarkModeSwitchChange
+                    )
                 }
             }
         }
+    }
+}
 
+@Composable
+internal fun PoliciesCard(
+    onAboutUsClick: () -> Unit,
+    onPrivacyPolicyClick: () -> Unit,
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
+    ) {
         GlassCard {
             Column(
                 modifier = Modifier.padding(24.dp)
@@ -86,9 +121,11 @@ internal fun SettingsContent(
                 Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    HelpCenterItem(text = "About Us", onButtonClick = { /* Handle click */ })
-                    HelpCenterItem(text = "Privacy Policy", onButtonClick = { /* Handle click */ })
-                    // HelpCenterItem(text = "Terms of conditions", onButtonClick = { /* Handle click */ })
+                    HelpCenterItem(text = "About Us", onButtonClick = onAboutUsClick)
+
+                    Spacer(modifier = Modifier.height(SPACER_PADDING_8))
+
+                    HelpCenterItem(text = "Privacy Policy", onButtonClick = onPrivacyPolicyClick)
                 }
             }
         }

@@ -95,9 +95,7 @@ internal fun MainNavGraph(
 
         settingsScreen(
             padding = padding,
-            onError = onError,
-            hazeState = hazeState,
-            onNavigateToLanding = onNavigateToLanding
+            hazeState = hazeState
         )
     }
 }

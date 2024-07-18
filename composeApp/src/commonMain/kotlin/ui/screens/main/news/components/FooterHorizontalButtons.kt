@@ -71,7 +71,7 @@ internal fun FooterHorizontalButtons(
                 shape = RoundedCornerShape(CARD_CORNER_RADIUS)
             ) {
                 Row(
-                    modifier = Modifier.padding(12.dp),
+                    modifier = Modifier.padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
                 ) {

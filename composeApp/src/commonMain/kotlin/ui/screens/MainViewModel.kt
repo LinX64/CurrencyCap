@@ -15,6 +15,14 @@ class MainViewModel(
     private val _state = MutableStateFlow<MainState>(MainState.Idle)
     val state = _state.asStateFlow()
 
+//    val isDarkMode = userPreferences.isDarkMode()
+//        .map { isDarkMode -> if (isDarkMode) ThemeMode.DARK else ThemeMode.LIGHT }
+//        .stateIn(
+//            scope = viewModelScope,
+//            started = SharingStarted.Lazily,
+//            initialValue = ThemeMode.SYSTEM
+//        )
+
     init {
         checkUserLoginStatus()
     }
