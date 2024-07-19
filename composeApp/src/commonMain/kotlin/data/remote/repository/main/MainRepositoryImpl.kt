@@ -1,6 +1,5 @@
 package data.remote.repository.main
 
-import currencycap.composeapp.generated.resources.Res
 import data.remote.model.main.CurrenciesDto
 import data.remote.model.main.Description
 import data.remote.model.main.KoinGeckoResponse
@@ -10,6 +9,7 @@ import data.remote.model.main.toDomain
 import data.remote.model.main.toMarketDomain
 import data.remote.model.main.toRateDomain
 import data.remote.model.news.ArticleDto
+import data.util.APIConst.BASE_URL
 import data.util.APIConst.CRYPTO_INFO_URL
 import data.util.APIConst.NEWS_URL
 import data.util.parseCurrencyRates
@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.serialization.json.Json
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 class MainRepositoryImpl(
     private val httpClient: HttpClient
@@ -90,9 +89,8 @@ class MainRepositoryImpl(
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
 
-    @OptIn(ExperimentalResourceApi::class)
     private suspend fun getCurrencies(): CurrenciesDto {
-        val plainResponse = Res.readBytes("files/currencies.json").decodeToString()
+        val plainResponse = httpClient.get(BASE_URL).body<String>()
         return parseCurrencyRates(plainResponse)
     }
 }
