@@ -6,6 +6,7 @@ import ComposeApp
 struct iOSApp: App {
     
     init() {
+        MainViewControllerKt.initialize()
         FirebaseApp.configure()
         KoinInitializer().initializeKoin()
     }

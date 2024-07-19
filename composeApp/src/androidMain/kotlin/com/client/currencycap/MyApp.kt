@@ -13,6 +13,7 @@ class MyApp : Application() {
         super.onCreate()
 
         ContextProvider().create(this)
+        ApplicationComponent.init()
 
         val appInitializer = AppInitializer.getInstance(this)
         appInitializer.initializeComponent(RealmInitializer::class.java)
@@ -20,6 +21,5 @@ class MyApp : Application() {
         KoinInitializer.initializeKoin()
 
         FirebaseApp.initializeApp(this)
-        ApplicationComponent.init()
     }
 }

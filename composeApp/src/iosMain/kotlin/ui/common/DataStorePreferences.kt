@@ -8,7 +8,7 @@ import di.SETTINGS_PREFERENCES
 import di.createDataStoreWithDefaults
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.CoroutineScope
-import platform.Foundation.NSDocumentDirectory
+import platform.Foundation.NSCachesDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSURL
 import platform.Foundation.NSUserDomainMask
@@ -25,10 +25,10 @@ actual fun dataStorePreferences(
     coroutineScope = coroutineScope,
     path = {
         val documentDirectory: NSURL? = NSFileManager.defaultManager.URLForDirectory(
-            directory = NSDocumentDirectory,
+            directory = NSCachesDirectory,
             inDomain = NSUserDomainMask,
             appropriateForURL = null,
-            create = false,
+            create = true,
             error = null,
         )
         requireNotNull(documentDirectory)
