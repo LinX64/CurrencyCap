@@ -63,7 +63,8 @@ internal fun NewsDetailContent(
         )
 
         GlassCard(
-            modifier = Modifier.fillMaxWidth().offset(y = (-55).dp),
+            modifier = Modifier.fillMaxWidth()
+                .offset(y = (-55).dp),
             contentPadding = PaddingValues(0.dp)
         ) {
             Surface(
@@ -71,7 +72,10 @@ internal fun NewsDetailContent(
                 color = MaterialTheme.colorScheme.surface.copy(alpha = 0.7f),
             ) {
                 val textModifierPlaceHolder =
-                    if (isLoading) getPlaceHolder(Modifier.fillMaxWidth().padding(24.dp)) else Modifier.fillMaxWidth()
+                    if (isLoading) getPlaceHolder(
+                        Modifier.fillMaxWidth()
+                            .padding(24.dp)
+                    ) else Modifier.fillMaxWidth()
                         .padding(24.dp)
                 Text(
                     modifier = textModifierPlaceHolder,

@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import dev.chrisbanes.haze.HazeState
+import ui.screens.main.news.news_detail.components.NewsDetailContent
+import util.getDummyNewsItem
 
 //@Composable
 //@Preview(showBackground = true)
@@ -70,7 +72,12 @@ import dev.chrisbanes.haze.HazeState
 private fun ExpandablePreview() {
     val hazeState = remember { HazeState() }
     KoinPreview {
-
+        NewsDetailContent(
+            article = getDummyNewsItem(),
+            isLoading = false,
+            imageUrl = null,
+            onReadMoreClick = {},
+        )
     }
 }
 

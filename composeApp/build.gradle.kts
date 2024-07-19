@@ -2,12 +2,12 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
+    alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.realm.plugin)
-    alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.gms)
 }
 
@@ -43,6 +43,7 @@ kotlin {
             implementation(compose.preview)
 
             api(libs.androidx.startup)
+            compileOnly(libs.mongodb.realm)
 
             // Firebase
             implementation(project.dependencies.platform(libs.firebase.bom))
@@ -104,31 +105,21 @@ kotlin {
 
 android {
     namespace = "com.client.currencycap"
-    compileSdk = 34
+    compileSdk = 35
 
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+    sourceSets["main"].apply {
+        manifest.srcFile("src/androidMain/AndroidManifest.xml")
+        res.srcDirs("src/androidMain/res")
+        resources.srcDirs("src/commonMain/resources")
+        jniLibs.srcDirs("src/main/jniLibs")
+    }
 
     defaultConfig {
         applicationId = "com.client.currencycap"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
-        ndk {
-            abiFilters.addAll(listOf("arm64-v8a"))
-        }
-
-        splits {
-            abi {
-                isEnable = true
-                reset()
-                isUniversalApk = false
-            }
-        }
-
     }
 
     packaging {
