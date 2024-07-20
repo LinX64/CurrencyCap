@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun BaseModelBottomSheet(
+internal fun BaseModalBottomSheet(
     isVisible: Boolean,
     onDismiss: () -> Unit,
     containerColor: Color = MaterialTheme.colorScheme.surface,

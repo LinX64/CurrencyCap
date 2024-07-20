@@ -26,7 +26,7 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import ui.components.base.BaseModelBottomSheet
+import ui.components.base.BaseModalBottomSheet
 import ui.navigation.graphs.AuthNavGraph
 import ui.navigation.util.ScreenRoutes
 import ui.screens.MainViewModel
@@ -71,7 +71,7 @@ internal fun NotLoggedInSection(
         )
     }
 
-    BaseModelBottomSheet(
+    BaseModalBottomSheet(
         isVisible = isSheetOpen.value,
         onDismiss = { isSheetOpen.value = false }
     ) {
