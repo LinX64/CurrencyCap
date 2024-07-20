@@ -12,6 +12,8 @@ object AppDimensions {
     val SPACER_PADDING_4 = 4.dp
     val SPACER_PADDING_8 = 8.dp
     val SPACER_PADDING_16 = 16.dp
+    val SPACER_PADDING_24 = 24.dp
+    val SPACER_PADDING_32 = 32.dp
 
     val ICON_SIZE_48 = 48.dp
 }
