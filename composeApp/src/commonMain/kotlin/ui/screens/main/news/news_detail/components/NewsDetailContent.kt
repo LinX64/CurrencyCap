@@ -26,7 +26,7 @@ import currencycap.composeapp.generated.resources.read_more
 import domain.model.Article
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
-import ui.components.base.button.PrimarySmallIconButton
+import ui.components.base.button.SecondarySmallIconButton
 import ui.screens.main.overview.components.getPlaceHolder
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.SPACER_PADDING_16
@@ -126,7 +126,7 @@ internal fun NewsDetailContent(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    PrimarySmallIconButton(
+                    SecondarySmallIconButton(
                         icon = Icons.AutoMirrored.Outlined.OpenInNew,
                         text = stringResource(Res.string.read_more),
                         onButtonClick = onReadMoreClick
