@@ -36,7 +36,7 @@ internal fun NewsDetailContent(
     article: Article,
     isLoading: Boolean = false,
     imageUrl: String? = null,
-    onReadMoreClick: (url: String) -> Unit
+    onReadMoreClick: () -> Unit
 ) {
     val loadingPlaceHolderModifier = if (isLoading) getPlaceHolder(Modifier.fillMaxWidth()) else Modifier.fillMaxWidth()
     val roundedCornerShape = RoundedCornerShape(CARD_CORNER_RADIUS)
@@ -126,7 +126,7 @@ internal fun NewsDetailContent(
                     horizontalAlignment = Alignment.End
                 ) {
                     TextButton(
-                        onClick = { onReadMoreClick(article.url) },
+                        onClick = onReadMoreClick,
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(

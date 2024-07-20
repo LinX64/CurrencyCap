@@ -16,6 +16,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.dp
 internal fun BaseModelBottomSheet(
     isVisible: Boolean,
     onDismiss: () -> Unit,
+    containerColor: Color = MaterialTheme.colorScheme.surface,
     content: @Composable () -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(
@@ -39,7 +41,7 @@ internal fun BaseModelBottomSheet(
             onDismissRequest = onDismiss,
             sheetState = sheetState,
             shape = RoundedCornerShape(topStart = 55.dp, topEnd = 55.dp),
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = containerColor,
             content = {
                 Box(
                     modifier = Modifier
@@ -47,7 +49,7 @@ internal fun BaseModelBottomSheet(
                         .navigationBarsPadding()
                         .heightIn(max = 700.dp)
                         .verticalScroll(rememberScrollState())
-                        .background(MaterialTheme.colorScheme.surface)
+                        .background(containerColor)
                 ) {
                     content()
                 }

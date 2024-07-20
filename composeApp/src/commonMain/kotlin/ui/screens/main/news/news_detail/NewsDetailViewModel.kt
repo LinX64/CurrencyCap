@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import ui.common.MviViewModel
 import ui.navigation.util.ENCODED_URL
-import ui.screens.main.news.news_detail.NewsDetailNavigationEffect.OpenBrowser
+import ui.screens.main.news.news_detail.NewsDetailNavigationEffect.OpenBottomSheet
 import ui.screens.main.news.news_detail.NewsDetailState.Error
 import ui.screens.main.news.news_detail.NewsDetailState.Loading
 import ui.screens.main.news.news_detail.NewsDetailState.Success
@@ -29,7 +29,7 @@ class NewsDetailViewModel(
     override fun handleEvent(event: NewsDetailViewEvent) {
         when (event) {
             is FetchNews -> fetchNews(event.url)
-            is OnReadMoreClick -> setEffect(OpenBrowser(event.url))
+            is OnReadMoreClick -> setEffect(OpenBottomSheet(event.url))
         }
     }
 
