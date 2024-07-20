@@ -35,6 +35,9 @@ import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.overview.components.CryptoHorizontalItem
 import ui.screens.main.search.SearchEvent.OnRetryClicked
 import ui.screens.main.search.SearchEvent.OnSearchTextChanged
+import ui.screens.main.search.SearchState.Error
+import ui.screens.main.search.SearchState.Loading
+import ui.screens.main.search.SearchState.Success
 import ui.screens.main.search.components.EmptyView
 import ui.screens.main.search.components.LeadingIcon
 import ui.screens.main.search.components.SearchPlaceHolder
@@ -43,15 +46,33 @@ import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.getDummyCryptoItem
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun SearchScreen(
+internal fun SearchRoute(
     searchViewModel: SearchViewModel = koinViewModel<SearchViewModel>(),
     padding: PaddingValues,
     hazeState: HazeState,
     onCryptoItemClick: (String) -> Unit
 ) {
     val state by searchViewModel.viewState.collectAsStateWithLifecycle()
+
+    SearchScreen(
+        state = state,
+        padding = padding,
+        hazeState = hazeState,
+        onCryptoItemClick = onCryptoItemClick,
+        handleEvent = { searchViewModel.handleEvent(it) }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun SearchScreen(
+    padding: PaddingValues,
+    hazeState: HazeState,
+    state: SearchState,
+    onCryptoItemClick: (String) -> Unit,
+    handleEvent: (SearchEvent) -> Unit
+) {
     var text by rememberSaveable { mutableStateOf("") }
     var expanded by rememberSaveable { mutableStateOf(true) }
     val showKeyboard = remember { mutableStateOf(true) }
@@ -76,18 +97,21 @@ internal fun SearchScreen(
                 onActiveChange = { expanded = it },
                 onQueryChange = {
                     text = it
-                    searchViewModel.handleEvent(OnSearchTextChanged(it))
+                    handleEvent(OnSearchTextChanged(it))
                 },
                 query = text,
                 placeholder = { SearchPlaceHolder() },
                 onSearch = { expanded = false },
                 leadingIcon = { LeadingIcon() },
                 trailingIcon = {
-                    TrailingIcon(expanded = expanded, onCloseClick = {
-                        expanded = false
-                        text = ""
-                        searchViewModel.handleEvent(OnSearchTextChanged(""))
-                    })
+                    TrailingIcon(
+                        expanded = expanded,
+                        onCloseClick = {
+                            expanded = false
+                            text = ""
+                            handleEvent(OnSearchTextChanged(""))
+                        }
+                    )
                 }
             ) {
                 BaseGlassLazyColumn(
@@ -98,7 +122,7 @@ internal fun SearchScreen(
                 ) {
                     searchResultContent(
                         state = state,
-                        onRetryClicked = { searchViewModel.handleEvent(OnRetryClicked(text)) },
+                        onRetryClicked = { handleEvent(OnRetryClicked(text)) },
                         onCryptoItemClick = onCryptoItemClick
                     )
                 }
@@ -127,7 +151,7 @@ private fun LazyListScope.searchResultContent(
     onRetryClicked: () -> Unit,
     onCryptoItemClick: (String) -> Unit
 ) = when (state) {
-    is SearchState.Success -> {
+    is Success -> {
         val cryptoItems = state.cryptoList
         items(
             count = cryptoItems.size,
@@ -142,7 +166,7 @@ private fun LazyListScope.searchResultContent(
         }
     }
 
-    is SearchState.Error -> {
+    is Error -> {
         item {
             ErrorView(
                 message = state.message,
@@ -151,7 +175,7 @@ private fun LazyListScope.searchResultContent(
         }
     }
 
-    is SearchState.Loading -> {
+    is Loading -> {
         items(5) {
             CryptoHorizontalItem(
                 crypto = getDummyCryptoItem(),

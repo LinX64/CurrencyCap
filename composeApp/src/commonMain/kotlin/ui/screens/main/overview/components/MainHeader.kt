@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import ui.components.base.GlassCard
 import ui.screens.main.overview.OverviewState
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -39,14 +40,14 @@ internal fun MainHeader(
             CircleCard(isLoading = isLoading)
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_32))
 
         PerformanceChart(
             modifier = if (isLoading) getPlaceHolder(Modifier.height(100.dp)) else Modifier,
             list = mockAssetInfo.lastDayChange
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_32))
 
     }
 }

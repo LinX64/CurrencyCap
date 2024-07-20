@@ -36,6 +36,7 @@ import ui.screens.initial.register.RegisterViewEvent.OnPasswordChanged
 import ui.screens.initial.register.RegisterViewEvent.OnRegisterClick
 import ui.screens.initial.register.components.LogInText
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
 internal fun RegisterScreen(
@@ -80,7 +81,7 @@ private fun RegisterContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 32.dp),
+            .padding(horizontal = SPACER_PADDING_32),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {

@@ -23,6 +23,7 @@ import org.jetbrains.compose.resources.painterResource
 import ui.components.base.button.PrimaryButton
 import ui.components.base.button.SecondaryButton
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -85,7 +86,7 @@ internal fun LandingScreen(
                 text = "Log In"
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_32))
 
             Text(
                 text = "Privacy Policy",

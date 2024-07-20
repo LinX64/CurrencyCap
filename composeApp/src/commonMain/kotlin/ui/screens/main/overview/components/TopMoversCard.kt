@@ -22,6 +22,7 @@ import domain.model.main.Crypto
 import ui.common.formatToPrice
 import ui.components.base.GlassCard
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
@@ -105,7 +106,7 @@ internal fun TopMoversCard(
                 list = priceData
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_32))
 
             BottomRow(
                 topMovers = topMovers,

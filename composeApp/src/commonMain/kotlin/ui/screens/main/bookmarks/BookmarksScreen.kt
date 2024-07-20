@@ -32,6 +32,7 @@ import ui.components.base.button.SecondaryButton
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.bookmarks.BookmarksViewEvent.OnRemoveBookmarkClick
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
 internal fun BookmarksScreen(
@@ -98,7 +99,7 @@ private fun NoBookmarks(
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = SPACER_PADDING_32),
             text = stringResource(Res.string.no_bookmarks_description),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
@@ -110,7 +111,7 @@ private fun NoBookmarks(
 
         SecondaryButton(
             modifier = Modifier
-                .padding(horizontal = 32.dp),
+                .padding(horizontal = SPACER_PADDING_32),
             text = stringResource(Res.string.explore_news),
             onButtonClick = onExploreNewsClick
         )

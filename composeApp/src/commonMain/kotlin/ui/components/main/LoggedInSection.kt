@@ -16,7 +16,7 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import ui.components.base.BaseModelBottomSheet
+import ui.components.base.BaseModalBottomSheet
 import ui.navigation.graphs.MainNavGraph
 import ui.screens.MainViewModel
 import ui.screens.main.news.NewsViewEvent.OnSetClick
@@ -72,14 +72,14 @@ internal fun LoggedInSection(
         )
     }
 
-    BaseModelBottomSheet(
+    BaseModalBottomSheet(
         isVisible = isSubscribeSheetVisible.value,
         onDismiss = { isSubscribeSheetVisible.value = false }
     ) {
         SubscribersSection()
     }
 
-    BaseModelBottomSheet(
+    BaseModalBottomSheet(
         isVisible = isNewsFilterSheetVisible.value,
         onDismiss = { isNewsFilterSheetVisible.value = false }
     ) {

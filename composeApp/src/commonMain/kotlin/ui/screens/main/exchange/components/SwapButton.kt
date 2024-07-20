@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
 internal fun SwapButton(
@@ -34,11 +35,11 @@ internal fun SwapButton(
                 .size(64.dp)
                 .background(
                     color = MaterialTheme.colorScheme.onSurface,
-                    shape = RoundedCornerShape(32.dp)
+                    shape = RoundedCornerShape(SPACER_PADDING_32)
                 ),
         ) {
             Icon(
-                modifier = Modifier.size(32.dp),
+                modifier = Modifier.size(SPACER_PADDING_32),
                 imageVector = Icons.Default.CurrencyExchange,
                 contentDescription = "Swap currencies",
                 tint = MaterialTheme.colorScheme.surface

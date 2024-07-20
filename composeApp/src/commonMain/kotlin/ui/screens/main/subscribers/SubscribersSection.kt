@@ -28,6 +28,7 @@ import ui.screens.main.subscribers.components.FreePlanCard
 import ui.screens.main.subscribers.components.PremiumAccessOnly
 import ui.screens.main.subscribers.components.ProPlanCard
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @OptIn(ExperimentalResourceApi::class)
@@ -108,7 +109,7 @@ private fun SubscribeButton(
         enabled = isPremium
     ) {
         Row(
-            modifier = modifier.padding(horizontal = 32.dp),
+            modifier = modifier.padding(horizontal = SPACER_PADDING_32),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(

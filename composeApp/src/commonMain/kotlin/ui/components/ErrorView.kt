@@ -31,6 +31,7 @@ import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.button.SecondaryButton
+import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @OptIn(ExperimentalResourceApi::class)
@@ -83,7 +84,7 @@ internal fun ErrorView(
         Spacer(modifier = Modifier.height(16.dp))
 
         SecondaryButton(
-            modifier = Modifier.padding(horizontal = 32.dp),
+            modifier = Modifier.padding(horizontal = SPACER_PADDING_32),
             text = stringResource(Res.string.retry),
             onButtonClick = onRetry
         )

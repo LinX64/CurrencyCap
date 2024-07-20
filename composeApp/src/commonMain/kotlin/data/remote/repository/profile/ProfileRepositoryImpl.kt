@@ -15,7 +15,7 @@ class ProfileRepositoryImpl(
 
         firestore.collection(USERS_COLLECTION)
             .document(uid)
-            .set(hashMapOf("fullName" to user.fullName, "phoneNumber" to user.phoneNumber))
+            .set(hashMapOf(FULL_NAME_FIELD to user.fullName, PHONE_NUMBER_FIELD to user.phoneNumber))
     }
 
     override suspend fun getUserFullName(): String {
