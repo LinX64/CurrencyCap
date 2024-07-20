@@ -43,9 +43,7 @@ internal fun NewsDetailScreen(
                     NewsDetailContent(
                         article = article,
                         imageUrl = article.urlToImage,
-                        onReadMoreClick = { url ->
-                            shouldShowBottomSheet = true
-                        }
+                        onReadMoreClick = { shouldShowBottomSheet = true }
                     )
                 }
             }
@@ -56,9 +54,7 @@ internal fun NewsDetailScreen(
                     NewsDetailContent(
                         article = getDummyNewsItem(),
                         isLoading = true,
-                        onReadMoreClick = { url ->
-                            shouldShowBottomSheet = true
-                        }
+                        onReadMoreClick = { shouldShowBottomSheet = true }
                     )
                 }
             }
