@@ -37,20 +37,22 @@ kotlin {
 
     sourceSets {
         androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.compose.foundation)
+            implementation(libs.androidx.compose.ui)
+            api(libs.androidx.startup)
+
             implementation(libs.koin.android)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.kotlinx.coroutines.android)
             implementation(compose.preview)
 
-            api(libs.androidx.startup)
             compileOnly(libs.mongodb.realm)
 
-            // Firebase
             implementation(project.dependencies.platform(libs.firebase.bom))
             implementation(libs.firebase.auth)
             implementation(libs.firebase.fireStore)
 
-            implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -65,7 +67,6 @@ kotlin {
             implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.lifecycle.runtime.compose)
             implementation(libs.androidx.lifecycle.viewmodel)
-
             implementation(libs.androidx.startup)
             implementation(libs.urlencoder.lib)
             implementation(libs.mongodb.realm)
@@ -73,7 +74,6 @@ kotlin {
             implementation(libs.firebase.fireStore)
 
             implementation(libs.kotlinx.collections.immutable)
-
             implementation(libs.kotlinx.datetime)
 
             // UI
@@ -105,7 +105,7 @@ kotlin {
 
 android {
     namespace = "com.client.currencycap"
-    compileSdk = 35
+    compileSdk = 34
 
     sourceSets["main"].apply {
         manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -117,7 +117,7 @@ android {
     defaultConfig {
         applicationId = "com.client.currencycap"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
     }
