@@ -27,4 +27,3 @@ internal fun App(
         else -> Unit
     }
 }
-
