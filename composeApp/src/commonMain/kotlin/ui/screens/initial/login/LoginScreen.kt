@@ -37,6 +37,7 @@ import ui.screens.initial.login.LoginViewEvent.OnResetPasswordClick
 import ui.screens.initial.login.components.LoginForm
 import ui.screens.initial.login.components.MadeWithLove
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
 internal fun LoginScreen(
@@ -97,7 +98,7 @@ private fun Content(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 32.dp),
+                .padding(horizontal = SPACER_PADDING_32),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

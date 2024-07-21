@@ -20,8 +20,7 @@ fun NavController.navigateToOverviewScreen(navOptions: NavOptions) = navigate(Ov
 fun NavGraphBuilder.overviewScreen(
     padding: PaddingValues,
     hazeState: HazeState,
-    navController: NavHostController,
-    onError: (message: String) -> Unit
+    navController: NavHostController
 ) {
     composable<Overview> {
         OverviewRoute(

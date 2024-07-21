@@ -32,6 +32,7 @@ import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -58,7 +59,7 @@ internal fun AiPredictScreen(
         )
 
         Column(
-            modifier = Modifier.padding(horizontal = 32.dp),
+            modifier = Modifier.padding(horizontal = SPACER_PADDING_32),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(

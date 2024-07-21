@@ -22,20 +22,8 @@ internal fun App(
     val mainState by mainViewModel.state.collectAsStateWithLifecycle()
     when (mainState) {
         Loading -> SplashScreen()
-        is LoggedIn -> {
-            LoggedInSection(
-                mainViewModel = mainViewModel,
-                scope = scope
-            )
-        }
-
-        is NotLoggedIn -> {
-            NotLoggedInSection(
-                scope = scope,
-                mainViewModel = mainViewModel
-            )
-        }
-
+        is LoggedIn -> LoggedInSection(scope = scope, mainViewModel = mainViewModel)
+        is NotLoggedIn -> NotLoggedInSection(scope = scope, mainViewModel = mainViewModel)
         else -> Unit
     }
 }

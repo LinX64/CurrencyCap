@@ -12,10 +12,9 @@ sealed interface NewsDetailState {
     data object Loading : NewsDetailState
     data class Success(val article: Article) : NewsDetailState
     data class Error(val message: String) : NewsDetailState
-    data class Empty(val message: String) : NewsDetailState
 }
 
 sealed interface NewsDetailNavigationEffect {
-    data class OpenBrowser(val url: String) : NewsDetailNavigationEffect
+    data class OpenBottomSheet(val url: String) : NewsDetailNavigationEffect
 }
 

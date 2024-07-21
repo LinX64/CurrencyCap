@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import domain.model.main.Crypto
 import ui.components.base.GlassCard
+import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.formatNumber
 
@@ -41,7 +42,7 @@ internal fun CryptoGridItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 AsyncImage(
-                    modifier = Modifier.size(32.dp).clip(CircleShape),
+                    modifier = Modifier.size(SPACER_PADDING_32).clip(CircleShape),
                     model = cryptoItem.image,
                     contentDescription = null
                 )

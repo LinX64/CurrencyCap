@@ -35,6 +35,7 @@ import ui.screens.initial.fill_profile.FillProfileViewEvent.OnSignUpClick
 import ui.screens.initial.fill_profile.components.NameTextField
 import ui.screens.initial.fill_profile.components.PhoneNumberTextField
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
 internal fun FillProfileScreen(
@@ -82,7 +83,7 @@ private fun FillProfileForm(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 32.dp),
+            .padding(horizontal = SPACER_PADDING_32),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -102,7 +103,7 @@ private fun FillProfileForm(
             fontWeight = FontWeight.Normal
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_32))
 
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -117,7 +118,7 @@ private fun FillProfileForm(
                 onError = onError
             )
 
-            Spacer(modifier = modifier.height(32.dp))
+            Spacer(modifier = modifier.height(SPACER_PADDING_32))
 
             PrimaryButton(
                 text = stringResource(Res.string.verify_phone_number),

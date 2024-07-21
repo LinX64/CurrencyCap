@@ -13,13 +13,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import ui.components.base.CenteredColumn
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.OverviewState.Error
 import ui.screens.main.overview.OverviewState.Loading
 import ui.screens.main.overview.OverviewState.Success
 import ui.screens.main.overview.components.tabs.components.NewsHomeItem
+import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -29,7 +29,7 @@ internal fun NewsTab(
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
-            .padding(end = 32.dp)
+            .padding(end = SPACER_PADDING_32)
     ) {
         Text(
             text = "Latest News",

@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
 import ui.navigation.util.Screen.CryptoDetail
 import ui.navigation.util.Screen.Explore
-import ui.screens.main.search.SearchScreen
+import ui.screens.main.search.SearchRoute
 
 fun NavController.navigateToSearchScreen() = navigate(Explore)
 
@@ -18,7 +18,7 @@ fun NavGraphBuilder.searchScreen(
     navController: NavHostController
 ) {
     composable<Explore> {
-        SearchScreen(
+        SearchRoute(
             padding = padding,
             hazeState = hazeState,
             onCryptoItemClick = { symbol ->

@@ -18,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
@@ -30,6 +29,7 @@ import ui.screens.initial.reset_password.ResetPasswordViewEvent.OnEmailChanged
 import ui.screens.initial.reset_password.ResetPasswordViewEvent.OnResetPasswordClick
 import ui.screens.initial.reset_password.components.PasswordResetDialog
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
 internal fun ResetPasswordScreen(
@@ -73,7 +73,7 @@ private fun ResetPasswordContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 32.dp),
+            .padding(horizontal = SPACER_PADDING_32),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -86,7 +86,7 @@ private fun ResetPasswordContent(
             color = MaterialTheme.colorScheme.onSurface
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_32))
 
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -94,7 +94,7 @@ private fun ResetPasswordContent(
         ) {
             EmailTextField(onEmailChanged = onEmailChanged)
 
-            Spacer(modifier = modifier.height(32.dp))
+            Spacer(modifier = modifier.height(SPACER_PADDING_32))
 
             PrimaryButton(
                 text = "Reset Password",

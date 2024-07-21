@@ -18,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
 import ui.components.base.BaseCenterColumn
@@ -29,6 +28,7 @@ import ui.screens.initial.get_verified.GetVerifiedPhoneViewEvent.OnCodeChanged
 import ui.screens.initial.get_verified.GetVerifiedPhoneViewEvent.OnFinishSignUpClick
 import ui.screens.initial.get_verified.components.CodeTextField
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -75,7 +75,7 @@ private fun GetVerifiedPhoneForm(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 32.dp),
+            .padding(horizontal = SPACER_PADDING_32),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -97,7 +97,7 @@ private fun GetVerifiedPhoneForm(
             fontWeight = FontWeight.Normal
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_32))
 
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -115,7 +115,7 @@ private fun GetVerifiedPhoneForm(
                 }
             )
 
-            Spacer(modifier = modifier.height(32.dp))
+            Spacer(modifier = modifier.height(SPACER_PADDING_32))
 
             PrimaryButton(
                 text = "Complete Sign Up",

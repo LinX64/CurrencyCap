@@ -16,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.contact_email
@@ -37,6 +36,7 @@ import ui.screens.main.profile.components.DeleteAccountCard
 import ui.screens.main.profile.components.HelpCenterCard
 import ui.screens.main.profile.components.ProfileCard
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
 import util.getDummyUser
 
 @Composable
@@ -110,7 +110,7 @@ private fun AppNameInfoCard(
     onSignOutClicked: () -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(horizontal = SPACER_PADDING_16, vertical = 32.dp),
+        modifier = Modifier.padding(horizontal = SPACER_PADDING_16, vertical = SPACER_PADDING_32),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -126,7 +126,7 @@ private fun AppNameInfoCard(
             style = MaterialTheme.typography.bodySmall
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_32))
 
         SecondaryButton(
             modifier = Modifier.fillMaxWidth(),
