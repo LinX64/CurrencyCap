@@ -15,11 +15,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.create_account
+import currencycap.composeapp.generated.resources.login
 import currencycap.composeapp.generated.resources.logo
+import currencycap.composeapp.generated.resources.privacy_policy
+import currencycap.composeapp.generated.resources.welcome_to_currency_cap
+import currencycap.composeapp.generated.resources.welcome_to_currency_cap_description
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.button.PrimaryButton
 import ui.components.base.button.SecondaryButton
 import ui.theme.AppDimensions.SPACER_PADDING_16
@@ -33,67 +40,68 @@ internal fun LandingScreen(
     onSignUpClick: () -> Unit,
     onPrivacyPolicyClick: () -> Unit
 ) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(SPACER_PADDING_16),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .padding(horizontal = SPACER_PADDING_16),
-            horizontalAlignment = Alignment.CenterHorizontally,
+    GradientBackground {
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(SPACER_PADDING_16),
+            contentAlignment = Alignment.Center
         ) {
-            Image(
-                painter = painterResource(Res.drawable.logo),
-                contentDescription = "Logo",
-                modifier = Modifier.size(220.dp)
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(horizontal = SPACER_PADDING_16),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Image(
+                    painter = painterResource(Res.drawable.logo),
+                    contentDescription = "Logo",
+                    modifier = Modifier.size(220.dp)
+                )
 
-            Spacer(modifier = Modifier.height(SPACER_PADDING_8))
+                Text(
+                    text = stringResource(Res.string.welcome_to_currency_cap),
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold
+                )
 
-            Text(
-                text = "Welcome to CurrencyCap",
-                style = MaterialTheme.typography.headlineLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-                textAlign = TextAlign.Center
-            )
+                Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
-            Spacer(modifier = Modifier.height(SPACER_PADDING_8))
+                Text(
+                    text = stringResource(Res.string.welcome_to_currency_cap_description),
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    textAlign = TextAlign.Center
+                )
 
-            Text(
-                text = "Track your crypto investments with ease",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                textAlign = TextAlign.Center
-            )
+                Spacer(modifier = Modifier.height(45.dp))
 
-            Spacer(modifier = Modifier.height(80.dp))
+                PrimaryButton(
+                    text = stringResource(Res.string.create_account),
+                    onButtonClick = onSignUpClick
+                )
 
-            PrimaryButton(
-                text = "Create an Account",
-                onButtonClick = onSignUpClick
-            )
+                Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
-            Spacer(modifier = Modifier.height(SPACER_PADDING_16))
+                SecondaryButton(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(Res.string.login),
+                    textPadding = SPACER_PADDING_8,
+                    onButtonClick = onLoginClick,
+                )
 
-            SecondaryButton(
-                modifier = Modifier.fillMaxWidth(),
-                textPadding = SPACER_PADDING_8,
-                onButtonClick = onLoginClick,
-                text = "Log In"
-            )
+                Spacer(modifier = Modifier.height(SPACER_PADDING_32))
 
-            Spacer(modifier = Modifier.height(SPACER_PADDING_32))
-
-            Text(
-                text = "Privacy Policy",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                modifier = Modifier.clickable { onPrivacyPolicyClick() }
-            )
+                Text(
+                    text = stringResource(Res.string.privacy_policy),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                    modifier = Modifier.clickable { onPrivacyPolicyClick() }
+                )
+            }
         }
     }
 }

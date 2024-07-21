@@ -14,7 +14,6 @@ import androidx.compose.ui.text.font.FontWeight
 import ui.screens.main.overview.OverviewState
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
-import ui.theme.colors.CurrencyColors
 import util.getDummyCryptoItems
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -30,7 +29,7 @@ internal fun TrendingCryptoCurrencies(
             ) else Modifier.padding(start = SPACER_PADDING_8),
             text = "Trending rates",
             style = MaterialTheme.typography.titleMedium,
-            color = CurrencyColors.White,
+            color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold
         )
 

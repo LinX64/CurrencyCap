@@ -8,7 +8,6 @@
     <string name="feature_not_available">This feature is not available yet!</string>
     <string name="feature_not_available_description">We are working hard to bring this feature to you soon. Stay tuned!</string>
     <string name="delete_your_account_warning">IMPORTANT: This action is irreversible and will delete all your data. Please proceed with caution!</string>
-    <string name="delete_account">Delete Account</string>
 
     <string name="exchange_screen_disclaimer">Disclaimer</string>
     <string name="exchange_screen_disclaimer_description">Exchange rates are indicative and may change according to market fluctuations. Rates provided by CoinCap.io.</string>
@@ -19,32 +18,27 @@
     <string name="bookmarks">Bookmarks</string>
     <string name="news">News</string>
     <string name="profile">Profile</string>
-
     <string name="ai_prediction">AI Prediction</string>
     <string name="market">Market</string>
     <string name="explore">Explore</string>
 
-    <string name="login">Login</string>
+    <!-- Login -->
     <string name="register">Register</string>
-    <string name="forgot_password">Forgot Password</string>
+    <string name="forgot_password">Forgot your Password?</string>
     <string name="logout">Logout</string>
     <string name="landing">Landing</string>
+    <string name="made_with_love">Made with ❤️ in Poland 🇵🇱</string>
 
     <string name="fill_profile">Fill Profile</string>
-    <string name="get_verified">Get Verified</string>
-    <string name="privacy_policy">Privacy Policy</string>
     <string name="crypto_details">Crypto Details</string>
     <string name="news_detail">News Detail</string>
     <string name="settings">Settings</string>
 
     <string name="search_hint">Search</string>
     <string name="search_hint_no_results">No results found</string>
-
     <string name="try_searching_for">Try searching for something else</string>
     <string name="no_results_found">No results found</string>
-
     <string name="no_internet_connection">No Internet Connection Available!</string>
-
     <string name="support_request">Support Request</string>
     <string name="contact_email">ash.wxrz@hotmail.com</string>
 
@@ -72,9 +66,41 @@
 
     <string name="please_fill_in_your_full_name">Please fill in your Full Name and Phone number</string>
     <string name="verify_phone_number">Verify Phone Number</string>
-
     <string name="skip">Skip</string>
-
     <string name="no_bookmarks_description">Start curating your news. Bookmark articles to see them here.</string>
     <string name="explore_news">Explore News</string>
+
+    <!-- Profile -->
+    <string name="help_center">Help Center</string>
+    <string name="support">Support</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="delete_your_account">Delete your account</string>
+    <string name="app_version">v1.0.0</string>
+    <string name="copy_right">© 2024 Currency Cap. All rights reserved.</string>
+    <string name="sign_out">Sign Out</string>
+
+    <!-- Landing screen-->
+    <string name="welcome_to_currency_cap">Welcome to CurrencyCap</string>
+    <string name="welcome_to_currency_cap_description">Track your crypto investments with ease</string>
+    <string name="create_account">Create an Account</string>
+    <string name="login">Log in</string>
+    <string name="get_started">Get Started</string>
+    <string name="privacy_policy">Privacy Policy</string>
+
+    <!-- Register -->
+    <string name="sign_up">Sign Up</string>
+    <string name="by_signing_up">By signing up, you agree to our </string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="and"> and </string>
+
+    <!-- Reset Password -->
+    <string name="reset_password">Reset Password</string>
+
+    <!-- Get Verified -->
+    <string name="get_verified">Get Verified</string>
+    <string name="enter_verification_code">Enter Verification Code</string>
+    <string name="we_have_sent_code">We have sent you an email with a verification code</string>
+    <string name="finish_sign_up">Finish Sign Up</string>
+
 </resources>

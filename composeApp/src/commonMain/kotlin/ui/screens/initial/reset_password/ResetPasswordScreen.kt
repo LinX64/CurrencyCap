@@ -20,7 +20,10 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.reset_password
 import di.koinViewModel
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.BaseCenterColumn
 import ui.components.base.EmailTextField
 import ui.components.base.button.PrimaryButton
@@ -80,7 +83,7 @@ private fun ResetPasswordContent(
         Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
         Text(
-            text = "Reset Password",
+            text = stringResource(Res.string.reset_password),
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurface
@@ -97,7 +100,7 @@ private fun ResetPasswordContent(
             Spacer(modifier = modifier.height(SPACER_PADDING_32))
 
             PrimaryButton(
-                text = "Reset Password",
+                text = stringResource(Res.string.reset_password),
                 onButtonClick = {
                     keyboardController?.hide()
                     onResetPasswordClick()

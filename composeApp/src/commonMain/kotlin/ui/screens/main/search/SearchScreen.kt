@@ -31,7 +31,7 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import kotlinx.coroutines.delay
 import ui.components.ErrorView
-import ui.components.main.BaseGlassLazyColumn
+import ui.components.base.BaseGlassLazyColumn
 import ui.screens.main.overview.components.CryptoHorizontalItem
 import ui.screens.main.search.SearchEvent.OnRetryClicked
 import ui.screens.main.search.SearchEvent.OnSearchTextChanged
@@ -75,7 +75,7 @@ internal fun SearchScreen(
 ) {
     var text by rememberSaveable { mutableStateOf("") }
     var expanded by rememberSaveable { mutableStateOf(true) }
-    val showKeyboard = remember { mutableStateOf(true) }
+    val showKeyboard by remember { mutableStateOf(true) }
     val focusRequester = remember { FocusRequester() }
     val keyboard = LocalSoftwareKeyboardController.current
 
@@ -133,9 +133,9 @@ internal fun SearchScreen(
     }
 
     LaunchedEffect(focusRequester) {
-        if (showKeyboard.equals(true)) {
+        if (showKeyboard) {
             focusRequester.requestFocus()
-            delay(100)
+            delay(300)
             keyboard?.show()
         }
     }

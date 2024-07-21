@@ -3,7 +3,7 @@ package ui.screens.main.profile
 import data.remote.model.User
 
 sealed interface ProfileViewEvent {
-    data class OnDeleteAccountCardClicked(val uid: String) : ProfileViewEvent
+    data object OnDeleteAccountCardClicked : ProfileViewEvent
     data object OnSupportClicked : ProfileViewEvent
     data object OnSignOutClicked : ProfileViewEvent
 }

@@ -12,7 +12,7 @@ import di.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 import ui.components.ErrorView
 import ui.components.NewsItem
-import ui.components.main.BaseGlassLazyColumn
+import ui.components.base.BaseGlassLazyColumn
 import ui.screens.main.news.NewsState.Empty
 import ui.screens.main.news.NewsState.Loading
 import ui.screens.main.news.NewsState.Success

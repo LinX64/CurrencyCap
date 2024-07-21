@@ -24,7 +24,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.forgot_password
+import currencycap.composeapp.generated.resources.login
 import di.koinViewModel
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.CenteredColumn
 import ui.components.base.HandleNavigationEffect
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToMarketOverview
@@ -103,7 +107,7 @@ private fun Content(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Login",
+                text = stringResource(Res.string.login),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
@@ -120,7 +124,7 @@ private fun Content(
 
             TextButton(onClick = { loginViewModel.handleEvent(OnResetPasswordClick) }) {
                 Text(
-                    text = "Forgot your password?",
+                    text = stringResource(Res.string.forgot_password),
                     color = MaterialTheme.colorScheme.primary,
                     fontSize = 14.sp
                 )

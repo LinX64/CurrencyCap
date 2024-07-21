@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
+import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.GlassCard
-import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.profile.components.HelpCenterItem
 import ui.screens.main.settings.SettingsViewEvent.OnDarkModeSwitchChange
 import ui.screens.main.settings.SettingsViewEvent.OnPushNotificationSwitchChange

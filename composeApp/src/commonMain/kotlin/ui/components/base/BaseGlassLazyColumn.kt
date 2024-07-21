@@ -1,4 +1,4 @@
-package ui.components.main
+package ui.components.base
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,16 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
-import ui.theme.AppDimensions.CARD_CORNER_RADIUS
+import ui.theme.AppDimensions.SPACER_PADDING_16
 
 @Composable
 internal fun BaseGlassLazyColumn(
     modifier: Modifier = Modifier,
-    padding: PaddingValues,
+    padding: PaddingValues = PaddingValues(0.dp),
     hazeState: HazeState,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
@@ -41,8 +40,7 @@ internal fun BaseGlassLazyColumn(
                     state = hazeState,
                     style = HazeStyle(
                         tint = MaterialTheme.colorScheme.surface.copy(alpha = 0.1f),
-                        blurRadius = CARD_CORNER_RADIUS,
-                        noiseFactor = HazeDefaults.noiseFactor
+                        blurRadius = SPACER_PADDING_16
                     )
                 ),
             contentPadding = padding,
