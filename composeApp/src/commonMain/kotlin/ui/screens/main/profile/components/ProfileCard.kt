@@ -25,7 +25,6 @@ import ui.theme.AppDimensions.SPACER_PADDING_16
 
 @Composable
 internal fun ProfileCard(
-    modifier: Modifier = Modifier,
     profilePicture: String = "https://www.w3schools.com/howto/img_avatar.png",
     user: User,
     isLoading: Boolean = false

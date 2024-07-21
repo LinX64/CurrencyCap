@@ -26,6 +26,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.delete_account
+import currencycap.composeapp.generated.resources.delete_your_account
 import currencycap.composeapp.generated.resources.delete_your_account_warning
 import org.jetbrains.compose.resources.stringResource
 import ui.components.DottedShape
@@ -62,7 +64,7 @@ internal fun DeleteAccountCard(
                 Spacer(modifier = Modifier.width(10.dp))
 
                 Text(
-                    text = "Delete account",
+                    text = stringResource(Res.string.delete_account),
                     fontWeight = FontWeight.Bold,
                     fontSize = MaterialTheme.typography.titleMedium.fontSize,
                     color = MaterialTheme.colorScheme.onSurface
@@ -92,7 +94,7 @@ internal fun DeleteAccountCard(
                 ) {
                     Text(
                         modifier = Modifier.weight(1f),
-                        text = "Delete your account",
+                        text = stringResource(Res.string.delete_your_account),
                         fontSize = MaterialTheme.typography.titleMedium.fontSize,
                         color = MaterialTheme.colorScheme.onSurface
                     )

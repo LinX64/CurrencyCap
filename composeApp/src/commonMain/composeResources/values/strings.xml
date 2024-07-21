@@ -8,7 +8,6 @@
     <string name="feature_not_available">This feature is not available yet!</string>
     <string name="feature_not_available_description">We are working hard to bring this feature to you soon. Stay tuned!</string>
     <string name="delete_your_account_warning">IMPORTANT: This action is irreversible and will delete all your data. Please proceed with caution!</string>
-    <string name="delete_account">Delete Account</string>
 
     <string name="exchange_screen_disclaimer">Disclaimer</string>
     <string name="exchange_screen_disclaimer_description">Exchange rates are indicative and may change according to market fluctuations. Rates provided by CoinCap.io.</string>
@@ -77,4 +76,14 @@
 
     <string name="no_bookmarks_description">Start curating your news. Bookmark articles to see them here.</string>
     <string name="explore_news">Explore News</string>
+
+    <!-- Profile -->
+    <string name="help_center">Help Center</string>
+    <string name="support">Support</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="delete_your_account">Delete your account</string>
+    <string name="app_version">v1.0.0</string>
+    <string name="copy_right">© 2024 Currency Cap. All rights reserved.</string>
+    <string name="sign_out">Sign Out</string>
 </resources>

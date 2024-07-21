@@ -11,6 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.app_name
+import currencycap.composeapp.generated.resources.app_version
+import currencycap.composeapp.generated.resources.copy_right
+import currencycap.composeapp.generated.resources.sign_out
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.button.SecondaryButton
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_32
@@ -24,13 +30,13 @@ internal fun AppNameInfoCard(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Currency Cap v1.0.0",
+            text = stringResource(Res.string.app_name) + " " + stringResource(Res.string.app_version),
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center
         )
 
         Text(
-            text = "© 2024 Currency Cap. All rights reserved.",
+            text = stringResource(Res.string.copy_right),
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodySmall
@@ -40,7 +46,7 @@ internal fun AppNameInfoCard(
 
         SecondaryButton(
             modifier = Modifier.fillMaxWidth(),
-            text = "Sign Out",
+            text = stringResource(Res.string.sign_out),
             onButtonClick = onSignOutClicked
         )
     }
