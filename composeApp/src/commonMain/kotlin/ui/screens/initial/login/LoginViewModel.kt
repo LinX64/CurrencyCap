@@ -39,6 +39,8 @@ internal class LoginViewModel(
     }
 
     private fun authenticate(email: String, password: String) {
+        Loading
+
         if (email.isEmpty()) {
             setState { Error("Email must not be empty") }
             return
