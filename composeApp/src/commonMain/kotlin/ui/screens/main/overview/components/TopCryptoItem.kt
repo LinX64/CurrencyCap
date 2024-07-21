@@ -75,7 +75,6 @@ internal fun TopCryptoItem(
 
                         ChangeIcon(
                             valueChange = dataDao.rateUsd.toDouble(),
-                            isPositive = data.valueChange > 0,
                             isLoading = isLoading
                         )
                     }

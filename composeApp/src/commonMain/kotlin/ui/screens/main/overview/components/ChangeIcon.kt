@@ -14,7 +14,6 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun ChangeIcon(
-    isPositive: Boolean,
     valueChange: Double,
     isLoading: Boolean = false
 ) {
