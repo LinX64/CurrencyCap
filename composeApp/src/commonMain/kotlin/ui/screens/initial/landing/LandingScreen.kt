@@ -19,7 +19,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.logo
+import currencycap.composeapp.generated.resources.privacy_policy
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.button.PrimaryButton
 import ui.components.base.button.SecondaryButton
 import ui.theme.AppDimensions.SPACER_PADDING_16
@@ -55,7 +57,7 @@ internal fun LandingScreen(
             Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
             Text(
-                text = "Welcome to CurrencyCap",
+                text = stringResource(Res.string.welcome_to_currency_cap),
                 style = MaterialTheme.typography.headlineLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 textAlign = TextAlign.Center
@@ -64,7 +66,7 @@ internal fun LandingScreen(
             Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
             Text(
-                text = "Track your crypto investments with ease",
+                text = stringResource(Res.string.welcome_to_currency_cap_description),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 textAlign = TextAlign.Center
@@ -73,7 +75,7 @@ internal fun LandingScreen(
             Spacer(modifier = Modifier.height(80.dp))
 
             PrimaryButton(
-                text = "Create an Account",
+                text = stringResource(Res.string.create_account),
                 onButtonClick = onSignUpClick
             )
 
@@ -81,15 +83,15 @@ internal fun LandingScreen(
 
             SecondaryButton(
                 modifier = Modifier.fillMaxWidth(),
+                text = stringResource(Res.string.login_to_your_account),
                 textPadding = SPACER_PADDING_8,
                 onButtonClick = onLoginClick,
-                text = "Log In"
             )
 
             Spacer(modifier = Modifier.height(SPACER_PADDING_32))
 
             Text(
-                text = "Privacy Policy",
+                text = stringResource(Res.string.privacy_policy),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                 modifier = Modifier.clickable { onPrivacyPolicyClick() }
