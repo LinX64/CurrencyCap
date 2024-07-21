@@ -81,7 +81,7 @@
     <string name="sign_out">Sign Out</string>
 
     <!-- Landing screen-->
-    <string name="welcome_to_currency_cap">Welcome to Currency Cap</string>
+    <string name="welcome_to_currency_cap">Welcome to CurrencyCap</string>
     <string name="welcome_to_currency_cap_description">Track your crypto investments with ease</string>
     <string name="create_account">Create an Account</string>
     <string name="login">Log in</string>

@@ -58,8 +58,6 @@ internal fun LandingScreen(
                 modifier = Modifier.size(220.dp)
             )
 
-            Spacer(modifier = Modifier.height(SPACER_PADDING_8))
-
             Text(
                 text = stringResource(Res.string.welcome_to_currency_cap),
                 style = MaterialTheme.typography.headlineLarge,
@@ -71,7 +69,7 @@ internal fun LandingScreen(
 
             Text(
                 text = stringResource(Res.string.welcome_to_currency_cap_description),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.onSurface,
                 textAlign = TextAlign.Center
             )
