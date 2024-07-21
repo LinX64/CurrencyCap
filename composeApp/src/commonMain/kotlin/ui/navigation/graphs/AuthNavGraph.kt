@@ -16,8 +16,8 @@ import ui.screens.initial.reset_password.navigation.resetPasswordScreen
 internal fun AuthNavGraph(
     padding: PaddingValues,
     navController: NavHostController,
-    onLoginSuccess: () -> Unit,
     showPrivacyPolicyBottomSheet: () -> Unit,
+    onLoginSuccess: () -> Unit,
     onError: (message: String) -> Unit
 ) {
     NavHost(

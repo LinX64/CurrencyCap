@@ -66,7 +66,6 @@ private fun LazyListScope.newsScreenContent(
     newsViewModel: NewsViewModel,
     onNewsItemClick: (url: String) -> Unit
 ) = when (val currentState = state.value) {
-
     is Success -> {
         val articles = currentState.news
         items(

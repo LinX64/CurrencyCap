@@ -34,6 +34,8 @@ import ui.components.base.HandleNavigationEffect
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToRegister
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToResetPassword
+import ui.screens.initial.login.LoginState.Error
+import ui.screens.initial.login.LoginState.Loading
 import ui.screens.initial.login.LoginViewEvent.OnEmailChanged
 import ui.screens.initial.login.LoginViewEvent.OnLoginClick
 import ui.screens.initial.login.LoginViewEvent.OnPasswordChanged
@@ -68,8 +70,8 @@ internal fun LoginScreen(
     }
 
     when (state) {
-        is LoginState.Loading -> CenteredColumn { CircularProgressIndicator() }
-        is LoginState.Error -> onError((state as LoginState.Error).message)
+        is Loading -> CenteredColumn { CircularProgressIndicator() }
+        is Error -> onError((state as Error).message)
         else -> Unit
     }
 }
