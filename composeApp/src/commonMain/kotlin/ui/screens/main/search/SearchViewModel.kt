@@ -17,10 +17,15 @@ import ui.common.MviViewModel
 import ui.screens.main.search.SearchEvent.OnRetryClicked
 import ui.screens.main.search.SearchEvent.OnSearchClicked
 import ui.screens.main.search.SearchEvent.OnSearchTextChanged
+import ui.screens.main.search.SearchState.Empty
+import ui.screens.main.search.SearchState.Error
+import ui.screens.main.search.SearchState.Idle
+import ui.screens.main.search.SearchState.Loading
+import ui.screens.main.search.SearchState.Success
 
 class SearchViewModel(
     private val mainRepository: MainRepository
-) : MviViewModel<SearchEvent, SearchState, SearchNavigationEffect>(SearchState.Idle) {
+) : MviViewModel<SearchEvent, SearchState, SearchNavigationEffect>(Idle) {
 
     private val searchQuery: MutableStateFlow<String> = MutableStateFlow("")
 
@@ -36,7 +41,7 @@ class SearchViewModel(
     private fun search(query: String) {
         with(searchQuery) {
             if (query.isEmpty()) {
-                setState { SearchState.Idle }
+                setState { Idle }
                 return
             }
 
@@ -49,12 +54,12 @@ class SearchViewModel(
                 .onEach { result ->
                     setState {
                         when (result) {
-                            is NetworkResult.Error -> SearchState.Error(result.throwable.message ?: "")
-                            is NetworkResult.Loading -> SearchState.Loading
+                            is NetworkResult.Error -> Error(result.throwable.message ?: "")
+                            is NetworkResult.Loading -> Loading
                             is NetworkResult.Success -> {
                                 if (result.data.isNotEmpty()) {
-                                    SearchState.Success(result.data)
-                                } else SearchState.Empty
+                                    Success(result.data)
+                                } else Empty
                             }
                         }
                     }

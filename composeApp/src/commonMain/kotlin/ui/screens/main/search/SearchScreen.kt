@@ -54,7 +54,6 @@ internal fun SearchRoute(
     onCryptoItemClick: (String) -> Unit
 ) {
     val state by searchViewModel.viewState.collectAsStateWithLifecycle()
-
     SearchScreen(
         state = state,
         padding = padding,
