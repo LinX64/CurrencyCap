@@ -24,7 +24,15 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.and
+import currencycap.composeapp.generated.resources.by_signing_up
+import currencycap.composeapp.generated.resources.privacy_policy
+import currencycap.composeapp.generated.resources.register
+import currencycap.composeapp.generated.resources.sign_up
+import currencycap.composeapp.generated.resources.terms_of_service
 import di.koinViewModel
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.CenteredColumn
 import ui.components.base.EmailTextField
 import ui.components.base.HandleNavigationEffect
@@ -86,7 +94,7 @@ private fun RegisterContent(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Register",
+            text = stringResource(Res.string.register),
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurface
@@ -110,7 +118,7 @@ private fun RegisterContent(
         Spacer(modifier = Modifier.height(24.dp))
 
         PrimaryButton(
-            text = "Sign Up",
+            text = stringResource(Res.string.sign_up),
             onButtonClick = {
                 keyboardController?.hide()
                 onSignUpClick()
@@ -129,7 +137,7 @@ private fun BySigningUpText(
 ) {
     Text(
         text = buildAnnotatedString {
-            append("By signing up, you agree to our ")
+            append(stringResource(Res.string.by_signing_up))
             withStyle(
                 style = SpanStyle(
                     textDecoration = TextDecoration.Underline,
@@ -137,10 +145,10 @@ private fun BySigningUpText(
                 )
             ) {
                 pushStringAnnotation("TOS", "")
-                append("Terms of Service")
+                append(stringResource(Res.string.terms_of_service))
                 pop()
             }
-            append(" and ")
+            append(stringResource(Res.string.and))
             withStyle(
                 style = SpanStyle(
                     textDecoration = TextDecoration.Underline,
@@ -148,7 +156,7 @@ private fun BySigningUpText(
                 )
             ) {
                 pushStringAnnotation("PP", "")
-                append("Privacy Policy")
+                append(stringResource(Res.string.privacy_policy))
                 pop()
             }
         },

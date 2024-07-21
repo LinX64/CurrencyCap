@@ -19,7 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.finish_sign_up
+import currencycap.composeapp.generated.resources.get_verified
+import currencycap.composeapp.generated.resources.we_have_sent_code
 import di.koinViewModel
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.BaseCenterColumn
 import ui.components.base.HandleNavigationEffect
 import ui.components.base.button.PrimaryButton
@@ -82,7 +87,7 @@ private fun GetVerifiedPhoneForm(
         Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
         Text(
-            text = "Enter Verification Code",
+            text = stringResource(Res.string.get_verified),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold
@@ -91,7 +96,7 @@ private fun GetVerifiedPhoneForm(
         Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
         Text(
-            text = "We have sent you an email with a verification code",
+            text = stringResource(Res.string.we_have_sent_code),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Normal
@@ -118,7 +123,7 @@ private fun GetVerifiedPhoneForm(
             Spacer(modifier = modifier.height(SPACER_PADDING_32))
 
             PrimaryButton(
-                text = "Complete Sign Up",
+                text = stringResource(Res.string.finish_sign_up),
                 onButtonClick = onFinishSignUpClick
             )
         }

@@ -23,7 +23,6 @@
     <string name="explore">Explore</string>
 
     <!-- Login -->
-    <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="forgot_password">Forgot your Password?</string>
     <string name="logout">Logout</string>
@@ -31,7 +30,6 @@
     <string name="made_with_love">Made with ❤️ in Poland 🇵🇱</string>
 
     <string name="fill_profile">Fill Profile</string>
-    <string name="get_verified">Get Verified</string>
     <string name="crypto_details">Crypto Details</string>
     <string name="news_detail">News Detail</string>
     <string name="settings">Settings</string>
@@ -86,7 +84,23 @@
     <string name="welcome_to_currency_cap">Welcome to Currency Cap</string>
     <string name="welcome_to_currency_cap_description">Track your crypto investments with ease</string>
     <string name="create_account">Create an Account</string>
-    <string name="login_to_your_account">Login to your Account</string>
+    <string name="login">Log in</string>
     <string name="get_started">Get Started</string>
     <string name="privacy_policy">Privacy Policy</string>
+
+    <!-- Register -->
+    <string name="sign_up">Sign Up</string>
+    <string name="by_signing_up">By signing up, you agree to our </string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="and"> and </string>
+
+    <!-- Reset Password -->
+    <string name="reset_password">Reset Password</string>
+
+    <!-- Get Verified -->
+    <string name="get_verified">Get Verified</string>
+    <string name="enter_verification_code">Enter Verification Code</string>
+    <string name="we_have_sent_code">We have sent you an email with a verification code</string>
+    <string name="finish_sign_up">Finish Sign Up</string>
+
 </resources>
