@@ -28,8 +28,8 @@ import di.koinViewModel
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
 import org.jetbrains.compose.resources.stringResource
 import ui.components.NewsItem
+import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.button.SecondaryButton
-import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.bookmarks.BookmarksViewEvent.OnRemoveBookmarkClick
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_32

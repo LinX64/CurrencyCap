@@ -8,7 +8,7 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import ui.components.HorizontalLineWithDot
 import ui.components.SearchViewHeader
-import ui.components.main.BaseGlassLazyColumn
+import ui.components.base.BaseGlassLazyColumn
 import ui.screens.main.overview.components.PortfolioSection
 import ui.screens.main.overview.components.TodayTopMovers
 import ui.screens.main.overview.components.TopRates

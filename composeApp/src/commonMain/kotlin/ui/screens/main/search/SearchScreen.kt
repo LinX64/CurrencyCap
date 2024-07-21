@@ -31,7 +31,7 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import kotlinx.coroutines.delay
 import ui.components.ErrorView
-import ui.components.main.BaseGlassLazyColumn
+import ui.components.base.BaseGlassLazyColumn
 import ui.screens.main.overview.components.CryptoHorizontalItem
 import ui.screens.main.search.SearchEvent.OnRetryClicked
 import ui.screens.main.search.SearchEvent.OnSearchTextChanged

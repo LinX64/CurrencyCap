@@ -15,9 +15,9 @@ import currencycap.composeapp.generated.resources.support_request
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import ui.common.SendMail
+import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.BaseTransparentCircularProgressBar
 import ui.components.base.HandleNavigationEffect
-import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.profile.ProfileNavigationEffect.NavigateToLanding
 import ui.screens.main.profile.ProfileNavigationEffect.OpenEmailApp
 import ui.screens.main.profile.ProfileState.Loading
