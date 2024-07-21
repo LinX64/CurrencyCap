@@ -43,7 +43,6 @@ internal fun SettingsRoute(
     )
 }
 
-
 @Composable
 internal fun SettingsScreen(
     padding: PaddingValues,

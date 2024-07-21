@@ -30,6 +30,8 @@ import org.jetbrains.compose.resources.stringResource
 import ui.components.NewsItem
 import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.button.SecondaryButton
+import ui.screens.main.bookmarks.BookmarksState.NoBookmarks
+import ui.screens.main.bookmarks.BookmarksState.Success
 import ui.screens.main.bookmarks.BookmarksViewEvent.OnRemoveBookmarkClick
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_32
@@ -46,11 +48,11 @@ internal fun BookmarksScreen(
     BaseGlassLazyColumn(
         hazeState = hazeState,
         padding = padding,
-        isEmpty = state is BookmarksState.NoBookmarks,
+        isEmpty = state is NoBookmarks,
         emptyContent = { NoBookmarks(onExploreNewsClick = onExploreNewsClick) },
         content = {
-            if (state is BookmarksState.Success) {
-                val articles = (state as BookmarksState.Success).articles
+            if (state is Success) {
+                val articles = (state as Success).articles
                 items(
                     count = articles.size,
                     key = { articles[it].url }
