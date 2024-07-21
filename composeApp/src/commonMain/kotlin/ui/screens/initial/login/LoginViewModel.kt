@@ -11,6 +11,8 @@ import ui.screens.initial.login.LoginNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToRegister
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToResetPassword
 import ui.screens.initial.login.LoginState.Error
+import ui.screens.initial.login.LoginState.Idle
+import ui.screens.initial.login.LoginState.Loading
 import ui.screens.initial.login.LoginViewEvent.OnEmailChanged
 import ui.screens.initial.login.LoginViewEvent.OnLoginClick
 import ui.screens.initial.login.LoginViewEvent.OnPasswordChanged
@@ -21,24 +23,22 @@ import util.validateEmail
 internal class LoginViewModel(
     private val authServiceRepository: AuthServiceRepository,
     private val userPreferences: UserPreferences
-) : MviViewModel<LoginViewEvent, LoginState, LoginNavigationEffect>(LoginState.Idle) {
+) : MviViewModel<LoginViewEvent, LoginState, LoginNavigationEffect>(Idle) {
 
     val newEmail: MutableStateFlow<String> = MutableStateFlow("")
     val newPassword: MutableStateFlow<String> = MutableStateFlow("")
 
     override fun handleEvent(event: LoginViewEvent) {
         when (event) {
+            OnSignUpClick -> setEffect(NavigateToRegister)
+            OnResetPasswordClick -> setEffect(NavigateToResetPassword)
             is OnLoginClick -> authenticate(email = event.email, password = event.password)
             is OnEmailChanged -> newEmail.value = event.email
             is OnPasswordChanged -> newPassword.value = event.password
-            OnSignUpClick -> setEffect(NavigateToRegister)
-            OnResetPasswordClick -> setEffect(NavigateToResetPassword)
         }
     }
 
     private fun authenticate(email: String, password: String) {
-        setState { LoginState.Loading }
-
         if (email.isEmpty()) {
             setState { Error("Email must not be empty") }
             return
@@ -57,7 +57,7 @@ internal class LoginViewModel(
         viewModelScope.launch {
             val authState = authServiceRepository.authenticate(email, password)
             when (authState) {
-                AuthState.Loading -> setState { LoginState.Loading }
+                AuthState.Loading -> setState { Loading }
                 is AuthState.Success -> {
                     userPreferences.saveUserUid(authServiceRepository.currentUserId) // TODO: Issue with IOS
                     setEffect(NavigateToMarketOverview)
