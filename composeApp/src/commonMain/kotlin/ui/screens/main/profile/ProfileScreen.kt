@@ -15,7 +15,7 @@ import currencycap.composeapp.generated.resources.support_request
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import ui.common.SendMail
-import ui.components.BaseCircularProgressBarWithBackground
+import ui.components.base.BaseTransparentCircularProgressBar
 import ui.components.base.HandleNavigationEffect
 import ui.components.main.BaseGlassLazyColumn
 import ui.screens.main.profile.ProfileNavigationEffect.NavigateToLanding
@@ -92,7 +92,7 @@ internal fun ProfileScreen(
 
         when (state) {
             is ProfileState.Error -> onError(state.message)
-            is Loading -> BaseCircularProgressBarWithBackground()
+            is Loading -> BaseTransparentCircularProgressBar()
             else -> Unit
         }
     }

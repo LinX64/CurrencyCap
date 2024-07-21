@@ -1,4 +1,4 @@
-package ui.components
+package ui.components.base
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-internal fun BaseCircularProgressBarWithBackground(
+internal fun BaseTransparentCircularProgressBar(
     modifier: Modifier = Modifier,
     backgroundColor: Color = MaterialTheme.colorScheme.background
 ) {
