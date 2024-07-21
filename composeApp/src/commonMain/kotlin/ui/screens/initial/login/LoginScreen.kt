@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.forgot_password
+import currencycap.composeapp.generated.resources.login
 import di.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.CenteredColumn

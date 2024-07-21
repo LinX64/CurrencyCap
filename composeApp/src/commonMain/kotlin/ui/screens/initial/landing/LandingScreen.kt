@@ -18,8 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.create_account
+import currencycap.composeapp.generated.resources.login_to_your_account
 import currencycap.composeapp.generated.resources.logo
 import currencycap.composeapp.generated.resources.privacy_policy
+import currencycap.composeapp.generated.resources.welcome_to_currency_cap
+import currencycap.composeapp.generated.resources.welcome_to_currency_cap_description
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.button.PrimaryButton
