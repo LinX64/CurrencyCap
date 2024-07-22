@@ -24,7 +24,6 @@ internal fun PortfolioSection(
     onNewsItemClick: (url: String) -> Unit,
     onCryptoItemClick: (symbol: String) -> Unit
 ) {
-    val isLoading = state is OverviewState.Loading
     val pagerState = rememberPagerState(
         pageCount = { tabs.size },
         initialPage = 1

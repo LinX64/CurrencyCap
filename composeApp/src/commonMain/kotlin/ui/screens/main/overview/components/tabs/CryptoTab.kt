@@ -130,9 +130,8 @@ internal fun InnerChartRow(
             )
 
             ChangeIcon(
-                isPositive = isPositive,
-                isLoading = isLoading,
                 valueChange = 10.1,
+                isLoading = isLoading,
             )
         }
     }

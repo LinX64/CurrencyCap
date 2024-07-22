@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.explore_news
 import currencycap.composeapp.generated.resources.no_bookmarks_description
+import currencycap.composeapp.generated.resources.no_bookmarks_yet
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
@@ -30,12 +31,14 @@ import org.jetbrains.compose.resources.stringResource
 import ui.components.NewsItem
 import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.button.SecondaryButton
+import ui.screens.main.bookmarks.BookmarksState.NoBookmarks
+import ui.screens.main.bookmarks.BookmarksState.Success
 import ui.screens.main.bookmarks.BookmarksViewEvent.OnRemoveBookmarkClick
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
-internal fun BookmarksScreen(
+internal fun BookmarksRoute(
     padding: PaddingValues,
     bookmarksViewModel: BookmarksViewModel = koinViewModel<BookmarksViewModel>(),
     hazeState: HazeState,
@@ -43,14 +46,34 @@ internal fun BookmarksScreen(
     onBookmarkItemClick: (url: String) -> Unit
 ) {
     val state by bookmarksViewModel.viewState.collectAsStateWithLifecycle()
+
+    BookmarksScreen(
+        padding = padding,
+        state = state,
+        hazeState = hazeState,
+        onExploreNewsClick = onExploreNewsClick,
+        onBookmarkItemClick = onBookmarkItemClick,
+        handleEvent = bookmarksViewModel::handleEvent
+    )
+}
+
+@Composable
+internal fun BookmarksScreen(
+    padding: PaddingValues,
+    hazeState: HazeState,
+    state: BookmarksState,
+    onExploreNewsClick: () -> Unit,
+    onBookmarkItemClick: (url: String) -> Unit,
+    handleEvent: (BookmarksViewEvent) -> Unit,
+) {
     BaseGlassLazyColumn(
         hazeState = hazeState,
         padding = padding,
-        isEmpty = state is BookmarksState.NoBookmarks,
+        isEmpty = state is NoBookmarks,
         emptyContent = { NoBookmarks(onExploreNewsClick = onExploreNewsClick) },
         content = {
-            if (state is BookmarksState.Success) {
-                val articles = (state as BookmarksState.Success).articles
+            if (state is Success) {
+                val articles = state.articles
                 items(
                     count = articles.size,
                     key = { articles[it].url }
@@ -62,7 +85,7 @@ internal fun BookmarksScreen(
                             val encodedUrl = UrlEncoderUtil.encode(articles[index].url)
                             onBookmarkItemClick(encodedUrl)
                         },
-                        onBookmarkClick = { bookmarksViewModel.handleEvent(OnRemoveBookmarkClick(articles[index])) }
+                        onBookmarkClick = { handleEvent(OnRemoveBookmarkClick(articles[index])) }
                     )
                 }
             }
@@ -89,7 +112,7 @@ private fun NoBookmarks(
 
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = "No bookmarks yet!",
+            text = stringResource(Res.string.no_bookmarks_yet),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Bold,

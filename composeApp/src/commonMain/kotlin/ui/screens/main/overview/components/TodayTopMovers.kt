@@ -14,7 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.today_top_movers
+import org.jetbrains.compose.resources.stringResource
 import ui.screens.main.overview.OverviewState
+import ui.screens.main.overview.OverviewState.Loading
+import ui.screens.main.overview.OverviewState.Success
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.getDummyCryptoItem
@@ -24,7 +29,7 @@ internal fun TodayTopMovers(
     overviewState: OverviewState,
     onCryptoItemClick: (String) -> Unit
 ) {
-    val isLoading = overviewState is OverviewState.Loading
+    val isLoading = overviewState is Loading
     Column(
         modifier = Modifier.fillMaxWidth()
             .padding(horizontal = SPACER_PADDING_8),
@@ -36,7 +41,7 @@ internal fun TodayTopMovers(
         ) {
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                text = "Today's Top Movers",
+                text = stringResource(Res.string.today_top_movers),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
@@ -50,7 +55,7 @@ internal fun TodayTopMovers(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            if (overviewState is OverviewState.Success) {
+            if (overviewState is Success) {
                 items(2) {
                     val topMovers = overviewState.topMovers[it]
                     TopMoversCard(
@@ -61,7 +66,7 @@ internal fun TodayTopMovers(
                 }
             }
 
-            if (overviewState is OverviewState.Loading) {
+            if (overviewState is Loading) {
                 items(2) {
                     TopMoversCard(
                         isLoading = true,

@@ -9,7 +9,7 @@ import dev.chrisbanes.haze.HazeState
 import ui.navigation.util.Screen.Bookmarks
 import ui.navigation.util.Screen.News
 import ui.navigation.util.Screen.NewsDetail
-import ui.screens.main.bookmarks.BookmarksScreen
+import ui.screens.main.bookmarks.BookmarksRoute
 
 fun NavController.navigateToBookmarksScreen(navOptions: NavOptions) = navigate(Bookmarks, navOptions)
 
@@ -19,16 +19,11 @@ fun NavGraphBuilder.bookmarksScreen(
     navController: NavController
 ) {
     composable<Bookmarks> {
-        BookmarksScreen(
+        BookmarksRoute(
             padding = padding,
             hazeState = hazeState,
             onBookmarkItemClick = { url -> navController.navigate(route = NewsDetail(url)) },
-            onExploreNewsClick = {
-                navController.navigate(News) {
-                    popUpTo(navController.graph.startDestinationRoute!!)
-                    launchSingleTop = true
-                }
-            }
+            onExploreNewsClick = { navController.navigate(News) }
         )
     }
 }

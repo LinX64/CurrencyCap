@@ -160,9 +160,8 @@ private fun EndHorizontalComponents(
             ) {
 
                 ChangeIcon(
-                    isLoading = isLoading,
                     valueChange = crypto.priceChangePercentage24h,
-                    isPositive = crypto.priceChangePercentage24h > 0
+                    isLoading = isLoading
                 )
 
                 val formattedPriceChange = formatToPrice(crypto.priceChangePercentage24h)

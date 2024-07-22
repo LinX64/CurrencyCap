@@ -137,7 +137,6 @@ private fun BottomRow(
 
         ChangeIcon(
             valueChange = topMovers.priceChange24h,
-            isPositive = topMovers.priceChange24h > 0,
             isLoading = isLoading
         )
     }
