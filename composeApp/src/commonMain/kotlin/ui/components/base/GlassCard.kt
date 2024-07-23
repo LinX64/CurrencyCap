@@ -1,7 +1,7 @@
 package ui.components.base
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -43,7 +43,7 @@ internal fun GlassCard(
         onClick = onCardClick,
         enabled = isClickable
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .padding(contentPadding)
                 .wrapContentSize()

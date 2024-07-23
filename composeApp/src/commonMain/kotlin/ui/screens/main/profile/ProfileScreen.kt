@@ -14,6 +14,7 @@ import currencycap.composeapp.generated.resources.contact_email
 import currencycap.composeapp.generated.resources.support_request
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
+import org.jetbrains.compose.resources.stringResource
 import ui.common.SendMail
 import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.BaseTransparentCircularProgressBar
@@ -99,8 +100,8 @@ internal fun ProfileScreen(
 
     if (shouldGoToEmailApp) {
         SendMail(
-            to = Res.string.contact_email.key,
-            subject = Res.string.support_request.key
+            to = stringResource(Res.string.contact_email),
+            subject = stringResource(Res.string.support_request)
         )
     }
 }

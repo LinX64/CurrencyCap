@@ -36,7 +36,6 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import org.jetbrains.compose.resources.painterResource
 import ui.components.base.BaseGlassLazyColumn
-import ui.components.base.GlassCard
 import ui.components.base.HandleNavigationEffect
 import ui.screens.main.exchange.ExchangeNavigationEffect.ShowSnakeBar
 import ui.screens.main.exchange.ExchangeViewEvent.OnConvert
@@ -106,62 +105,67 @@ private fun ExchangeCard(
     handleEvent: (ExchangeViewEvent) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+    val state = uiState as ExchangeUiState
     var dialogOpened by rememberSaveable { mutableStateOf(false) }
     var selectedCurrencyType: CurrencyType by remember { mutableStateOf(CurrencyType.None) }
-    var amount by remember { mutableStateOf("") }
-    val state = uiState as ExchangeUiState
+    var amount by rememberSaveable { mutableStateOf("") }
+
+    LaunchedEffect(Unit) {
+        if (amount.isEmpty()) {
+            amount = DEFAULT_VALUE
+            handleEvent(OnConvert(DEFAULT_VALUE))
+        }
+    }
 
     Column {
-        GlassCard {
-            Column(
-                modifier = modifier.padding(SPACER_PADDING_16),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+        Column(
+            modifier = modifier.padding(SPACER_PADDING_16),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-                Spacer(modifier = Modifier.height(SPACER_PADDING_16))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
-                Image(
-                    modifier = Modifier.size(84.dp),
-                    painter = painterResource(Res.drawable.exchange_illustration),
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
-                )
+            Image(
+                modifier = Modifier.size(84.dp),
+                painter = painterResource(Res.drawable.exchange_illustration),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
+            )
 
-                Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-                CurrencyInputs(
-                    source = state.sourceCurrency,
-                    target = state.targetCurrency,
-                    onSwitch = { handleEvent(OnSwitchCurrencies) },
-                    onCurrencyTypeSelect = {
-                        dialogOpened = true
-                        selectedCurrencyType = it
-                    }
-                )
-                Spacer(modifier = Modifier.height(24.dp))
+            CurrencyInputs(
+                source = state.sourceCurrency,
+                target = state.targetCurrency,
+                onSwitch = { handleEvent(OnSwitchCurrencies) },
+                onCurrencyTypeSelect = {
+                    dialogOpened = true
+                    selectedCurrencyType = it
+                }
+            )
+            Spacer(modifier = Modifier.height(24.dp))
 
-                Text(
-                    modifier = Modifier.padding(start = 12.dp),
-                    text = "Amount",
-                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    textAlign = TextAlign.Start
-                )
+            Text(
+                modifier = Modifier.padding(start = 12.dp),
+                text = "Amount",
+                fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Start
+            )
 
-                Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
-                AmountInput(
-                    amount = amount,
-                    onAmountChange = {
-                        amount = it
-                        handleEvent(OnConvert(amount))
-                    },
-                    onErrorMessage = {
-                        keyboardController?.hide()
-                        onError(it)
-                    }
-                )
-            }
+            AmountInput(
+                amount = amount,
+                onAmountChange = {
+                    amount = it
+                    handleEvent(OnConvert(amount))
+                },
+                onErrorMessage = {
+                    keyboardController?.hide()
+                    onError(it)
+                }
+            )
         }
 
         Spacer(modifier = Modifier.height(SPACER_PADDING_16))
@@ -187,12 +191,7 @@ private fun ExchangeCard(
         Disclaimer()
     }
 
-    LaunchedEffect(Unit) {
-        if (amount.isEmpty()) {
-            amount = DEFAULT_VALUE
-            handleEvent(OnConvert(DEFAULT_VALUE))
-        }
-    }
+
 
     if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
         CurrencyPicker(
