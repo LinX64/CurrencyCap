@@ -88,18 +88,12 @@ internal fun ExchangeScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
-            when (state) {
-                is ExchangeUiState -> {
-                    ExchangeCard(
-                        uiState = state,
-                        hazeState = hazeState,
-                        onError = onError,
-                        handleEvent = handleEvent
-                    )
-                }
-
-                is ExchangeState.Idle -> Unit
-            }
+            ExchangeCard(
+                uiState = state,
+                hazeState = hazeState,
+                onError = onError,
+                handleEvent = handleEvent
+            )
         }
     }
 }
@@ -107,7 +101,7 @@ internal fun ExchangeScreen(
 @Composable
 private fun ExchangeCard(
     modifier: Modifier = Modifier,
-    uiState: ExchangeUiState,
+    uiState: ExchangeState,
     hazeState: HazeState,
     onError: (String) -> Unit,
     handleEvent: (ExchangeViewEvent) -> Unit
@@ -116,6 +110,7 @@ private fun ExchangeCard(
     var dialogOpened by rememberSaveable { mutableStateOf(false) }
     var selectedCurrencyType: CurrencyType by remember { mutableStateOf(CurrencyType.None) }
     var amount by remember { mutableStateOf("") }
+    val state = uiState as ExchangeUiState
 
     LaunchedEffect(Unit) {
         if (amount.isEmpty()) {
@@ -126,7 +121,7 @@ private fun ExchangeCard(
 
     if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
         CurrencyPicker(hazeState = hazeState,
-            currencyList = uiState.currencyRates,
+            currencyList = state.currencyRates,
             currencyType = selectedCurrencyType,
             onEvent = { event ->
                 handleEvent(event)
@@ -159,8 +154,9 @@ private fun ExchangeCard(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                CurrencyInputs(source = uiState.sourceCurrency,
-                    target = uiState.targetCurrency,
+                CurrencyInputs(
+                    source = state.sourceCurrency,
+                    target = state.targetCurrency,
                     onSwitch = { handleEvent(OnSwitchCurrencies) },
                     onCurrencyTypeSelect = {
                         dialogOpened = true
@@ -209,7 +205,7 @@ private fun ExchangeCard(
 
         Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
-        ResultCard(uiState = uiState, amount = amount)
+        ResultCard(uiState = state, amount = amount)
 
         Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
