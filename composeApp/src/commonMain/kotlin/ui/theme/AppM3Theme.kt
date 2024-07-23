@@ -4,7 +4,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -18,22 +17,15 @@ internal expect fun SystemAppearance(isDark: Boolean)
 
 @Composable
 fun AppM3Theme(
-    themeMode: ThemeMode,
-    isDarkMode: Boolean = isSystemInDarkTheme(),
+    isDarkMode: Boolean,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when (themeMode) {
-        SYSTEM -> if (isDarkMode) appDarkColorScheme() else appLightColorScheme()
-        LIGHT -> appLightColorScheme()
-        DARK -> appDarkColorScheme()
-    }
-
     SystemAppearance(!isDarkMode)
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = if (isDarkMode) appDarkColorScheme() else appLightColorScheme(),
         typography = CurrencyTypography(),
-        content = { Surface(content = content) }
+        content = content
     )
 }
 

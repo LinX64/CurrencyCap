@@ -104,5 +104,6 @@
     <string name="finish_sign_up">Finish Sign Up</string>
 
     <string name="no_bookmarks_yet">No bookmarks yet!</string>
+    <string name="amount_text">Amount</string>
 
 </resources>

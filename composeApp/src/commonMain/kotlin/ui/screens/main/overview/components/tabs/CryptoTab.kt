@@ -48,7 +48,7 @@ internal fun CryptoContent(
 
 @Composable
 private fun CryptoSuccessBody(
-    isLoading: Boolean,
+    isLoading: Boolean = false,
     bitcoinItem: Crypto?,
     usd: String,
     cryptoRates: List<Crypto>
@@ -93,17 +93,16 @@ internal fun InnerChartRow(
     isLoading: Boolean = false,
     cryptoRates: List<Crypto>
 ) {
-    val isPositive = cryptoRates[0].priceChangePercentage24h > 0
-
+    val bitcoin = cryptoRates[0]
     Row(
         modifier = Modifier.padding(top = SPACER_PADDING_16),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_16)
     ) {
         val priceData = listOf(
-            cryptoRates[0].low24h.toFloat(),
-            cryptoRates[0].currentPrice.toFloat(),
-            cryptoRates[0].high24h.toFloat()
+            bitcoin.low24h.toFloat(),
+            bitcoin.currentPrice.toFloat(),
+            bitcoin.high24h.toFloat()
         )
 
         TopMoversChart(
@@ -124,7 +123,7 @@ internal fun InnerChartRow(
         ) {
             Text(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                text = "Market Cap: ${formatNumber(cryptoRates[0].marketCap)}",
+                text = "Market Cap: ${formatNumber(bitcoin.marketCap)}",
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 fontSize = MaterialTheme.typography.bodyMedium.fontSize
             )
@@ -139,14 +138,14 @@ internal fun InnerChartRow(
 
 @Composable
 private fun InnerDropDown(
-    isLoading: Boolean,
+    isLoading: Boolean = false,
     usd: String
 ) {
     Box(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            modifier = Modifier.padding(start = 4.dp),
+            modifier = if (isLoading) getPlaceHolder(Modifier.padding(start = 4.dp)) else Modifier.padding(start = 4.dp),
             text = usd,
             color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.bodySmall,

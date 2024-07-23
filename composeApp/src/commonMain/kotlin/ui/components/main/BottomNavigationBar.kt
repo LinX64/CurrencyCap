@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -48,6 +49,8 @@ import ui.navigation.util.ScreenRoutes
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.ICON_SIZE_48
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,7 +80,7 @@ internal fun BottomNavigationBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .nestedScroll(scrollBehavior.nestedScrollConnection)
-                .padding(horizontal = 12.dp),
+                .padding(horizontal = 12.dp, vertical = SPACER_PADDING_32),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CenteredExchangeButton(
@@ -110,6 +113,8 @@ internal fun BottomNavigationBar(
 
                 UnderDashedLine(selectedTabIndex)
             }
+
+            Spacer(modifier = Modifier.height(SPACER_PADDING_8))
         }
     }
 }

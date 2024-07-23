@@ -1,6 +1,5 @@
 package ui.components.base
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -49,7 +48,6 @@ internal fun BaseModalBottomSheet(
                         .navigationBarsPadding()
                         .heightIn(max = 700.dp)
                         .verticalScroll(rememberScrollState())
-                        .background(containerColor)
                 ) {
                     content()
                 }
