@@ -10,6 +10,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import dev.chrisbanes.haze.HazeState
@@ -31,7 +32,7 @@ internal fun LoggedInSection(
     mainViewModel: MainViewModel,
     newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    scope: CoroutineScope
+    scope: CoroutineScope = rememberCoroutineScope()
 ) {
     val currentDestination = appState.currentDestination
     val navController = appState.navController
