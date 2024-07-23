@@ -7,12 +7,9 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.graphics.toArgb
 import ui.App
 import ui.theme.AppM3Theme
-import ui.theme.ThemeMode
 
 class MainActivity : ComponentActivity() {
 
@@ -23,25 +20,16 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val isDarkTheme = isSystemInDarkTheme()
-            val statusBarBackgroundColor = MaterialTheme.colorScheme.surface.toArgb()
-
             DisposableEffect(isDarkTheme) {
                 enableEdgeToEdge(
-                    statusBarStyle = if (isDarkTheme) SystemBarStyle.dark(
-                        scrim = statusBarBackgroundColor
-                    ) else SystemBarStyle.light(
-                        scrim = statusBarBackgroundColor,
-                        darkScrim = statusBarBackgroundColor
-                    ),
-                    navigationBarStyle = SystemBarStyle.dark(
-                        scrim = Color.TRANSPARENT
-                    )
+                    statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+                    navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
                 )
                 onDispose { }
             }
 
             // TODO: Add dark/light support
-            AppM3Theme(themeMode = ThemeMode.DARK) {
+            AppM3Theme(isDarkMode = true) {
                 App()
             }
         }
