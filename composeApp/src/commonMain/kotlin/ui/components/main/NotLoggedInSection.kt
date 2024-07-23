@@ -37,7 +37,7 @@ internal fun NotLoggedInSection(
     val navController = appState.navController
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-    val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+    val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
         topBar = {
