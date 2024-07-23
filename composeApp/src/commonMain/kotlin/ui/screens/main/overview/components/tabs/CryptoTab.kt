@@ -17,7 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.bitcoin_btc
 import domain.model.main.Crypto
+import org.jetbrains.compose.resources.stringResource
 import ui.common.formatToPrice
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.ChangeIcon
@@ -48,7 +51,7 @@ internal fun CryptoContent(
 
 @Composable
 private fun CryptoSuccessBody(
-    isLoading: Boolean,
+    isLoading: Boolean = false,
     bitcoinItem: Crypto?,
     usd: String,
     cryptoRates: List<Crypto>
@@ -58,7 +61,7 @@ private fun CryptoSuccessBody(
     ) {
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-            text = "Bitcoin (BTC)",
+            text = stringResource(Res.string.bitcoin_btc),
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             fontSize = MaterialTheme.typography.bodyLarge.fontSize,
             fontWeight = FontWeight.Bold
@@ -93,8 +96,6 @@ internal fun InnerChartRow(
     isLoading: Boolean = false,
     cryptoRates: List<Crypto>
 ) {
-    val isPositive = cryptoRates[0].priceChangePercentage24h > 0
-
     Row(
         modifier = Modifier.padding(top = SPACER_PADDING_16),
         verticalAlignment = Alignment.CenterVertically,
@@ -139,14 +140,14 @@ internal fun InnerChartRow(
 
 @Composable
 private fun InnerDropDown(
-    isLoading: Boolean,
+    isLoading: Boolean = false,
     usd: String
 ) {
     Box(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            modifier = Modifier.padding(start = 4.dp),
+            modifier = if (isLoading) getPlaceHolder(Modifier.padding(start = 4.dp)) else Modifier.padding(start = 4.dp),
             text = usd,
             color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.bodySmall,
