@@ -106,10 +106,10 @@ private fun ExchangeCard(
     handleEvent: (ExchangeViewEvent) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+    val state = uiState as ExchangeUiState
     var dialogOpened by rememberSaveable { mutableStateOf(false) }
     var selectedCurrencyType: CurrencyType by remember { mutableStateOf(CurrencyType.None) }
-    var amount by remember { mutableStateOf("") }
-    val state = uiState as ExchangeUiState
+    var amount by rememberSaveable { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         if (amount.isEmpty()) {

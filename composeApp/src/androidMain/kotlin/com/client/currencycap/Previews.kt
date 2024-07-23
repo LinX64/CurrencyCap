@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import dev.chrisbanes.haze.HazeState
-import ui.screens.initial.landing.LandingScreen
+import ui.components.ErrorView
 
 //@Composable
 //@Preview(showBackground = true)
@@ -80,10 +80,9 @@ private fun ExpandablePreview() {
     val hazeState = remember { HazeState() }
     KoinPreview {
         Column {
-            LandingScreen(
-                onLoginClick = {},
-                onSignUpClick = {},
-                onPrivacyPolicyClick = {}
+            ErrorView(
+                message = "An error occurred",
+                onRetry = { /*TODO*/ }
             )
         }
     }
