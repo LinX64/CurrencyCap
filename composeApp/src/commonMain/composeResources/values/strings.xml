@@ -105,6 +105,6 @@
 
     <string name="no_bookmarks_yet">No bookmarks yet!</string>
     <string name="amount_text">Amount</string>
-    <string name="bitcoin_btc">Bitcoin (BTC)</string>
+    <string name="bitcoin_btc_text">Bitcoin (BTC)</string>
 
 </resources>
