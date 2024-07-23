@@ -43,40 +43,42 @@ internal fun DateOfPublicationButton(
     GlassCard(
         isClickable = false
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(SPACER_PADDING_8),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.DateRange,
-                tint = MaterialTheme.colorScheme.onSurface,
-                contentDescription = null
-            )
+        Column {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(SPACER_PADDING_8),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.DateRange,
+                    tint = MaterialTheme.colorScheme.onSurface,
+                    contentDescription = null
+                )
 
-            Spacer(modifier = Modifier.width(SPACER_PADDING_8))
+                Spacer(modifier = Modifier.width(SPACER_PADDING_8))
 
-            Text(
-                text = stringResource(Res.string.date_of_publication),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.Bold
-            )
-        }
+                Text(
+                    text = stringResource(Res.string.date_of_publication),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontWeight = FontWeight.Bold
+                )
+            }
 
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(SPACER_PADDING_8),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            StartDatePickerSection(
-                onDateSelected = onStartDateSelected
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(SPACER_PADDING_8),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                StartDatePickerSection(
+                    onDateSelected = onStartDateSelected
+                )
 
-            EndDatePickerSection(
-                onDateSelected = onEndDateSelected
-            )
+                EndDatePickerSection(
+                    onDateSelected = onEndDateSelected
+                )
+            }
         }
     }
 }
