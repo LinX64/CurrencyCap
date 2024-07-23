@@ -30,13 +30,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.amount_text
 import currencycap.composeapp.generated.resources.exchange_illustration
 import data.local.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.GlassCard
 import ui.components.base.HandleNavigationEffect
@@ -144,7 +142,7 @@ private fun ExchangeCard(
 
                 Text(
                     modifier = Modifier.padding(start = 12.dp),
-                    text = stringResource(Res.string.amount_text),
+                    text = "Amount",
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Start

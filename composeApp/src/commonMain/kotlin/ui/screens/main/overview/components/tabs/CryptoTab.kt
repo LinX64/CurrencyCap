@@ -17,10 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import currencycap.composeapp.generated.resources.Res
-import currencycap.composeapp.generated.resources.bitcoin_btc_text
 import domain.model.main.Crypto
-import org.jetbrains.compose.resources.stringResource
 import ui.common.formatToPrice
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.ChangeIcon
@@ -61,7 +58,7 @@ private fun CryptoSuccessBody(
     ) {
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-            text = stringResource(Res.string.bitcoin_btc_text),
+            text = "Bitcoin (BTC)",
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             fontSize = MaterialTheme.typography.bodyLarge.fontSize,
             fontWeight = FontWeight.Bold
