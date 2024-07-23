@@ -1,11 +1,10 @@
 package ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
-import kotlinx.coroutines.CoroutineScope
 import ui.components.main.LoggedInSection
 import ui.components.main.NotLoggedInSection
 import ui.screens.MainState.Loading
@@ -17,13 +16,18 @@ import ui.screens.initial.splash.SplashScreen
 @Composable
 internal fun App(
     mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
-    scope: CoroutineScope = rememberCoroutineScope()
 ) {
-    val mainState by mainViewModel.state.collectAsStateWithLifecycle()
+    val mainState by mainViewModel.appState.collectAsStateWithLifecycle()
     when (mainState) {
         Loading -> SplashScreen()
-        is LoggedIn -> LoggedInSection(scope = scope, mainViewModel = mainViewModel)
-        is NotLoggedIn -> NotLoggedInSection(scope = scope, mainViewModel = mainViewModel)
+        is LoggedIn -> LoggedInSection(mainViewModel = mainViewModel)
+        is NotLoggedIn -> NotLoggedInSection(mainViewModel = mainViewModel)
         else -> Unit
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            mainViewModel.clearState()
+        }
     }
 }

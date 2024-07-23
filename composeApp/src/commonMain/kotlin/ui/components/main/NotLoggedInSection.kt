@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import dev.chrisbanes.haze.HazeState
@@ -28,15 +28,15 @@ import ui.screens.initial.landing.privacy_policy.PrivacyPolicySection
 @Composable
 internal fun NotLoggedInSection(
     appState: AppState = rememberAppState(),
-    scope: CoroutineScope,
+    scope: CoroutineScope = rememberCoroutineScope(),
     mainViewModel: MainViewModel,
 ) {
     val hazeState = remember { HazeState() }
-    val currentDestination = appState.currentDestination
+    var isSheetOpen by remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
     val navController = appState.navController
-    var isSheetOpen by rememberSaveable { mutableStateOf(false) }
+    val currentDestination = appState.currentDestination
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
-    val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
         topBar = {
