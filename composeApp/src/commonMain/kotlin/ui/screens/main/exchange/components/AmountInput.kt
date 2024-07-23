@@ -8,6 +8,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -24,10 +27,11 @@ internal fun AmountInput(
     onAmountChange: (String) -> Unit,
     onErrorMessage: (String) -> Unit
 ) {
+    val amountValue by rememberSaveable { mutableStateOf(amount) }
     TextField(
         modifier = Modifier.fillMaxWidth()
             .clip(RoundedCornerShape(CARD_CORNER_RADIUS)),
-        value = amount,
+        value = amountValue,
         onValueChange = { newValue ->
             if (newValue.isEmpty() || newValue.matches(Regex("^\\d*.?\\d*$"))) {
                 onAmountChange(newValue)

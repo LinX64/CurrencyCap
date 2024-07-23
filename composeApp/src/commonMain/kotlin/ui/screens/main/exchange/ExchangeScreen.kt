@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,11 +30,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.amount_text
 import currencycap.composeapp.generated.resources.exchange_illustration
 import data.local.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.GlassCard
 import ui.components.base.HandleNavigationEffect
@@ -112,31 +113,7 @@ private fun ExchangeCard(
     var amount by remember { mutableStateOf("") }
     val state = uiState as ExchangeUiState
 
-    LaunchedEffect(Unit) {
-        if (amount.isEmpty()) {
-            amount = DEFAULT_VALUE
-            handleEvent(OnConvert(DEFAULT_VALUE))
-        }
-    }
-
-    if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
-        CurrencyPicker(hazeState = hazeState,
-            currencyList = state.currencyRates,
-            currencyType = selectedCurrencyType,
-            onEvent = { event ->
-                handleEvent(event)
-                dialogOpened = false
-                selectedCurrencyType = CurrencyType.None
-            },
-            onDismiss = {
-                dialogOpened = false
-                selectedCurrencyType = CurrencyType.None
-            })
-    }
-
-    Column(
-        modifier = modifier.fillMaxSize()
-    ) {
+    Column {
         GlassCard {
             Column(
                 modifier = modifier.padding(SPACER_PADDING_16),
@@ -167,7 +144,7 @@ private fun ExchangeCard(
 
                 Text(
                     modifier = Modifier.padding(start = 12.dp),
-                    text = "Amount",
+                    text = stringResource(Res.string.amount_text),
                     fontSize = MaterialTheme.typography.bodySmall.fontSize,
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Start
@@ -210,6 +187,30 @@ private fun ExchangeCard(
         Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
         Disclaimer()
+    }
+
+    LaunchedEffect(Unit) {
+        if (amount.isEmpty()) {
+            amount = DEFAULT_VALUE
+            handleEvent(OnConvert(DEFAULT_VALUE))
+        }
+    }
+
+    if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
+        CurrencyPicker(
+            hazeState = hazeState,
+            currencyList = state.currencyRates,
+            currencyType = selectedCurrencyType,
+            onEvent = { event ->
+                handleEvent(event)
+                dialogOpened = false
+                selectedCurrencyType = CurrencyType.None
+            },
+            onDismiss = {
+                dialogOpened = false
+                selectedCurrencyType = CurrencyType.None
+            }
+        )
     }
 }
 
