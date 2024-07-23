@@ -46,9 +46,7 @@ class MainViewModel(
     }
 
     fun onLoginSuccess() {
-        viewModelScope.launch {
-            _state.value = LoggedIn
-        }
+        _state.value = LoggedIn
     }
 
     fun navigateToLanding() {
