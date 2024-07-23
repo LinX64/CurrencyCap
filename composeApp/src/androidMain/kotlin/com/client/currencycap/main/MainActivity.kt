@@ -10,7 +10,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import ui.App
 import ui.theme.AppM3Theme
 import ui.theme.ThemeMode
@@ -24,16 +23,18 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val isDarkTheme = isSystemInDarkTheme()
-            val context = LocalContext.current as ComponentActivity
-            val statusBarBackgroundColor = MaterialTheme.colorScheme.primary.toArgb()
+            val statusBarBackgroundColor = MaterialTheme.colorScheme.surface.toArgb()
 
             DisposableEffect(isDarkTheme) {
                 enableEdgeToEdge(
-                    statusBarStyle = SystemBarStyle.light(
-                        Color.TRANSPARENT, Color.TRANSPARENT
+                    statusBarStyle = if (isDarkTheme) SystemBarStyle.dark(
+                        scrim = statusBarBackgroundColor
+                    ) else SystemBarStyle.light(
+                        scrim = statusBarBackgroundColor,
+                        darkScrim = statusBarBackgroundColor
                     ),
-                    navigationBarStyle = SystemBarStyle.light(
-                        Color.TRANSPARENT, Color.TRANSPARENT
+                    navigationBarStyle = SystemBarStyle.dark(
+                        scrim = Color.TRANSPARENT
                     )
                 )
                 onDispose { }

@@ -1,7 +1,9 @@
 package ui.navigation.graphs
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import ui.navigation.util.Screen.Landing
@@ -11,6 +13,7 @@ import ui.screens.initial.landing.navigation.landingScreen
 import ui.screens.initial.login.navigation.loginScreen
 import ui.screens.initial.register.navigation.registerScreen
 import ui.screens.initial.reset_password.navigation.resetPasswordScreen
+import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
 internal fun AuthNavGraph(
@@ -21,6 +24,7 @@ internal fun AuthNavGraph(
     onError: (message: String) -> Unit
 ) {
     NavHost(
+        modifier = Modifier.padding(bottom = SPACER_PADDING_32),
         navController = navController,
         startDestination = Landing
     ) {

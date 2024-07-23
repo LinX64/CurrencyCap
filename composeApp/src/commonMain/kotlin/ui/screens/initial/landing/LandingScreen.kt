@@ -40,68 +40,66 @@ internal fun LandingScreen(
     onSignUpClick: () -> Unit,
     onPrivacyPolicyClick: () -> Unit
 ) {
-    GradientBackground {
-        Box(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(SPACER_PADDING_16),
-            contentAlignment = Alignment.Center
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(SPACER_PADDING_16),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(horizontal = SPACER_PADDING_16),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .padding(horizontal = SPACER_PADDING_16),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Image(
-                    painter = painterResource(Res.drawable.logo),
-                    contentDescription = "Logo",
-                    modifier = Modifier.size(220.dp)
-                )
+            Image(
+                painter = painterResource(Res.drawable.logo),
+                contentDescription = "Logo",
+                modifier = Modifier.size(220.dp)
+            )
 
-                Text(
-                    text = stringResource(Res.string.welcome_to_currency_cap),
-                    style = MaterialTheme.typography.headlineLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold
-                )
+            Text(
+                text = stringResource(Res.string.welcome_to_currency_cap),
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold
+            )
 
-                Spacer(modifier = Modifier.height(SPACER_PADDING_8))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
-                Text(
-                    text = stringResource(Res.string.welcome_to_currency_cap_description),
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    textAlign = TextAlign.Center
-                )
+            Text(
+                text = stringResource(Res.string.welcome_to_currency_cap_description),
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurface,
+                textAlign = TextAlign.Center
+            )
 
-                Spacer(modifier = Modifier.height(45.dp))
+            Spacer(modifier = Modifier.height(45.dp))
 
-                PrimaryButton(
-                    text = stringResource(Res.string.create_account),
-                    onButtonClick = onSignUpClick
-                )
+            PrimaryButton(
+                text = stringResource(Res.string.create_account),
+                onButtonClick = onSignUpClick
+            )
 
-                Spacer(modifier = Modifier.height(SPACER_PADDING_16))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
-                SecondaryButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(Res.string.login),
-                    textPadding = SPACER_PADDING_8,
-                    onButtonClick = onLoginClick,
-                )
+            SecondaryButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(Res.string.login),
+                textPadding = SPACER_PADDING_8,
+                onButtonClick = onLoginClick,
+            )
 
-                Spacer(modifier = Modifier.height(SPACER_PADDING_32))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_32))
 
-                Text(
-                    text = stringResource(Res.string.privacy_policy),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                    modifier = Modifier.clickable { onPrivacyPolicyClick() }
-                )
-            }
+            Text(
+                text = stringResource(Res.string.privacy_policy),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                modifier = Modifier.clickable { onPrivacyPolicyClick() }
+            )
         }
     }
 }
