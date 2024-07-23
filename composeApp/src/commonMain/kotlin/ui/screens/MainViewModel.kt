@@ -40,17 +40,14 @@ class MainViewModel(
             delay(1500)
 
             val userLoggedIn = userPreferences.isUserLoggedIn()
-            if (userLoggedIn) {
-                val uid = userPreferences.getUserUid()
-                _state.value = LoggedIn(uid)
-            } else _state.value = NotLoggedIn
+            if (userLoggedIn) _state.value = LoggedIn
+            else _state.value = NotLoggedIn
         }
     }
 
     fun onLoginSuccess() {
         viewModelScope.launch {
-            val uid = userPreferences.getUserUid()
-            _state.value = LoggedIn(uid)
+            _state.value = LoggedIn
         }
     }
 
@@ -63,5 +60,5 @@ sealed class MainState {
     data object Idle : MainState()
     data object Loading : MainState()
     data object NotLoggedIn : MainState()
-    data class LoggedIn(val uid: String) : MainState()
+    data object LoggedIn : MainState()
 }

@@ -59,9 +59,11 @@ internal class LoginViewModel(
         viewModelScope.launch {
             val authState = authServiceRepository.authenticate(email, password)
             when (authState) {
-                AuthState.Loading -> setState { Loading }
+                AuthState.Loading -> Unit
                 is AuthState.Success -> {
                     userPreferences.saveUserUid(authServiceRepository.currentUserId) // TODO: Issue with IOS
+
+                    setState { Idle }
                     setEffect(NavigateToMarketOverview)
                 }
 
