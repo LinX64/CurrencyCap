@@ -111,6 +111,13 @@ private fun ExchangeCard(
     var amount by remember { mutableStateOf("") }
     val state = uiState as ExchangeUiState
 
+    LaunchedEffect(Unit) {
+        if (amount.isEmpty()) {
+            amount = DEFAULT_VALUE
+            handleEvent(OnConvert(DEFAULT_VALUE))
+        }
+    }
+
     Column {
         GlassCard {
             Column(
@@ -187,12 +194,7 @@ private fun ExchangeCard(
         Disclaimer()
     }
 
-    LaunchedEffect(Unit) {
-        if (amount.isEmpty()) {
-            amount = DEFAULT_VALUE
-            handleEvent(OnConvert(DEFAULT_VALUE))
-        }
-    }
+
 
     if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
         CurrencyPicker(
