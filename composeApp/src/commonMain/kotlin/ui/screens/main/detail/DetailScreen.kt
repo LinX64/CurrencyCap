@@ -34,6 +34,7 @@ import ui.screens.main.profile.components.HelpCenterBaseGlassCard
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
+import util.getDummyCryptoItem
 
 @Composable
 internal fun DetailRoute(
@@ -63,16 +64,17 @@ internal fun DetailScreen(
         hazeState = hazeState,
         verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_16)
     ) {
-        when (state) {
-            is DetailState.Success -> {
-                val crypto = state.crypto
+        if (state is DetailState.Success) {
+            val crypto = state.crypto
+            item { DetailHeader(crypto = crypto, isLoading = false) }
+            item { DetailBody(crypto = crypto) }
+            //item { DescriptionCard(description, isLoading) } TODO: fix this
+        }
 
-                item { DetailHeader(crypto, isLoading) }
-                item { DetailBody(crypto) }
-                //item { DescriptionCard(description, isLoading) } TODO: fix this
-            }
-
-            else -> Unit
+        if (isLoading) {
+            val crypto = getDummyCryptoItem()
+            item { DetailHeader(crypto, isLoading = true) }
+            item { DetailBody(crypto) }
         }
     }
 }
@@ -80,7 +82,7 @@ internal fun DetailScreen(
 @Composable
 private fun DetailHeader(
     crypto: Crypto,
-    isLoading: Boolean
+    isLoading: Boolean = false
 ) {
     GlassCard(
         modifier = Modifier.fillMaxWidth()
