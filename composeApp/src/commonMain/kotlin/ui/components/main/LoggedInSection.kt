@@ -36,7 +36,7 @@ internal fun LoggedInSection(
 ) {
     val currentDestination = appState.currentDestination
     val navController = appState.navController
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val hazeState = remember { HazeState() }
     val isSubscribeSheetVisible = rememberSaveable { mutableStateOf(false) }
     val isNewsFilterSheetVisible = rememberSaveable { mutableStateOf(false) }
