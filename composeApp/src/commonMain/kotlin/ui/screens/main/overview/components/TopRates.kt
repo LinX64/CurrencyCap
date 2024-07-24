@@ -17,7 +17,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.refresh
 import domain.model.main.BonbastRate
+import org.jetbrains.compose.resources.stringResource
 import ui.screens.main.overview.OverviewState
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
@@ -40,7 +43,7 @@ internal fun TopRates(rates: OverviewState) {
             Icon(
                 modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                 imageVector = Icons.Default.Refresh,
-                contentDescription = null,
+                contentDescription = stringResource(Res.string.refresh),
             )
         }
 

@@ -55,7 +55,7 @@ internal fun LandingScreen(
         ) {
             Image(
                 painter = painterResource(Res.drawable.logo),
-                contentDescription = "Logo",
+                contentDescription = stringResource(Res.string.logo),
                 modifier = Modifier.size(220.dp)
             )
 

@@ -106,4 +106,25 @@
     <string name="no_bookmarks_yet">No bookmarks yet!</string>
     <string name="amount_text">Amount</string>
 
+    <!-- content description -->
+    <string name="error">Error</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="back">Back</string>
+    <string name="info">Info</string>
+    <string name="filter">Filter</string>
+    <string name="lock">Lock</string>
+    <string name="crypto_image">Crypto Image</string>
+    <string name="crypto_symbol">Crypto Symbol</string>
+    <string name="refresh">Refresh</string>
+    <string name="expandable">Expandable</string>
+    <string name="change_icon">Change Icon</string>
+    <string name="rate">Rate</string>
+    <string name="check">Check</string>
+    <string name="chevron_right">Chevron Right</string>
+    <string name="news_image">News Image</string>
+    <string name="icon">Icon</string>
+    <string name="person">Person</string>
+    <string name="phone">Phone</string>
+    <string name="logo">Logo</string>
+    <string name="close">Close</string>
 </resources>

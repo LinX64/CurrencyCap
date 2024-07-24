@@ -21,6 +21,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.icon
+import org.jetbrains.compose.resources.stringResource
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
@@ -62,7 +65,7 @@ internal fun SecondarySmallIconButton(
             Icon(
                 imageVector = icon,
                 tint = MaterialTheme.colorScheme.onSurface,
-                contentDescription = null
+                contentDescription = stringResource(Res.string.icon)
             )
 
             Text(

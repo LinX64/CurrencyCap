@@ -16,6 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.check
+import org.jetbrains.compose.resources.stringResource
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -27,7 +30,7 @@ internal fun FeatureItem(text: String) {
         Icon(
             modifier = Modifier.size(20.dp),
             imageVector = Icons.Default.Check,
-            contentDescription = null,
+            contentDescription = stringResource(Res.string.check),
             tint = MaterialTheme.colorScheme.onSurface
         )
 

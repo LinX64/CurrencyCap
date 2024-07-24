@@ -29,10 +29,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.bookmarks
 import currencycap.composeapp.generated.resources.ic_bookmark_filled
 import currencycap.composeapp.generated.resources.ic_bookmark_not_filled
+import currencycap.composeapp.generated.resources.news_image
 import domain.model.Article
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
 import ui.screens.main.overview.components.getPlaceHolder
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
@@ -101,7 +104,7 @@ private fun FirstImageTextColumn(
             onError = {
                 // TODO: Handle error
             },
-            contentDescription = null,
+            contentDescription = stringResource(Res.string.news_image),
             contentScale = ContentScale.Crop
         )
 
@@ -151,7 +154,7 @@ private fun TextContentSection(
         ) {
             Icon(
                 painter = painterResource(bookmarkIcon),
-                contentDescription = null,
+                contentDescription = stringResource(Res.string.bookmarks),
                 tint = bookmarkIconColor
             )
         }

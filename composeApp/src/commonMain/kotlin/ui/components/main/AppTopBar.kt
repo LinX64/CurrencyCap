@@ -17,11 +17,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.back
+import currencycap.composeapp.generated.resources.filter
 import currencycap.composeapp.generated.resources.ic_arrow_left
 import currencycap.composeapp.generated.resources.ic_filter_search
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import ui.navigation.util.Screen.Settings
 import ui.navigation.util.ScreenRoutes
 import ui.navigation.util.ScreenRoutes.AI_PREDICTION
@@ -108,7 +111,7 @@ private fun NavigationIcon(
         ) {
             Icon(
                 painter = painterResource(Res.drawable.ic_arrow_left),
-                contentDescription = "Back",
+                contentDescription = stringResource(Res.string.back),
                 tint = MaterialTheme.colorScheme.onSurface
             )
         }
@@ -129,7 +132,7 @@ private fun Actions(
         ) {
             Icon(
                 painter = painterResource(Res.drawable.ic_filter_search),
-                contentDescription = "filter",
+                contentDescription = stringResource(Res.string.filter),
                 tint = MaterialTheme.colorScheme.onSurface
             )
         }

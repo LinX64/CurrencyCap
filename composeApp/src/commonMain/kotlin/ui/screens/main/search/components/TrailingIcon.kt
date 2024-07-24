@@ -8,7 +8,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.baseline_close_24
+import currencycap.composeapp.generated.resources.close
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun TrailingIcon(
@@ -22,7 +24,7 @@ internal fun TrailingIcon(
         ) {
             Icon(
                 painter = painterResource(Res.drawable.baseline_close_24),
-                contentDescription = null
+                contentDescription = stringResource(Res.string.close)
             )
         }
     }

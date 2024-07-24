@@ -17,6 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.chevron_right
+import org.jetbrains.compose.resources.stringResource
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.colors.CurrencyColors
 
@@ -59,7 +62,7 @@ internal fun HelpCenterItem(
 
             Icon(
                 imageVector = Icons.Default.ChevronRight,
-                contentDescription = null,
+                contentDescription = stringResource(Res.string.chevron_right),
                 tint = MaterialTheme.colorScheme.onSurface
             )
         }

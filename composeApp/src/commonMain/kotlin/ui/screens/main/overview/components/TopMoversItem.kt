@@ -22,6 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.today_top_movers
+import org.jetbrains.compose.resources.stringResource
 import ui.common.formatCurrentTotal
 import ui.theme.AppDimensions.ICON_SIZE_48
 import ui.theme.AppDimensions.SPACER_PADDING_16
@@ -52,7 +55,7 @@ internal fun TopMoversItem(
             SubcomposeAsyncImage(
                 modifier = Modifier.size(ICON_SIZE_48),
                 model = icon,
-                contentDescription = null,
+                contentDescription = stringResource(Res.string.today_top_movers),
                 contentScale = ContentScale.Inside
             ) {
                 if (isLoading) {

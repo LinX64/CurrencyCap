@@ -19,6 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.bookmark
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.ClickableCard
 import ui.theme.AppDimensions.SPACER_PADDING_16
 
@@ -47,7 +50,7 @@ internal fun ProPlanCard(
             ) {
                 Icon(
                     imageVector = Icons.Default.Star,
-                    contentDescription = null,
+                    contentDescription = stringResource(Res.string.bookmark),
                     tint = MaterialTheme.colorScheme.primary
                 )
 

@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.news_detail
 import currencycap.composeapp.generated.resources.read_more
 import domain.model.Article
 import org.jetbrains.compose.resources.stringResource
@@ -57,7 +58,7 @@ internal fun NewsDetailContent(
                 .fillMaxWidth()
                 .clip(roundedCornerShape),
             model = imageUrl,
-            contentDescription = null,
+            contentDescription = stringResource(Res.string.news_detail),
             clipToBounds = true,
             alpha = 0.5f,
             contentScale = ContentScale.FillBounds

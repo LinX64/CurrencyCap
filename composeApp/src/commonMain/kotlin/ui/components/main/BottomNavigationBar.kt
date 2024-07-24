@@ -41,10 +41,12 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.exchange
 import currencycap.composeapp.generated.resources.ic_arrow_up_down
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import ui.navigation.util.ScreenRoutes
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.ICON_SIZE_48
@@ -193,7 +195,7 @@ private fun CenteredExchangeButton(
         Icon(
             modifier = Modifier.size(ICON_SIZE_48),
             painter = painterResource(Res.drawable.ic_arrow_up_down),
-            contentDescription = "Exchange",
+            contentDescription = stringResource(Res.string.exchange),
             tint = MaterialTheme.colorScheme.onSurface
         )
     }

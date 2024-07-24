@@ -13,8 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.back
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
+import org.jetbrains.compose.resources.stringResource
 import ui.navigation.util.ScreenRoutes
 
 @Composable
@@ -47,7 +50,7 @@ private fun NavigationIcon(
 
     if (isNavigationIconVisible(currentDestination)) {
         IconButton(onClick = { navController.navigateUp() }) {
-            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(Res.string.back))
         }
     }
 }

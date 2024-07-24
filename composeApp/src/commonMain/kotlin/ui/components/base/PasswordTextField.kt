@@ -28,6 +28,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.lock
+import org.jetbrains.compose.resources.stringResource
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
@@ -53,7 +56,7 @@ internal fun PasswordTextField(
             Icon(
                 modifier = modifier.padding(start = 16.dp),
                 imageVector = Icons.Outlined.Lock,
-                contentDescription = "eye icon",
+                contentDescription = stringResource(Res.string.lock),
                 tint = MaterialTheme.colorScheme.onSurface
             )
         },

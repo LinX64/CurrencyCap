@@ -19,7 +19,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.crypto_image
 import domain.model.main.Crypto
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
 import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
@@ -44,7 +47,7 @@ internal fun CryptoGridItem(
                 AsyncImage(
                     modifier = Modifier.size(SPACER_PADDING_32).clip(CircleShape),
                     model = cryptoItem.image,
-                    contentDescription = null
+                    contentDescription = stringResource(Res.string.crypto_image)
                 )
 
                 Spacer(modifier = Modifier.width(12.dp))

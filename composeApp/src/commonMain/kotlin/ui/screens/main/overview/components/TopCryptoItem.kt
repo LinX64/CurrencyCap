@@ -21,7 +21,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.SubcomposeAsyncImage
 import coil3.compose.SubcomposeAsyncImageContent
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.crypto_symbol
 import domain.model.main.Rate
+import org.jetbrains.compose.resources.stringResource
 import ui.common.formatCurrentTotal
 import ui.components.base.GlassCard
 import util.getIconBy
@@ -82,7 +85,7 @@ internal fun TopCryptoItem(
                     SubcomposeAsyncImage(
                         modifier = Modifier.size(24.dp).clip(CircleShape),
                         model = getIconBy(dataDao.symbol),
-                        contentDescription = null,
+                        contentDescription = stringResource(Res.string.crypto_symbol),
                         contentScale = ContentScale.FillWidth
                     ) {
                         if (isLoading) {
