@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import ui.navigation.util.Screen.Login
-import ui.screens.initial.login.LoginScreen
+import ui.screens.initial.login.LoginRoute
 import ui.screens.initial.register.navigation.navigateToRegisterScreen
 import ui.screens.initial.reset_password.navigation.navigateToResetPassword
 
@@ -19,7 +19,7 @@ fun NavGraphBuilder.loginScreen(
     onError: (message: String) -> Unit
 ) {
     composable<Login> {
-        LoginScreen(
+        LoginRoute(
             padding = padding,
             onError = onError,
             navigateToMarketOverview = onLoginSuccess,

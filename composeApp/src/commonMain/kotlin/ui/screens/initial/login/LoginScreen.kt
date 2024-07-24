@@ -46,7 +46,7 @@ import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
-internal fun LoginScreen(
+internal fun LoginRoute(
     loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
     padding: PaddingValues,
     navigateToMarketOverview: () -> Unit,
@@ -55,10 +55,14 @@ internal fun LoginScreen(
     onError: (message: String) -> Unit
 ) {
     val state by loginViewModel.viewState.collectAsStateWithLifecycle()
+    val email = loginViewModel.newEmail.value
+    val password = loginViewModel.newPassword.value
 
-    Content(
-        loginViewModel = loginViewModel,
-        padding = padding
+    LoginScreen(
+        padding = padding,
+        email = email,
+        password = password,
+        handleEvent = loginViewModel::handleEvent
     )
 
     HandleNavigationEffect(loginViewModel) { effect ->
@@ -77,13 +81,12 @@ internal fun LoginScreen(
 }
 
 @Composable
-private fun Content(
-    loginViewModel: LoginViewModel,
-    padding: PaddingValues
+private fun LoginScreen(
+    padding: PaddingValues,
+    email: String,
+    password: String,
+    handleEvent: (LoginViewEvent) -> Unit
 ) {
-    val email by loginViewModel.newEmail.collectAsStateWithLifecycle()
-    val password by loginViewModel.newPassword.collectAsStateWithLifecycle()
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -117,14 +120,14 @@ private fun Content(
             Spacer(modifier = Modifier.height(24.dp))
 
             LoginForm(
-                onEmailChanged = { loginViewModel.handleEvent(OnEmailChanged(it)) },
-                onPasswordChanged = { loginViewModel.handleEvent(OnPasswordChanged(it)) },
-                onLoginClick = { loginViewModel.handleEvent(OnLoginClick(email, password)) }
+                onEmailChanged = { handleEvent(OnEmailChanged(it)) },
+                onPasswordChanged = { handleEvent(OnPasswordChanged(it)) },
+                onLoginClick = { handleEvent(OnLoginClick(email, password)) }
             )
 
             Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
-            TextButton(onClick = { loginViewModel.handleEvent(OnResetPasswordClick) }) {
+            TextButton(onClick = { handleEvent(OnResetPasswordClick) }) {
                 Text(
                     text = stringResource(Res.string.forgot_password),
                     color = MaterialTheme.colorScheme.primary,

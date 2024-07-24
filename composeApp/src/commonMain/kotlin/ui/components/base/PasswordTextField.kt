@@ -53,7 +53,7 @@ internal fun PasswordTextField(
             Icon(
                 modifier = modifier.padding(start = 16.dp),
                 imageVector = Icons.Outlined.Lock,
-                contentDescription = null,
+                contentDescription = "eye icon",
                 tint = MaterialTheme.colorScheme.onSurface
             )
         },
