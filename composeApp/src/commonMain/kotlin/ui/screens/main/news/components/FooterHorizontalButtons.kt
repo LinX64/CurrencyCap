@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.cancel
+import currencycap.composeapp.generated.resources.clear
 import currencycap.composeapp.generated.resources.set
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.button.PrimarySmallIconButton
@@ -78,7 +79,7 @@ internal fun FooterHorizontalButtons(
                     Icon(
                         imageVector = Icons.Filled.Close,
                         tint = MaterialTheme.colorScheme.onSurface,
-                        contentDescription = null
+                        contentDescription = stringResource(Res.string.clear)
                     )
 
                     Text(

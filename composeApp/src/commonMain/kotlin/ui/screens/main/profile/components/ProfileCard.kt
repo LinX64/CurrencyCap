@@ -18,7 +18,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.profile
 import data.remote.model.User
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
 import ui.screens.main.overview.components.getPlaceHolder
 import ui.theme.AppDimensions.SPACER_PADDING_16
@@ -44,7 +47,7 @@ internal fun ProfileCard(
                         Modifier.size(100.dp).clip(RoundedCornerShape(55)),
                     ) else Modifier.size(100.dp).clip(RoundedCornerShape(55)),
                     model = profilePicture,
-                    contentDescription = null
+                    contentDescription = stringResource(Res.string.profile)
                 )
 
                 Spacer(modifier = Modifier.height(SPACER_PADDING_16))

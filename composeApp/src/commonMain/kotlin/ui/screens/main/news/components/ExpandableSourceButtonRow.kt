@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.expandable
 import currencycap.composeapp.generated.resources.source
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
@@ -57,7 +58,7 @@ internal fun ExpandableSourceButtonRow(
                     Icon(
                         imageVector = Icons.Outlined.Source,
                         tint = MaterialTheme.colorScheme.onSurface,
-                        contentDescription = null
+                        contentDescription = stringResource(Res.string.source)
                     )
 
                     Spacer(modifier = Modifier.width(SPACER_PADDING_8))
@@ -73,7 +74,7 @@ internal fun ExpandableSourceButtonRow(
                 Icon(
                     imageVector = if (isExpanded) Icons.Outlined.KeyboardArrowUp else Icons.Outlined.KeyboardArrowDown,
                     tint = MaterialTheme.colorScheme.onSurface,
-                    contentDescription = null
+                    contentDescription = stringResource(Res.string.expandable)
                 )
             }
             AnimatedVisibility(visible = isExpanded) {

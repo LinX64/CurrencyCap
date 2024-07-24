@@ -21,10 +21,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.email
 import currencycap.composeapp.generated.resources.email_sent
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
@@ -62,7 +64,7 @@ internal fun PasswordResetDialog(
                     ) {
                         Image(
                             painter = painterResource(Res.drawable.email_sent),
-                            contentDescription = null,
+                            contentDescription = stringResource(Res.string.email),
                             modifier = Modifier.size(64.dp)
                         )
 

@@ -1,10 +1,10 @@
 package ui.screens.initial.login
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import data.remote.repository.auth.AuthServiceRepositoryImpl.AuthState
 import domain.repository.AuthServiceRepository
 import domain.repository.UserPreferences
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToMarketOverview
@@ -25,8 +25,8 @@ internal class LoginViewModel(
     private val userPreferences: UserPreferences
 ) : MviViewModel<LoginViewEvent, LoginState, LoginNavigationEffect>(Idle) {
 
-    val newEmail: MutableStateFlow<String> = MutableStateFlow("")
-    val newPassword: MutableStateFlow<String> = MutableStateFlow("")
+    val newEmail = mutableStateOf("")
+    val newPassword = mutableStateOf("")
 
     override fun handleEvent(event: LoginViewEvent) {
         when (event) {

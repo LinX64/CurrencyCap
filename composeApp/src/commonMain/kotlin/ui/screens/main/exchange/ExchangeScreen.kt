@@ -30,11 +30,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.exchange
 import currencycap.composeapp.generated.resources.exchange_illustration
 import data.local.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.HandleNavigationEffect
 import ui.screens.main.exchange.ExchangeNavigationEffect.ShowSnakeBar
@@ -128,7 +130,7 @@ private fun ExchangeCard(
             Image(
                 modifier = Modifier.size(84.dp),
                 painter = painterResource(Res.drawable.exchange_illustration),
-                contentDescription = null,
+                contentDescription = stringResource(Res.string.exchange),
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
             )
 

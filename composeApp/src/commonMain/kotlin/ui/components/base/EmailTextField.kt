@@ -48,7 +48,7 @@ internal fun EmailTextField(
             Icon(
                 modifier = modifier.padding(start = 16.dp),
                 imageVector = Icons.Outlined.Email,
-                contentDescription = null,
+                contentDescription = stringResource(Res.string.email),
                 tint = MaterialTheme.colorScheme.onSurface
             )
         },

@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.bookmark
 import currencycap.composeapp.generated.resources.explore_news
 import currencycap.composeapp.generated.resources.no_bookmarks_description
 import currencycap.composeapp.generated.resources.no_bookmarks_yet
@@ -104,7 +105,7 @@ private fun NoBookmarks(
         Icon(
             modifier = Modifier.size(64.dp),
             imageVector = Icons.Default.Bookmarks,
-            contentDescription = null,
+            contentDescription = stringResource(Res.string.bookmark),
             tint = MaterialTheme.colorScheme.onSurface
         )
 

@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.full_name
+import currencycap.composeapp.generated.resources.person
 import org.jetbrains.compose.resources.stringResource
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.SPACER_PADDING_16
@@ -58,7 +59,7 @@ internal fun NameTextField(
             Icon(
                 modifier = modifier.padding(start = SPACER_PADDING_16),
                 imageVector = Icons.Outlined.Person,
-                contentDescription = null,
+                contentDescription = stringResource(Res.string.person),
                 tint = MaterialTheme.colorScheme.onSurface
             )
         },

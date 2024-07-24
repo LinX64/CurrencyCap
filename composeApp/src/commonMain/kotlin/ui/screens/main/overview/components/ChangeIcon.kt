@@ -10,7 +10,9 @@ import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.baseline_trending_down_24
 import currencycap.composeapp.generated.resources.baseline_trending_up_24
+import currencycap.composeapp.generated.resources.change_icon
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun ChangeIcon(
@@ -31,7 +33,7 @@ internal fun ChangeIcon(
     Icon(
         modifier = if (isLoading) getPlaceHolder(Modifier.size(17.dp)) else Modifier,
         painter = painter,
-        contentDescription = null,
+        contentDescription = stringResource(Res.string.change_icon),
         tint = tint
     )
 }

@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.error
 import currencycap.composeapp.generated.resources.please_check_internet_connection
 import currencycap.composeapp.generated.resources.retry
 import currencycap.composeapp.generated.resources.something_went_wrong
@@ -43,7 +44,7 @@ internal fun ErrorView(
     ) {
         Icon(
             imageVector = Icons.Default.Error,
-            contentDescription = null,
+            contentDescription = stringResource(Res.string.error),
             modifier = Modifier.size(ICON_SIZE_64),
             tint = MaterialTheme.colorScheme.onSurface
         )

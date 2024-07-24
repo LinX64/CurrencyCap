@@ -53,7 +53,7 @@ internal fun DateOfPublicationButton(
                 Icon(
                     imageVector = Icons.Outlined.DateRange,
                     tint = MaterialTheme.colorScheme.onSurface,
-                    contentDescription = null
+                    contentDescription = stringResource(Res.string.date_of_publication)
                 )
 
                 Spacer(modifier = Modifier.width(SPACER_PADDING_8))

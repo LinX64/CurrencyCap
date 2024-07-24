@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.ic_letters_ai
 import currencycap.composeapp.generated.resources.ic_search_normal
+import currencycap.composeapp.generated.resources.info
 import currencycap.composeapp.generated.resources.search
 import currencycap.composeapp.generated.resources.type_to_search
 import org.jetbrains.compose.resources.painterResource
@@ -111,7 +112,7 @@ private fun CircleButton(
         ) {
             Icon(
                 painter = painterResource(Res.drawable.ic_letters_ai),
-                contentDescription = "Info",
+                contentDescription = stringResource(Res.string.info),
                 tint = Color.Gray,
                 modifier = Modifier.size(24.dp)
             )

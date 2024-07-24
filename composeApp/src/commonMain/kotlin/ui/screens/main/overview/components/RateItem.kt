@@ -17,8 +17,10 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.baseline_monetization_on_48
+import currencycap.composeapp.generated.resources.rate
 import domain.model.main.BonbastRate
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import ui.common.formatToPrice
 import ui.components.base.GlassCard
 import ui.theme.AppDimensions.ICON_SIZE_48
@@ -48,7 +50,7 @@ internal fun RateItem(
                     placeholder = painterResource(Res.drawable.baseline_monetization_on_48),
                     error = painterResource(Res.drawable.baseline_monetization_on_48),
                     model = icon,
-                    contentDescription = null
+                    contentDescription = stringResource(Res.string.rate)
                 )
             }
 

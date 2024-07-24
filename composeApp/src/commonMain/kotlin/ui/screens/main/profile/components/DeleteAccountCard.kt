@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.chevron_right
 import currencycap.composeapp.generated.resources.delete_account
 import currencycap.composeapp.generated.resources.delete_your_account
 import currencycap.composeapp.generated.resources.delete_your_account_warning
@@ -102,7 +103,7 @@ internal fun DeleteAccountCard(
                     Icon(
                         modifier = Modifier.padding(start = SPACER_PADDING_8),
                         imageVector = Icons.Default.ChevronRight,
-                        contentDescription = null,
+                        contentDescription = stringResource(Res.string.chevron_right),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.logo
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import ui.theme.AppDimensions.SPACER_PADDING_16
 
 @Composable
@@ -36,7 +37,7 @@ internal fun SplashScreen(modifier: Modifier = Modifier) {
         ) {
             Image(
                 painter = painterResource(Res.drawable.logo),
-                contentDescription = null,
+                contentDescription = stringResource(Res.string.logo),
                 modifier = Modifier.size(180.dp),
                 contentScale = ContentScale.Crop
             )

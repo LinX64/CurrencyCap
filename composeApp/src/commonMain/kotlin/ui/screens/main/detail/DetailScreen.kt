@@ -22,9 +22,12 @@ import androidx.compose.ui.text.style.TextAlign.Companion.Justify
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.crypto_image
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import domain.model.main.Crypto
+import org.jetbrains.compose.resources.stringResource
 import org.koin.core.parameter.parametersOf
 import ui.common.formatToPrice
 import ui.components.base.BaseGlassLazyColumn
@@ -105,7 +108,7 @@ private fun DetailHeader(
             AsyncImage(
                 modifier = isLoadingModifier,
                 model = crypto.image,
-                contentDescription = null
+                contentDescription = stringResource(Res.string.crypto_image)
             )
 
             Spacer(modifier = Modifier.height(SPACER_PADDING_8))
