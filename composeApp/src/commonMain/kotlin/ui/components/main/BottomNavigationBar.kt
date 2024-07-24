@@ -61,6 +61,7 @@ internal fun BottomNavigationBar(
     currentDestination: String?,
     scrollBehavior: TopAppBarScrollBehavior,
     hazeState: HazeState,
+    isLoggedIn: Boolean,
     onTabSelected: (BottomBarTab) -> Unit
 ) {
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
@@ -77,7 +78,12 @@ internal fun BottomNavigationBar(
         }
     }
 
-    if (isSettingsScreen.not() && isExploreScreen.not() && isAIScreen.not() && isDetailScreen.not()) {
+    if (isSettingsScreen.not() &&
+        isExploreScreen.not() &&
+        isAIScreen.not() &&
+        isDetailScreen.not() &&
+        isLoggedIn
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

@@ -29,7 +29,6 @@ import ui.navigation.graphs.AppNavGraph
 import ui.screens.MainState
 import ui.screens.MainViewModel
 import ui.screens.initial.landing.privacy_policy.PrivacyPolicySection
-import ui.screens.initial.splash.SplashScreen
 import ui.screens.main.news.NewsViewEvent.OnSetClick
 import ui.screens.main.news.NewsViewModel
 import ui.screens.main.news.components.NewsFilterSection
@@ -39,7 +38,7 @@ import ui.screens.main.subscribers.SubscribersSection
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun App(
-    mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
+    mainViewModel: MainViewModel,
     newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
@@ -50,14 +49,11 @@ internal fun App(
     val currentDestination = appState.currentDestination
     val navController = appState.navController
     val isLoggedIn = mainState is MainState.LoggedIn
-    val isLoading = mainState is MainState.Loading
 
     val hazeState = remember { HazeState() }
     var isNewsFilterSheetVisible by remember { mutableStateOf(false) }
     var isSheetOpen by remember { mutableStateOf(false) }
     var isSubscribeSheetVisible by remember { mutableStateOf(false) }
-
-    if (isLoading) SplashScreen()
 
     Scaffold(
         topBar = {
@@ -71,14 +67,13 @@ internal fun App(
             )
         },
         bottomBar = {
-            if (isLoggedIn) {
-                BottomNavigationBar(
-                    currentDestination = currentDestination,
-                    scrollBehavior = scrollBehavior,
-                    hazeState = hazeState,
-                    onTabSelected = { tab -> appState.navigateToTopLevelDestination(tab) }
-                )
-            }
+            BottomNavigationBar(
+                currentDestination = currentDestination,
+                scrollBehavior = scrollBehavior,
+                isLoggedIn = isLoggedIn,
+                hazeState = hazeState,
+                onTabSelected = { tab -> appState.navigateToTopLevelDestination(tab) }
+            )
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -91,12 +86,12 @@ internal fun App(
             isLoggedIn = isLoggedIn,
             scrollBehavior = scrollBehavior,
             onNavigateToLanding = mainViewModel::navigateToLanding,
+            showPrivacyPolicyBottomSheet = { isSheetOpen = true },
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
             onLoginSuccess = {
                 mainViewModel.onLoginSuccess()
                 navController.navigate(Overview)
-            },
-            showPrivacyPolicyBottomSheet = { isSheetOpen = true }
+            }
         )
     }
 

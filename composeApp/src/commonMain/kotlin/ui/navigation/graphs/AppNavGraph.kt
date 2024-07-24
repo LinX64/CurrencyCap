@@ -40,7 +40,7 @@ internal fun AppNavGraph(
     navController: NavHostController,
     padding: PaddingValues,
     hazeState: HazeState,
-    isLoggedIn: Boolean = false,
+    isLoggedIn: Boolean,
     scrollBehavior: TopAppBarScrollBehavior,
     onNavigateToLanding: () -> Unit,
     onError: (message: String) -> Unit,
@@ -49,12 +49,13 @@ internal fun AppNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = if (isLoggedIn) Overview else AuthNavGraph,
+        startDestination = if (isLoggedIn) MainNavGraph else AuthNavGraph,
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
             .padding(bottom = SPACER_PADDING_32)
     ) {
+
         mainNavGraph(
             padding = padding,
             navController = navController,
@@ -62,10 +63,10 @@ internal fun AppNavGraph(
             onNavigateToLanding = onNavigateToLanding,
             onError = onError
         )
+
         authNavGraph(
             padding = padding,
             navController = navController,
-            isUserLoggedIn = isLoggedIn,
             showPrivacyPolicyBottomSheet = showPrivacyPolicyBottomSheet,
             onLoginSuccess = onLoginSuccess,
             onError = onError
@@ -80,69 +81,70 @@ private fun NavGraphBuilder.mainNavGraph(
     onNavigateToLanding: () -> Unit,
     onError: (message: String) -> Unit
 ) {
-    searchScreen(
-        padding = padding,
-        navController = navController,
-        hazeState = hazeState
-    )
+    navigation<MainNavGraph>(startDestination = Overview) {
+        searchScreen(
+            padding = padding,
+            navController = navController,
+            hazeState = hazeState
+        )
 
-    aiPredictScreen(
-        padding = padding,
-        hazeState = hazeState
-    )
+        aiPredictScreen(
+            padding = padding,
+            hazeState = hazeState
+        )
 
-    overviewScreen(
-        padding = padding,
-        hazeState = hazeState,
-        navController = navController
-    )
+        overviewScreen(
+            padding = padding,
+            hazeState = hazeState,
+            navController = navController
+        )
 
-    bookmarksScreen(
-        padding = padding,
-        hazeState = hazeState,
-        navController = navController
-    )
+        bookmarksScreen(
+            padding = padding,
+            hazeState = hazeState,
+            navController = navController
+        )
 
-    newsScreen(
-        padding = padding,
-        hazeState = hazeState,
-        navController = navController
-    )
+        newsScreen(
+            padding = padding,
+            hazeState = hazeState,
+            navController = navController
+        )
 
-    newsDetailScreen(
-        padding = padding,
-        hazeState = hazeState,
-        onError = onError
-    )
+        newsDetailScreen(
+            padding = padding,
+            hazeState = hazeState,
+            onError = onError
+        )
 
-    detailScreen(
-        padding = padding,
-        hazeState = hazeState
-    )
+        detailScreen(
+            padding = padding,
+            hazeState = hazeState
+        )
 
-    exchangeScreen(
-        padding = padding,
-        onError = onError,
-        hazeState = hazeState
-    )
+        exchangeScreen(
+            padding = padding,
+            onError = onError,
+            hazeState = hazeState
+        )
 
-    profileScreen(
-        padding = padding,
-        onNavigateToLanding = onNavigateToLanding,
-        onError = onError,
-        hazeState = hazeState
-    )
+        profileScreen(
+            padding = padding,
+            onNavigateToLanding = onNavigateToLanding,
+            onError = onError,
+            hazeState = hazeState
+        )
 
-    settingsScreen(
-        padding = padding,
-        hazeState = hazeState
-    )
+        settingsScreen(
+            padding = padding,
+            hazeState = hazeState
+        )
+    }
 }
 
 private fun NavGraphBuilder.authNavGraph(
     padding: PaddingValues,
     navController: NavHostController,
-    isUserLoggedIn: Boolean,
     showPrivacyPolicyBottomSheet: () -> Unit,
     onLoginSuccess: () -> Unit,
     onError: (message: String) -> Unit,
@@ -185,6 +187,9 @@ private fun NavGraphBuilder.authNavGraph(
         )
     }
 }
+
+@Serializable
+data object MainNavGraph
 
 @Serializable
 data object AuthNavGraph
