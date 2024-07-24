@@ -12,7 +12,7 @@ kotlinxDatetime = "0.6.0"
 lifecycleViewModel = "2.8.4"
 navigationCompose = "2.8.0-alpha08"
 haze = "0.7.3"
-coil = "3.0.0-alpha08"
+coil = "3.0.0-alpha09"
 compottie = "1.1.2"
 placeholder-material3 = "1.0.8"
 androidx-startup = "1.2.0-alpha02"
@@ -63,7 +63,7 @@ lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifec
 # Coil
 coil = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coil" }
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
-coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor", version.ref = "coil" }
+coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor2", version.ref = "coil" }
 
 # Network
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
