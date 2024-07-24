@@ -104,11 +104,11 @@ class NewsViewModel(
     }
 
     private fun getSources(news: List<Article>) {
-        val sources = news
+        val sourcesNames = news
             .map { it.source.name }
             .distinct()
 
-        this.sources.value = sources
+        sources.value = sourcesNames
     }
 
     private fun saveSelectedSources(strings: Set<String>) {

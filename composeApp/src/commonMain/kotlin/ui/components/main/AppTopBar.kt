@@ -25,7 +25,6 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import ui.navigation.util.Screen.Settings
 import ui.navigation.util.ScreenRoutes
 import ui.navigation.util.ScreenRoutes.AI_PREDICTION
 import ui.navigation.util.ScreenRoutes.CRYPTO_DETAIL
@@ -33,6 +32,7 @@ import ui.navigation.util.ScreenRoutes.EXPLORE
 import ui.navigation.util.ScreenRoutes.NEWS
 import ui.navigation.util.ScreenRoutes.NEWS_DETAIL
 import ui.navigation.util.ScreenRoutes.SETTINGS
+import ui.screens.main.settings.navigation.Settings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,6 +40,7 @@ internal fun AppTopBar(
     currentDestination: String?,
     navController: NavHostController,
     scrollBehavior: TopAppBarScrollBehavior,
+    isLoggedIn: Boolean = false,
     hazeState: HazeState,
     onFilterClick: () -> Unit,
 ) {

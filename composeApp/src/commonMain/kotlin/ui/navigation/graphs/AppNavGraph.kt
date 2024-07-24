@@ -2,6 +2,7 @@ package ui.navigation.graphs
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -12,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.navigation
 import dev.chrisbanes.haze.HazeState
+import kotlinx.serialization.Serializable
 import ui.screens.initial.fill_profile.navigation.fillProfileScreen
 import ui.screens.initial.get_verified.navigation.getVerifiedPhoneScreen
 import ui.screens.initial.landing.navigation.Landing
@@ -30,37 +32,41 @@ import ui.screens.main.overview.navigation.overviewScreen
 import ui.screens.main.profile.navigation.profileScreen
 import ui.screens.main.search.navigation.searchScreen
 import ui.screens.main.settings.navigation.settingsScreen
+import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun MainNavGraph(
+internal fun AppNavGraph(
     navController: NavHostController,
     padding: PaddingValues,
     hazeState: HazeState,
+    isLoggedIn: Boolean = false,
     scrollBehavior: TopAppBarScrollBehavior,
     onNavigateToLanding: () -> Unit,
     onError: (message: String) -> Unit,
+    showPrivacyPolicyBottomSheet: () -> Unit,
+    onLoginSuccess: () -> Unit,
 ) {
     NavHost(
         navController = navController,
-        startDestination = Overview,
+        startDestination = if (isLoggedIn) Overview else AuthNavGraph,
         modifier = Modifier
             .consumeWindowInsets(padding)
             .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .padding(bottom = SPACER_PADDING_32)
     ) {
-        authNavGraph(
-            padding = padding,
-            navController = navController,
-            onError = onError,
-            showPrivacyPolicyBottomSheet = { /* no-op */ },
-            onLoginSuccess = { /* no-op */ }
-        )
-
         mainNavGraph(
             padding = padding,
             navController = navController,
             hazeState = hazeState,
             onNavigateToLanding = onNavigateToLanding,
+            onError = onError
+        )
+        authNavGraph(
+            padding = padding,
+            navController = navController,
+            showPrivacyPolicyBottomSheet = showPrivacyPolicyBottomSheet,
+            onLoginSuccess = onLoginSuccess,
             onError = onError
         )
     }
@@ -139,7 +145,7 @@ private fun NavGraphBuilder.authNavGraph(
     onLoginSuccess: () -> Unit,
     onError: (message: String) -> Unit
 ) {
-    navigation<Landing>(startDestination = Landing) {
+    navigation<AuthNavGraph>(startDestination = Landing) {
         landingScreen(
             navController = navController,
             showPrivacyPolicyBottomSheet = showPrivacyPolicyBottomSheet
@@ -177,3 +183,6 @@ private fun NavGraphBuilder.authNavGraph(
         )
     }
 }
+
+@Serializable
+data object AuthNavGraph
