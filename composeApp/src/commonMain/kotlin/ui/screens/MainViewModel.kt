@@ -5,10 +5,10 @@ import androidx.lifecycle.viewModelScope
 import domain.repository.UserPreferences
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ui.screens.MainState.Idle
 import ui.screens.MainState.Loading
 import ui.screens.MainState.LoggedIn
 import ui.screens.MainState.NotLoggedIn
@@ -17,13 +17,8 @@ class MainViewModel(
     private val userPreferences: UserPreferences
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<MainState>(MainState.Idle)
-    val appState: StateFlow<MainState> = _state
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(1_000L),
-            initialValue = MainState.Idle
-        )
+    private val _state: MutableStateFlow<MainState> = MutableStateFlow(Idle)
+    val appState: StateFlow<MainState> = _state.asStateFlow()
 
     init {
         checkUserLoginStatus()
@@ -49,7 +44,7 @@ class MainViewModel(
     }
 
     fun clearState() {
-        _state.value = MainState.Idle
+        _state.value = Idle
     }
 }
 

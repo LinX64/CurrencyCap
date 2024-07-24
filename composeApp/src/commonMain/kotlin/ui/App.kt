@@ -9,14 +9,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -47,7 +46,7 @@ internal fun App(
     scope: CoroutineScope = rememberCoroutineScope(),
     appState: AppState = rememberAppState(),
 ) {
-    val mainState by mainViewModel.appState.collectAsStateWithLifecycle()
+    val mainState by mainViewModel.appState.collectAsState()
     val currentDestination = appState.currentDestination
     val navController = appState.navController
     val isLoggedIn = mainState is MainState.LoggedIn
@@ -59,82 +58,70 @@ internal fun App(
     var isSubscribeSheetVisible by remember { mutableStateOf(false) }
 
     if (isLoading) SplashScreen()
-    else {
-        Scaffold(
-            topBar = {
-                AppTopBar(
-                    currentDestination = currentDestination,
-                    hazeState = hazeState,
-                    isLoggedIn = isLoggedIn,
-                    navController = navController,
-                    scrollBehavior = scrollBehavior,
-                    onFilterClick = { isNewsFilterSheetVisible = true }
-                )
-            },
-            bottomBar = {
-                if (isLoggedIn) {
-                    BottomNavigationBar(
-                        currentDestination = currentDestination,
-                        scrollBehavior = scrollBehavior,
-                        hazeState = hazeState,
-                        onTabSelected = { tab -> appState.navigateToTopLevelDestination(tab) }
-                    )
-                }
-            },
-            contentWindowInsets = WindowInsets(0, 0, 0, 0),
-            snackbarHost = { SnackbarHost(snackbarHostState) },
-            modifier = Modifier.fillMaxSize()
-        ) { paddingValues ->
-            AppNavGraph(
-                navController = navController,
-                padding = paddingValues,
+
+    Scaffold(
+        topBar = {
+            AppTopBar(
+                currentDestination = currentDestination,
                 hazeState = hazeState,
                 isLoggedIn = isLoggedIn,
+                navController = navController,
                 scrollBehavior = scrollBehavior,
-                onNavigateToLanding = mainViewModel::navigateToLanding,
-                onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
-                onLoginSuccess = {
-                    mainViewModel.onLoginSuccess()
-                    navController.navigate(Overview) {
-                        popUpTo(navController.graph.startDestinationId) {
-                            inclusive = true
-                        }
-                    }
-                },
-                showPrivacyPolicyBottomSheet = { isSheetOpen = true }
+                onFilterClick = { isNewsFilterSheetVisible = true }
             )
-        }
-
-        BaseModalBottomSheet(
-            isVisible = isSubscribeSheetVisible,
-            onDismiss = { isSubscribeSheetVisible = false }
-        ) { SubscribersSection() }
-
-        BaseModalBottomSheet(
-            isVisible = isNewsFilterSheetVisible,
-            onDismiss = { isNewsFilterSheetVisible = false }
-        ) {
-            NewsFilterSection(
-                sources = newsViewModel.sources.value,
-                onCloseClick = { isNewsFilterSheetVisible = false },
-                onDoneClick = { startDate, endDate, selectedSources ->
-                    isNewsFilterSheetVisible = false
-                    newsViewModel.handleEvent(OnSetClick(startDate, endDate, selectedSources))
-                }
-            )
-        }
-
-        BaseModalBottomSheet(
-            isVisible = isSheetOpen,
-            onDismiss = { isSheetOpen = false }
-        ) { PrivacyPolicySection() }
-
-        DisposableEffect(Unit) {
-            onDispose {
-                mainViewModel.clearState()
+        },
+        bottomBar = {
+            if (isLoggedIn) {
+                BottomNavigationBar(
+                    currentDestination = currentDestination,
+                    scrollBehavior = scrollBehavior,
+                    hazeState = hazeState,
+                    onTabSelected = { tab -> appState.navigateToTopLevelDestination(tab) }
+                )
             }
-        }
+        },
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        modifier = Modifier.fillMaxSize()
+    ) { paddingValues ->
+        AppNavGraph(
+            navController = navController,
+            padding = paddingValues,
+            hazeState = hazeState,
+            isLoggedIn = isLoggedIn,
+            scrollBehavior = scrollBehavior,
+            onNavigateToLanding = mainViewModel::navigateToLanding,
+            onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
+            onLoginSuccess = {
+                mainViewModel.onLoginSuccess()
+                navController.navigate(Overview)
+            },
+            showPrivacyPolicyBottomSheet = { isSheetOpen = true }
+        )
     }
-}
 
+    BaseModalBottomSheet(
+        isVisible = isSubscribeSheetVisible,
+        onDismiss = { isSubscribeSheetVisible = false }
+    ) { SubscribersSection() }
+
+    BaseModalBottomSheet(
+        isVisible = isNewsFilterSheetVisible,
+        onDismiss = { isNewsFilterSheetVisible = false }
+    ) {
+        NewsFilterSection(
+            sources = newsViewModel.sources.value,
+            onCloseClick = { isNewsFilterSheetVisible = false },
+            onDoneClick = { startDate, endDate, selectedSources ->
+                isNewsFilterSheetVisible = false
+                newsViewModel.handleEvent(OnSetClick(startDate, endDate, selectedSources))
+            }
+        )
+    }
+
+    BaseModalBottomSheet(
+        isVisible = isSheetOpen,
+        onDismiss = { isSheetOpen = false }
+    ) { PrivacyPolicySection() }
+}
 

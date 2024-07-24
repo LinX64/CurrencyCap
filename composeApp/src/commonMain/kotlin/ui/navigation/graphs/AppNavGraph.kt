@@ -65,6 +65,7 @@ internal fun AppNavGraph(
         authNavGraph(
             padding = padding,
             navController = navController,
+            isUserLoggedIn = isLoggedIn,
             showPrivacyPolicyBottomSheet = showPrivacyPolicyBottomSheet,
             onLoginSuccess = onLoginSuccess,
             onError = onError
@@ -141,9 +142,10 @@ private fun NavGraphBuilder.mainNavGraph(
 private fun NavGraphBuilder.authNavGraph(
     padding: PaddingValues,
     navController: NavHostController,
+    isUserLoggedIn: Boolean,
     showPrivacyPolicyBottomSheet: () -> Unit,
     onLoginSuccess: () -> Unit,
-    onError: (message: String) -> Unit
+    onError: (message: String) -> Unit,
 ) {
     navigation<AuthNavGraph>(startDestination = Landing) {
         landingScreen(

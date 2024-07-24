@@ -33,8 +33,6 @@ class OverviewViewModel(
     }
 
     private fun loadCombinedRates() {
-        setState { OverviewState.Loading }
-
         val ratesFlow = mainRepository.getAllRates()
         val newsFlow = newsRepository.getNews().map {
             if (it is NetworkResult.Success) it.data else emptyList()
