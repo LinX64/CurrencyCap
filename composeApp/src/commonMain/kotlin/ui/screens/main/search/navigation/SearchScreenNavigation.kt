@@ -6,8 +6,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
+import kotlinx.serialization.Serializable
 import ui.navigation.util.Screen.CryptoDetail
-import ui.navigation.util.Screen.Explore
 import ui.screens.main.search.SearchRoute
 
 fun NavController.navigateToSearchScreen() = navigate(Explore)
@@ -27,3 +27,6 @@ fun NavGraphBuilder.searchScreen(
         )
     }
 }
+
+@Serializable
+data object Explore

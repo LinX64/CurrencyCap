@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.util.Screen.Profile
+import kotlinx.serialization.Serializable
 import ui.screens.main.profile.ProfileRoute
 
 fun NavController.navigateToProfileScreen(navOptions: NavOptions) = navigate(Profile, navOptions)
@@ -26,3 +26,6 @@ fun NavGraphBuilder.profileScreen(
         )
     }
 }
+
+@Serializable
+data object Profile

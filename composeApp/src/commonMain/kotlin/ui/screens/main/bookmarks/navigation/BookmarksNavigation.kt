@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.util.Screen.Bookmarks
+import kotlinx.serialization.Serializable
 import ui.navigation.util.Screen.News
 import ui.navigation.util.Screen.NewsDetail
 import ui.screens.main.bookmarks.BookmarksRoute
@@ -27,3 +27,6 @@ fun NavGraphBuilder.bookmarksScreen(
         )
     }
 }
+
+@Serializable
+data object Bookmarks

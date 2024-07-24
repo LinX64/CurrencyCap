@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.util.Screen.Exchange
+import kotlinx.serialization.Serializable
 import ui.screens.main.exchange.ExchangeRoute
 
 fun NavController.navigateToExchangeScreen(navOptions: NavOptions) = navigate(Exchange, navOptions)
@@ -24,3 +24,6 @@ fun NavGraphBuilder.exchangeScreen(
         )
     }
 }
+
+@Serializable
+data object Exchange

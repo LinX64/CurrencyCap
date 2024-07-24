@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.util.Screen.Settings
+import kotlinx.serialization.Serializable
 import ui.screens.main.settings.SettingsRoute
 
 fun NavController.navigateToSettingsScreen() = navigate(Settings)
@@ -21,3 +21,6 @@ fun NavGraphBuilder.settingsScreen(
         )
     }
 }
+
+@Serializable
+data object Settings

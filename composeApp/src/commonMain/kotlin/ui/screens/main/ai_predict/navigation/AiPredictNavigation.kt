@@ -5,7 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.util.Screen.AIPrediction
+import kotlinx.serialization.Serializable
 import ui.screens.main.ai_predict.AiPredictScreen
 
 fun NavController.navigateToAiPredictScreen() = navigate(AIPrediction)
@@ -21,3 +21,6 @@ fun NavGraphBuilder.aiPredictScreen(
         )
     }
 }
+
+@Serializable
+data object AIPrediction

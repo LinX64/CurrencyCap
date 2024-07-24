@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import ui.navigation.util.Screen.Register
+import kotlinx.serialization.Serializable
 import ui.screens.initial.fill_profile.navigation.navigateToFillProfileScreen
 import ui.screens.initial.login.navigation.navigateToLoginScreen
 import ui.screens.initial.register.RegisterScreen
@@ -25,3 +25,6 @@ fun NavGraphBuilder.registerScreen(
         )
     }
 }
+
+@Serializable
+data object Register
