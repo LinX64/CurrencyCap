@@ -26,11 +26,7 @@ fun NavGraphBuilder.overviewScreen(
         OverviewRoute(
             padding = padding,
             hazeState = hazeState,
-            onSearchCardClicked = {
-                navController.navigate(Explore) {
-                    popUpTo(Overview) { inclusive = true }
-                }
-            },
+            onSearchCardClicked = { navController.navigate(Explore) },
             onNewsItemClick = { url ->
                 val encodedUrl = UrlEncoderUtil.encode(url)
                 navController.navigate(NewsDetail(encodedUrl))
