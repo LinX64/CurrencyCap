@@ -17,6 +17,7 @@ import ui.screens.main.profile.ProfileState.Idle
 import ui.screens.main.profile.ProfileState.Loading
 import ui.screens.main.profile.ProfileState.Success
 import ui.screens.main.profile.ProfileViewEvent.OnDeleteAccountCardClicked
+import ui.screens.main.profile.ProfileViewEvent.OnFetchProfile
 import ui.screens.main.profile.ProfileViewEvent.OnSignOutClicked
 import ui.screens.main.profile.ProfileViewEvent.OnSupportClicked
 
@@ -29,11 +30,12 @@ internal class ProfileViewModel(
     val uid: MutableState<String> = mutableStateOf("")
 
     init {
-        fetchProfile()
+        handleEvent(OnFetchProfile)
     }
 
     override fun handleEvent(event: ProfileViewEvent) {
         when (event) {
+            OnFetchProfile -> fetchProfile()
             OnSupportClicked -> setEffect(OpenEmailApp)
             OnSignOutClicked -> logout()
             is OnDeleteAccountCardClicked -> handleDeleteAccount()

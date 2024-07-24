@@ -6,6 +6,7 @@ sealed interface ProfileViewEvent {
     data object OnDeleteAccountCardClicked : ProfileViewEvent
     data object OnSupportClicked : ProfileViewEvent
     data object OnSignOutClicked : ProfileViewEvent
+    data object OnFetchProfile : ProfileViewEvent
 }
 
 sealed interface ProfileState {
