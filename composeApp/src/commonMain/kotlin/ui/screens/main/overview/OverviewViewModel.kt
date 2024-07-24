@@ -22,7 +22,7 @@ class OverviewViewModel(
 ) : MviViewModel<OverviewViewEvent, OverviewState, OverviewNavigationEffect>(OverviewState.Loading) {
 
     init {
-        loadCombinedRates()
+        handleEvent(OnLoadRates)
     }
 
     override fun handleEvent(event: OverviewViewEvent) {
@@ -33,6 +33,8 @@ class OverviewViewModel(
     }
 
     private fun loadCombinedRates() {
+        setState { OverviewState.Loading }
+
         val ratesFlow = mainRepository.getAllRates()
         val newsFlow = newsRepository.getNews().map {
             if (it is NetworkResult.Success) it.data else emptyList()
