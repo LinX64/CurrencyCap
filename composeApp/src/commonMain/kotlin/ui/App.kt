@@ -16,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -28,11 +29,11 @@ import ui.components.main.rememberAppState
 import ui.navigation.graphs.AppNavGraph
 import ui.screens.MainState
 import ui.screens.MainViewModel
+import ui.screens.initial.landing.navigation.Landing
 import ui.screens.initial.landing.privacy_policy.PrivacyPolicySection
 import ui.screens.main.news.NewsViewEvent.OnSetClick
 import ui.screens.main.news.NewsViewModel
 import ui.screens.main.news.components.NewsFilterSection
-import ui.screens.main.overview.navigation.Overview
 import ui.screens.main.subscribers.SubscribersSection
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,13 +86,10 @@ internal fun App(
             hazeState = hazeState,
             isLoggedIn = isLoggedIn,
             scrollBehavior = scrollBehavior,
-            onNavigateToLanding = mainViewModel::navigateToLanding,
+            onNavigateToLanding = { navigateToLanding(mainViewModel, navController) },
             showPrivacyPolicyBottomSheet = { isSheetOpen = true },
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
-            onLoginSuccess = {
-                mainViewModel.onLoginSuccess()
-                navController.navigate(Overview)
-            }
+            onLoginSuccess = { navigateToOverview(mainViewModel, navController) }
         )
     }
 
@@ -118,5 +116,25 @@ internal fun App(
         isVisible = isSheetOpen,
         onDismiss = { isSheetOpen = false }
     ) { PrivacyPolicySection() }
+}
+
+private fun navigateToOverview(
+    mainViewModel: MainViewModel,
+    navController: NavHostController
+) {
+    mainViewModel.onLoginSuccess()
+    navController.popBackStack()
+}
+
+private fun navigateToLanding(
+    mainViewModel: MainViewModel,
+    navController: NavHostController
+) {
+    mainViewModel.navigateToLanding()
+    navController.navigate(Landing) {
+        popUpTo(navController.graph.startDestinationId) {
+            inclusive = true
+        }
+    }
 }
 
