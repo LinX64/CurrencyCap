@@ -56,7 +56,8 @@ internal class AppState(
 
     // TODO: Temporary solution
     private fun getTabFromRoute(route: String?): String? {
-        val simpleRoute = route?.replace("ui.navigation.util.Screen.", "")
+        val splitRoute = route?.split(".")
+        val simpleRoute = splitRoute?.lastOrNull() ?: return null
 
         val tabRoute = BottomBarTab.entries.find { it.route == simpleRoute }?.route
         return tabRoute ?: simpleRoute

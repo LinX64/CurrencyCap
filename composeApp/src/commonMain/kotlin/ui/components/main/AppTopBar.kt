@@ -25,14 +25,14 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import ui.navigation.util.Screen.Settings
-import ui.navigation.util.ScreenRoutes
 import ui.navigation.util.ScreenRoutes.AI_PREDICTION
 import ui.navigation.util.ScreenRoutes.CRYPTO_DETAIL
 import ui.navigation.util.ScreenRoutes.EXPLORE
 import ui.navigation.util.ScreenRoutes.NEWS
 import ui.navigation.util.ScreenRoutes.NEWS_DETAIL
+import ui.navigation.util.ScreenRoutes.PROFILE
 import ui.navigation.util.ScreenRoutes.SETTINGS
+import ui.screens.main.settings.navigation.Settings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,6 +42,7 @@ internal fun AppTopBar(
     scrollBehavior: TopAppBarScrollBehavior,
     hazeState: HazeState,
     onFilterClick: () -> Unit,
+    isLoggedIn: Boolean,
 ) {
     val isSettingsScreen = currentDestination == SETTINGS
     val isNewsDetailScreen = currentDestination?.startsWith(NEWS_DETAIL)
@@ -49,13 +50,13 @@ internal fun AppTopBar(
     val isExploreScreen = currentDestination == EXPLORE
     val isAiScreen = currentDestination == AI_PREDICTION
     val isNewsScreen = currentDestination == NEWS
-    val isProfileScreen = currentDestination == ScreenRoutes.PROFILE
+    val isProfileScreen = currentDestination == PROFILE
 
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
             .hazeChild(state = hazeState),
         title = {
-            if (isNewsDetailScreen?.not() == true && isDetailScreen?.not() == true) {
+            if ((isNewsDetailScreen?.not() == true && isDetailScreen?.not() == true) && isLoggedIn) {
                 Text(
                     text = currentDestination,
                     maxLines = 1,
@@ -72,12 +73,12 @@ internal fun AppTopBar(
         scrollBehavior = scrollBehavior,
         navigationIcon = {
             NavigationIcon(
-                isSettingsScreen,
-                isNewsDetailScreen,
-                isExploreScreen,
-                isAiScreen,
-                isDetailScreen,
-                navController
+                isSettingsScreen = isSettingsScreen,
+                isNewsDetailScreen = isNewsDetailScreen,
+                isExploreScreen = isExploreScreen,
+                isAiScreen = isAiScreen,
+                isDetailScreen = isDetailScreen,
+                navController = navController
             )
         },
         actions = {

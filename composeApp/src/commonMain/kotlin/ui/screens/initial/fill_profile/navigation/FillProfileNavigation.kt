@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import ui.navigation.util.Screen.FillProfile
+import kotlinx.serialization.Serializable
 import ui.screens.initial.fill_profile.FillProfileScreen
 
 fun NavController.navigateToFillProfileScreen() = navigate(FillProfile)
@@ -22,3 +22,6 @@ fun NavGraphBuilder.fillProfileScreen(
         )
     }
 }
+
+@Serializable
+data object FillProfile

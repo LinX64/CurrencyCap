@@ -7,10 +7,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
+import kotlinx.serialization.Serializable
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
-import ui.navigation.util.Screen.News
-import ui.navigation.util.Screen.NewsDetail
 import ui.screens.main.news.NewsRoute
+import ui.screens.main.news.news_detail.navigation.NewsDetail
 
 fun NavController.navigateToNewsScreen(navOptions: NavOptions) = navigate(News, navOptions)
 
@@ -31,3 +31,5 @@ fun NavGraphBuilder.newsScreen(
     }
 }
 
+@Serializable
+data object News

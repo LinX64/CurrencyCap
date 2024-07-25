@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.util.Screen.CryptoDetail
+import kotlinx.serialization.Serializable
 import ui.screens.main.detail.DetailRoute
 
 fun NavGraphBuilder.detailScreen(
@@ -23,3 +23,6 @@ fun NavGraphBuilder.detailScreen(
         )
     }
 }
+
+@Serializable
+data class CryptoDetail(val symbol: String)

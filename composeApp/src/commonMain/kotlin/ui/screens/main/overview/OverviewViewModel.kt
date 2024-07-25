@@ -22,7 +22,7 @@ class OverviewViewModel(
 ) : MviViewModel<OverviewViewEvent, OverviewState, OverviewNavigationEffect>(OverviewState.Loading) {
 
     init {
-        loadCombinedRates()
+        handleEvent(OnLoadRates)
     }
 
     override fun handleEvent(event: OverviewViewEvent) {

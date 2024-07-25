@@ -7,13 +7,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
+import kotlinx.serialization.Serializable
 import net.thauvin.erik.urlencoder.UrlEncoderUtil
-import ui.navigation.util.Screen.CryptoDetail
-import ui.navigation.util.Screen.Explore
-import ui.navigation.util.Screen.NewsDetail
-import ui.navigation.util.Screen.Overview
 import ui.screens.main.ai_predict.navigation.navigateToAiPredictScreen
+import ui.screens.main.detail.navigation.CryptoDetail
+import ui.screens.main.news.news_detail.navigation.NewsDetail
 import ui.screens.main.overview.OverviewRoute
+import ui.screens.main.search.navigation.Explore
 
 fun NavController.navigateToOverviewScreen(navOptions: NavOptions) = navigate(Overview, navOptions)
 
@@ -36,3 +36,6 @@ fun NavGraphBuilder.overviewScreen(
         )
     }
 }
+
+@Serializable
+data object Overview

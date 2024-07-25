@@ -6,10 +6,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
-import ui.navigation.util.Screen.Bookmarks
-import ui.navigation.util.Screen.News
-import ui.navigation.util.Screen.NewsDetail
+import kotlinx.serialization.Serializable
 import ui.screens.main.bookmarks.BookmarksRoute
+import ui.screens.main.news.navigation.News
+import ui.screens.main.news.news_detail.navigation.NewsDetail
 
 fun NavController.navigateToBookmarksScreen(navOptions: NavOptions) = navigate(Bookmarks, navOptions)
 
@@ -27,3 +27,6 @@ fun NavGraphBuilder.bookmarksScreen(
         )
     }
 }
+
+@Serializable
+data object Bookmarks
