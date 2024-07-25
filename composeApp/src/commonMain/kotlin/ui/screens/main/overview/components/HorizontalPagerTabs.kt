@@ -1,5 +1,6 @@
 package ui.screens.main.overview.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,7 @@ import ui.screens.main.overview.components.tabs.NewsTab
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun HorizontalPagerTabs(
     state: OverviewState,
@@ -52,6 +54,7 @@ internal fun HorizontalPagerTabs(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HorizontalPagerDotIndicator(
     pagerState: PagerState,
