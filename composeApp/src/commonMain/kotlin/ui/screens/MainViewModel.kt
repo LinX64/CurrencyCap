@@ -3,6 +3,7 @@ package ui.screens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import domain.repository.UserPreferences
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,6 +28,8 @@ class MainViewModel(
         _state.value = Loading
 
         viewModelScope.launch {
+            delay(1500)
+
             val userLoggedIn = userPreferences.isUserLoggedIn()
             if (userLoggedIn) onLoginSuccess() else navigateToLanding()
         }

@@ -59,10 +59,10 @@ internal fun App(
         topBar = {
             AppTopBar(
                 currentDestination = currentDestination,
-                hazeState = hazeState,
-                isLoggedIn = isLoggedIn,
                 navController = navController,
                 scrollBehavior = scrollBehavior,
+                isLoggedIn = isLoggedIn,
+                hazeState = hazeState,
                 onFilterClick = { isNewsFilterSheetVisible = true }
             )
         },

@@ -47,7 +47,10 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import ui.navigation.util.ScreenRoutes
+import ui.navigation.util.ScreenRoutes.AI_PREDICTION
+import ui.navigation.util.ScreenRoutes.CRYPTO_DETAIL
+import ui.navigation.util.ScreenRoutes.EXPLORE
+import ui.navigation.util.ScreenRoutes.SETTINGS
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.ICON_SIZE_48
 import ui.theme.AppDimensions.SPACER_PADDING_16
@@ -66,10 +69,10 @@ internal fun BottomNavigationBar(
 ) {
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
 
-    val isExploreScreen = currentDestination == ScreenRoutes.EXPLORE
-    val isAIScreen = currentDestination == ScreenRoutes.AI_PREDICTION
-    val isDetailScreen = currentDestination?.startsWith(ScreenRoutes.CRYPTO_DETAIL) == true
-    val isSettingsScreen = currentDestination == ScreenRoutes.SETTINGS
+    val isExploreScreen = currentDestination == EXPLORE
+    val isAIScreen = currentDestination == AI_PREDICTION
+    val isDetailScreen = currentDestination == CRYPTO_DETAIL
+    val isSettingsScreen = currentDestination == SETTINGS
 
     LaunchedEffect(currentDestination) {
         val newIndex = tabs.indexOfFirst { it.name == currentDestination }
