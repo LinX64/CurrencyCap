@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
 
             AppM3Theme(isDarkMode = true) {
                 if (isLoading) SplashScreen()
-                else App(mainViewModel)
+                else App()
             }
         }
     }

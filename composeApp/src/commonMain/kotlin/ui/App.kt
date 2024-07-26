@@ -39,7 +39,7 @@ import ui.screens.main.subscribers.SubscribersSection
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun App(
-    mainViewModel: MainViewModel,
+    mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
     newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
