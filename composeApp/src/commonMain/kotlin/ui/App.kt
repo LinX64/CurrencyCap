@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 import ui.components.base.BaseModalBottomSheet
 import ui.components.main.AppState
 import ui.components.main.AppTopBar
+import ui.components.main.BottomBarTab
 import ui.components.main.BottomNavigationBar
 import ui.components.main.rememberAppState
 import ui.navigation.graphs.AppNavGraph
@@ -89,7 +90,8 @@ internal fun App(
             onNavigateToLanding = { navigateToLanding(mainViewModel, navController) },
             showPrivacyPolicyBottomSheet = { isSheetOpen = true },
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
-            onLoginSuccess = { navigateToOverview(mainViewModel, navController) }
+            onLoginSuccess = { navigateToOverview(mainViewModel, navController) },
+            onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.News) }
         )
     }
 

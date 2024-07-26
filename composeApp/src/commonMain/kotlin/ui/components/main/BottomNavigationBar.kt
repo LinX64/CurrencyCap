@@ -71,7 +71,7 @@ internal fun BottomNavigationBar(
 
     val isExploreScreen = currentDestination == EXPLORE
     val isAIScreen = currentDestination == AI_PREDICTION
-    val isDetailScreen = currentDestination == CRYPTO_DETAIL
+    val isDetailScreen = currentDestination?.startsWith(CRYPTO_DETAIL) == true
     val isSettingsScreen = currentDestination == SETTINGS
 
     LaunchedEffect(currentDestination) {
@@ -83,9 +83,7 @@ internal fun BottomNavigationBar(
 
     if (isSettingsScreen.not() &&
         isExploreScreen.not() &&
-        isAIScreen.not() &&
-        isDetailScreen.not() &&
-        isLoggedIn
+        isAIScreen.not() && isDetailScreen.not() && isLoggedIn
     ) {
         Column(
             modifier = Modifier

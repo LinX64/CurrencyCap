@@ -8,7 +8,6 @@ import androidx.navigation.compose.composable
 import dev.chrisbanes.haze.HazeState
 import kotlinx.serialization.Serializable
 import ui.screens.main.bookmarks.BookmarksRoute
-import ui.screens.main.news.navigation.News
 import ui.screens.main.news.news_detail.navigation.NewsDetail
 
 fun NavController.navigateToBookmarksScreen(navOptions: NavOptions) = navigate(Bookmarks, navOptions)
@@ -16,14 +15,15 @@ fun NavController.navigateToBookmarksScreen(navOptions: NavOptions) = navigate(B
 fun NavGraphBuilder.bookmarksScreen(
     padding: PaddingValues,
     hazeState: HazeState,
-    navController: NavController
+    navController: NavController,
+    onExploreNewsClick: () -> Unit
 ) {
     composable<Bookmarks> {
         BookmarksRoute(
             padding = padding,
             hazeState = hazeState,
             onBookmarkItemClick = { url -> navController.navigate(NewsDetail(url)) },
-            onExploreNewsClick = { navController.navigate(News) }
+            onExploreNewsClick = onExploreNewsClick
         )
     }
 }
