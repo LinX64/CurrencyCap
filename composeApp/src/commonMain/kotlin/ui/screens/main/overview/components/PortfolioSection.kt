@@ -1,5 +1,6 @@
 package ui.screens.main.overview.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import ui.screens.main.overview.OverviewState
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun PortfolioSection(
     state: OverviewState,
