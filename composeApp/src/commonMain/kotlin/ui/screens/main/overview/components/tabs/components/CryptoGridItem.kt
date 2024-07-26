@@ -39,7 +39,7 @@ internal fun CryptoGridItem(
         onCardClick = { onCryptoItemClick(cryptoItem.symbol) },
     ) {
         Column(
-            modifier = Modifier.size(width = 190.dp, height = 80.dp)
+            modifier = Modifier.size(width = 190.dp, height = 75.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
