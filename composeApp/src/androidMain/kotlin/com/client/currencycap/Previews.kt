@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
 import dev.chrisbanes.haze.HazeState
-import ui.components.ErrorView
+import ui.components.main.SectionRowItem
 
 //@Composable
 //@Preview(showBackground = true)
@@ -80,9 +80,8 @@ private fun ExpandablePreview() {
     val hazeState = remember { HazeState() }
     KoinPreview {
         Column {
-            ErrorView(
-                message = "An error occurred",
-                onRetry = { /*TODO*/ }
+            SectionRowItem(
+                title = "Today's Top Movers",
             )
         }
     }

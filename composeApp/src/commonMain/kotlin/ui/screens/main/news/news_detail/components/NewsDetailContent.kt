@@ -1,5 +1,6 @@
 package ui.screens.main.news.news_detail.components
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -43,9 +44,8 @@ internal fun NewsDetailContent(
     val loadingPlaceHolderModifier = if (isLoading) getPlaceHolder(Modifier.fillMaxWidth()) else Modifier.fillMaxWidth()
     val roundedCornerShape = RoundedCornerShape(CARD_CORNER_RADIUS)
 
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Box(
+        modifier = Modifier.fillMaxWidth()
     ) {
         AsyncImage(
             modifier = if (isLoading) getPlaceHolder(
@@ -65,68 +65,62 @@ internal fun NewsDetailContent(
         )
 
         GlassCard(
-            modifier = Modifier.fillMaxWidth()
-                .offset(y = (-55).dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(y = 145.dp),
             contentPadding = PaddingValues(0.dp)
         ) {
             Surface(
                 modifier = Modifier.fillMaxWidth(),
                 color = MaterialTheme.colorScheme.surface.copy(alpha = 0.7f),
             ) {
-                val textModifierPlaceHolder =
-                    if (isLoading) getPlaceHolder(
-                        Modifier.fillMaxWidth()
-                            .padding(24.dp)
-                    ) else Modifier.fillMaxWidth()
-                        .padding(24.dp)
-                Text(
-                    modifier = textModifierPlaceHolder,
-                    text = article.title,
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    textAlign = TextAlign.Center
-                )
-            }
-
-            Column(
-                modifier = Modifier.fillMaxWidth().padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    modifier = loadingPlaceHolderModifier,
-                    text = article.source.name,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                val author = "By ${article.author}" + " • " + convertDateFormat(article.publishedAt)
-                Text(
-                    modifier = loadingPlaceHolderModifier,
-                    text = author,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(SPACER_PADDING_16))
-
-                Text(
-                    modifier = loadingPlaceHolderModifier,
-                    text = article.description,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    textAlign = TextAlign.Justify
-                )
-
-                Spacer(modifier = Modifier.height(SPACER_PADDING_16))
-
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    Text(
+                        modifier = if (isLoading) getPlaceHolder(Modifier.fillMaxWidth()) else Modifier.fillMaxWidth(),
+                        text = article.title,
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        modifier = loadingPlaceHolderModifier,
+                        text = article.source.name,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    val author = "By ${article.author}" + " • " + convertDateFormat(article.publishedAt)
+                    Text(
+                        modifier = loadingPlaceHolderModifier,
+                        text = author,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(SPACER_PADDING_16))
+
+                    Text(
+                        modifier = loadingPlaceHolderModifier,
+                        text = article.description,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        textAlign = TextAlign.Justify
+                    )
+
+                    Spacer(modifier = Modifier.height(SPACER_PADDING_16))
+
                     SecondarySmallIconButton(
                         icon = Icons.AutoMirrored.Outlined.OpenInNew,
                         text = stringResource(Res.string.read_more),

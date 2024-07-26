@@ -46,6 +46,7 @@ internal fun AppNavGraph(
     onError: (message: String) -> Unit,
     showPrivacyPolicyBottomSheet: () -> Unit,
     onLoginSuccess: () -> Unit,
+    onExploreNewsClick: () -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -60,8 +61,9 @@ internal fun AppNavGraph(
             padding = padding,
             navController = navController,
             hazeState = hazeState,
+            onError = onError,
             onNavigateToLanding = onNavigateToLanding,
-            onError = onError
+            onExploreNewsClick = onExploreNewsClick
         )
 
         authNavGraph(
@@ -79,7 +81,8 @@ private fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
     hazeState: HazeState,
     onNavigateToLanding: () -> Unit,
-    onError: (message: String) -> Unit
+    onError: (message: String) -> Unit,
+    onExploreNewsClick: () -> Unit,
 ) {
     navigation<MainNavGraph>(startDestination = Overview) {
         searchScreen(
@@ -102,7 +105,8 @@ private fun NavGraphBuilder.mainNavGraph(
         bookmarksScreen(
             padding = padding,
             hazeState = hazeState,
-            navController = navController
+            navController = navController,
+            onExploreNewsClick = onExploreNewsClick
         )
 
         newsScreen(

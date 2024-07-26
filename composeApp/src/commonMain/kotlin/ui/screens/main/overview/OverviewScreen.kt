@@ -9,9 +9,9 @@ import di.koinViewModel
 import ui.components.HorizontalLineWithDot
 import ui.components.SearchViewHeader
 import ui.components.base.BaseGlassLazyColumn
+import ui.screens.main.overview.components.OptimizedTopRates
 import ui.screens.main.overview.components.PortfolioSection
 import ui.screens.main.overview.components.TodayTopMovers
-import ui.screens.main.overview.components.TopRates
 import ui.screens.main.overview.components.TrendingCryptoCurrencies
 
 @Composable
@@ -51,24 +51,36 @@ internal fun OverviewScreen(
         padding = padding,
         hazeState = hazeState,
     ) {
-        item {
+        item(key = "search_header") {
             SearchViewHeader(
                 state = state,
                 onSearchCardClicked = onSearchCardClicked,
                 onCircleButtonClicked = onCircleButtonClicked
             )
         }
-        item { HorizontalLineWithDot() }
-        item {
+
+        item(key = "horizontal_line") {
+            HorizontalLineWithDot()
+        }
+
+        item(key = "portfolio_section") {
             PortfolioSection(
                 state = state,
                 onNewsItemClick = onNewsItemClick,
                 onCryptoItemClick = onCryptoItemClick
             )
         }
-        item { TodayTopMovers(overviewState = state, onCryptoItemClick = onCryptoItemClick) }
-        item { TopRates(state) }
-        item { TrendingCryptoCurrencies(overviewState = state, onCryptoItemClick) }
+
+        item(key = "top_movers") {
+            TodayTopMovers(overviewState = state, onCryptoItemClick = onCryptoItemClick)
+        }
+
+        item(key = "top_rates") {
+            OptimizedTopRates(state)
+        }
+
+        item(key = "trending_crypto") {
+            TrendingCryptoCurrencies(overviewState = state, onCryptoItemClick)
+        }
     }
 }
-
