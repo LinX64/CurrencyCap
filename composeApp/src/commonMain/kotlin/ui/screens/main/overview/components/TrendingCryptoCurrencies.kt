@@ -2,8 +2,6 @@ package ui.screens.main.overview.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -14,28 +12,37 @@ import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.getDummyCryptoItems
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun TrendingCryptoCurrencies(
     overviewState: OverviewState,
     onCryptoItemClick: (String) -> Unit
 ) {
     Column {
-        SectionRowItem(
-            title = "Trending Rates",
-        )
+        SectionRowItem(title = "Trending Rates")
 
-        FlowColumn(
-            modifier = Modifier.fillMaxWidth().padding(top = SPACER_PADDING_16),
-            verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
-        ) {
-            if (overviewState is OverviewState.Success) {
-                val cryptoRates = overviewState.cryptoRates
+        TrendingCryptoContent(overviewState, onCryptoItemClick)
+    }
+}
+
+@Composable
+private fun TrendingCryptoContent(
+    overviewState: OverviewState,
+    onCryptoItemClick: (String) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = SPACER_PADDING_16),
+        verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8)
+    ) {
+        when (overviewState) {
+            is OverviewState.Success -> {
+                val cryptoRates = overviewState.cryptoRates.take(30)
 
                 if (cryptoRates.isNotEmpty()) {
-                    cryptoRates.forEachIndexed { index, _ -> // Takes only 50 items TODO: Add pagination
+                    cryptoRates.forEach { crypto ->
                         CryptoHorizontalItem(
-                            crypto = cryptoRates[index],
+                            crypto = crypto,
                             isLoading = false,
                             onClick = onCryptoItemClick
                         )
@@ -51,15 +58,17 @@ internal fun TrendingCryptoCurrencies(
                 }
             }
 
-            if (overviewState is OverviewState.Loading) {
+            is OverviewState.Loading -> {
                 repeat(5) {
                     CryptoHorizontalItem(
                         crypto = getDummyCryptoItems()[it],
                         isLoading = true,
-                        onClick = { /* TODO: Navigate to detail screen */ }
+                        onClick = { /* No action needed for loading state */ }
                     )
                 }
             }
+
+            else -> Unit
         }
     }
 }
