@@ -6,11 +6,9 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import ui.components.main.SectionRowItem
 import ui.screens.main.overview.OverviewState
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
@@ -23,14 +21,8 @@ internal fun TrendingCryptoCurrencies(
     onCryptoItemClick: (String) -> Unit
 ) {
     Column {
-        Text(
-            modifier = if (overviewState is OverviewState.Loading) getPlaceHolder(
-                Modifier.padding(start = SPACER_PADDING_8),
-            ) else Modifier.padding(start = SPACER_PADDING_8),
-            text = "Trending rates",
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontWeight = FontWeight.Bold
+        SectionRowItem(
+            title = "Trending Rates",
         )
 
         FlowColumn(
@@ -38,14 +30,25 @@ internal fun TrendingCryptoCurrencies(
             verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
         ) {
             if (overviewState is OverviewState.Success) {
-                overviewState.cryptoRates.take(50)
-                    .forEachIndexed { index, rate -> // Takes only 50 items TODO: Add pagination
+                val cryptoRates = overviewState.cryptoRates
+
+                if (cryptoRates.isNotEmpty()) {
+                    cryptoRates.forEachIndexed { index, _ -> // Takes only 50 items TODO: Add pagination
                         CryptoHorizontalItem(
-                            crypto = overviewState.cryptoRates[index],
+                            crypto = cryptoRates[index],
                             isLoading = false,
                             onClick = onCryptoItemClick
                         )
                     }
+                } else {
+                    repeat(5) {
+                        CryptoHorizontalItem(
+                            crypto = getDummyCryptoItems()[it],
+                            isLoading = false,
+                            onClick = onCryptoItemClick
+                        )
+                    }
+                }
             }
 
             if (overviewState is OverviewState.Loading) {

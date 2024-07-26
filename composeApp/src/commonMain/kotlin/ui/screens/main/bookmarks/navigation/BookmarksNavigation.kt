@@ -22,7 +22,7 @@ fun NavGraphBuilder.bookmarksScreen(
         BookmarksRoute(
             padding = padding,
             hazeState = hazeState,
-            onBookmarkItemClick = { url -> navController.navigate(route = NewsDetail(url)) },
+            onBookmarkItemClick = { url -> navController.navigate(NewsDetail(url)) },
             onExploreNewsClick = { navController.navigate(News) }
         )
     }
