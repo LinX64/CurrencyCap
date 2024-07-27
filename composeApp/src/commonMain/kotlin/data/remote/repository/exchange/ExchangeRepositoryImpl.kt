@@ -1,9 +1,9 @@
 package data.remote.repository.exchange
 
-import data.local.model.exchange.Currency
 import data.remote.model.main.RateDto
 import data.util.APIConst.BASE_URL
 import data.util.parseCurrencyRates
+import domain.model.Currency
 import domain.repository.ExchangeRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body

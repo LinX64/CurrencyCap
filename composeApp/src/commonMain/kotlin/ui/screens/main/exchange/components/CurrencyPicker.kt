@@ -50,11 +50,11 @@ import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import data.local.model.exchange.Currency
 import data.local.model.exchange.CurrencyCode
 import data.local.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
+import domain.model.Currency
 import org.jetbrains.compose.resources.painterResource
 import ui.screens.main.exchange.ExchangeViewEvent
 import ui.screens.main.exchange.ExchangeViewEvent.OnSaveSelectedCurrencyCode

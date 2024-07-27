@@ -2,9 +2,9 @@ package ui.screens.main.exchange
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
-import data.local.model.exchange.Currency
 import data.local.model.exchange.CurrencyCode
 import data.local.model.exchange.CurrencyType
+import domain.model.Currency
 
 sealed interface ExchangeViewEvent {
     data object OnFetchRates : ExchangeViewEvent

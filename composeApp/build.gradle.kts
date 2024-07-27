@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     alias(libs.plugins.kotlinxSerialization)
@@ -23,6 +24,19 @@ kotlin {
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
+    subprojects {
+        tasks.withType(KotlinCompile::class.java).configureEach {
+            compilerOptions {
+                if (project.findProperty("enableMultiModuleComposeReports") == "true") {
+                    freeCompilerArgs.add("-P")
+                    freeCompilerArgs.add("plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${rootProject.buildDir.absolutePath}/compose_metrics/")
+                    freeCompilerArgs.add("-P")
+                    freeCompilerArgs.add("plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${rootProject.buildDir.absolutePath}/compose_metrics/")
+                }
+            }
+        }
     }
 
     listOf(
