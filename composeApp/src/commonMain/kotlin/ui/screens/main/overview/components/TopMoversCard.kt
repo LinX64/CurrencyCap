@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import domain.model.main.Crypto
+import kotlinx.collections.immutable.persistentListOf
 import ui.common.formatToPrice
 import ui.components.base.GlassCard
 import ui.theme.AppDimensions.SPACER_PADDING_16
@@ -73,7 +74,7 @@ internal fun TopMoversCard(
 
             Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
-            val priceData = listOf(
+            val priceData = persistentListOf(
                 topMovers.low24h.toFloat(),
                 topMovers.currentPrice.toFloat(),
                 topMovers.high24h.toFloat()

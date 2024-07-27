@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import domain.model.main.Crypto
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ui.common.formatToPrice
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.ChangeIcon
@@ -100,7 +101,7 @@ internal fun InnerChartRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_16)
     ) {
-        val priceData = listOf(
+        val priceData = persistentListOf(
             bitcoin.low24h.toFloat(),
             bitcoin.currentPrice.toFloat(),
             bitcoin.high24h.toFloat()
