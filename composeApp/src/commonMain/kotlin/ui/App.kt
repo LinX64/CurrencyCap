@@ -46,11 +46,12 @@ internal fun App(
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scope: CoroutineScope = rememberCoroutineScope(),
-    appState: AppState = rememberAppState(rememberNavController()),
 ) {
+    val navController = rememberNavController()
+    val appState: AppState = rememberAppState(navController)
+
     val mainState by mainViewModel.appState.collectAsState()
     val currentDestination = appState.currentDestination
-    val navController = appState.navController
     val isLoggedIn = mainState is MainState.LoggedIn
 
     val hazeState = remember { HazeState() }
