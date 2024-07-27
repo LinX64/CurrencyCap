@@ -72,7 +72,7 @@ jobs:
           </html>" >> compose_metrics_report.html
 
       - name: Upload Compose Metrics Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: compose-metrics-report
           path: compose_metrics_report.html
