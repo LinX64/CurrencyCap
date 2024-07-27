@@ -29,12 +29,13 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.collections.immutable.ImmutableSet
 import org.jetbrains.compose.resources.painterResource
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun BottomBar(
-    tabs: List<BottomBarTab>,
+    tabs: ImmutableSet<BottomBarTab>,
     selectedTab: Int,
     onTabSelected: (BottomBarTab) -> Unit,
 ) {

@@ -5,6 +5,8 @@ import androidx.compose.ui.graphics.Color
 import data.local.model.exchange.CurrencyCode
 import data.local.model.exchange.CurrencyType
 import domain.model.Currency
+import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.persistentSetOf
 
 sealed interface ExchangeViewEvent {
     data object OnFetchRates : ExchangeViewEvent
@@ -34,7 +36,7 @@ data class ExchangeUiState(
     val sourceCurrency: Currency? = null,
     val targetCurrency: Currency? = null,
     val convertedAmount: Double = 0.0,
-    val currencyRates: List<Currency> = emptyList(),
+    val currencyRates: ImmutableSet<Currency> = persistentSetOf(),
     val sourceCurrencyAmount: CurrencyCode = CurrencyCode.USD,
     val targetCurrencyAmount: CurrencyCode = CurrencyCode.EUR
 ) : ExchangeState

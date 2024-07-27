@@ -5,6 +5,7 @@ import currencycap.composeapp.generated.resources.ic_home
 import currencycap.composeapp.generated.resources.ic_news
 import currencycap.composeapp.generated.resources.ic_save
 import currencycap.composeapp.generated.resources.ic_user_normal
+import kotlinx.collections.immutable.persistentSetOf
 import org.jetbrains.compose.resources.DrawableResource
 import ui.navigation.util.ScreenRoutes
 
@@ -19,7 +20,7 @@ enum class BottomBarTab(
     Profile(ScreenRoutes.PROFILE, Res.drawable.ic_user_normal)
 }
 
-internal val tabs = listOf(
+internal val tabs = persistentSetOf(
     BottomBarTab.Overview,
     BottomBarTab.News,
     BottomBarTab.Exchange,

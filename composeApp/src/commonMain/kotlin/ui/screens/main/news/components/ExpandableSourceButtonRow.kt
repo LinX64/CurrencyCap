@@ -29,17 +29,20 @@ import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.expandable
 import currencycap.composeapp.generated.resources.source
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun ExpandableSourceButtonRow(
-    sources: List<String>,
-    selectedSourcesList: (Set<String>) -> Unit
+    sources: ImmutableSet<String>,
+    selectedSourcesList: (ImmutableList<String>) -> Unit
 ) {
     var isExpanded by remember { mutableStateOf(false) }
-    var selectedSources by remember { mutableStateOf(setOf<String>()) }
+    var selectedSources by remember { mutableStateOf(persistentListOf<String>()) }
 
     Column {
         GlassCard(
@@ -93,11 +96,8 @@ internal fun ExpandableSourceButtonRow(
                             Checkbox(
                                 checked = source in selectedSources,
                                 onCheckedChange = { isChecked ->
-                                    selectedSources = if (isChecked) {
-                                        selectedSources + source
-                                    } else {
-                                        selectedSources - source
-                                    }
+                                    selectedSources = if (isChecked) selectedSources.add(source)
+                                    else selectedSources.remove(source)
 
                                     selectedSourcesList(selectedSources)
                                 },

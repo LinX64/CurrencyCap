@@ -9,6 +9,8 @@ import domain.model.Article
 import domain.repository.ArticleLocalDataSource
 import domain.repository.NewsRepository
 import domain.repository.UserPreferences
+import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -29,7 +31,7 @@ class NewsViewModel(
     private val userPreferences: UserPreferences
 ) : MviViewModel<NewsViewEvent, NewsState, NewsNavigationEffect>(Loading), DefaultLifecycleObserver {
 
-    val sources = mutableStateOf(emptyList<String>())
+    val sources = mutableStateOf(persistentSetOf<String>())
 
     init {
         handleEvent(FetchNews)
@@ -108,7 +110,7 @@ class NewsViewModel(
             .map { it.source.name }
             .distinct()
 
-        sources.value = sourcesNames
+        sources.value = sourcesNames.toPersistentSet()
     }
 
     private fun saveSelectedSources(strings: Set<String>) {
