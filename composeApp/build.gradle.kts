@@ -31,9 +31,9 @@ kotlin {
             compilerOptions {
                 if (project.findProperty("enableMultiModuleComposeReports") == "true") {
                     freeCompilerArgs.add("-P")
-                    freeCompilerArgs.add("plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${rootProject.layout.buildDirectory}/compose_metrics/")
+                    freeCompilerArgs.add("plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${rootProject.buildDir.absolutePath}/compose_metrics/")
                     freeCompilerArgs.add("-P")
-                    freeCompilerArgs.add("plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${rootProject.layout.buildDirectory}/compose_metrics/")
+                    freeCompilerArgs.add("plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${rootProject.buildDir.absolutePath}/compose_metrics/")
                 }
             }
         }
