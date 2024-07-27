@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,19 +26,19 @@ import ui.theme.colors.CurrencyColors
 
 @Composable
 internal fun TopMoversCard(
+    modifier: Modifier = Modifier,
     isLoading: Boolean,
     topMovers: Crypto,
     onClick: (String) -> Unit
 ) {
     GlassCard(
-        modifier = Modifier
+        modifier = modifier
             .padding(end = SPACER_PADDING_8),
         isClickable = true,
         onCardClick = { onClick(topMovers.symbol) }
     ) {
         Column(
-            modifier = Modifier.padding(SPACER_PADDING_16)
-                .width(130.dp),
+            modifier = Modifier.padding(SPACER_PADDING_16),
             horizontalAlignment = Alignment.Start
         ) {
             Text(
@@ -74,17 +73,6 @@ internal fun TopMoversCard(
 
             Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
-            val changeData = listOf(
-                topMovers.priceChange24h.toFloat(),
-                topMovers.priceChangePercentage24h.toFloat()
-            )
-
-            val supplyData = listOf(
-                topMovers.circulatingSupply.toFloat(),
-                topMovers.totalSupply?.toFloat(),
-                topMovers.maxSupply?.toFloat()
-            )
-
             val priceData = listOf(
                 topMovers.low24h.toFloat(),
                 topMovers.currentPrice.toFloat(),
@@ -96,11 +84,9 @@ internal fun TopMoversCard(
                     Modifier
                         .fillMaxWidth()
                         .height(60.dp)
-                        .width(40.dp),
                 ) else Modifier
                     .fillMaxWidth()
-                    .height(60.dp)
-                    .width(40.dp),
+                    .height(60.dp),
                 list = priceData
             )
 

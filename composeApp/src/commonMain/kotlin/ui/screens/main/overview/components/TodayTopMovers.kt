@@ -2,8 +2,10 @@ package ui.screens.main.overview.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
@@ -17,6 +19,7 @@ import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.OverviewState.Loading
 import ui.screens.main.overview.OverviewState.Success
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.getDummyCryptoItem
 
 @Composable
@@ -36,14 +39,18 @@ internal fun TodayTopMovers(
         Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+                .height(IntrinsicSize.Min),
+            horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             when (overviewState) {
                 is Success -> {
                     overviewState.topMovers.take(2).forEach { topMovers ->
                         TopMoversCard(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight(),
                             topMovers = topMovers,
                             isLoading = false,
                             onClick = onCryptoItemClick
@@ -54,6 +61,9 @@ internal fun TodayTopMovers(
                 is Loading -> {
                     repeat(2) {
                         TopMoversCard(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight(),
                             isLoading = true,
                             topMovers = getDummyCryptoItem(),
                             onClick = { /* TODO */ }
