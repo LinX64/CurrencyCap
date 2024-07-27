@@ -1,7 +1,6 @@
 package ui.screens.main.news.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -45,14 +44,13 @@ internal fun FooterHorizontalButtons(
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)
-            .background(MaterialTheme.colorScheme.surface)
     ) {
         HorizontalDivider(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.Center),
             thickness = 1.dp,
-            color = Color.DarkGray
+            color = Color.Gray.copy(alpha = 0.1f),
         )
 
         Row(

@@ -80,39 +80,40 @@ internal fun ExpandableSourceButtonRow(
                     contentDescription = stringResource(Res.string.expandable)
                 )
             }
-            AnimatedVisibility(visible = isExpanded) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(SPACER_PADDING_8)
-                ) {
-                    sources.forEach { source ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Checkbox(
-                                checked = source in selectedSources,
-                                onCheckedChange = { isChecked ->
-                                    selectedSources = if (isChecked) selectedSources.add(source)
-                                    else selectedSources.remove(source)
+        }
 
-                                    selectedSourcesList(selectedSources)
-                                },
-                                colors = CheckboxDefaults.colors(
-                                    checkmarkColor = MaterialTheme.colorScheme.onSurface
-                                )
+        AnimatedVisibility(visible = isExpanded) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(SPACER_PADDING_8)
+            ) {
+                sources.forEach { source ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Checkbox(
+                            checked = source in selectedSources,
+                            onCheckedChange = { isChecked ->
+                                selectedSources = if (isChecked) selectedSources.add(source)
+                                else selectedSources.remove(source)
+
+                                selectedSourcesList(selectedSources)
+                            },
+                            colors = CheckboxDefaults.colors(
+                                checkmarkColor = MaterialTheme.colorScheme.onSurface
                             )
-                            Text(
-                                text = source,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                fontWeight = FontWeight.Bold,
-                                modifier = Modifier.padding(start = SPACER_PADDING_8)
-                            )
-                        }
+                        )
+                        Text(
+                            text = source,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(start = SPACER_PADDING_8)
+                        )
                     }
                 }
             }
