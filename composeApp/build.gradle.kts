@@ -5,10 +5,11 @@ plugins {
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
+    alias(libs.plugins.gms)
+    alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.realm.plugin)
-    alias(libs.plugins.gms)
 }
 
 kotlin {
@@ -72,6 +73,7 @@ kotlin {
             implementation(libs.mongodb.realm)
             implementation(libs.firebase.auth)
             implementation(libs.firebase.fireStore)
+            implementation(libs.firebase.crashlytics)
 
             implementation(libs.kotlinx.collections.immutable)
             implementation(libs.kotlinx.datetime)

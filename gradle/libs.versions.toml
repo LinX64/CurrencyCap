@@ -54,6 +54,7 @@ androidx-compose-foundation = { module = "androidx.compose.foundation:foundation
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-auth = { module = "dev.gitlive:firebase-auth", version.ref = "firebaseAuth" }
 firebase-fireStore = { module = "dev.gitlive:firebase-firestore", version.ref = "firebase-firestore" }
+firebase-crashlytics = { module = "dev.gitlive:firebase-crashlytics", version.ref = "firebase-firestore" }
 
 # Jetbrains Compose
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
