@@ -15,33 +15,26 @@ plugins {
 
 kotlin {
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class) compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
 
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    compilerOptions {
+    @OptIn(ExperimentalKotlinGradlePluginApi::class) compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 
     allprojects {
         tasks.withType(KotlinCompile::class.java).configureEach {
             compilerOptions {
-                val composeReportPath = rootProject.layout.buildDirectory.dir("reports/compose_metrics")
-
                 if (project.findProperty("enableMultiModuleComposeReports") == "true") {
+                    val composeReportPath = rootProject.layout.buildDirectory.asFile.get().absolutePath + "/compose_reports/"
                     freeCompilerArgs.addAll(
                         listOf(
                             "-P",
-                            "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$composeReportPath"
-                        )
-                    )
-                    freeCompilerArgs.addAll(
-                        listOf(
+                            "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$composeReportPath",
                             "-P",
-                            "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$composeReportPath/metrics"
+                            "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$composeReportPath"
                         )
                     )
                 }
@@ -50,9 +43,7 @@ kotlin {
     }
 
     listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
+        iosX64(), iosArm64(), iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
