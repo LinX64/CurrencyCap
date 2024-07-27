@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.amount_text
 import currencycap.composeapp.generated.resources.exchange
 import currencycap.composeapp.generated.resources.exchange_illustration
 import data.local.model.exchange.CurrencyType
@@ -48,6 +49,7 @@ import ui.screens.main.exchange.components.CurrencyPicker
 import ui.screens.main.exchange.components.Disclaimer
 import ui.screens.main.exchange.components.ResultCard
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun ExchangeRoute(
@@ -149,7 +151,7 @@ private fun ExchangeCard(
 
             Text(
                 modifier = Modifier.padding(start = 12.dp),
-                text = "Amount",
+                text = stringResource(Res.string.amount_text),
                 fontSize = MaterialTheme.typography.bodySmall.fontSize,
                 color = MaterialTheme.colorScheme.onSurface,
                 textAlign = TextAlign.Start
@@ -170,7 +172,7 @@ private fun ExchangeCard(
             )
         }
 
-        Spacer(modifier = Modifier.height(SPACER_PADDING_16))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
         Box(
             modifier = Modifier.fillMaxWidth()
@@ -184,7 +186,7 @@ private fun ExchangeCard(
             )
         }
 
-        Spacer(modifier = Modifier.height(SPACER_PADDING_16))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
         ResultCard(uiState = state, amount = amount)
 
@@ -192,8 +194,6 @@ private fun ExchangeCard(
 
         Disclaimer()
     }
-
-
 
     if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
         CurrencyPicker(

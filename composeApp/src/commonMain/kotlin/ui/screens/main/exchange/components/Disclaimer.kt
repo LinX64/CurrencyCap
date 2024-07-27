@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,15 +14,11 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.exchange_screen_disclaimer
 import currencycap.composeapp.generated.resources.exchange_screen_disclaimer_description
 import org.jetbrains.compose.resources.stringResource
-import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
-internal fun Disclaimer(
-    modifier: Modifier = Modifier
-) {
+internal fun Disclaimer() {
     Column(
-        modifier = modifier.padding(vertical = SPACER_PADDING_16),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
