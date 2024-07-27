@@ -1,6 +1,6 @@
 package domain.usecase
 
-import data.local.model.exchange.Currency
+import domain.model.Currency
 import util.normalizeRateUsd
 
 class ConvertCurrenciesUseCase {

@@ -4,6 +4,7 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.ic_bitcoin
 import currencycap.composeapp.generated.resources.ic_chart
 import currencycap.composeapp.generated.resources.ic_news
+import kotlinx.collections.immutable.persistentSetOf
 import org.jetbrains.compose.resources.DrawableResource
 
 sealed class VerticalBarTab(
@@ -26,7 +27,7 @@ sealed class VerticalBarTab(
     )
 }
 
-internal val myTabs = listOf(
+internal val myTabs = persistentSetOf(
     VerticalBarTab.NEWS,
     VerticalBarTab.CRYPTO,
     VerticalBarTab.STOCK

@@ -18,6 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import domain.model.main.Crypto
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import ui.common.formatToPrice
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.ChangeIcon
@@ -51,7 +53,7 @@ private fun CryptoSuccessBody(
     isLoading: Boolean = false,
     bitcoinItem: Crypto?,
     usd: String,
-    cryptoRates: List<Crypto>
+    cryptoRates: ImmutableList<Crypto>
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -91,7 +93,7 @@ private fun CryptoSuccessBody(
 @Composable
 internal fun InnerChartRow(
     isLoading: Boolean = false,
-    cryptoRates: List<Crypto>
+    cryptoRates: ImmutableList<Crypto>
 ) {
     val bitcoin = cryptoRates[0]
     Row(
@@ -99,7 +101,7 @@ internal fun InnerChartRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_16)
     ) {
-        val priceData = listOf(
+        val priceData = persistentListOf(
             bitcoin.low24h.toFloat(),
             bitcoin.currentPrice.toFloat(),
             bitcoin.high24h.toFloat()

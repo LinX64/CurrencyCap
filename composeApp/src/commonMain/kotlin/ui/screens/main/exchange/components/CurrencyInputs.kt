@@ -22,9 +22,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.switch_ic
-import data.local.model.exchange.Currency
 import data.local.model.exchange.CurrencyCode
 import data.local.model.exchange.CurrencyType
+import domain.model.Currency
 import org.jetbrains.compose.resources.painterResource
 import ui.theme.AppDimensions.SPACER_PADDING_16
 

@@ -9,6 +9,8 @@ import data.util.asResult
 import domain.repository.CurrencyRepository
 import domain.repository.ExchangeRepository
 import domain.usecase.ConvertCurrenciesUseCase
+import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -58,11 +60,11 @@ internal class ExchangeViewModel(
             .map { result ->
                 when (result) {
                     is NetworkResult.Success -> {
-                        val currencyRates = result.data.sortedBy { it.code }
+                        val currencyRates = result.data.sortedBy { it.code }.toImmutableSet()
                         setState { ExchangeUiState(currencyRates = currencyRates) }
                     }
 
-                    is NetworkResult.Error -> setState { ExchangeUiState(currencyRates = emptyList()) }
+                    is NetworkResult.Error -> setState { ExchangeUiState(currencyRates = persistentSetOf()) }
                     else -> Unit
                 }
             }

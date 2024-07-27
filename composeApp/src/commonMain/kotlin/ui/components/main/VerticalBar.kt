@@ -26,11 +26,12 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.PersistentSet
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
 internal fun VerticalBar(
-    tabs: List<VerticalBarTab>,
+    tabs: PersistentSet<VerticalBarTab>,
     selectedTab: Int,
     onTabSelected: (VerticalBarTab) -> Unit,
 ) {

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Icon
@@ -63,12 +64,15 @@ private fun TopRatesHeader(isLoading: Boolean) {
 
 @Composable
 private fun TopRatesContent(rates: OverviewState, isLoading: Boolean) {
+    val scrollableState = rememberLazyListState()
+
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = SPACER_PADDING_8)
             .height(180.dp),
-        horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_8)
+        horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
+        state = scrollableState,
     ) {
         when {
             rates is OverviewState.Success -> {

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,6 +30,8 @@ internal fun BaseGlassLazyColumn(
     emptyContent: @Composable () -> Unit = {},
     content: LazyListScope.() -> Unit
 ) {
+    val scrollableState = rememberLazyListState()
+
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -45,7 +48,8 @@ internal fun BaseGlassLazyColumn(
                 ),
             contentPadding = padding,
             verticalArrangement = verticalArrangement,
-            horizontalAlignment = horizontalAlignment
+            horizontalAlignment = horizontalAlignment,
+            state = scrollableState
         ) {
             content()
         }

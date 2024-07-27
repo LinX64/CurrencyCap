@@ -1,7 +1,7 @@
 package util
 
-import data.local.model.exchange.Currency
 import data.util.APIConst
+import domain.model.Currency
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone

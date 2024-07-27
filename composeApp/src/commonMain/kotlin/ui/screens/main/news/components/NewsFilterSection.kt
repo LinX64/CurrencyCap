@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.filter_by
+import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.datetime.Clock
 import org.jetbrains.compose.resources.stringResource
 import ui.theme.AppDimensions.SPACER_PADDING_16
@@ -26,7 +27,7 @@ import util.DateUtils.convertMillisToDate
 @Composable
 internal fun NewsFilterSection(
     modifier: Modifier = Modifier,
-    sources: List<String>,
+    sources: ImmutableSet<String>,
     onCloseClick: () -> Unit,
     onDoneClick: (startDate: String, endDate: String, sources: Set<String>) -> Unit
 ) {
@@ -52,7 +53,7 @@ internal fun NewsFilterSection(
 
         ExpandableSourceButtonRow(
             sources = sources,
-            selectedSourcesList = { selectedSources = it }
+            selectedSourcesList = { selectedSources = it.toSet() }
         )
 
         DateOfPublicationButton(

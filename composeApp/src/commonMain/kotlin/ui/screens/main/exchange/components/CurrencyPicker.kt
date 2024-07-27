@@ -50,11 +50,12 @@ import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import data.local.model.exchange.Currency
 import data.local.model.exchange.CurrencyCode
 import data.local.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
+import domain.model.Currency
+import kotlinx.collections.immutable.ImmutableSet
 import org.jetbrains.compose.resources.painterResource
 import ui.screens.main.exchange.ExchangeViewEvent
 import ui.screens.main.exchange.ExchangeViewEvent.OnSaveSelectedCurrencyCode
@@ -64,7 +65,7 @@ import ui.theme.AppDimensions.SPACER_PADDING_8
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CurrencyPicker(
-    currencyList: List<Currency>,
+    currencyList: ImmutableSet<Currency>,
     currencyType: CurrencyType,
     onEvent: (ExchangeViewEvent) -> Unit,
     onDismiss: () -> Unit,

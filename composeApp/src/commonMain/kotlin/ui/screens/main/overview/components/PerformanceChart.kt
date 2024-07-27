@@ -10,11 +10,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 internal fun PerformanceChart(
     modifier: Modifier = Modifier,
-    list: List<Float>
+    list: ImmutableList<Float>
 ) {
     val zipList: List<Pair<Float, Float>> = list.zipWithNext()
     Canvas(
