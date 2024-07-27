@@ -27,7 +27,7 @@ import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.getIconBy
 
 @Composable
-internal fun OptimizedTopRates(rates: OverviewState) {
+internal fun TopRates(rates: OverviewState) {
     val isLoading by remember { derivedStateOf { rates is OverviewState.Loading } }
 
     Column(

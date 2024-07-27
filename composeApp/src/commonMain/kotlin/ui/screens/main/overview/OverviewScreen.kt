@@ -9,9 +9,9 @@ import di.koinViewModel
 import ui.components.HorizontalLineWithDot
 import ui.components.SearchViewHeader
 import ui.components.base.BaseGlassLazyColumn
-import ui.screens.main.overview.components.OptimizedTopRates
 import ui.screens.main.overview.components.PortfolioSection
 import ui.screens.main.overview.components.TodayTopMovers
+import ui.screens.main.overview.components.TopRates
 import ui.screens.main.overview.components.TrendingCryptoCurrencies
 
 @Composable
@@ -76,7 +76,7 @@ internal fun OverviewScreen(
         }
 
         item(key = "top_rates") {
-            OptimizedTopRates(state)
+            TopRates(state)
         }
 
         item(key = "trending_crypto") {
