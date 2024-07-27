@@ -1,6 +1,5 @@
 package ui.screens.main.overview.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -10,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ui.components.main.VerticalBarCard
@@ -17,12 +18,11 @@ import ui.screens.main.overview.OverviewState
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun PortfolioSection(
     state: OverviewState,
     scope: CoroutineScope = rememberCoroutineScope(),
-    tabs: List<String> = listOf("News", "Crypto", "Market"),
+    tabs: ImmutableSet<String> = persistentSetOf("News", "Crypto", "Market"),
     onNewsItemClick: (url: String) -> Unit,
     onCryptoItemClick: (symbol: String) -> Unit
 ) {

@@ -11,13 +11,14 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun TopMoversChart(
     modifier: Modifier = Modifier,
     lightLineColor: Color = MaterialTheme.colorScheme.onSurface,
     lighterColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-    list: List<Float>
+    list: ImmutableList<Float>
 ) {
     val dotColor = MaterialTheme.colorScheme.onSurface
 
