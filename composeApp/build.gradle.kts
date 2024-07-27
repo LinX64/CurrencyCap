@@ -26,14 +26,24 @@ kotlin {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 
-    subprojects {
+    allprojects {
         tasks.withType(KotlinCompile::class.java).configureEach {
             compilerOptions {
+                val composeReportPath = rootProject.layout.buildDirectory.dir("reports/compose_metrics")
+
                 if (project.findProperty("enableMultiModuleComposeReports") == "true") {
-                    freeCompilerArgs.add("-P")
-                    freeCompilerArgs.add("plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${rootProject.buildDir.absolutePath}/compose_metrics/")
-                    freeCompilerArgs.add("-P")
-                    freeCompilerArgs.add("plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${rootProject.buildDir.absolutePath}/compose_metrics/")
+                    freeCompilerArgs.addAll(
+                        listOf(
+                            "-P",
+                            "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$composeReportPath"
+                        )
+                    )
+                    freeCompilerArgs.addAll(
+                        listOf(
+                            "-P",
+                            "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$composeReportPath/metrics"
+                        )
+                    )
                 }
             }
         }
