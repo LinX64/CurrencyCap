@@ -11,18 +11,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import currencycap.composeapp.generated.resources.Res
-import io.github.alexzhirkevich.compottie.LottieCompositionSpec
-import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
-import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import ui.screens.main.subscribers.components.FreePlanCard
 import ui.screens.main.subscribers.components.PremiumAccessOnly
@@ -31,29 +25,17 @@ import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 internal fun SubscribersSection(
     modifier: Modifier = Modifier
 ) {
-    var bytes by remember { mutableStateOf(ByteArray(0)) }
-    val composition by rememberLottieComposition(LottieCompositionSpec.JsonString(bytes.decodeToString()))
-    val progress by animateLottieCompositionAsState(composition)
 
     var isPremium by rememberSaveable { mutableStateOf(false) }
     var selectedPlan by rememberSaveable { mutableStateOf<Plan?>(Plan.FREE) }
 
-    LaunchedEffect(Unit) {
-        bytes = Res.readBytes("files/premium.json")
-    }
-
     LazyColumn(modifier = modifier.padding(SPACER_PADDING_16)) {
         item {
-            PremiumAccessOnly(
-                modifier = modifier,
-                composition = composition,
-                progress = progress
-            )
+            PremiumAccessOnly()
         }
 
         item {

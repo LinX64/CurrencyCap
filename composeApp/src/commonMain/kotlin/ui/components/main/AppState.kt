@@ -21,7 +21,7 @@ import ui.screens.main.profile.navigation.navigateToProfileScreen
 
 @Composable
 internal fun rememberAppState(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController
 ): AppState = remember(navController) {
     AppState(navController = navController)
 }

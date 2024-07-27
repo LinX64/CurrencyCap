@@ -17,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -45,7 +46,7 @@ internal fun App(
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scope: CoroutineScope = rememberCoroutineScope(),
-    appState: AppState = rememberAppState(),
+    appState: AppState = rememberAppState(rememberNavController()),
 ) {
     val mainState by mainViewModel.appState.collectAsState()
     val currentDestination = appState.currentDestination
