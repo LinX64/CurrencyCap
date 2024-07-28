@@ -15,10 +15,8 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
-import kotlin.time.Duration.Companion.days
 
 class CryptoRepositoryImpl(
     private val httpClient: HttpClient
@@ -28,12 +26,8 @@ class CryptoRepositoryImpl(
         coinId: String,
         period: ChipPeriod
     ): Flow<CoinMarketChartData> = flow {
-        val endTime = Clock.System.now()
-        val periodInDays = 7
-        val startTime: Instant = endTime.minus(periodInDays.days)
-
         val response = httpClient.get("$COINCAP_BASE_URL/assets/bitcoin/history") {
-            parameter("interval", "h1")
+            parameter("interval", period.interval)
         }
 
         val json = Json { ignoreUnknownKeys = true }
