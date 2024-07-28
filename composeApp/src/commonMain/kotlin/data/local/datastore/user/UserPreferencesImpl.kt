@@ -86,7 +86,7 @@ internal class UserPreferencesImpl(
 
     override fun isDarkMode(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
-            preferences[IS_DARK_MODE] ?: false
+            preferences[IS_DARK_MODE] ?: true
         }
     }
 

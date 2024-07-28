@@ -16,7 +16,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,9 +38,7 @@ import ui.navigation.util.ScreenRoutes.EXPLORE
 import ui.navigation.util.ScreenRoutes.NEWS
 import ui.navigation.util.ScreenRoutes.NEWS_DETAIL
 import ui.navigation.util.ScreenRoutes.OVERVIEW
-import ui.navigation.util.ScreenRoutes.PROFILE
 import ui.navigation.util.ScreenRoutes.SETTINGS
-import ui.screens.main.settings.navigation.Settings
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,7 +57,6 @@ internal fun AppTopBar(
     val isExploreScreen = currentDestination == EXPLORE
     val isAiScreen = currentDestination == AI_PREDICTION
     val isNewsScreen = currentDestination == NEWS
-    val isProfileScreen = currentDestination == PROFILE
     val isOverviewScreen = currentDestination == OVERVIEW
 
     CenterAlignedTopAppBar(
@@ -96,7 +93,6 @@ internal fun AppTopBar(
                 isNewsScreen = isNewsScreen,
                 isOverviewScreen = isOverviewScreen,
                 onFilterClick = onFilterClick,
-                onSettingsClick = { navController.navigate(Settings) },
                 onThemeChangeClick = onThemeChangeClick
             )
         }
@@ -135,10 +131,9 @@ private fun Actions(
     isNewsScreen: Boolean,
     isOverviewScreen: Boolean,
     onFilterClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    onThemeChangeClick: (isDark: Boolean) -> Unit
+    onThemeChangeClick: (isDark: Boolean) -> Unit,
 ) {
-    var isDarkTheme by remember { mutableStateOf(false) }
+    var isDarkTheme by rememberSaveable { mutableStateOf(true) }
 
     if (isNewsScreen) {
         IconButton(
@@ -162,7 +157,7 @@ private fun Actions(
             }
         ) {
             Icon(
-                imageVector = if (isDarkTheme) Icons.Filled.DarkMode else Icons.Filled.LightMode,
+                imageVector = if (isDarkTheme) Icons.Filled.LightMode else Icons.Filled.DarkMode,
                 contentDescription = "theme",
                 tint = MaterialTheme.colorScheme.onSurface
             )
