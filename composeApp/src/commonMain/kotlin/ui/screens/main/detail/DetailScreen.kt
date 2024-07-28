@@ -82,7 +82,9 @@ internal fun DetailScreen(
                         crypto = crypto,
                         isLoading = true,
                         chartData = chartData,
-                        onChartPeriodSelect = { coinId, chipPeriod -> handleEvent(OnChartPeriodSelect(coinId, chipPeriod)) }
+                        onChartPeriodSelect = { coinId, chipPeriod ->
+                            handleEvent(OnChartPeriodSelect(coinId, chipPeriod))
+                        }
                     )
                 }
                 item { DetailBody(crypto = crypto, isLoading = true) }

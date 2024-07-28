@@ -4,7 +4,9 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -15,9 +17,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun HorizontalLineWithDot() {
-    Row(
-        modifier = Modifier.fillMaxWidth()
-    ) {
+    val circleColor = MaterialTheme.colorScheme.onBackground
+    val circleColorInt = remember(circleColor) { circleColor }
+
+    Row {
         Canvas(
             modifier = Modifier.fillMaxWidth()
                 .height(20.dp)
@@ -46,7 +49,7 @@ internal fun HorizontalLineWithDot() {
             )
 
             drawCircle(
-                color = Color.White,
+                color = circleColorInt,
                 radius = 8f,
                 center = Offset(canvasWidth / 2, canvasHeight)
             )
