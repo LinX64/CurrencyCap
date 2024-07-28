@@ -39,12 +39,12 @@ import ui.common.formatToPrice
 import kotlin.math.roundToInt
 
 @Composable
-fun InteractiveCryptoChart(
+internal fun InteractiveCryptoChart(
     modifier: Modifier = Modifier,
     lineColor: Color,
     list: List<ChartDataPoint>,
     lighterColor: Color = MaterialTheme.colorScheme.surface,
-    lightLineColor: Color = MaterialTheme.colorScheme.primary,
+    lightLineColor: Color = MaterialTheme.colorScheme.primary
 ) {
     val highestIndex = remember(list) { list.indices.maxByOrNull { list[it].price } ?: 0 }
     var selectedIndex by remember(highestIndex) { mutableIntStateOf(highestIndex) }
@@ -111,11 +111,11 @@ fun InteractiveCryptoChart(
                 path = shadowPath,
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        lineColor.copy(alpha = 0.3f),
-                        lineColor.copy(alpha = 0.01f)
+                        lineColor.copy(alpha = 0.1f),
+                        lineColor.copy(alpha = 0.001f)
                     ),
                     startY = 0f,
-                    endY = size.height
+                    endY = size.height * 0.9f
                 )
             )
 
@@ -136,7 +136,8 @@ fun InteractiveCryptoChart(
 
             // Draw dot at the highest point only when not interacting
             if (list.isNotEmpty() && !isInteracting) {
-                val highestValuePercentage = getValuePercentageForRange(list[highestIndex].price.toFloat(), max, min)
+                val highestValuePercentage =
+                    getValuePercentageForRange(list[highestIndex].price.toFloat(), max, min)
                 val x = highestIndex * sizeWidthPerPair
                 val y = size.height * (1 - highestValuePercentage)
                 drawCircle(
