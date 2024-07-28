@@ -7,6 +7,8 @@ import data.util.NetworkResult.Loading
 import data.util.NetworkResult.Success
 import data.util.asResult
 import domain.repository.MainRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import ui.common.MviViewModel
@@ -30,16 +32,28 @@ class DetailViewModel(
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun onLoadCryptoDetail() {
         mainRepository.getCryptoBySymbol(symbol)
+            .flatMapLatest { crypto ->
+                mainRepository.getCryptoInfoById(crypto.id)
+                    .map { info -> Pair(crypto, info) }
+            }
             .asResult()
-            .map {
-                when (it) {
-                    is Loading -> setState { DetailState.Loading }
-                    is Success -> setState { DetailState.Success(it.data) }
-                    is Error -> setState {
-                        DetailState.Error(it.throwable.message ?: "An error occurred")
+            .map { result ->
+                when (result) {
+                    is Success -> {
+                        val (crypto, info) = result.data
+                        setState {
+                            DetailState.Success(
+                                crypto = crypto,
+                                description = info.description.en
+                            )
+                        }
                     }
+
+                    is Error -> setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
+                    is Loading -> setState { DetailState.Loading }
                 }
             }
             .launchIn(viewModelScope)

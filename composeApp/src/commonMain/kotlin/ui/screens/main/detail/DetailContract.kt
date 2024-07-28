@@ -12,7 +12,10 @@ sealed interface DetailState {
     data object Loading : DetailState
 
     @Stable
-    data class Success(val crypto: Crypto) : DetailState
+    data class Success(
+        val crypto: Crypto,
+        val description: String
+    ) : DetailState
 
     @Stable
     data class Error(val message: String) : DetailState

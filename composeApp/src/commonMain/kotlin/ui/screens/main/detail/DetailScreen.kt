@@ -88,11 +88,9 @@ internal fun DetailScreen(
         verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_16)
     ) {
         if (state is DetailState.Success) {
-            val crypto = state.crypto
-            val description = "state.description"
-            item { DetailHeader(crypto = crypto) }
-            item { DetailBody(crypto = crypto) }
-            item { DescriptionCard(description = description) }
+            item { DetailHeader(crypto = state.crypto) }
+            item { DetailBody(crypto = state.crypto) }
+            item { DescriptionCard(description = state.description) }
         }
 
         if (isLoading) {
@@ -101,7 +99,7 @@ internal fun DetailScreen(
 
             item { DetailHeader(crypto, isLoading = true) }
             item { DetailBody(crypto = crypto, isLoading = true) }
-            item { DescriptionCard(description = description, isLoading = false) }
+            item { DescriptionCard(description = description, isLoading = true) }
         }
     }
 }

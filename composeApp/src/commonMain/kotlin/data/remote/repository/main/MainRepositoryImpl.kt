@@ -1,8 +1,7 @@
 package data.remote.repository.main
 
+import data.remote.model.main.CryptoInfo
 import data.remote.model.main.CurrenciesDto
-import data.remote.model.main.Description
-import data.remote.model.main.KoinGeckoResponse
 import data.remote.model.main.toBonbastRateDomain
 import data.remote.model.main.toCryptoDomain
 import data.remote.model.main.toDomain
@@ -56,14 +55,14 @@ class MainRepositoryImpl(
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
 
-    override fun getCryptoInfoBySymbol(symbol: String): Flow<Description> = flow {
+    override fun getCryptoInfoById(symbol: String): Flow<CryptoInfo> = flow {
         val jsonString = httpClient.get("$CRYPTO_INFO_URL/$symbol").bodyAsText()
         val json = Json {
             ignoreUnknownKeys = true
             coerceInputValues = true
         }
-        val partialResponse = json.decodeFromString<KoinGeckoResponse>(jsonString)
-        emit(partialResponse.description)
+        val partialResponse = json.decodeFromString<CryptoInfo>(jsonString)
+        emit(partialResponse)
     }.flowOn(Dispatchers.IO)
 
     override suspend fun getCryptoNameBySymbol(symbol: String): String {
