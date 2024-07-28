@@ -27,7 +27,6 @@ import ui.screens.main.overview.components.tabs.NewsTab
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun HorizontalPagerTabs(
     state: OverviewState,

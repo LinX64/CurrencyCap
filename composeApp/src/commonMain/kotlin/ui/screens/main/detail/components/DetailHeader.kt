@@ -77,15 +77,11 @@ internal fun DetailHeader(
             Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
             InteractiveCryptoChart(
-                modifier = if (isLoading) getPlaceHolder(
-                    Modifier
-                        .fillMaxWidth()
-                        .height(170.dp)
-                ) else Modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .height(170.dp),
-                lineColor = CurrencyColors.Orange.primary,
-                list = chartData
+                list = chartData,
+                isLoading = isLoading,
             )
         }
 

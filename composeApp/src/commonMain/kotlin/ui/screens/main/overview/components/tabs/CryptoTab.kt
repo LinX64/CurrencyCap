@@ -17,9 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.bitcoin_text
 import domain.model.main.Crypto
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import org.jetbrains.compose.resources.stringResource
 import ui.common.formatToPrice
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.ChangeIcon
@@ -60,7 +63,7 @@ private fun CryptoSuccessBody(
     ) {
         Text(
             modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-            text = "Bitcoin (BTC)",
+            text = stringResource(Res.string.bitcoin_text),
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             fontSize = MaterialTheme.typography.bodyLarge.fontSize,
             fontWeight = FontWeight.Bold
@@ -115,8 +118,8 @@ internal fun InnerChartRow(
             ) else Modifier
                 .width(120.dp)
                 .height(60.dp),
-            lighterColor = CurrencyColors.Green.extraLight,
-            lightLineColor = CurrencyColors.Green.primary,
+            lineColor = CurrencyColors.Green.extraLight,
+            shadowColor = CurrencyColors.Green.primary,
             list = priceData
         )
 
