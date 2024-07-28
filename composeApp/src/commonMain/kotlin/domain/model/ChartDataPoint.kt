@@ -1,6 +1,18 @@
 package domain.model
 
-import androidx.compose.runtime.Immutable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@Immutable
-data class ChartDataPoint(val timestamp: Long, val price: Float)
+@Serializable
+data class CoinCapResponse(
+    val data: List<ChartDataPoint>,
+    val timestamp: Long
+)
+
+@Serializable
+data class ChartDataPoint(
+    @SerialName("priceUsd")
+    val price: String,
+    @SerialName("time")
+    val timestamp: Long,
+)

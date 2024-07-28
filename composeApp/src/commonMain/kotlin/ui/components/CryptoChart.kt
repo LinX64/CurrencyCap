@@ -26,7 +26,7 @@ fun CryptoChart(
     Canvas(
         modifier = modifier
     ) {
-        val prices = list.map { it.price }
+        val prices = list.map { it.price }.map { it.toFloat() }
         val max = prices.maxOrNull() ?: 0f
         val min = prices.minOrNull() ?: 0f
         val highestIndex = prices.indexOf(max)
@@ -36,10 +36,10 @@ fun CryptoChart(
         // Create a path for the line
         val path = Path().apply {
             if (list.isNotEmpty()) {
-                val startValuePercentage = getValuePercentageForRange(list[0].price, max, min)
+                val startValuePercentage = getValuePercentageForRange(list[0].price.toFloat(), max, min)
                 moveTo(0f, size.height * (1 - startValuePercentage))
                 list.forEachIndexed { index, point ->
-                    val valuePercentage = getValuePercentageForRange(point.price, max, min)
+                    val valuePercentage = getValuePercentageForRange(point.price.toFloat(), max, min)
                     lineTo(index * sizeWidthPerPair, size.height * (1 - valuePercentage))
                 }
             }
@@ -48,10 +48,10 @@ fun CryptoChart(
         // Create a path for the shadow, extending slightly above and below the main path
         val shadowPath = Path().apply {
             if (list.isNotEmpty()) {
-                val startValuePercentage = getValuePercentageForRange(list[0].price, max, min)
+                val startValuePercentage = getValuePercentageForRange(list[0].price.toFloat(), max, min)
                 moveTo(0f, size.height * (1 - startValuePercentage) - 10f)
                 list.forEachIndexed { index, point ->
-                    val valuePercentage = getValuePercentageForRange(point.price, max, min)
+                    val valuePercentage = getValuePercentageForRange(point.price.toFloat(), max, min)
                     lineTo(index * sizeWidthPerPair, size.height * (1 - valuePercentage) - 10f)
                 }
                 lineTo(size.width, size.height)
@@ -88,7 +88,7 @@ fun CryptoChart(
 
         // Draw dot at the highest point
         if (list.isNotEmpty()) {
-            val highestValuePercentage = getValuePercentageForRange(list[highestIndex].price, max, min)
+            val highestValuePercentage = getValuePercentageForRange(list[highestIndex].price.toFloat(), max, min)
             val x = highestIndex * sizeWidthPerPair
             val y = size.height * (1 - highestValuePercentage)
             drawCircle(

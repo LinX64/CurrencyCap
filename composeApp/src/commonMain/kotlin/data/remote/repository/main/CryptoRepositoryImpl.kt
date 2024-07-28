@@ -1,8 +1,8 @@
 package data.remote.repository.main
 
-import data.util.APIConst.CRYPTO_MARKET_URL
+import data.util.APIConst.COINCAP_BASE_URL
 import domain.model.ChipPeriod
-import domain.model.CoinGeckoResponse
+import domain.model.CoinCapResponse
 import domain.model.CoinMarketChartData
 import domain.model.PricePoint
 import domain.repository.CryptoRepository
@@ -15,8 +15,10 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
+import kotlin.time.Duration.Companion.days
 
 class CryptoRepositoryImpl(
     private val httpClient: HttpClient
@@ -26,18 +28,22 @@ class CryptoRepositoryImpl(
         coinId: String,
         period: ChipPeriod
     ): Flow<CoinMarketChartData> = flow {
-        val response = httpClient.get("$CRYPTO_MARKET_URL/$coinId/$MARKET_CHART") {
-            parameter("vs_currency", "usd")
-            parameter("days", period.days)
+        val endTime = Clock.System.now()
+        val periodInDays = 7
+        val startTime: Instant = endTime.minus(periodInDays.days)
+
+        val response = httpClient.get("$COINCAP_BASE_URL/assets/bitcoin/history") {
+            parameter("interval", "h1")
         }
+
         val json = Json { ignoreUnknownKeys = true }
         val jsonString = response.bodyAsText()
-        val data = json.decodeFromString<CoinGeckoResponse>(jsonString)
+        val data = json.decodeFromString<CoinCapResponse>(jsonString)
 
-        val chartData = data.prices.map { (timestamp, price) ->
+        val chartData = data.data.map { dataPoint ->
             PricePoint(
-                time = Instant.fromEpochMilliseconds(timestamp.toLong()),
-                price = price
+                time = Instant.fromEpochMilliseconds(dataPoint.timestamp),
+                price = dataPoint.price.toDouble()
             )
         }
 
@@ -45,8 +51,4 @@ class CryptoRepositoryImpl(
 
         emit(coinMarketChartData)
     }.flowOn(Dispatchers.IO)
-
-    private companion object {
-        const val MARKET_CHART = "market_chart"
-    }
 }

@@ -94,7 +94,8 @@ class DetailViewModel(
         return chartData.prices.map { pricePoint ->
             ChartDataPoint(
                 timestamp = pricePoint.time.toEpochMilliseconds(),
-                price = pricePoint.price.toFloat()
+                price = pricePoint.price.toString()
+
             )
         }.toImmutableList()
     }

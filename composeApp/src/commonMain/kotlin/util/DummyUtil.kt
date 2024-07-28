@@ -173,7 +173,7 @@ internal fun getDummyCryptoInfo() = CryptoInfo(
 
 internal fun getDummyChartData(): ImmutableList<ChartDataPoint> = persistentListOf(
     ChartDataPoint(
-        price = 1.1f,
+        price = "1.1",
         timestamp = 2L
     )
 )
