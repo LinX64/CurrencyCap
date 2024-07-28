@@ -46,12 +46,7 @@ class DetailViewModel(
                 when (result) {
                     is Success -> {
                         val (crypto, info) = result.data
-                        setState {
-                            DetailState.Success(
-                                crypto = crypto,
-                                description = info.description.en
-                            )
-                        }
+                        setState { DetailState.Success(crypto = crypto, cryptoInfo = info) }
                     }
 
                     is Error -> setState { DetailState.Error(result.throwable.message ?: "An error occurred") }

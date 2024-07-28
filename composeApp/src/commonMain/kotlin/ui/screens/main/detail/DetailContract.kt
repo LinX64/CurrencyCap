@@ -1,6 +1,7 @@
 package ui.screens.main.detail
 
 import androidx.compose.runtime.Stable
+import data.remote.model.main.CryptoInfo
 import domain.model.main.Crypto
 
 sealed interface DetailViewEvent {
@@ -15,7 +16,7 @@ sealed interface DetailState {
     @Stable
     data class Success(
         val crypto: Crypto,
-        val description: String
+        val cryptoInfo: CryptoInfo
     ) : DetailState
 
     @Stable

@@ -63,7 +63,9 @@ class MainRepositoryImpl(
         }
         val partialResponse = json.decodeFromString<CryptoInfo>(jsonString)
         emit(partialResponse)
-    }.flowOn(Dispatchers.IO)
+    }
+        .flowOn(Dispatchers.IO)
+        .retryOnIOException()
 
     override suspend fun getCryptoNameBySymbol(symbol: String): String {
         val currencies = getCurrencies()

@@ -27,7 +27,15 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.crypto_image
+import data.remote.model.main.CryptoInfo
+import domain.model.ChipPeriod
+import domain.model.ChipPeriod.ALL
+import domain.model.ChipPeriod.DAY
+import domain.model.ChipPeriod.MONTH
+import domain.model.ChipPeriod.WEEK
+import domain.model.ChipPeriod.YEAR
 import domain.model.main.Crypto
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import ui.common.formatToPrice
@@ -43,9 +51,10 @@ import ui.theme.colors.CurrencyColors
 @Composable
 internal fun DetailHeader(
     crypto: Crypto,
-    isLoading: Boolean = false
+    cryptoInfo: CryptoInfo,
+    isLoading: Boolean = false,
 ) {
-    var selectedChip by remember { mutableStateOf("24H") }
+    var selectedChip by remember { mutableStateOf(DAY) }
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -124,15 +133,7 @@ internal fun DetailHeader(
                         .height(170.dp),
                     lightLineColor = CurrencyColors.Orange.primary,
                     lighterColor = CurrencyColors.Orange.primary.copy(alpha = 0.1f),
-                    list = persistentListOf(
-                        58.00f,
-                        58.00f,
-                        58.3f,
-                        58.4f,
-                        60.0f,
-                        61.0f,
-                        60.0f,
-                    )
+                    list = prepareChartData(cryptoInfo, selectedChip)
                 )
 
                 Spacer(modifier = Modifier.height(SPACER_PADDING_32))
@@ -148,4 +149,25 @@ internal fun DetailHeader(
             }
         )
     }
+}
+
+// todo consider moving to viewmodel
+
+private fun prepareChartData(
+    cryptoInfo: CryptoInfo,
+    selectedChip: ChipPeriod
+): ImmutableList<Float> {
+    val percentageChange = when (selectedChip) {
+        DAY -> cryptoInfo.priceChangePercentage24h
+        WEEK -> cryptoInfo.priceChangePercentage7d
+        MONTH -> cryptoInfo.priceChangePercentage30d
+        YEAR -> cryptoInfo.priceChangePercentage1y
+        ALL -> cryptoInfo.priceChangePercentage200d
+    }
+
+    val currentPrice = cryptoInfo.marketData.commonUsdPrice.usd.toFloat()
+    val changeAmount = currentPrice * (percentageChange / 100f)
+    val startPrice = currentPrice - changeAmount.toFloat()
+
+    return persistentListOf(startPrice, currentPrice)
 }

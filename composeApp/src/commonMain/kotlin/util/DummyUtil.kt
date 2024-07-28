@@ -1,6 +1,10 @@
 package util
 
 import data.remote.model.User
+import data.remote.model.main.CommonUsdPrice
+import data.remote.model.main.CryptoInfo
+import data.remote.model.main.Description
+import data.remote.model.main.MarketData
 import domain.model.Article
 import domain.model.Source
 import domain.model.main.BonbastRate
@@ -147,6 +151,21 @@ internal fun getDummyUser() = User(
     fullName = "fullName",
     phoneNumber = "phoneNumber",
     profilePicture = ""
+)
+
+internal fun getDummyCryptoInfo() = CryptoInfo(
+    high24h = CommonUsdPrice(usd = 88.89),
+    low24h = CommonUsdPrice(usd = 90.91),
+    priceChange24h = 96.97,
+    priceChangePercentage24h = 98.99,
+    description = Description(en = "melius"),
+    marketData = MarketData(commonUsdPrice = CommonUsdPrice(usd = 14.15)),
+    priceChangePercentage7d = 16.17,
+    priceChangePercentage14d = 18.19,
+    priceChangePercentage30d = 20.21,
+    priceChangePercentage60d = 22.23,
+    priceChangePercentage200d = 24.25,
+    priceChangePercentage1y = 26.27,
 )
 
 internal fun getDummyBonbastRates(): ImmutableList<BonbastRate> = persistentListOf(

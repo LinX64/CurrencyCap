@@ -15,6 +15,7 @@ import ui.screens.main.detail.components.DescriptionCard
 import ui.screens.main.detail.components.DetailBody
 import ui.screens.main.detail.components.DetailHeader
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import util.getDummyCryptoInfo
 import util.getDummyCryptoItem
 
 @Composable
@@ -49,16 +50,18 @@ internal fun DetailScreen(
     ) {
         when (state) {
             is DetailState.Success -> {
-                item { DetailHeader(crypto = state.crypto) }
+                val description = state.cryptoInfo.description.en
+                item { DetailHeader(crypto = state.crypto, cryptoInfo = state.cryptoInfo) }
                 item { DetailBody(crypto = state.crypto) }
-                item { DescriptionCard(description = state.description) }
+                item { DescriptionCard(description = description) }
             }
 
             is DetailState.Loading -> {
                 val crypto = getDummyCryptoItem()
+                val cryptoInfo = getDummyCryptoInfo()
                 val description = "state.description"
 
-                item { DetailHeader(crypto, isLoading = true) }
+                item { DetailHeader(crypto, isLoading = true, cryptoInfo = cryptoInfo) }
                 item { DetailBody(crypto = crypto, isLoading = true) }
                 item { DescriptionCard(description = description, isLoading = true) }
             }
