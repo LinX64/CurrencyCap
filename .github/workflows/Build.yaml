@@ -40,7 +40,6 @@ jobs:
       - name: Clear Gradle Caches
         run: |
           rm -rf ~/.gradle/caches/
-          ./gradlew cleanBuildCache
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
