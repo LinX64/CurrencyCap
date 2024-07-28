@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -39,19 +40,20 @@ import kotlin.math.roundToInt
 
 @Composable
 fun InteractiveCryptoChart(
+    modifier: Modifier = Modifier,
     lineColor: Color,
     list: List<ChartDataPoint>,
     lighterColor: Color = MaterialTheme.colorScheme.surface,
     lightLineColor: Color = MaterialTheme.colorScheme.primary,
-    modifier: Modifier = Modifier
 ) {
-    var selectedIndex by remember { mutableStateOf<Int?>(null) }
+    val highestIndex = remember(list) { list.indices.maxByOrNull { list[it].price } ?: 0 }
+    var selectedIndex by remember(highestIndex) { mutableIntStateOf(highestIndex) }
     var isInteracting by remember { mutableStateOf(false) }
 
     LaunchedEffect(isInteracting) {
         if (!isInteracting) {
             delay(100)
-            selectedIndex = null
+            selectedIndex = highestIndex
         }
     }
 
@@ -70,7 +72,9 @@ fun InteractiveCryptoChart(
                         onDragCancel = { isInteracting = false },
                         onDrag = { change, _ ->
                             val x = change.position.x
-                            selectedIndex = ((x / size.width) * (list.size - 1)).roundToInt().coerceIn(0, list.size - 1)
+                            selectedIndex = ((x / size.width) * (list.size - 1))
+                                .roundToInt()
+                                .coerceIn(0, list.size - 1)
                         }
                     )
                 }
@@ -78,7 +82,6 @@ fun InteractiveCryptoChart(
             val prices = list.map { it.price.toFloat() }
             val max = prices.maxOrNull() ?: 0f
             val min = prices.minOrNull() ?: 0f
-            val highestIndex = prices.indexOf(max)
             val dotColor = Color.White
 
             val sizeWidthPerPair = if (list.size > 1) size.width / (list.size - 1) else size.width
@@ -131,8 +134,8 @@ fun InteractiveCryptoChart(
                 )
             )
 
-            // Draw dot at the highest point
-            if (list.isNotEmpty()) {
+            // Draw dot at the highest point only when not interacting
+            if (list.isNotEmpty() && !isInteracting) {
                 val highestValuePercentage = getValuePercentageForRange(list[highestIndex].price.toFloat(), max, min)
                 val x = highestIndex * sizeWidthPerPair
                 val y = size.height * (1 - highestValuePercentage)
@@ -144,36 +147,38 @@ fun InteractiveCryptoChart(
             }
 
             // Draw selected point
-            selectedIndex?.let { index ->
+            selectedIndex.let { index ->
                 val valuePercentage = getValuePercentageForRange(list[index].price.toFloat(), max, min)
                 val x = index * sizeWidthPerPair
                 val y = size.height * (1 - valuePercentage)
                 drawCircle(
-                    color = Color.White,
-                    radius = 8f,
+                    color = dotColor,
+                    radius = 14f,
                     center = Offset(x, y)
                 )
             }
         }
 
-        // Overlay for selected data point information
-        selectedIndex?.let { index ->
-            val dataPoint = list[index]
-            Column(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.8f))
-                    .padding(8.dp)
-            ) {
-                Text(
-                    text = "Price: $${formatToPrice(dataPoint.price.toDouble())}",
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = "Time: ${formatTimestamp(dataPoint.timestamp)}",
-                    color = MaterialTheme.colorScheme.onSurface
-                )
+        // Overlay for selected data point information, only shown when interacting
+        if (isInteracting) {
+            selectedIndex.let { index ->
+                val dataPoint = list[index]
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.8f))
+                        .padding(8.dp)
+                ) {
+                    Text(
+                        text = "Price: $${formatToPrice(dataPoint.price.toDouble())}",
+                        color = MaterialTheme.colorScheme.onSurface,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = "Time: ${formatTimestamp(dataPoint.timestamp)}",
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
             }
         }
     }
