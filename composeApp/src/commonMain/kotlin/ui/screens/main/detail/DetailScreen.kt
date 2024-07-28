@@ -10,6 +10,10 @@ import di.koinViewModel
 import org.koin.core.parameter.parametersOf
 import ui.components.ErrorView
 import ui.components.base.BaseGlassLazyColumn
+import ui.screens.main.detail.DetailState.Error
+import ui.screens.main.detail.DetailState.Loading
+import ui.screens.main.detail.DetailState.Success
+import ui.screens.main.detail.DetailViewEvent.OnChartPeriodSelect
 import ui.screens.main.detail.DetailViewEvent.OnRetry
 import ui.screens.main.detail.components.DescriptionCard
 import ui.screens.main.detail.components.DetailBody
@@ -44,24 +48,41 @@ internal fun DetailScreen(
     BaseGlassLazyColumn(
         padding = padding,
         hazeState = hazeState,
-        isEmpty = state is DetailState.Error,
+        isEmpty = state is Error,
         emptyContent = { ErrorView(onRetry = { handleEvent(OnRetry) }) },
         verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_16)
     ) {
         when (state) {
-            is DetailState.Success -> {
-                val description = state.cryptoInfo.description.en
-                item { DetailHeader(crypto = state.crypto, cryptoInfo = state.cryptoInfo) }
-                item { DetailBody(crypto = state.crypto) }
+            is Success -> {
+                val description = state.cryptoInfo?.description?.en ?: "state.description"
+                val crypto = state.crypto ?: getDummyCryptoItem()
+                val cryptoInfo = state.cryptoInfo ?: getDummyCryptoInfo()
+
+                item {
+                    DetailHeader(
+                        crypto = crypto,
+                        isLoading = true,
+                        cryptoInfo = cryptoInfo,
+                        onChartPeriodSelect = { coinId, chipPeriod -> handleEvent(OnChartPeriodSelect(coinId, chipPeriod)) }
+                    )
+                }
+                item { DetailBody(crypto = crypto) }
                 item { DescriptionCard(description = description) }
             }
 
-            is DetailState.Loading -> {
+            is Loading -> {
                 val crypto = getDummyCryptoItem()
                 val cryptoInfo = getDummyCryptoInfo()
                 val description = "state.description"
 
-                item { DetailHeader(crypto, isLoading = true, cryptoInfo = cryptoInfo) }
+                item {
+                    DetailHeader(
+                        crypto = crypto,
+                        isLoading = true,
+                        cryptoInfo = cryptoInfo,
+                        onChartPeriodSelect = { coinId, chipPeriod -> handleEvent(OnChartPeriodSelect(coinId, chipPeriod)) }
+                    )
+                }
                 item { DetailBody(crypto = crypto, isLoading = true) }
                 item { DescriptionCard(description = description, isLoading = true) }
             }

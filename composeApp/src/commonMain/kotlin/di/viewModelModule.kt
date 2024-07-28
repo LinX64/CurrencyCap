@@ -38,7 +38,7 @@ val viewModelModule = module {
     single { FillProfileViewModel(get()) }
 
     factory { (url: String) -> NewsDetailViewModel(get(), SavedStateHandle(mapOf(ENCODED_URL to url))) }
-    factory { (symbol: String) -> DetailViewModel(get(), SavedStateHandle(mapOf(SYMBOL to symbol))) }
+    factory { (symbol: String) -> DetailViewModel(get(), get(), SavedStateHandle(mapOf(SYMBOL to symbol))) }
 }
 
 val previewModule = module {

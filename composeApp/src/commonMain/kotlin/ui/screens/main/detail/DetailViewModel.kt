@@ -6,6 +6,8 @@ import data.util.NetworkResult.Error
 import data.util.NetworkResult.Loading
 import data.util.NetworkResult.Success
 import data.util.asResult
+import domain.model.ChipPeriod
+import domain.repository.CryptoRepository
 import domain.repository.MainRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapLatest
@@ -13,11 +15,13 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import ui.common.MviViewModel
 import ui.navigation.util.SYMBOL
+import ui.screens.main.detail.DetailViewEvent.OnChartPeriodSelect
 import ui.screens.main.detail.DetailViewEvent.OnLoadCryptoInfo
 import ui.screens.main.detail.DetailViewEvent.OnRetry
 
 class DetailViewModel(
     private val mainRepository: MainRepository,
+    private val cryptoRepository: CryptoRepository,
     savedStateHandle: SavedStateHandle
 ) : MviViewModel<DetailViewEvent, DetailState, DetailNavigationEffect>(DetailState.Idle) {
 
@@ -31,6 +35,7 @@ class DetailViewModel(
         when (event) {
             OnRetry -> handleEvent(OnLoadCryptoInfo)
             OnLoadCryptoInfo -> onLoadCryptoDetail()
+            is OnChartPeriodSelect -> onChartPeriodSelect(event.coinId, event.chipPeriod)
         }
     }
 
@@ -55,4 +60,21 @@ class DetailViewModel(
             }
             .launchIn(viewModelScope)
     } // TODO: Consider merging this function in one call
+
+    private fun onChartPeriodSelect(coinId: String, chipPeriod: ChipPeriod) {
+        cryptoRepository.fetchMarketChartData(coinId, chipPeriod)
+            .asResult()
+            .map { result ->
+                when (result) {
+                    is Success -> {
+                        val chartData = result.data
+                        setState { DetailState.Success(chartData = chartData) }
+                    }
+
+                    is Error -> setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
+                    is Loading -> setState { DetailState.Loading }
+                }
+            }
+            .launchIn(viewModelScope)
+    }
 }

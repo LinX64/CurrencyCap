@@ -28,6 +28,7 @@ import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.crypto_image
 import data.remote.model.main.CryptoInfo
+import domain.model.ChipPeriod
 import domain.model.ChipPeriod.DAY
 import domain.model.main.Crypto
 import org.jetbrains.compose.resources.stringResource
@@ -47,8 +48,10 @@ internal fun DetailHeader(
     crypto: Crypto,
     cryptoInfo: CryptoInfo,
     isLoading: Boolean = false,
+    onChartPeriodSelect: (coinId: String, chipPeriod: ChipPeriod) -> Unit
 ) {
     var selectedChip by remember { mutableStateOf(DAY) }
+    val isDefaultLoadingModifier = if (isLoading) getPlaceHolder(Modifier) else Modifier
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -84,12 +87,14 @@ internal fun DetailHeader(
 
                     Column {
                         Text(
+                            modifier = isDefaultLoadingModifier,
                             text = crypto.name + " (" + crypto.symbol.uppercase() + ")",
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.onSurface
                         )
 
                         Text(
+                            modifier = isDefaultLoadingModifier,
                             text = "Market Cap: $${formatToPrice(crypto.marketCap.toDouble())}",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
@@ -100,6 +105,7 @@ internal fun DetailHeader(
                 Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
                 Text(
+                    modifier = isDefaultLoadingModifier,
                     text = "$${formatToPrice(crypto.currentPrice)}",
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onSurface,
@@ -112,6 +118,7 @@ internal fun DetailHeader(
                     Spacer(modifier = Modifier.width(SPACER_PADDING_8))
 
                     Text(
+                        modifier = isDefaultLoadingModifier,
                         text = "${crypto.priceChangePercentage24h}%",
                         style = MaterialTheme.typography.bodyMedium,
                         color = if (crypto.priceChangePercentage24h > 0) CurrencyColors.Green.primary else CurrencyColors.Red.primary,
@@ -140,6 +147,7 @@ internal fun DetailHeader(
             selectedRange = selectedChip,
             onRangeSelected = { newRange ->
                 selectedChip = newRange
+                onChartPeriodSelect(crypto.id, newRange)
             }
         )
     }

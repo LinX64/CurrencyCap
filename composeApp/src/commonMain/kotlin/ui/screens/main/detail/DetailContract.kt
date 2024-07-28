@@ -2,11 +2,17 @@ package ui.screens.main.detail
 
 import androidx.compose.runtime.Stable
 import data.remote.model.main.CryptoInfo
+import domain.model.ChipPeriod
+import domain.model.CoinMarketChartData
 import domain.model.main.Crypto
 
 sealed interface DetailViewEvent {
     data object OnRetry : DetailViewEvent
     data object OnLoadCryptoInfo : DetailViewEvent
+    data class OnChartPeriodSelect(
+        val coinId: String,
+        val chipPeriod: ChipPeriod
+    ) : DetailViewEvent
 }
 
 sealed interface DetailState {
@@ -15,8 +21,9 @@ sealed interface DetailState {
 
     @Stable
     data class Success(
-        val crypto: Crypto,
-        val cryptoInfo: CryptoInfo
+        val crypto: Crypto? = null,
+        val cryptoInfo: CryptoInfo? = null,
+        val chartData: CoinMarketChartData? = null
     ) : DetailState
 
     @Stable
