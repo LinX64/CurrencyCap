@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   build:
-    name: "Build and Metrics"
+    name: "Build & report Compose Metrics"
     runs-on: ubuntu-latest
 
     permissions:
@@ -41,38 +41,15 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
         with:
           validate-wrappers: true
-          gradle-home-cache-cleanup: true
 
       - name: Build with Gradle
-        run: ./gradlew clean build
+        run: ./gradlew build
 
-      - name: Run Compose Metrics
-        run: ./gradlew assembleRelease -PenableMultiModuleComposeReports=true --rerun-tasks
-
-      - name: Generate HTML Report
-        run: |
-          echo "<!DOCTYPE html>
-          <html lang='en'>
-          <head>
-              <meta charset='UTF-8'>
-              <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-              <title>Compose Compiler Metrics Report</title>
-              <style>
-                  body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
-                  h1 { color: #333; }
-                  pre { background-color: #f4f4f4; padding: 15px; border-radius: 5px; }
-              </style>
-          </head>
-          <body>
-              <h1>Compose Compiler Metrics Report</h1>
-              <pre>" > compose_metrics_report.html
-          find . -name "*-composables.txt" | xargs cat >> compose_metrics_report.html
-          echo "</pre>
-          </body>
-          </html>" >> compose_metrics_report.html
+      - name: Run Compose Metrics Report
+        run: ./gradlew :composeApp:androidReleaseComposeCompilerHtmlReport
 
       - name: Upload Compose Metrics Report
         uses: actions/upload-artifact@v4
         with:
           name: compose-metrics-report
-          path: compose_metrics_report.html
+          path: composeApp/build/compose_report/

@@ -9,4 +9,5 @@ plugins {
     alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.firebase.perf) apply false
     alias(libs.plugins.realm.plugin) apply false
+    alias(libs.plugins.compose.compiler.report) apply false
 }

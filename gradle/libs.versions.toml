@@ -36,6 +36,8 @@ urlencoderLib = "1.5.0"
 datastore = "1.1.1"
 realm = "2.1.0"
 
+compose-metrics-report = "1.4.0"
+
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModel" }
@@ -117,3 +119,4 @@ firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "
 firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerfPlugin" }
 gms = { id = "com.google.gms.google-services", version.ref = "gmsPlugin" }
 realm-plugin = { id = "io.realm.kotlin", version.ref = "realm" }
+compose-compiler-report = { id = "dev.shreyaspatil.compose-compiler-report-generator", version.ref = "compose-metrics-report" }
