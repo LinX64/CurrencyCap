@@ -56,6 +56,7 @@ class DetailViewModel(
                     is Success -> {
                         val (crypto, info) = result.data
                         setState { DetailState.Success(crypto = crypto, cryptoInfo = info, null) }
+                        handleEvent(OnChartPeriodSelect(coinId = result.data.first.id, chipPeriod = ChipPeriod.DAY))
                     }
 
                     is Error -> setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
@@ -67,7 +68,6 @@ class DetailViewModel(
 
     private fun onChartPeriodSelect(coinId: String, chipPeriod: ChipPeriod) {
         val currentState = (viewState.value as? DetailState.Success) ?: return
-
         setState { currentState.copy(chartData = currentState.chartData?.copy(isLoading = true)) }
 
         cryptoRepository.fetchMarketChartData(coinId, chipPeriod)
@@ -78,20 +78,12 @@ class DetailViewModel(
                         val chartData = result.data
                         setState {
                             currentState.copy(
-                                chartData = ChartDataUiState(
-                                    data = prepareChartData(chartData),
-                                    isLoading = false
-                                )
+                                chartData = ChartDataUiState(data = prepareChartData(chartData), isLoading = false)
                             )
                         }
                     }
 
-                    is Error -> setState {
-                        currentState.copy(
-                            chartData = currentState.chartData?.copy(isLoading = false)
-                        )
-                    }
-
+                    is Error -> setState { currentState.copy(chartData = currentState.chartData?.copy(isLoading = false)) }
                     is Loading -> currentState
                 }
             }
