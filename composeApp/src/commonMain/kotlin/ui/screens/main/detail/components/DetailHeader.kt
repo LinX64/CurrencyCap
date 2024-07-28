@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -34,10 +33,11 @@ import domain.model.main.Crypto
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 import ui.common.formatToPrice
-import ui.components.CryptoChart
+import ui.components.InteractiveCryptoChart
 import ui.screens.main.overview.components.ChangeIcon
 import ui.screens.main.overview.components.getPlaceHolder
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
@@ -56,48 +56,11 @@ internal fun DetailHeader(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(SPACER_PADDING_16),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                val isLoadingModifier = if (isLoading) getPlaceHolder(
-                    Modifier
-                        .size(48.dp)
-                        .clip(CircleShape)
-                        .background(Color.Gray)
-                ) else Modifier
-                    .size(48.dp)
-                    .clip(CircleShape)
-                    .background(Color.Gray)
-
-                AsyncImage(
-                    modifier = isLoadingModifier,
-                    model = crypto.image,
-                    contentDescription = stringResource(Res.string.crypto_image)
-                )
-
-                Column {
-                    Text(
-                        modifier = isDefaultLoadingModifier,
-                        text = crypto.name + " (" + crypto.symbol.uppercase() + ")",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-
-                    Text(
-                        modifier = isDefaultLoadingModifier,
-                        text = "Market Cap: $${formatToPrice(crypto.marketCap.toDouble())}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-                    )
-                }
-            }
+            TopHeaderRow(isLoading, crypto, isDefaultLoadingModifier)
 
             Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
@@ -109,23 +72,11 @@ internal fun DetailHeader(
                 fontWeight = FontWeight.Bold
             )
 
-            Row {
-                ChangeIcon(valueChange = crypto.priceChangePercentage24h, isLoading = isLoading)
-
-                Spacer(modifier = Modifier.width(SPACER_PADDING_8))
-
-                Text(
-                    modifier = isDefaultLoadingModifier,
-                    text = "${crypto.priceChangePercentage24h}%",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = if (crypto.priceChangePercentage24h > 0) CurrencyColors.Green.primary else CurrencyColors.Red.primary,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+            InnerHeaderRow(crypto, isLoading, isDefaultLoadingModifier)
 
             Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
-            CryptoChart(
+            InteractiveCryptoChart(
                 modifier = if (isLoading) getPlaceHolder(
                     Modifier
                         .fillMaxWidth()
@@ -133,13 +84,12 @@ internal fun DetailHeader(
                 ) else Modifier
                     .fillMaxWidth()
                     .height(170.dp),
-                lightLineColor = CurrencyColors.Orange.primary,
-                lighterColor = CurrencyColors.Orange.primary.copy(alpha = 0.1f),
+                lineColor = CurrencyColors.Orange.primary,
                 list = chartData
             )
         }
 
-        Spacer(modifier = Modifier.height(SPACER_PADDING_16))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_32))
 
         TimeRangeChips(
             selectedRange = selectedChip,
@@ -148,5 +98,70 @@ internal fun DetailHeader(
                 onChartPeriodSelect(crypto.id, newRange)
             }
         )
+    }
+}
+
+@Composable
+private fun InnerHeaderRow(
+    crypto: Crypto,
+    isLoading: Boolean,
+    isDefaultLoadingModifier: Modifier
+) {
+    Row {
+        ChangeIcon(valueChange = crypto.priceChangePercentage24h, isLoading = isLoading)
+
+        Spacer(modifier = Modifier.width(SPACER_PADDING_8))
+
+        Text(
+            modifier = isDefaultLoadingModifier,
+            text = "${crypto.priceChangePercentage24h}%",
+            style = MaterialTheme.typography.bodyMedium,
+            color = if (crypto.priceChangePercentage24h > 0) CurrencyColors.Green.primary else CurrencyColors.Red.primary,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
+private fun TopHeaderRow(
+    isLoading: Boolean,
+    crypto: Crypto,
+    isDefaultLoadingModifier: Modifier
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        val isLoadingModifier = if (isLoading) getPlaceHolder(
+            Modifier
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(Color.Gray)
+        ) else Modifier
+            .size(48.dp)
+            .clip(CircleShape)
+            .background(Color.Gray)
+
+        AsyncImage(
+            modifier = isLoadingModifier,
+            model = crypto.image,
+            contentDescription = stringResource(Res.string.crypto_image)
+        )
+
+        Column {
+            Text(
+                modifier = isDefaultLoadingModifier,
+                text = crypto.name + " (" + crypto.symbol.uppercase() + ")",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+
+            Text(
+                modifier = isDefaultLoadingModifier,
+                text = "Market Cap: $${formatToPrice(crypto.marketCap.toDouble())}",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+            )
+        }
     }
 }

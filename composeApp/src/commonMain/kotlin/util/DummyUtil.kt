@@ -177,32 +177,28 @@ internal fun getDummyChartData(): ImmutableList<ChartDataPoint> = persistentList
         timestamp = 1721779200000
     ),
     ChartDataPoint(
-        price = "66102.0506660328449703",
+        price = "66104.0506660328449703",
         timestamp = 1721865600000
     ),
     ChartDataPoint(
-        price = "66102.0506660328449703",
+        price = "66105.0506660328449703",
         timestamp = 1721952000000
     ),
     ChartDataPoint(
-        price = "66102.0506660328449703",
+        price = "66106.0506660328449703",
         timestamp = 1722038400000
     ),
     ChartDataPoint(
-        price = "66102.0506660328449703",
+        price = "66107.0506660328449703",
         timestamp = 1722124800000
     ),
     ChartDataPoint(
-        price = "66102.0506660328449703",
+        price = "66108.0506660328449703",
         timestamp = 1722211200000
     ),
     ChartDataPoint(
-        price = "66102.0506660328449703",
+        price = "66109.0506660328449703",
         timestamp = 1722297600000
-    ),
-    ChartDataPoint(
-        price = "66102.0506660328449703",
-        timestamp = 1722384000000
     ),
 )
 

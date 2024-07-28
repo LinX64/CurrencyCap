@@ -3,16 +3,15 @@ package com.client.currencycap
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
-import ui.components.CryptoChart
+import ui.screens.main.detail.components.DetailHeader
 import util.getDummyChartData
+import util.getDummyCryptoItem
 
 //@Composable
 //@Preview(showBackground = true)
@@ -87,13 +86,14 @@ private fun ExpandablePreview() {
     val hazeState = remember { HazeState() }
     KoinPreview {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            CryptoChart(list = getDummyChartData())
+            DetailHeader(
+                crypto = getDummyCryptoItem(),
+                chartData = getDummyChartData(),
+                onChartPeriodSelect = { _, _ -> })
         }
     }
 }
