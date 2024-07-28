@@ -67,7 +67,8 @@ internal fun App(
                 scrollBehavior = scrollBehavior,
                 isLoggedIn = isLoggedIn,
                 hazeState = hazeState,
-                onFilterClick = { isNewsFilterSheetVisible = true }
+                onFilterClick = { isNewsFilterSheetVisible = true },
+                onThemeChangeClick = mainViewModel::toggleDarkMode
             )
         },
         bottomBar = {

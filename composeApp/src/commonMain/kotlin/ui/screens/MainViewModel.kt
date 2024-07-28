@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import domain.repository.UserPreferences
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ui.screens.MainState.Idle
 import ui.screens.MainState.Loading
@@ -19,6 +21,13 @@ class MainViewModel(
 
     private val _state: MutableStateFlow<MainState> = MutableStateFlow(Idle)
     val appState: StateFlow<MainState> = _state.asStateFlow()
+
+    val isDark: StateFlow<Boolean> = userPreferences.isDarkMode()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(1000L),
+            initialValue = false
+        )
 
     init {
         checkUserLoginStatus()
@@ -43,8 +52,10 @@ class MainViewModel(
         _state.value = NotLoggedIn
     }
 
-    fun clearState() {
-        _state.value = Idle
+    fun toggleDarkMode(isDark: Boolean = false) {
+        viewModelScope.launch {
+            userPreferences.setDarkMode(isDark)
+        }
     }
 }
 

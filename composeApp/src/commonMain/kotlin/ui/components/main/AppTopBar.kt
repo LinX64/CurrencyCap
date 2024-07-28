@@ -2,6 +2,9 @@ package ui.components.main
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -11,6 +14,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -30,6 +37,7 @@ import ui.navigation.util.ScreenRoutes.CRYPTO_DETAIL
 import ui.navigation.util.ScreenRoutes.EXPLORE
 import ui.navigation.util.ScreenRoutes.NEWS
 import ui.navigation.util.ScreenRoutes.NEWS_DETAIL
+import ui.navigation.util.ScreenRoutes.OVERVIEW
 import ui.navigation.util.ScreenRoutes.PROFILE
 import ui.navigation.util.ScreenRoutes.SETTINGS
 import ui.screens.main.settings.navigation.Settings
@@ -41,8 +49,9 @@ internal fun AppTopBar(
     navController: NavHostController,
     scrollBehavior: TopAppBarScrollBehavior,
     hazeState: HazeState,
-    onFilterClick: () -> Unit,
     isLoggedIn: Boolean,
+    onFilterClick: () -> Unit,
+    onThemeChangeClick: (isDark: Boolean) -> Unit
 ) {
     val isSettingsScreen = currentDestination == SETTINGS
     val isNewsDetailScreen = currentDestination?.startsWith(NEWS_DETAIL)
@@ -51,6 +60,7 @@ internal fun AppTopBar(
     val isAiScreen = currentDestination == AI_PREDICTION
     val isNewsScreen = currentDestination == NEWS
     val isProfileScreen = currentDestination == PROFILE
+    val isOverviewScreen = currentDestination == OVERVIEW
 
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
@@ -84,9 +94,10 @@ internal fun AppTopBar(
         actions = {
             Actions(
                 isNewsScreen = isNewsScreen,
-                isProfileScreen = isProfileScreen,
+                isOverviewScreen = isOverviewScreen,
                 onFilterClick = onFilterClick,
-                onSettingsClick = { navController.navigate(Settings) }
+                onSettingsClick = { navController.navigate(Settings) },
+                onThemeChangeClick = onThemeChangeClick
             )
         }
     )
@@ -122,10 +133,13 @@ private fun NavigationIcon(
 @Composable
 private fun Actions(
     isNewsScreen: Boolean,
-    isProfileScreen: Boolean,
+    isOverviewScreen: Boolean,
     onFilterClick: () -> Unit,
-    onSettingsClick: () -> Unit
+    onSettingsClick: () -> Unit,
+    onThemeChangeClick: (isDark: Boolean) -> Unit
 ) {
+    var isDarkTheme by remember { mutableStateOf(false) }
+
     if (isNewsScreen) {
         IconButton(
             modifier = Modifier.padding(end = 16.dp),
@@ -134,6 +148,22 @@ private fun Actions(
             Icon(
                 painter = painterResource(Res.drawable.ic_filter_search),
                 contentDescription = stringResource(Res.string.filter),
+                tint = MaterialTheme.colorScheme.onSurface
+            )
+        }
+    }
+
+    if (isOverviewScreen) {
+        IconButton(
+            modifier = Modifier.padding(end = 16.dp),
+            onClick = {
+                isDarkTheme = !isDarkTheme
+                onThemeChangeClick(isDarkTheme)
+            }
+        ) {
+            Icon(
+                imageVector = if (isDarkTheme) Icons.Filled.DarkMode else Icons.Filled.LightMode,
+                contentDescription = "theme",
                 tint = MaterialTheme.colorScheme.onSurface
             )
         }

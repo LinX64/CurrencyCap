@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -29,6 +30,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val isDarkTheme = isSystemInDarkTheme()
             val appState by mainViewModel.appState.collectAsStateWithLifecycle()
+            val isDarkMode by mainViewModel.isDark.collectAsState()
             val isLoading = appState is MainState.Loading
 
             DisposableEffect(isDarkTheme) {
@@ -39,7 +41,7 @@ class MainActivity : ComponentActivity() {
                 onDispose { }
             }
 
-            AppM3Theme(isDarkMode = true) {
+            AppM3Theme(isDarkMode = isDarkMode) {
                 if (isLoading) SplashScreen()
                 else App()
             }
