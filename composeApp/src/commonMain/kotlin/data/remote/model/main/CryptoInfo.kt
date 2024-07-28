@@ -8,7 +8,19 @@ data class CryptoInfo(
     @SerialName("description")
     val description: Description,
     @SerialName("market_data")
-    val marketData: MarketData,
+    val marketData: MarketData
+)
+
+@Serializable
+data class Description(
+    @SerialName("en")
+    val en: String
+)
+
+@Serializable
+data class MarketData(
+    @SerialName("current_price")
+    val currentPrice: CommonUsdPrice,
     @SerialName("high_24h")
     val high24h: CommonUsdPrice,
     @SerialName("low_24h")
@@ -28,19 +40,7 @@ data class CryptoInfo(
     @SerialName("price_change_percentage_200d")
     val priceChangePercentage200d: Double,
     @SerialName("price_change_percentage_1y")
-    val priceChangePercentage1y: Double,
-)
-
-@Serializable
-data class Description(
-    @SerialName("en")
-    val en: String
-)
-
-@Serializable
-data class MarketData(
-    @SerialName("current_price")
-    val commonUsdPrice: CommonUsdPrice
+    val priceChangePercentage1y: Double
 )
 
 @Serializable

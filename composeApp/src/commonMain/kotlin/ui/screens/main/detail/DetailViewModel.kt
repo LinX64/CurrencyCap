@@ -54,5 +54,5 @@ class DetailViewModel(
                 }
             }
             .launchIn(viewModelScope)
-    }
+    } // TODO: Consider merging this function in one call
 }
