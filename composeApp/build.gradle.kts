@@ -1,6 +1,6 @@
+
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     alias(libs.plugins.kotlinxSerialization)
@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.realm.plugin)
+    alias(libs.plugins.compose.compiler.report)
 }
 
 kotlin {
@@ -22,24 +23,6 @@ kotlin {
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class) compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
-    }
-
-    allprojects {
-        tasks.withType(KotlinCompile::class.java).configureEach {
-            compilerOptions {
-                if (project.findProperty("enableMultiModuleComposeReports") == "true") {
-                    val composeReportPath = rootProject.layout.buildDirectory.asFile.get().absolutePath + "/compose_reports/"
-                    freeCompilerArgs.addAll(
-                        listOf(
-                            "-P",
-                            "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$composeReportPath",
-                            "-P",
-                            "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$composeReportPath"
-                        )
-                    )
-                }
-            }
-        }
     }
 
     listOf(
