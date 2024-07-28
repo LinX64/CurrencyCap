@@ -48,7 +48,7 @@ jobs:
           gradle-home-cache-cleanup: true
 
       - name: Build with Gradle
-        run: ./gradlew clean build
+        run: ./gradlew build
 
       - name: Run Compose Metrics Report
         run: ./gradlew :composeApp:androidReleaseComposeCompilerHtmlReport
