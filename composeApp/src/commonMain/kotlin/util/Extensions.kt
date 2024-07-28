@@ -1,16 +1,7 @@
 package util
 
-import data.remote.model.main.MarketData
 import data.util.APIConst
-import domain.model.ChipPeriod
-import domain.model.ChipPeriod.ALL
-import domain.model.ChipPeriod.DAY
-import domain.model.ChipPeriod.MONTH
-import domain.model.ChipPeriod.WEEK
-import domain.model.ChipPeriod.YEAR
 import domain.model.Currency
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -110,21 +101,3 @@ fun convertToLocalDate(dateString: String): LocalDate {
     }
 }
 
-fun prepareChartData(
-    cryptoInfo: MarketData,
-    selectedChip: ChipPeriod
-): ImmutableList<Float> {
-    val percentageChange = when (selectedChip) {
-        DAY -> cryptoInfo.priceChangePercentage24h
-        WEEK -> cryptoInfo.priceChangePercentage7d
-        MONTH -> cryptoInfo.priceChangePercentage30d
-        YEAR -> cryptoInfo.priceChangePercentage1y
-        ALL -> cryptoInfo.priceChangePercentage200d
-    }
-
-    val currentPrice = cryptoInfo.currentPrice.usd.toFloat()
-    val changeAmount = currentPrice * (percentageChange / 100f)
-    val startPrice = currentPrice - changeAmount.toFloat()
-
-    return persistentListOf(startPrice, currentPrice)
-}

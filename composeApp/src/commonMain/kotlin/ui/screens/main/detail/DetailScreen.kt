@@ -19,7 +19,7 @@ import ui.screens.main.detail.components.DescriptionCard
 import ui.screens.main.detail.components.DetailBody
 import ui.screens.main.detail.components.DetailHeader
 import ui.theme.AppDimensions.SPACER_PADDING_16
-import util.getDummyCryptoInfo
+import util.getDummyChartData
 import util.getDummyCryptoItem
 
 @Composable
@@ -54,17 +54,21 @@ internal fun DetailScreen(
     ) {
         when (state) {
             is Success -> {
-                val description = state.cryptoInfo?.description?.en ?: "state.description"
-                val crypto = state.crypto ?: getDummyCryptoItem()
-                val cryptoInfo = state.cryptoInfo ?: getDummyCryptoInfo()
+                val description = state.cryptoInfo.description.en
+                val crypto = state.crypto
+                val chartData = state.chartData
 
                 item {
-                    DetailHeader(
-                        crypto = crypto,
-                        isLoading = true,
-                        cryptoInfo = cryptoInfo,
-                        onChartPeriodSelect = { coinId, chipPeriod -> handleEvent(OnChartPeriodSelect(coinId, chipPeriod)) }
-                    )
+                    chartData?.data?.let {
+                        DetailHeader(
+                            crypto = crypto,
+                            isLoading = chartData.isLoading,
+                            chartData = it,
+                            onChartPeriodSelect = { coinId, chipPeriod ->
+                                handleEvent(OnChartPeriodSelect(coinId, chipPeriod))
+                            }
+                        )
+                    }
                 }
                 item { DetailBody(crypto = crypto) }
                 item { DescriptionCard(description = description) }
@@ -72,14 +76,14 @@ internal fun DetailScreen(
 
             is Loading -> {
                 val crypto = getDummyCryptoItem()
-                val cryptoInfo = getDummyCryptoInfo()
                 val description = "state.description"
+                val chartData = getDummyChartData()
 
                 item {
                     DetailHeader(
                         crypto = crypto,
                         isLoading = true,
-                        cryptoInfo = cryptoInfo,
+                        chartData = chartData,
                         onChartPeriodSelect = { coinId, chipPeriod -> handleEvent(OnChartPeriodSelect(coinId, chipPeriod)) }
                     )
                 }

@@ -6,9 +6,13 @@ import data.util.NetworkResult.Error
 import data.util.NetworkResult.Loading
 import data.util.NetworkResult.Success
 import data.util.asResult
+import domain.model.ChartDataPoint
 import domain.model.ChipPeriod
+import domain.model.CoinMarketChartData
 import domain.repository.CryptoRepository
 import domain.repository.MainRepository
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
@@ -51,7 +55,7 @@ class DetailViewModel(
                 when (result) {
                     is Success -> {
                         val (crypto, info) = result.data
-                        setState { DetailState.Success(crypto = crypto, cryptoInfo = info) }
+                        setState { DetailState.Success(crypto = crypto, cryptoInfo = info, null) }
                     }
 
                     is Error -> setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
@@ -62,19 +66,44 @@ class DetailViewModel(
     } // TODO: Consider merging this function in one call
 
     private fun onChartPeriodSelect(coinId: String, chipPeriod: ChipPeriod) {
+        val currentState = (viewState.value as? DetailState.Success) ?: return
+
+        setState { currentState.copy(chartData = currentState.chartData?.copy(isLoading = true)) }
+
         cryptoRepository.fetchMarketChartData(coinId, chipPeriod)
             .asResult()
             .map { result ->
                 when (result) {
                     is Success -> {
                         val chartData = result.data
-                        setState { DetailState.Success(chartData = chartData) }
+                        setState {
+                            currentState.copy(
+                                chartData = ChartDataUiState(
+                                    data = prepareChartData(chartData),
+                                    isLoading = false
+                                )
+                            )
+                        }
                     }
 
-                    is Error -> setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
-                    is Loading -> setState { DetailState.Loading }
+                    is Error -> setState {
+                        currentState.copy(
+                            chartData = currentState.chartData?.copy(isLoading = false)
+                        )
+                    }
+
+                    is Loading -> currentState
                 }
             }
             .launchIn(viewModelScope)
+    }
+
+    private fun prepareChartData(chartData: CoinMarketChartData): ImmutableList<ChartDataPoint> {
+        return chartData.prices.map { pricePoint ->
+            ChartDataPoint(
+                timestamp = pricePoint.time.toEpochMilliseconds(),
+                price = pricePoint.price.toFloat()
+            )
+        }.toImmutableList()
     }
 }

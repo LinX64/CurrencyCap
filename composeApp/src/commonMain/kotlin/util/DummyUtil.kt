@@ -6,6 +6,7 @@ import data.remote.model.main.CryptoInfo
 import data.remote.model.main.Description
 import data.remote.model.main.MarketData
 import domain.model.Article
+import domain.model.ChartDataPoint
 import domain.model.Source
 import domain.model.main.BonbastRate
 import domain.model.main.Crypto
@@ -167,6 +168,13 @@ internal fun getDummyCryptoInfo() = CryptoInfo(
         priceChangePercentage60d = 66.67,
         priceChangePercentage200d = 68.69,
         priceChangePercentage1y = 70.71
+    )
+)
+
+internal fun getDummyChartData(): ImmutableList<ChartDataPoint> = persistentListOf(
+    ChartDataPoint(
+        price = 1.1f,
+        timestamp = 2L
     )
 )
 

@@ -27,28 +27,28 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.crypto_image
-import data.remote.model.main.CryptoInfo
+import domain.model.ChartDataPoint
 import domain.model.ChipPeriod
 import domain.model.ChipPeriod.DAY
 import domain.model.main.Crypto
+import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 import ui.common.formatToPrice
+import ui.components.CryptoChart
 import ui.components.base.GlassCard
 import ui.screens.main.overview.components.ChangeIcon
-import ui.screens.main.overview.components.TopMoversChart
 import ui.screens.main.overview.components.getPlaceHolder
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
-import util.prepareChartData
 
 @Composable
 internal fun DetailHeader(
     crypto: Crypto,
-    cryptoInfo: CryptoInfo,
     isLoading: Boolean = false,
-    onChartPeriodSelect: (coinId: String, chipPeriod: ChipPeriod) -> Unit
+    chartData: ImmutableList<ChartDataPoint>,
+    onChartPeriodSelect: (coinId: String, chipPeriod: ChipPeriod) -> Unit,
 ) {
     var selectedChip by remember { mutableStateOf(DAY) }
     val isDefaultLoadingModifier = if (isLoading) getPlaceHolder(Modifier) else Modifier
@@ -128,13 +128,13 @@ internal fun DetailHeader(
 
                 Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
-                TopMoversChart(
+                CryptoChart(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(170.dp),
                     lightLineColor = CurrencyColors.Orange.primary,
                     lighterColor = CurrencyColors.Orange.primary.copy(alpha = 0.1f),
-                    list = prepareChartData(cryptoInfo.marketData, selectedChip)
+                    list = chartData
                 )
 
                 Spacer(modifier = Modifier.height(SPACER_PADDING_32))
