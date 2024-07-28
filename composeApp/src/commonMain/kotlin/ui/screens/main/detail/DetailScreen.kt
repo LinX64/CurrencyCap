@@ -7,8 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
-import domain.model.ChartDataPoint
-import kotlinx.collections.immutable.ImmutableList
 import org.koin.core.parameter.parametersOf
 import ui.components.ErrorView
 import ui.components.base.BaseGlassLazyColumn
@@ -58,7 +56,7 @@ internal fun DetailScreen(
             is Success -> {
                 val description = state.cryptoInfo.description.en
                 val crypto = state.crypto
-                val chartData: ImmutableList<ChartDataPoint> = state.chartData?.data ?: getDummyChartData()
+                val chartData = state.chartData?.data ?: getDummyChartData()
 
                 item {
                     DetailHeader(

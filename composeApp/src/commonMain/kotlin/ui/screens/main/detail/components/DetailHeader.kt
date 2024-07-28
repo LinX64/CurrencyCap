@@ -38,7 +38,6 @@ import ui.components.CryptoChart
 import ui.screens.main.overview.components.ChangeIcon
 import ui.screens.main.overview.components.getPlaceHolder
 import ui.theme.AppDimensions.SPACER_PADDING_16
-import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
@@ -138,18 +137,16 @@ internal fun DetailHeader(
                 lighterColor = CurrencyColors.Orange.primary.copy(alpha = 0.1f),
                 list = chartData
             )
-
-            Spacer(modifier = Modifier.height(SPACER_PADDING_32))
         }
+
+        Spacer(modifier = Modifier.height(SPACER_PADDING_16))
+
+        TimeRangeChips(
+            selectedRange = selectedChip,
+            onRangeSelected = { newRange ->
+                selectedChip = newRange
+                onChartPeriodSelect(crypto.id, newRange)
+            }
+        )
     }
-
-    Spacer(modifier = Modifier.height(SPACER_PADDING_16))
-
-    TimeRangeChips(
-        selectedRange = selectedChip,
-        onRangeSelected = { newRange ->
-            selectedChip = newRange
-            onChartPeriodSelect(crypto.id, newRange)
-        }
-    )
 }
