@@ -4,6 +4,7 @@ import androidx.compose.runtime.Stable
 import domain.model.main.Crypto
 
 sealed interface DetailViewEvent {
+    data object OnRetry : DetailViewEvent
     data object OnLoadCryptoInfo : DetailViewEvent
 }
 

@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.map
 import ui.common.MviViewModel
 import ui.navigation.util.SYMBOL
 import ui.screens.main.detail.DetailViewEvent.OnLoadCryptoInfo
+import ui.screens.main.detail.DetailViewEvent.OnRetry
 
 class DetailViewModel(
     private val mainRepository: MainRepository,
@@ -28,6 +29,7 @@ class DetailViewModel(
 
     override fun handleEvent(event: DetailViewEvent) {
         when (event) {
+            OnRetry -> handleEvent(OnLoadCryptoInfo)
             OnLoadCryptoInfo -> onLoadCryptoDetail()
         }
     }
