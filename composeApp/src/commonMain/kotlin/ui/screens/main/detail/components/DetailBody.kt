@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import data.remote.model.main.CryptoInfo
+import domain.model.main.CryptoInfo
 import ui.common.formatToPrice
 import ui.components.main.SectionRowItem
 import ui.screens.main.overview.components.getPlaceHolder

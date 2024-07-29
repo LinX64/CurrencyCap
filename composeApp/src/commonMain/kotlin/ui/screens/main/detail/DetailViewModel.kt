@@ -65,9 +65,6 @@ class DetailViewModel(
         symbol: String,
         chipPeriod: ChipPeriod,
     ) {
-        val currentState = (viewState.value as? DetailState.Success) ?: return
-        setState { currentState.copy(chartData = currentState.chartData?.copy(isLoading = true)) }
-
         cryptoRepository.fetchMarketChartData(
             coinId = coinId,
             symbol = symbol,
@@ -77,24 +74,14 @@ class DetailViewModel(
             .mapLatest { result ->
                 when (result) {
                     is Success -> {
-                        val chartData = result.data
-                        setState {
-                            currentState.copy(
-                                chartData = ChartDataUiState(data = chartData.prices, isLoading = false)
-                            )
-                        }
+                        val chartData = result.data.prices
+                        //setState { DetailState.Success(chartData = ChartDataUiState(chartDataPoints = chartData)) }
                     }
 
-                    is Error -> {
-                        println("Error: ${result.throwable.message}")
-                        setState {
-                            currentState.copy(
-                                chartData = currentState.chartData?.copy(isLoading = false)
-                            )
-                        }
+                    is Error -> setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
+                    is Loading -> {
+                        // setState { DetailState.Success(chartData = ChartDataUiState(isLoading = true)) }
                     }
-
-                    is Loading -> currentState
                 }
             }
             .launchIn(viewModelScope)

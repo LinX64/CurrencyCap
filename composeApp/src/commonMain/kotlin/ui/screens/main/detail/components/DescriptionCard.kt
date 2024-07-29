@@ -9,6 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign.Companion.Justify
 import androidx.compose.ui.unit.dp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.description
+import org.jetbrains.compose.resources.stringResource
 import ui.screens.main.overview.components.getPlaceHolder
 import ui.screens.main.profile.components.HelpCenterBaseGlassCard
 
@@ -18,7 +21,7 @@ internal fun DescriptionCard(
     isLoading: Boolean = false
 ) {
     HelpCenterBaseGlassCard(
-        title = "Description",
+        title = stringResource(Res.string.description),
         badgeColor = MaterialTheme.colorScheme.secondary
     ) {
         Column(

@@ -57,13 +57,13 @@ internal fun DetailScreen(
             is Success -> {
                 val description = state.cryptoInfo.description.en
                 val cryptoInfo = state.cryptoInfo
-                val chartData = state.chartData?.data ?: getDummyChartData()
+
+                val chartDataPoints = state.chartData.chartDataPoints
 
                 item {
                     DetailHeader(
                         cryptoInfo = cryptoInfo,
-                        isLoading = state.chartData?.isLoading ?: false,
-                        chartData = chartData,
+                        chartData = chartDataPoints,
                         onChartPeriodSelect = { coinId, chipPeriod ->
                             handleEvent(
                                 OnChartPeriodSelect(
@@ -90,13 +90,7 @@ internal fun DetailScreen(
                         isLoading = true,
                         chartData = chartData,
                         onChartPeriodSelect = { coinId, chipPeriod ->
-                            handleEvent(
-                                OnChartPeriodSelect(
-                                    coinId = coinId,
-                                    symbol = cryptoInfo.symbol,
-                                    chipPeriod = chipPeriod
-                                )
-                            )
+                            handleEvent(OnChartPeriodSelect(coinId, cryptoInfo.symbol, chipPeriod))
                         }
                     )
                 }

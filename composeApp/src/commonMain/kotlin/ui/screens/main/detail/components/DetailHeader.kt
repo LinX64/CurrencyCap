@@ -26,10 +26,10 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.crypto_image
-import data.remote.model.main.CryptoInfo
 import domain.model.ChipPeriod
 import domain.model.ChipPeriod.DAY
 import domain.model.main.ChartDataPoint
+import domain.model.main.CryptoInfo
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 import ui.common.formatToPrice

@@ -1,18 +1,18 @@
 package util
 
 import data.remote.model.User
-import data.remote.model.main.CommonUsdPrice
-import data.remote.model.main.CryptoImage
-import data.remote.model.main.CryptoInfo
-import data.remote.model.main.Description
-import data.remote.model.main.MarketData
 import domain.model.Article
 import domain.model.Source
 import domain.model.main.BonbastRate
 import domain.model.main.ChartDataPoint
+import domain.model.main.CommonUsdPrice
 import domain.model.main.Crypto
+import domain.model.main.CryptoImage
+import domain.model.main.CryptoInfo
 import domain.model.main.Currencies
+import domain.model.main.Description
 import domain.model.main.Market
+import domain.model.main.MarketData
 import domain.model.main.Rate
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -184,32 +184,12 @@ internal fun getDummyUser() = User(
 
 internal fun getDummyChartData(): ImmutableList<ChartDataPoint> = persistentListOf(
     ChartDataPoint(
-        price = "66102.0506660328449703",
+        price = "0.0",
         timestamp = 1721779200000
     ),
     ChartDataPoint(
-        price = "66104.0506660328449703",
-        timestamp = 1721865600000
-    ),
-    ChartDataPoint(
-        price = "66105.0506660328449703",
-        timestamp = 1721952000000
-    ),
-    ChartDataPoint(
-        price = "66106.0506660328449703",
-        timestamp = 1722038400000
-    ),
-    ChartDataPoint(
-        price = "66107.0506660328449703",
-        timestamp = 1722124800000
-    ),
-    ChartDataPoint(
-        price = "66108.0506660328449703",
-        timestamp = 1722211200000
-    ),
-    ChartDataPoint(
-        price = "66109.0506660328449703",
-        timestamp = 1722297600000
+        price = "0.0",
+        timestamp = 1721779200000
     ),
 )
 
