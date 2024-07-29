@@ -127,4 +127,7 @@
     <string name="phone">Phone</string>
     <string name="logo">Logo</string>
     <string name="close">Close</string>
+
+    <string name="bitcoin_text">Bitcoin (BTC)</string>
+    <string name="description">Description</string>
 </resources>

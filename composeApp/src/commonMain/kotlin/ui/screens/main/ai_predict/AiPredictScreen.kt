@@ -2,7 +2,6 @@ package ui.screens.main.ai_predict
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -37,7 +36,6 @@ import ui.theme.AppDimensions.SPACER_PADDING_32
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 internal fun AiPredictScreen(
-    padding: PaddingValues,
     aiPredictViewModel: AiPredictViewModel = koinViewModel<AiPredictViewModel>(),
     hazeState: HazeState
 ) {
@@ -47,8 +45,7 @@ internal fun AiPredictScreen(
     LaunchedEffect(Unit) { bytes = Res.readBytes("files/coming_soon.json") }
 
     Column(
-        modifier = Modifier.fillMaxSize()
-            .padding(padding),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

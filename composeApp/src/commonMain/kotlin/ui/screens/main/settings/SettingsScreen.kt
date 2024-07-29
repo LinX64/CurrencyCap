@@ -2,7 +2,6 @@ package ui.screens.main.settings
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,14 +25,12 @@ import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun SettingsRoute(
-    padding: PaddingValues,
     settingsViewModel: SettingsViewModel = koinViewModel<SettingsViewModel>(),
     hazeState: HazeState,
 ) {
     val state by settingsViewModel.viewState.collectAsStateWithLifecycle()
 
     SettingsScreen(
-        padding = padding,
         hazeState = hazeState,
         state = state,
         onPushNotificationSwitchChange = { settingsViewModel.handleEvent(OnPushNotificationSwitchChange(it)) },
@@ -45,7 +42,6 @@ internal fun SettingsRoute(
 
 @Composable
 internal fun SettingsScreen(
-    padding: PaddingValues,
     hazeState: HazeState,
     state: SettingsState,
     onPushNotificationSwitchChange: (Boolean) -> Unit,
@@ -54,7 +50,6 @@ internal fun SettingsScreen(
     onPrivacyPolicyClick: () -> Unit,
 ) {
     BaseGlassLazyColumn(
-        padding = padding,
         hazeState = hazeState
     ) {
         item {

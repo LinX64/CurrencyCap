@@ -4,6 +4,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +15,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -25,9 +25,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.haze
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
@@ -36,7 +33,7 @@ internal fun VerticalBarCard(
     onTabSelected: (Int) -> Unit,
 ) {
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(1) }
-    val hazeState = remember { HazeState() }
+
     Box(
         modifier = Modifier.then(modifier)
             .width(64.dp)
@@ -47,14 +44,7 @@ internal fun VerticalBarCard(
                 shape = RoundedCornerShape(CARD_CORNER_RADIUS)
             )
             .clip(RoundedCornerShape(CARD_CORNER_RADIUS))
-            .haze(
-                state = hazeState,
-                style = HazeStyle(
-                    tint = MaterialTheme.colorScheme.primary,
-                    blurRadius = CARD_CORNER_RADIUS,
-                    noiseFactor = 20f
-                )
-            )
+            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)),
     ) {
         VerticalBar(
             tabs = myTabs,
@@ -73,7 +63,7 @@ internal fun VerticalBarCard(
 private fun SidesDash(
     selectedTabIndex: Int,
     tabsCount: Int = 3,
-    horizontalPaddingBetweenDashes: Dp = 1.dp
+    horizontalPaddingBetweenDashes: Dp = 0.dp
 ) {
     val animatedSelectedTabIndex by animateFloatAsState(
         targetValue = selectedTabIndex.toFloat(), label = "animatedSelectedTabIndex",
@@ -96,7 +86,7 @@ private fun SidesDash(
 
         // Calculate the horizontal padding correctly
         val dashLeftX = horizontalPadding
-        val dashRightX = size.width - horizontalPadding - dashWidth
+        val dashRightX = size.width - dashWidth
 
         // Draw left vertical dash
         drawRoundRect(

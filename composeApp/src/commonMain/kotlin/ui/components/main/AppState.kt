@@ -6,13 +6,14 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import ui.components.main.BottomBarTab.Bookmarks
 import ui.components.main.BottomBarTab.Exchange
 import ui.components.main.BottomBarTab.News
 import ui.components.main.BottomBarTab.Overview
 import ui.components.main.BottomBarTab.Profile
+import ui.screens.MainViewModel
+import ui.screens.initial.landing.navigation.Landing
 import ui.screens.main.bookmarks.navigation.navigateToBookmarksScreen
 import ui.screens.main.exchange.navigation.navigateToExchangeScreen
 import ui.screens.main.news.navigation.navigateToNewsScreen
@@ -61,5 +62,25 @@ internal class AppState(
 
         val tabRoute = BottomBarTab.entries.find { it.route == simpleRoute }?.route
         return tabRoute ?: simpleRoute
+    }
+}
+
+internal fun navigateToOverview(
+    mainViewModel: MainViewModel,
+    navController: NavHostController
+) {
+    mainViewModel.onLoginSuccess()
+    navController.popBackStack()
+}
+
+internal fun navigateToLanding(
+    mainViewModel: MainViewModel,
+    navController: NavHostController
+) {
+    mainViewModel.updateStateToNotLoggedIn()
+    navController.navigate(Landing) {
+        popUpTo(navController.graph.startDestinationId) {
+            inclusive = true
+        }
     }
 }

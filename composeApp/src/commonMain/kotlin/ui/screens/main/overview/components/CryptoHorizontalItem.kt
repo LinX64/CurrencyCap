@@ -60,11 +60,11 @@ internal fun CryptoHorizontalItem(
     modifier: Modifier = Modifier,
     crypto: Crypto,
     isLoading: Boolean = false,
-    onClick: (String) -> Unit
+    onClick: (id: String, symbol: String) -> Unit,
 ) {
     GlassCard(
         isClickable = true,
-        onCardClick = { onClick(crypto.symbol) }
+        onCardClick = { onClick(crypto.id, crypto.symbol) }
     ) {
         Row(
             modifier = modifier

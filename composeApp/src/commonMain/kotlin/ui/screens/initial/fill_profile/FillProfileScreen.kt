@@ -2,7 +2,6 @@ package ui.screens.initial.fill_profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,7 +38,6 @@ import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
 internal fun FillProfileScreen(
-    padding: PaddingValues,
     fillProfileViewModel: FillProfileViewModel = koinViewModel<FillProfileViewModel>(),
     navigateToMarketOverview: () -> Unit,
     onError: (message: String) -> Unit
@@ -48,7 +46,7 @@ internal fun FillProfileScreen(
     BaseCenterColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(padding),
+            .padding(SPACER_PADDING_16),
     ) {
         FillProfileForm(
             onSkipClick = navigateToMarketOverview,

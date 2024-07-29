@@ -24,7 +24,7 @@ internal fun PortfolioSection(
     scope: CoroutineScope = rememberCoroutineScope(),
     tabs: ImmutableSet<String> = persistentSetOf("News", "Crypto", "Market"),
     onNewsItemClick: (url: String) -> Unit,
-    onCryptoItemClick: (symbol: String) -> Unit
+    onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     val pagerState = rememberPagerState(
         pageCount = { tabs.size },

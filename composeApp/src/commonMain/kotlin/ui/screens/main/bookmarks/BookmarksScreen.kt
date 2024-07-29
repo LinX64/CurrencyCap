@@ -1,7 +1,6 @@
 package ui.screens.main.bookmarks
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -40,7 +39,6 @@ import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
 internal fun BookmarksRoute(
-    padding: PaddingValues,
     bookmarksViewModel: BookmarksViewModel = koinViewModel<BookmarksViewModel>(),
     hazeState: HazeState,
     onExploreNewsClick: () -> Unit,
@@ -49,7 +47,6 @@ internal fun BookmarksRoute(
     val state by bookmarksViewModel.viewState.collectAsStateWithLifecycle()
 
     BookmarksScreen(
-        padding = padding,
         state = state,
         hazeState = hazeState,
         onExploreNewsClick = onExploreNewsClick,
@@ -60,7 +57,6 @@ internal fun BookmarksRoute(
 
 @Composable
 internal fun BookmarksScreen(
-    padding: PaddingValues,
     hazeState: HazeState,
     state: BookmarksState,
     onExploreNewsClick: () -> Unit,
@@ -69,7 +65,6 @@ internal fun BookmarksScreen(
 ) {
     BaseGlassLazyColumn(
         hazeState = hazeState,
-        padding = padding,
         isEmpty = state is NoBookmarks,
         emptyContent = { NoBookmarks(onExploreNewsClick = onExploreNewsClick) },
         content = {

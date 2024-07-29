@@ -23,7 +23,7 @@ import ui.theme.AppDimensions.SPACER_PADDING_8
 @Composable
 internal fun MarketTab(
     state: OverviewState,
-    onCryptoItemClick: (symbol: String) -> Unit
+    onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize()

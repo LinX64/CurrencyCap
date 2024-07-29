@@ -1,6 +1,5 @@
 package ui.screens.main.news
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -22,7 +21,6 @@ import util.getDummyNewsItem
 
 @Composable
 internal fun NewsRoute(
-    padding: PaddingValues,
     newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
     hazeState: HazeState,
     onNewsItemClick: (url: String) -> Unit
@@ -30,7 +28,6 @@ internal fun NewsRoute(
     val state = newsViewModel.viewState.collectAsStateWithLifecycle()
 
     NewsScreen(
-        padding = padding,
         state = state,
         newsViewModel = newsViewModel,
         hazeState = hazeState,
@@ -40,7 +37,6 @@ internal fun NewsRoute(
 
 @Composable
 internal fun NewsScreen(
-    padding: PaddingValues,
     state: State<NewsState>,
     newsViewModel: NewsViewModel,
     hazeState: HazeState,
@@ -48,7 +44,6 @@ internal fun NewsScreen(
 ) {
     BaseGlassLazyColumn(
         hazeState = hazeState,
-        padding = padding,
         isEmpty = state.value is Empty,
         emptyContent = {
             ErrorView(

@@ -16,15 +16,13 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun TopMoversChart(
     modifier: Modifier = Modifier,
-    lightLineColor: Color = MaterialTheme.colorScheme.onSurface,
-    lighterColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+    lineColor: Color = MaterialTheme.colorScheme.onSurface,
+    shadowColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
     list: ImmutableList<Float>
 ) {
     val dotColor = MaterialTheme.colorScheme.onSurface
 
-    Canvas(
-        modifier = modifier
-    ) {
+    Canvas(modifier = modifier) {
         val max = list.maxOrNull() ?: 0f
         val min = list.minOrNull() ?: 0f
         val highestIndex = list.indexOf(max)
@@ -43,40 +41,42 @@ fun TopMoversChart(
             }
         }
 
-        // Create a path for the shadow, extending slightly above and below the main path
+        // Create a path for the shadow, extending below the main path
         val shadowPath = Path().apply {
             if (list.isNotEmpty()) {
                 val startValuePercentage = getValuePercentageForRange(list[0], max, min)
-                moveTo(0f, size.height * (1 - startValuePercentage) - 10f)
+                moveTo(0f, size.height * (1 - startValuePercentage))
                 list.forEachIndexed { index, value ->
                     val valuePercentage = getValuePercentageForRange(value, max, min)
-                    lineTo(index * sizeWidthPerPair, size.height * (1 - valuePercentage) - 10f)
+                    val x = index * sizeWidthPerPair
+                    val y = size.height * (1 - valuePercentage)
+                    lineTo(x, y)
                 }
+                // Continue to bottom-right corner
                 lineTo(size.width, size.height)
+                // Move to bottom-left corner and close the path
                 lineTo(0f, size.height)
                 close()
             }
         }
 
-        // Draw gradient shadow around the line
+        // Draw gradient shadow below the line
         drawPath(
             path = shadowPath,
             brush = Brush.verticalGradient(
                 colors = listOf(
-                    lightLineColor.copy(alpha = 0.3f),
-                    lightLineColor.copy(alpha = 0.1f)
-                )
+                    shadowColor,
+                    shadowColor.copy(alpha = 0.001f)
+                ),
+                startY = 0f,
+                endY = size.height
             )
         )
 
-        // Draw the line with gradient brush and rounded corners
+        // Draw the line
         drawPath(
             path = path,
-            brush = Brush.horizontalGradient(
-                colors = listOf(lighterColor, lightLineColor, lighterColor),
-                startX = 0f,
-                endX = size.width
-            ),
+            color = lineColor,
             style = Stroke(
                 width = 8f,
                 cap = StrokeCap.Round,

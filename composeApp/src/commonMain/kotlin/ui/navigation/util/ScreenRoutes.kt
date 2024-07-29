@@ -27,6 +27,7 @@ object ScreenRoutes {
 
 const val ENCODED_URL = "encodedUrl"
 const val PHONE_NUMBER = "phoneNumber"
+const val ID = "id"
 const val SYMBOL = "symbol"
 const val START_DATE = "startDate"
 const val END_DATE = "endDate"

@@ -39,12 +39,10 @@ import ui.screens.initial.login.LoginViewEvent.OnResetPasswordClick
 import ui.screens.initial.login.components.LoginForm
 import ui.screens.initial.login.components.MadeWithLove
 import ui.theme.AppDimensions.SPACER_PADDING_16
-import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
 internal fun LoginRoute(
     loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
-    padding: PaddingValues,
     navigateToMarketOverview: () -> Unit,
     navigateToRegister: () -> Unit,
     navigateToResetPassword: () -> Unit,
@@ -55,7 +53,6 @@ internal fun LoginRoute(
     val password = loginViewModel.newPassword.value
 
     LoginScreen(
-        padding = padding,
         email = email,
         password = password,
         handleEvent = loginViewModel::handleEvent
@@ -78,7 +75,7 @@ internal fun LoginRoute(
 
 @Composable
 private fun LoginScreen(
-    padding: PaddingValues,
+    padding: PaddingValues = PaddingValues(SPACER_PADDING_16),
     email: String,
     password: String,
     handleEvent: (LoginViewEvent) -> Unit
@@ -91,7 +88,7 @@ private fun LoginScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = SPACER_PADDING_32),
+                .padding(horizontal = SPACER_PADDING_16),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

@@ -49,14 +49,12 @@ import util.getDummyCryptoItem
 @Composable
 internal fun SearchRoute(
     searchViewModel: SearchViewModel = koinViewModel<SearchViewModel>(),
-    padding: PaddingValues,
     hazeState: HazeState,
-    onCryptoItemClick: (String) -> Unit
+    onCryptoItemClick: (id: String, symbol: String) -> Unit
 ) {
     val state by searchViewModel.viewState.collectAsStateWithLifecycle()
     SearchScreen(
         state = state,
-        padding = padding,
         hazeState = hazeState,
         onCryptoItemClick = onCryptoItemClick,
         handleEvent = { searchViewModel.handleEvent(it) }
@@ -66,10 +64,9 @@ internal fun SearchRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SearchScreen(
-    padding: PaddingValues,
     hazeState: HazeState,
     state: SearchState,
-    onCryptoItemClick: (String) -> Unit,
+    onCryptoItemClick: (String, String) -> Unit,
     handleEvent: (SearchEvent) -> Unit
 ) {
     var text by rememberSaveable { mutableStateOf("") }
@@ -79,7 +76,7 @@ internal fun SearchScreen(
     val keyboard = LocalSoftwareKeyboardController.current
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(padding),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
@@ -148,7 +145,7 @@ private fun SearchTabs() {
 private fun LazyListScope.searchResultContent(
     state: SearchState,
     onRetryClicked: () -> Unit,
-    onCryptoItemClick: (String) -> Unit
+    onCryptoItemClick: (String, String) -> Unit
 ) = when (state) {
     is Success -> {
         val cryptoItems = state.cryptoList
@@ -179,7 +176,7 @@ private fun LazyListScope.searchResultContent(
             CryptoHorizontalItem(
                 crypto = getDummyCryptoItem(),
                 isLoading = true,
-                onClick = { }
+                onClick = { _, _ -> }
             )
         }
     }

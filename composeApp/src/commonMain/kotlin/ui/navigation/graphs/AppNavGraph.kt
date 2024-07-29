@@ -2,12 +2,10 @@ package ui.navigation.graphs
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -34,31 +32,28 @@ import ui.screens.main.search.navigation.searchScreen
 import ui.screens.main.settings.navigation.settingsScreen
 import ui.theme.AppDimensions.SPACER_PADDING_32
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun AppNavGraph(
     navController: NavHostController,
-    padding: PaddingValues,
+    paddingValues: PaddingValues,
     hazeState: HazeState,
     isLoggedIn: Boolean,
-    scrollBehavior: TopAppBarScrollBehavior,
     onNavigateToLanding: () -> Unit,
     onError: (message: String) -> Unit,
     showPrivacyPolicyBottomSheet: () -> Unit,
     onLoginSuccess: () -> Unit,
-    onExploreNewsClick: () -> Unit
+    onExploreNewsClick: () -> Unit,
 ) {
     NavHost(
         navController = navController,
         startDestination = if (isLoggedIn) MainNavGraph else AuthNavGraph,
         modifier = Modifier
-            .consumeWindowInsets(padding)
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .fillMaxSize()
+            .consumeWindowInsets(paddingValues)
             .padding(bottom = SPACER_PADDING_32)
     ) {
 
         mainNavGraph(
-            padding = padding,
             navController = navController,
             hazeState = hazeState,
             onError = onError,
@@ -67,7 +62,6 @@ internal fun AppNavGraph(
         )
 
         authNavGraph(
-            padding = padding,
             navController = navController,
             showPrivacyPolicyBottomSheet = showPrivacyPolicyBottomSheet,
             onLoginSuccess = onLoginSuccess,
@@ -77,7 +71,6 @@ internal fun AppNavGraph(
 }
 
 private fun NavGraphBuilder.mainNavGraph(
-    padding: PaddingValues,
     navController: NavHostController,
     hazeState: HazeState,
     onNavigateToLanding: () -> Unit,
@@ -86,68 +79,57 @@ private fun NavGraphBuilder.mainNavGraph(
 ) {
     navigation<MainNavGraph>(startDestination = Overview) {
         searchScreen(
-            padding = padding,
             navController = navController,
             hazeState = hazeState
         )
 
         aiPredictScreen(
-            padding = padding,
             hazeState = hazeState
         )
 
         overviewScreen(
-            padding = padding,
             hazeState = hazeState,
             navController = navController
         )
 
         bookmarksScreen(
-            padding = padding,
             hazeState = hazeState,
             navController = navController,
             onExploreNewsClick = onExploreNewsClick
         )
 
         newsScreen(
-            padding = padding,
             hazeState = hazeState,
             navController = navController
         )
 
         newsDetailScreen(
-            padding = padding,
             hazeState = hazeState,
             onError = onError
         )
 
         detailScreen(
-            padding = padding,
             hazeState = hazeState
         )
 
         exchangeScreen(
-            padding = padding,
             onError = onError,
             hazeState = hazeState
         )
 
         profileScreen(
-            padding = padding,
             onNavigateToLanding = onNavigateToLanding,
             onError = onError,
             hazeState = hazeState
         )
 
         settingsScreen(
-            padding = padding,
             hazeState = hazeState
         )
     }
 }
 
 private fun NavGraphBuilder.authNavGraph(
-    padding: PaddingValues,
     navController: NavHostController,
     showPrivacyPolicyBottomSheet: () -> Unit,
     onLoginSuccess: () -> Unit,
@@ -160,7 +142,6 @@ private fun NavGraphBuilder.authNavGraph(
         )
 
         loginScreen(
-            padding = padding,
             navController = navController,
             onLoginSuccess = onLoginSuccess,
             onError = onError
@@ -173,20 +154,17 @@ private fun NavGraphBuilder.authNavGraph(
         )
 
         fillProfileScreen(
-            padding = padding,
             onNavigateToMarketOverview = onLoginSuccess,
             onError = onError
         )
 
         getVerifiedPhoneScreen(
-            padding = padding,
             onNavigateToMarketOverview = onLoginSuccess,
             onError = onError
         )
 
         resetPasswordScreen(
             navController = navController,
-            padding = padding,
             onError = onError
         )
     }

@@ -17,13 +17,14 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun BaseGlassLazyColumn(
     modifier: Modifier = Modifier,
     padding: PaddingValues = PaddingValues(0.dp),
     hazeState: HazeState,
-    contentPadding: PaddingValues = PaddingValues(16.dp),
+    contentPadding: PaddingValues = PaddingValues(SPACER_PADDING_8),
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     isEmpty: Boolean = false,

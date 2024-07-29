@@ -1,12 +1,17 @@
 package ui.screens
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import domain.repository.UserPreferences
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ui.screens.MainState.Idle
 import ui.screens.MainState.Loading
@@ -20,6 +25,17 @@ class MainViewModel(
     private val _state: MutableStateFlow<MainState> = MutableStateFlow(Idle)
     val appState: StateFlow<MainState> = _state.asStateFlow()
 
+    var isSubscribeSheetVisible by mutableStateOf(false)
+    var isNewsFilterSheetVisible by mutableStateOf(false)
+    var isPrivacyPolicySheetVisible by mutableStateOf(false)
+
+    val isDark: StateFlow<Boolean> = userPreferences.isDarkMode()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(1000L),
+            initialValue = false
+        )
+
     init {
         checkUserLoginStatus()
     }
@@ -31,7 +47,7 @@ class MainViewModel(
             delay(1500)
 
             val userLoggedIn = userPreferences.isUserLoggedIn()
-            if (userLoggedIn) onLoginSuccess() else navigateToLanding()
+            if (userLoggedIn) onLoginSuccess() else updateStateToNotLoggedIn()
         }
     }
 
@@ -39,12 +55,26 @@ class MainViewModel(
         _state.value = LoggedIn
     }
 
-    fun navigateToLanding() {
+    fun updateStateToNotLoggedIn() {
         _state.value = NotLoggedIn
     }
 
-    fun clearState() {
-        _state.value = Idle
+    fun toggleDarkMode(isDark: Boolean = false) {
+        viewModelScope.launch {
+            userPreferences.setDarkMode(isDark)
+        }
+    }
+
+    fun toggleSubscribeSheet() {
+        isSubscribeSheetVisible = !isSubscribeSheetVisible
+    }
+
+    fun toggleNewsFilterSheet() {
+        isNewsFilterSheetVisible = !isNewsFilterSheetVisible
+    }
+
+    fun togglePrivacyPolicySheet() {
+        isPrivacyPolicySheetVisible = !isPrivacyPolicySheetVisible
     }
 }
 
