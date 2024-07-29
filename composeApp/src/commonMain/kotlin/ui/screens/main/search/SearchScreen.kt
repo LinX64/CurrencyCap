@@ -49,14 +49,12 @@ import util.getDummyCryptoItem
 @Composable
 internal fun SearchRoute(
     searchViewModel: SearchViewModel = koinViewModel<SearchViewModel>(),
-    padding: PaddingValues,
     hazeState: HazeState,
     onCryptoItemClick: (id: String, symbol: String) -> Unit
 ) {
     val state by searchViewModel.viewState.collectAsStateWithLifecycle()
     SearchScreen(
         state = state,
-        padding = padding,
         hazeState = hazeState,
         onCryptoItemClick = onCryptoItemClick,
         handleEvent = { searchViewModel.handleEvent(it) }
@@ -66,7 +64,7 @@ internal fun SearchRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SearchScreen(
-    padding: PaddingValues,
+    padding: PaddingValues = PaddingValues(SPACER_PADDING_8),
     hazeState: HazeState,
     state: SearchState,
     onCryptoItemClick: (String, String) -> Unit,

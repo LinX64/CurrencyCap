@@ -44,7 +44,6 @@ import ui.theme.AppDimensions.SPACER_PADDING_32
 @Composable
 internal fun LoginRoute(
     loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
-    padding: PaddingValues,
     navigateToMarketOverview: () -> Unit,
     navigateToRegister: () -> Unit,
     navigateToResetPassword: () -> Unit,
@@ -55,7 +54,6 @@ internal fun LoginRoute(
     val password = loginViewModel.newPassword.value
 
     LoginScreen(
-        padding = padding,
         email = email,
         password = password,
         handleEvent = loginViewModel::handleEvent
@@ -78,7 +76,7 @@ internal fun LoginRoute(
 
 @Composable
 private fun LoginScreen(
-    padding: PaddingValues,
+    padding: PaddingValues = PaddingValues(SPACER_PADDING_16),
     email: String,
     password: String,
     handleEvent: (LoginViewEvent) -> Unit

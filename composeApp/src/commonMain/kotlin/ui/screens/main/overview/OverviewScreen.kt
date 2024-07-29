@@ -1,6 +1,5 @@
 package ui.screens.main.overview
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -17,7 +16,6 @@ import ui.screens.main.overview.components.TrendingCryptoCurrencies
 @Composable
 internal fun OverviewRoute(
     overviewViewModel: OverviewViewModel = koinViewModel<OverviewViewModel>(),
-    padding: PaddingValues,
     hazeState: HazeState,
     onSearchCardClicked: () -> Unit,
     onNewsItemClick: (url: String) -> Unit,
@@ -27,7 +25,6 @@ internal fun OverviewRoute(
     val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
 
     OverviewScreen(
-        padding = padding,
         state = state,
         hazeState = hazeState,
         onSearchCardClicked = onSearchCardClicked,
@@ -39,7 +36,6 @@ internal fun OverviewRoute(
 
 @Composable
 internal fun OverviewScreen(
-    padding: PaddingValues,
     state: OverviewState,
     hazeState: HazeState,
     onSearchCardClicked: () -> Unit,
@@ -48,7 +44,6 @@ internal fun OverviewScreen(
     onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     BaseGlassLazyColumn(
-        padding = padding,
         hazeState = hazeState,
     ) {
         item(key = "search_header") {

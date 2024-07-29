@@ -37,7 +37,7 @@ import ui.theme.AppDimensions.SPACER_PADDING_32
 @Composable
 internal fun ResetPasswordScreen(
     resetPasswordViewModel: ResetPasswordViewModel = koinViewModel<ResetPasswordViewModel>(),
-    padding: PaddingValues,
+    padding: PaddingValues = PaddingValues(SPACER_PADDING_16),
     onNavigateToLogin: () -> Unit,
     onMessage: (message: String) -> Unit
 ) {

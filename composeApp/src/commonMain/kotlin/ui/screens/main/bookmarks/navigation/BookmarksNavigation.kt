@@ -1,6 +1,5 @@
 package ui.screens.main.bookmarks.navigation
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -13,14 +12,12 @@ import ui.screens.main.news.news_detail.navigation.NewsDetail
 fun NavController.navigateToBookmarksScreen(navOptions: NavOptions) = navigate(Bookmarks, navOptions)
 
 fun NavGraphBuilder.bookmarksScreen(
-    padding: PaddingValues,
     hazeState: HazeState,
     navController: NavController,
     onExploreNewsClick: () -> Unit
 ) {
     composable<Bookmarks> {
         BookmarksRoute(
-            padding = padding,
             hazeState = hazeState,
             onBookmarkItemClick = { url -> navController.navigate(NewsDetail(url)) },
             onExploreNewsClick = onExploreNewsClick

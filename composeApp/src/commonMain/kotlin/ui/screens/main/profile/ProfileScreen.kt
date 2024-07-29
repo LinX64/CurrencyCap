@@ -2,7 +2,6 @@ package ui.screens.main.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,7 +32,6 @@ import ui.theme.AppDimensions.SPACER_PADDING_16
 
 @Composable
 internal fun ProfileRoute(
-    padding: PaddingValues,
     onError: (message: String) -> Unit,
     hazeState: HazeState,
     onNavigateToLanding: () -> Unit,
@@ -43,7 +41,6 @@ internal fun ProfileRoute(
     var shouldGoToEmailApp by remember { mutableStateOf(false) }
 
     ProfileScreen(
-        padding = padding,
         hazeState = hazeState,
         state = state,
         shouldGoToEmailApp = shouldGoToEmailApp,
@@ -61,7 +58,6 @@ internal fun ProfileRoute(
 
 @Composable
 internal fun ProfileScreen(
-    padding: PaddingValues,
     hazeState: HazeState,
     state: ProfileState,
     shouldGoToEmailApp: Boolean,
@@ -70,7 +66,6 @@ internal fun ProfileScreen(
 ) {
     Box {
         BaseGlassLazyColumn(
-            padding = padding,
             hazeState = hazeState,
             verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_16)
         ) {

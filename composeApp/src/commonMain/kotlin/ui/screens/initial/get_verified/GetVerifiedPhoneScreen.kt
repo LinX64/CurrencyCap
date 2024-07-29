@@ -38,7 +38,7 @@ import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun GetVerifiedPhoneScreen(
-    padding: PaddingValues,
+    padding: PaddingValues = PaddingValues(SPACER_PADDING_16),
     getVerifiedPhoneViewModel: GetVerifiedPhoneViewModel = koinViewModel<GetVerifiedPhoneViewModel>(),
     navigateToMarketOverview: () -> Unit,
     onError: (message: String) -> Unit

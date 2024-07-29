@@ -34,7 +34,7 @@ internal fun TopRates(rates: OverviewState) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = SPACER_PADDING_8, vertical = SPACER_PADDING_16),
+            .padding(vertical = SPACER_PADDING_16),
     ) {
         TopRatesHeader(isLoading)
 

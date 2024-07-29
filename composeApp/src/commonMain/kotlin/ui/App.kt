@@ -1,13 +1,18 @@
 package ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.pullToRefresh
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,12 +20,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ui.components.base.BaseModalBottomSheet
 import ui.components.main.AppState
@@ -59,7 +67,18 @@ internal fun App(
     var isSheetOpen by remember { mutableStateOf(false) }
     var isSubscribeSheetVisible by remember { mutableStateOf(false) }
 
+    val pullToRefreshState = rememberPullToRefreshState()
+    var isRefreshing by remember { mutableStateOf(false) }
+    val onRefresh: () -> Unit = {
+        isRefreshing = true
+        scope.launch {
+            delay(1500)
+            isRefreshing = false
+        }
+    }
+
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             AppTopBar(
                 currentDestination = currentDestination,
@@ -81,21 +100,43 @@ internal fun App(
             )
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-        modifier = Modifier.fillMaxSize()
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { paddingValues ->
-        AppNavGraph(
-            navController = navController,
-            padding = paddingValues,
-            hazeState = hazeState,
-            isLoggedIn = isLoggedIn,
-            scrollBehavior = scrollBehavior,
-            onNavigateToLanding = { navigateToLanding(mainViewModel, navController) },
-            showPrivacyPolicyBottomSheet = { isSheetOpen = true },
-            onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
-            onLoginSuccess = { navigateToOverview(mainViewModel, navController) },
-            onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.News) }
-        )
+        Box(
+            modifier = Modifier.fillMaxSize()
+                .padding(top = paddingValues.calculateTopPadding())
+                .pullToRefresh(
+                    state = pullToRefreshState,
+                    isRefreshing = isRefreshing,
+                    onRefresh = {
+                        isRefreshing = true
+                        onRefresh()
+                    },
+                ),
+            contentAlignment = Alignment.TopCenter
+        ) {
+            AppNavGraph(
+                navController = navController,
+                hazeState = hazeState,
+                padding = paddingValues,
+                isLoggedIn = isLoggedIn,
+                onNavigateToLanding = { navigateToLanding(mainViewModel, navController) },
+                showPrivacyPolicyBottomSheet = { isSheetOpen = true },
+                onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
+                onLoginSuccess = { navigateToOverview(mainViewModel, navController) },
+                onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.News) }
+            )
+
+            PullToRefreshBox(
+                state = pullToRefreshState,
+                isRefreshing = isRefreshing,
+                onRefresh = {
+                    isRefreshing = true
+                    onRefresh()
+                },
+                content = {}
+            )
+        }
     }
 
     BaseModalBottomSheet(

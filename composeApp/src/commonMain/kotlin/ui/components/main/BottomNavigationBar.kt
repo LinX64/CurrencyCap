@@ -38,7 +38,6 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.exchange
@@ -54,7 +53,6 @@ import ui.navigation.util.ScreenRoutes.SETTINGS
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.ICON_SIZE_48
 import ui.theme.AppDimensions.SPACER_PADDING_16
-import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
@@ -88,8 +86,7 @@ internal fun BottomNavigationBar(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .nestedScroll(scrollBehavior.nestedScrollConnection)
-                .padding(horizontal = 12.dp, vertical = SPACER_PADDING_32),
+                .padding(horizontal = 12.dp, vertical = SPACER_PADDING_16),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CenteredExchangeButton(

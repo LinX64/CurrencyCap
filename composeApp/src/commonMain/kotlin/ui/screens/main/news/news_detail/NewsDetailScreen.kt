@@ -1,6 +1,5 @@
 package ui.screens.main.news.news_detail
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,7 +22,6 @@ import util.getDummyNewsItem
 
 @Composable
 internal fun NewsDetailScreen(
-    padding: PaddingValues,
     hazeState: HazeState,
     decodedUrl: String,
     newsDetailViewModel: NewsDetailViewModel = koinViewModel { parametersOf(decodedUrl) },
@@ -34,7 +32,6 @@ internal fun NewsDetailScreen(
 
     BaseGlassLazyColumn(
         hazeState = hazeState,
-        padding = padding,
     ) {
         when (state.value) {
             is Success -> {

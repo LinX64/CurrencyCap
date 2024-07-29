@@ -1,7 +1,6 @@
 package ui.screens.main.detail
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -24,7 +23,6 @@ import util.getDummyCryptoInfoItem
 
 @Composable
 internal fun DetailRoute(
-    padding: PaddingValues,
     hazeState: HazeState,
     id: String,
     symbol: String,
@@ -36,7 +34,6 @@ internal fun DetailRoute(
     DetailScreen(
         state = state,
         chartDataState = chartDataState,
-        padding = padding,
         hazeState = hazeState,
         handleEvent = detailViewModel::handleEvent
     )
@@ -46,12 +43,10 @@ internal fun DetailRoute(
 internal fun DetailScreen(
     state: DetailState,
     chartDataState: ChartDataUiState,
-    padding: PaddingValues,
     hazeState: HazeState,
     handleEvent: (DetailViewEvent) -> Unit,
 ) {
     BaseGlassLazyColumn(
-        padding = padding,
         hazeState = hazeState,
         isEmpty = state is Error,
         emptyContent = { ErrorView(onRetry = { handleEvent(OnRetry) }) },

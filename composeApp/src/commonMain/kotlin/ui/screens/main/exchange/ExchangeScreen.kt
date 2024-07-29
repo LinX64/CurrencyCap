@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -53,7 +52,6 @@ import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun ExchangeRoute(
-    padding: PaddingValues,
     hazeState: HazeState,
     viewModel: ExchangeViewModel = koinViewModel<ExchangeViewModel>(),
     onError: (String) -> Unit,
@@ -61,7 +59,6 @@ internal fun ExchangeRoute(
     val state by viewModel.viewState.collectAsStateWithLifecycle()
 
     ExchangeScreen(
-        padding = padding,
         hazeState = hazeState,
         state = state,
         onError = onError,
@@ -77,14 +74,12 @@ internal fun ExchangeRoute(
 
 @Composable
 internal fun ExchangeScreen(
-    padding: PaddingValues,
     hazeState: HazeState,
     onError: (String) -> Unit,
     state: ExchangeState,
     handleEvent: (ExchangeViewEvent) -> Unit
 ) {
     BaseGlassLazyColumn(
-        padding = padding,
         hazeState = hazeState,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
