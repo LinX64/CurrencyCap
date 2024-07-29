@@ -40,7 +40,7 @@ class MainViewModel(
             delay(1500)
 
             val userLoggedIn = userPreferences.isUserLoggedIn()
-            if (userLoggedIn) onLoginSuccess() else navigateToLanding()
+            if (userLoggedIn) onLoginSuccess() else updateStateToNotLoggedIn()
         }
     }
 
@@ -48,7 +48,7 @@ class MainViewModel(
         _state.value = LoggedIn
     }
 
-    fun navigateToLanding() {
+    fun updateStateToNotLoggedIn() {
         _state.value = NotLoggedIn
     }
 
