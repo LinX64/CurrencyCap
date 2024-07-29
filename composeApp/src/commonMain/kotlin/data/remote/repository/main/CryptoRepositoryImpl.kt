@@ -4,6 +4,7 @@ import data.remote.model.main.ChartDataPointDto
 import data.remote.model.main.CoinCapChartResponseDto
 import data.remote.model.main.toChartDataPoints
 import data.util.APIConst.COINCAP_BASE_URL
+import data.util.retryOnIOException
 import domain.model.ChipPeriod
 import domain.model.CryptoMarketChartData
 import domain.repository.CryptoRepository
@@ -45,7 +46,9 @@ class CryptoRepositoryImpl(
 
             else -> emit(processResponse(response))
         }
-    }.flowOn(Dispatchers.IO)
+    }
+        .flowOn(Dispatchers.IO)
+        .retryOnIOException()
 
     private suspend fun fetchData(
         id: String? = null,

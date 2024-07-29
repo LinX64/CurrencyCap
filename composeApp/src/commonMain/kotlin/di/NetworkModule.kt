@@ -40,7 +40,7 @@ val httpClientModule = module {
             }
             install(Resources)
             install(HttpCache) {
-                publicStorage(KachetorStorage(50 * 1024 * 1024))
+                publicStorage(KachetorStorage(50 * 1024 * 4024))
             }
         }
     }
