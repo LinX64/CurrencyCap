@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import data.util.NetworkResult
 import data.util.asResult
 import domain.repository.MainRepository
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,7 +59,7 @@ class SearchViewModel(
                             is NetworkResult.Loading -> Loading
                             is NetworkResult.Success -> {
                                 if (result.data.isNotEmpty()) {
-                                    Success(result.data)
+                                    Success(result.data.toImmutableList())
                                 } else Empty
                             }
                         }

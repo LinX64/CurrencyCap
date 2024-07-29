@@ -3,6 +3,7 @@ package ui.screens.main.bookmarks
 import androidx.lifecycle.viewModelScope
 import domain.model.Article
 import domain.repository.ArticleLocalDataSource
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -29,7 +30,7 @@ class BookmarksViewModel(
             .map { articles ->
                 when {
                     articles.isEmpty() -> setState { BookmarksState.NoBookmarks }
-                    else -> setState { BookmarksState.Success(articles) }
+                    else -> setState { BookmarksState.Success(articles.toImmutableList()) }
                 }
             }
             .launchIn(viewModelScope)

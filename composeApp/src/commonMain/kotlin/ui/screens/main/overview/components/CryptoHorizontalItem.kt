@@ -29,32 +29,6 @@ import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import ui.theme.colors.CurrencyColors
 
-data class AssetInfo(
-    val lastDayChange: List<Float>,
-    val currentValue: Float,
-)
-
-val mockAssetInfo = AssetInfo(
-    listOf(
-        113.518f,
-        113.799f,
-        113.333f,
-        113.235f,
-        114.099f,
-        113.506f,
-        113.985f,
-        114.212f,
-        114.125f,
-        113.531f,
-        114.228f,
-        113.284f,
-        114.031f,
-        113.493f,
-        115.112f
-    ),
-    113.02211f
-)
-
 @Composable
 internal fun CryptoHorizontalItem(
     modifier: Modifier = Modifier,

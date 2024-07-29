@@ -41,6 +41,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import domain.model.main.ChartDataPoint
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
@@ -51,7 +52,7 @@ import kotlin.math.roundToInt
 @Composable
 internal fun InteractiveCryptoChart(
     modifier: Modifier = Modifier,
-    list: List<ChartDataPoint>,
+    list: ImmutableList<ChartDataPoint>,
     isInteractivityEnabled: Boolean = true,
     isLoading: Boolean = false,
     lighterColor: Color = MaterialTheme.colorScheme.surface,

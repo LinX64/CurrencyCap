@@ -8,6 +8,7 @@ import domain.repository.ExchangeRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
@@ -33,7 +34,7 @@ class ExchangeRepositoryImpl(
         emit(mapToCurrency)
     }.flowOn(Dispatchers.IO)
 
-    private val unrecognizedSymbols = setOf(
+    private val unrecognizedSymbols = persistentSetOf(
         "CNH", "XAG", "PEN", "UYU", "AWG", "KYD", "XOF", "XPT",
         "XPF", "XAU", "XDR", "BND", "UGX", "XCD", "BIF", "XPD",
         "SSP", "SZL", "SHP"
