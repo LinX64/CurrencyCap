@@ -63,6 +63,8 @@ internal class AppState(
         val tabRoute = BottomBarTab.entries.find { it.route == simpleRoute }?.route
         return tabRoute ?: simpleRoute
     }
+
+
 }
 
 internal fun navigateToOverview(
@@ -79,7 +81,7 @@ internal fun navigateToLanding(
 ) {
     mainViewModel.updateStateToNotLoggedIn()
     navController.navigate(Landing) {
-        popUpTo(navController.graph.startDestinationId) {
+        popUpTo(navController.graph.findStartDestination().id) {
             inclusive = true
         }
     }
