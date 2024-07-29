@@ -1,5 +1,6 @@
 package data.remote.repository.main
 
+import data.remote.model.main.CryptoDto
 import data.remote.model.main.CryptoInfoDto
 import data.remote.model.main.CurrenciesDto
 import data.remote.model.main.toBonbastRateDomain
@@ -77,10 +78,7 @@ class MainRepositoryImpl(
     }
 
     override fun search(query: String): Flow<List<Crypto>> = flow {
-        val currencies = getCurrencies()
-
-        val filteredCryptos = currencies.crypto.filter { it.symbol.startsWith(query, ignoreCase = true) }
-        emit(filteredCryptos.toCryptoDomain())
+        emit(searchWithEfficientAlgorithm(query).toCryptoDomain())
     }
         .flowOn(Dispatchers.IO)
         .retryOnIOException()
@@ -95,5 +93,16 @@ class MainRepositoryImpl(
     private suspend fun getCurrencies(): CurrenciesDto {
         val plainResponse = httpClient.get(BASE_URL).bodyAsText()
         return parseCurrencyRates(plainResponse)
+    }
+
+    private suspend fun searchWithEfficientAlgorithm(query: String): List<CryptoDto> {
+        val cryptoList = getCurrencies().crypto.sortedBy { it.symbol }
+
+        val startIndex = cryptoList.binarySearch {
+            it.symbol.compareTo(query, ignoreCase = true)
+        }.let { if (it < 0) -(it + 1) else it }
+
+        return cryptoList.subList(startIndex, cryptoList.size)
+            .takeWhile { it.symbol.startsWith(query, ignoreCase = true) }
     }
 }
