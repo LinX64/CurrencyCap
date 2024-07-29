@@ -6,9 +6,9 @@ import data.remote.model.main.CryptoInfo
 import data.remote.model.main.Description
 import data.remote.model.main.MarketData
 import domain.model.Article
-import domain.model.ChartDataPoint
 import domain.model.Source
 import domain.model.main.BonbastRate
+import domain.model.main.ChartDataPoint
 import domain.model.main.Crypto
 import domain.model.main.Currencies
 import domain.model.main.Market

@@ -6,13 +6,9 @@ import data.util.NetworkResult.Error
 import data.util.NetworkResult.Loading
 import data.util.NetworkResult.Success
 import data.util.asResult
-import domain.model.ChartDataPoint
 import domain.model.ChipPeriod
-import domain.model.CoinMarketChartData
 import domain.repository.CryptoRepository
 import domain.repository.MainRepository
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
@@ -39,7 +35,7 @@ class DetailViewModel(
         when (event) {
             OnRetry -> handleEvent(OnLoadCryptoInfo)
             OnLoadCryptoInfo -> onLoadCryptoDetail()
-            is OnChartPeriodSelect -> onChartPeriodSelect(event.coinId, event.chipPeriod)
+            is OnChartPeriodSelect -> onChartPeriodSelected(event.coinId, event.coinSymbol, event.chipPeriod)
         }
     }
 
@@ -56,7 +52,13 @@ class DetailViewModel(
                     is Success -> {
                         val (crypto, info) = result.data
                         setState { DetailState.Success(crypto = crypto, cryptoInfo = info, null) }
-                        handleEvent(OnChartPeriodSelect(coinId = result.data.first.id, chipPeriod = ChipPeriod.DAY))
+                        handleEvent(
+                            OnChartPeriodSelect(
+                                coinId = result.data.first.id,
+                                coinSymbol = result.data.first.symbol,
+                                chipPeriod = ChipPeriod.DAY
+                            )
+                        )
                     }
 
                     is Error -> setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
@@ -66,11 +68,19 @@ class DetailViewModel(
             .launchIn(viewModelScope)
     } // TODO: Consider merging this function in one call
 
-    private fun onChartPeriodSelect(coinId: String, chipPeriod: ChipPeriod) {
+    private fun onChartPeriodSelected(
+        coinId: String,
+        coinSymbol: String,
+        chipPeriod: ChipPeriod
+    ) {
         val currentState = (viewState.value as? DetailState.Success) ?: return
         setState { currentState.copy(chartData = currentState.chartData?.copy(isLoading = true)) }
 
-        cryptoRepository.fetchMarketChartData(coinId, chipPeriod)
+        cryptoRepository.fetchMarketChartData(
+            coinId = coinId,
+            coinSymbol = coinSymbol,
+            period = chipPeriod
+        )
             .asResult()
             .map { result ->
                 when (result) {
@@ -78,7 +88,7 @@ class DetailViewModel(
                         val chartData = result.data
                         setState {
                             currentState.copy(
-                                chartData = ChartDataUiState(data = prepareChartData(chartData), isLoading = false)
+                                chartData = ChartDataUiState(data = chartData.prices, isLoading = false)
                             )
                         }
                     }
@@ -88,15 +98,5 @@ class DetailViewModel(
                 }
             }
             .launchIn(viewModelScope)
-    }
-
-    private fun prepareChartData(chartData: CoinMarketChartData): ImmutableList<ChartDataPoint> {
-        return chartData.prices.map { pricePoint ->
-            ChartDataPoint(
-                timestamp = pricePoint.time.toEpochMilliseconds(),
-                price = pricePoint.price.toString()
-
-            )
-        }.toImmutableList()
     }
 }

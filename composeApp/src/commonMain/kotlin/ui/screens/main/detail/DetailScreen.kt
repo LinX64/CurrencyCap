@@ -63,8 +63,14 @@ internal fun DetailScreen(
                         crypto = crypto,
                         isLoading = state.chartData?.isLoading ?: false,
                         chartData = chartData,
-                        onChartPeriodSelect = { coinId, chipPeriod ->
-                            handleEvent(OnChartPeriodSelect(coinId, chipPeriod))
+                        onChartPeriodSelect = { coinId, coinSymbol, chipPeriod ->
+                            handleEvent(
+                                OnChartPeriodSelect(
+                                    coinId = coinId,
+                                    coinSymbol = coinSymbol,
+                                    chipPeriod = chipPeriod
+                                )
+                            )
                         }
                     )
                 }
@@ -82,8 +88,14 @@ internal fun DetailScreen(
                         crypto = crypto,
                         isLoading = true,
                         chartData = chartData,
-                        onChartPeriodSelect = { coinId, chipPeriod ->
-                            handleEvent(OnChartPeriodSelect(coinId, chipPeriod))
+                        onChartPeriodSelect = { coinId, coinSymbol, chipPeriod ->
+                            handleEvent(
+                                OnChartPeriodSelect(
+                                    coinId = coinId,
+                                    coinSymbol = coinSymbol,
+                                    chipPeriod = chipPeriod
+                                )
+                            )
                         }
                     )
                 }

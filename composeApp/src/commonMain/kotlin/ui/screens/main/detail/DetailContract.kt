@@ -2,8 +2,8 @@ package ui.screens.main.detail
 
 import androidx.compose.runtime.Stable
 import data.remote.model.main.CryptoInfo
-import domain.model.ChartDataPoint
 import domain.model.ChipPeriod
+import domain.model.main.ChartDataPoint
 import domain.model.main.Crypto
 import kotlinx.collections.immutable.ImmutableList
 
@@ -11,9 +11,11 @@ sealed interface DetailViewEvent {
     data object OnRetry : DetailViewEvent
     data object OnLoadCryptoInfo : DetailViewEvent
 
+    @Stable
     data class OnChartPeriodSelect(
         val coinId: String,
-        val chipPeriod: ChipPeriod
+        val coinSymbol: String,
+        val chipPeriod: ChipPeriod,
     ) : DetailViewEvent
 }
 
