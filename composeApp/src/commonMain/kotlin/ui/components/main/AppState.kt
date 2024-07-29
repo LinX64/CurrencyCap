@@ -19,6 +19,7 @@ import ui.screens.main.exchange.navigation.navigateToExchangeScreen
 import ui.screens.main.news.navigation.navigateToNewsScreen
 import ui.screens.main.overview.navigation.navigateToOverviewScreen
 import ui.screens.main.profile.navigation.navigateToProfileScreen
+import ui.screens.main.profile.navigation.Profile as ProfileScreen
 
 @Composable
 internal fun rememberAppState(
@@ -81,7 +82,7 @@ internal fun navigateToLanding(
 ) {
     mainViewModel.updateStateToNotLoggedIn()
     navController.navigate(Landing) {
-        popUpTo(navController.graph.findStartDestination().id) {
+        popUpTo(ProfileScreen) {
             inclusive = true
         }
     }
