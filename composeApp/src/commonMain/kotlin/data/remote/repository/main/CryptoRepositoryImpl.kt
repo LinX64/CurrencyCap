@@ -13,7 +13,6 @@ import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.isSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
@@ -31,23 +30,20 @@ class CryptoRepositoryImpl(
         symbol: String,
         period: ChipPeriod
     ): Flow<CryptoMarketChartData> = flow {
-
         val response = fetchData(id = coinId, period = period)
-        when {
-            response.status.isSuccess() -> {
+        when (response.status) {
+            HttpStatusCode.OK -> {
                 val chartData = processResponse(response)
                 emit(chartData)
             }
 
-            response.status == HttpStatusCode.NotFound -> {
+            HttpStatusCode.NotFound -> {
                 val responseWithSymbol = fetchData(symbol = symbol, period = period)
                 val chartData = processResponse(responseWithSymbol)
-                emit(CryptoMarketChartData(prices = chartData.prices))
+                emit(chartData)
             }
 
-            else -> {
-                throw Exception("Failed to fetch market data")
-            }
+            else -> emit(processResponse(response))
         }
     }.flowOn(Dispatchers.IO)
 

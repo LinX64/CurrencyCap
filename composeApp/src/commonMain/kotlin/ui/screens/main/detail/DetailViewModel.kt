@@ -9,8 +9,10 @@ import data.util.asResult
 import domain.model.ChipPeriod
 import domain.repository.CryptoRepository
 import domain.repository.MainRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import ui.common.MviViewModel
 import ui.navigation.util.ID
 import ui.navigation.util.SYMBOL
@@ -57,6 +59,7 @@ class DetailViewModel(
             .launchIn(viewModelScope)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun onChartPeriodSelected(
         coinId: String,
         symbol: String,
@@ -65,9 +68,13 @@ class DetailViewModel(
         val currentState = (viewState.value as? DetailState.Success) ?: return
         setState { currentState.copy(chartData = currentState.chartData?.copy(isLoading = true)) }
 
-        cryptoRepository.fetchMarketChartData(coinId = coinId, symbol = symbol, period = chipPeriod)
+        cryptoRepository.fetchMarketChartData(
+            coinId = coinId,
+            symbol = symbol,
+            period = chipPeriod
+        )
             .asResult()
-            .map { result ->
+            .mapLatest { result ->
                 when (result) {
                     is Success -> {
                         val chartData = result.data
@@ -78,10 +85,13 @@ class DetailViewModel(
                         }
                     }
 
-                    is Error -> setState {
-                        currentState.copy(
-                            chartData = currentState.chartData?.copy(isLoading = false)
-                        )
+                    is Error -> {
+                        println("Error: ${result.throwable.message}")
+                        setState {
+                            currentState.copy(
+                                chartData = currentState.chartData?.copy(isLoading = false)
+                            )
+                        }
                     }
 
                     is Loading -> currentState

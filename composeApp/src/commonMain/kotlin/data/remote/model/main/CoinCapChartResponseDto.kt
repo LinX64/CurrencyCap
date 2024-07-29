@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CoinCapChartResponseDto(
-    val data: ImmutableList<ChartDataPointDto>,
+    val data: List<ChartDataPointDto>,
     val timestamp: Long
 )
 
