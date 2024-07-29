@@ -1,6 +1,5 @@
 package ui.screens.main.overview.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -53,7 +52,6 @@ internal fun HorizontalPagerTabs(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HorizontalPagerDotIndicator(
     pagerState: PagerState,

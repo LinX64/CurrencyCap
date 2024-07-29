@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
@@ -60,6 +61,8 @@ internal fun InteractiveCryptoChart(
     var selectedIndex by remember(highestIndex) { mutableIntStateOf(highestIndex) }
     var isInteracting by remember { mutableStateOf(false) }
     val labelColor = MaterialTheme.colorScheme.onSurface
+    val dotColor = MaterialTheme.colorScheme.onSurface
+    val labelBackgroundColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f)
     val textMeasurer = rememberTextMeasurer()
 
     LaunchedEffect(isInteracting) {
@@ -97,7 +100,6 @@ internal fun InteractiveCryptoChart(
                 val prices = list.map { it.price.toFloat() }
                 val max = prices.maxOrNull() ?: 0f
                 val min = prices.minOrNull() ?: 0f
-                val dotColor = Color.White
 
                 val sizeWidthPerPair = if (list.size > 1) size.width / (list.size - 1) else size.width
 
@@ -155,7 +157,13 @@ internal fun InteractiveCryptoChart(
                     }
                 }
 
-                drawMinMaxLabels(labelColor, min, max, textMeasurer)
+                drawMinMaxLabels(
+                    labelColor = labelColor,
+                    labelBackgroundColor = labelBackgroundColor,
+                    min = min,
+                    max = max,
+                    textMeasurer = textMeasurer
+                )
             }
 
             // Overlay for selected data point information, only shown when interacting
@@ -165,7 +173,7 @@ internal fun InteractiveCryptoChart(
                     Column(
                         modifier = Modifier
                             .align(Alignment.TopStart)
-                            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.8f))
+                            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
                             .padding(8.dp)
                     ) {
                         Text(
@@ -193,12 +201,14 @@ internal fun InteractiveCryptoChart(
 
 private fun DrawScope.drawMinMaxLabels(
     labelColor: Color,
+    labelBackgroundColor: Color,
     min: Float,
     max: Float,
     textMeasurer: TextMeasurer
 ) {
     val padding = 8.dp.toPx()
     val verticalOffset = 16.dp.toPx()
+    val arrowTextSpacing = 4.dp.toPx() // New variable for spacing between arrow and text
     val textStyle = TextStyle(
         fontSize = 12.sp,
         fontFamily = FontFamily.Default,
@@ -215,21 +225,32 @@ private fun DrawScope.drawMinMaxLabels(
     val arrowSize = 16.dp.toPx()
 
     // Draw background rectangles for labels
-    drawRect(
-        color = Color.Black.copy(alpha = 0.5f),
+    drawRoundRect(
+        color = labelBackgroundColor,
         topLeft = Offset(0f, size.height - minTextLayout.size.height - padding * 2 - verticalOffset),
-        size = Size(minTextLayout.size.width + padding * 2 + arrowSize, minTextLayout.size.height + padding * 2)
+        size = Size(
+            minTextLayout.size.width + padding * 2 + arrowSize + arrowTextSpacing,
+            minTextLayout.size.height + padding * 2
+        ),
+        cornerRadius = CornerRadius(4.dp.toPx())
     )
-    drawRect(
-        color = Color.Black.copy(alpha = 0.5f),
-        topLeft = Offset(size.width - maxTextLayout.size.width - padding * 2 - arrowSize, verticalOffset),
-        size = Size(maxTextLayout.size.width + padding * 2 + arrowSize, maxTextLayout.size.height + padding * 2)
+    drawRoundRect(
+        color = labelBackgroundColor,
+        topLeft = Offset(size.width - maxTextLayout.size.width - padding * 2 - arrowSize - arrowTextSpacing, verticalOffset),
+        size = Size(
+            maxTextLayout.size.width + padding * 2 + arrowSize + arrowTextSpacing,
+            maxTextLayout.size.height + padding * 2
+        ),
+        cornerRadius = CornerRadius(4.dp.toPx())
     )
 
     // Draw MIN label and arrow
     drawText(
         textLayoutResult = minTextLayout,
-        topLeft = Offset(padding + arrowSize, size.height - minTextLayout.size.height - padding - verticalOffset),
+        topLeft = Offset(
+            padding + arrowSize + arrowTextSpacing,
+            size.height - minTextLayout.size.height - padding - verticalOffset
+        ),
         color = labelColor
     )
     drawPath(
@@ -245,7 +266,10 @@ private fun DrawScope.drawMinMaxLabels(
     // Draw MAX label and arrow
     drawText(
         textLayoutResult = maxTextLayout,
-        topLeft = Offset(size.width - maxTextLayout.size.width - padding - arrowSize, padding + verticalOffset),
+        topLeft = Offset(
+            size.width - maxTextLayout.size.width - padding - arrowSize - arrowTextSpacing,
+            padding + verticalOffset
+        ),
         color = labelColor
     )
     drawPath(
