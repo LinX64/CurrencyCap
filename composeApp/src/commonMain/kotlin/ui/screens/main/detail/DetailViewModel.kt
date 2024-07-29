@@ -9,10 +9,11 @@ import data.util.asResult
 import domain.model.ChipPeriod
 import domain.repository.CryptoRepository
 import domain.repository.MainRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import ui.common.MviViewModel
 import ui.navigation.util.ID
 import ui.navigation.util.SYMBOL
@@ -28,6 +29,9 @@ class DetailViewModel(
 
     val id: String = savedStateHandle.get<String>(ID) ?: ""
     val symbol: String = savedStateHandle.get<String>(SYMBOL) ?: ""
+
+    private val _chartDataState = MutableStateFlow(ChartDataUiState())
+    val chartDataState = _chartDataState.asStateFlow()
 
     init {
         handleEvent(OnLoadCryptoInfo)
@@ -59,29 +63,25 @@ class DetailViewModel(
             .launchIn(viewModelScope)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private fun onChartPeriodSelected(
         coinId: String,
         symbol: String,
         chipPeriod: ChipPeriod,
     ) {
-        cryptoRepository.fetchMarketChartData(
-            coinId = coinId,
-            symbol = symbol,
-            period = chipPeriod
-        )
+        cryptoRepository.fetchMarketChartData(coinId, symbol, chipPeriod)
             .asResult()
-            .mapLatest { result ->
+            .map { result ->
                 when (result) {
                     is Success -> {
-                        val chartData = result.data.prices
-                        //setState { DetailState.Success(chartData = ChartDataUiState(chartDataPoints = chartData)) }
+                        val chartData = result.data.prices.toImmutableList()
+                        if (chartData.isEmpty()) {
+                            _chartDataState.value = ChartDataUiState(isLoading = false)
+                            return@map
+                        } else _chartDataState.value = ChartDataUiState(chartDataPoints = chartData)
                     }
 
                     is Error -> setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
-                    is Loading -> {
-                        // setState { DetailState.Success(chartData = ChartDataUiState(isLoading = true)) }
-                    }
+                    is Loading -> _chartDataState.value = ChartDataUiState(isLoading = true)
                 }
             }
             .launchIn(viewModelScope)

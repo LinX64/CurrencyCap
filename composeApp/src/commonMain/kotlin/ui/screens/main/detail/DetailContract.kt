@@ -5,7 +5,6 @@ import domain.model.ChipPeriod
 import domain.model.main.ChartDataPoint
 import domain.model.main.CryptoInfo
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 
 sealed interface DetailViewEvent {
     data object OnRetry : DetailViewEvent
@@ -26,7 +25,6 @@ sealed interface DetailState {
     @Stable
     data class Success(
         val cryptoInfo: CryptoInfo,
-        val chartData: ChartDataUiState = ChartDataUiState()
     ) : DetailState
 
     @Stable
@@ -35,7 +33,7 @@ sealed interface DetailState {
 
 @Stable
 data class ChartDataUiState(
-    val chartDataPoints: ImmutableList<ChartDataPoint> = persistentListOf(),
+    val chartDataPoints: ImmutableList<ChartDataPoint>? = null,
     val isLoading: Boolean = false
 )
 

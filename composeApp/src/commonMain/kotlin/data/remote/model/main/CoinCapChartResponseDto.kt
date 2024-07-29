@@ -1,8 +1,6 @@
 package data.remote.model.main
 
 import domain.model.main.ChartDataPoint
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -27,6 +25,6 @@ fun ChartDataPointDto.toChartDataPoint(): ChartDataPoint {
     )
 }
 
-fun List<ChartDataPointDto>.toChartDataPoints(): ImmutableList<ChartDataPoint> {
-    return map { it.toChartDataPoint() }.toImmutableList()
+fun List<ChartDataPointDto>.toChartDataPoints(): List<ChartDataPoint> {
+    return map { it.toChartDataPoint() }
 }

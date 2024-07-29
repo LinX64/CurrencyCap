@@ -31,8 +31,11 @@ internal fun DetailRoute(
     detailViewModel: DetailViewModel = koinViewModel { parametersOf(id, symbol) }
 ) {
     val state by detailViewModel.viewState.collectAsStateWithLifecycle()
+    val chartDataState by detailViewModel.chartDataState.collectAsStateWithLifecycle()
+
     DetailScreen(
         state = state,
+        chartDataState = chartDataState,
         padding = padding,
         hazeState = hazeState,
         handleEvent = detailViewModel::handleEvent
@@ -42,9 +45,10 @@ internal fun DetailRoute(
 @Composable
 internal fun DetailScreen(
     state: DetailState,
+    chartDataState: ChartDataUiState,
     padding: PaddingValues,
     hazeState: HazeState,
-    handleEvent: (DetailViewEvent) -> Unit
+    handleEvent: (DetailViewEvent) -> Unit,
 ) {
     BaseGlassLazyColumn(
         padding = padding,
@@ -57,13 +61,12 @@ internal fun DetailScreen(
             is Success -> {
                 val description = state.cryptoInfo.description.en
                 val cryptoInfo = state.cryptoInfo
-
-                val chartDataPoints = state.chartData.chartDataPoints
+                val chartData = chartDataState.chartDataPoints ?: getDummyChartData()
 
                 item {
                     DetailHeader(
                         cryptoInfo = cryptoInfo,
-                        chartData = chartDataPoints,
+                        chartData = chartData,
                         onChartPeriodSelect = { coinId, chipPeriod ->
                             handleEvent(
                                 OnChartPeriodSelect(
