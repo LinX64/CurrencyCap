@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface CryptoRepository {
     fun fetchMarketChartData(
         coinId: String,
-        coinSymbol: String,
+        symbol: String,
         period: ChipPeriod
     ): Flow<CryptoMarketChartData>
 }

@@ -71,14 +71,14 @@ class DetailViewModel(
     private fun onChartPeriodSelected(
         coinId: String,
         coinSymbol: String,
-        chipPeriod: ChipPeriod
+        chipPeriod: ChipPeriod,
     ) {
         val currentState = (viewState.value as? DetailState.Success) ?: return
         setState { currentState.copy(chartData = currentState.chartData?.copy(isLoading = true)) }
 
         cryptoRepository.fetchMarketChartData(
             coinId = coinId,
-            coinSymbol = coinSymbol,
+            symbol = coinSymbol,
             period = chipPeriod
         )
             .asResult()
@@ -87,9 +87,7 @@ class DetailViewModel(
                     is Success -> {
                         val chartData = result.data
                         setState {
-                            currentState.copy(
-                                chartData = ChartDataUiState(data = chartData.prices, isLoading = false)
-                            )
+                            currentState.copy(chartData = ChartDataUiState(data = chartData.prices, isLoading = false))
                         }
                     }
 

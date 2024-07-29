@@ -13,6 +13,7 @@ import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.isSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
@@ -27,25 +28,34 @@ class CryptoRepositoryImpl(
 
     override fun fetchMarketChartData(
         coinId: String,
-        coinSymbol: String,
+        symbol: String,
         period: ChipPeriod
     ): Flow<CryptoMarketChartData> = flow {
-        var response = fetchData(coinId)
-        if (response.status == HttpStatusCode.NotFound) {
-            response = fetchData(coinSymbol) // fallback to symbol
-        }
 
-        if (response.status == HttpStatusCode.OK) {
-            val coinMarketChartData = processResponse(response)
-            emit(coinMarketChartData)
+        val response = fetchData(id = coinId, period = period)
+        when {
+            response.status.isSuccess() -> emit(processResponse(response))
+            response.status == HttpStatusCode.NotFound -> {
+                fetchData(symbol = symbol, period = period).let {
+                    if (it.status.isSuccess()) emit(processResponse(it))
+                    else throw Exception("Failed to fetch data")
+                }
+            }
+
+            else -> throw Exception("Failed to fetch data")
         }
     }.flowOn(Dispatchers.IO)
 
     private suspend fun fetchData(
-        id: String,
+        id: String? = null,
+        symbol: String? = null,
         period: ChipPeriod = ChipPeriod.DAY
     ): HttpResponse {
-        return httpClient.get("$COINCAP_BASE_URL/assets/$id/history") {
+        return if (symbol?.isNotEmpty() == true) {
+            httpClient.get("$COINCAP_BASE_URL/assets/$symbol/history") {
+                parameter("interval", period.interval)
+            }
+        } else httpClient.get("$COINCAP_BASE_URL/assets/$id/history") {
             parameter("interval", period.interval)
         }
     }
