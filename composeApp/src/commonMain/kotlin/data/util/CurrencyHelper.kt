@@ -5,6 +5,7 @@ import data.remote.model.main.CryptoDto
 import data.remote.model.main.CurrenciesDto
 import data.remote.model.main.MarketDto
 import data.remote.model.main.RateDto
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
@@ -39,9 +40,9 @@ internal fun parseCurrencyRates(jsonString: String): CurrenciesDto {
     val ratesList = rates.map { Json.decodeFromJsonElement<RateDto>(it) }
 
     return CurrenciesDto(
-        bonbast = bonbastRates,
-        crypto = cryptoList,
-        market = marketsList,
-        rates = ratesList
+        bonbast = bonbastRates.toImmutableList(),
+        crypto = cryptoList.toImmutableList(),
+        market = marketsList.toImmutableList(),
+        rates = ratesList.toImmutableList()
     )
 }

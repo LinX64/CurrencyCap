@@ -1,6 +1,7 @@
 package ui.screens.main.bookmarks
 
 import domain.model.Article
+import kotlinx.collections.immutable.ImmutableList
 
 sealed interface BookmarksViewEvent {
     data object OnLoadBookmarks : BookmarksViewEvent
@@ -9,10 +10,8 @@ sealed interface BookmarksViewEvent {
 
 sealed interface BookmarksState {
     data object Idle : BookmarksState
-    data class Success(val articles: List<Article>) : BookmarksState
+    data class Success(val articles: ImmutableList<Article>) : BookmarksState
     data object NoBookmarks : BookmarksState
 }
 
-sealed interface BookmarksNavigationEffect {
-    data class ShowSnakeBar(val message: String) : BookmarksNavigationEffect
-}
+sealed interface BookmarksNavigationEffect

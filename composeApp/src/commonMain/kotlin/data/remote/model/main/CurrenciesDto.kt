@@ -4,19 +4,20 @@ import domain.model.main.BonbastRate
 import domain.model.main.Crypto
 import domain.model.main.Market
 import domain.model.main.Rate
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class CurrenciesDto(
     @SerialName("bonbast")
-    val bonbast: List<BonbastRateDto>,
+    val bonbast: ImmutableList<BonbastRateDto>,
     @SerialName("crypto")
-    val crypto: List<CryptoDto>,
+    val crypto: ImmutableList<CryptoDto>,
     @SerialName("markets")
-    val market: List<MarketDto>,
+    val market: ImmutableList<MarketDto>,
     @SerialName("rates")
-    val rates: List<RateDto>
+    val rates: ImmutableList<RateDto>
 )
 
 internal fun List<BonbastRateDto>.toBonbastRateDomain(): List<BonbastRate> = map {

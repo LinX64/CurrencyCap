@@ -93,7 +93,7 @@ class MainRepositoryImpl(
         .retryOnIOException()
 
     private suspend fun getCurrencies(): CurrenciesDto {
-        val plainResponse = httpClient.get(BASE_URL).body<String>()
+        val plainResponse = httpClient.get(BASE_URL).bodyAsText()
         return parseCurrencyRates(plainResponse)
     }
 }
