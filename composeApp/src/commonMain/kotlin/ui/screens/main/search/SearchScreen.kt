@@ -64,7 +64,6 @@ internal fun SearchRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SearchScreen(
-    padding: PaddingValues = PaddingValues(SPACER_PADDING_8),
     hazeState: HazeState,
     state: SearchState,
     onCryptoItemClick: (String, String) -> Unit,
@@ -77,7 +76,7 @@ internal fun SearchScreen(
     val keyboard = LocalSoftwareKeyboardController.current
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(padding),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(

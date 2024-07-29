@@ -22,7 +22,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
@@ -51,7 +50,7 @@ import ui.screens.main.subscribers.SubscribersSection
 internal fun App(
     mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
     newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
-    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
+    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
@@ -78,7 +77,7 @@ internal fun App(
     }
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             AppTopBar(
                 currentDestination = currentDestination,
@@ -118,7 +117,6 @@ internal fun App(
             AppNavGraph(
                 navController = navController,
                 hazeState = hazeState,
-                padding = paddingValues,
                 isLoggedIn = isLoggedIn,
                 onNavigateToLanding = { navigateToLanding(mainViewModel, navController) },
                 showPrivacyPolicyBottomSheet = { isSheetOpen = true },

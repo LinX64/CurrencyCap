@@ -1,7 +1,5 @@
 package ui.navigation.graphs
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -34,7 +32,6 @@ import ui.theme.AppDimensions.SPACER_PADDING_32
 @Composable
 internal fun AppNavGraph(
     navController: NavHostController,
-    padding: PaddingValues,
     hazeState: HazeState,
     isLoggedIn: Boolean,
     onNavigateToLanding: () -> Unit,
@@ -47,7 +44,6 @@ internal fun AppNavGraph(
         navController = navController,
         startDestination = if (isLoggedIn) MainNavGraph else AuthNavGraph,
         modifier = Modifier
-            .consumeWindowInsets(padding)
             .padding(bottom = SPACER_PADDING_32)
     ) {
 
