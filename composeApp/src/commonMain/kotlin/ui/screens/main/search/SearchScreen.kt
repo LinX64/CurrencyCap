@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -85,44 +86,57 @@ internal fun SearchScreen(
                 .semantics { isTraversalGroup = true }
         ) {
             SearchBar(
+                inputField = {
+                    SearchBarDefaults.InputField(
+                        query = text,
+                        onQueryChange = {
+                            text = it
+                            handleEvent(OnSearchTextChanged(it))
+                        },
+                        onSearch = { expanded = false },
+                        expanded = expanded,
+                        onExpandedChange = { expanded = it },
+                        enabled = true,
+                        placeholder = { SearchPlaceHolder() },
+                        leadingIcon = { LeadingIcon() },
+                        trailingIcon = {
+                            TrailingIcon(
+                                expanded = expanded,
+                                onCloseClick = {
+                                    expanded = false
+                                    text = ""
+                                    handleEvent(OnSearchTextChanged(""))
+                                }
+                            )
+                        },
+                        interactionSource = null,
+                    )
+                },
+                expanded = expanded,
+                onExpandedChange = { expanded = it },
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .semantics { traversalIndex = 0f }
                     .focusRequester(focusRequester),
-                active = expanded,
-                onActiveChange = { expanded = it },
-                onQueryChange = {
-                    text = it
-                    handleEvent(OnSearchTextChanged(it))
+                shape = SearchBarDefaults.inputFieldShape,
+                tonalElevation = SearchBarDefaults.TonalElevation,
+                shadowElevation = SearchBarDefaults.ShadowElevation,
+                windowInsets = SearchBarDefaults.windowInsets,
+                content = {
+                    BaseGlassLazyColumn(
+                        modifier = Modifier.semantics { traversalIndex = 1f },
+                        padding = PaddingValues(0.dp),
+                        verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
+                        hazeState = hazeState
+                    ) {
+                        searchResultContent(
+                            state = state,
+                            onRetryClicked = { handleEvent(OnRetryClicked(text)) },
+                            onCryptoItemClick = onCryptoItemClick
+                        )
+                    }
                 },
-                query = text,
-                placeholder = { SearchPlaceHolder() },
-                onSearch = { expanded = false },
-                leadingIcon = { LeadingIcon() },
-                trailingIcon = {
-                    TrailingIcon(
-                        expanded = expanded,
-                        onCloseClick = {
-                            expanded = false
-                            text = ""
-                            handleEvent(OnSearchTextChanged(""))
-                        }
-                    )
-                }
-            ) {
-                BaseGlassLazyColumn(
-                    modifier = Modifier.semantics { traversalIndex = 1f },
-                    padding = PaddingValues(0.dp),
-                    verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
-                    hazeState = hazeState
-                ) {
-                    searchResultContent(
-                        state = state,
-                        onRetryClicked = { handleEvent(OnRetryClicked(text)) },
-                        onCryptoItemClick = onCryptoItemClick
-                    )
-                }
-            }
+            )
 
             SearchTabs()
         }
