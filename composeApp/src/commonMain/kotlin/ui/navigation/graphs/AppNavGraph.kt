@@ -3,6 +3,7 @@ package ui.navigation.graphs
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
@@ -29,6 +30,7 @@ import ui.screens.main.overview.navigation.overviewScreen
 import ui.screens.main.profile.navigation.profileScreen
 import ui.screens.main.search.navigation.searchScreen
 import ui.screens.main.settings.navigation.settingsScreen
+import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
 internal fun AppNavGraph(
@@ -48,6 +50,7 @@ internal fun AppNavGraph(
         modifier = Modifier
             .fillMaxSize()
             .consumeWindowInsets(paddingValues)
+            .padding(bottom = SPACER_PADDING_32)
     ) {
 
         mainNavGraph(

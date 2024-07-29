@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EdgeToEdgeScaffoldWithPullToRefresh(
+internal fun EdgeToEdgeScaffoldWithPullToRefresh(
     scope: CoroutineScope = rememberCoroutineScope(),
     containerColor: Color = MaterialTheme.colorScheme.background,
     contentColor: Color = contentColorFor(containerColor),

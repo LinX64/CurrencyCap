@@ -1,5 +1,8 @@
 package ui.screens
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import domain.repository.UserPreferences
@@ -21,6 +24,10 @@ class MainViewModel(
 
     private val _state: MutableStateFlow<MainState> = MutableStateFlow(Idle)
     val appState: StateFlow<MainState> = _state.asStateFlow()
+
+    var isSubscribeSheetVisible by mutableStateOf(false)
+    var isNewsFilterSheetVisible by mutableStateOf(false)
+    var isPrivacyPolicySheetVisible by mutableStateOf(false)
 
     val isDark: StateFlow<Boolean> = userPreferences.isDarkMode()
         .stateIn(
@@ -56,6 +63,18 @@ class MainViewModel(
         viewModelScope.launch {
             userPreferences.setDarkMode(isDark)
         }
+    }
+
+    fun toggleSubscribeSheet() {
+        isSubscribeSheetVisible = !isSubscribeSheetVisible
+    }
+
+    fun toggleNewsFilterSheet() {
+        isNewsFilterSheetVisible = !isNewsFilterSheetVisible
+    }
+
+    fun togglePrivacyPolicySheet() {
+        isPrivacyPolicySheetVisible = !isPrivacyPolicySheetVisible
     }
 }
 
