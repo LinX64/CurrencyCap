@@ -8,7 +8,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.contentColorFor
-import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.pullToRefresh
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
@@ -41,7 +41,7 @@ internal fun EdgeToEdgeScaffoldWithPullToRefresh(
     val onRefresh: () -> Unit = {
         isRefreshing = true
         scope.launch {
-            delay(1500)
+            delay(2500L)
             isRefreshing = false
         }
     }
@@ -68,14 +68,10 @@ internal fun EdgeToEdgeScaffoldWithPullToRefresh(
         ) {
             content(paddingValues)
 
-            PullToRefreshBox(
+            PullToRefreshDefaults.Indicator(
                 state = pullToRefreshState,
                 isRefreshing = isRefreshing,
-                onRefresh = {
-                    isRefreshing = true
-                    onRefresh()
-                },
-                content = {}
+                color = MaterialTheme.colorScheme.primary,
             )
         }
     }
