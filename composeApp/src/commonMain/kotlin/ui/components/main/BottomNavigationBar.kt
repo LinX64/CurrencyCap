@@ -1,9 +1,12 @@
 package ui.components.main
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -68,6 +71,8 @@ internal fun BottomNavigationBar(
     val isDetailScreen = currentDestination?.startsWith(CRYPTO_DETAIL) == true
     val isSettingsScreen = currentDestination == SETTINGS
 
+    val isVisible = isSettingsScreen.not() && isExploreScreen.not() && isAIScreen.not() && isDetailScreen.not() && isLoggedIn
+
     LaunchedEffect(currentDestination) {
         val newIndex = tabs.indexOfFirst { it.name == currentDestination }
         if (newIndex != -1) {
@@ -75,9 +80,10 @@ internal fun BottomNavigationBar(
         }
     }
 
-    if (isSettingsScreen.not() &&
-        isExploreScreen.not() &&
-        isAIScreen.not() && isDetailScreen.not() && isLoggedIn
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { it })
     ) {
         Column(
             modifier = Modifier
