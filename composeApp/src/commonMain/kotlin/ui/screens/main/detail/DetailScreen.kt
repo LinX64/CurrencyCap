@@ -27,7 +27,8 @@ internal fun DetailRoute(
     padding: PaddingValues,
     hazeState: HazeState,
     id: String,
-    detailViewModel: DetailViewModel = koinViewModel { parametersOf(id) }
+    symbol: String,
+    detailViewModel: DetailViewModel = koinViewModel { parametersOf(id, symbol) }
 ) {
     val state by detailViewModel.viewState.collectAsStateWithLifecycle()
     DetailScreen(
@@ -67,6 +68,7 @@ internal fun DetailScreen(
                             handleEvent(
                                 OnChartPeriodSelect(
                                     coinId = coinId,
+                                    symbol = cryptoInfo.symbol,
                                     chipPeriod = chipPeriod
                                 )
                             )
@@ -88,7 +90,13 @@ internal fun DetailScreen(
                         isLoading = true,
                         chartData = chartData,
                         onChartPeriodSelect = { coinId, chipPeriod ->
-                            handleEvent(OnChartPeriodSelect(coinId = coinId, chipPeriod = chipPeriod))
+                            handleEvent(
+                                OnChartPeriodSelect(
+                                    coinId = coinId,
+                                    symbol = cryptoInfo.symbol,
+                                    chipPeriod = chipPeriod
+                                )
+                            )
                         }
                     )
                 }

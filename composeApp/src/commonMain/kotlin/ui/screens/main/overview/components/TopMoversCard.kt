@@ -30,13 +30,13 @@ internal fun TopMoversCard(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
     topMovers: Crypto,
-    onClick: (String) -> Unit
+    onClick: (id: String, symbol: String) -> Unit,
 ) {
     GlassCard(
         modifier = modifier
             .padding(end = SPACER_PADDING_8),
         isClickable = true,
-        onCardClick = { onClick(topMovers.id) }
+        onCardClick = { onClick(topMovers.id, topMovers.symbol) }
     ) {
         Column(
             modifier = Modifier.padding(SPACER_PADDING_16),

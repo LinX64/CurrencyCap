@@ -31,12 +31,12 @@ import util.formatNumber
 @Composable
 internal fun CryptoGridItem(
     cryptoItem: Crypto,
-    onCryptoItemClick: (symbol: String) -> Unit
+    onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     GlassCard(
         modifier = Modifier.padding(end = SPACER_PADDING_8),
         isClickable = true,
-        onCardClick = { onCryptoItemClick(cryptoItem.symbol) },
+        onCardClick = { onCryptoItemClick(cryptoItem.id, cryptoItem.symbol) }
     ) {
         Column(
             modifier = Modifier.size(width = 190.dp, height = 75.dp)

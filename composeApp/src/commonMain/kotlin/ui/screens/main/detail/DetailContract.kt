@@ -13,6 +13,7 @@ sealed interface DetailViewEvent {
     @Stable
     data class OnChartPeriodSelect(
         val coinId: String,
+        val symbol: String,
         val chipPeriod: ChipPeriod,
     ) : DetailViewEvent
 }

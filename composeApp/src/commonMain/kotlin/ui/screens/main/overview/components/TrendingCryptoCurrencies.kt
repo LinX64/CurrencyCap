@@ -15,7 +15,7 @@ import util.getDummyCryptoItems
 @Composable
 internal fun TrendingCryptoCurrencies(
     overviewState: OverviewState,
-    onCryptoItemClick: (String) -> Unit
+    onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     Column {
         SectionRowItem(title = "Trending Rates")
@@ -27,7 +27,7 @@ internal fun TrendingCryptoCurrencies(
 @Composable
 private fun TrendingCryptoContent(
     overviewState: OverviewState,
-    onCryptoItemClick: (String) -> Unit
+    onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -63,7 +63,7 @@ private fun TrendingCryptoContent(
                     CryptoHorizontalItem(
                         crypto = getDummyCryptoItems()[it],
                         isLoading = true,
-                        onClick = { /* No action needed for loading state */ }
+                        onClick = { _, _ -> }
                     )
                 }
             }

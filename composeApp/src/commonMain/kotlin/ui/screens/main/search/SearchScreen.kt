@@ -51,7 +51,7 @@ internal fun SearchRoute(
     searchViewModel: SearchViewModel = koinViewModel<SearchViewModel>(),
     padding: PaddingValues,
     hazeState: HazeState,
-    onCryptoItemClick: (String) -> Unit
+    onCryptoItemClick: (id: String, symbol: String) -> Unit
 ) {
     val state by searchViewModel.viewState.collectAsStateWithLifecycle()
     SearchScreen(
@@ -69,7 +69,7 @@ internal fun SearchScreen(
     padding: PaddingValues,
     hazeState: HazeState,
     state: SearchState,
-    onCryptoItemClick: (String) -> Unit,
+    onCryptoItemClick: (String, String) -> Unit,
     handleEvent: (SearchEvent) -> Unit
 ) {
     var text by rememberSaveable { mutableStateOf("") }
@@ -148,7 +148,7 @@ private fun SearchTabs() {
 private fun LazyListScope.searchResultContent(
     state: SearchState,
     onRetryClicked: () -> Unit,
-    onCryptoItemClick: (String) -> Unit
+    onCryptoItemClick: (String, String) -> Unit
 ) = when (state) {
     is Success -> {
         val cryptoItems = state.cryptoList
@@ -179,7 +179,7 @@ private fun LazyListScope.searchResultContent(
             CryptoHorizontalItem(
                 crypto = getDummyCryptoItem(),
                 isLoading = true,
-                onClick = { }
+                onClick = { _, _ -> }
             )
         }
     }

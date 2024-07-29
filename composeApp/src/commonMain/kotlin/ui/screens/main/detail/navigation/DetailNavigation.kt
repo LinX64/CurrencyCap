@@ -14,15 +14,17 @@ fun NavGraphBuilder.detailScreen(
 ) {
     composable<CryptoDetail> { backStackEntry ->
         val cryptoDetail: CryptoDetail = backStackEntry.toRoute()
-        val symbol = cryptoDetail.id
+        val id = cryptoDetail.id
+        val symbol = cryptoDetail.symbol
 
         DetailRoute(
             padding = padding,
             hazeState = hazeState,
-            id = symbol
+            id = id,
+            symbol = symbol
         )
     }
 }
 
 @Serializable
-data class CryptoDetail(val id: String)
+data class CryptoDetail(val id: String, val symbol: String)

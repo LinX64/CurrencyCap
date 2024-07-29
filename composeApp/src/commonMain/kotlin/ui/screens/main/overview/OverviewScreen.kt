@@ -22,7 +22,7 @@ internal fun OverviewRoute(
     onSearchCardClicked: () -> Unit,
     onNewsItemClick: (url: String) -> Unit,
     onCircleButtonClicked: () -> Unit,
-    onCryptoItemClick: (id: String) -> Unit,
+    onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
 
@@ -45,7 +45,7 @@ internal fun OverviewScreen(
     onSearchCardClicked: () -> Unit,
     onNewsItemClick: (url: String) -> Unit,
     onCircleButtonClicked: () -> Unit,
-    onCryptoItemClick: (id: String) -> Unit,
+    onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     BaseGlassLazyColumn(
         padding = padding,

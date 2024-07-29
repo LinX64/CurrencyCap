@@ -21,8 +21,8 @@ fun NavGraphBuilder.searchScreen(
         SearchRoute(
             padding = padding,
             hazeState = hazeState,
-            onCryptoItemClick = { symbol ->
-                navController.navigate(route = CryptoDetail(symbol))
+            onCryptoItemClick = { id, symbol ->
+                navController.navigate(route = CryptoDetail(id, symbol))
             }
         )
     }

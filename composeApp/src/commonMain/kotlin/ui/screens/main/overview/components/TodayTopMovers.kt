@@ -25,7 +25,7 @@ import util.getDummyCryptoItem
 @Composable
 internal fun TodayTopMovers(
     overviewState: OverviewState,
-    onCryptoItemClick: (String) -> Unit
+    onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     val isLoading = overviewState is Loading
     Column(
@@ -66,7 +66,7 @@ internal fun TodayTopMovers(
                                 .fillMaxHeight(),
                             isLoading = true,
                             topMovers = getDummyCryptoItem(),
-                            onClick = { /* TODO */ }
+                            onClick = { _, _ -> }
                         )
                     }
                 }

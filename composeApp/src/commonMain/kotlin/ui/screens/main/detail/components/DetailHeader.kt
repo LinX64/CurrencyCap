@@ -140,7 +140,7 @@ private fun TopHeaderRow(
 
         AsyncImage(
             modifier = isLoadingModifier,
-            model = cryptoInfo.image,
+            model = cryptoInfo.image.large,
             contentDescription = stringResource(Res.string.crypto_image)
         )
 
