@@ -5,10 +5,18 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CryptoInfo(
+    @SerialName("id")
+    val id: String,
     @SerialName("description")
     val description: Description,
     @SerialName("market_data")
-    val marketData: MarketData
+    val marketData: MarketData,
+    @SerialName("name")
+    val name: String,
+    @SerialName("symbol")
+    val symbol: String,
+    @SerialName("image")
+    val image: CryptoImage
 )
 
 @Serializable
@@ -40,11 +48,25 @@ data class MarketData(
     @SerialName("price_change_percentage_200d")
     val priceChangePercentage200d: Double,
     @SerialName("price_change_percentage_1y")
-    val priceChangePercentage1y: Double
+    val priceChangePercentage1y: Double,
+    @SerialName("market_cap")
+    val marketCap: CommonUsdPrice,
+    @SerialName("ath")
+    val ath: CommonUsdPrice,
 )
 
 @Serializable
 data class CommonUsdPrice(
     @SerialName("usd")
     val usd: Double
+)
+
+@Serializable
+data class CryptoImage(
+    @SerialName("thumb")
+    val thumb: String,
+    @SerialName("small")
+    val small: String,
+    @SerialName("large")
+    val large: String
 )

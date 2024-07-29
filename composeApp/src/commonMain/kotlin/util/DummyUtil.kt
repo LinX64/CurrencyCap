@@ -2,6 +2,7 @@ package util
 
 import data.remote.model.User
 import data.remote.model.main.CommonUsdPrice
+import data.remote.model.main.CryptoImage
 import data.remote.model.main.CryptoInfo
 import data.remote.model.main.Description
 import data.remote.model.main.MarketData
@@ -90,6 +91,33 @@ internal fun getDummyCryptoItem(): Crypto = Crypto(
     totalVolume = 100.101
 )
 
+internal fun getDummyCryptoInfoItem(): CryptoInfo = CryptoInfo(
+    id = "id",
+    description = Description(en = "melius"),
+    marketData = MarketData(
+        currentPrice = CommonUsdPrice(usd = 50.51),
+        high24h = CommonUsdPrice(usd = 52.53),
+        low24h = CommonUsdPrice(usd = 54.55),
+        priceChange24h = 56.57,
+        priceChangePercentage24h = 58.59,
+        priceChangePercentage7d = 60.61,
+        priceChangePercentage14d = 62.63,
+        priceChangePercentage30d = 64.65,
+        priceChangePercentage60d = 66.67,
+        priceChangePercentage200d = 68.69,
+        priceChangePercentage1y = 70.71,
+        ath = CommonUsdPrice(usd = 72.73),
+        marketCap = CommonUsdPrice(usd = 74.75),
+    ),
+    name = "Bitcoin",
+    symbol = "btc",
+    image = CryptoImage(
+        large = "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
+        small = "https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1547033579",
+        thumb = "https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png?1547033579"
+    )
+)
+
 internal fun getDummyCryptoItems() = persistentListOf(
     Crypto(
         ath = 76.77,
@@ -152,23 +180,6 @@ internal fun getDummyUser() = User(
     fullName = "fullName",
     phoneNumber = "phoneNumber",
     profilePicture = ""
-)
-
-internal fun getDummyCryptoInfo() = CryptoInfo(
-    description = Description(en = "melius"),
-    marketData = MarketData(
-        currentPrice = CommonUsdPrice(usd = 50.51),
-        high24h = CommonUsdPrice(usd = 52.53),
-        low24h = CommonUsdPrice(usd = 54.55),
-        priceChange24h = 56.57,
-        priceChangePercentage24h = 58.59,
-        priceChangePercentage7d = 60.61,
-        priceChangePercentage14d = 62.63,
-        priceChangePercentage30d = 64.65,
-        priceChangePercentage60d = 66.67,
-        priceChangePercentage200d = 68.69,
-        priceChangePercentage1y = 70.71
-    )
 )
 
 internal fun getDummyChartData(): ImmutableList<ChartDataPoint> = persistentListOf(

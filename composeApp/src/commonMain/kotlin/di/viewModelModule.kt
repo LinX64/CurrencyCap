@@ -3,7 +3,7 @@ package di
 import androidx.lifecycle.SavedStateHandle
 import org.koin.dsl.module
 import ui.navigation.util.ENCODED_URL
-import ui.navigation.util.SYMBOL
+import ui.navigation.util.ID
 import ui.screens.MainViewModel
 import ui.screens.initial.fill_profile.FillProfileViewModel
 import ui.screens.initial.get_verified.GetVerifiedPhoneViewModel
@@ -38,7 +38,7 @@ val viewModelModule = module {
     single { FillProfileViewModel(get()) }
 
     factory { (url: String) -> NewsDetailViewModel(get(), SavedStateHandle(mapOf(ENCODED_URL to url))) }
-    factory { (symbol: String) -> DetailViewModel(get(), get(), SavedStateHandle(mapOf(SYMBOL to symbol))) }
+    factory { (id: String) -> DetailViewModel(get(), get(), SavedStateHandle(mapOf(ID to id))) }
 }
 
 val previewModule = module {

@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import domain.model.main.Crypto
+import data.remote.model.main.CryptoInfo
 import ui.common.formatToPrice
 import ui.components.main.SectionRowItem
 import ui.screens.main.overview.components.getPlaceHolder
@@ -23,12 +23,12 @@ import ui.theme.colors.CurrencyColors
 
 @Composable
 internal fun DetailBody(
-    crypto: Crypto,
+    cryptoInfo: CryptoInfo,
     isLoading: Boolean = false
 ) {
     val isLoadingModifier = if (isLoading) getPlaceHolder(Modifier) else Modifier
     Column {
-        SectionRowItem(title = "About ${crypto.name}")
+        SectionRowItem(title = "About ${cryptoInfo.name}")
 
         Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
@@ -51,7 +51,7 @@ internal fun DetailBody(
 
                     Text(
                         modifier = isLoadingModifier,
-                        text = formatToPrice(crypto.marketCap.toDouble()),
+                        text = formatToPrice(cryptoInfo.marketData.marketCap.usd),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
@@ -69,10 +69,10 @@ internal fun DetailBody(
                     )
 
                     val textColor =
-                        if (crypto.priceChangePercentage24h > 0) CurrencyColors.Green.primary else CurrencyColors.Red.primary
+                        if (cryptoInfo.marketData.priceChangePercentage24h > 0) CurrencyColors.Green.primary else CurrencyColors.Red.primary
                     Text(
                         modifier = isLoadingModifier,
-                        text = "${crypto.priceChangePercentage24h}%",
+                        text = "${cryptoInfo.marketData.priceChangePercentage24h}%",
                         style = MaterialTheme.typography.bodyLarge,
                         color = textColor,
                         fontWeight = FontWeight.Bold
@@ -91,7 +91,7 @@ internal fun DetailBody(
 
                     Text(
                         modifier = isLoadingModifier,
-                        text = "$${formatToPrice(crypto.high24h)}",
+                        text = "$${formatToPrice(cryptoInfo.marketData.high24h.usd)}",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
@@ -110,7 +110,7 @@ internal fun DetailBody(
 
                     Text(
                         modifier = isLoadingModifier,
-                        text = "$${formatToPrice(crypto.low24h)}",
+                        text = "$${formatToPrice(cryptoInfo.marketData.low24h.usd)}",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
@@ -129,7 +129,7 @@ internal fun DetailBody(
 
                     Text(
                         modifier = isLoadingModifier,
-                        text = "$${formatToPrice(crypto.ath)}",
+                        text = "$${formatToPrice(cryptoInfo.marketData.ath.usd)}",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold

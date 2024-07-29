@@ -9,12 +9,10 @@ import data.util.asResult
 import domain.model.ChipPeriod
 import domain.repository.CryptoRepository
 import domain.repository.MainRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import ui.common.MviViewModel
-import ui.navigation.util.SYMBOL
+import ui.navigation.util.ID
 import ui.screens.main.detail.DetailViewEvent.OnChartPeriodSelect
 import ui.screens.main.detail.DetailViewEvent.OnLoadCryptoInfo
 import ui.screens.main.detail.DetailViewEvent.OnRetry
@@ -25,7 +23,7 @@ class DetailViewModel(
     savedStateHandle: SavedStateHandle
 ) : MviViewModel<DetailViewEvent, DetailState, DetailNavigationEffect>(DetailState.Idle) {
 
-    val symbol: String = savedStateHandle.get<String>(SYMBOL) ?: ""
+    val id: String = savedStateHandle.get<String>(ID) ?: ""
 
     init {
         handleEvent(OnLoadCryptoInfo)
@@ -35,30 +33,19 @@ class DetailViewModel(
         when (event) {
             OnRetry -> handleEvent(OnLoadCryptoInfo)
             OnLoadCryptoInfo -> onLoadCryptoDetail()
-            is OnChartPeriodSelect -> onChartPeriodSelected(event.coinId, event.coinSymbol, event.chipPeriod)
+            is OnChartPeriodSelect -> onChartPeriodSelected(event.coinId, event.chipPeriod)
         }
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private fun onLoadCryptoDetail() {
-        mainRepository.getCryptoBySymbol(symbol)
-            .flatMapLatest { crypto ->
-                mainRepository.getCryptoInfoById(crypto.id)
-                    .map { info -> Pair(crypto, info) }
-            }
+        mainRepository.getCryptoInfoById(id)
             .asResult()
             .map { result ->
                 when (result) {
                     is Success -> {
-                        val (crypto, info) = result.data
-                        setState { DetailState.Success(crypto = crypto, cryptoInfo = info, null) }
-                        handleEvent(
-                            OnChartPeriodSelect(
-                                coinId = result.data.first.id,
-                                coinSymbol = result.data.first.symbol,
-                                chipPeriod = ChipPeriod.DAY
-                            )
-                        )
+                        val data = result.data
+                        setState { DetailState.Success(cryptoInfo = data) }
+                        handleEvent(OnChartPeriodSelect(coinId = id, chipPeriod = ChipPeriod.DAY))
                     }
 
                     is Error -> setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
@@ -66,11 +53,10 @@ class DetailViewModel(
                 }
             }
             .launchIn(viewModelScope)
-    } // TODO: Consider merging this function in one call
+    }
 
     private fun onChartPeriodSelected(
         coinId: String,
-        coinSymbol: String,
         chipPeriod: ChipPeriod,
     ) {
         val currentState = (viewState.value as? DetailState.Success) ?: return
@@ -78,7 +64,6 @@ class DetailViewModel(
 
         cryptoRepository.fetchMarketChartData(
             coinId = coinId,
-            symbol = coinSymbol,
             period = chipPeriod
         )
             .asResult()

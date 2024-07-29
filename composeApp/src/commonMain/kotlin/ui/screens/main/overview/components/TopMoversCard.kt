@@ -36,7 +36,7 @@ internal fun TopMoversCard(
         modifier = modifier
             .padding(end = SPACER_PADDING_8),
         isClickable = true,
-        onCardClick = { onClick(topMovers.symbol) }
+        onCardClick = { onClick(topMovers.id) }
     ) {
         Column(
             modifier = Modifier.padding(SPACER_PADDING_16),

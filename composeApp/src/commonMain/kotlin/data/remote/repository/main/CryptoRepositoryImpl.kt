@@ -12,8 +12,6 @@ import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
-import io.ktor.http.HttpStatusCode
-import io.ktor.http.isSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
@@ -28,22 +26,11 @@ class CryptoRepositoryImpl(
 
     override fun fetchMarketChartData(
         coinId: String,
-        symbol: String,
         period: ChipPeriod
     ): Flow<CryptoMarketChartData> = flow {
 
         val response = fetchData(id = coinId, period = period)
-        when {
-            response.status.isSuccess() -> emit(processResponse(response))
-            response.status == HttpStatusCode.NotFound -> {
-                fetchData(symbol = symbol, period = period).let {
-                    if (it.status.isSuccess()) emit(processResponse(it))
-                    else throw Exception("Failed to fetch data")
-                }
-            }
-
-            else -> throw Exception("Failed to fetch data")
-        }
+        emit(processResponse(response))
     }.flowOn(Dispatchers.IO)
 
     private suspend fun fetchData(

@@ -4,7 +4,6 @@ import androidx.compose.runtime.Stable
 import data.remote.model.main.CryptoInfo
 import domain.model.ChipPeriod
 import domain.model.main.ChartDataPoint
-import domain.model.main.Crypto
 import kotlinx.collections.immutable.ImmutableList
 
 sealed interface DetailViewEvent {
@@ -14,7 +13,6 @@ sealed interface DetailViewEvent {
     @Stable
     data class OnChartPeriodSelect(
         val coinId: String,
-        val coinSymbol: String,
         val chipPeriod: ChipPeriod,
     ) : DetailViewEvent
 }
@@ -25,7 +23,6 @@ sealed interface DetailState {
 
     @Stable
     data class Success(
-        val crypto: Crypto,
         val cryptoInfo: CryptoInfo,
         val chartData: ChartDataUiState? = null
     ) : DetailState

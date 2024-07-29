@@ -26,10 +26,10 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.crypto_image
+import data.remote.model.main.CryptoInfo
 import domain.model.ChipPeriod
 import domain.model.ChipPeriod.DAY
 import domain.model.main.ChartDataPoint
-import domain.model.main.Crypto
 import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 import ui.common.formatToPrice
@@ -43,10 +43,10 @@ import ui.theme.colors.CurrencyColors
 
 @Composable
 internal fun DetailHeader(
-    crypto: Crypto,
+    cryptoInfo: CryptoInfo,
     isLoading: Boolean = false,
     chartData: ImmutableList<ChartDataPoint>,
-    onChartPeriodSelect: (coinId: String, coinSymbol: String, chipPeriod: ChipPeriod) -> Unit,
+    onChartPeriodSelect: (coinId: String, chipPeriod: ChipPeriod) -> Unit,
 ) {
     var selectedChip by remember { mutableStateOf(DAY) }
     val isDefaultLoadingModifier = if (isLoading) getPlaceHolder(Modifier) else Modifier
@@ -60,19 +60,19 @@ internal fun DetailHeader(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            TopHeaderRow(isLoading, crypto, isDefaultLoadingModifier)
+            TopHeaderRow(isLoading, cryptoInfo, isDefaultLoadingModifier)
 
             Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
             Text(
                 modifier = isDefaultLoadingModifier,
-                text = "$${formatToPrice(crypto.currentPrice)}",
+                text = "$${formatToPrice(cryptoInfo.marketData.currentPrice.usd)}",
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold
             )
 
-            InnerHeaderRow(crypto, isLoading, isDefaultLoadingModifier)
+            InnerHeaderRow(cryptoInfo, isLoading, isDefaultLoadingModifier)
 
             Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
@@ -91,7 +91,7 @@ internal fun DetailHeader(
             selectedRange = selectedChip,
             onRangeSelected = { newRange ->
                 selectedChip = newRange
-                onChartPeriodSelect(crypto.id, crypto.symbol, newRange)
+                onChartPeriodSelect(cryptoInfo.id, newRange)
             }
         )
     }
@@ -99,20 +99,20 @@ internal fun DetailHeader(
 
 @Composable
 private fun InnerHeaderRow(
-    crypto: Crypto,
+    cryptoInfo: CryptoInfo,
     isLoading: Boolean,
     isDefaultLoadingModifier: Modifier
 ) {
     Row {
-        ChangeIcon(valueChange = crypto.priceChangePercentage24h, isLoading = isLoading)
+        ChangeIcon(valueChange = cryptoInfo.marketData.priceChangePercentage24h, isLoading = isLoading)
 
         Spacer(modifier = Modifier.width(SPACER_PADDING_8))
 
         Text(
             modifier = isDefaultLoadingModifier,
-            text = "${crypto.priceChangePercentage24h}%",
+            text = "${cryptoInfo.marketData.priceChangePercentage24h}%",
             style = MaterialTheme.typography.bodyMedium,
-            color = if (crypto.priceChangePercentage24h > 0) CurrencyColors.Green.primary else CurrencyColors.Red.primary,
+            color = if (cryptoInfo.marketData.priceChangePercentage24h > 0) CurrencyColors.Green.primary else CurrencyColors.Red.primary,
             fontWeight = FontWeight.Bold
         )
     }
@@ -121,7 +121,7 @@ private fun InnerHeaderRow(
 @Composable
 private fun TopHeaderRow(
     isLoading: Boolean,
-    crypto: Crypto,
+    cryptoInfo: CryptoInfo,
     isDefaultLoadingModifier: Modifier
 ) {
     Row(
@@ -140,21 +140,21 @@ private fun TopHeaderRow(
 
         AsyncImage(
             modifier = isLoadingModifier,
-            model = crypto.image,
+            model = cryptoInfo.image,
             contentDescription = stringResource(Res.string.crypto_image)
         )
 
         Column {
             Text(
                 modifier = isDefaultLoadingModifier,
-                text = crypto.name + " (" + crypto.symbol.uppercase() + ")",
+                text = cryptoInfo.name + " (" + cryptoInfo.symbol.uppercase() + ")",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface
             )
 
             Text(
                 modifier = isDefaultLoadingModifier,
-                text = "Market Cap: $${formatToPrice(crypto.marketCap.toDouble())}",
+                text = "Market Cap: $${formatToPrice(cryptoInfo.marketData.marketCap.usd)}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
             )
