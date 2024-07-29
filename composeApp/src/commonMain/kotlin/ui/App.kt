@@ -65,9 +65,8 @@ internal fun App(
         bottomBar = {
             BottomNavigationBar(
                 currentDestination = currentDestination,
-                scrollBehavior = scrollBehavior,
-                isLoggedIn = isLoggedIn,
                 hazeState = hazeState,
+                isLoggedIn = isLoggedIn,
                 onTabSelected = { tab -> appState.navigateToTopLevelDestination(tab) }
             )
         },
