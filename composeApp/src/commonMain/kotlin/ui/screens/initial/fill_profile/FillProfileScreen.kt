@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.fill_profile
+import currencycap.composeapp.generated.resources.finish_sign_up
 import currencycap.composeapp.generated.resources.please_fill_in_your_full_name
 import currencycap.composeapp.generated.resources.skip
-import currencycap.composeapp.generated.resources.verify_phone_number
 import di.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.BaseCenterColumn
@@ -81,7 +81,7 @@ private fun FillProfileForm(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = SPACER_PADDING_32),
+            .padding(horizontal = SPACER_PADDING_16),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -119,7 +119,7 @@ private fun FillProfileForm(
             Spacer(modifier = modifier.height(SPACER_PADDING_32))
 
             PrimaryButton(
-                text = stringResource(Res.string.verify_phone_number),
+                text = stringResource(Res.string.finish_sign_up),
                 onButtonClick = onFinishSignUpClick
             )
 
