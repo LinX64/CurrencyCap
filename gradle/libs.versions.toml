@@ -18,6 +18,7 @@ placeholder-material3 = "1.0.8"
 androidx-startup = "1.2.0-alpha02"
 lifecycle = "2.8.0"
 jetpack-compose = "1.7.0-beta06"
+mvi-compose = "1.5"
 
 # Firebase
 firebase-firestore = "1.13.0"
@@ -48,9 +49,10 @@ kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collec
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 placeholder-material3 = { group = "com.eygraber", name = "compose-placeholder-material3", version.ref = "placeholder-material3" }
 kachetor = { module = "com.vipulasri.kachetor:kachetor", version.ref = "kachetor" }
-
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "jetpack-compose" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "jetpack-compose" }
+
+mvi-compose-common = { module = "io.github.linx64:mvicompose", version.ref = "mvi-compose" }
 
 # Firebase
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }

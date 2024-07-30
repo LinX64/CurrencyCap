@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mvicompose.linx64.ui.components.HandleNavigationEffect
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.finish_sign_up
 import currencycap.composeapp.generated.resources.get_verified
@@ -26,7 +27,6 @@ import currencycap.composeapp.generated.resources.we_have_sent_code
 import di.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.BaseCenterColumn
-import ui.components.base.HandleNavigationEffect
 import ui.components.base.button.PrimaryButton
 import ui.screens.initial.get_verified.GetVerifiedPhoneNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.get_verified.GetVerifiedPhoneViewEvent.OnCodeChanged
