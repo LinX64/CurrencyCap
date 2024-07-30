@@ -30,10 +30,12 @@ class MainRepositoryImpl(
     private val ratesLocalDataSource: RatesLocalDataSource,
 ) : MainRepository {
 
-    override fun getAllRates(): Flow<NetworkResult<Currencies>> = cacheDataOrFetchOnline(
+    override fun getAllRates(
+        forceRefresh: Boolean,
+    ): Flow<NetworkResult<Currencies>> = cacheDataOrFetchOnline(
         query = { ratesLocalDataSource.getRates() },
         fetch = { getCurrencies() },
-        shouldFetch = { localRates -> localRates == null },
+        shouldFetch = { localRates -> localRates == null || forceRefresh },
         saveFetchResult = { responseDto ->
             ratesLocalDataSource.insertRates(responseDto.toEntity())
         }

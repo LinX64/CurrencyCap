@@ -27,10 +27,12 @@ class NewsRepositoryImpl(
     private val articleLocalDataSource: ArticleLocalDataSource
 ) : NewsRepository {
 
-    override fun getNews(): Flow<NetworkResult<List<Article>>> = cacheDataOrFetchOnline(
+    override fun getNews(
+        forceRefresh: Boolean
+    ): Flow<NetworkResult<List<Article>>> = cacheDataOrFetchOnline(
         query = { articleLocalDataSource.getArticles() },
         fetch = { getPlainNewsResponse() },
-        shouldFetch = { localArticles -> localArticles.isNullOrEmpty() },
+        shouldFetch = { localArticles -> localArticles.isNullOrEmpty() || forceRefresh },
         saveFetchResult = { responseText ->
             val articles: List<ArticleDto> = parseArticlesResponse(responseText)
             articleLocalDataSource.insertArticles(articles.toEntity())

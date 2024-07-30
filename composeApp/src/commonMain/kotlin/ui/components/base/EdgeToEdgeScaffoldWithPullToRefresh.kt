@@ -12,24 +12,19 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.pullToRefresh
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import ui.navigation.util.ScreenRoutes.OVERVIEW
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun EdgeToEdgeScaffoldWithPullToRefresh(
-    scope: CoroutineScope = rememberCoroutineScope(),
     containerColor: Color = MaterialTheme.colorScheme.background,
     contentColor: Color = contentColorFor(containerColor),
+    currentDestination: String?,
+    isRefreshing: Boolean,
+    onRefresh: () -> Unit,
     topBar: @Composable () -> Unit,
     bottomBar: @Composable () -> Unit = {},
     snackbarHost: @Composable () -> Unit = {},
@@ -37,14 +32,7 @@ internal fun EdgeToEdgeScaffoldWithPullToRefresh(
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val pullToRefreshState = rememberPullToRefreshState()
-    var isRefreshing by remember { mutableStateOf(false) }
-    val onRefresh: () -> Unit = {
-        isRefreshing = true
-        scope.launch {
-            delay(2500L)
-            isRefreshing = false
-        }
-    }
+    val isOverviewScreen = currentDestination == OVERVIEW
 
     Scaffold(
         topBar = topBar,
@@ -60,7 +48,6 @@ internal fun EdgeToEdgeScaffoldWithPullToRefresh(
                     state = pullToRefreshState,
                     isRefreshing = isRefreshing,
                     onRefresh = {
-                        isRefreshing = true
                         onRefresh()
                     },
                 ),
@@ -68,11 +55,13 @@ internal fun EdgeToEdgeScaffoldWithPullToRefresh(
         ) {
             content(paddingValues)
 
-            PullToRefreshDefaults.Indicator(
-                state = pullToRefreshState,
-                isRefreshing = isRefreshing,
-                color = MaterialTheme.colorScheme.primary,
-            )
+            if (isOverviewScreen) {
+                PullToRefreshDefaults.Indicator(
+                    state = pullToRefreshState,
+                    isRefreshing = isRefreshing,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
         }
     }
 

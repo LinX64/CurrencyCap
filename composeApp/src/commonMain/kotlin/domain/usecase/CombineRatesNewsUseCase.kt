@@ -17,11 +17,13 @@ class CombineRatesNewsUseCase(
     private val mainRepository: MainRepository,
     private val newsRepository: NewsRepository
 ) {
-    suspend operator fun invoke(): Flow<CombinedRatesNews> = coroutineScope {
-        val ratesFlow = mainRepository.getAllRates()
+    suspend operator fun invoke(
+        forceRefresh: Boolean = false
+    ): Flow<CombinedRatesNews> = coroutineScope {
+        val ratesFlow = mainRepository.getAllRates(forceRefresh)
             .mapNotNull { (it as? Success)?.data ?: (it as? Error)?.data }
 
-        val newsFlow = newsRepository.getNews()
+        val newsFlow = newsRepository.getNews(forceRefresh)
             .mapNotNull { (it as? Success)?.data ?: (it as? Error)?.data }
             .map { it.take(2) }
 

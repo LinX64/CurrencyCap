@@ -10,7 +10,7 @@ import domain.model.main.Rate
 import kotlinx.collections.immutable.ImmutableList
 
 sealed interface OverviewViewEvent {
-    data object OnLoadRates : OverviewViewEvent
+    data class OnLoadRates(val forceRefresh: Boolean = false) : OverviewViewEvent
     data object OnRetry : OverviewViewEvent
 }
 

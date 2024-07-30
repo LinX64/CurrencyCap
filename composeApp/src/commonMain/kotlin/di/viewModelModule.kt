@@ -23,7 +23,7 @@ import ui.screens.main.search.SearchViewModel
 import ui.screens.main.settings.SettingsViewModel
 
 val viewModelModule = module {
-    single { MainViewModel(get()) }
+    single { MainViewModel(get(), get()) }
     single { OverviewViewModel(get()) }
     single { ExchangeViewModel(get(), get(), get()) }
     single { BookmarksViewModel(get()) }

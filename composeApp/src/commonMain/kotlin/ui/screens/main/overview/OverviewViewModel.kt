@@ -2,6 +2,10 @@ package ui.screens.main.overview
 
 import androidx.lifecycle.viewModelScope
 import domain.usecase.CombineRatesNewsUseCase
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -15,8 +19,11 @@ class OverviewViewModel(
     private val combinedRatesUseCase: CombineRatesNewsUseCase
 ) : MviViewModel<OverviewViewEvent, OverviewState, OverviewNavigationEffect>(Loading) {
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
+
     init {
-        handleEvent(OnLoadRates)
+        handleEvent(OnLoadRates())
     }
 
     override fun handleEvent(event: OverviewViewEvent) {
@@ -51,6 +58,16 @@ class OverviewViewModel(
                     }
                 }
                 .launchIn(viewModelScope)
+        }
+    }
+
+    fun refresh() {
+        _isRefreshing.value = true
+        viewModelScope.launch {
+            delay(2500L)
+            _isRefreshing.value = false
+
+            handleEvent(OnLoadRates(forceRefresh = true))
         }
     }
 }

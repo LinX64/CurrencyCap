@@ -30,6 +30,7 @@ import ui.screens.initial.landing.privacy_policy.PrivacyPolicySection
 import ui.screens.main.news.NewsViewEvent.OnSetClick
 import ui.screens.main.news.NewsViewModel
 import ui.screens.main.news.components.NewsFilterSection
+import ui.screens.main.overview.OverviewViewModel
 import ui.screens.main.subscribers.SubscribersSection
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,6 +38,7 @@ import ui.screens.main.subscribers.SubscribersSection
 internal fun App(
     mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
     newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
+    overviewViewModel: OverviewViewModel = koinViewModel<OverviewViewModel>(),
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
@@ -45,12 +47,15 @@ internal fun App(
     val scope = rememberCoroutineScope()
 
     val mainState by mainViewModel.appState.collectAsState()
+    val isRefreshing by overviewViewModel.isRefreshing.collectAsState()
     val currentDestination = appState.currentDestination
     val isLoggedIn = mainState is MainState.LoggedIn
     val hazeState = remember { HazeState() }
 
     EdgeToEdgeScaffoldWithPullToRefresh(
-        scope = scope,
+        currentDestination = currentDestination,
+        isRefreshing = isRefreshing,
+        onRefresh = { overviewViewModel.refresh() },
         topBar = {
             AppTopBar(
                 currentDestination = currentDestination,
