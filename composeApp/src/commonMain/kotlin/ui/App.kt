@@ -6,10 +6,10 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
@@ -46,8 +46,8 @@ internal fun App(
     val appState: AppState = rememberAppState(navController)
     val scope = rememberCoroutineScope()
 
-    val mainState by mainViewModel.appState.collectAsState()
-    val isRefreshing by overviewViewModel.isRefreshing.collectAsState()
+    val mainState by mainViewModel.appState.collectAsStateWithLifecycle()
+    val isRefreshing by overviewViewModel.isRefreshing.collectAsStateWithLifecycle()
     val currentDestination = appState.currentDestination
     val isLoggedIn = mainState is MainState.LoggedIn
     val hazeState = remember { HazeState() }

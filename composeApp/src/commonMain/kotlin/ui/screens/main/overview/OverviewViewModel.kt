@@ -33,9 +33,7 @@ class OverviewViewModel(
         }
     }
 
-    private fun loadCombinedRates(
-        forceRefresh: Boolean = false
-    ) {
+    private fun loadCombinedRates(forceRefresh: Boolean = false) {
         setState { Loading }
 
         viewModelScope.launch {
@@ -64,7 +62,9 @@ class OverviewViewModel(
     }
 
     fun refresh() {
+        setState { Loading }
         _isRefreshing.value = true
+
         viewModelScope.launch {
             delay(2500L)
             _isRefreshing.value = false
