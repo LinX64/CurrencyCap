@@ -1,6 +1,7 @@
 package ui.screens.main.exchange
 
 import androidx.lifecycle.viewModelScope
+import com.mvicompose.linx64.ui.MviViewModel
 import data.local.model.exchange.CurrencyType.None
 import data.local.model.exchange.CurrencyType.Source
 import data.local.model.exchange.CurrencyType.Target
@@ -20,7 +21,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import ui.common.MviViewModel
 import ui.screens.main.exchange.ExchangeViewEvent.OnConvert
 import ui.screens.main.exchange.ExchangeViewEvent.OnFetchRates
 import ui.screens.main.exchange.ExchangeViewEvent.OnReadCurrencySourceCode

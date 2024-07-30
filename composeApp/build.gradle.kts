@@ -85,6 +85,8 @@ kotlin {
             implementation(libs.kotlinx.collections.immutable)
             implementation(libs.kotlinx.datetime)
 
+            implementation(libs.mvi.compose.common)
+
             // UI
             implementation(libs.haze)
             implementation(libs.compottie)

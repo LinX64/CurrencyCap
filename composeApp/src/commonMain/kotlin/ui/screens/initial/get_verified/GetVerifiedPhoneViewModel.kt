@@ -1,10 +1,10 @@
 package ui.screens.initial.get_verified
 
 import androidx.lifecycle.viewModelScope
+import com.mvicompose.linx64.ui.MviViewModel
 import domain.repository.AuthServiceRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import ui.common.MviViewModel
 import ui.screens.initial.get_verified.GetVerifiedPhoneState.Error
 import ui.screens.initial.get_verified.GetVerifiedPhoneState.Loading
 import ui.screens.initial.get_verified.GetVerifiedPhoneViewEvent.OnCodeChanged

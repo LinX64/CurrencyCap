@@ -24,6 +24,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mvicompose.linx64.ui.components.HandleNavigationEffect
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.and
 import currencycap.composeapp.generated.resources.by_signing_up
@@ -35,7 +36,6 @@ import di.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.CenteredColumn
 import ui.components.base.EmailTextField
-import ui.components.base.HandleNavigationEffect
 import ui.components.base.PasswordTextField
 import ui.components.base.button.PrimaryButton
 import ui.screens.initial.register.RegisterNavigationEffect.NavigateToFillProfile

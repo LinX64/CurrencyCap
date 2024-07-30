@@ -2,6 +2,7 @@ package ui.screens.main.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.mvicompose.linx64.ui.MviViewModel
 import data.util.NetworkResult.Error
 import data.util.NetworkResult.Loading
 import data.util.NetworkResult.Success
@@ -14,7 +15,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import ui.common.MviViewModel
 import ui.navigation.util.ID
 import ui.navigation.util.SYMBOL
 import ui.screens.main.detail.DetailViewEvent.OnChartPeriodSelect
