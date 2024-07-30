@@ -4,7 +4,6 @@ import data.local.model.ArticleEntity
 import domain.model.Article
 import domain.model.News
 import domain.model.Source
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -12,7 +11,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class NewsDto(
     @SerialName("articles")
-    val articles: ImmutableList<ArticleDto>,
+    val articles: List<ArticleDto>,
     @SerialName("status")
     val status: String,
     @SerialName("totalResults")
@@ -40,13 +39,13 @@ data class ArticleDto(
 ) {
     fun toEntity(): ArticleEntity {
         return ArticleEntity().apply {
-            this.url = this@ArticleDto.url
-            this.title = this@ArticleDto.title
-            this.description = this@ArticleDto.description
-            this.author = this@ArticleDto.author ?: ""
-            this.publishedAt = this@ArticleDto.publishedAt
-            this.sourceName = this@ArticleDto.sourceDto.name
-            this.urlToImage = this@ArticleDto.urlToImage ?: ""
+            url = this@ArticleDto.url
+            title = this@ArticleDto.title
+            description = this@ArticleDto.description
+            author = this@ArticleDto.author ?: ""
+            publishedAt = this@ArticleDto.publishedAt
+            sourceName = this@ArticleDto.sourceDto.name
+            urlToImage = this@ArticleDto.urlToImage ?: ""
         }
     }
 }

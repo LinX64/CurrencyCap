@@ -3,7 +3,6 @@ package ui.screens.main.search
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -26,7 +25,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
@@ -125,9 +123,8 @@ internal fun SearchScreen(
                 content = {
                     BaseGlassLazyColumn(
                         modifier = Modifier.semantics { traversalIndex = 1f },
-                        padding = PaddingValues(0.dp),
-                        verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
-                        hazeState = hazeState
+                        hazeState = hazeState,
+                        verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8)
                     ) {
                         searchResultContent(
                             state = state,

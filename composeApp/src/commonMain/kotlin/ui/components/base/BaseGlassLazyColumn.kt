@@ -2,6 +2,7 @@ package ui.components.base
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,19 +13,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
 import ui.theme.AppDimensions.SPACER_PADDING_16
-import ui.theme.AppDimensions.SPACER_PADDING_8
+import ui.theme.AppDimensions.SPACER_PADDING_96
 
 @Composable
 internal fun BaseGlassLazyColumn(
     modifier: Modifier = Modifier,
-    padding: PaddingValues = PaddingValues(0.dp),
     hazeState: HazeState,
-    contentPadding: PaddingValues = PaddingValues(SPACER_PADDING_8),
+    contentPadding: PaddingValues = PaddingValues(SPACER_PADDING_16),
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     isEmpty: Boolean = false,
@@ -39,7 +38,6 @@ internal fun BaseGlassLazyColumn(
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize()
-                .padding(contentPadding)
                 .haze(
                     state = hazeState,
                     style = HazeStyle(
@@ -47,12 +45,19 @@ internal fun BaseGlassLazyColumn(
                         blurRadius = SPACER_PADDING_16
                     )
                 ),
-            contentPadding = padding,
+            contentPadding = contentPadding,
             verticalArrangement = verticalArrangement,
             horizontalAlignment = horizontalAlignment,
             state = scrollableState
         ) {
             content()
+
+            item {
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                        .padding(bottom = SPACER_PADDING_96)
+                ) {}
+            }
         }
 
         if (isEmpty) {

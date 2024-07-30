@@ -1,6 +1,6 @@
 package data.remote.model.main
 
-import domain.model.main.BonbastRate
+import data.local.model.main.CurrenciesEntity
 import domain.model.main.Crypto
 import domain.model.main.Market
 import domain.model.main.Rate
@@ -15,17 +15,16 @@ data class CurrenciesDto(
     @SerialName("crypto")
     val crypto: ImmutableList<CryptoDto>,
     @SerialName("markets")
-    val market: ImmutableList<MarketDto>,
+    var market: ImmutableList<MarketDto>,
     @SerialName("rates")
     val rates: ImmutableList<RateDto>
-)
-
-internal fun List<BonbastRateDto>.toBonbastRateDomain(): List<BonbastRate> = map {
-    BonbastRate(
-        code = it.code,
-        sell = it.sell,
-        buy = it.buy
-    )
+) {
+    fun toEntity() = CurrenciesEntity().apply {
+        bonbast = this@CurrenciesDto.bonbast.toEntity()
+        crypto = this@CurrenciesDto.crypto.toEntity()
+        markets = this@CurrenciesDto.market.toEntity()
+        rates = this@CurrenciesDto.rates.toEntity()
+    }
 }
 
 internal fun List<CryptoDto>.toCryptoDomain(): List<Crypto> = map {

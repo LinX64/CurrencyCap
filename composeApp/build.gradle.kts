@@ -127,8 +127,8 @@ android {
         applicationId = "com.client.currencycap"
         minSdk = 24
         targetSdk = 34
-        versionCode = 6
-        versionName = "1.1.2"
+        versionCode = 7
+        versionName = "1.1.3"
     }
 
     packaging {

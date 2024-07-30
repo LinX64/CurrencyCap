@@ -26,7 +26,7 @@ fun <T> Flow<T>.retryOnIOException(
 } // TODO: Consider adding internet connection check
 
 internal inline fun <ResultType, RequestType> cacheDataOrFetchOnline(
-    crossinline query: () -> Flow<ResultType>,
+    crossinline query: () -> Flow<ResultType?>,
     crossinline fetch: suspend () -> RequestType,
     crossinline saveFetchResult: suspend (RequestType) -> Unit,
     crossinline onFetchFailed: (Throwable) -> Unit = { },
@@ -36,7 +36,9 @@ internal inline fun <ResultType, RequestType> cacheDataOrFetchOnline(
 
     val queryFlow = query()
     queryFlow.collect { localData ->
-        send(NetworkResult.Success(localData))
+        if (localData != null) {
+            send(NetworkResult.Success(localData))
+        }
 
         if (shouldFetch(localData)) {
             try {

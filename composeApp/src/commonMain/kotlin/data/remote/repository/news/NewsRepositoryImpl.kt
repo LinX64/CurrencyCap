@@ -7,13 +7,19 @@ import data.remote.model.news.toEntity
 import data.util.APIConst.NEWS_URL
 import data.util.NetworkResult
 import data.util.cacheDataOrFetchOnline
+import data.util.retryOnIOException
 import domain.model.Article
 import domain.repository.ArticleLocalDataSource
 import domain.repository.NewsRepository
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.serialization.json.Json
 
 class NewsRepositoryImpl(
@@ -45,6 +51,13 @@ class NewsRepositoryImpl(
     private fun parseArticlesResponse(responseText: String): List<ArticleDto> {
         return Json.decodeFromString(NewsDto.serializer(), responseText).articles
     }
+
+    override fun getNewsOnline(): Flow<List<Article>> = flow {
+        val response = httpClient.get(NEWS_URL).body<List<ArticleDto>>().toDomain()
+        emit(response)
+    }
+        .flowOn(Dispatchers.IO)
+        .retryOnIOException()
 
     private suspend fun fetchArticleByUrl(url: String): Article {
         val responseText = getPlainNewsResponse()
