@@ -48,9 +48,9 @@ internal fun DetailScreen(
 ) {
     BaseGlassLazyColumn(
         hazeState = hazeState,
+        verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_16),
         isEmpty = state is Error,
-        emptyContent = { ErrorView(onRetry = { handleEvent(OnRetry) }) },
-        verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_16)
+        emptyContent = { ErrorView(onRetry = { handleEvent(OnRetry) }) }
     ) {
         when (state) {
             is Success -> {

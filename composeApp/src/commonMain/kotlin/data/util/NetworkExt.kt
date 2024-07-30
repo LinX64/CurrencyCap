@@ -40,8 +40,6 @@ internal inline fun <ResultType, RequestType> cacheDataOrFetchOnline(
             send(NetworkResult.Success(localData))
         }
 
-        println("localData: $localData")
-
         if (shouldFetch(localData)) {
             try {
                 val fetchedData = fetch()
