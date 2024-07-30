@@ -11,7 +11,7 @@ import ui.components.base.BaseGlassLazyColumn
 import ui.screens.main.overview.components.PortfolioSection
 import ui.screens.main.overview.components.TodayTopMovers
 import ui.screens.main.overview.components.TopRates
-import ui.screens.main.overview.components.TrendingCryptoCurrencies
+import ui.screens.main.overview.components.cryptoListItems
 
 @Composable
 internal fun OverviewRoute(
@@ -74,8 +74,6 @@ internal fun OverviewScreen(
             TopRates(state)
         }
 
-        item(key = "trending_crypto") {
-            TrendingCryptoCurrencies(overviewState = state, onCryptoItemClick)
-        }
+        cryptoListItems(state, onCryptoItemClick)
     }
 }

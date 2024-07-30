@@ -1,74 +1,70 @@
 package ui.screens.main.overview.components
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.ui.Modifier
 import ui.components.main.SectionRowItem
 import ui.screens.main.overview.OverviewState
+import ui.screens.main.overview.OverviewState.Loading
+import ui.screens.main.overview.OverviewState.Success
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.getDummyCryptoItems
 
-@Composable
-internal fun TrendingCryptoCurrencies(
+internal fun LazyListScope.cryptoListItems(
     overviewState: OverviewState,
-    onCryptoItemClick: (id: String, symbol: String) -> Unit,
+    onCryptoItemClick: (String, String) -> Unit
 ) {
-    Column {
-        SectionRowItem(title = "Trending Rates")
+    item {
+        Column {
+            SectionRowItem(title = "Trending Rates")
 
-        TrendingCryptoContent(overviewState, onCryptoItemClick)
+            Spacer(modifier = Modifier.height(SPACER_PADDING_16))
+        }
     }
-}
 
-@Composable
-private fun TrendingCryptoContent(
-    overviewState: OverviewState,
-    onCryptoItemClick: (id: String, symbol: String) -> Unit,
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = SPACER_PADDING_16),
-        verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8)
-    ) {
-        when (overviewState) {
-            is OverviewState.Success -> {
-                val cryptoRates = overviewState.cryptoRates.take(30)
+    when (overviewState) {
+        is Success -> {
+            val cryptoRates = overviewState.cryptoRates.take(30)
+            if (cryptoRates.isNotEmpty()) {
+                items(
+                    count = cryptoRates.size,
+                    key = { cryptoRates[it].id }
+                ) { index ->
+                    CryptoHorizontalItem(
+                        crypto = cryptoRates[index],
+                        isLoading = false,
+                        onClick = onCryptoItemClick
+                    )
 
-                if (cryptoRates.isNotEmpty()) {
-                    cryptoRates.forEach { crypto ->
-                        CryptoHorizontalItem(
-                            crypto = crypto,
-                            isLoading = false,
-                            onClick = onCryptoItemClick
-                        )
-                    }
-                } else {
-                    repeat(5) {
-                        CryptoHorizontalItem(
-                            crypto = getDummyCryptoItems()[it],
-                            isLoading = false,
-                            onClick = onCryptoItemClick
-                        )
+                    if (index < cryptoRates.size - 1) {
+                        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
                     }
                 }
-            }
-
-            is OverviewState.Loading -> {
-                repeat(5) {
+            } else {
+                items(5) { index ->
                     CryptoHorizontalItem(
-                        crypto = getDummyCryptoItems()[it],
-                        isLoading = true,
-                        onClick = { _, _ -> }
+                        crypto = getDummyCryptoItems()[index],
+                        isLoading = false,
+                        onClick = onCryptoItemClick
                     )
                 }
             }
-
-            else -> Unit
         }
+
+        is Loading -> {
+            items(5) { index ->
+                CryptoHorizontalItem(
+                    crypto = getDummyCryptoItems()[index],
+                    isLoading = true,
+                    onClick = { _, _ -> }
+                )
+            }
+        }
+
+        else -> Unit
     }
 }
+
