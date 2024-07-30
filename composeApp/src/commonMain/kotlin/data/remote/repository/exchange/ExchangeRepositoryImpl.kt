@@ -1,38 +1,37 @@
 package data.remote.repository.exchange
 
-import data.remote.model.main.RateDto
-import data.util.APIConst.BASE_URL
-import data.util.parseCurrencyRates
+import data.util.NetworkResult.Error
+import data.util.NetworkResult.Success
 import domain.model.Currency
+import domain.model.main.Rate
 import domain.repository.ExchangeRepository
-import io.ktor.client.HttpClient
-import io.ktor.client.call.body
-import io.ktor.client.request.get
+import domain.repository.MainRepository
 import kotlinx.collections.immutable.persistentSetOf
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 
 class ExchangeRepositoryImpl(
-    private val httpClient: HttpClient
+    private val mainRepository: MainRepository
 ) : ExchangeRepository {
 
-    override fun getLatest(): Flow<List<Currency>> = flow {
-        val plainResponse = httpClient.get(BASE_URL).body<String>()
-        val rates = parseCurrencyRates(plainResponse).rates
-            .filter { it.type == FIAT && isRecognizedSymbol(it) }
+    override fun getLatest(
+        forceRefresh: Boolean
+    ): Flow<List<Currency>> = flow {
+        val ratesFlow = mainRepository.getAllRates(forceRefresh)
+            .mapNotNull { (it as? Success)?.data ?: (it as? Error)?.data }
+            .map { it.rates }
+            .map { it.filter { rate -> rate.type == FIAT && isRecognizedSymbol(rate) } }
 
-        val mapToCurrency = rates.map { rate ->
-            Currency(
-                code = rate.symbol,
-                value = rate.rateUsd.toDouble()
-            )
-        }
-
+        val mapToCurrency = ratesFlow.map { rates ->
+            rates.map { rate ->
+                Currency(code = rate.symbol, value = rate.rateUsd.toDouble())
+            }
+        }.first()
         emit(mapToCurrency)
-    }.flowOn(Dispatchers.IO)
+    }
 
     private val unrecognizedSymbols = persistentSetOf(
         "CNH", "XAG", "PEN", "UYU", "AWG", "KYD", "XOF", "XPT",
@@ -40,7 +39,7 @@ class ExchangeRepositoryImpl(
         "SSP", "SZL", "SHP"
     )
 
-    private fun isRecognizedSymbol(it: RateDto) = it.symbol !in unrecognizedSymbols
+    private fun isRecognizedSymbol(it: Rate) = it.symbol !in unrecognizedSymbols
 
     private companion object {
         const val FIAT = "fiat"
