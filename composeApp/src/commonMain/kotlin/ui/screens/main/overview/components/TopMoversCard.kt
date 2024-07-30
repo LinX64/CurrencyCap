@@ -69,7 +69,7 @@ internal fun TopMoversCard(
                     .background(
                         Brush.radialGradient(
                             colors = listOf(
-                                Color(0xFFB39DDB).copy(alpha = 0.3f),
+                                Color(0xFFB39DDB).copy(alpha = 0.5f),
                                 Color.Transparent
                             ),
                             center = Offset(200f, 55f),
@@ -111,7 +111,7 @@ internal fun TopMoversCard(
                 Text(
                     modifier = isLoadingModifier,
                     text = topMovers.name,
-                    color = MaterialTheme.colorScheme.surface,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -119,7 +119,7 @@ internal fun TopMoversCard(
                 Text(
                     modifier = isLoadingModifier,
                     text = "$${formatToPrice(topMovers.currentPrice)}",
-                    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.7f),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                     fontSize = 18.sp
                 )
 

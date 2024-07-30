@@ -1,6 +1,7 @@
 package ui
 
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
@@ -11,9 +12,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.article_added_to_bookmarks
+import currencycap.composeapp.generated.resources.article_removed_from_bookmarks
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 import ui.components.base.BaseModalBottomSheet
 import ui.components.base.EdgeToEdgeScaffoldWithPullToRefresh
 import ui.components.main.AppState
@@ -111,7 +116,15 @@ internal fun App(
             showPrivacyPolicyBottomSheet = { mainViewModel.togglePrivacyPolicySheet() },
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
             onLoginSuccess = { navigateToOverview(mainViewModel, navController) },
-            onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.News) }
+            onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.News) },
+            showBookmarkConfirmationSnakeBar = { isBookmarked ->
+                scope.launch {
+                    snackbarHostState.showSnackbar(
+                        message = if (isBookmarked) getString(Res.string.article_added_to_bookmarks)
+                        else getString(Res.string.article_removed_from_bookmarks), duration = SnackbarDuration.Short
+                    )
+                }
+            }
         )
     }
 }

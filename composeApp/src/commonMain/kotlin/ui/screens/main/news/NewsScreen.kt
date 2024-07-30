@@ -12,6 +12,8 @@ import org.jetbrains.compose.resources.stringResource
 import ui.components.ErrorView
 import ui.components.NewsItem
 import ui.components.base.BaseGlassLazyColumn
+import ui.components.base.HandleNavigationEffect
+import ui.screens.main.news.NewsNavigationEffect.ShowBookmarkConfirmation
 import ui.screens.main.news.NewsState.Empty
 import ui.screens.main.news.NewsState.Loading
 import ui.screens.main.news.NewsState.Success
@@ -23,24 +25,31 @@ import util.getDummyNewsItem
 internal fun NewsRoute(
     newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
     hazeState: HazeState,
-    onNewsItemClick: (url: String) -> Unit
+    onNewsItemClick: (url: String) -> Unit,
+    showBookmarkConfirmationSnakeBar: (Boolean) -> Unit
 ) {
     val state = newsViewModel.viewState.collectAsStateWithLifecycle()
 
     NewsScreen(
         state = state,
-        newsViewModel = newsViewModel,
         hazeState = hazeState,
-        onNewsItemClick = onNewsItemClick
+        onNewsItemClick = onNewsItemClick,
+        handleEvent = newsViewModel::handleEvent
     )
+
+    HandleNavigationEffect(newsViewModel) { effect ->
+        when (effect) {
+            is ShowBookmarkConfirmation -> showBookmarkConfirmationSnakeBar(effect.isBookmarked)
+        }
+    }
 }
 
 @Composable
 internal fun NewsScreen(
     state: State<NewsState>,
-    newsViewModel: NewsViewModel,
     hazeState: HazeState,
-    onNewsItemClick: (url: String) -> Unit
+    onNewsItemClick: (url: String) -> Unit,
+    handleEvent: (NewsViewEvent) -> Unit
 ) {
     BaseGlassLazyColumn(
         hazeState = hazeState,
@@ -48,18 +57,22 @@ internal fun NewsScreen(
         emptyContent = {
             ErrorView(
                 message = stringResource(Res.string.an_error_occurred),
-                onRetry = { newsViewModel.handleEvent(OnRetry) }
+                onRetry = { handleEvent(OnRetry) }
             )
         }
     ) {
-        newsScreenContent(state, newsViewModel, onNewsItemClick)
+        newsScreenContent(
+            state = state,
+            onNewsItemClick = onNewsItemClick,
+            handleEvent = handleEvent
+        )
     }
 }
 
 private fun LazyListScope.newsScreenContent(
     state: State<NewsState>,
-    newsViewModel: NewsViewModel,
-    onNewsItemClick: (url: String) -> Unit
+    onNewsItemClick: (url: String) -> Unit,
+    handleEvent: (NewsViewEvent) -> Unit
 ) = when (val currentState = state.value) {
     is Success -> {
         val articles = currentState.news
@@ -72,7 +85,7 @@ private fun LazyListScope.newsScreenContent(
                 onNewsItemClick = onNewsItemClick,
                 shouldShowBookmark = articles[index].isBookmarked,
                 onBookmarkClick = { isBookmarked ->
-                    newsViewModel.handleEvent(OnBookmarkArticle(articles[index], isBookmarked))
+                    handleEvent(OnBookmarkArticle(articles[index], isBookmarked))
                 }
             )
         }
