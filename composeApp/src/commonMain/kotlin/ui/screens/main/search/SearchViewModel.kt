@@ -1,6 +1,7 @@
 package ui.screens.main.search
 
 import androidx.lifecycle.viewModelScope
+import com.mvicompose.linx64.ui.MviViewModel
 import data.util.NetworkResult
 import data.util.asResult
 import domain.repository.ExploreRepository
@@ -14,7 +15,6 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import ui.common.MviViewModel
 import ui.screens.main.search.SearchEvent.OnRetryClicked
 import ui.screens.main.search.SearchEvent.OnSearchClicked
 import ui.screens.main.search.SearchEvent.OnSearchTextChanged

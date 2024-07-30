@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mvicompose.linx64.ui.components.HandleNavigationEffect
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.amount_text
 import currencycap.composeapp.generated.resources.exchange
@@ -38,7 +39,6 @@ import di.koinViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.BaseGlassLazyColumn
-import ui.components.base.HandleNavigationEffect
 import ui.screens.main.exchange.ExchangeNavigationEffect.ShowSnakeBar
 import ui.screens.main.exchange.ExchangeViewEvent.OnConvert
 import ui.screens.main.exchange.ExchangeViewEvent.OnSwitchCurrencies

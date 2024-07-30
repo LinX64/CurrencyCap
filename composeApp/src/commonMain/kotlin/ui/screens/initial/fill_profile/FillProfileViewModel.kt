@@ -2,10 +2,10 @@ package ui.screens.initial.fill_profile
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
+import com.mvicompose.linx64.ui.MviViewModel
 import data.remote.model.User
 import domain.repository.ProfileRepository
 import kotlinx.coroutines.launch
-import ui.common.MviViewModel
 import ui.screens.initial.fill_profile.FillProfileNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnNameChanged
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnPhoneNumberChanged
