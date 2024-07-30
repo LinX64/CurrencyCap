@@ -11,6 +11,9 @@ import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import org.koin.dsl.module
 
+const val REALM_SCHEMA_VERSION: Long = 2
+const val REALM_FILE_NAME = "rates.realm"
+
 val dataModule = module {
     single<Configuration> {
         RealmConfiguration.Builder(
@@ -23,6 +26,8 @@ val dataModule = module {
                 RateEntity::class
             )
         )
+            .name(REALM_FILE_NAME)
+            .schemaVersion(REALM_SCHEMA_VERSION)
             .compactOnLaunch()
             .build()
     }

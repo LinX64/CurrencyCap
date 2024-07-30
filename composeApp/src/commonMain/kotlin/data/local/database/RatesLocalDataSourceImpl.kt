@@ -7,21 +7,16 @@ import domain.repository.RatesLocalDataSource
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 
 class RatesLocalDataSourceImpl(
     private val realm: Realm
 ) : RatesLocalDataSource {
 
-    override fun getRates(): Flow<Currencies> {
-        return realm.query<CurrenciesEntity>()
-            .first()
-            .asFlow()
-            .map { it.obj }
-            .filterNotNull()
-            .map { it.toDomain() }
-    }
+    override fun getRates(): Flow<Currencies?> = realm.query<CurrenciesEntity>()
+        .first()
+        .asFlow()
+        .map { realmResult -> realmResult.obj?.toDomain() }
 
     override suspend fun insertRates(rates: CurrenciesEntity) {
         realm.write {

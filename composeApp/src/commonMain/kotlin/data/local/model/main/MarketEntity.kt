@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 open class MarketEntity : RealmObject {
     @PrimaryKey
+    var rank: String = ""
     var baseId: String = ""
     var baseSymbol: String = ""
     var exchangeId: String = ""
@@ -16,7 +17,6 @@ open class MarketEntity : RealmObject {
     var priceUsd: String = ""
     var quoteId: String = ""
     var quoteSymbol: String = ""
-    var rank: String = ""
     var tradesCount24Hr: String? = null
     var updated: Long = 0
     var volumeUsd24Hr: String = ""
