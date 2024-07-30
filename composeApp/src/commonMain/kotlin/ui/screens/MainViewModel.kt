@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import domain.repository.MainRepository
 import domain.repository.UserPreferences
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +19,6 @@ import ui.screens.MainState.LoggedIn
 import ui.screens.MainState.NotLoggedIn
 
 class MainViewModel(
-    private val mainRepository: MainRepository,
     private val userPreferences: UserPreferences
 ) : ViewModel() {
 
@@ -79,8 +77,6 @@ class MainViewModel(
     fun togglePrivacyPolicySheet() {
         isPrivacyPolicySheetVisible = !isPrivacyPolicySheetVisible
     }
-
-
 }
 
 sealed class MainState {

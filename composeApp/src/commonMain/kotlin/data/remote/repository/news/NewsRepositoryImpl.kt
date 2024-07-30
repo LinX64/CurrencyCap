@@ -32,9 +32,11 @@ class NewsRepositoryImpl(
     ): Flow<NetworkResult<List<Article>>> = cacheDataOrFetchOnline(
         query = { articleLocalDataSource.getArticles() },
         fetch = { getPlainNewsResponse() },
-        shouldFetch = { localArticles -> localArticles.isNullOrEmpty() || forceRefresh },
+        shouldFetch = { localArticles -> localArticles.isNullOrEmpty() },
+        forceRefresh = forceRefresh,
+        clearLocalData = { articleLocalDataSource.deleteArticles() },
         saveFetchResult = { responseText ->
-            val articles: List<ArticleDto> = parseArticlesResponse(responseText)
+            val articles: Set<ArticleDto> = parseArticlesResponse(responseText)
             articleLocalDataSource.insertArticles(articles.toEntity())
         }
     )
@@ -43,6 +45,8 @@ class NewsRepositoryImpl(
         query = { articleLocalDataSource.getArticleByUrl(url) },
         fetch = { fetchArticleByUrl(url) },
         shouldFetch = { localArticle -> localArticle == null },
+        forceRefresh = false,
+        clearLocalData = { },
         saveFetchResult = { article ->
             articleLocalDataSource.insertArticle(article.toEntity())
         }
@@ -50,12 +54,12 @@ class NewsRepositoryImpl(
 
     private suspend fun getPlainNewsResponse() = httpClient.get(NEWS_URL).bodyAsText()
 
-    private fun parseArticlesResponse(responseText: String): List<ArticleDto> {
-        return Json.decodeFromString(NewsDto.serializer(), responseText).articles
+    private fun parseArticlesResponse(responseText: String): Set<ArticleDto> {
+        return Json.decodeFromString(NewsDto.serializer(), responseText).articles.toSet()
     }
 
     override fun getNewsOnline(): Flow<List<Article>> = flow {
-        val response = httpClient.get(NEWS_URL).body<List<ArticleDto>>().toDomain()
+        val response = httpClient.get(NEWS_URL).body<Set<ArticleDto>>().toDomain()
         emit(response)
     }
         .flowOn(Dispatchers.IO)
@@ -63,7 +67,7 @@ class NewsRepositoryImpl(
 
     private suspend fun fetchArticleByUrl(url: String): Article {
         val responseText = getPlainNewsResponse()
-        val articles: List<ArticleDto> = parseArticlesResponse(responseText)
+        val articles: Set<ArticleDto> = parseArticlesResponse(responseText)
 
         val matchedArticle = articles
             .find { it.url.contains(url) }

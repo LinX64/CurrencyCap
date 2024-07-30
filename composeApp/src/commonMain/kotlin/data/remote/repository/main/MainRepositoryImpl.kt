@@ -35,7 +35,9 @@ class MainRepositoryImpl(
     ): Flow<NetworkResult<Currencies>> = cacheDataOrFetchOnline(
         query = { ratesLocalDataSource.getRates() },
         fetch = { getCurrencies() },
-        shouldFetch = { localRates -> localRates == null || forceRefresh },
+        shouldFetch = { localRates -> localRates == null },
+        forceRefresh = forceRefresh,
+        clearLocalData = { ratesLocalDataSource.deleteRates() },
         saveFetchResult = { responseDto ->
             ratesLocalDataSource.insertRates(responseDto.toEntity())
         }

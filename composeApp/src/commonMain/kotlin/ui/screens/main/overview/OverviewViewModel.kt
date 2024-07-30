@@ -28,16 +28,18 @@ class OverviewViewModel(
 
     override fun handleEvent(event: OverviewViewEvent) {
         when (event) {
-            OnRetry -> loadCombinedRates()
-            is OnLoadRates -> loadCombinedRates()
+            OnRetry -> loadCombinedRates(forceRefresh = true)
+            is OnLoadRates -> loadCombinedRates(event.forceRefresh)
         }
     }
 
-    private fun loadCombinedRates() {
+    private fun loadCombinedRates(
+        forceRefresh: Boolean = false
+    ) {
         setState { Loading }
 
         viewModelScope.launch {
-            combinedRatesUseCase()
+            combinedRatesUseCase(forceRefresh = forceRefresh)
                 .map {
                     val bonbastRates = it.bonbastRates
                     val cryptoRates = it.cryptoRates
