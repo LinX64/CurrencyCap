@@ -3,6 +3,10 @@ package ui.screens.main.overview
 import androidx.lifecycle.viewModelScope
 import com.mvicompose.linx64.ui.MviViewModel
 import domain.usecase.CombineRatesNewsUseCase
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -15,22 +19,25 @@ class OverviewViewModel(
     private val combinedRatesUseCase: CombineRatesNewsUseCase
 ) : MviViewModel<OverviewViewEvent, OverviewState, OverviewNavigationEffect>(Loading) {
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
+
     init {
-        handleEvent(OnLoadRates)
+        handleEvent(OnLoadRates())
     }
 
     override fun handleEvent(event: OverviewViewEvent) {
         when (event) {
-            OnRetry -> loadCombinedRates()
-            is OnLoadRates -> loadCombinedRates()
+            OnRetry -> loadCombinedRates(forceRefresh = true)
+            is OnLoadRates -> loadCombinedRates(event.forceRefresh)
         }
     }
 
-    private fun loadCombinedRates() {
+    private fun loadCombinedRates(forceRefresh: Boolean = false) {
         setState { Loading }
 
         viewModelScope.launch {
-            combinedRatesUseCase()
+            combinedRatesUseCase(forceRefresh = forceRefresh)
                 .map {
                     val bonbastRates = it.bonbastRates
                     val cryptoRates = it.cryptoRates
@@ -51,6 +58,18 @@ class OverviewViewModel(
                     }
                 }
                 .launchIn(viewModelScope)
+        }
+    }
+
+    fun refresh() {
+        setState { Loading }
+        _isRefreshing.value = true
+
+        viewModelScope.launch {
+            delay(2500L)
+            _isRefreshing.value = false
+
+            handleEvent(OnLoadRates(forceRefresh = true))
         }
     }
 }

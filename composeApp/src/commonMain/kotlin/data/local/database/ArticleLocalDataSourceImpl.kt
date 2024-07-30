@@ -5,6 +5,7 @@ import data.local.model.toDomain
 import domain.model.Article
 import domain.repository.ArticleLocalDataSource
 import io.realm.kotlin.Realm
+import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -14,7 +15,9 @@ class ArticleLocalDataSourceImpl(
 ) : ArticleLocalDataSource {
 
     override suspend fun insertArticle(article: ArticleEntity) {
-        realm.write { copyToRealm(article) }
+        realm.writeBlocking {
+            copyToRealm(article, updatePolicy = UpdatePolicy.ALL)
+        }
     }
 
     override suspend fun updateArticle(article: ArticleEntity) {
@@ -41,7 +44,7 @@ class ArticleLocalDataSourceImpl(
             .map { it.list.first().toDomain() }
     }
 
-    override suspend fun insertArticles(articles: List<ArticleEntity>) {
+    override suspend fun insertArticles(articles: Set<ArticleEntity>) {
         realm.write {
             articles.map { copyToRealm(it) }
         }
@@ -59,7 +62,7 @@ class ArticleLocalDataSourceImpl(
             .map { it.list.map(ArticleEntity::toDomain) }
     }
 
-    override suspend fun cleanUp() {
+    override suspend fun deleteArticles() {
         return realm.write {
             val articles = this.query<ArticleEntity>()
             delete(articles)

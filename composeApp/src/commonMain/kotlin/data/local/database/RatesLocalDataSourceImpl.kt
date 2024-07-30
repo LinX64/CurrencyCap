@@ -5,6 +5,7 @@ import data.local.model.main.toDomain
 import domain.model.main.Currencies
 import domain.repository.RatesLocalDataSource
 import io.realm.kotlin.Realm
+import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -20,7 +21,7 @@ class RatesLocalDataSourceImpl(
 
     override suspend fun insertRates(rates: CurrenciesEntity) {
         realm.write {
-            copyToRealm(rates)
+            copyToRealm(rates, updatePolicy = UpdatePolicy.ALL)
         }
     }
 

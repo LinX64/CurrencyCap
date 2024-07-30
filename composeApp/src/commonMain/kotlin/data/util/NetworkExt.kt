@@ -1,11 +1,8 @@
 package data.util
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.retryWhen
 import okio.IOException
 import kotlin.math.pow
@@ -30,21 +27,47 @@ internal inline fun <ResultType, RequestType> cacheDataOrFetchOnline(
     crossinline fetch: suspend () -> RequestType,
     crossinline saveFetchResult: suspend (RequestType) -> Unit,
     crossinline onFetchFailed: (Throwable) -> Unit = { },
-    crossinline shouldFetch: (ResultType?) -> Boolean = { true }
+    crossinline shouldFetch: (ResultType?) -> Boolean = { true },
+    crossinline isFresh: (ResultType?) -> Boolean = { false },
+    crossinline clearLocalData: suspend () -> Unit = { },
+    forceRefresh: Boolean = false
 ): Flow<NetworkResult<ResultType>> = channelFlow {
     send(NetworkResult.Loading(null))
 
-    val queryFlow = query()
-    queryFlow.collect { localData ->
-        if (localData != null) {
-            send(NetworkResult.Success(localData))
+    /**
+     * If forceRefresh is true, clear the local data and fetch the data from the network.
+     * If the fetch is successful, save the fetched data.
+     */
+    if (forceRefresh) {
+        clearLocalData()
+
+        try {
+            val fetchedData = fetch()
+            saveFetchResult(fetchedData)
+        } catch (e: Exception) {
+            onFetchFailed(e)
+            send(NetworkResult.Error(e, null))
+            return@channelFlow
+        }
+    }
+
+    /**
+     * Collect the local data and check if it is empty or stale.
+     * If the data is not empty and fresh, send the data.
+     * If the data is empty or stale, fetch the data from the network.
+     */
+    query().collect { localData ->
+        val isEmpty = localData == null || (localData as? Collection<*>)?.isEmpty() ?: false
+
+        if (localData != null && !isEmpty) {
+            val freshness = if (isFresh(localData)) DataFreshness.FRESH else DataFreshness.STALE
+            send(NetworkResult.Success(localData, freshness))
         }
 
-        if (shouldFetch(localData)) {
+        if (shouldFetch(localData) && !forceRefresh) {
             try {
                 val fetchedData = fetch()
                 saveFetchResult(fetchedData)
-                // The updated data will be emitted in the next iteration of this collect
             } catch (e: Exception) {
                 onFetchFailed(e)
                 send(NetworkResult.Error(e, localData))
@@ -52,5 +75,8 @@ internal inline fun <ResultType, RequestType> cacheDataOrFetchOnline(
         }
     }
 }
-    .flowOn(Dispatchers.IO)
-    .retryOnIOException()
+
+enum class DataFreshness {
+    FRESH,
+    STALE
+}

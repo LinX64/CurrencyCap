@@ -6,10 +6,10 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
@@ -30,6 +30,7 @@ import ui.screens.initial.landing.privacy_policy.PrivacyPolicySection
 import ui.screens.main.news.NewsViewEvent.OnSetClick
 import ui.screens.main.news.NewsViewModel
 import ui.screens.main.news.components.NewsFilterSection
+import ui.screens.main.overview.OverviewViewModel
 import ui.screens.main.subscribers.SubscribersSection
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,6 +38,7 @@ import ui.screens.main.subscribers.SubscribersSection
 internal fun App(
     mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
     newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
+    overviewViewModel: OverviewViewModel = koinViewModel<OverviewViewModel>(),
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
@@ -44,13 +46,16 @@ internal fun App(
     val appState: AppState = rememberAppState(navController)
     val scope = rememberCoroutineScope()
 
-    val mainState by mainViewModel.appState.collectAsState()
+    val mainState by mainViewModel.appState.collectAsStateWithLifecycle()
+    val isRefreshing by overviewViewModel.isRefreshing.collectAsStateWithLifecycle()
     val currentDestination = appState.currentDestination
     val isLoggedIn = mainState is MainState.LoggedIn
     val hazeState = remember { HazeState() }
 
     EdgeToEdgeScaffoldWithPullToRefresh(
-        scope = scope,
+        currentDestination = currentDestination,
+        isRefreshing = isRefreshing,
+        onRefresh = { overviewViewModel.refresh() },
         topBar = {
             AppTopBar(
                 currentDestination = currentDestination,

@@ -11,10 +11,10 @@ interface ArticleLocalDataSource {
 
     fun getArticleByUrl(url: String): Flow<Article>
 
-    suspend fun insertArticles(articles: List<ArticleEntity>)
+    suspend fun insertArticles(articles: Set<ArticleEntity>)
     fun getArticles(): Flow<List<Article>>
 
     fun getBookmarkedArticles(): Flow<List<Article>>
 
-    suspend fun cleanUp()
+    suspend fun deleteArticles()
 }
