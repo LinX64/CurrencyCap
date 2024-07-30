@@ -1,9 +1,11 @@
-package ui.screens.main.overview.components
+package com.client.currencycap
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,16 +24,19 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import domain.model.main.Crypto
 import kotlinx.collections.immutable.persistentListOf
 import ui.common.formatToPrice
+import ui.screens.main.overview.components.TopMoversChart
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.SPACER_PADDING_32
+import util.getDummyCryptoItem
 
 @Composable
-internal fun TopMoversCard(
+internal fun AIStyledCard(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
     topMovers: Crypto,
@@ -94,7 +98,8 @@ internal fun TopMoversCard(
                 ) {
                     Text(
                         text = "${if (topMovers.priceChange24h >= 0) "+" else ""}${formatToPrice(topMovers.priceChange24h)}%",
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = Color.White,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -111,7 +116,7 @@ internal fun TopMoversCard(
                 Text(
                     modifier = isLoadingModifier,
                     text = topMovers.name,
-                    color = MaterialTheme.colorScheme.surface,
+                    color = Color.White,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -119,7 +124,7 @@ internal fun TopMoversCard(
                 Text(
                     modifier = isLoadingModifier,
                     text = "$${formatToPrice(topMovers.currentPrice)}",
-                    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.7f),
+                    color = Color.White.copy(alpha = 0.7f),
                     fontSize = 18.sp
                 )
 
@@ -145,6 +150,31 @@ internal fun TopMoversCard(
                             topMovers.currentPrice.toFloat(),
                             topMovers.high24h.toFloat(),
                         )
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun MainPreview() {
+    DarkBackground {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                repeat(2) {
+                    AIStyledCard(
+                        topMovers = getDummyCryptoItem(),
+                        isLoading = false,
+                        onClick = { _, _ -> }
                     )
                 }
             }

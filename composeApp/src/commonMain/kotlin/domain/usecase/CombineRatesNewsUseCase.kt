@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
+import kotlin.math.abs
 
 class CombineRatesNewsUseCase(
     private val mainRepository: MainRepository,
@@ -45,7 +46,7 @@ class CombineRatesNewsUseCase(
 }
 
 private fun mapToTopMovers(rates: List<Crypto>) = rates
-    .sortedByDescending { it.name }
-    .take(4)
-    .sortedBy { it.currentPrice }
+    .sortedBy { it.symbol }
+    .sortedByDescending { abs(it.priceChangePercentage24h) }
+    .take(2)
 

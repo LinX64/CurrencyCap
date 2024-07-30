@@ -1,14 +1,5 @@
 package com.client.currencycap
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import ui.components.main.VerticalBarCard
-
 //@Composable
 //@Preview(showBackground = true)
 //private fun ExchangePreview() {
@@ -76,21 +67,21 @@ import ui.components.main.VerticalBarCard
 //    }
 //}
 
-@Composable
-@Preview(showBackground = true)
-private fun LineChartPreview() {
-    KoinPreview {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            VerticalBarCard(
-                onTabSelected = {}
-            )
-        }
-    }
-}
+//@Composable
+//@Preview(showBackground = true)
+//private fun LineChartPreview() {
+//    KoinPreview {
+//        Column(
+//            modifier = Modifier.fillMaxSize(),
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            verticalArrangement = Arrangement.Center
+//        ) {
+//            VerticalBarCard(
+//                onTabSelected = {}
+//            )
+//        }
+//    }
+//}
 
 //data class DataPoint(
 //    val y: Double,
@@ -223,5 +214,6 @@ private fun LineChartPreview() {
 //        }
 //    }
 //}
+
 
 
