@@ -2,11 +2,11 @@ package ui.screens.initial.login
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.mvicompose.linx64.ui.MviViewModel
 import data.remote.repository.auth.AuthServiceRepositoryImpl.AuthState
 import domain.repository.AuthServiceRepository
 import domain.repository.UserPreferences
 import kotlinx.coroutines.launch
+import ui.common.MviViewModel
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToRegister
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToResetPassword

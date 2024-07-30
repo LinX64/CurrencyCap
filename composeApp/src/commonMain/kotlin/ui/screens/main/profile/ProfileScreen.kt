@@ -8,7 +8,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.mvicompose.linx64.ui.components.HandleNavigationEffect
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.contact_email
 import currencycap.composeapp.generated.resources.support_request
@@ -18,6 +17,7 @@ import org.jetbrains.compose.resources.stringResource
 import ui.common.SendMail
 import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.BaseTransparentCircularProgressBar
+import ui.components.base.HandleNavigationEffect
 import ui.screens.main.profile.ProfileNavigationEffect.NavigateToLanding
 import ui.screens.main.profile.ProfileNavigationEffect.OpenEmailApp
 import ui.screens.main.profile.ProfileState.Loading

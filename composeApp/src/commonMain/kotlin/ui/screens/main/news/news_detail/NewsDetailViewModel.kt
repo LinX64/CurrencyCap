@@ -2,11 +2,11 @@ package ui.screens.main.news.news_detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.mvicompose.linx64.ui.MviViewModel
 import data.util.NetworkResult
 import domain.repository.NewsRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import ui.common.MviViewModel
 import ui.navigation.util.ENCODED_URL
 import ui.screens.main.news.news_detail.NewsDetailNavigationEffect.OpenBottomSheet
 import ui.screens.main.news.news_detail.NewsDetailState.Error

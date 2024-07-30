@@ -3,11 +3,11 @@ package ui.screens.initial.register
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.mvicompose.linx64.ui.MviViewModel
 import data.remote.repository.auth.AuthServiceRepositoryImpl
 import domain.repository.AuthServiceRepository
 import domain.repository.UserPreferences
 import kotlinx.coroutines.launch
+import ui.common.MviViewModel
 import ui.screens.initial.register.RegisterState.Loading
 import ui.screens.initial.register.RegisterViewEvent.OnEmailChanged
 import ui.screens.initial.register.RegisterViewEvent.OnPasswordChanged
