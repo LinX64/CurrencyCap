@@ -3,7 +3,7 @@ package ui.screens.main.search
 import androidx.lifecycle.viewModelScope
 import data.util.NetworkResult
 import data.util.asResult
-import domain.repository.MainRepository
+import domain.repository.ExploreRepository
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -25,7 +25,7 @@ import ui.screens.main.search.SearchState.Loading
 import ui.screens.main.search.SearchState.Success
 
 class SearchViewModel(
-    private val mainRepository: MainRepository
+    private val exploreRepository: ExploreRepository
 ) : MviViewModel<SearchEvent, SearchState, SearchNavigationEffect>(Idle) {
 
     private val searchQuery: MutableStateFlow<String> = MutableStateFlow("")
@@ -50,7 +50,7 @@ class SearchViewModel(
             debounce(500)
                 .filter { it.isNotEmpty() }
                 .distinctUntilChanged()
-                .flatMapLatest(mainRepository::search)
+                .flatMapLatest(exploreRepository::search)
                 .asResult()
                 .onEach { result ->
                     setState {

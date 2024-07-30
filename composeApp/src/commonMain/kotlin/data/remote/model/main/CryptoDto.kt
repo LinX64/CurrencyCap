@@ -1,6 +1,8 @@
 package data.remote.model.main
 
+import data.local.model.main.CryptoEntity
 import domain.model.main.Crypto
+import io.realm.kotlin.ext.toRealmList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
@@ -24,7 +26,7 @@ data class CryptoDto(
     @SerialName("current_price")
     val currentPrice: Double,
     @SerialName("fully_diluted_valuation")
-    val fullyDilutedValuation: Long? = null,
+    var fullyDilutedValuation: Long? = null,
     @SerialName("high_24h")
     val high24h: Double,
     @SerialName("id")
@@ -59,7 +61,34 @@ data class CryptoDto(
     val totalSupply: Double? = null,
     @SerialName("total_volume")
     val totalVolume: Double
-)
+) {
+    fun toEntity() = CryptoEntity().apply {
+        ath = this@CryptoDto.ath
+        athChangePercentage = this@CryptoDto.athChangePercentage
+        athDate = this@CryptoDto.athDate
+        atl = this@CryptoDto.atl
+        atlChangePercentage = this@CryptoDto.atl
+        atlDate = this@CryptoDto.atlDate
+        circulatingSupply = this@CryptoDto.circulatingSupply
+        currentPrice = this@CryptoDto.currentPrice
+        high24h = this@CryptoDto.high24h
+        id = this@CryptoDto.id
+        image = this@CryptoDto.image
+        lastUpdated = this@CryptoDto.lastUpdated
+        low24h = this@CryptoDto.low24h
+        marketCap = this@CryptoDto.marketCap
+        marketCapChange24h = this@CryptoDto.marketCapChange24h
+        marketCapChangePercentage24h = this@CryptoDto.marketCapChangePercentage24h
+        marketCapRank = this@CryptoDto.marketCapRank
+        maxSupply = this@CryptoDto.maxSupply
+        name = this@CryptoDto.name
+        priceChange24h = this@CryptoDto.priceChange24h
+        priceChangePercentage24h = this@CryptoDto.priceChangePercentage24h
+        symbol = this@CryptoDto.symbol
+        totalSupply = this@CryptoDto.totalSupply
+        totalVolume = this@CryptoDto.totalVolume
+    }
+}
 
 fun CryptoDto.toDomain() = Crypto(
     ath = ath,
@@ -88,3 +117,5 @@ fun CryptoDto.toDomain() = Crypto(
     totalSupply = totalSupply,
     totalVolume = totalVolume
 )
+
+fun List<CryptoDto>.toEntity() = map { it.toEntity() }.toRealmList()

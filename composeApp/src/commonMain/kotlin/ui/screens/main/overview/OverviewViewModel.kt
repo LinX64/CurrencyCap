@@ -7,6 +7,7 @@ import domain.repository.MainRepository
 import domain.repository.NewsRepository
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import ui.common.MviViewModel
@@ -35,7 +36,10 @@ class OverviewViewModel(
     private fun loadCombinedRates() {
         setState { OverviewState.Loading }
 
-        val ratesFlow = mainRepository.getAllRates()
+        val ratesFlow = mainRepository.getAllRates().map {
+            if (it is NetworkResult.Success) it.data else null
+        }.filterNotNull()
+
         val newsFlow = newsRepository.getNews().map {
             if (it is NetworkResult.Success) it.data else emptyList()
         }
