@@ -3,7 +3,6 @@ package ui.screens.main.profile
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.mvicompose.linx64.ui.MviViewModel
 import data.remote.model.User
 import domain.repository.AuthServiceRepository
 import domain.repository.ProfileRepository
@@ -11,6 +10,7 @@ import domain.repository.UserPreferences
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
+import ui.common.MviViewModel
 import ui.screens.main.profile.ProfileNavigationEffect.NavigateToLanding
 import ui.screens.main.profile.ProfileNavigationEffect.OpenEmailApp
 import ui.screens.main.profile.ProfileState.Idle

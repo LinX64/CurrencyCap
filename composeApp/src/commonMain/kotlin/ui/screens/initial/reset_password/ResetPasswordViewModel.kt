@@ -1,10 +1,10 @@
 package ui.screens.initial.reset_password
 
 import androidx.lifecycle.viewModelScope
-import com.mvicompose.linx64.ui.MviViewModel
 import domain.repository.AuthServiceRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import ui.common.MviViewModel
 import ui.screens.initial.reset_password.ResetPasswordViewEvent.OnEmailChanged
 import ui.screens.initial.reset_password.ResetPasswordViewEvent.OnResetPasswordClick
 import util.validateEmail

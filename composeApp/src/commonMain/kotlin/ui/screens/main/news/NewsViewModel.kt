@@ -3,7 +3,6 @@ package ui.screens.main.news
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.viewModelScope
-import com.mvicompose.linx64.ui.MviViewModel
 import data.remote.model.news.toEntity
 import data.util.NetworkResult
 import domain.model.Article
@@ -15,6 +14,7 @@ import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ui.common.MviViewModel
 import ui.screens.main.news.NewsState.Empty
 import ui.screens.main.news.NewsState.Error
 import ui.screens.main.news.NewsState.Loading

@@ -17,6 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import ui.screens.main.subscribers.components.FreePlanCard
 import ui.screens.main.subscribers.components.PremiumAccessOnly
 import ui.screens.main.subscribers.components.ProPlanCard

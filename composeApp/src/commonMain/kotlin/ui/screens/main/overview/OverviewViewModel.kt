@@ -1,7 +1,6 @@
 package ui.screens.main.overview
 
 import androidx.lifecycle.viewModelScope
-import com.mvicompose.linx64.ui.MviViewModel
 import domain.usecase.CombineRatesNewsUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,6 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ui.common.MviViewModel
 import ui.screens.main.overview.OverviewState.Loading
 import ui.screens.main.overview.OverviewState.Success
 import ui.screens.main.overview.OverviewViewEvent.OnLoadRates

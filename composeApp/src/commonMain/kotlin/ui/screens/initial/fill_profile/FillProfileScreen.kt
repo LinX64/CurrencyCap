@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.mvicompose.linx64.ui.components.HandleNavigationEffect
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.fill_profile
 import currencycap.composeapp.generated.resources.finish_sign_up
@@ -25,6 +24,7 @@ import currencycap.composeapp.generated.resources.skip
 import di.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.BaseCenterColumn
+import ui.components.base.HandleNavigationEffect
 import ui.components.base.button.PrimaryButton
 import ui.components.base.button.SecondaryButton
 import ui.screens.initial.fill_profile.FillProfileNavigationEffect.NavigateToMarketOverview

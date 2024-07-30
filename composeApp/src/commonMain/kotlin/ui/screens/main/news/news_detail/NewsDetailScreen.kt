@@ -7,12 +7,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.mvicompose.linx64.ui.components.HandleNavigationEffect
 import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import org.koin.core.parameter.parametersOf
 import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.BaseModalBottomSheet
+import ui.components.base.HandleNavigationEffect
 import ui.screens.main.news.news_detail.NewsDetailNavigationEffect.OpenBottomSheet
 import ui.screens.main.news.news_detail.NewsDetailState.Error
 import ui.screens.main.news.news_detail.NewsDetailState.Loading
