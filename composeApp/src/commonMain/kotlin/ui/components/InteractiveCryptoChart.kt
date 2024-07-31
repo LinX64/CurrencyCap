@@ -125,6 +125,8 @@ private fun DrawChart(
     modifier: Modifier = Modifier,
     chartData: ImmutableList<ChartDataPoint>,
     isInteractivityEnabled: Boolean,
+    zoomLevel: Float = 1f,
+    onZoomChanged: (Float) -> Unit = {},
     lighterColor: Color,
     lightLineColor: Color,
     labelColor: Color,

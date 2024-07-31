@@ -1,11 +1,11 @@
 package di
 
+import com.vipulasri.kachetor.KachetorStorage
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.resources.Resources
 import io.ktor.http.ContentType
@@ -18,7 +18,7 @@ val httpClientModule = module {
         HttpClient {
             install(ContentNegotiation) {
                 json(
-                    json = Json {
+                    Json {
                         ignoreUnknownKeys = true
                         isLenient = true
                         coerceInputValues = true
@@ -26,19 +26,14 @@ val httpClientModule = module {
                     contentType = ContentType.Application.Json
                 )
             }
-            install(Logging) {
-                level = LogLevel.ALL
-                logger = object : Logger {
-                    override fun log(message: String) {
-                        println("HTTP Client: $message")
-                    }
-                }
-            }
+            install(Logging) { level = LogLevel.INFO }
             install(HttpTimeout) {
-                requestTimeoutMillis = 15000
+                requestTimeoutMillis = 15000L
             }
             install(Resources)
-            install(HttpCache)
+            install(HttpCache) {
+                publicStorage(KachetorStorage(10 * 1024 * 1024)) // 10MB
+            }
         }
     }
 }
