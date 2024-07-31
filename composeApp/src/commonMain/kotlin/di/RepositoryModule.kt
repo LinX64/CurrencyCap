@@ -41,7 +41,7 @@ val repositoryModule = module {
     single<AppPreferences> { AppPreferencesImpl(get()) }
     single<CurrencyRepository> { CurrencyRepositoryImpl(get()) }
     single<ExchangeRepository> { ExchangeRepositoryImpl(get()) }
-    single<NewsRepository> { NewsRepositoryImpl(get(), get()) }
+    single<NewsRepository> { NewsRepositoryImpl(get(), get(), get()) }
     single<CryptoRepository> { CryptoRepositoryImpl(get()) }
     single<ExploreRepository> { ExploreRepositoryImpl(get()) }
 

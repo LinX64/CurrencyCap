@@ -29,6 +29,9 @@ sealed interface DetailState {
 
     @Stable
     data class Error(val message: String) : DetailState
+
+    @Stable
+    data object EmptyChartData : DetailState
 }
 
 @Stable

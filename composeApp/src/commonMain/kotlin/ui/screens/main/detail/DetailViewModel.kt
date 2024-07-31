@@ -76,11 +76,10 @@ class DetailViewModel(
                         val chartData = result.data.prices.toImmutableList()
                         if (chartData.isEmpty()) {
                             _chartDataState.value = ChartDataUiState(isLoading = false)
-                            return@map
                         } else _chartDataState.value = ChartDataUiState(chartDataPoints = chartData)
                     }
 
-                    is Error -> setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
+                    is Error -> _chartDataState.value = ChartDataUiState(isLoading = false)
                     is Loading -> _chartDataState.value = ChartDataUiState(isLoading = true)
                 }
             }

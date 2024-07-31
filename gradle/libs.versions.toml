@@ -47,7 +47,6 @@ compottie = { group = "io.github.alexzhirkevich", name = "compottie", version.re
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 placeholder-material3 = { group = "com.eygraber", name = "compose-placeholder-material3", version.ref = "placeholder-material3" }
-kachetor = { module = "com.vipulasri.kachetor:kachetor", version.ref = "kachetor" }
 
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "jetpack-compose" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "jetpack-compose" }
