@@ -1,13 +1,15 @@
 package domain.repository
 
+import data.util.NetworkResult
 import domain.model.ChipPeriod
-import domain.model.CryptoMarketChartData
+import domain.model.main.ChartDataPoint
 import kotlinx.coroutines.flow.Flow
 
 interface CryptoRepository {
+
     fun fetchMarketChartData(
         coinId: String,
         symbol: String,
         period: ChipPeriod
-    ): Flow<CryptoMarketChartData>
+    ): Flow<NetworkResult<List<ChartDataPoint>>>
 }

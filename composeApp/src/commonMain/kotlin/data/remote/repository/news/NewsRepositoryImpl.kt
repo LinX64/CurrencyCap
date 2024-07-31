@@ -54,6 +54,10 @@ class NewsRepositoryImpl(
             val articles: Set<ArticleDto> = parseArticlesResponse(responseText)
             val sortedArticles = articles.sortedBy { it.publishedAt }.reversed().toSet()
             articleLocalDataSource.insertArticles(sortedArticles.toEntity())
+
+            println("cachedLastFetchTime: $cachedLastFetchTime")
+            println("getCurrentTime(): ${getCurrentTime()}")
+
             appPreferences.saveLastFetchTime(getCurrentTime())
         }
     )
@@ -103,7 +107,6 @@ class NewsRepositoryImpl(
     private fun isCacheExpired(): Boolean {
         val now = getCurrentTime()
         val isExpired = now - cachedLastFetchTime > cacheExpirationTime
-        println("isCacheExpired: $isExpired")
         return isExpired
     }
 
