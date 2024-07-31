@@ -61,7 +61,6 @@ internal fun TopMoversCard(
                     )
                 )
         ) {
-            // Blurred purple effect in top-right corner
             Box(
                 modifier = Modifier
                     .size(100.dp)
@@ -111,7 +110,7 @@ internal fun TopMoversCard(
                 Text(
                     modifier = isLoadingModifier,
                     text = topMovers.name,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = Color.White,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -119,7 +118,7 @@ internal fun TopMoversCard(
                 Text(
                     modifier = isLoadingModifier,
                     text = "$${formatToPrice(topMovers.currentPrice)}",
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                    color = Color.Gray.copy(alpha = 0.5f),
                     fontSize = 18.sp
                 )
 

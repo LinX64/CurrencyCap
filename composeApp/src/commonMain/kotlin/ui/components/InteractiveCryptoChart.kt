@@ -57,14 +57,14 @@ internal fun InteractiveCryptoChart(
     isLoading: Boolean = false,
     lighterColor: Color = MaterialTheme.colorScheme.surface,
     lightLineColor: Color = MaterialTheme.colorScheme.primary,
+    labelColor: Color = MaterialTheme.colorScheme.onSurface,
+    dotColor: Color = MaterialTheme.colorScheme.onSurface,
+    labelBackgroundColor: Color = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f),
+    textMeasurer: TextMeasurer = rememberTextMeasurer()
 ) {
     val highestIndex = remember(list) { list.indices.maxByOrNull { list[it].price } ?: 0 }
     var selectedIndex by remember(highestIndex) { mutableIntStateOf(highestIndex) }
     var isInteracting by remember { mutableStateOf(false) }
-    val labelColor = MaterialTheme.colorScheme.onSurface
-    val dotColor = MaterialTheme.colorScheme.onSurface
-    val labelBackgroundColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f)
-    val textMeasurer = rememberTextMeasurer()
 
     LaunchedEffect(isInteracting) {
         if (!isInteracting) {
@@ -180,11 +180,14 @@ internal fun InteractiveCryptoChart(
                         Text(
                             text = "Price: $${formatToPrice(dataPoint.price.toDouble())}",
                             color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.bodyMedium
                         )
                         Text(
                             text = "Time: ${formatTimestamp(dataPoint.timestamp)}",
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.bodyMedium
                         )
                     }
                 }

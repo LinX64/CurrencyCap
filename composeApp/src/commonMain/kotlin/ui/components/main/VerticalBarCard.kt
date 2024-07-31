@@ -3,25 +3,26 @@ package ui.components.main
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -34,28 +35,34 @@ internal fun VerticalBarCard(
 ) {
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(1) }
 
-    Box(
+    Card(
         modifier = Modifier.then(modifier)
             .width(64.dp)
-            .height(160.dp)
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),
-                shape = RoundedCornerShape(CARD_CORNER_RADIUS)
-            )
-            .clip(RoundedCornerShape(CARD_CORNER_RADIUS))
-            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)),
+            .height(160.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        border = BorderStroke(1.dp, Color.White.copy(alpha = 0.1f)),
+        shape = RoundedCornerShape(CARD_CORNER_RADIUS),
     ) {
-        VerticalBar(
-            tabs = myTabs,
-            selectedTab = selectedTabIndex,
-            onTabSelected = {
-                selectedTabIndex = myTabs.indexOf(it)
-                onTabSelected(selectedTabIndex)
-            }
-        )
+        Box(
+            modifier = Modifier
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(Color(0xFF4A148C), Color(0xFF000000)),
+                        startY = 0f,
+                    )
+                )
+        ) {
+            VerticalBar(
+                tabs = myTabs,
+                selectedTab = selectedTabIndex,
+                onTabSelected = {
+                    selectedTabIndex = myTabs.indexOf(it)
+                    onTabSelected(selectedTabIndex)
+                }
+            )
 
-        SidesDash(selectedTabIndex)
+            SidesDash(selectedTabIndex)
+        }
     }
 }
 

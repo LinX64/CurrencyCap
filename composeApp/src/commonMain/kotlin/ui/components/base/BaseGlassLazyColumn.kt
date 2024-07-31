@@ -17,6 +17,7 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_24
 import ui.theme.AppDimensions.SPACER_PADDING_96
 
 @Composable
@@ -42,7 +43,7 @@ internal fun BaseGlassLazyColumn(
                     state = hazeState,
                     style = HazeStyle(
                         tint = MaterialTheme.colorScheme.surface.copy(alpha = 0.1f),
-                        blurRadius = SPACER_PADDING_16
+                        blurRadius = SPACER_PADDING_24
                     )
                 ),
             contentPadding = contentPadding,
