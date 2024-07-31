@@ -11,6 +11,10 @@ import domain.repository.NewsRepository
 import domain.repository.UserPreferences
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toPersistentSet
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -31,16 +35,18 @@ class NewsViewModel(
     private val userPreferences: UserPreferences
 ) : MviViewModel<NewsViewEvent, NewsState, NewsNavigationEffect>(Loading), DefaultLifecycleObserver {
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
     val sources = mutableStateOf(persistentSetOf<String>())
 
     init {
-        handleEvent(FetchNews)
+        handleEvent(FetchNews())
     }
 
     override fun handleEvent(event: NewsViewEvent) {
         when (event) {
-            FetchNews -> fetchNews()
             OnRetry -> fetchNews()
+            is FetchNews -> fetchNews(event.forceRefresh)
             is OnBookmarkArticle -> handleOnBookmarkClick(event.article, event.isBookmarked)
             is OnSetClick -> {
                 saveSelectedDatesAndFilter(event.startDate, event.endDate)
@@ -49,8 +55,8 @@ class NewsViewModel(
         }
     }
 
-    private fun fetchNews() {
-        newsRepository.getNews()
+    private fun fetchNews(forceRefresh: Boolean = false) {
+        newsRepository.getNews(forceRefresh)
             .map { result ->
                 when (result) {
                     is NetworkResult.Success -> {
@@ -132,6 +138,18 @@ class NewsViewModel(
             }
 
             setState { if (filteredNews.isNotEmpty()) Success(filteredNews) else Empty }
+        }
+    }
+
+    fun refresh() {
+        setState { Loading }
+        _isRefreshing.value = true
+
+        viewModelScope.launch {
+            delay(2500L)
+            _isRefreshing.value = false
+
+            handleEvent(FetchNews(true))
         }
     }
 }
