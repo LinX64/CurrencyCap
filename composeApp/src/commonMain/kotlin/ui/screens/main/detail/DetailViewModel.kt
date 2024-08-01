@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import data.util.NetworkResult.Error
 import data.util.NetworkResult.Loading
 import data.util.NetworkResult.Success
-import data.util.asResult
 import domain.model.ChipPeriod
 import domain.repository.CryptoRepository
 import domain.repository.MainRepository
@@ -45,9 +44,10 @@ class DetailViewModel(
         }
     }
 
-    private fun onLoadCryptoInfo() {
-        mainRepository.getCryptoInfoById(id)
-            .asResult()
+    private fun onLoadCryptoInfo(
+        forceRefresh: Boolean = false,
+    ) {
+        mainRepository.getCryptoInfoBySymbol(forceRefresh = forceRefresh, symbol = symbol)
             .map { result ->
                 when (result) {
                     is Success -> {
@@ -56,7 +56,12 @@ class DetailViewModel(
                         onChartPeriodSelected(coinId = data.id, symbol = data.symbol, chipPeriod = ChipPeriod.DAY)
                     }
 
-                    is Error -> setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
+                    is Error -> {
+                        val cachedData = result.data
+                        if (cachedData != null) setState { DetailState.Success(cryptoInfo = cachedData) }
+                        else setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
+                    }
+
                     is Loading -> setState { DetailState.Loading }
                 }
             }
