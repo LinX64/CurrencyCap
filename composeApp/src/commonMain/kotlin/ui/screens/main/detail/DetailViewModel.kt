@@ -69,14 +69,13 @@ class DetailViewModel(
         chipPeriod: ChipPeriod,
     ) {
         cryptoRepository.fetchMarketChartData(coinId, symbol, chipPeriod)
-            .asResult()
             .map { result ->
                 when (result) {
                     is Success -> {
-                        val chartData = result.data.prices.toImmutableList()
+                        val chartData = result.data
                         if (chartData.isEmpty()) {
                             _chartDataState.value = ChartDataUiState(isLoading = false)
-                        } else _chartDataState.value = ChartDataUiState(chartDataPoints = chartData)
+                        } else _chartDataState.value = ChartDataUiState(chartDataPoints = chartData.toImmutableList())
                     }
 
                     is Error -> _chartDataState.value = ChartDataUiState(isLoading = false)

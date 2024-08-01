@@ -6,7 +6,9 @@ import domain.model.ChipPeriod
 import domain.model.main.ChartDataPoint
 import domain.repository.MarketChartDataLocalRepository
 import io.realm.kotlin.Realm
+import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
+import io.realm.kotlin.ext.realmListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -15,12 +17,11 @@ class MarketChartDataLocalRepositoryImpl(
 ) : MarketChartDataLocalRepository {
 
     override fun getChartDataFromDb(
-        coinId: String,
         symbol: String,
         period: ChipPeriod
     ): Flow<List<ChartDataPoint>> {
         return realm.query<ChartDataPointEntity>()
-            .query("coinId == $0 AND symbol == $1 AND period == $2", coinId, symbol, period.name)
+            .query("symbol == $0 AND period == $1", symbol, period.name)
             .asFlow()
             .map { entities ->
                 entities.list.map { entity ->
@@ -33,23 +34,29 @@ class MarketChartDataLocalRepositoryImpl(
     }
 
     override suspend fun insertMarketChartData(
-        coinId: String,
         symbol: String,
         period: String,
         prices: List<ChartDataPoint>
     ) {
         realm.writeBlocking {
-            prices.forEach { price ->
-                copyToRealm(MarketChartDataEntity().apply {
-                    this.id = coinId
+            val marketChartData = query<MarketChartDataEntity>("symbol == $0 AND period == $1", symbol, period)
+                .first()
+                .find()
+                ?: MarketChartDataEntity().apply {
                     this.symbol = symbol
                     this.period = period
-                })
-                copyToRealm(ChartDataPointEntity().apply {
+                    this.data = realmListOf()
+                }
+
+            prices.forEach { price ->
+                val chartDataPoint = ChartDataPointEntity().apply {
                     this.price = price.price
                     this.timestamp = price.timestamp
-                })
+                }
+                marketChartData.data.add(chartDataPoint)
             }
+
+            copyToRealm(marketChartData, UpdatePolicy.ALL)
         }
     }
 }

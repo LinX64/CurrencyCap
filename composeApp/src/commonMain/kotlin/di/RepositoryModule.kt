@@ -1,6 +1,7 @@
 package di
 
 import data.local.database.ArticleLocalDataSourceImpl
+import data.local.database.MarketChartDataLocalRepositoryImpl
 import data.local.database.RatesLocalDataSourceImpl
 import data.local.datastore.app.AppPreferences
 import data.local.datastore.app.AppPreferencesImpl
@@ -23,6 +24,7 @@ import domain.repository.CurrencyRepository
 import domain.repository.ExchangeRepository
 import domain.repository.ExploreRepository
 import domain.repository.MainRepository
+import domain.repository.MarketChartDataLocalRepository
 import domain.repository.NewsRepository
 import domain.repository.ProfileRepository
 import domain.repository.RatesLocalDataSource
@@ -42,10 +44,11 @@ val repositoryModule = module {
     single<CurrencyRepository> { CurrencyRepositoryImpl(get()) }
     single<ExchangeRepository> { ExchangeRepositoryImpl(get()) }
     single<NewsRepository> { NewsRepositoryImpl(get(), get(), get()) }
-    single<CryptoRepository> { CryptoRepositoryImpl(get()) }
+    single<CryptoRepository> { CryptoRepositoryImpl(get(), get()) }
     single<ExploreRepository> { ExploreRepositoryImpl(get()) }
 
     // Local repositories
     single<ArticleLocalDataSource> { ArticleLocalDataSourceImpl(get()) }
     single<RatesLocalDataSource> { RatesLocalDataSourceImpl(get()) }
+    single<MarketChartDataLocalRepository> { MarketChartDataLocalRepositoryImpl(get()) }
 }

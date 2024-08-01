@@ -6,6 +6,7 @@ import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.resources.Resources
 import io.ktor.http.ContentType
@@ -26,13 +27,20 @@ val httpClientModule = module {
                     contentType = ContentType.Application.Json
                 )
             }
-            install(Logging) { level = LogLevel.INFO }
+            install(Logging) {
+                level = LogLevel.INFO
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        println("HTTP Client: $message")
+                    }
+                }
+            }
             install(HttpTimeout) {
                 requestTimeoutMillis = 15000L
             }
             install(Resources)
             install(HttpCache) {
-                publicStorage(KachetorStorage(10 * 1024 * 1024)) // 10MB
+                publicStorage(KachetorStorage(100 * 1024 * 1024)) // 100MB
             }
         }
     }

@@ -10,6 +10,6 @@ interface CryptoRepository {
     fun fetchMarketChartData(
         coinId: String,
         symbol: String,
-        period: ChipPeriod
+        period: ChipPeriod = ChipPeriod.DAY
     ): Flow<NetworkResult<List<ChartDataPoint>>>
 }

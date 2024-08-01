@@ -7,13 +7,11 @@ import kotlinx.coroutines.flow.Flow
 interface MarketChartDataLocalRepository {
 
     fun getChartDataFromDb(
-        coinId: String,
         symbol: String,
-        period: ChipPeriod
+        period: ChipPeriod = ChipPeriod.DAY
     ): Flow<List<ChartDataPoint>>
 
     suspend fun insertMarketChartData(
-        coinId: String,
         symbol: String,
         period: String,
         prices: List<ChartDataPoint>

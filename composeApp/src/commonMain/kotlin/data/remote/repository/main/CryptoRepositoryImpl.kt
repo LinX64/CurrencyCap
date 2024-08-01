@@ -30,7 +30,8 @@ class CryptoRepositoryImpl(
         symbol: String,
         period: ChipPeriod
     ): Flow<NetworkResult<List<ChartDataPoint>>> = cacheDataOrFetchOnline(
-        query = { marketChartDataLocalRepository.getChartDataFromDb(coinId, symbol, period) },
+        forceRefresh = false,
+        query = { marketChartDataLocalRepository.getChartDataFromDb(symbol, period) },
         fetch = { fetchDataWithFilter(coinId, symbol, period) },
         shouldFetch = { localChartData -> localChartData.isNullOrEmpty() },
         clearLocalData = { },
@@ -39,7 +40,7 @@ class CryptoRepositoryImpl(
         },
         saveFetchResult = { chartData ->
             if (chartData.isNotEmpty()) {
-                marketChartDataLocalRepository.insertMarketChartData(coinId, symbol, period.interval, chartData)
+                marketChartDataLocalRepository.insertMarketChartData(symbol, period.interval, chartData)
             }
         }
     )

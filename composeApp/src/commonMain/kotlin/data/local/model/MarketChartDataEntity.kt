@@ -21,4 +21,6 @@ open class MarketChartDataEntity : RealmObject {
 open class ChartDataPointEntity : RealmObject {
     var price: String = ""
     var timestamp: Long = 0
+
+    companion object
 }
