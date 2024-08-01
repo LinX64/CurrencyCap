@@ -26,11 +26,12 @@ class CryptoRepositoryImpl(
 ) : CryptoRepository {
 
     override fun fetchMarketChartData(
+        forceRefresh: Boolean,
         coinId: String,
         symbol: String,
         period: ChipPeriod
     ): Flow<NetworkResult<List<ChartDataPoint>>> = cacheDataOrFetchOnline(
-        forceRefresh = false,
+        forceRefresh = forceRefresh,
         query = { marketChartDataLocalRepository.getChartDataFromDb(symbol, period) },
         fetch = { fetchDataWithFilter(coinId, symbol, period) },
         shouldFetch = { localChartData -> localChartData.isNullOrEmpty() },

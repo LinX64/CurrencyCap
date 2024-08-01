@@ -1,16 +1,17 @@
 package data.local.database
 
-import data.local.model.ChartDataPointEntity
 import data.local.model.MarketChartDataEntity
+import data.local.model.PriceDataPointEntity
 import domain.model.ChipPeriod
 import domain.model.main.ChartDataPoint
 import domain.repository.MarketChartDataLocalRepository
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
-import io.realm.kotlin.ext.realmListOf
+import io.realm.kotlin.ext.toRealmList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Clock
 
 class MarketChartDataLocalRepositoryImpl(
     private val realm: Realm
@@ -20,15 +21,16 @@ class MarketChartDataLocalRepositoryImpl(
         symbol: String,
         period: ChipPeriod
     ): Flow<List<ChartDataPoint>> {
-        return realm.query<ChartDataPointEntity>()
-            .query("symbol == $0 AND period == $1", symbol, period.name)
+        return realm.query<MarketChartDataEntity>("symbol == $0 AND period == $1", symbol, period.interval)
             .asFlow()
-            .map { entities ->
-                entities.list.map { entity ->
-                    ChartDataPoint(
-                        price = entity.price,
-                        timestamp = entity.timestamp
-                    )
+            .map { results ->
+                results.list.flatMap { entity ->
+                    entity.chartData.map { dataPoint ->
+                        ChartDataPoint(
+                            price = dataPoint.price,
+                            timestamp = dataPoint.timestamp
+                        )
+                    }
                 }
             }
     }
@@ -38,22 +40,19 @@ class MarketChartDataLocalRepositoryImpl(
         period: String,
         prices: List<ChartDataPoint>
     ) {
-        realm.writeBlocking {
-            val marketChartData = query<MarketChartDataEntity>("symbol == $0 AND period == $1", symbol, period)
-                .first()
-                .find()
-                ?: MarketChartDataEntity().apply {
-                    this.symbol = symbol
-                    this.period = period
-                    this.data = realmListOf()
-                }
+        realm.write {
+            val marketChartData = MarketChartDataEntity().apply {
+                this.id = "${symbol}_${period}"
+                this.symbol = symbol
+                this.period = period
+                this.chartData = prices.map { price ->
+                    PriceDataPointEntity().apply {
+                        this.price = price.price
+                        this.timestamp = price.timestamp
+                    }
+                }.toRealmList()
 
-            prices.forEach { price ->
-                val chartDataPoint = ChartDataPointEntity().apply {
-                    this.price = price.price
-                    this.timestamp = price.timestamp
-                }
-                marketChartData.data.add(chartDataPoint)
+                this.lastUpdated = Clock.System.now().toEpochMilliseconds()
             }
 
             copyToRealm(marketChartData, UpdatePolicy.ALL)

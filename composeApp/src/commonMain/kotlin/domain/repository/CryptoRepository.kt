@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface CryptoRepository {
 
     fun fetchMarketChartData(
+        forceRefresh: Boolean = false,
         coinId: String,
         symbol: String,
         period: ChipPeriod = ChipPeriod.DAY

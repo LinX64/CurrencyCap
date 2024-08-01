@@ -1,6 +1,7 @@
 package data.local.model
 
 import io.realm.kotlin.ext.realmListOf
+import io.realm.kotlin.types.EmbeddedRealmObject
 import io.realm.kotlin.types.RealmList
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
@@ -12,13 +13,14 @@ open class MarketChartDataEntity : RealmObject {
     var id: String = ""
     var symbol: String = ""
     var period: String = ""
-    var data: RealmList<ChartDataPointEntity> = realmListOf()
+    var chartData: RealmList<PriceDataPointEntity> = realmListOf()
+    var lastUpdated: Long = 0
 
     companion object
 }
 
 @Serializable
-open class ChartDataPointEntity : RealmObject {
+open class PriceDataPointEntity : EmbeddedRealmObject {
     var price: String = ""
     var timestamp: Long = 0
 

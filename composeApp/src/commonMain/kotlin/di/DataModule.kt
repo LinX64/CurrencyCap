@@ -1,8 +1,8 @@
 package di
 
 import data.local.model.ArticleEntity
-import data.local.model.ChartDataPointEntity
 import data.local.model.MarketChartDataEntity
+import data.local.model.PriceDataPointEntity
 import data.local.model.main.BonbastRateEntity
 import data.local.model.main.CryptoEntity
 import data.local.model.main.CurrenciesEntity
@@ -27,7 +27,7 @@ val dataModule = module {
                 MarketEntity::class,
                 RateEntity::class,
                 MarketChartDataEntity::class,
-                ChartDataPointEntity::class
+                PriceDataPointEntity::class
             )
         )
             .name(REALM_FILE_NAME)

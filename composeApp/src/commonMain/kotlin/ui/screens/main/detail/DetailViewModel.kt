@@ -41,7 +41,7 @@ class DetailViewModel(
         when (event) {
             OnRetry -> handleEvent(OnLoadCryptoInfo)
             OnLoadCryptoInfo -> onLoadCryptoInfo()
-            is OnChartPeriodSelect -> onChartPeriodSelected(event.coinId, event.symbol, event.chipPeriod)
+            is OnChartPeriodSelect -> onChartPeriodSelected(false, event.coinId, event.symbol, event.chipPeriod)
         }
     }
 
@@ -64,11 +64,12 @@ class DetailViewModel(
     }
 
     private fun onChartPeriodSelected(
+        forceRefresh: Boolean = false,
         coinId: String,
         symbol: String,
         chipPeriod: ChipPeriod,
     ) {
-        cryptoRepository.fetchMarketChartData(coinId, symbol, chipPeriod)
+        cryptoRepository.fetchMarketChartData(forceRefresh, coinId, symbol, chipPeriod)
             .map { result ->
                 when (result) {
                     is Success -> {
@@ -78,7 +79,14 @@ class DetailViewModel(
                         } else _chartDataState.value = ChartDataUiState(chartDataPoints = chartData.toImmutableList())
                     }
 
-                    is Error -> _chartDataState.value = ChartDataUiState(isLoading = false)
+                    is Error -> {
+                        val cachedData = result.data
+                        _chartDataState.value = ChartDataUiState(
+                            chartDataPoints = cachedData?.toImmutableList(),
+                            isLoading = false,
+                        )
+                    }
+
                     is Loading -> _chartDataState.value = ChartDataUiState(isLoading = true)
                 }
             }
