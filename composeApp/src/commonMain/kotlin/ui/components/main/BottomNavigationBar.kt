@@ -183,9 +183,10 @@ private fun CenteredExchangeButton(
 ) {
     val gradient = Brush.horizontalGradient(
         colors = listOf(
-            CurrencyColors.Muted_Teal.primary,
-            CurrencyColors.Green.primary
+            CurrencyColors.Muted_Teal.primary.copy(alpha = .8f),
+            CurrencyColors.Green.primary.copy(alpha = .8f)
         )
+        // todo: fix the background
     )
 
     IconButton(
@@ -195,7 +196,7 @@ private fun CenteredExchangeButton(
             .size(76.dp)
             .background(
                 brush = gradient,
-                shape = RoundedCornerShape(33.dp)
+                shape = RoundedCornerShape(CARD_CORNER_RADIUS)
             )
     ) {
         Icon(

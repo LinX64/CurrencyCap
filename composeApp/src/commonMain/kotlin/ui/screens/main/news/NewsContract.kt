@@ -33,4 +33,6 @@ sealed interface NewsState {
     data object Empty : NewsState
 }
 
-sealed interface NewsNavigationEffect
+sealed interface NewsNavigationEffect {
+    data class ShowBookmarkConfirmation(val isBookmarked: Boolean) : NewsNavigationEffect
+}

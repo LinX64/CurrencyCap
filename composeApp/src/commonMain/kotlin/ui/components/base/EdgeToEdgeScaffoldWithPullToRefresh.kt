@@ -35,6 +35,13 @@ internal fun EdgeToEdgeScaffoldWithPullToRefresh(
     val pullToRefreshState = rememberPullToRefreshState()
     val isOverviewScreen = currentDestination == OVERVIEW
     val isNewsScreen = currentDestination == NEWS
+    val isPullToRefreshEnabled = isOverviewScreen || isNewsScreen
+
+    val pullToRefreshModifier = if (isPullToRefreshEnabled) Modifier.pullToRefresh(
+        state = pullToRefreshState,
+        isRefreshing = isRefreshing,
+        onRefresh = { onRefresh() }
+    ) else Modifier
 
     Scaffold(
         topBar = topBar,
@@ -46,18 +53,12 @@ internal fun EdgeToEdgeScaffoldWithPullToRefresh(
         Box(
             modifier = Modifier.fillMaxSize()
                 .padding(top = paddingValues.calculateTopPadding())
-                .pullToRefresh(
-                    state = pullToRefreshState,
-                    isRefreshing = isRefreshing,
-                    onRefresh = {
-                        onRefresh()
-                    },
-                ),
+                .then(pullToRefreshModifier),
             contentAlignment = Alignment.TopCenter
         ) {
             content(paddingValues)
 
-            if (isOverviewScreen || isNewsScreen) {
+            if (isPullToRefreshEnabled) {
                 PullToRefreshDefaults.Indicator(
                     state = pullToRefreshState,
                     isRefreshing = isRefreshing,

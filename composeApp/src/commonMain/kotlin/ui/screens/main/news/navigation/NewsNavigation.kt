@@ -15,11 +15,13 @@ fun NavController.navigateToNewsScreen(navOptions: NavOptions) = navigate(News, 
 
 fun NavGraphBuilder.newsScreen(
     hazeState: HazeState,
-    navController: NavHostController
+    navController: NavHostController,
+    showBookmarkConfirmationSnakeBar: (Boolean) -> Unit
 ) {
     composable<News> {
         NewsRoute(
             hazeState = hazeState,
+            showBookmarkConfirmationSnakeBar = showBookmarkConfirmationSnakeBar,
             onNewsItemClick = { url ->
                 val encodedUrl = UrlEncoderUtil.encode(url)
                 navController.navigate(route = NewsDetail(encodedUrl))

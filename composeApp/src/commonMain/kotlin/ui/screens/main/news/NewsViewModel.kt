@@ -79,6 +79,8 @@ class NewsViewModel(
             val updatedArticle = article.copy(isBookmarked = isBookmarked)
             articleLocalDataSource.updateArticle(updatedArticle.toEntity())
         }
+
+        setEffect(NewsNavigationEffect.ShowBookmarkConfirmation(isBookmarked))
     }
 
     private fun filterNewsBy(startDate: String, endDate: String) {

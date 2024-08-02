@@ -118,7 +118,6 @@ internal fun InnerChartRow(
             ) else Modifier
                 .width(120.dp)
                 .height(60.dp),
-            lineColor = CurrencyColors.Green.extraLight,
             shadowColor = CurrencyColors.Green.primary,
             list = priceData
         )

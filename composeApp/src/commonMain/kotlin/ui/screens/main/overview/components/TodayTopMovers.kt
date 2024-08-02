@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
@@ -46,14 +45,11 @@ internal fun TodayTopMovers(
         ) {
             when (overviewState) {
                 is Success -> {
-                    overviewState.topMovers.take(2).forEach { topMovers ->
+                    overviewState.topMovers.forEach { topMovers ->
                         TopMoversCard(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight(),
-                            topMovers = topMovers,
                             isLoading = false,
-                            onClick = onCryptoItemClick
+                            topMovers = topMovers,
+                            onClick = onCryptoItemClick,
                         )
                     }
                 }
@@ -61,12 +57,9 @@ internal fun TodayTopMovers(
                 is Loading -> {
                     repeat(2) {
                         TopMoversCard(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight(),
                             isLoading = true,
                             topMovers = getDummyCryptoItem(),
-                            onClick = { _, _ -> }
+                            onClick = { _, _ -> },
                         )
                     }
                 }

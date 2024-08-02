@@ -12,15 +12,18 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import kotlinx.collections.immutable.ImmutableList
+import ui.theme.colors.CurrencyColors
 
 @Composable
 fun TopMoversChart(
     modifier: Modifier = Modifier,
-    lineColor: Color = MaterialTheme.colorScheme.onSurface,
-    shadowColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
-    list: ImmutableList<Float>
+    shadowColor: Color = MaterialTheme.colorScheme.surface.copy(alpha = 0.1f),
+    list: ImmutableList<Float>,
+    lighterColor: Color = CurrencyColors.Green.primary,
+    lightLineColor: Color = CurrencyColors.Green.light
 ) {
-    val dotColor = MaterialTheme.colorScheme.onSurface
+    val shadowColorStart = if (list.isNotEmpty()) lighterColor.copy(alpha = 0.3f) else shadowColor
+    val shadowColorEnd = if (list.isNotEmpty()) Color.Black.copy(alpha = 0.8f) else shadowColor.copy(alpha = 0.1f)
 
     Canvas(modifier = modifier) {
         val max = list.maxOrNull() ?: 0f
@@ -65,18 +68,22 @@ fun TopMoversChart(
             path = shadowPath,
             brush = Brush.verticalGradient(
                 colors = listOf(
-                    shadowColor,
-                    shadowColor.copy(alpha = 0.001f)
+                    shadowColorStart,
+                    shadowColorEnd
                 ),
                 startY = 0f,
                 endY = size.height
             )
         )
 
-        // Draw the line
+        // Draw the main line with gradient
         drawPath(
             path = path,
-            color = lineColor,
+            brush = Brush.horizontalGradient(
+                colors = listOf(lighterColor, lightLineColor, lighterColor),
+                startX = 0f,
+                endX = size.width
+            ),
             style = Stroke(
                 width = 8f,
                 cap = StrokeCap.Round,
@@ -89,9 +96,20 @@ fun TopMoversChart(
             val highestValuePercentage = getValuePercentageForRange(list[highestIndex], max, min)
             val x = highestIndex * sizeWidthPerPair
             val y = size.height * (1 - highestValuePercentage)
+
+            // Draw glow effect for the dot
+            for (i in 3 downTo 0) {
+                drawCircle(
+                    color = CurrencyColors.Orange.primary.copy(alpha = 0.2f * (4 - i)),
+                    radius = 18f - i * 3,
+                    center = Offset(x, y)
+                )
+            }
+
+            // Draw the main dot
             drawCircle(
-                color = dotColor,
-                radius = 14f,
+                color = CurrencyColors.Orange.primary,
+                radius = 8f,
                 center = Offset(x, y)
             )
         }

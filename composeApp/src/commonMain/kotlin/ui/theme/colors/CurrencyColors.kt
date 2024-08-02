@@ -17,6 +17,7 @@ object CurrencyColors {
     val DARK_SHADE = Color(0xFF4A148C)
     val PURPLE_SHADE = Color(0xFF004D40)
     val GREEN_SHADE = Color(0xFF64DD17)
+    val PURPLE = Color(0xFFB39DDB)
 
     val Red = ColorShades(
         extraLight = Color(0xFFF5ABAB),

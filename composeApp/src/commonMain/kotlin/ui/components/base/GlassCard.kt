@@ -10,12 +10,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
@@ -28,10 +25,8 @@ internal fun GlassCard(
     onCardClick: () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
-    val hazeState = remember { HazeState() }
     Card(
         modifier = Modifier.wrapContentSize()
-            .haze(hazeState)
             .then(modifier),
         shape = RoundedCornerShape(CARD_CORNER_RADIUS),
         border = BorderStroke(1.dp, Color.Gray.copy(alpha = 0.1f)),

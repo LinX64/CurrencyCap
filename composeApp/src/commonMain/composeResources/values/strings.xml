@@ -130,4 +130,7 @@
 
     <string name="bitcoin_text">Bitcoin (BTC)</string>
     <string name="description">Description</string>
+
+    <string name="article_added_to_bookmarks">Article added to bookmarks!</string>
+    <string name="article_removed_from_bookmarks">Article removed from bookmarks!</string>
 </resources>

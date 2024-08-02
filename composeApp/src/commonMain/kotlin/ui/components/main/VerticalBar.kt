@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.PersistentSet
@@ -36,7 +37,7 @@ internal fun VerticalBar(
     onTabSelected: (VerticalBarTab) -> Unit,
 ) {
     CompositionLocalProvider(
-        LocalContentColor provides MaterialTheme.colorScheme.onSurface
+        LocalContentColor provides Color.White
     ) {
         Column(
             modifier = Modifier
