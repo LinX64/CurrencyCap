@@ -45,8 +45,6 @@ import androidx.compose.ui.unit.sp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.no_chart_data_available
 import domain.model.main.ChartDataPoint
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
@@ -95,7 +93,7 @@ internal fun InteractiveCryptoChart(
             chartData?.isNotEmpty() == true -> {
                 DrawChart(
                     modifier = Modifier.align(Alignment.Center).height(height),
-                    chartData = chartData.toImmutableList(),
+                    chartData = chartData.toList(),
                     isInteractivityEnabled = isInteractivityEnabled,
                     lighterColor = lighterColor,
                     lightLineColor = lightLineColor,
@@ -123,7 +121,7 @@ internal fun InteractiveCryptoChart(
 @Composable
 private fun DrawChart(
     modifier: Modifier = Modifier,
-    chartData: ImmutableList<ChartDataPoint>,
+    chartData: List<ChartDataPoint>,
     isInteractivityEnabled: Boolean,
     lighterColor: Color,
     lightLineColor: Color,
