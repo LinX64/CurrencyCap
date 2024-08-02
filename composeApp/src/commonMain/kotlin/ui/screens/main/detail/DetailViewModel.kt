@@ -38,7 +38,7 @@ class DetailViewModel(
 
     override fun handleEvent(event: DetailViewEvent) {
         when (event) {
-            OnRetry -> handleEvent(OnLoadCryptoInfo)
+            OnRetry -> onLoadCryptoInfo()
             OnLoadCryptoInfo -> onLoadCryptoInfo()
             is OnChartPeriodSelect -> onChartPeriodSelected(false, event.coinId, event.symbol, event.chipPeriod)
         }
