@@ -200,38 +200,40 @@ private fun DrawChart(
 
         // Draw dot at the highest point only when not interacting
         if (chartData.isNotEmpty() && !isInteracting) {
-            val highestValuePercentage =
-                getValuePercentageForRange(chartData[highestIndex].price.toFloat(), max, min)
-            val x = highestIndex * sizeWidthPerPair
-            val y = size.height * (1 - highestValuePercentage)
-            drawCircle(
-                color = dotColor,
-                radius = 14f,
-                center = Offset(x, y)
-            )
-        }
-
-        // Draw selected point
-        if (isInteractivityEnabled) {
-            selectedIndex.let { index ->
-                val valuePercentage = getValuePercentageForRange(chartData[index].price.toFloat(), max, min)
-                val x = index * sizeWidthPerPair
-                val y = size.height * (1 - valuePercentage)
+            if (highestIndex in chartData.indices) {
+                val highestValuePercentage =
+                    getValuePercentageForRange(chartData[highestIndex].price.toFloat(), max, min)
+                val x = highestIndex * sizeWidthPerPair
+                val y = size.height * (1 - highestValuePercentage)
                 drawCircle(
                     color = dotColor,
                     radius = 14f,
                     center = Offset(x, y)
                 )
             }
-        }
 
-        drawMinMaxLabels(
-            labelColor = labelColor,
-            labelBackgroundColor = labelBackgroundColor,
-            min = min,
-            max = max,
-            textMeasurer = textMeasurer
-        )
+            // Draw selected point
+            if (isInteractivityEnabled) {
+                selectedIndex.let { index ->
+                    val valuePercentage = getValuePercentageForRange(chartData[index].price.toFloat(), max, min)
+                    val x = index * sizeWidthPerPair
+                    val y = size.height * (1 - valuePercentage)
+                    drawCircle(
+                        color = dotColor,
+                        radius = 14f,
+                        center = Offset(x, y)
+                    )
+                }
+            }
+
+            drawMinMaxLabels(
+                labelColor = labelColor,
+                labelBackgroundColor = labelBackgroundColor,
+                min = min,
+                max = max,
+                textMeasurer = textMeasurer
+            )
+        }
     }
 
     // Overlay for selected data point information, only shown when interacting

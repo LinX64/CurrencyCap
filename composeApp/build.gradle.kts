@@ -146,7 +146,6 @@ android {
         getByName("debug") {
             isMinifyEnabled = false
             manifestPlaceholders["crashlyticsCollectionEnabled"] = "false"
-
         }
     }
 
