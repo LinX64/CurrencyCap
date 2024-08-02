@@ -18,7 +18,6 @@ import ui.screens.main.detail.components.DescriptionCard
 import ui.screens.main.detail.components.DetailBody
 import ui.screens.main.detail.components.DetailHeader
 import ui.theme.AppDimensions.SPACER_PADDING_16
-import util.getDummyChartData
 import util.getDummyCryptoInfoItem
 
 @Composable
@@ -56,20 +55,14 @@ internal fun DetailScreen(
             is Success -> {
                 val description = state.cryptoInfo.description.en
                 val cryptoInfo = state.cryptoInfo
-                val chartData = chartDataState.chartDataPoints ?: getDummyChartData()
+                val chartData = chartDataState.chartDataPoints
 
                 item {
                     DetailHeader(
                         cryptoInfo = cryptoInfo,
                         chartData = chartData,
                         onChartPeriodSelect = { coinId, chipPeriod ->
-                            handleEvent(
-                                OnChartPeriodSelect(
-                                    coinId = coinId,
-                                    symbol = cryptoInfo.symbol,
-                                    chipPeriod = chipPeriod
-                                )
-                            )
+                            handleEvent(OnChartPeriodSelect(coinId, cryptoInfo.symbol, chipPeriod))
                         }
                     )
                 }
@@ -79,13 +72,13 @@ internal fun DetailScreen(
 
             is Loading -> {
                 val cryptoInfo = getDummyCryptoInfoItem()
-                val description = "state.description"
+                val description = ""
 
                 item {
                     DetailHeader(
                         cryptoInfo = cryptoInfo,
                         isLoading = true,
-                        chartData = getDummyChartData(),
+                        chartData = null,
                         onChartPeriodSelect = { coinId, chipPeriod ->
                             handleEvent(OnChartPeriodSelect(coinId, cryptoInfo.symbol, chipPeriod))
                         }

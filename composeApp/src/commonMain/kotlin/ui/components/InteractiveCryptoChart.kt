@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -38,23 +39,27 @@ import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.no_chart_data_available
 import domain.model.main.ChartDataPoint
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.compose.resources.stringResource
 import ui.common.formatToPrice
 import kotlin.math.roundToInt
 
 @Composable
 internal fun InteractiveCryptoChart(
     modifier: Modifier = Modifier,
-    list: ImmutableList<ChartDataPoint>,
+    chartData: Set<ChartDataPoint>?,
     isInteractivityEnabled: Boolean = true,
     isLoading: Boolean = false,
+    height: Dp = 200.dp,
     lighterColor: Color = MaterialTheme.colorScheme.surface,
     lightLineColor: Color = MaterialTheme.colorScheme.primary,
     labelColor: Color = MaterialTheme.colorScheme.onSurface,
@@ -62,7 +67,74 @@ internal fun InteractiveCryptoChart(
     labelBackgroundColor: Color = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f),
     textMeasurer: TextMeasurer = rememberTextMeasurer()
 ) {
-    val highestIndex = remember(list) { list.indices.maxByOrNull { list[it].price } ?: 0 }
+    val shouldShowEmptyState = chartData.isNullOrEmpty() && !isLoading
+    var showNoDataMessage by remember { mutableStateOf(false) }
+
+    LaunchedEffect(shouldShowEmptyState) {
+        showNoDataMessage = false
+        if (shouldShowEmptyState) {
+            delay(1000)
+            showNoDataMessage = true
+        }
+    }
+
+    Box(
+        modifier = modifier.fillMaxWidth()
+            .then(modifier)
+    ) {
+        when {
+            isLoading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+
+            chartData?.isNotEmpty() == true -> {
+                DrawChart(
+                    modifier = Modifier.align(Alignment.Center).height(height),
+                    chartData = chartData.toList(),
+                    isInteractivityEnabled = isInteractivityEnabled,
+                    lighterColor = lighterColor,
+                    lightLineColor = lightLineColor,
+                    labelColor = labelColor,
+                    dotColor = dotColor,
+                    labelBackgroundColor = labelBackgroundColor,
+                    textMeasurer = textMeasurer,
+                )
+            }
+
+            else -> Unit
+        }
+
+        if (showNoDataMessage) {
+            Text(
+                text = stringResource(Res.string.no_chart_data_available),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
+    }
+}
+
+@Composable
+private fun DrawChart(
+    modifier: Modifier = Modifier,
+    chartData: List<ChartDataPoint>,
+    isInteractivityEnabled: Boolean,
+    lighterColor: Color,
+    lightLineColor: Color,
+    labelColor: Color,
+    dotColor: Color,
+    labelBackgroundColor: Color,
+    textMeasurer: TextMeasurer,
+) {
+    val highestIndex by remember {
+        derivedStateOf {
+            chartData.indices.maxByOrNull { chartData[it].price } ?: 0
+        }
+    }
     var selectedIndex by remember(highestIndex) { mutableIntStateOf(highestIndex) }
     var isInteracting by remember { mutableStateOf(false) }
 
@@ -73,132 +145,117 @@ internal fun InteractiveCryptoChart(
         }
     }
 
-    Box(
+    Canvas(
         modifier = modifier
-            .fillMaxWidth()
-            .height(200.dp)
-    ) {
-        if (!isLoading) {
-            Canvas(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .pointerInput(Unit) {
-                        if (isInteractivityEnabled) {
-                            detectDragGestures(
-                                onDragStart = { isInteracting = true },
-                                onDragEnd = { isInteracting = false },
-                                onDragCancel = { isInteracting = false },
-                                onDrag = { change, _ ->
-                                    val x = change.position.x
-                                    selectedIndex = ((x / size.width) * (list.size - 1))
-                                        .roundToInt()
-                                        .coerceIn(0, list.size - 1)
-                                }
-                            )
-                        }
-                    }
-            ) {
-                val prices = list.map { it.price.toFloat() }
-                val max = prices.maxOrNull() ?: 0f
-                val min = prices.minOrNull() ?: 0f
-
-                val sizeWidthPerPair = if (list.size > 1) size.width / (list.size - 1) else size.width
-
-                // Create a path for the line
-                val path = Path().apply {
-                    if (list.isNotEmpty()) {
-                        val startValuePercentage = getValuePercentageForRange(list[0].price.toFloat(), max, min)
-                        moveTo(0f, size.height * (1 - startValuePercentage))
-                        list.forEachIndexed { index, point ->
-                            val valuePercentage = getValuePercentageForRange(point.price.toFloat(), max, min)
-                            lineTo(index * sizeWidthPerPair, size.height * (1 - valuePercentage))
-                        }
-                    }
-                }
-
-                // Draw the line with gradient brush and rounded corners
-                drawPath(
-                    path = path,
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(lighterColor, lightLineColor, lighterColor),
-                        startX = 0f,
-                        endX = size.width
-                    ),
-                    style = Stroke(
-                        width = 8f,
-                        cap = StrokeCap.Round,
-                        join = StrokeJoin.Round
-                    )
-                )
-
-                // Draw dot at the highest point only when not interacting
-                if (list.isNotEmpty() && !isInteracting) {
-                    val highestValuePercentage =
-                        getValuePercentageForRange(list[highestIndex].price.toFloat(), max, min)
-                    val x = highestIndex * sizeWidthPerPair
-                    val y = size.height * (1 - highestValuePercentage)
-                    drawCircle(
-                        color = dotColor,
-                        radius = 14f,
-                        center = Offset(x, y)
-                    )
-                }
-
-                // Draw selected point
+            .fillMaxSize()
+            .pointerInput(Unit) {
                 if (isInteractivityEnabled) {
-                    selectedIndex.let { index ->
-                        val valuePercentage = getValuePercentageForRange(list[index].price.toFloat(), max, min)
-                        val x = index * sizeWidthPerPair
-                        val y = size.height * (1 - valuePercentage)
-                        drawCircle(
-                            color = dotColor,
-                            radius = 14f,
-                            center = Offset(x, y)
-                        )
-                    }
+                    detectDragGestures(
+                        onDragStart = { isInteracting = true },
+                        onDragEnd = { isInteracting = false },
+                        onDragCancel = { isInteracting = false },
+                        onDrag = { change, _ ->
+                            val x = change.position.x
+                            selectedIndex = ((x / size.width) * (chartData.size - 1))
+                                .roundToInt()
+                                .coerceIn(0, chartData.size - 1)
+                        }
+                    )
                 }
-
-                drawMinMaxLabels(
-                    labelColor = labelColor,
-                    labelBackgroundColor = labelBackgroundColor,
-                    min = min,
-                    max = max,
-                    textMeasurer = textMeasurer
-                )
             }
+            .then(modifier)
+    ) {
+        val prices = chartData.map { it.price.toFloat() }
+        val max = prices.maxOrNull() ?: 0f
+        val min = prices.minOrNull() ?: 0f
 
-            // Overlay for selected data point information, only shown when interacting
-            if (isInteractivityEnabled && isInteracting) {
-                selectedIndex.let { index ->
-                    val dataPoint = list[index]
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
-                            .padding(8.dp)
-                    ) {
-                        Text(
-                            text = "Price: $${formatToPrice(dataPoint.price.toDouble())}",
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.Bold,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                        Text(
-                            text = "Time: ${formatTimestamp(dataPoint.timestamp)}",
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.Bold,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
+        val sizeWidthPerPair = if (chartData.size > 1) size.width / (chartData.size - 1) else size.width
+
+        // Create a path for the line
+        val path = Path().apply {
+            if (chartData.isNotEmpty()) {
+                val startValuePercentage = getValuePercentageForRange(chartData[0].price.toFloat(), max, min)
+                moveTo(0f, size.height * (1 - startValuePercentage))
+                chartData.forEachIndexed { index, point ->
+                    val valuePercentage = getValuePercentageForRange(point.price.toFloat(), max, min)
+                    lineTo(index * sizeWidthPerPair, size.height * (1 - valuePercentage))
                 }
             }
         }
 
-        if (isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center),
-                color = MaterialTheme.colorScheme.primary
+        // Draw the line with gradient brush and rounded corners
+        drawPath(
+            path = path,
+            brush = Brush.horizontalGradient(
+                colors = listOf(lighterColor, lightLineColor, lighterColor),
+                startX = 0f,
+                endX = size.width
+            ),
+            style = Stroke(
+                width = 8f,
+                cap = StrokeCap.Round,
+                join = StrokeJoin.Round
             )
+        )
+
+        // Draw dot at the highest point only when not interacting
+        if (chartData.isNotEmpty() && !isInteracting) {
+            val highestValuePercentage =
+                getValuePercentageForRange(chartData[highestIndex].price.toFloat(), max, min)
+            val x = highestIndex * sizeWidthPerPair
+            val y = size.height * (1 - highestValuePercentage)
+            drawCircle(
+                color = dotColor,
+                radius = 14f,
+                center = Offset(x, y)
+            )
+        }
+
+        // Draw selected point
+        if (isInteractivityEnabled) {
+            selectedIndex.let { index ->
+                val valuePercentage = getValuePercentageForRange(chartData[index].price.toFloat(), max, min)
+                val x = index * sizeWidthPerPair
+                val y = size.height * (1 - valuePercentage)
+                drawCircle(
+                    color = dotColor,
+                    radius = 14f,
+                    center = Offset(x, y)
+                )
+            }
+        }
+
+        drawMinMaxLabels(
+            labelColor = labelColor,
+            labelBackgroundColor = labelBackgroundColor,
+            min = min,
+            max = max,
+            textMeasurer = textMeasurer
+        )
+    }
+
+    // Overlay for selected data point information, only shown when interacting
+    if (isInteractivityEnabled && isInteracting) {
+        selectedIndex.let { index ->
+            val dataPoint = chartData[index]
+            Column(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.4f))
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = "Price: $${formatToPrice(dataPoint.price.toDouble())}",
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = "Time: ${formatTimestamp(dataPoint.timestamp)}",
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
         }
     }
 }

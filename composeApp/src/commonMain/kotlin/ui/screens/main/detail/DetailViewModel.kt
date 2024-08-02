@@ -5,11 +5,9 @@ import androidx.lifecycle.viewModelScope
 import data.util.NetworkResult.Error
 import data.util.NetworkResult.Loading
 import data.util.NetworkResult.Success
-import data.util.asResult
 import domain.model.ChipPeriod
 import domain.repository.CryptoRepository
 import domain.repository.MainRepository
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -39,15 +37,16 @@ class DetailViewModel(
 
     override fun handleEvent(event: DetailViewEvent) {
         when (event) {
-            OnRetry -> handleEvent(OnLoadCryptoInfo)
+            OnRetry -> onLoadCryptoInfo()
             OnLoadCryptoInfo -> onLoadCryptoInfo()
-            is OnChartPeriodSelect -> onChartPeriodSelected(event.coinId, event.symbol, event.chipPeriod)
+            is OnChartPeriodSelect -> onChartPeriodSelected(false, event.coinId, event.symbol, event.chipPeriod)
         }
     }
 
-    private fun onLoadCryptoInfo() {
-        mainRepository.getCryptoInfoById(id)
-            .asResult()
+    private fun onLoadCryptoInfo(
+        forceRefresh: Boolean = false,
+    ) {
+        mainRepository.getCryptoInfoBySymbol(forceRefresh = forceRefresh, symbol = symbol)
             .map { result ->
                 when (result) {
                     is Success -> {
@@ -56,7 +55,12 @@ class DetailViewModel(
                         onChartPeriodSelected(coinId = data.id, symbol = data.symbol, chipPeriod = ChipPeriod.DAY)
                     }
 
-                    is Error -> setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
+                    is Error -> {
+                        val cachedData = result.data
+                        if (cachedData != null) setState { DetailState.Success(cryptoInfo = cachedData) }
+                        else setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
+                    }
+
                     is Loading -> setState { DetailState.Loading }
                 }
             }
@@ -64,23 +68,29 @@ class DetailViewModel(
     }
 
     private fun onChartPeriodSelected(
+        forceRefresh: Boolean = false,
         coinId: String,
         symbol: String,
         chipPeriod: ChipPeriod,
     ) {
-        cryptoRepository.fetchMarketChartData(coinId, symbol, chipPeriod)
-            .asResult()
+        cryptoRepository.fetchMarketChartData(forceRefresh, coinId, symbol, chipPeriod)
             .map { result ->
                 when (result) {
                     is Success -> {
-                        val chartData = result.data.prices.toImmutableList()
+                        val chartData = result.data
                         if (chartData.isEmpty()) {
                             _chartDataState.value = ChartDataUiState(isLoading = false)
-                            return@map
-                        } else _chartDataState.value = ChartDataUiState(chartDataPoints = chartData)
+                        } else _chartDataState.value = ChartDataUiState(chartDataPoints = chartData.toSet())
                     }
 
-                    is Error -> setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
+                    is Error -> {
+                        val cachedData = result.data
+                        _chartDataState.value = ChartDataUiState(
+                            chartDataPoints = cachedData?.toSet(),
+                            isLoading = false,
+                        )
+                    }
+
                     is Loading -> _chartDataState.value = ChartDataUiState(isLoading = true)
                 }
             }

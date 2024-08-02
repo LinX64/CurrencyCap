@@ -1,5 +1,6 @@
 package data.remote.repository.news
 
+import data.local.datastore.app.AppPreferences
 import data.remote.model.news.ArticleDto
 import data.remote.model.news.NewsDto
 import data.remote.model.news.toDomain
@@ -15,29 +16,49 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
+import kotlin.time.Duration.Companion.seconds
 
 class NewsRepositoryImpl(
     private val httpClient: HttpClient,
-    private val articleLocalDataSource: ArticleLocalDataSource
+    private val articleLocalDataSource: ArticleLocalDataSource,
+    private val appPreferences: AppPreferences,
+    private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default)
 ) : NewsRepository {
 
-    override fun getNews(
-        forceRefresh: Boolean
-    ): Flow<NetworkResult<List<Article>>> = cacheDataOrFetchOnline(
+    private val cacheExpirationTime = 15.seconds.inWholeSeconds
+    private var cachedLastFetchTime: Long = 0
+
+    init {
+        updateCachedLastFetchTime()
+    }
+
+    override fun getNews(forceRefresh: Boolean): Flow<NetworkResult<List<Article>>> = cacheDataOrFetchOnline(
+        forceRefresh = forceRefresh,
         query = { articleLocalDataSource.getArticles() },
         fetch = { getPlainNewsResponse() },
-        shouldFetch = { localArticles -> localArticles.isNullOrEmpty() },
-        forceRefresh = forceRefresh,
+        shouldFetch = { localArticles -> localArticles.isNullOrEmpty() || isCacheExpired() },
         clearLocalData = { articleLocalDataSource.deleteArticles() },
+        isFresh = { localData ->
+            localData != null && (localData as? Collection<*>)?.isNotEmpty() == true && !isCacheExpired()
+        },
         saveFetchResult = { responseText ->
             val articles: Set<ArticleDto> = parseArticlesResponse(responseText)
-            articleLocalDataSource.insertArticles(articles.toEntity())
+            val sortedArticles = articles.sortedBy { it.publishedAt }.reversed().toSet()
+            articleLocalDataSource.insertArticles(sortedArticles.toEntity())
+
+            println("cachedLastFetchTime: $cachedLastFetchTime")
+            println("getCurrentTime(): ${getCurrentTime()}")
+
+            appPreferences.saveLastFetchTime(getCurrentTime())
         }
     )
 
@@ -76,4 +97,18 @@ class NewsRepositoryImpl(
 
         return matchedArticle
     }
+
+    private fun updateCachedLastFetchTime() {
+        coroutineScope.launch {
+            cachedLastFetchTime = appPreferences.getLastFetchTime()
+        }
+    }
+
+    private fun isCacheExpired(): Boolean {
+        val now = getCurrentTime()
+        val isExpired = now - cachedLastFetchTime > cacheExpirationTime
+        return isExpired
+    }
+
+    private fun getCurrentTime(): Long = Clock.System.now().toEpochMilliseconds()
 }

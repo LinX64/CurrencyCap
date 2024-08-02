@@ -1,8 +1,5 @@
 package ui.screens.main.detail.components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,7 +30,6 @@ import domain.model.ChipPeriod
 import domain.model.ChipPeriod.DAY
 import domain.model.main.ChartDataPoint
 import domain.model.main.CryptoInfo
-import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 import ui.common.formatToPrice
 import ui.components.InteractiveCryptoChart
@@ -48,7 +44,7 @@ import ui.theme.colors.CurrencyColors
 internal fun DetailHeader(
     cryptoInfo: CryptoInfo,
     isLoading: Boolean = false,
-    chartData: ImmutableList<ChartDataPoint>,
+    chartData: Set<ChartDataPoint>?,
     onChartPeriodSelect: (coinId: String, chipPeriod: ChipPeriod) -> Unit,
 ) {
     var selectedChip by remember { mutableStateOf(DAY) }
@@ -79,20 +75,11 @@ internal fun DetailHeader(
 
             Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
-            // show the chart with a nice animation
-            AnimatedVisibility(
-                visible = chartData.isNotEmpty(),
-                enter = fadeIn(),
-                exit = fadeOut()
-            ) {
-                InteractiveCryptoChart(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(170.dp),
-                    list = chartData,
-                    isLoading = isLoading,
-                )
-            }
+            InteractiveCryptoChart(
+                modifier = Modifier.height(200.dp),
+                chartData = chartData,
+                isLoading = isLoading,
+            )
         }
 
         Spacer(modifier = Modifier.height(SPACER_PADDING_32))

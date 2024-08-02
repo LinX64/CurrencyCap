@@ -77,6 +77,7 @@ internal inline fun <ResultType, RequestType> cacheDataOrFetchOnline(
 }
 
 enum class DataFreshness {
+    FROM_CACHE,
     FRESH,
     STALE
 }

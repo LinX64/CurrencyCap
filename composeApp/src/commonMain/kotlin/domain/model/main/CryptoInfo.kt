@@ -1,5 +1,8 @@
 package domain.model.main
 
+import data.local.model.main.detail.CryptoInfoEntity
+import data.local.model.main.detail.MarketDataEntity
+
 data class CryptoInfo(
     val id: String,
     val description: Description,
@@ -38,3 +41,32 @@ data class CryptoImage(
     val small: String,
     val large: String
 )
+
+fun CryptoInfo.toEntity(): CryptoInfoEntity {
+    return CryptoInfoEntity().apply {
+        id = this@toEntity.id
+        description = this@toEntity.description.en
+        marketData = this@toEntity.marketData.toEntity()
+        name = this@toEntity.name
+        symbol = this@toEntity.symbol
+        image = this@toEntity.image.large
+    }
+}
+
+fun MarketData.toEntity(): MarketDataEntity {
+    return MarketDataEntity().apply {
+        currentPrice = this@toEntity.currentPrice.usd
+        high24h = this@toEntity.high24h.usd
+        low24h = this@toEntity.low24h.usd
+        priceChange24h = this@toEntity.priceChange24h
+        priceChangePercentage24h = this@toEntity.priceChangePercentage24h
+        priceChangePercentage7d = this@toEntity.priceChangePercentage7d
+        priceChangePercentage14d = this@toEntity.priceChangePercentage14d
+        priceChangePercentage30d = this@toEntity.priceChangePercentage30d
+        priceChangePercentage60d = this@toEntity.priceChangePercentage60d
+        priceChangePercentage200d = this@toEntity.priceChangePercentage200d
+        priceChangePercentage1y = this@toEntity.priceChangePercentage1y
+        marketCap = this@toEntity.marketCap.usd
+        ath = this@toEntity.ath.usd
+    }
+}

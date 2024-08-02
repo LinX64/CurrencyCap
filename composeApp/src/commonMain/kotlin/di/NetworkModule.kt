@@ -19,7 +19,7 @@ val httpClientModule = module {
         HttpClient {
             install(ContentNegotiation) {
                 json(
-                    json = Json {
+                    Json {
                         ignoreUnknownKeys = true
                         isLenient = true
                         coerceInputValues = true
@@ -28,19 +28,19 @@ val httpClientModule = module {
                 )
             }
             install(Logging) {
-                level = LogLevel.ALL
+                level = LogLevel.INFO
                 logger = object : Logger {
                     override fun log(message: String) {
-                        println(message)
+                        println("HTTP Client: $message")
                     }
                 }
             }
             install(HttpTimeout) {
-                requestTimeoutMillis = 15000
+                requestTimeoutMillis = 15000L
             }
             install(Resources)
             install(HttpCache) {
-                publicStorage(KachetorStorage(50 * 1024 * 4024))
+                publicStorage(KachetorStorage(100 * 1024 * 1024)) // 100MB
             }
         }
     }

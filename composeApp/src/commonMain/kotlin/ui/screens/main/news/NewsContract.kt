@@ -4,7 +4,7 @@ import androidx.compose.runtime.Stable
 import domain.model.Article
 
 sealed interface NewsViewEvent {
-    data object FetchNews : NewsViewEvent
+    data class FetchNews(val forceRefresh: Boolean = false) : NewsViewEvent
     data object OnRetry : NewsViewEvent
 
     @Stable
