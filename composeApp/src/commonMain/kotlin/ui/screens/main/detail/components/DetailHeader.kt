@@ -45,7 +45,7 @@ import ui.theme.colors.CurrencyColors
 internal fun DetailHeader(
     cryptoInfo: CryptoInfo,
     isLoading: Boolean = false,
-    chartData: ImmutableList<ChartDataPoint>? = null,
+    chartData: ImmutableList<ChartDataPoint>,
     onChartPeriodSelect: (coinId: String, chipPeriod: ChipPeriod) -> Unit,
 ) {
     var selectedChip by remember { mutableStateOf(DAY) }
