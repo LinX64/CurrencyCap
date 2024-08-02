@@ -8,7 +8,6 @@ import data.util.NetworkResult.Success
 import domain.model.ChipPeriod
 import domain.repository.CryptoRepository
 import domain.repository.MainRepository
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -81,13 +80,13 @@ class DetailViewModel(
                         val chartData = result.data
                         if (chartData.isEmpty()) {
                             _chartDataState.value = ChartDataUiState(isLoading = false)
-                        } else _chartDataState.value = ChartDataUiState(chartDataPoints = chartData.toImmutableList())
+                        } else _chartDataState.value = ChartDataUiState(chartDataPoints = chartData.toSet())
                     }
 
                     is Error -> {
                         val cachedData = result.data
                         _chartDataState.value = ChartDataUiState(
-                            chartDataPoints = cachedData?.toImmutableList(),
+                            chartDataPoints = cachedData?.toSet(),
                             isLoading = false,
                         )
                     }

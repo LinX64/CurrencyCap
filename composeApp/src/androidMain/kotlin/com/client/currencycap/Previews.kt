@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import kotlinx.collections.immutable.persistentListOf
 import ui.components.InteractiveCryptoChart
 
 //@Composable
@@ -86,7 +85,7 @@ private fun LineChartPreview() {
         ) {
             val isLoading = false
             InteractiveCryptoChart(
-                chartData = persistentListOf(),
+                chartData = setOf(),
                 isLoading = isLoading,
             )
         }

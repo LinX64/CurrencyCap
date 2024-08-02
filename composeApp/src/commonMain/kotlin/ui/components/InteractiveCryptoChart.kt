@@ -58,7 +58,7 @@ import kotlin.math.roundToInt
 @Composable
 internal fun InteractiveCryptoChart(
     modifier: Modifier = Modifier,
-    chartData: List<ChartDataPoint>?,
+    chartData: Set<ChartDataPoint>?,
     isInteractivityEnabled: Boolean = true,
     isLoading: Boolean = false,
     height: Dp = 200.dp,
@@ -125,8 +125,6 @@ private fun DrawChart(
     modifier: Modifier = Modifier,
     chartData: ImmutableList<ChartDataPoint>,
     isInteractivityEnabled: Boolean,
-    zoomLevel: Float = 1f,
-    onZoomChanged: (Float) -> Unit = {},
     lighterColor: Color,
     lightLineColor: Color,
     labelColor: Color,

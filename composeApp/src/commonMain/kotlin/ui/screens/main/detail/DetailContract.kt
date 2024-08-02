@@ -4,7 +4,6 @@ import androidx.compose.runtime.Stable
 import domain.model.ChipPeriod
 import domain.model.main.ChartDataPoint
 import domain.model.main.CryptoInfo
-import kotlinx.collections.immutable.ImmutableList
 
 sealed interface DetailViewEvent {
     data object OnRetry : DetailViewEvent
@@ -29,14 +28,11 @@ sealed interface DetailState {
 
     @Stable
     data class Error(val message: String) : DetailState
-
-    @Stable
-    data object EmptyChartData : DetailState
 }
 
 @Stable
 data class ChartDataUiState(
-    val chartDataPoints: ImmutableList<ChartDataPoint>? = null,
+    val chartDataPoints: Set<ChartDataPoint>? = null,
     val isLoading: Boolean = false
 )
 

@@ -30,7 +30,6 @@ import domain.model.ChipPeriod
 import domain.model.ChipPeriod.DAY
 import domain.model.main.ChartDataPoint
 import domain.model.main.CryptoInfo
-import kotlinx.collections.immutable.ImmutableList
 import org.jetbrains.compose.resources.stringResource
 import ui.common.formatToPrice
 import ui.components.InteractiveCryptoChart
@@ -45,7 +44,7 @@ import ui.theme.colors.CurrencyColors
 internal fun DetailHeader(
     cryptoInfo: CryptoInfo,
     isLoading: Boolean = false,
-    chartData: ImmutableList<ChartDataPoint>?,
+    chartData: Set<ChartDataPoint>?,
     onChartPeriodSelect: (coinId: String, chipPeriod: ChipPeriod) -> Unit,
 ) {
     var selectedChip by remember { mutableStateOf(DAY) }
