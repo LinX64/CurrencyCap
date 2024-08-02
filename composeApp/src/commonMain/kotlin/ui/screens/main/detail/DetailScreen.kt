@@ -78,6 +78,7 @@ internal fun DetailScreen(
                     DetailHeader(
                         cryptoInfo = cryptoInfo,
                         isLoading = true,
+                        chartData = null,
                         onChartPeriodSelect = { coinId, chipPeriod ->
                             handleEvent(OnChartPeriodSelect(coinId, cryptoInfo.symbol, chipPeriod))
                         }
