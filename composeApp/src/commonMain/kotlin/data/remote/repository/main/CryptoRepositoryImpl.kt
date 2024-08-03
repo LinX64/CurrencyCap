@@ -29,12 +29,13 @@ class CryptoRepositoryImpl(
 
     override fun fetchMarketChartData(
         forceRefresh: Boolean,
+        coinId: String,
         symbol: String,
         period: ChipPeriod
     ): Flow<NetworkResult<List<ChartDataPoint>>> = cacheDataOrFetchOnline(
         forceRefresh = forceRefresh,
         query = { marketChartDataLocalRepository.getChartDataFromDb(symbol, period) },
-        fetch = { fetchDataWithFilter(symbol, period) },
+        fetch = { fetchDataWithFilter(coinId, symbol, period) },
         shouldFetch = { localChartData -> localChartData.isNullOrEmpty() },
         clearLocalData = { },
         isFresh = { localData ->
@@ -48,19 +49,20 @@ class CryptoRepositoryImpl(
     )
 
     private suspend fun fetchDataWithFilter(
+        coinId: String,
         symbol: String,
         period: ChipPeriod = ChipPeriod.DAY
     ): List<ChartDataPoint> {
         val coinList = getCoinList()
-        val foundCoinId = coinList.find { it.symbol == symbol }?.id
+        val foundCoinId = coinList.find { it.id == symbol }?.id
         val response = fetchDataBy(id = foundCoinId, period = period)
 
-        // handling errors
         return when (response.status) {
             HttpStatusCode.OK -> processResponse(response)
             HttpStatusCode.NotFound -> {
-                println("Data not found")
-                emptyList()
+                println("Data not found, retrying with id")
+                val responseWithId = fetchDataBy(id = coinId, period = period)
+                processResponse(responseWithId)
             }
 
             else -> processResponse(response)

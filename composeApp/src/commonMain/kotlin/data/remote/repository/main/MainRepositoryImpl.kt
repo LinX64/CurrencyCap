@@ -68,12 +68,6 @@ class MainRepositoryImpl(
                 partialResponse.toDomainModel()
             }
 
-            HttpStatusCode.NotFound -> {
-                val jsonString = httpClient.get("$CRYPTO_INFO_URL/$id").bodyAsText()
-                val partialResponse = json.decodeFromString<CryptoInfoDto>(jsonString)
-                partialResponse.toDomainModel()
-            }
-
             else -> {
                 val jsonString = httpClient.get("$CRYPTO_INFO_URL/$id").bodyAsText()
                 val partialResponse = json.decodeFromString<CryptoInfoDto>(jsonString)

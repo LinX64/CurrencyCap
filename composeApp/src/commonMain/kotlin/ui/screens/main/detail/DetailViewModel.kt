@@ -39,7 +39,7 @@ class DetailViewModel(
         when (event) {
             OnRetry -> onLoadCryptoInfo()
             OnLoadCryptoInfo -> onLoadCryptoInfo()
-            is OnChartPeriodSelect -> onChartPeriodSelected(false, event.symbol, event.chipPeriod)
+            is OnChartPeriodSelect -> onChartPeriodSelected(false, id, event.symbol, event.chipPeriod)
         }
     }
 
@@ -69,10 +69,11 @@ class DetailViewModel(
 
     private fun onChartPeriodSelected(
         forceRefresh: Boolean = false,
+        coinId: String = id,
         symbol: String,
         chipPeriod: ChipPeriod,
     ) {
-        cryptoRepository.fetchMarketChartData(forceRefresh, symbol, chipPeriod)
+        cryptoRepository.fetchMarketChartData(forceRefresh, coinId, symbol, chipPeriod)
             .map { result ->
                 when (result) {
                     is Success -> {
