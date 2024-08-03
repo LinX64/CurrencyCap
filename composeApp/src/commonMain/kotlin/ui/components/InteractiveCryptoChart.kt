@@ -73,7 +73,7 @@ internal fun InteractiveCryptoChart(
     LaunchedEffect(shouldShowEmptyState) {
         showNoDataMessage = false
         if (shouldShowEmptyState) {
-            delay(1000)
+            delay(1500)
             showNoDataMessage = true
         }
     }

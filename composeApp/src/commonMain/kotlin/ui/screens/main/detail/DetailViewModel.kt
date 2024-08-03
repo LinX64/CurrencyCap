@@ -50,9 +50,8 @@ class DetailViewModel(
             .map { result ->
                 when (result) {
                     is Success -> {
-                        val data = result.data
-                        setState { DetailState.Success(cryptoInfo = data) }
-                        onChartPeriodSelected(symbol = data.symbol, chipPeriod = ChipPeriod.DAY)
+                        setState { DetailState.Success(cryptoInfo = result.data) }
+                        onChartPeriodSelected(symbol = result.data.symbol, chipPeriod = ChipPeriod.DAY)
                     }
 
                     is Error -> {
