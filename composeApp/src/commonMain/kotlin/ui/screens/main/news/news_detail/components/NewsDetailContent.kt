@@ -1,6 +1,5 @@
 package ui.screens.main.news.news_detail.components
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -44,8 +43,8 @@ internal fun NewsDetailContent(
     val loadingPlaceHolderModifier = if (isLoading) getPlaceHolder(Modifier.fillMaxWidth()) else Modifier.fillMaxWidth()
     val roundedCornerShape = RoundedCornerShape(CARD_CORNER_RADIUS)
 
-    Box(
-        modifier = Modifier.fillMaxWidth()
+    Column(
+        modifier = Modifier.fillMaxWidth(),
     ) {
         AsyncImage(
             modifier = if (isLoading) getPlaceHolder(
@@ -67,7 +66,7 @@ internal fun NewsDetailContent(
         GlassCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .offset(y = 145.dp),
+                .offset(y = (-55).dp),
             contentPadding = PaddingValues(0.dp)
         ) {
             Surface(
