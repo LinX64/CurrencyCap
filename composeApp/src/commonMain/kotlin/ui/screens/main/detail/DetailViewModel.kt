@@ -76,20 +76,13 @@ class DetailViewModel(
             .map { result ->
                 when (result) {
                     is Success -> {
-                        val chartData = result.data
-                        if (chartData.isEmpty()) {
-                            _chartDataState.value = ChartDataUiState(isLoading = false)
-                        } else _chartDataState.value = ChartDataUiState(chartDataPoints = chartData.toSet())
+                        val chartData = result.data.toSet()
+                        if (chartData.isNotEmpty()) {
+                            _chartDataState.value = ChartDataUiState(chartData)
+                        } else _chartDataState.value = ChartDataUiState(isLoading = false, chartDataPoints = emptySet())
                     }
 
-                    is Error -> {
-                        val cachedData = result.data
-                        _chartDataState.value = ChartDataUiState(
-                            chartDataPoints = cachedData?.toSet(),
-                            isLoading = false,
-                        )
-                    }
-
+                    is Error -> _chartDataState.value = ChartDataUiState(result.data?.toSet(), false)
                     is Loading -> _chartDataState.value = ChartDataUiState(isLoading = true)
                 }
             }
