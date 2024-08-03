@@ -39,20 +39,20 @@ class DetailViewModel(
         when (event) {
             OnRetry -> onLoadCryptoInfo()
             OnLoadCryptoInfo -> onLoadCryptoInfo()
-            is OnChartPeriodSelect -> onChartPeriodSelected(false, event.coinId, event.symbol, event.chipPeriod)
+            is OnChartPeriodSelect -> onChartPeriodSelected(false, event.symbol, event.chipPeriod)
         }
     }
 
     private fun onLoadCryptoInfo(
         forceRefresh: Boolean = false,
     ) {
-        mainRepository.getCryptoInfoBySymbol(forceRefresh = forceRefresh, symbol = symbol)
+        mainRepository.getCryptoInfoBySymbol(forceRefresh, id, symbol)
             .map { result ->
                 when (result) {
                     is Success -> {
                         val data = result.data
                         setState { DetailState.Success(cryptoInfo = data) }
-                        onChartPeriodSelected(coinId = data.id, symbol = data.symbol, chipPeriod = ChipPeriod.DAY)
+                        onChartPeriodSelected(symbol = data.symbol, chipPeriod = ChipPeriod.DAY)
                     }
 
                     is Error -> {
@@ -69,11 +69,10 @@ class DetailViewModel(
 
     private fun onChartPeriodSelected(
         forceRefresh: Boolean = false,
-        coinId: String,
         symbol: String,
         chipPeriod: ChipPeriod,
     ) {
-        cryptoRepository.fetchMarketChartData(forceRefresh, coinId, symbol, chipPeriod)
+        cryptoRepository.fetchMarketChartData(forceRefresh, symbol, chipPeriod)
             .map { result ->
                 when (result) {
                     is Success -> {

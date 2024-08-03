@@ -2,8 +2,10 @@ package data.remote.repository.main
 
 import data.remote.model.main.ChartDataPointDto
 import data.remote.model.main.CoinCapChartResponseDto
+import data.remote.model.main.CoinGeckoItemsResponse
 import data.remote.model.main.toChartDataPoints
 import data.util.APIConst.COINCAP_BASE_URL
+import data.util.APIConst.COIN_GECKO_BASE_URL
 import data.util.NetworkResult
 import data.util.cacheDataOrFetchOnline
 import domain.model.ChipPeriod
@@ -27,13 +29,12 @@ class CryptoRepositoryImpl(
 
     override fun fetchMarketChartData(
         forceRefresh: Boolean,
-        coinId: String,
         symbol: String,
         period: ChipPeriod
     ): Flow<NetworkResult<List<ChartDataPoint>>> = cacheDataOrFetchOnline(
         forceRefresh = forceRefresh,
         query = { marketChartDataLocalRepository.getChartDataFromDb(symbol, period) },
-        fetch = { fetchDataWithFilter(coinId, symbol, period) },
+        fetch = { fetchDataWithFilter(symbol, period) },
         shouldFetch = { localChartData -> localChartData.isNullOrEmpty() },
         clearLocalData = { },
         isFresh = { localData ->
@@ -47,38 +48,30 @@ class CryptoRepositoryImpl(
     )
 
     private suspend fun fetchDataWithFilter(
-        coinId: String? = null,
-        symbol: String? = null,
+        symbol: String,
         period: ChipPeriod = ChipPeriod.DAY
     ): List<ChartDataPoint> {
-        val response = fetchData(id = coinId, period = period)
-        when (response.status) {
-            HttpStatusCode.OK -> {
-                val chartData = processResponse(response)
-                return chartData
-            }
+        val coinList = getCoinList()
+        val foundCoinId = coinList.find { it.symbol == symbol }?.id
+        val response = fetchDataBy(id = foundCoinId, period = period)
 
+        // handling errors
+        return when (response.status) {
+            HttpStatusCode.OK -> processResponse(response)
             HttpStatusCode.NotFound -> {
-                // sometimes this works, sometimes no TODO: save only prices if available
-                val responseWithSymbol = fetchData(symbol = symbol, period = period)
-                val chartData = processResponse(responseWithSymbol)
-                return chartData
+                println("Data not found")
+                emptyList()
             }
 
-            else -> return processResponse(response)
+            else -> processResponse(response)
         }
     }
 
-    private suspend fun fetchData(
+    private suspend fun fetchDataBy(
         id: String? = null,
-        symbol: String? = null,
         period: ChipPeriod = ChipPeriod.DAY
     ): HttpResponse {
-        return if (symbol?.isNotEmpty() == true) {
-            httpClient.get("$COINCAP_BASE_URL/assets/$symbol/history") {
-                parameter("interval", period.interval)
-            }
-        } else httpClient.get("$COINCAP_BASE_URL/assets/$id/history") {
+        return httpClient.get("$COINCAP_BASE_URL/assets/$id/history") {
             parameter("interval", period.interval)
         }
     }
@@ -96,5 +89,13 @@ class CryptoRepositoryImpl(
         }
 
         return chartData.toChartDataPoints()
+    }
+
+    private suspend fun getCoinList(): List<CoinGeckoItemsResponse> {
+        val response = httpClient.get("$COIN_GECKO_BASE_URL/coins/list")
+        val json = Json { ignoreUnknownKeys = true }
+        val jsonString = response.bodyAsText()
+        val data = json.decodeFromString<List<CoinGeckoItemsResponse>>(jsonString)
+        return data
     }
 }
