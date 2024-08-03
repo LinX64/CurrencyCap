@@ -6,7 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import ui.components.PoweredByCoinGeckoAndCoinCapText
+import androidx.compose.ui.unit.dp
+import ui.components.InteractiveCryptoChart
+import util.getDummyChartData
 
 //@Composable
 //@Preview(showBackground = true)
@@ -83,7 +85,10 @@ private fun LineChartPreview() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            PoweredByCoinGeckoAndCoinCapText()
+            InteractiveCryptoChart(
+                chartData = getDummyChartData().toSet(),
+                height = 200.dp,
+            )
         }
     }
 }

@@ -50,7 +50,6 @@ internal fun InteractiveCryptoChart(
     lighterColor: Color = MaterialTheme.colorScheme.surface,
     lightLineColor: Color = MaterialTheme.colorScheme.primary,
     labelColor: Color = MaterialTheme.colorScheme.onSurface,
-    dotColor: Color = MaterialTheme.colorScheme.onSurface,
     labelBackgroundColor: Color = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f),
     textMeasurer: TextMeasurer = rememberTextMeasurer()
 ) {
@@ -156,10 +155,8 @@ private fun DrawChart(
 }
 
 @Composable
-private fun rememberChartState(chartData: List<ChartDataPoint>): ChartState {
-    return remember(chartData) {
-        ChartState(chartData)
-    }
+private fun rememberChartState(chartData: List<ChartDataPoint>): ChartState = remember(chartData) {
+    ChartState(chartData)
 }
 
 @Composable

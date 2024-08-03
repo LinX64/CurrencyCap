@@ -162,7 +162,7 @@ object ChartHelper {
         )
     }
 
-    fun DrawScope.drawDashedLine(
+    private fun DrawScope.drawDashedLine(
         start: Offset,
         end: Offset,
         color: Color,
@@ -207,13 +207,13 @@ object ChartHelper {
         }
     }
 
-    fun getValuePercentageForRange(value: Float, max: Float, min: Float): Float {
-        return if (max - min == 0f) 0f else (value - min) / (max - min)
-    }
-
     fun formatTimestamp(timestamp: Long): String {
         val instant = Instant.fromEpochSeconds(timestamp)
         val dateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
         return "${dateTime.monthNumber}/${dateTime.dayOfMonth}, ${dateTime.hour}:${dateTime.minute}"
+    }
+
+    private fun getValuePercentageForRange(value: Float, max: Float, min: Float): Float {
+        return if (max - min == 0f) 0f else (value - min) / (max - min)
     }
 }
