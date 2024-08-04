@@ -6,7 +6,6 @@ import domain.model.main.CombinedRatesNews
 import domain.model.main.Crypto
 import domain.repository.MainRepository
 import domain.repository.NewsRepository
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -30,12 +29,12 @@ class CombineRatesNewsUseCase(
 
         combine(ratesFlow, newsFlow) { rates, news ->
             CombinedRatesNews(
-                bonbastRates = rates.bonbast.toImmutableList(),
-                cryptoRates = rates.crypto.sortedBy { it.name }.toImmutableList(),
-                markets = rates.markets.toImmutableList(),
-                fiatRates = rates.rates.filter { it.type == FIAT }.toImmutableList(),
-                topMovers = mapToTopMovers(rates.crypto).toImmutableList(),
-                news = news.toImmutableList()
+                bonbastRates = rates.bonbast,
+                cryptoRates = rates.crypto.sortedBy { it.name },
+                markets = rates.markets,
+                fiatRates = rates.rates.filter { it.type == FIAT },
+                topMovers = mapToTopMovers(rates.crypto),
+                news = news
             )
         }
     }

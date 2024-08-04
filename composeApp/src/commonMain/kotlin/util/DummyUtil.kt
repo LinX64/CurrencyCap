@@ -195,7 +195,7 @@ internal fun getDummyChartData(): ImmutableList<ChartDataPoint> = persistentList
 
 internal fun getDummyBonbastRates(): ImmutableList<BonbastRate> = persistentListOf(
     BonbastRate(
-        code = "code", sell = 8.9, buy = 10.11,
+        code = "code", sell = 8.9, buy = 10.11, imageUrl = "imageUrl"
     )
 )
 

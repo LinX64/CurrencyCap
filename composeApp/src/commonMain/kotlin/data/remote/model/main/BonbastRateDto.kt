@@ -1,7 +1,6 @@
 package data.remote.model.main
 
 import data.local.model.main.BonbastRateEntity
-import domain.model.main.BonbastRate
 import io.realm.kotlin.ext.toRealmList
 import kotlinx.serialization.Serializable
 
@@ -16,14 +15,6 @@ data class BonbastRateDto(
         sell = this@BonbastRateDto.sell
         buy = this@BonbastRateDto.buy
     }
-}
-
-internal fun List<BonbastRateDto>.toBonbastRateDomain(): List<BonbastRate> = map {
-    BonbastRate(
-        code = it.code,
-        sell = it.sell,
-        buy = it.buy
-    )
 }
 
 internal fun List<BonbastRateDto>.toEntity() = map { it.toEntity() }.toRealmList()

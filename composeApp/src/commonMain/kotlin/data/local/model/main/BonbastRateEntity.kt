@@ -19,6 +19,7 @@ fun BonbastRateEntity.toDomain(): BonbastRate {
     return BonbastRate(
         code = code,
         sell = sell,
-        buy = buy
+        buy = buy,
+        imageUrl = ""
     )
 }
