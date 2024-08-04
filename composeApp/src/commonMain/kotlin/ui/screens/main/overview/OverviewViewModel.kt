@@ -2,6 +2,7 @@ package ui.screens.main.overview
 
 import androidx.lifecycle.viewModelScope
 import domain.usecase.CombineRatesNewsUseCase
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,6 +15,7 @@ import ui.screens.main.overview.OverviewState.Loading
 import ui.screens.main.overview.OverviewState.Success
 import ui.screens.main.overview.OverviewViewEvent.OnLoadRates
 import ui.screens.main.overview.OverviewViewEvent.OnRetry
+import util.getIconBy
 
 class OverviewViewModel(
     private val combinedRatesUseCase: CombineRatesNewsUseCase
@@ -39,12 +41,15 @@ class OverviewViewModel(
         viewModelScope.launch {
             combinedRatesUseCase(forceRefresh = forceRefresh)
                 .map {
-                    val bonbastRates = it.bonbastRates
-                    val cryptoRates = it.cryptoRates
-                    val markets = it.markets
-                    val fiatRates = it.fiatRates
-                    val topMovers = it.topMovers
-                    val news = it.news
+                    val bonbastRates = it.bonbastRates.map { bonbastRate ->
+                        getIconBy(bonbastRate.code).let { bonbastRate.copy(imageUrl = it) }
+                    }.toImmutableList()
+
+                    val cryptoRates = it.cryptoRates.toImmutableList()
+                    val markets = it.markets.toImmutableList()
+                    val fiatRates = it.fiatRates.toImmutableList()
+                    val topMovers = it.topMovers.toImmutableList()
+                    val news = it.news.toImmutableList()
 
                     when {
                         bonbastRates.isEmpty()

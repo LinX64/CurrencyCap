@@ -25,7 +25,6 @@ import ui.components.main.SectionRowItem
 import ui.screens.main.overview.OverviewState
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
-import util.getIconBy
 
 @Composable
 internal fun TopRates(rates: OverviewState) {
@@ -80,7 +79,7 @@ private fun TopRatesContent(rates: OverviewState, isLoading: Boolean) {
                 items(ratesList.size) { index ->
                     RateItem(
                         isLoading = false,
-                        icon = getIconBy(ratesList[index].code),
+                        icon = ratesList[index].imageUrl,
                         rate = ratesList[index]
                     )
                 }
@@ -91,7 +90,7 @@ private fun TopRatesContent(rates: OverviewState, isLoading: Boolean) {
                     RateItem(
                         isLoading = true,
                         icon = "",
-                        rate = BonbastRate(code = "", sell = 0.0, buy = 0.0)
+                        rate = BonbastRate(code = "", sell = 0.0, buy = 0.0, imageUrl = "")
                     )
                 }
             }

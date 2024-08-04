@@ -1,10 +1,11 @@
 package domain.model.main
 
-import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 
-@Immutable
+@Stable
 data class BonbastRate(
     val code: String,
     val sell: Double,
-    val buy: Double
+    val buy: Double,
+    val imageUrl: String,
 )
