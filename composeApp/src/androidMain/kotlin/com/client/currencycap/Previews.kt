@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import ui.components.InteractiveCryptoChart
+import ui.components.PoweredByCoinGeckoAndCoinCapText
 
 //@Composable
 //@Preview(showBackground = true)
@@ -83,11 +83,7 @@ private fun LineChartPreview() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            val isLoading = false
-            InteractiveCryptoChart(
-                chartData = setOf(),
-                isLoading = isLoading,
-            )
+            PoweredByCoinGeckoAndCoinCapText()
         }
     }
 }

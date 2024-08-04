@@ -15,7 +15,9 @@ import domain.repository.MainRepository
 import domain.repository.RatesLocalDataSource
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.Json
 
@@ -24,9 +26,7 @@ class MainRepositoryImpl(
     private val ratesLocalDataSource: RatesLocalDataSource,
 ) : MainRepository {
 
-    override fun getAllRates(
-        forceRefresh: Boolean,
-    ): Flow<NetworkResult<Currencies>> = cacheDataOrFetchOnline(
+    override fun getAllRates(forceRefresh: Boolean): Flow<NetworkResult<Currencies>> = cacheDataOrFetchOnline(
         query = { ratesLocalDataSource.getRates() },
         fetch = { getParsedRates() },
         shouldFetch = { localRates -> localRates == null },
@@ -39,10 +39,11 @@ class MainRepositoryImpl(
 
     override fun getCryptoInfoBySymbol(
         forceRefresh: Boolean,
+        id: String,
         symbol: String
     ): Flow<NetworkResult<CryptoInfo>> = cacheDataOrFetchOnline(
         query = { ratesLocalDataSource.getCryptoInfoBySymbol(symbol) },
-        fetch = { getParsedCryptoBySymbol(symbol) },
+        fetch = { getParsedCryptoBy(id, symbol) },
         shouldFetch = { localCryptoInfo -> localCryptoInfo == null },
         forceRefresh = forceRefresh,
         clearLocalData = { ratesLocalDataSource.deleteCryptoInfoBySymbol(symbol) },
@@ -51,14 +52,28 @@ class MainRepositoryImpl(
         }
     )
 
-    private suspend fun getParsedCryptoBySymbol(symbol: String): CryptoInfo {
-        val jsonString = httpClient.get("$CRYPTO_INFO_URL/$symbol").bodyAsText()
+    private suspend fun getParsedCryptoBy(
+        id: String,
+        symbol: String
+    ): CryptoInfo {
         val json = Json {
             ignoreUnknownKeys = true
             coerceInputValues = true
         }
-        val partialResponse = json.decodeFromString<CryptoInfoDto>(jsonString)
-        return partialResponse.toDomainModel()
+        val symbolResponse: HttpResponse = httpClient.get("$CRYPTO_INFO_URL/$symbol")
+        return when (symbolResponse.status) {
+            HttpStatusCode.OK -> {
+                val jsonString = symbolResponse.bodyAsText()
+                val partialResponse = json.decodeFromString<CryptoInfoDto>(jsonString)
+                partialResponse.toDomainModel()
+            }
+
+            else -> {
+                val jsonString = httpClient.get("$CRYPTO_INFO_URL/$id").bodyAsText()
+                val partialResponse = json.decodeFromString<CryptoInfoDto>(jsonString)
+                partialResponse.toDomainModel()
+            }
+        }
     }
 
     private suspend fun getParsedRates(): CurrenciesDto {

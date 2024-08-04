@@ -8,6 +8,7 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import org.koin.core.parameter.parametersOf
 import ui.components.ErrorView
+import ui.components.PoweredByCoinGeckoAndCoinCapText
 import ui.components.base.BaseGlassLazyColumn
 import ui.screens.main.detail.DetailState.Error
 import ui.screens.main.detail.DetailState.Loading
@@ -68,6 +69,7 @@ internal fun DetailScreen(
                 }
                 item { DetailBody(cryptoInfo = cryptoInfo) }
                 item { DescriptionCard(description = description) }
+                item { PoweredByCoinGeckoAndCoinCapText() }
             }
 
             is Loading -> {
@@ -86,6 +88,7 @@ internal fun DetailScreen(
                 }
                 item { DetailBody(cryptoInfo = cryptoInfo, isLoading = true) }
                 item { DescriptionCard(description = description, isLoading = true) }
+                item { PoweredByCoinGeckoAndCoinCapText() }
             }
 
             else -> Unit

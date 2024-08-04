@@ -7,7 +7,6 @@ import domain.model.main.BonbastRate
 import domain.model.main.Crypto
 import domain.model.main.Market
 import domain.model.main.Rate
-import kotlinx.collections.immutable.ImmutableList
 
 sealed interface OverviewViewEvent {
     data class OnLoadRates(val forceRefresh: Boolean = false) : OverviewViewEvent
@@ -19,12 +18,12 @@ sealed interface OverviewState {
 
     @Stable
     data class Success(
-        val bonbastRates: ImmutableList<BonbastRate>,
-        val cryptoRates: ImmutableList<Crypto>,
-        val markets: ImmutableList<Market>,
-        val fiatRates: ImmutableList<Rate>,
-        val topMovers: ImmutableList<Crypto>,
-        val news: ImmutableList<Article>
+        val bonbastRates: List<BonbastRate>,
+        val cryptoRates: List<Crypto>,
+        val markets: List<Market>,
+        val fiatRates: List<Rate>,
+        val topMovers: List<Crypto>,
+        val news: List<Article>
     ) : OverviewState
 
     @Immutable

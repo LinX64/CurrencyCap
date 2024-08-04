@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.bitcoin_text
 import domain.model.main.Crypto
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import ui.common.formatToPrice
@@ -56,7 +55,7 @@ private fun CryptoSuccessBody(
     isLoading: Boolean = false,
     bitcoinItem: Crypto?,
     usd: String,
-    cryptoRates: ImmutableList<Crypto>
+    cryptoRates: List<Crypto>
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -96,7 +95,7 @@ private fun CryptoSuccessBody(
 @Composable
 internal fun InnerChartRow(
     isLoading: Boolean = false,
-    cryptoRates: ImmutableList<Crypto>
+    cryptoRates: List<Crypto>
 ) {
     val bitcoin = cryptoRates[0]
     Row(

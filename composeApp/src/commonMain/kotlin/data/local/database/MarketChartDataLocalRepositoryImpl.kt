@@ -26,10 +26,7 @@ class MarketChartDataLocalRepositoryImpl(
             .map { results ->
                 results.list.flatMap { entity ->
                     entity.chartData.map { dataPoint ->
-                        ChartDataPoint(
-                            price = dataPoint.price,
-                            timestamp = dataPoint.timestamp
-                        )
+                        ChartDataPoint(dataPoint.price, dataPoint.timestamp)
                     }
                 }
             }
