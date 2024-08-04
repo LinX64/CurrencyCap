@@ -184,11 +184,11 @@ internal fun getDummyUser() = User(
 
 internal fun getDummyChartData(): ImmutableList<ChartDataPoint> = persistentListOf(
     ChartDataPoint(
-        price = "0.0",
+        price = "132.0",
         timestamp = 1721779200000
     ),
     ChartDataPoint(
-        price = "0.0",
+        price = "155.0",
         timestamp = 1721779200000
     ),
 )
