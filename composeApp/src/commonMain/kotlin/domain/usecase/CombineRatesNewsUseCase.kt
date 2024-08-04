@@ -7,7 +7,6 @@ import domain.model.main.Crypto
 import domain.repository.MainRepository
 import domain.repository.NewsRepository
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
@@ -17,9 +16,7 @@ class CombineRatesNewsUseCase(
     private val mainRepository: MainRepository,
     private val newsRepository: NewsRepository
 ) {
-    suspend operator fun invoke(
-        forceRefresh: Boolean = false
-    ): Flow<CombinedRatesNews> = coroutineScope {
+    suspend operator fun invoke(forceRefresh: Boolean = false) = coroutineScope {
         val ratesFlow = mainRepository.getAllRates(forceRefresh)
             .mapNotNull { (it as? Success)?.data ?: (it as? Error)?.data }
 

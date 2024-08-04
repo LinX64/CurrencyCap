@@ -54,10 +54,6 @@ class NewsRepositoryImpl(
             val articles: Set<ArticleDto> = parseArticlesResponse(responseText)
             val sortedArticles = articles.sortedBy { it.publishedAt }.reversed().toSet()
             articleLocalDataSource.insertArticles(sortedArticles.toEntity())
-
-            println("cachedLastFetchTime: $cachedLastFetchTime")
-            println("getCurrentTime(): ${getCurrentTime()}")
-
             appPreferences.saveLastFetchTime(getCurrentTime())
         }
     )

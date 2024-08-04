@@ -9,6 +9,7 @@ interface MainRepository {
     fun getAllRates(forceRefresh: Boolean = false): Flow<NetworkResult<Currencies>>
     fun getCryptoInfoBySymbol(
         forceRefresh: Boolean = false,
+        id: String,
         symbol: String
     ): Flow<NetworkResult<CryptoInfo>>
 }

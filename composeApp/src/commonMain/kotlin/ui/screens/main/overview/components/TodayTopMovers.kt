@@ -19,7 +19,6 @@ import ui.screens.main.overview.OverviewState.Loading
 import ui.screens.main.overview.OverviewState.Success
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
-import util.getDummyCryptoItem
 
 @Composable
 internal fun TodayTopMovers(
@@ -58,7 +57,7 @@ internal fun TodayTopMovers(
                     repeat(2) {
                         TopMoversCard(
                             isLoading = true,
-                            topMovers = getDummyCryptoItem(),
+                            topMovers = null,
                             onClick = { _, _ -> },
                         )
                     }

@@ -4,7 +4,6 @@ import data.local.model.ArticleEntity
 import domain.model.Article
 import domain.model.News
 import domain.model.Source
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -60,7 +59,7 @@ data class SourceDto(
 
 fun NewsDto.toDomain(): News {
     return News(
-        articles = articles.map { it.toDomain() }.toImmutableList(),
+        articles = articles.map { it.toDomain() },
         status = status,
         totalResults = totalResults
     )

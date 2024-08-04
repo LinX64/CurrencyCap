@@ -6,4 +6,5 @@ object APIConst {
     const val CRYPTO_ICON_API = "https://linx64.github.io/cryptoicon-api/public/icons/"
     const val CRYPTO_INFO_URL = "https://api.coingecko.com/api/v3/coins"
     const val COINCAP_BASE_URL = "https://api.coincap.io/v2"
+    const val COIN_GECKO_BASE_URL = "https://api.coingecko.com/api/v3"
 }

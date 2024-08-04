@@ -35,6 +35,7 @@ internal inline fun <ResultType, RequestType> cacheDataOrFetchOnline(
     send(NetworkResult.Loading(null))
 
     /**
+     * FORCE REFRESH LOGIC:
      * If forceRefresh is true, clear the local data and fetch the data from the network.
      * If the fetch is successful, save the fetched data.
      */
@@ -52,6 +53,7 @@ internal inline fun <ResultType, RequestType> cacheDataOrFetchOnline(
     }
 
     /**
+     * NORMAL QUERY LOGIC:
      * Collect the local data and check if it is empty or stale.
      * If the data is not empty and fresh, send the data.
      * If the data is empty or stale, fetch the data from the network.

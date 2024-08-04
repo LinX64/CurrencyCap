@@ -43,6 +43,8 @@ internal fun NewsDetailScreen(
                         onReadMoreClick = { shouldShowBottomSheet = true }
                     )
                 }
+
+                // TODO: consider adding related news here
             }
 
             is Error -> onError((state.value as Error).message)
