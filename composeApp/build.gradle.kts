@@ -98,7 +98,6 @@ kotlin {
             implementation(libs.bundles.datastore)
             implementation(libs.bundles.ktor)
             implementation(libs.kotlinx.serialization)
-            implementation(libs.kachetor)
             api(libs.koin.core)
             implementation(libs.koin.compose)
         }

@@ -33,8 +33,6 @@ coroutines = "1.8.1"
 urlencoderLib = "1.5.0"
 datastore = "1.1.1"
 realm = "2.1.0"
-kachetor = "1.0.0"
-
 compose-metrics-report = "1.4.0"
 
 [libraries]
@@ -47,7 +45,6 @@ compottie = { group = "io.github.alexzhirkevich", name = "compottie", version.re
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 placeholder-material3 = { group = "com.eygraber", name = "compose-placeholder-material3", version.ref = "placeholder-material3" }
-kachetor = { module = "com.vipulasri.kachetor:kachetor", version.ref = "kachetor" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "jetpack-compose" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "jetpack-compose" }
 
