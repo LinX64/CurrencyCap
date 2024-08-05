@@ -179,8 +179,6 @@ private fun ExchangeCard(
             )
         }
 
-        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
-
         ResultCard(uiState = state, amount = amount)
 
         Spacer(modifier = Modifier.height(SPACER_PADDING_16))
