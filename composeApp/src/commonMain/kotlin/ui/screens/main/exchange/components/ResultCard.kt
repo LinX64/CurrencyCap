@@ -53,7 +53,8 @@ import util.normalizeRateUsd
 @Composable
 internal fun ResultCard(
     uiState: ExchangeUiState,
-    amount: String
+    amount: String,
+    onRefreshClick: () -> Unit
 ) {
     val animatedExchangeAmount by animateValueAsState(
         targetValue = uiState.convertedAmount,
@@ -88,7 +89,7 @@ internal fun ResultCard(
 
                 Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
-                ExchangeRateRefreshComponent(onRefreshClick = { /*TODO*/ })
+                ExchangeRateRefreshComponent(onRefreshClick = onRefreshClick)
             }
         }
     }

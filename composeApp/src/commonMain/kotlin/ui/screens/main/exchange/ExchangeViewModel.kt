@@ -55,6 +55,8 @@ internal class ExchangeViewModel(
     }
 
     private fun fetchRates() {
+        setupAmountObserver()
+
         exchangeRepository.getLatest()
             .asResult()
             .map { result ->
