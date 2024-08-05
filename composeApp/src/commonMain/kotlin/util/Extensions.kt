@@ -2,6 +2,7 @@ package util
 
 import data.util.APIConst
 import domain.model.Currency
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -109,3 +110,5 @@ fun formatTimestamp(timestamp: Long): String {
     } " +
             "${dateTime.hour.toString().padStart(2, '0')}:${dateTime.minute.toString().padStart(2, '0')}"
 }
+
+fun getCurrentTimeInMillis(): Long = Clock.System.now().toEpochMilliseconds()

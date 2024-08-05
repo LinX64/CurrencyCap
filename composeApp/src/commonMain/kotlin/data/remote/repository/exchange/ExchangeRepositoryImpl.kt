@@ -15,9 +15,7 @@ class ExchangeRepositoryImpl(
     private val mainRepository: MainRepository
 ) : ExchangeRepository {
 
-    override fun getLatest(
-        forceRefresh: Boolean
-    ): Flow<List<Currency>> = flow {
+    override fun getLatest(forceRefresh: Boolean): Flow<List<Currency>> = flow {
         val currencies = mainRepository.getAllRates(forceRefresh)
             .mapNotNull { result ->
                 when (result) {

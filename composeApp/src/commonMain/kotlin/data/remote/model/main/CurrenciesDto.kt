@@ -7,6 +7,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CurrenciesDto(
+    @SerialName("timestamp")
+    val timestamp: Long,
     @SerialName("bonbast")
     val bonbast: List<BonbastRateDto>,
     @SerialName("crypto")

@@ -223,6 +223,7 @@ internal fun getDummyRatesItem(): ImmutableList<Rate> = persistentListOf(
 )
 
 internal fun getDummyCurrencies(): Currencies = Currencies(
+    timestamp = 123456789,
     bonbast = getDummyBonbastRates(),
     crypto = getDummyCryptoItems(),
     markets = getDummyMarketRates(),
