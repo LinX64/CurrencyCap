@@ -16,7 +16,7 @@ compottie = "1.1.2"
 placeholder-material3 = "1.0.8"
 androidx-startup = "1.2.0-alpha02"
 lifecycle = "2.8.0"
-jetpack-compose = "1.7.0-beta06"
+jetpack-compose = "1.7.0-beta07"
 
 # Firebase
 firebase-firestore = "1.13.0"
