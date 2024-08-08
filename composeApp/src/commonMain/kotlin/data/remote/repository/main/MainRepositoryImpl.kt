@@ -20,6 +20,7 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.Json
+import util.getCurrentTimeInMillis
 
 class MainRepositoryImpl(
     private val httpClient: HttpClient,
@@ -29,7 +30,7 @@ class MainRepositoryImpl(
     override fun getAllRates(forceRefresh: Boolean): Flow<NetworkResult<Currencies>> = cacheDataOrFetchOnline(
         query = { ratesLocalDataSource.getRates() },
         fetch = { getParsedRates() },
-        shouldFetch = { localRates -> localRates == null },
+        shouldFetch = { localRates -> localRates == null || localRates.timestamp < getCurrentTimeInMillis() },
         forceRefresh = forceRefresh,
         clearLocalData = { ratesLocalDataSource.deleteRates() },
         saveFetchResult = { responseDto ->

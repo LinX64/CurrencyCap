@@ -41,6 +41,7 @@ import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.HandleNavigationEffect
 import ui.screens.main.exchange.ExchangeNavigationEffect.ShowSnakeBar
 import ui.screens.main.exchange.ExchangeViewEvent.OnConvert
+import ui.screens.main.exchange.ExchangeViewEvent.OnFetchRates
 import ui.screens.main.exchange.ExchangeViewEvent.OnSwitchCurrencies
 import ui.screens.main.exchange.components.AmountInput
 import ui.screens.main.exchange.components.CurrencyInputs
@@ -179,9 +180,7 @@ private fun ExchangeCard(
             )
         }
 
-        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
-
-        ResultCard(uiState = state, amount = amount)
+        ResultCard(uiState = state, amount = amount, onRefreshClick = { handleEvent(OnFetchRates) })
 
         Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 

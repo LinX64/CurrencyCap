@@ -137,4 +137,6 @@
     <string name="no_chart_data_available">No chart data available!</string>
     <string name="powered_by">Powered by</string>
     <string name="chart_data_by_coincap">Chart data provided by CoinCap.io</string>
+
+    <string name="last_update_text">Last update: %1$s</string>
 </resources>

@@ -25,7 +25,6 @@ class MainViewModel(
     private val _state: MutableStateFlow<MainState> = MutableStateFlow(Idle)
     val appState: StateFlow<MainState> = _state.asStateFlow()
 
-
     var isSubscribeSheetVisible by mutableStateOf(false)
     var isNewsFilterSheetVisible by mutableStateOf(false)
     var isPrivacyPolicySheetVisible by mutableStateOf(false)

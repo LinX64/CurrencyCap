@@ -60,7 +60,6 @@ class CryptoRepositoryImpl(
         return when (response.status) {
             HttpStatusCode.OK -> processResponse(response)
             HttpStatusCode.NotFound -> {
-                println("Data not found, retrying with id")
                 val responseWithId = fetchDataBy(id = coinId, period = period)
                 processResponse(responseWithId)
             }

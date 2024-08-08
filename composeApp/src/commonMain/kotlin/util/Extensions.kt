@@ -2,6 +2,7 @@ package util
 
 import data.util.APIConst
 import domain.model.Currency
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -101,3 +102,13 @@ fun convertToLocalDate(dateString: String): LocalDate {
     }
 }
 
+fun formatTimestamp(timestamp: Long): String {
+    val instant = Instant.fromEpochMilliseconds(timestamp)
+    val dateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+    return "${dateTime.year}-${dateTime.monthNumber.toString().padStart(2, '0')}-${
+        dateTime.dayOfMonth.toString().padStart(2, '0')
+    } " +
+            "${dateTime.hour.toString().padStart(2, '0')}:${dateTime.minute.toString().padStart(2, '0')}"
+}
+
+fun getCurrentTimeInMillis(): Long = Clock.System.now().toEpochMilliseconds()
