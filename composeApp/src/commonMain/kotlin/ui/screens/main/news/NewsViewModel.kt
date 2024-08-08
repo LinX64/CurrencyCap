@@ -60,8 +60,6 @@ class NewsViewModel(
             .map { result ->
                 when (result) {
                     is NetworkResult.Success -> {
-                        println("Data Freshness: ${result.freshness}")
-
                         setState { Success(news = result.data) }
                         getSources(result.data)
                     }

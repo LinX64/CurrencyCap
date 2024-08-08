@@ -2,17 +2,18 @@ package ui.components.base
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import kotlinx.coroutines.flow.onEach
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ui.common.MviViewModel
 
 @Composable
-internal fun <Effect> HandleNavigationEffect(
+internal fun <Effect : Any> HandleNavigationEffect(
     viewModel: MviViewModel<*, *, Effect>,
     onEffect: (Effect) -> Unit
 ) {
-    LaunchedEffect(key1 = viewModel) {
-        viewModel.effect.onEach { effect ->
-            onEffect(effect)
-        }.collect {}
+    val effect by viewModel.effect.collectAsStateWithLifecycle(initialValue = null)
+
+    LaunchedEffect(effect) {
+        effect?.let(onEffect)
     }
 }

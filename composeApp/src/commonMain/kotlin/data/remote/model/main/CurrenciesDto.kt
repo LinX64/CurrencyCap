@@ -19,6 +19,7 @@ data class CurrenciesDto(
     val rates: List<RateDto>
 ) {
     fun toEntity() = CurrenciesEntity().apply {
+        timestamp = this@CurrenciesDto.timestamp
         bonbast = this@CurrenciesDto.bonbast.toEntity()
         crypto = this@CurrenciesDto.crypto.toEntity()
         markets = this@CurrenciesDto.market.toEntity()

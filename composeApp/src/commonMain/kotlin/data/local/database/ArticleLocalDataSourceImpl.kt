@@ -38,10 +38,12 @@ class ArticleLocalDataSourceImpl(
         }
     }
 
-    override fun getArticleByUrl(url: String): Flow<Article> {
+    override fun getArticleByUrl(url: String): Flow<Article?> {
         return realm.query<ArticleEntity>("url == $0", url)
             .asFlow()
-            .map { it.list.first().toDomain() }
+            .map { result ->
+                result.list.firstOrNull()?.toDomain()
+            }
     }
 
     override suspend fun insertArticles(articles: Set<ArticleEntity>) {

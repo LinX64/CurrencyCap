@@ -1,6 +1,5 @@
 package ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,13 +40,16 @@ internal fun PoweredByCoinGeckoAndCoinCapText(
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.bodySmall
             )
+
             Spacer(modifier = Modifier.width(4.dp))
-            Image(
-                modifier = Modifier
-                    .requiredHeight(20.dp)
-                    .padding(top = 2.dp),
+
+            Icon(
                 painter = painterResource(Res.drawable.ic_coingecko),
                 contentDescription = null,
+                tint = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier
+                    .requiredHeight(20.dp)
+                    .padding(top = 2.dp)
             )
         }
 
