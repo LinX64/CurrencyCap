@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
 import ui.screens.main.news.NewsState.Empty
-import ui.screens.main.news.NewsState.Error
 import ui.screens.main.news.NewsState.Loading
 import ui.screens.main.news.NewsState.Success
 import ui.screens.main.news.NewsViewEvent.FetchNews
@@ -71,7 +70,7 @@ class NewsViewModel(
                         getSources(news)
 
                         if (news.isNotEmpty()) setState { Success(news = news) }
-                        else setState { Error(message) }
+                        else setState { Empty }
                     }
 
                     else -> setState { Loading }
