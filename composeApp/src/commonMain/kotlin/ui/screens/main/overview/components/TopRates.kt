@@ -48,8 +48,8 @@ private fun TopRatesHeader(isLoading: Boolean) {
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         SectionRowItem(
-            title = "Top rates",
             hasSubTitle = true,
+            title = "Top rates",
             subTitle = "Iranian currency",
         )
 

@@ -11,13 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import ui.screens.main.overview.components.getPlaceHolder
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun SectionRowItem(
     modifier: Modifier = Modifier,
-    isLoading: Boolean = false,
     hasSubTitle: Boolean = false,
     title: String,
     subTitle: String? = null,
@@ -35,7 +33,6 @@ internal fun SectionRowItem(
         ) {
             Column {
                 Text(
-                    modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
                     text = title,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,

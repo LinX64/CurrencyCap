@@ -9,7 +9,7 @@ interface ArticleLocalDataSource {
     suspend fun updateArticle(article: ArticleEntity)
     suspend fun removeArticle(article: Article)
 
-    fun getArticleByUrl(url: String): Flow<Article>
+    fun getArticleByUrl(url: String): Flow<Article?>
 
     suspend fun insertArticles(articles: Set<ArticleEntity>)
     fun getArticles(): Flow<List<Article>>

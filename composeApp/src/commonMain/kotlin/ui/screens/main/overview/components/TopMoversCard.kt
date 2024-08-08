@@ -35,117 +35,115 @@ import ui.theme.AppDimensions.SPACER_PADDING_32
 internal fun TopMoversCard(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
-    topMovers: Crypto? = null,
+    topMovers: Crypto,
     onClick: (id: String, symbol: String) -> Unit,
 ) {
     val isLoadingModifier = if (isLoading) Modifier else Modifier
-    if (topMovers != null) {
-        Card(
-            modifier = modifier
-                .width(170.dp)
-                .height(250.dp),
-            shape = RoundedCornerShape(CARD_CORNER_RADIUS),
-            colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-            border = BorderStroke(1.dp, Color.White.copy(alpha = 0.1f)),
-            onClick = { onClick(topMovers.id, topMovers.symbol) }
+
+    Card(
+        modifier = modifier
+            .width(170.dp)
+            .height(250.dp),
+        shape = RoundedCornerShape(CARD_CORNER_RADIUS),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        border = BorderStroke(1.dp, Color.White.copy(alpha = 0.1f)),
+        onClick = { onClick(topMovers.id, topMovers.symbol) }
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(Color(0xFF4A148C), Color(0xFF000000)),
+                        startY = 0f,
+                        endY = 250f
+                    )
+                )
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .size(100.dp)
+                    .align(Alignment.TopEnd)
                     .background(
-                        Brush.verticalGradient(
-                            colors = listOf(Color(0xFF4A148C), Color(0xFF000000)),
-                            startY = 0f,
-                            endY = 250f
+                        Brush.radialGradient(
+                            colors = listOf(
+                                Color(0xFFB39DDB).copy(alpha = 0.5f),
+                                Color.Transparent
+                            ),
+                            center = Offset(200f, 55f),
+                            radius = 120f
                         )
                     )
+            )
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
             ) {
                 Box(
                     modifier = Modifier
-                        .size(100.dp)
-                        .align(Alignment.TopEnd)
+                        .align(Alignment.End)
                         .background(
-                            Brush.radialGradient(
-                                colors = listOf(
-                                    Color(0xFFB39DDB).copy(alpha = 0.5f),
-                                    Color.Transparent
-                                ),
-                                center = Offset(200f, 55f),
-                                radius = 120f
-                            )
+                            if (topMovers.priceChange24h >= 0) Color(0xFF4CAF50) else Color(0xFFF44336),
+                            RoundedCornerShape(16.dp)
                         )
-                )
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.End)
-                            .background(
-                                if (topMovers.priceChange24h >= 0) Color(0xFF4CAF50) else Color(0xFFF44336),
-                                RoundedCornerShape(16.dp)
-                            )
-                            .padding(horizontal = 8.dp, vertical = 4.dp)
-                    ) {
-                        Text(
-                            text = "${if (topMovers.priceChange24h >= 0) "+" else ""}${formatToPrice(topMovers.priceChange24h)}%",
-                            color = MaterialTheme.colorScheme.onSurface,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
                     Text(
-                        modifier = isLoadingModifier,
-                        text = topMovers.symbol,
-                        color = Color(0xFFB39DDB),
-                        fontSize = 14.sp
-                    )
-
-                    Text(
-                        modifier = isLoadingModifier,
-                        text = topMovers.name,
-                        color = Color.White,
-                        fontSize = 24.sp,
+                        text = "${if (topMovers.priceChange24h >= 0) "+" else ""}${formatToPrice(topMovers.priceChange24h)}%",
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
                     )
+                }
 
-                    Text(
-                        modifier = isLoadingModifier,
-                        text = "$${formatToPrice(topMovers.currentPrice)}",
-                        color = Color.Gray.copy(alpha = 0.5f),
-                        fontSize = 18.sp
-                    )
+                Spacer(modifier = Modifier.height(8.dp))
 
-                    Spacer(modifier = Modifier.height(SPACER_PADDING_32))
+                Text(
+                    modifier = isLoadingModifier,
+                    text = topMovers.symbol,
+                    color = Color(0xFFB39DDB),
+                    fontSize = 14.sp
+                )
 
-                    // Chart
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(80.dp)
-                    ) {
-                        TopMoversChart(
-                            modifier = Modifier.fillMaxSize(),
-                            list = persistentListOf(
-                                topMovers.currentPrice.toFloat(),
-                                topMovers.high24h.toFloat(),
-                                topMovers.currentPrice.toFloat(),
-                                topMovers.currentPrice.toFloat(),
-                                topMovers.currentPrice.toFloat(),
-                                topMovers.low24h.toFloat(),
-                                topMovers.currentPrice.toFloat(),
-                                topMovers.high24h.toFloat(),
-                                topMovers.currentPrice.toFloat(),
-                                topMovers.high24h.toFloat(),
-                            )
+                Text(
+                    modifier = isLoadingModifier,
+                    text = topMovers.name,
+                    color = Color.White,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Text(
+                    modifier = isLoadingModifier,
+                    text = "$${formatToPrice(topMovers.currentPrice)}",
+                    color = Color.Gray.copy(alpha = 0.5f),
+                    fontSize = 18.sp
+                )
+
+                Spacer(modifier = Modifier.height(SPACER_PADDING_32))
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(80.dp)
+                ) {
+                    TopMoversChart(
+                        modifier = Modifier.fillMaxSize(),
+                        list = persistentListOf(
+                            topMovers.currentPrice.toFloat(),
+                            topMovers.high24h.toFloat(),
+                            topMovers.currentPrice.toFloat(),
+                            topMovers.currentPrice.toFloat(),
+                            topMovers.currentPrice.toFloat(),
+                            topMovers.low24h.toFloat(),
+                            topMovers.currentPrice.toFloat(),
+                            topMovers.high24h.toFloat(),
+                            topMovers.currentPrice.toFloat(),
+                            topMovers.high24h.toFloat(),
                         )
-                    }
+                    )
                 }
             }
         }

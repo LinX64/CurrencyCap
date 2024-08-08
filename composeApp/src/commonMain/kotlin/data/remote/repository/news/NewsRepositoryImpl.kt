@@ -23,8 +23,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
+import util.getCurrentTimeInMillis
 import kotlin.time.Duration.Companion.seconds
 
 class NewsRepositoryImpl(
@@ -54,7 +54,7 @@ class NewsRepositoryImpl(
             val articles: Set<ArticleDto> = parseArticlesResponse(responseText)
             val sortedArticles = articles.sortedBy { it.publishedAt }.reversed().toSet()
             articleLocalDataSource.insertArticles(sortedArticles.toEntity())
-            appPreferences.saveLastFetchTime(getCurrentTime())
+            appPreferences.saveLastFetchTime(getCurrentTimeInMillis())
         }
     )
 
@@ -101,10 +101,8 @@ class NewsRepositoryImpl(
     }
 
     private fun isCacheExpired(): Boolean {
-        val now = getCurrentTime()
+        val now = getCurrentTimeInMillis()
         val isExpired = now - cachedLastFetchTime > cacheExpirationTime
         return isExpired
     }
-
-    private fun getCurrentTime(): Long = Clock.System.now().toEpochMilliseconds()
 }
