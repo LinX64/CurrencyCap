@@ -19,6 +19,7 @@ import ui.screens.main.overview.OverviewState.Loading
 import ui.screens.main.overview.OverviewState.Success
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
+import util.getDummyCryptoItem
 
 @Composable
 internal fun TodayTopMovers(
@@ -30,7 +31,6 @@ internal fun TodayTopMovers(
         modifier = Modifier.fillMaxWidth(),
     ) {
         SectionRowItem(
-            isLoading = isLoading,
             title = stringResource(Res.string.today_top_movers),
         )
 
@@ -46,7 +46,7 @@ internal fun TodayTopMovers(
                 is Success -> {
                     overviewState.topMovers.forEach { topMovers ->
                         TopMoversCard(
-                            isLoading = false,
+                            isLoading = isLoading,
                             topMovers = topMovers,
                             onClick = onCryptoItemClick,
                         )
@@ -56,8 +56,8 @@ internal fun TodayTopMovers(
                 is Loading -> {
                     repeat(2) {
                         TopMoversCard(
-                            isLoading = true,
-                            topMovers = null,
+                            isLoading = isLoading,
+                            topMovers = getDummyCryptoItem(),
                             onClick = { _, _ -> },
                         )
                     }

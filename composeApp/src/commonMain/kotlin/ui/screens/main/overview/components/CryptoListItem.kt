@@ -44,7 +44,7 @@ internal fun LazyListScope.cryptoListItems(
                     }
                 }
             } else {
-                items(5) { index ->
+                items(2) { index ->
                     CryptoHorizontalItem(
                         crypto = getDummyCryptoItems()[index],
                         isLoading = false,
@@ -55,7 +55,7 @@ internal fun LazyListScope.cryptoListItems(
         }
 
         is Loading -> {
-            items(5) { index ->
+            items(2) { index ->
                 CryptoHorizontalItem(
                     crypto = getDummyCryptoItems()[index],
                     isLoading = true,
