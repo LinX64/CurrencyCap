@@ -1,5 +1,5 @@
 [versions]
-agp = "8.3.2"
+agp = "8.5.2"
 androidx-activityCompose = "1.9.1"
 compose-plugin = "1.7.0-alpha02"
 composeWebviewMultiplatform = "1.9.20"
