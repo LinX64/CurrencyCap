@@ -5,7 +5,6 @@ import domain.model.Article
 import domain.model.Source
 import domain.model.main.BonbastRate
 import domain.model.main.ChartDataPoint
-import domain.model.main.CommonUsdPrice
 import domain.model.main.Crypto
 import domain.model.main.CryptoImage
 import domain.model.main.CryptoInfo
@@ -95,9 +94,9 @@ internal fun getDummyCryptoInfoItem(): CryptoInfo = CryptoInfo(
     id = "id",
     description = Description(en = "melius"),
     marketData = MarketData(
-        currentPrice = CommonUsdPrice(usd = 50.51),
-        high24h = CommonUsdPrice(usd = 52.53),
-        low24h = CommonUsdPrice(usd = 54.55),
+        currentPrice = 50.51,
+        high24h = 52.53,
+        low24h = 54.55,
         priceChange24h = 56.57,
         priceChangePercentage24h = 58.59,
         priceChangePercentage7d = 60.61,
@@ -106,8 +105,8 @@ internal fun getDummyCryptoInfoItem(): CryptoInfo = CryptoInfo(
         priceChangePercentage60d = 66.67,
         priceChangePercentage200d = 68.69,
         priceChangePercentage1y = 70.71,
-        ath = CommonUsdPrice(usd = 72.73),
-        marketCap = CommonUsdPrice(usd = 74.75),
+        ath = 72.73,
+        marketCap = 74.75,
     ),
     name = "Bitcoin",
     symbol = "btc",

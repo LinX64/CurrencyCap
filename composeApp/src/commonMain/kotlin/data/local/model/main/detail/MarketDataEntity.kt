@@ -1,6 +1,5 @@
 package data.local.model.main.detail
 
-import domain.model.main.CommonUsdPrice
 import domain.model.main.MarketData
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
@@ -29,9 +28,9 @@ class MarketDataEntity : RealmObject {
 
 fun MarketDataEntity.toDomain(): MarketData {
     return MarketData(
-        currentPrice = CommonUsdPrice(usd = currentPrice),
-        high24h = CommonUsdPrice(usd = currentPrice),
-        low24h = CommonUsdPrice(usd = currentPrice),
+        currentPrice = currentPrice,
+        high24h = high24h,
+        low24h = low24h,
         priceChange24h = priceChange24h,
         priceChangePercentage24h = priceChangePercentage24h,
         priceChangePercentage7d = priceChangePercentage7d,
@@ -40,7 +39,7 @@ fun MarketDataEntity.toDomain(): MarketData {
         priceChangePercentage60d = priceChangePercentage60d,
         priceChangePercentage200d = priceChangePercentage200d,
         priceChangePercentage1y = priceChangePercentage1y,
-        marketCap = CommonUsdPrice(usd = currentPrice),
-        ath = CommonUsdPrice(usd = currentPrice),
+        marketCap = currentPrice,
+        ath = currentPrice,
     )
 }

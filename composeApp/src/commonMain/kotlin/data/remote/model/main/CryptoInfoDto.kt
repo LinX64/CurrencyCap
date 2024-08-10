@@ -1,6 +1,5 @@
 package data.remote.model.main
 
-import domain.model.main.CommonUsdPrice
 import domain.model.main.CryptoImage
 import domain.model.main.CryptoInfo
 import domain.model.main.Description
@@ -34,11 +33,11 @@ data class DescriptionDto(
 @Serializable
 data class MarketDataDto(
     @SerialName("current_price")
-    val currentPrice: CommonUsdPriceDto,
+    val currentPrice: Map<String, Double>,
     @SerialName("high_24h")
-    val high24h: CommonUsdPriceDto,
+    val high24h: Map<String, Double>,
     @SerialName("low_24h")
-    val low24h: CommonUsdPriceDto,
+    val low24h: Map<String, Double>,
     @SerialName("price_change_24h")
     val priceChange24h: Double,
     @SerialName("price_change_percentage_24h")
@@ -56,15 +55,9 @@ data class MarketDataDto(
     @SerialName("price_change_percentage_1y")
     val priceChangePercentage1y: Double,
     @SerialName("market_cap")
-    val marketCap: CommonUsdPriceDto,
+    val marketCap: Map<String, Double>,
     @SerialName("ath")
-    val ath: CommonUsdPriceDto,
-)
-
-@Serializable
-data class CommonUsdPriceDto(
-    @SerialName("usd")
-    val usd: Double
+    val ath: Map<String, Double>
 )
 
 @Serializable
@@ -77,7 +70,7 @@ data class CryptoImageDto(
     val large: String
 )
 
-fun CryptoInfoDto.toDomainModel(): CryptoInfo {
+internal fun CryptoInfoDto.toDomainModel(): CryptoInfo {
     return CryptoInfo(
         id = id,
         description = Description(en = descriptionDto.en),
@@ -89,19 +82,19 @@ fun CryptoInfoDto.toDomainModel(): CryptoInfo {
             large = image.large
         ),
         marketData = MarketData(
-            currentPrice = CommonUsdPrice(usd = 26.27),
-            high24h = CommonUsdPrice(usd = 28.29),
-            low24h = CommonUsdPrice(usd = 30.31),
-            priceChange24h = 32.33,
-            priceChangePercentage24h = 34.35,
-            priceChangePercentage7d = 36.37,
-            priceChangePercentage14d = 38.39,
-            priceChangePercentage30d = 40.41,
-            priceChangePercentage60d = 42.43,
-            priceChangePercentage200d = 44.45,
-            priceChangePercentage1y = 46.47,
-            marketCap = CommonUsdPrice(usd = 48.49),
-            ath = CommonUsdPrice(usd = 50.51)
+            currentPrice = marketDataDto.currentPrice["usd"] ?: 0.0,
+            high24h = marketDataDto.high24h["usd"] ?: 0.0,
+            low24h = marketDataDto.low24h["usd"] ?: 0.0,
+            priceChange24h = marketDataDto.priceChange24h,
+            priceChangePercentage24h = marketDataDto.priceChangePercentage24h,
+            priceChangePercentage7d = marketDataDto.priceChangePercentage7d,
+            priceChangePercentage14d = marketDataDto.priceChangePercentage14d,
+            priceChangePercentage30d = marketDataDto.priceChangePercentage30d,
+            priceChangePercentage60d = marketDataDto.priceChangePercentage60d,
+            priceChangePercentage200d = marketDataDto.priceChangePercentage200d,
+            priceChangePercentage1y = marketDataDto.priceChangePercentage1y,
+            marketCap = marketDataDto.marketCap["usd"] ?: 0.0,
+            ath = marketDataDto.ath["usd"] ?: 0.0
         )
     )
 }
