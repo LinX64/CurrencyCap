@@ -59,8 +59,6 @@ internal fun DetailHeader(
 
         Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
-        println("CryptoInfo: " + cryptoInfo.marketData.currentPrice)
-
         Text(
             modifier = isDefaultLoadingModifier,
             text = "$${formatToPrice(cryptoInfo.marketData.currentPrice)}",
@@ -78,17 +76,17 @@ internal fun DetailHeader(
             chartData = chartData,
             isLoading = isLoading,
         )
+
+        Spacer(modifier = Modifier.height(SPACER_PADDING_32))
+
+        TimeRangeChips(
+            selectedRange = selectedChip,
+            onRangeSelected = { newRange ->
+                selectedChip = newRange
+                onChartPeriodSelect(cryptoInfo.id, newRange)
+            }
+        )
     }
-
-    Spacer(modifier = Modifier.height(SPACER_PADDING_32))
-
-    TimeRangeChips(
-        selectedRange = selectedChip,
-        onRangeSelected = { newRange ->
-            selectedChip = newRange
-            onChartPeriodSelect(cryptoInfo.id, newRange)
-        }
-    )
 }
 
 @Composable
