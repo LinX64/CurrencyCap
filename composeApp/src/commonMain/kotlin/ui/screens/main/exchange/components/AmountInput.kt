@@ -29,7 +29,7 @@ internal fun AmountInput(
             .clip(RoundedCornerShape(CARD_CORNER_RADIUS)),
         value = amount,
         onValueChange = { newValue ->
-            if (newValue.isEmpty() || newValue.matches(Regex("^\\d*.?\\d*$"))) {
+            if (newValue.isEmpty() || newValue.matches(Regex("^\\d+$"))) {
                 onAmountChange(newValue)
             } else onErrorMessage("Invalid amount format")
         },

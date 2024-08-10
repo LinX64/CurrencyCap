@@ -1,7 +1,7 @@
 package util
 
 import data.util.APIConst
-import domain.model.Currency
+import domain.model.CurrencyRate
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
@@ -62,9 +62,10 @@ fun convertDateFormat(inputDate: String): String {
     return "$formattedDay $monthName, $year"
 }
 
-internal fun normalizeRateUsd(currency: Currency): Double = if (currency.code == "USD") {
-    currency.value
-} else 1.0 / currency.value
+internal fun normalizeRateUsd(currencyRate: CurrencyRate): Pair<Double, Boolean> =
+    if (currencyRate.code == "USD" || currencyRate.value >= 1.0) {
+        Pair(currencyRate.value, false)
+    } else Pair(1.0 / currencyRate.value, true)
 
 fun formatNumber(number: Number): String {
     val num = number.toDouble()

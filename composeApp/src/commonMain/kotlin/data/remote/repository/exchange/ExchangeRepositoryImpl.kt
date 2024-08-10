@@ -2,7 +2,8 @@ package data.remote.repository.exchange
 
 import data.util.NetworkResult.Error
 import data.util.NetworkResult.Success
-import domain.model.Currency
+import domain.model.CurrencyRate
+import domain.model.main.Currencies
 import domain.repository.ExchangeRepository
 import domain.repository.MainRepository
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +16,7 @@ class ExchangeRepositoryImpl(
     private val mainRepository: MainRepository
 ) : ExchangeRepository {
 
-    override fun getLatest(forceRefresh: Boolean): Flow<List<Currency>> = flow {
+    override fun getLatest(forceRefresh: Boolean): Flow<List<CurrencyRate>> = flow {
         val currencies = mainRepository.getAllRates(forceRefresh)
             .mapNotNull { result ->
                 when (result) {
@@ -24,14 +25,23 @@ class ExchangeRepositoryImpl(
                     else -> null
                 }
             }
-            .map { data ->
-                data.rates
-                    .filter { it.type == FIAT && it.symbol !in unrecognizedSymbols }
-                    .map { rate -> Currency(code = rate.symbol, value = rate.rateUsd.toDouble()) }
-            }
+            .map(::mapIRRFiatToToman)
             .first()
 
         emit(currencies)
+    }
+
+    private fun mapIRRFiatToToman(data: Currencies): List<CurrencyRate> {
+        val iranianRealRate = data.bonbast.first { it.code == "USD" }.sell
+
+        return data.rates
+            .filter { it.type == FIAT && it.symbol !in unrecognizedSymbols }
+            .map { rate ->
+                CurrencyRate(
+                    code = rate.symbol,
+                    value = if (rate.symbol == "IRR") iranianRealRate else rate.rateUsd.toDouble(),
+                )
+            }
     }
 
     companion object {

@@ -133,8 +133,8 @@ private fun ExchangeCard(
             Spacer(modifier = Modifier.height(24.dp))
 
             CurrencyInputs(
-                source = state.sourceCurrency,
-                target = state.targetCurrency,
+                source = state.sourceCurrencyRate,
+                target = state.targetCurrencyRate,
                 onSwitch = { handleEvent(OnSwitchCurrencies) },
                 onCurrencyTypeSelect = {
                     dialogOpened = true
@@ -190,7 +190,7 @@ private fun ExchangeCard(
     if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
         CurrencyPicker(
             hazeState = hazeState,
-            currencyList = state.currencyRates,
+            currencyRateList = state.currencyRateRates,
             currencyType = selectedCurrencyType,
             onEvent = { event ->
                 handleEvent(event)

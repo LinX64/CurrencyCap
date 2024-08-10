@@ -33,12 +33,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.last_update_text
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import org.jetbrains.compose.resources.stringResource
 import ui.common.formatToPrice
 import ui.components.base.GlassCard
@@ -48,6 +48,7 @@ import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.currencyConverterAnimation
 import util.exitTransition
 import util.formatTimestamp
+import util.getCurrentTimeInMillis
 import util.normalizeRateUsd
 
 @Composable
@@ -56,12 +57,6 @@ internal fun ResultCard(
     amount: String,
     onRefreshClick: () -> Unit
 ) {
-    val animatedExchangeAmount by animateValueAsState(
-        targetValue = uiState.convertedAmount,
-        animationSpec = tween(300),
-        typeConverter = currencyConverterAnimation, label = ""
-    )
-
     AnimatedVisibility(
         visible = amount.isNotEmpty(),
         enter = fadeIn() + expandVertically(),
@@ -74,33 +69,39 @@ internal fun ResultCard(
                     .padding(SPACER_PADDING_16),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                ConvertedAmountRow(animatedExchangeAmount, uiState)
+                ConvertedAmountRow(uiState)
 
                 Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
-                val normalizedAmount = uiState.targetCurrency?.let { normalizeRateUsd(it) }
-                val formattedAmount = normalizedAmount?.let { formatToPrice(it) } ?: "0.00"
+                val (normalizedAmount, isReversed) = uiState.targetCurrencyRate?.let { normalizeRateUsd(it) } ?: Pair(null, false)
+                val formattedAmount = normalizedAmount?.let { formatToPrice(it) } ?: normalizedAmount
+                val sourceCode = uiState.sourceCurrencyRate?.code ?: ""
+                val targetCode = uiState.targetCurrencyRate?.code ?: ""
+
+                val text = if (isReversed) {
+                    "${formatToPrice(1.0 / (normalizedAmount ?: 1.0))} $sourceCode = 1 $targetCode"
+                } else "1 $sourceCode = $formattedAmount $targetCode"
 
                 Text(
-                    text = "1 ${uiState.sourceCurrency?.code} = $formattedAmount ${uiState.targetCurrency?.code}",
+                    text = text,
                     color = MaterialTheme.colorScheme.onSurface,
                     style = MaterialTheme.typography.bodySmall
                 )
 
                 Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
-                ExchangeRateRefreshComponent(onRefreshClick = onRefreshClick)
+                ExchangeRateRefreshRow(onRefreshClick = onRefreshClick)
             }
         }
     }
 }
 
 @Composable
-private fun ExchangeRateRefreshComponent(
+private fun ExchangeRateRefreshRow(
     modifier: Modifier = Modifier,
     onRefreshClick: () -> Unit,
 ) {
-    val currentTimestamp = Clock.System.now().toEpochMilliseconds()
+    val currentTimestamp = getCurrentTimeInMillis()
     var lastUpdateTime by remember { mutableLongStateOf(currentTimestamp) }
 
     Row(
@@ -156,12 +157,18 @@ private fun AnimatedRefreshIcon(
 
 @Composable
 private fun ConvertedAmountRow(
-    animatedExchangeAmount: Double,
     uiState: ExchangeUiState
 ) {
+    val animatedExchangeAmount by animateValueAsState(
+        targetValue = uiState.convertedAmount,
+        animationSpec = tween(300),
+        typeConverter = currencyConverterAnimation,
+        label = ""
+    )
+
     Row {
         Text(
-            text = "${(animatedExchangeAmount * 100).toLong() / 100.0}",
+            text = formatToPrice(animatedExchangeAmount),
             color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold
@@ -169,11 +176,14 @@ private fun ConvertedAmountRow(
 
         Spacer(modifier = Modifier.width(SPACER_PADDING_8))
 
+        val isIRR = uiState.targetCurrencyRate?.code == "IRR"
         Text(
-            text = uiState.targetCurrency?.code.toString(),
+            text = if (isIRR) "Toman" else uiState.targetCurrencyRate?.code ?: "",
             color = MaterialTheme.colorScheme.onSurface,
             style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            maxLines = 2,
+            textAlign = TextAlign.Center
         )
     }
 }

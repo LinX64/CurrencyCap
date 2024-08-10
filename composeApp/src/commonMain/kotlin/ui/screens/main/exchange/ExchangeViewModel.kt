@@ -63,10 +63,10 @@ internal class ExchangeViewModel(
                 when (result) {
                     is NetworkResult.Success -> {
                         val currencyRates = result.data.sortedBy { it.code }.toImmutableSet()
-                        setState { ExchangeUiState(currencyRates = currencyRates) }
+                        setState { ExchangeUiState(currencyRateRates = currencyRates) }
                     }
 
-                    is NetworkResult.Error -> setState { ExchangeUiState(currencyRates = persistentSetOf()) }
+                    is NetworkResult.Error -> setState { ExchangeUiState(currencyRateRates = persistentSetOf()) }
                     else -> Unit
                 }
             }
@@ -78,10 +78,10 @@ internal class ExchangeViewModel(
             currencyRepository.readSourceCurrencyCode().collectLatest { currencyCode ->
                 viewState.collectLatest { currentState ->
                     if (currentState is ExchangeUiState) {
-                        val selectedCurrency = currentState.currencyRates.find { it.code == currencyCode.name }
+                        val selectedCurrency = currentState.currencyRateRates.find { it.code == currencyCode.name }
 
                         selectedCurrency?.let { nonNullData ->
-                            setState { if (this is ExchangeUiState) copy(sourceCurrency = nonNullData) else this }
+                            setState { if (this is ExchangeUiState) copy(sourceCurrencyRate = nonNullData) else this }
                         }
                     }
                 }
@@ -94,10 +94,10 @@ internal class ExchangeViewModel(
             currencyRepository.readTargetCurrencyCode().collectLatest { currencyCode ->
                 viewState.collectLatest { currentState ->
                     if (currentState is ExchangeUiState) {
-                        val selectedCurrency = currentState.currencyRates.find { it.code == currencyCode.name }
+                        val selectedCurrency = currentState.currencyRateRates.find { it.code == currencyCode.name }
 
                         selectedCurrency?.let { nonNullData ->
-                            setState { if (this is ExchangeUiState) copy(targetCurrency = nonNullData) else this }
+                            setState { if (this is ExchangeUiState) copy(targetCurrencyRate = nonNullData) else this }
                         }
                     }
                 }
@@ -126,8 +126,8 @@ internal class ExchangeViewModel(
         viewModelScope.launch {
             val currentState = viewState.value
             if (currentState is ExchangeUiState) {
-                val source = currentState.sourceCurrency ?: return@launch
-                val target = currentState.targetCurrency ?: return@launch
+                val source = currentState.sourceCurrencyRate ?: return@launch
+                val target = currentState.targetCurrencyRate ?: return@launch
 
                 saveCurrencyTargetCode(source.code)
                 saveCurrencySourceCode(target.code)
@@ -143,8 +143,8 @@ internal class ExchangeViewModel(
         val currentState = viewState.value
 
         if (currentState is ExchangeUiState) {
-            val source = currentState.sourceCurrency
-            val target = currentState.targetCurrency
+            val source = currentState.sourceCurrencyRate
+            val target = currentState.targetCurrencyRate
 
             val convertedValue = convertCurrenciesUseCase(amountDouble, source, target)
             setState { if (this is ExchangeUiState) copy(convertedAmount = convertedValue) else this }
