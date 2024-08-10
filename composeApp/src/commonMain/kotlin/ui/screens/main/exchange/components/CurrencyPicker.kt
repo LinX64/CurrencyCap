@@ -54,7 +54,7 @@ import data.local.model.exchange.CurrencyCode
 import data.local.model.exchange.CurrencyType
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
-import domain.model.Currency
+import domain.model.CurrencyRate
 import kotlinx.collections.immutable.ImmutableSet
 import org.jetbrains.compose.resources.painterResource
 import ui.screens.main.exchange.ExchangeViewEvent
@@ -65,15 +65,15 @@ import ui.theme.AppDimensions.SPACER_PADDING_8
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CurrencyPicker(
-    currencyList: ImmutableSet<Currency>,
+    currencyRateList: ImmutableSet<CurrencyRate>,
     currencyType: CurrencyType,
     onEvent: (ExchangeViewEvent) -> Unit,
     onDismiss: () -> Unit,
     hazeState: HazeState
 ) {
 
-    val allCurrencies = remember(key1 = currencyList) {
-        mutableStateListOf<Currency>().apply { addAll(currencyList) }
+    val allCurrencies = remember(key1 = currencyRateList) {
+        mutableStateListOf<CurrencyRate>().apply { addAll(currencyRateList) }
     }
 
     var searchQuery by remember { mutableStateOf("") }
@@ -114,14 +114,14 @@ internal fun CurrencyPicker(
                             searchQuery = query.uppercase()
 
                             if (query.isNotEmpty()) {
-                                val filteredCurrencies = currencyList.filter {
+                                val filteredCurrencies = currencyRateList.filter {
                                     it.code.contains(query.uppercase())
                                 }
                                 allCurrencies.clear()
                                 allCurrencies.addAll(filteredCurrencies)
                             } else {
                                 allCurrencies.clear()
-                                allCurrencies.addAll(currencyList)
+                                allCurrencies.addAll(currencyRateList)
                             }
                         },
                         placeholder = {

@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import data.local.model.exchange.CurrencyCode
-import domain.model.Currency
+import domain.model.CurrencyRate
 import org.jetbrains.compose.resources.painterResource
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.SPACER_PADDING_16
@@ -37,8 +37,8 @@ import util.transitionSpec
 @Composable
 fun RowScope.CurrencyView(
     placeholder: String,
-    currency: Currency?,
-    onClick: (Currency) -> Unit
+    currencyRate: CurrencyRate?,
+    onClick: (CurrencyRate) -> Unit
 ) {
     Column(
         modifier = Modifier.weight(1f)
@@ -58,7 +58,7 @@ fun RowScope.CurrencyView(
                 .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f))
                 .height(64.dp)
                 .clickable {
-                    currency?.let {
+                    currencyRate?.let {
                         onClick(it)
                     }
                 },
@@ -66,11 +66,11 @@ fun RowScope.CurrencyView(
             horizontalArrangement = Arrangement.Center
         ) {
             AnimatedVisibility(
-                visible = currency != null,
+                visible = currencyRate != null,
                 enter = enterTransition(),
                 exit = exitTransition()
             ) {
-                currency?.let { data ->
+                currencyRate?.let { data ->
                     AnimatedContent(
                         targetState = data,
                         transitionSpec = { transitionSpec() },

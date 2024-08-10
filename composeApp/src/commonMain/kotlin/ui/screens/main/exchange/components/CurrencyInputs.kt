@@ -24,14 +24,14 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.switch_ic
 import data.local.model.exchange.CurrencyCode
 import data.local.model.exchange.CurrencyType
-import domain.model.Currency
+import domain.model.CurrencyRate
 import org.jetbrains.compose.resources.painterResource
 import ui.theme.AppDimensions.SPACER_PADDING_16
 
 @Composable
 internal fun CurrencyInputs(
-    source: Currency?,
-    target: Currency?,
+    source: CurrencyRate?,
+    target: CurrencyRate?,
     onSwitch: () -> Unit,
     onCurrencyTypeSelect: (CurrencyType) -> Unit
 ) {
@@ -47,7 +47,7 @@ internal fun CurrencyInputs(
     ) {
         CurrencyView(
             placeholder = "From",
-            currency = source,
+            currencyRate = source,
             onClick = {
                 onCurrencyTypeSelect(
                     CurrencyType.Source(CurrencyCode.valueOf(it.code))
@@ -80,7 +80,7 @@ internal fun CurrencyInputs(
 
         CurrencyView(
             placeholder = "To",
-            currency = target,
+            currencyRate = target,
             onClick = {
                 onCurrencyTypeSelect(
                     CurrencyType.Target(CurrencyCode.valueOf(it.code))
