@@ -113,7 +113,7 @@ kotlin {
 
 android {
     namespace = "com.client.currencycap"
-    compileSdk = 35
+    compileSdk = 34
 
     sourceSets["main"].apply {
         manifest.srcFile("src/androidMain/AndroidManifest.xml")
