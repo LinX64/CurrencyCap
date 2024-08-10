@@ -51,7 +51,7 @@ internal fun DetailBody(
 
                     Text(
                         modifier = isLoadingModifier,
-                        text = formatToPrice(cryptoInfo.marketData.marketCap.usd),
+                        text = formatToPrice(cryptoInfo.marketData.marketCap),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
@@ -91,7 +91,7 @@ internal fun DetailBody(
 
                     Text(
                         modifier = isLoadingModifier,
-                        text = "$${formatToPrice(cryptoInfo.marketData.high24h.usd)}",
+                        text = "$${formatToPrice(cryptoInfo.marketData.high24h)}",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
@@ -110,7 +110,7 @@ internal fun DetailBody(
 
                     Text(
                         modifier = isLoadingModifier,
-                        text = "$${formatToPrice(cryptoInfo.marketData.low24h.usd)}",
+                        text = "$${formatToPrice(cryptoInfo.marketData.low24h)}",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold
@@ -129,7 +129,7 @@ internal fun DetailBody(
 
                     Text(
                         modifier = isLoadingModifier,
-                        text = "$${formatToPrice(cryptoInfo.marketData.ath.usd)}",
+                        text = "$${formatToPrice(cryptoInfo.marketData.ath)}",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold

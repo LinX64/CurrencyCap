@@ -1,8 +1,10 @@
 package domain.model.main
 
+import androidx.compose.runtime.Stable
 import data.local.model.main.detail.CryptoInfoEntity
 import data.local.model.main.detail.MarketDataEntity
 
+@Stable
 data class CryptoInfo(
     val id: String,
     val description: Description,
@@ -12,14 +14,16 @@ data class CryptoInfo(
     val image: CryptoImage
 )
 
+@Stable
 data class Description(
     val en: String
 )
 
+@Stable
 data class MarketData(
-    val currentPrice: CommonUsdPrice,
-    val high24h: CommonUsdPrice,
-    val low24h: CommonUsdPrice,
+    val currentPrice: Double,
+    val high24h: Double,
+    val low24h: Double,
     val priceChange24h: Double,
     val priceChangePercentage24h: Double,
     val priceChangePercentage7d: Double,
@@ -28,21 +32,21 @@ data class MarketData(
     val priceChangePercentage60d: Double,
     val priceChangePercentage200d: Double,
     val priceChangePercentage1y: Double,
-    val marketCap: CommonUsdPrice,
-    val ath: CommonUsdPrice,
+    val marketCap: Double,
+    val ath: Double,
 )
 
-data class CommonUsdPrice(
-    val usd: Double
-)
+@Stable
+data class CommonUsdPrice(val usd: Double)
 
+@Stable
 data class CryptoImage(
     val thumb: String,
     val small: String,
     val large: String
 )
 
-fun CryptoInfo.toEntity(): CryptoInfoEntity {
+internal fun CryptoInfo.toEntity(): CryptoInfoEntity {
     return CryptoInfoEntity().apply {
         id = this@toEntity.id
         description = this@toEntity.description.en
@@ -53,11 +57,11 @@ fun CryptoInfo.toEntity(): CryptoInfoEntity {
     }
 }
 
-fun MarketData.toEntity(): MarketDataEntity {
+internal fun MarketData.toEntity(): MarketDataEntity {
     return MarketDataEntity().apply {
-        currentPrice = this@toEntity.currentPrice.usd
-        high24h = this@toEntity.high24h.usd
-        low24h = this@toEntity.low24h.usd
+        currentPrice = this@toEntity.currentPrice
+        high24h = this@toEntity.high24h
+        low24h = this@toEntity.low24h
         priceChange24h = this@toEntity.priceChange24h
         priceChangePercentage24h = this@toEntity.priceChangePercentage24h
         priceChangePercentage7d = this@toEntity.priceChangePercentage7d
@@ -66,7 +70,7 @@ fun MarketData.toEntity(): MarketDataEntity {
         priceChangePercentage60d = this@toEntity.priceChangePercentage60d
         priceChangePercentage200d = this@toEntity.priceChangePercentage200d
         priceChangePercentage1y = this@toEntity.priceChangePercentage1y
-        marketCap = this@toEntity.marketCap.usd
-        ath = this@toEntity.ath.usd
+        marketCap = this@toEntity.marketCap
+        ath = this@toEntity.ath
     }
 }

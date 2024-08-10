@@ -52,46 +52,43 @@ internal fun DetailHeader(
 
     Column(
         modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
 
-            TopHeaderRow(isLoading, cryptoInfo, isDefaultLoadingModifier)
+        TopHeaderRow(isLoading, cryptoInfo, isDefaultLoadingModifier)
 
-            Spacer(modifier = Modifier.height(SPACER_PADDING_16))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
-            Text(
-                modifier = isDefaultLoadingModifier,
-                text = "$${formatToPrice(cryptoInfo.marketData.currentPrice.usd)}",
-                style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                fontWeight = FontWeight.Bold
-            )
+        println("CryptoInfo: " + cryptoInfo.marketData.currentPrice)
 
-            InnerHeaderRow(cryptoInfo, isLoading, isDefaultLoadingModifier)
+        Text(
+            modifier = isDefaultLoadingModifier,
+            text = "$${formatToPrice(cryptoInfo.marketData.currentPrice)}",
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Bold
+        )
 
-            Spacer(modifier = Modifier.height(SPACER_PADDING_16))
+        InnerHeaderRow(cryptoInfo, isLoading, isDefaultLoadingModifier)
 
-            InteractiveCryptoChart(
-                modifier = Modifier.height(200.dp),
-                chartData = chartData,
-                isLoading = isLoading,
-            )
-        }
+        Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
-        Spacer(modifier = Modifier.height(SPACER_PADDING_32))
-
-        TimeRangeChips(
-            selectedRange = selectedChip,
-            onRangeSelected = { newRange ->
-                selectedChip = newRange
-                onChartPeriodSelect(cryptoInfo.id, newRange)
-            }
+        InteractiveCryptoChart(
+            modifier = Modifier.height(200.dp),
+            chartData = chartData,
+            isLoading = isLoading,
         )
     }
+
+    Spacer(modifier = Modifier.height(SPACER_PADDING_32))
+
+    TimeRangeChips(
+        selectedRange = selectedChip,
+        onRangeSelected = { newRange ->
+            selectedChip = newRange
+            onChartPeriodSelect(cryptoInfo.id, newRange)
+        }
+    )
 }
 
 @Composable
@@ -151,7 +148,7 @@ private fun TopHeaderRow(
 
             Text(
                 modifier = isDefaultLoadingModifier,
-                text = "Market Cap: $${formatToPrice(cryptoInfo.marketData.marketCap.usd)}",
+                text = "Market Cap: $${formatToPrice(cryptoInfo.marketData.marketCap)}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
             )
