@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 import ui.common.MviViewModel
 import ui.navigation.util.ENCODED_URL
 import ui.screens.main.news.news_detail.NewsDetailNavigationEffect.OpenBottomSheet
-import ui.screens.main.news.news_detail.NewsDetailState.Error
+import ui.screens.main.news.news_detail.NewsDetailNavigationEffect.ShowError
 import ui.screens.main.news.news_detail.NewsDetailState.Loading
 import ui.screens.main.news.news_detail.NewsDetailState.Success
 import ui.screens.main.news.news_detail.NewsDetailViewEvent.FetchNews
@@ -38,10 +38,7 @@ class NewsDetailViewModel(
             .map { result ->
                 when (result) {
                     is NetworkResult.Success -> setState { Success(result.data) }
-                    is NetworkResult.Error -> setState {
-                        Error(result.throwable.message ?: "Error while fetching news")
-                    }
-
+                    is NetworkResult.Error -> setEffect(ShowError(result.throwable.message ?: "Error while fetching news"))
                     else -> setState { Loading }
                 }
             }

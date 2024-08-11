@@ -7,8 +7,11 @@ sealed interface ResetPasswordViewEvent {
 
 sealed interface ResetPasswordState {
     data object Idle : ResetPasswordState
+    data object Loading : ResetPasswordState
     data class Error(val message: String) : ResetPasswordState
     data object Success : ResetPasswordState
 }
 
-sealed interface ResetPasswordNavigationEffect
+sealed interface ResetPasswordNavigationEffect {
+    data class ShowError(val message: String) : ResetPasswordNavigationEffect
+}

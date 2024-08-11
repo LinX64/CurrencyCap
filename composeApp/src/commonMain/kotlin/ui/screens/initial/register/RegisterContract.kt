@@ -15,5 +15,6 @@ sealed interface RegisterState {
 
 sealed interface RegisterNavigationEffect {
     data object NavigateToFillProfile : RegisterNavigationEffect
+    data class ShowError(val message: String) : RegisterNavigationEffect
 }
 

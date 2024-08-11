@@ -5,6 +5,10 @@ import domain.repository.AuthServiceRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
+import ui.screens.initial.reset_password.ResetPasswordNavigationEffect.ShowError
+import ui.screens.initial.reset_password.ResetPasswordState.Error
+import ui.screens.initial.reset_password.ResetPasswordState.Loading
+import ui.screens.initial.reset_password.ResetPasswordState.Success
 import ui.screens.initial.reset_password.ResetPasswordViewEvent.OnEmailChanged
 import ui.screens.initial.reset_password.ResetPasswordViewEvent.OnResetPasswordClick
 import util.validateEmail
@@ -25,20 +29,19 @@ internal class ResetPasswordViewModel(
     private fun handleResetPasswordClick() {
         val email = email.value
 
-        if (email.isEmpty()) {
-            setState { ResetPasswordState.Error("Email cannot be empty") }
-            return
+        when {
+            email.isEmpty() -> setState { Error("Email cannot be empty") }
+            email.validateEmail().not() -> setEffect(ShowError("Invalid email"))
+            else -> sendRecoveryEmail(email)
         }
+    }
 
-        if (email.validateEmail().not()) {
-            setState { ResetPasswordState.Error("Invalid email") }
-            return
-        }
+    private fun sendRecoveryEmail(email: String) {
+        setState { Loading }
 
         viewModelScope.launch {
             authServiceRepository.sendRecoveryEmail(email)
-
-            setState { ResetPasswordState.Success }
+            setState { Success }
         }
     }
 }

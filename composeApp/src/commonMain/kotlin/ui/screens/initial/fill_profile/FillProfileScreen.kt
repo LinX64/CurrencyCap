@@ -10,12 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.fill_profile
 import currencycap.composeapp.generated.resources.finish_sign_up
@@ -28,7 +26,9 @@ import ui.components.base.HandleNavigationEffect
 import ui.components.base.button.PrimaryButton
 import ui.components.base.button.SecondaryButton
 import ui.screens.initial.fill_profile.FillProfileNavigationEffect.NavigateToMarketOverview
+import ui.screens.initial.fill_profile.FillProfileNavigationEffect.ShowError
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnNameChanged
+import ui.screens.initial.fill_profile.FillProfileViewEvent.OnPasswordError
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnPhoneNumberChanged
 import ui.screens.initial.fill_profile.FillProfileViewEvent.OnSignUpClick
 import ui.screens.initial.fill_profile.components.NameTextField
@@ -40,9 +40,8 @@ import ui.theme.AppDimensions.SPACER_PADDING_32
 internal fun FillProfileScreen(
     fillProfileViewModel: FillProfileViewModel = koinViewModel<FillProfileViewModel>(),
     navigateToMarketOverview: () -> Unit,
-    onError: (message: String) -> Unit
+    onError: (message: String) -> Unit,
 ) {
-    val state by fillProfileViewModel.viewState.collectAsStateWithLifecycle()
     BaseCenterColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -50,7 +49,7 @@ internal fun FillProfileScreen(
     ) {
         FillProfileForm(
             onSkipClick = navigateToMarketOverview,
-            onError = onError,
+            onError = { fillProfileViewModel.handleEvent(OnPasswordError(it)) },
             onNameChanged = { fillProfileViewModel.handleEvent(OnNameChanged(it)) },
             onPhoneChanged = { fillProfileViewModel.handleEvent(OnPhoneNumberChanged(it)) },
             onFinishSignUpClick = { fillProfileViewModel.handleEvent(OnSignUpClick) }
@@ -60,12 +59,8 @@ internal fun FillProfileScreen(
     HandleNavigationEffect(viewModel = fillProfileViewModel) { effect ->
         when (effect) {
             is NavigateToMarketOverview -> navigateToMarketOverview()
+            is ShowError -> onError(effect.message)
         }
-    }
-
-    when (state) {
-        is FillProfileState.Error -> onError((state as FillProfileState.Error).message)
-        else -> Unit
     }
 }
 

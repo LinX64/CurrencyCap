@@ -26,8 +26,10 @@ import di.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.BaseCenterColumn
 import ui.components.base.EmailTextField
+import ui.components.base.HandleNavigationEffect
 import ui.components.base.button.PrimaryButton
-import ui.screens.initial.reset_password.ResetPasswordState.Error
+import ui.screens.initial.reset_password.ResetPasswordNavigationEffect.ShowError
+import ui.screens.initial.reset_password.ResetPasswordState.Success
 import ui.screens.initial.reset_password.ResetPasswordViewEvent.OnEmailChanged
 import ui.screens.initial.reset_password.ResetPasswordViewEvent.OnResetPasswordClick
 import ui.screens.initial.reset_password.components.PasswordResetDialog
@@ -54,15 +56,18 @@ internal fun ResetPasswordScreen(
         )
     }
 
+    HandleNavigationEffect(resetPasswordViewModel) { effect ->
+        when (effect) {
+            is ShowError -> onMessage(effect.message)
+        }
+    }
+
     when (state) {
-        is Error -> onMessage((state as Error).message)
-        ResetPasswordState.Success -> shouldShowDialog.value = true
+        Success -> shouldShowDialog.value = true
         else -> Unit
     }
 
-    if (shouldShowDialog.value) {
-        PasswordResetDialog { onNavigateToLogin() }
-    }
+    if (shouldShowDialog.value) PasswordResetDialog { onNavigateToLogin() }
 }
 
 @Composable
