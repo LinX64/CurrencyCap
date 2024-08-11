@@ -24,5 +24,6 @@ sealed interface LoginNavigationEffect {
     data object NavigateToMarketOverview : LoginNavigationEffect
     data object NavigateToRegister : LoginNavigationEffect
     data object NavigateToResetPassword : LoginNavigationEffect
+    data class ShowError(val message: String) : LoginNavigationEffect
 }
 
