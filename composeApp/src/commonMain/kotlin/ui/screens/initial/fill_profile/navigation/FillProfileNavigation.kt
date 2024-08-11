@@ -16,7 +16,6 @@ fun NavGraphBuilder.fillProfileScreen(
         FillProfileScreen(
             onError = onError,
             navigateToMarketOverview = onNavigateToMarketOverview,
-            showError = onError
         )
     }
 }
