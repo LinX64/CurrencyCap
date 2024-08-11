@@ -14,7 +14,7 @@ import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.BaseModalBottomSheet
 import ui.components.base.HandleNavigationEffect
 import ui.screens.main.news.news_detail.NewsDetailNavigationEffect.OpenBottomSheet
-import ui.screens.main.news.news_detail.NewsDetailState.Error
+import ui.screens.main.news.news_detail.NewsDetailNavigationEffect.ShowError
 import ui.screens.main.news.news_detail.NewsDetailState.Loading
 import ui.screens.main.news.news_detail.NewsDetailState.Success
 import ui.screens.main.news.news_detail.components.NewsDetailContent
@@ -47,7 +47,6 @@ internal fun NewsDetailScreen(
                 // TODO: consider adding related news here
             }
 
-            is Error -> onError((state.value as Error).message)
             is Loading -> {
                 item {
                     NewsDetailContent(
@@ -65,6 +64,7 @@ internal fun NewsDetailScreen(
     HandleNavigationEffect(newsDetailViewModel) { effect ->
         when (effect) {
             is OpenBottomSheet -> shouldShowBottomSheet = true
+            is ShowError -> onError(effect.message)
         }
     }
 

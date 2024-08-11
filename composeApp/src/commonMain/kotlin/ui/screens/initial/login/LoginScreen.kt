@@ -30,7 +30,6 @@ import ui.components.base.HandleNavigationEffect
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToRegister
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToResetPassword
-import ui.screens.initial.login.LoginState.Error
 import ui.screens.initial.login.LoginState.Loading
 import ui.screens.initial.login.LoginViewEvent.OnEmailChanged
 import ui.screens.initial.login.LoginViewEvent.OnLoginClick
@@ -60,15 +59,15 @@ internal fun LoginRoute(
 
     HandleNavigationEffect(loginViewModel) { effect ->
         when (effect) {
-            is NavigateToMarketOverview -> navigateToMarketOverview()
             NavigateToRegister -> navigateToRegister()
             NavigateToResetPassword -> navigateToResetPassword()
+            is NavigateToMarketOverview -> navigateToMarketOverview()
+            is LoginNavigationEffect.ShowError -> onError(effect.message)
         }
     }
 
     when (state) {
         is Loading -> CenteredColumn { CircularProgressIndicator() }
-        is Error -> onError((state as Error).message)
         else -> Unit
     }
 }

@@ -16,5 +16,6 @@ sealed interface NewsDetailState {
 
 sealed interface NewsDetailNavigationEffect {
     data class OpenBottomSheet(val url: String) : NewsDetailNavigationEffect
+    data class ShowError(val message: String) : NewsDetailNavigationEffect
 }
 

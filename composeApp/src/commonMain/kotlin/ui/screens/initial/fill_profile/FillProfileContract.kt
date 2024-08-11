@@ -3,6 +3,7 @@ package ui.screens.initial.fill_profile
 sealed interface FillProfileViewEvent {
     data class OnNameChanged(val fullName: String) : FillProfileViewEvent
     data class OnPhoneNumberChanged(val phoneNumber: String) : FillProfileViewEvent
+    data class OnPasswordError(val message: String) : FillProfileViewEvent
     data object OnSignUpClick : FillProfileViewEvent
     data object OnSkipClicked : FillProfileViewEvent
 }
@@ -16,5 +17,6 @@ sealed interface FillProfileState {
 
 sealed interface FillProfileNavigationEffect {
     data object NavigateToMarketOverview : FillProfileNavigationEffect
+    data class ShowError(val message: String) : FillProfileNavigationEffect
 }
 

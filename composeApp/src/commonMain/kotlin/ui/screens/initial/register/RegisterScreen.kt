@@ -39,6 +39,7 @@ import ui.components.base.HandleNavigationEffect
 import ui.components.base.PasswordTextField
 import ui.components.base.button.PrimaryButton
 import ui.screens.initial.register.RegisterNavigationEffect.NavigateToFillProfile
+import ui.screens.initial.register.RegisterNavigationEffect.ShowError
 import ui.screens.initial.register.RegisterViewEvent.OnEmailChanged
 import ui.screens.initial.register.RegisterViewEvent.OnPasswordChanged
 import ui.screens.initial.register.RegisterViewEvent.OnRegisterClick
@@ -66,12 +67,12 @@ internal fun RegisterScreen(
     HandleNavigationEffect(registerViewModel) { effect ->
         when (effect) {
             is NavigateToFillProfile -> onNavigateToFillProfile()
+            is ShowError -> onError(effect.message)
         }
     }
 
     when (state) {
         is RegisterState.Loading -> CenteredColumn { CircularProgressIndicator() }
-        is RegisterState.Error -> onError((state as RegisterState.Error).message)
         else -> Unit
     }
 }

@@ -3,11 +3,13 @@ package ui.screens.initial.register
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import data.remote.repository.auth.AuthServiceRepositoryImpl
+import data.remote.repository.auth.AuthServiceRepositoryImpl.AuthState
 import domain.repository.AuthServiceRepository
 import domain.repository.UserPreferences
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
+import ui.screens.initial.register.RegisterNavigationEffect.NavigateToFillProfile
+import ui.screens.initial.register.RegisterNavigationEffect.ShowError
 import ui.screens.initial.register.RegisterState.Loading
 import ui.screens.initial.register.RegisterViewEvent.OnEmailChanged
 import ui.screens.initial.register.RegisterViewEvent.OnPasswordChanged
@@ -30,23 +32,28 @@ internal class RegisterViewModel(
     }
 
     private fun register(email: String, password: String) {
+        when {
+            email.isEmpty() -> setEffect(ShowError("Email cannot be empty!"))
+            password.isEmpty() -> setEffect(ShowError("Password cannot be empty!"))
+            else -> registerUser(email, password)
+        }
+    }
+
+    private fun registerUser(email: String, password: String) {
         setState { Loading }
 
-        if (email.isEmpty()) {
-            setState { RegisterState.Error("Email cannot be empty!") }
-            return
-        }
-
         viewModelScope.launch {
-            val state = authServiceRepository.signUpWithEmailAndPassword(email, password)
-            if (state is AuthServiceRepositoryImpl.AuthState.Success) {
-                userPreferences.saveUserUid(authServiceRepository.currentUserId)
-                setEffect(RegisterNavigationEffect.NavigateToFillProfile)
-                setState { RegisterState.Idle }
+            when (val state = authServiceRepository.signUpWithEmailAndPassword(email, password)) {
+                AuthState.Loading -> Unit
+                is AuthState.Success -> {
+                    userPreferences.saveUserUid(authServiceRepository.currentUserId)
+                    setEffect(NavigateToFillProfile)
+                }
 
-            } else {
-                setState { RegisterState.Error("Could not register user!") }
+                is AuthState.Error -> setEffect(ShowError("Error registering user: ${state.message}"))
             }
+
+            setState { RegisterState.Idle }
         }
     }
 }
