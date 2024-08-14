@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,7 +31,6 @@ import currencycap.composeapp.generated.resources.sign_up
 import currencycap.composeapp.generated.resources.terms_of_service
 import di.koinViewModel
 import org.jetbrains.compose.resources.stringResource
-import ui.components.base.CenteredColumn
 import ui.components.base.EmailTextField
 import ui.components.base.HandleNavigationEffect
 import ui.components.base.PasswordTextField
@@ -70,11 +68,6 @@ internal fun RegisterScreen(
             is NavigateToFillProfile -> onNavigateToFillProfile()
             is ShowError -> onError(effect.message)
         }
-    }
-
-    when (state) {
-        is RegisterState.Loading -> CenteredColumn { CircularProgressIndicator() }
-        else -> Unit
     }
 }
 
