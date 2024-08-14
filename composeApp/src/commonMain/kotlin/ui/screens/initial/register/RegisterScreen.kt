@@ -21,7 +21,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
@@ -45,6 +44,7 @@ import ui.screens.initial.register.RegisterViewEvent.OnPasswordChanged
 import ui.screens.initial.register.RegisterViewEvent.OnRegisterClick
 import ui.screens.initial.register.components.LogInText
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import ui.theme.AppDimensions.SPACER_PADDING_24
 import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
@@ -57,6 +57,7 @@ internal fun RegisterScreen(
 ) {
     val state by registerViewModel.viewState.collectAsStateWithLifecycle()
     RegisterContent(
+        isLoading = state is RegisterState.Loading,
         onEmailChanged = { registerViewModel.handleEvent(OnEmailChanged(it)) },
         onPasswordChanged = { registerViewModel.handleEvent(OnPasswordChanged(it)) },
         onSignUpClick = { registerViewModel.handleEvent(OnRegisterClick) },
@@ -79,6 +80,7 @@ internal fun RegisterScreen(
 
 @Composable
 private fun RegisterContent(
+    isLoading: Boolean = false,
     onEmailChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit,
     onSignUpClick: () -> Unit,
@@ -100,7 +102,7 @@ private fun RegisterContent(
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurface
         )
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_24))
 
         EmailTextField(
             onEmailChanged = onEmailChanged
@@ -116,9 +118,10 @@ private fun RegisterContent(
 
         BySigningUpText(onTermsOfServiceClick = onTermsOfServiceClick)
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(SPACER_PADDING_24))
 
         PrimaryButton(
+            isLoading = isLoading,
             text = stringResource(Res.string.sign_up),
             onButtonClick = {
                 keyboardController?.hide()

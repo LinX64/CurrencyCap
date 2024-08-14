@@ -16,10 +16,10 @@ import di.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 import ui.common.SendMail
 import ui.components.base.BaseGlassLazyColumn
-import ui.components.base.BaseTransparentCircularProgressBar
 import ui.components.base.HandleNavigationEffect
 import ui.screens.main.profile.ProfileNavigationEffect.NavigateToLanding
 import ui.screens.main.profile.ProfileNavigationEffect.OpenEmailApp
+import ui.screens.main.profile.ProfileNavigationEffect.ShowError
 import ui.screens.main.profile.ProfileState.Loading
 import ui.screens.main.profile.ProfileState.Success
 import ui.screens.main.profile.ProfileViewEvent.OnDeleteAccountCardClicked
@@ -32,10 +32,10 @@ import ui.theme.AppDimensions.SPACER_PADDING_16
 
 @Composable
 internal fun ProfileRoute(
-    onError: (message: String) -> Unit,
     hazeState: HazeState,
-    onNavigateToLanding: () -> Unit,
     profileViewModel: ProfileViewModel = koinViewModel<ProfileViewModel>(),
+    onNavigateToLanding: () -> Unit,
+    onError: (message: String) -> Unit,
 ) {
     val state by profileViewModel.viewState.collectAsStateWithLifecycle()
     var shouldGoToEmailApp by remember { mutableStateOf(false) }
@@ -44,13 +44,13 @@ internal fun ProfileRoute(
         hazeState = hazeState,
         state = state,
         shouldGoToEmailApp = shouldGoToEmailApp,
-        onError = onError,
         handleEvent = profileViewModel::handleEvent,
     )
 
     HandleNavigationEffect(profileViewModel) { effect ->
         when (effect) {
             is NavigateToLanding -> onNavigateToLanding()
+            is ShowError -> onError(effect.message)
             OpenEmailApp -> shouldGoToEmailApp = true
         }
     }
@@ -61,7 +61,6 @@ internal fun ProfileScreen(
     hazeState: HazeState,
     state: ProfileState,
     shouldGoToEmailApp: Boolean,
-    onError: (message: String) -> Unit,
     handleEvent: (ProfileViewEvent) -> Unit,
 ) {
     Box {
@@ -82,14 +81,11 @@ internal fun ProfileScreen(
                 DeleteAccountCard(onDeleteAccountClicked = { handleEvent(OnDeleteAccountCardClicked) })
             }
             item {
-                AppNameInfoCard(onSignOutClicked = { handleEvent(OnSignOutClicked) })
+                AppNameInfoCard(
+                    isLoading = state is Loading,
+                    onSignOutClicked = { handleEvent(OnSignOutClicked) }
+                )
             }
-        }
-
-        when (state) {
-            is ProfileState.Error -> onError(state.message)
-            is Loading -> BaseTransparentCircularProgressBar()
-            else -> Unit
         }
     }
 
