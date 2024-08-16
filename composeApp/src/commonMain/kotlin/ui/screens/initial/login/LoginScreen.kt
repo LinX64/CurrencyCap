@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -25,12 +24,10 @@ import currencycap.composeapp.generated.resources.forgot_password
 import currencycap.composeapp.generated.resources.login
 import di.koinViewModel
 import org.jetbrains.compose.resources.stringResource
-import ui.components.base.CenteredColumn
 import ui.components.base.HandleNavigationEffect
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToMarketOverview
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToRegister
 import ui.screens.initial.login.LoginNavigationEffect.NavigateToResetPassword
-import ui.screens.initial.login.LoginState.Loading
 import ui.screens.initial.login.LoginViewEvent.OnEmailChanged
 import ui.screens.initial.login.LoginViewEvent.OnLoginClick
 import ui.screens.initial.login.LoginViewEvent.OnPasswordChanged
@@ -52,6 +49,7 @@ internal fun LoginRoute(
     val password = loginViewModel.newPassword.value
 
     LoginScreen(
+        state = state,
         email = email,
         password = password,
         handleEvent = loginViewModel::handleEvent
@@ -65,20 +63,18 @@ internal fun LoginRoute(
             is LoginNavigationEffect.ShowError -> onError(effect.message)
         }
     }
-
-    when (state) {
-        is Loading -> CenteredColumn { CircularProgressIndicator() }
-        else -> Unit
-    }
 }
 
 @Composable
 private fun LoginScreen(
     padding: PaddingValues = PaddingValues(SPACER_PADDING_16),
+    state: LoginState,
     email: String,
     password: String,
-    handleEvent: (LoginViewEvent) -> Unit
+    handleEvent: (LoginViewEvent) -> Unit,
 ) {
+    val isLoading = state is LoginState.Loading
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -100,6 +96,7 @@ private fun LoginScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             LoginForm(
+                isLoading = isLoading,
                 onEmailChanged = { handleEvent(OnEmailChanged(it)) },
                 onPasswordChanged = { handleEvent(OnPasswordChanged(it)) },
                 onLoginClick = { handleEvent(OnLoginClick(email, password)) }

@@ -23,6 +23,7 @@ import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
 internal fun AppNameInfoCard(
+    isLoading: Boolean,
     onSignOutClicked: () -> Unit
 ) {
     Column(
@@ -45,6 +46,7 @@ internal fun AppNameInfoCard(
         Spacer(modifier = Modifier.height(SPACER_PADDING_32))
 
         SecondaryButton(
+            isLoading = isLoading,
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(Res.string.sign_out),
             onButtonClick = onSignOutClicked

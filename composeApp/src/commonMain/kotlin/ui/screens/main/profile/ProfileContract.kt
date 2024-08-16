@@ -19,4 +19,5 @@ sealed interface ProfileState {
 sealed interface ProfileNavigationEffect {
     data object NavigateToLanding : ProfileNavigationEffect
     data object OpenEmailApp : ProfileNavigationEffect
+    data class ShowError(val message: String) : ProfileNavigationEffect
 }
