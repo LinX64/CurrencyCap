@@ -19,6 +19,7 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import ui.components.base.BaseModalBottomSheet
 import ui.components.base.EdgeToEdgeScaffoldWithPullToRefresh
 import ui.components.main.AppState
@@ -41,6 +42,7 @@ import ui.screens.main.subscribers.SubscribersSection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+@Preview
 internal fun App(
     mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
     newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
