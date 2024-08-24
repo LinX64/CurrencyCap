@@ -14,7 +14,7 @@ haze = "0.7.3"
 coil = "3.0.0-alpha10"
 compottie = "1.1.2"
 placeholder-material3 = "1.0.8"
-androidx-startup = "1.2.0-alpha02"
+androidx-startup = "1.2.0-beta01"
 lifecycle = "2.8.0"
 jetpack-compose = "1.7.0-beta07"
 
