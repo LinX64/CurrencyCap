@@ -57,7 +57,7 @@ internal class LoginViewModel(
             when (authServiceRepository.authenticate(email, password)) {
                 AuthState.Loading -> Unit
                 is AuthState.Success -> {
-                    userPreferences.saveUserUid(authServiceRepository.currentUserId) // TODO: Issue with IOS
+                    userPreferences.saveUserUid(authServiceRepository.currentUserId)
                     setEffect(NavigateToMarketOverview)
                 }
                 is AuthState.Error -> setEffect(ShowError("Invalid email or password"))
