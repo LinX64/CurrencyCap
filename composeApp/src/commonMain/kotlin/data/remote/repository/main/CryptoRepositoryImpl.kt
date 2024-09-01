@@ -4,23 +4,20 @@ import data.remote.model.main.ChartDataPointDto
 import data.remote.model.main.CoinCapChartResponseDto
 import data.remote.model.main.CoinGeckoItemsResponse
 import data.remote.model.main.toChartDataPoints
-import data.util.APIConst.BASE_COIN_GECKO_URL
 import data.util.APIConst.COINCAP_BASE_URL
 import data.util.parseListResponse
 import data.util.parseResponse
+import di.coinGeckoApi
 import domain.model.ChipPeriod
 import domain.model.main.ChartDataPoint
 import domain.repository.CryptoRepository
 import domain.repository.MarketChartDataLocalRepository
 import io.ktor.client.HttpClient
-import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
-import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.URLProtocol
-import io.ktor.http.contentType
+import io.ktor.http.path
 import kotlinx.datetime.Instant
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
@@ -98,16 +95,12 @@ class CryptoRepositoryImpl(
     }
 
     private suspend fun getCoinList(): List<CoinGeckoItemsResponse> {
-        val request = HttpClient {
-            defaultRequest {
-                url {
-                    host = BASE_COIN_GECKO_URL
-                    protocol = URLProtocol.HTTPS
-                    contentType(ContentType.Application.Json)
-                }
+        val request = httpClient.get {
+            coinGeckoApi()
+            url {
+                path("coins", "list")
             }
         }
-        val response = request.get("/api/v3/coins/list")
-        return parseListResponse<CoinGeckoItemsResponse>(response)
+        return parseListResponse<CoinGeckoItemsResponse>(request)
     }
 }

@@ -1,7 +1,6 @@
 package ui.screens.main.profile
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,6 +28,7 @@ import ui.screens.main.profile.components.DeleteAccountCard
 import ui.screens.main.profile.components.HelpCenterCard
 import ui.screens.main.profile.components.ProfileCard
 import ui.theme.AppDimensions.SPACER_PADDING_16
+import util.getDummyUser
 
 @Composable
 internal fun ProfileRoute(
@@ -63,29 +63,32 @@ internal fun ProfileScreen(
     shouldGoToEmailApp: Boolean,
     handleEvent: (ProfileViewEvent) -> Unit,
 ) {
-    Box {
-        BaseGlassLazyColumn(
-            hazeState = hazeState,
-            verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_16)
-        ) {
-            item {
-                if (state is Success) {
-                    val profileState = state.user
-                    ProfileCard(user = profileState, isLoading = false)
-                }
-            }
-            item {
-                HelpCenterCard(onButtonClick = { handleEvent(ProfileViewEvent.OnSupportClicked) })
-            }
-            item {
-                DeleteAccountCard(onDeleteAccountClicked = { handleEvent(OnDeleteAccountCardClicked) })
-            }
-            item {
-                AppNameInfoCard(
-                    isLoading = state is Loading,
-                    onSignOutClicked = { handleEvent(OnSignOutClicked) }
+    BaseGlassLazyColumn(
+        hazeState = hazeState,
+        verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_16)
+    ) {
+        item {
+            if (state is Success) {
+                val profileState = state.user
+                ProfileCard(user = profileState, isLoading = false)
+            } else {
+                ProfileCard(
+                    user = getDummyUser(),
+                    isLoading = true
                 )
             }
+        }
+        item {
+            HelpCenterCard(onButtonClick = { handleEvent(ProfileViewEvent.OnSupportClicked) })
+        }
+        item {
+            DeleteAccountCard(onDeleteAccountClicked = { handleEvent(OnDeleteAccountCardClicked) })
+        }
+        item {
+            AppNameInfoCard(
+                isLoading = state is Loading,
+                onSignOutClicked = { handleEvent(OnSignOutClicked) }
+            )
         }
     }
 

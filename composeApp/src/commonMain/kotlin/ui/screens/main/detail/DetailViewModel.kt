@@ -57,13 +57,15 @@ class DetailViewModel(
                 .collectLatest { response ->
                     when (response) {
                         is StoreReadResponse.Loading -> setState { DetailState.Loading }
-                        is StoreReadResponse.Error -> setState { DetailState.Error("No data available") }
+                        is StoreReadResponse.Error -> {
+                            setState { DetailState.Error("Error while loading data: " + response.errorMessageOrNull()) }
+                        }
+
                         is StoreReadResponse.Data -> {
                             val data = response.value
                             setState { DetailState.Success(cryptoInfo = data) }
                         }
 
-                        is StoreReadResponse.NoNewData -> setState { DetailState.Error("No data available") }
                         else -> Unit
                     }
                 }

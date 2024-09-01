@@ -7,6 +7,7 @@ import data.remote.model.news.toEntity
 import data.remote.model.requests.GetNews
 import data.util.parseResponse
 import data.util.retryOnIOException
+import di.baseApi
 import domain.model.Article
 import domain.model.toEntity
 import domain.repository.ArticleLocalDataSource
@@ -38,7 +39,7 @@ class NewsRepositoryImpl(
                     val sortedArticles = response.sortedBy { it.publishedAt }.reversed()
                     articleLocalDataSource.insertArticles(sortedArticles.toEntity().toSet())
                 },
-                deleteAll = { articleLocalDataSource.deleteArticles() }
+                deleteAll = { articleLocalDataSource.deleteArticles() },
             )
         ).build()
     }
@@ -55,7 +56,7 @@ class NewsRepositoryImpl(
     }
 
     override fun getNewsOnline(): Flow<List<Article>> = flow {
-        val response = httpClient.get(GetNews())
+        val response = httpClient.get(GetNews()) { baseApi() }
         when (response.status.isSuccess()) {
             true -> {
                 val articles: List<ArticleDto> = parseResponse<NewsDto>(response).articles
@@ -69,7 +70,7 @@ class NewsRepositoryImpl(
         .retryOnIOException()
 
     private suspend fun fetchArticleByUrl(url: String): Article {
-        val response = httpClient.get(GetNews())
+        val response = httpClient.get(GetNews()) { baseApi() }
         val articles: List<ArticleDto> = parseResponse<NewsDto>(response).articles
 
         val matchedArticle = articles
