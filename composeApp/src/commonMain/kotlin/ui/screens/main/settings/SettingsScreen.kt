@@ -42,9 +42,7 @@ internal fun SettingsRoute(
         hazeState = hazeState,
         state = state,
         onPushNotificationSwitchChange = {
-            settingsViewModel.handleEvent(
-                OnPushNotificationSwitchChange(it)
-            )
+            settingsViewModel.handleEvent(OnPushNotificationSwitchChange(it))
         },
         onDarkModeSwitchChange = { settingsViewModel.handleEvent(OnDarkModeSwitchChange(it)) },
         onAboutUsClick = { settingsViewModel.handleEvent(OnAboutUsClick) },

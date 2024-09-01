@@ -81,6 +81,7 @@ kotlin {
             implementation(libs.firebase.auth)
             implementation(libs.firebase.fireStore)
             implementation(libs.firebase.crashlytics)
+            implementation(libs.firebase.messaging)
 
             implementation(libs.kotlinx.collections.immutable)
             implementation(libs.kotlinx.datetime)

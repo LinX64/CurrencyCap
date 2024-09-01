@@ -22,7 +22,8 @@ internal class UserPreferencesImpl(
         private val USER_SELECTED_END_DATE_KEY = stringPreferencesKey("user_selected_end_date")
         private val USER_SELECTED_SOURCES_KEY = stringPreferencesKey("user_selected_sources")
         private val IS_DARK_MODE = booleanPreferencesKey("is_dark_mode")
-        private val IS_PUSH_NOTIFICATION_ENABLED = booleanPreferencesKey("is_push_notification_enabled")
+        private val IS_PUSH_NOTIFICATION_ENABLED =
+            booleanPreferencesKey("is_push_notification_enabled")
     }
 
     override suspend fun isUserLoggedIn(): Boolean {
@@ -96,9 +97,9 @@ internal class UserPreferencesImpl(
         }
     }
 
-    override suspend fun isPushNotificationEnabled(): Boolean {
+    override fun isPushNotificationEnabled(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
             preferences[IS_PUSH_NOTIFICATION_ENABLED] ?: false
-        }.first()
+        }
     }
 }

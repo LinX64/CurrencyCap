@@ -18,5 +18,5 @@ interface UserPreferences {
     fun isDarkMode(): Flow<Boolean>
 
     suspend fun setPushNotificationEnabled(isPushNotificationEnabled: Boolean)
-    suspend fun isPushNotificationEnabled(): Boolean
+    fun isPushNotificationEnabled(): Flow<Boolean>
 }

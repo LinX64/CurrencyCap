@@ -37,6 +37,13 @@ class MainViewModel(
             initialValue = false
         )
 
+    val isPushNotificationEnabled: StateFlow<Boolean> = userPreferences.isPushNotificationEnabled()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(1000L),
+            initialValue = false
+        )
+
     init {
         checkUserLoginStatus()
     }
