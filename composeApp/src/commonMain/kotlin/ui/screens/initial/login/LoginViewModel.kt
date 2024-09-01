@@ -59,7 +59,7 @@ internal class LoginViewModel(
                     userPreferences.saveUserUid(authServiceRepository.currentUserId)
                     setEffect(NavigateToMarketOverview)
                 },
-                onFailure = { setEffect(ShowError("Error while authenticating" + it.message)) }
+                onFailure = { setEffect(ShowError("Error while authenticating: " + it.message)) }
             )
             setState { Idle }
         }

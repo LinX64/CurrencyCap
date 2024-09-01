@@ -48,7 +48,7 @@ internal class RegisterViewModel(
                     userPreferences.saveUserUid(authServiceRepository.currentUserId)
                     setEffect(NavigateToFillProfile)
                 },
-                onFailure = { setEffect(ShowError("Error registering user: ${it.message}")) }
+                onFailure = { setEffect(ShowError("Error while registering user: ${it.message}")) }
             )
             setState { RegisterState.Idle }
         }
