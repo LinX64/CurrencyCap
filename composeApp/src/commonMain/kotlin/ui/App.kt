@@ -38,6 +38,7 @@ import ui.screens.main.news.NewsViewEvent.OnSetClick
 import ui.screens.main.news.NewsViewModel
 import ui.screens.main.news.components.NewsFilterSection
 import ui.screens.main.overview.OverviewViewModel
+import ui.screens.main.settings.AboutUsSection
 import ui.screens.main.subscribers.SubscribersSection
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,8 +72,8 @@ internal fun App(
                 currentDestination = currentDestination,
                 navController = navController,
                 scrollBehavior = scrollBehavior,
-                isLoggedIn = isLoggedIn,
                 hazeState = hazeState,
+                isLoggedIn = isLoggedIn,
                 onFilterClick = { mainViewModel.toggleNewsFilterSheet() },
                 onThemeChangeClick = mainViewModel::toggleDarkMode
             )
@@ -110,6 +111,11 @@ internal fun App(
                 isVisible = mainViewModel.isPrivacyPolicySheetVisible,
                 onDismiss = { mainViewModel.togglePrivacyPolicySheet() }
             ) { PrivacyPolicySection() }
+
+            BaseModalBottomSheet(
+                isVisible = mainViewModel.isAboutUsSheetVisible,
+                onDismiss = { mainViewModel.toggleAboutUsSheet() }
+            ) { AboutUsSection() }
         }
     ) { paddingValues ->
         AppNavGraph(
@@ -122,11 +128,13 @@ internal fun App(
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
             onLoginSuccess = { navigateToOverview(mainViewModel, navController) },
             onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.News) },
+            onShowAboutUsBottomSheet = { mainViewModel.toggleAboutUsSheet() }, //todo
             showBookmarkConfirmationSnakeBar = { isBookmarked ->
                 scope.launch {
                     snackbarHostState.showSnackbar(
                         message = if (isBookmarked) getString(Res.string.article_added_to_bookmarks)
-                        else getString(Res.string.article_removed_from_bookmarks), duration = SnackbarDuration.Short
+                        else getString(Res.string.article_removed_from_bookmarks),
+                        duration = SnackbarDuration.Short
                     )
                 }
             }

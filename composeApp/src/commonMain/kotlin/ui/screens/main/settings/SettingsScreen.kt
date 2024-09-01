@@ -16,28 +16,45 @@ import dev.chrisbanes.haze.HazeState
 import di.koinViewModel
 import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.GlassCard
+import ui.components.base.HandleNavigationEffect
 import ui.screens.main.profile.components.HelpCenterItem
+import ui.screens.main.settings.SettingsNavigationEffect.OpenBrowser
+import ui.screens.main.settings.SettingsNavigationEffect.ShowAboutUsBottomSheet
+import ui.screens.main.settings.SettingsViewEvent.OnAboutUsClick
 import ui.screens.main.settings.SettingsViewEvent.OnDarkModeSwitchChange
+import ui.screens.main.settings.SettingsViewEvent.OnPrivacyPolicyClick
 import ui.screens.main.settings.SettingsViewEvent.OnPushNotificationSwitchChange
 import ui.screens.main.settings.components.SettingsGeneralItem
 import ui.screens.main.settings.components.SettingsHeaderText
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun SettingsRoute(
     settingsViewModel: SettingsViewModel = koinViewModel<SettingsViewModel>(),
     hazeState: HazeState,
+    onShowAboutUsBottomSheet: () -> Unit,
+    onShowPrivacyPolicy: () -> Unit,
 ) {
     val state by settingsViewModel.viewState.collectAsStateWithLifecycle()
 
     SettingsScreen(
         hazeState = hazeState,
         state = state,
-        onPushNotificationSwitchChange = { settingsViewModel.handleEvent(OnPushNotificationSwitchChange(it)) },
+        onPushNotificationSwitchChange = {
+            settingsViewModel.handleEvent(OnPushNotificationSwitchChange(it))
+        },
         onDarkModeSwitchChange = { settingsViewModel.handleEvent(OnDarkModeSwitchChange(it)) },
-        onAboutUsClick = { /* Handle about us click */ },
-        onPrivacyPolicyClick = { /* Handle privacy policy click */ },
+        onAboutUsClick = { settingsViewModel.handleEvent(OnAboutUsClick) },
+        onPrivacyPolicyClick = { settingsViewModel.handleEvent(OnPrivacyPolicyClick) },
     )
+
+    HandleNavigationEffect(settingsViewModel) { effect ->
+        when (effect) {
+            is OpenBrowser -> onShowPrivacyPolicy()
+            is ShowAboutUsBottomSheet -> onShowAboutUsBottomSheet()
+        }
+    }
 }
 
 @Composable
@@ -58,6 +75,9 @@ internal fun SettingsScreen(
                 onPushNotificationSwitchChange = onPushNotificationSwitchChange,
                 onDarkModeSwitchChange = onDarkModeSwitchChange,
             )
+        }
+        item {
+            Spacer(Modifier.height(SPACER_PADDING_16))
         }
         item {
             PoliciesCard(
@@ -84,7 +104,10 @@ private fun GeneralCard(
             ) {
                 SettingsHeaderText("General")
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    SettingsGeneralItem(text = "Push Notifications", onSwitchChange = onPushNotificationSwitchChange)
+                    SettingsGeneralItem(
+                        text = "Push Notifications",
+                        onSwitchChange = onPushNotificationSwitchChange
+                    )
 
                     SettingsGeneralItem(
                         text = "Dark Mode",

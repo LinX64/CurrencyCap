@@ -26,6 +26,7 @@ import currencycap.composeapp.generated.resources.back
 import currencycap.composeapp.generated.resources.filter
 import currencycap.composeapp.generated.resources.ic_arrow_left
 import currencycap.composeapp.generated.resources.ic_filter_search
+import currencycap.composeapp.generated.resources.ic_settings
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
@@ -36,7 +37,9 @@ import ui.navigation.util.ScreenRoutes.EXPLORE
 import ui.navigation.util.ScreenRoutes.NEWS
 import ui.navigation.util.ScreenRoutes.NEWS_DETAIL
 import ui.navigation.util.ScreenRoutes.OVERVIEW
+import ui.navigation.util.ScreenRoutes.PROFILE
 import ui.navigation.util.ScreenRoutes.SETTINGS
+import ui.screens.main.settings.navigation.navigateToSettingsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,7 +50,7 @@ internal fun AppTopBar(
     hazeState: HazeState,
     isLoggedIn: Boolean,
     onFilterClick: () -> Unit,
-    onThemeChangeClick: (isDark: Boolean) -> Unit
+    onThemeChangeClick: (isDark: Boolean) -> Unit,
 ) {
     val isSettingsScreen = currentDestination == SETTINGS
     val isNewsDetailScreen = currentDestination?.startsWith(NEWS_DETAIL)
@@ -56,6 +59,7 @@ internal fun AppTopBar(
     val isAiScreen = currentDestination == AI_PREDICTION
     val isNewsScreen = currentDestination == NEWS
     val isOverviewScreen = currentDestination == OVERVIEW
+    val isProfileScreen = currentDestination == PROFILE
 
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
@@ -86,8 +90,10 @@ internal fun AppTopBar(
             Actions(
                 isNewsScreen = isNewsScreen,
                 isOverviewScreen = isOverviewScreen,
+                isProfileScreen = isProfileScreen,
                 onFilterClick = onFilterClick,
-                onThemeChangeClick = onThemeChangeClick
+                onThemeChangeClick = onThemeChangeClick,
+                onSettingsClick = { navController.navigateToSettingsScreen() }
             )
         }
     )
@@ -124,8 +130,10 @@ private fun NavigationIcon(
 private fun Actions(
     isNewsScreen: Boolean,
     isOverviewScreen: Boolean,
+    isProfileScreen: Boolean,
     onFilterClick: () -> Unit,
     onThemeChangeClick: (isDark: Boolean) -> Unit,
+    onSettingsClick: () -> Unit
 ) {
     var isDarkTheme by rememberSaveable { mutableStateOf(true) }
 
@@ -158,16 +166,16 @@ private fun Actions(
         }
     }
 
-//    if (isProfileScreen) {
-//        IconButton(
-//            modifier = Modifier.padding(end = 16.dp),
-//            onClick = onSettingsClick
-//        ) {
-//            Icon(
-//                painter = painterResource(Res.drawable.ic_settings),
-//                contentDescription = "settings",
-//                tint = MaterialTheme.colorScheme.onSurface
-//            )
-//        }
-//    } // TODO: Fix this whenever there is a solution for theme on IOS
+    if (isProfileScreen) {
+        IconButton(
+            modifier = Modifier.padding(end = 16.dp),
+            onClick = onSettingsClick
+        ) {
+            Icon(
+                painter = painterResource(Res.drawable.ic_settings),
+                contentDescription = "settings",
+                tint = MaterialTheme.colorScheme.onSurface
+            )
+        }
+    }
 }

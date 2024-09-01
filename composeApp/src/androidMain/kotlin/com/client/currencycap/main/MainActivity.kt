@@ -46,5 +46,7 @@ class MainActivity : ComponentActivity() {
                 else App()
             }
         }
+
+        // TODO: Handle notification
     }
 }

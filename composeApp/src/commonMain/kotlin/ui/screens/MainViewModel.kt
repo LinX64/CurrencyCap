@@ -28,8 +28,16 @@ class MainViewModel(
     var isSubscribeSheetVisible by mutableStateOf(false)
     var isNewsFilterSheetVisible by mutableStateOf(false)
     var isPrivacyPolicySheetVisible by mutableStateOf(false)
+    var isAboutUsSheetVisible by mutableStateOf(false)
 
     val isDark: StateFlow<Boolean> = userPreferences.isDarkMode()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(1000L),
+            initialValue = false
+        )
+
+    val isPushNotificationEnabled: StateFlow<Boolean> = userPreferences.isPushNotificationEnabled()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(1000L),
@@ -75,6 +83,10 @@ class MainViewModel(
 
     fun togglePrivacyPolicySheet() {
         isPrivacyPolicySheetVisible = !isPrivacyPolicySheetVisible
+    }
+
+    fun toggleAboutUsSheet() {
+        isAboutUsSheetVisible = !isAboutUsSheetVisible
     }
 }
 
