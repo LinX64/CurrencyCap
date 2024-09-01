@@ -128,12 +128,13 @@ internal fun App(
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
             onLoginSuccess = { navigateToOverview(mainViewModel, navController) },
             onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.News) },
-            onShowAboutUsBottomSheet = {}, //todo
+            onShowAboutUsBottomSheet = { mainViewModel.toggleAboutUsSheet() }, //todo
             showBookmarkConfirmationSnakeBar = { isBookmarked ->
                 scope.launch {
                     snackbarHostState.showSnackbar(
                         message = if (isBookmarked) getString(Res.string.article_added_to_bookmarks)
-                        else getString(Res.string.article_removed_from_bookmarks), duration = SnackbarDuration.Short
+                        else getString(Res.string.article_removed_from_bookmarks),
+                        duration = SnackbarDuration.Short
                     )
                 }
             }
