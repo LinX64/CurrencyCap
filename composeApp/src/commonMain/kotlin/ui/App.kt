@@ -71,8 +71,8 @@ internal fun App(
                 currentDestination = currentDestination,
                 navController = navController,
                 scrollBehavior = scrollBehavior,
-                isLoggedIn = isLoggedIn,
                 hazeState = hazeState,
+                isLoggedIn = isLoggedIn,
                 onFilterClick = { mainViewModel.toggleNewsFilterSheet() },
                 onThemeChangeClick = mainViewModel::toggleDarkMode
             )
