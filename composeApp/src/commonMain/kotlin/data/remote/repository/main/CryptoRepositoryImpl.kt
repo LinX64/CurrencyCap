@@ -6,8 +6,6 @@ import data.remote.model.main.CoinGeckoItemsResponse
 import data.remote.model.main.toChartDataPoints
 import data.util.APIConst.COINCAP_BASE_URL
 import data.util.APIConst.COIN_GECKO_BASE_URL
-import data.util.NetworkResult
-import data.util.cacheDataOrFetchOnline
 import domain.model.ChipPeriod
 import domain.model.main.ChartDataPoint
 import domain.repository.CryptoRepository
@@ -18,35 +16,39 @@ import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
-import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.Store
+import org.mobilenativefoundation.store.store5.StoreBuilder
 
 class CryptoRepositoryImpl(
     private val httpClient: HttpClient,
     private val marketChartDataLocalRepository: MarketChartDataLocalRepository
 ) : CryptoRepository {
 
-    override fun fetchMarketChartData(
+    override fun fetchMarketChartDataNew(
         forceRefresh: Boolean,
         coinId: String,
         symbol: String,
         period: ChipPeriod
-    ): Flow<NetworkResult<List<ChartDataPoint>>> = cacheDataOrFetchOnline(
-        forceRefresh = forceRefresh,
-        query = { marketChartDataLocalRepository.getChartDataFromDb(symbol, period) },
-        fetch = { fetchDataWithFilter(coinId, symbol, period) },
-        shouldFetch = { localChartData -> localChartData.isNullOrEmpty() },
-        clearLocalData = { },
-        isFresh = { localData ->
-            localData != null && (localData as? Collection<*>)?.isNotEmpty() == true
-        },
-        saveFetchResult = { chartData ->
-            if (chartData.isNotEmpty()) {
-                marketChartDataLocalRepository.insertMarketChartData(symbol, period.interval, chartData)
-            }
-        }
-    )
+    ): Store<String, List<ChartDataPoint>> {
+        return StoreBuilder.from(
+            fetcher = Fetcher.of { key: String -> fetchDataWithFilter(coinId, symbol, period) },
+            sourceOfTruth = SourceOfTruth.of(
+                reader = { marketChartDataLocalRepository.getChartDataFromDb(symbol, period) },
+                writer = { _, chartData ->
+                    marketChartDataLocalRepository.insertMarketChartData(
+                        symbol,
+                        period.interval,
+                        chartData
+                    )
+                },
+                delete = { key: String -> marketChartDataLocalRepository.deleteChartDataFromDb(key) }
+            )
+        ).build()
+    }
 
     private suspend fun fetchDataWithFilter(
         coinId: String,
@@ -85,7 +87,8 @@ class CryptoRepositoryImpl(
         val chartData = data.data.map { dataPoint ->
             ChartDataPointDto(
                 price = dataPoint.price,
-                timestamp = Instant.fromEpochMilliseconds(dataPoint.timestamp).toEpochMilliseconds(),
+                timestamp = Instant.fromEpochMilliseconds(dataPoint.timestamp)
+                    .toEpochMilliseconds(),
             )
         }
 

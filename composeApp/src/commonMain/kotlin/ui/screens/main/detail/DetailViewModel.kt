@@ -3,16 +3,12 @@ package ui.screens.main.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import data.util.Constant.GET_CRYPTO_INFO_KEY
-import data.util.NetworkResult.Error
-import data.util.NetworkResult.Loading
-import data.util.NetworkResult.Success
 import domain.model.ChipPeriod
 import domain.repository.CryptoRepository
 import domain.repository.MainRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.mobilenativefoundation.store.store5.StoreReadRequest
 import org.mobilenativefoundation.store.store5.StoreReadResponse
@@ -80,23 +76,28 @@ class DetailViewModel(
         symbol: String,
         chipPeriod: ChipPeriod,
     ) {
-        cryptoRepository.fetchMarketChartData(forceRefresh, coinId, symbol, chipPeriod)
-            .map { result ->
-                when (result) {
-                    is Success -> {
-                        val chartData = result.data.toSet()
-                        if (chartData.isNotEmpty()) {
-                            _chartDataState.value = ChartDataUiState(chartData)
-                        } else _chartDataState.value =
-                            ChartDataUiState(isLoading = false, chartDataPoints = emptySet())
+        viewModelScope.launch {
+            cryptoRepository.fetchMarketChartDataNew(forceRefresh, coinId, symbol, chipPeriod)
+                .stream(StoreReadRequest.cached(key = symbol, refresh = forceRefresh))
+                .collectLatest { response ->
+                    when (response) {
+                        is StoreReadResponse.Loading -> _chartDataState.value =
+                            ChartDataUiState(isLoading = true)
+
+                        is StoreReadResponse.Error -> _chartDataState.value =
+                            ChartDataUiState(isLoading = false)
+
+                        is StoreReadResponse.Data -> {
+                            val data = response.value.toSet()
+                            _chartDataState.value = ChartDataUiState(chartDataPoints = data)
+                        }
+
+                        is StoreReadResponse.NoNewData -> _chartDataState.value =
+                            ChartDataUiState(isLoading = false)
+
+                        else -> Unit
                     }
-
-                    is Error -> _chartDataState.value =
-                        ChartDataUiState(result.data?.toSet(), false)
-
-                    is Loading -> _chartDataState.value = ChartDataUiState(isLoading = true)
                 }
-            }
-            .launchIn(viewModelScope)
+        }
     }
 }

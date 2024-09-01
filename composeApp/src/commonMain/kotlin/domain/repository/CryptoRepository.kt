@@ -1,16 +1,15 @@
 package domain.repository
 
-import data.util.NetworkResult
 import domain.model.ChipPeriod
 import domain.model.main.ChartDataPoint
-import kotlinx.coroutines.flow.Flow
+import org.mobilenativefoundation.store.store5.Store
 
 interface CryptoRepository {
 
-    fun fetchMarketChartData(
+    fun fetchMarketChartDataNew(
         forceRefresh: Boolean = false,
         coinId: String,
         symbol: String,
         period: ChipPeriod = ChipPeriod.DAY
-    ): Flow<NetworkResult<List<ChartDataPoint>>>
+    ): Store<String, List<ChartDataPoint>>
 }

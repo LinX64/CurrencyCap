@@ -55,7 +55,7 @@ class ArticleLocalDataSourceImpl(
 
     override suspend fun insertArticles(articles: Set<ArticleEntity>) {
         realm.write {
-            articles.map { copyToRealm(it) }
+            articles.map { copyToRealm(it, UpdatePolicy.ALL) }
         }
     }
 
