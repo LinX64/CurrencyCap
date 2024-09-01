@@ -10,6 +10,7 @@ import data.util.NetworkResult
 import data.util.cacheDataOrFetchOnline
 import data.util.retryOnIOException
 import domain.model.Article
+import domain.model.toEntity
 import domain.repository.ArticleLocalDataSource
 import domain.repository.NewsRepository
 import io.ktor.client.HttpClient
@@ -24,6 +25,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.Store
+import org.mobilenativefoundation.store.store5.StoreBuilder
 import util.getCurrentTimeInMillis
 import kotlin.time.Duration.Companion.seconds
 
@@ -41,33 +46,31 @@ class NewsRepositoryImpl(
         updateCachedLastFetchTime()
     }
 
-    override fun getNews(forceRefresh: Boolean): Flow<NetworkResult<List<Article>>> = cacheDataOrFetchOnline(
-        forceRefresh = forceRefresh,
-        query = { articleLocalDataSource.getArticles() },
-        fetch = { getPlainNewsResponse() },
-        shouldFetch = { localArticles -> localArticles.isNullOrEmpty() || isCacheExpired() },
-        clearLocalData = { articleLocalDataSource.deleteArticles() },
-        isFresh = { localData ->
-            localData != null && (localData as? Collection<*>)?.isNotEmpty() == true && !isCacheExpired()
-        },
-        saveFetchResult = { responseText ->
-            val articles: Set<ArticleDto> = parseArticlesResponse(responseText)
-            val sortedArticles = articles.sortedBy { it.publishedAt }.reversed().toSet()
-            articleLocalDataSource.insertArticles(sortedArticles.toEntity())
-            appPreferences.saveLastFetchTime(getCurrentTimeInMillis())
-        }
-    )
+    override fun getNewsNew(): Store<String, List<Article>> {
+        return StoreBuilder.from(
+            fetcher = Fetcher.ofFlow { getNewsOnline() },
+            sourceOfTruth = SourceOfTruth.of(
+                reader = { articleLocalDataSource.getArticles() },
+                writer = { _: String, response: List<Article> ->
+                    val sortedArticles = response.sortedBy { it.publishedAt }.reversed()
+                    articleLocalDataSource.insertArticles(sortedArticles.toEntity().toSet())
+                },
+                deleteAll = { articleLocalDataSource.deleteArticles() }
+            )
+        ).build()
+    }
 
-    override fun getArticleByUrl(url: String): Flow<NetworkResult<Article>> = cacheDataOrFetchOnline(
-        query = { articleLocalDataSource.getArticleByUrl(url) },
-        fetch = { fetchArticleByUrl(url) },
-        shouldFetch = { localArticle -> localArticle == null },
-        forceRefresh = false,
-        clearLocalData = { },
-        saveFetchResult = { article ->
-            articleLocalDataSource.insertArticle(article.toEntity())
-        }
-    )
+    override fun getArticleByUrl(url: String): Flow<NetworkResult<Article>> =
+        cacheDataOrFetchOnline(
+            query = { articleLocalDataSource.getArticleByUrl(url) },
+            fetch = { fetchArticleByUrl(url) },
+            shouldFetch = { localArticle -> localArticle == null },
+            forceRefresh = false,
+            clearLocalData = { },
+            saveFetchResult = { article ->
+                articleLocalDataSource.insertArticle(article.toEntity())
+            }
+        )
 
     private suspend fun getPlainNewsResponse() = httpClient.get(NEWS_URL).bodyAsText()
 

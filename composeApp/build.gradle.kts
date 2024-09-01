@@ -93,6 +93,8 @@ kotlin {
             implementation(libs.coil.network.ktor)
             api(libs.compose.webview.multiplatform)
 
+            implementation(libs.mobilenativefoundation.store5)
+
             // Data
             implementation(libs.bundles.datastore)
             implementation(libs.bundles.ktor)

@@ -1,34 +1,37 @@
 package data.remote.repository.exchange
 
-import data.util.NetworkResult.Error
-import data.util.NetworkResult.Success
+import data.util.Constant.ALL_RATES_KEY
 import domain.model.CurrencyRate
 import domain.model.main.Currencies
 import domain.repository.ExchangeRepository
 import domain.repository.MainRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
+import org.mobilenativefoundation.store.store5.StoreReadRequest
+import org.mobilenativefoundation.store.store5.StoreReadResponse
 
 class ExchangeRepositoryImpl(
     private val mainRepository: MainRepository
 ) : ExchangeRepository {
 
     override fun getLatest(forceRefresh: Boolean): Flow<List<CurrencyRate>> = flow {
-        val currencies = mainRepository.getAllRates(forceRefresh)
-            .mapNotNull { result ->
-                when (result) {
-                    is Success -> result.data
-                    is Error -> result.data
-                    else -> null
+        mainRepository.getAllRatesNew()
+            .stream(StoreReadRequest.cached(ALL_RATES_KEY, false))
+            .map { response ->
+                when (response) {
+                    is StoreReadResponse.Data -> {
+                        val data = response.value
+                        emit(mapIRRFiatToToman(data))
+                    }
+
+                    is StoreReadResponse.Error -> {
+                        emit(emptyList())
+                    }
+
+                    else -> Unit
                 }
             }
-            .map(::mapIRRFiatToToman)
-            .first()
-
-        emit(currencies)
     }
 
     private fun mapIRRFiatToToman(data: Currencies): List<CurrencyRate> {

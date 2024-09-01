@@ -7,8 +7,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
 import ui.screens.main.overview.OverviewState.Loading
@@ -18,7 +16,7 @@ import ui.screens.main.overview.OverviewViewEvent.OnRetry
 import util.getIconBy
 
 class OverviewViewModel(
-    private val combinedRatesUseCase: CombineRatesNewsUseCase
+    private val combinedRatesUseCase: CombineRatesNewsUseCase,
 ) : MviViewModel<OverviewViewEvent, OverviewState, OverviewNavigationEffect>(Loading) {
 
     private val _isRefreshing = MutableStateFlow(false)
@@ -30,39 +28,45 @@ class OverviewViewModel(
 
     override fun handleEvent(event: OverviewViewEvent) {
         when (event) {
-            OnRetry -> loadCombinedRates(forceRefresh = true)
-            is OnLoadRates -> loadCombinedRates(event.forceRefresh)
+            OnRetry -> loadCombinedRates()
+            is OnLoadRates -> loadCombinedRates()
         }
     }
 
-    private fun loadCombinedRates(forceRefresh: Boolean = false) {
+    private fun loadCombinedRates() {
         setState { Loading }
 
         viewModelScope.launch {
-            combinedRatesUseCase(forceRefresh = forceRefresh)
-                .map {
-                    val bonbastRates = it.bonbastRates.map { bonbastRate ->
-                        getIconBy(bonbastRate.code).let { bonbastRate.copy(imageUrl = it) }
-                    }.toImmutableList()
+            val combinedRates = combinedRatesUseCase(isRefreshing.value)
+            val bonbastRates = combinedRates.bonbastRates.map { bonbastRate ->
+                getIconBy(bonbastRate.code).let { bonbastRate.copy(imageUrl = it) }
+            }.toImmutableList()
 
-                    val cryptoRates = it.cryptoRates.toImmutableList()
-                    val markets = it.markets.toImmutableList()
-                    val fiatRates = it.fiatRates.toImmutableList()
-                    val topMovers = it.topMovers.toImmutableList()
-                    val news = it.news.toImmutableList()
+            val cryptoRates = combinedRates.cryptoRates.toImmutableList()
+            val markets = combinedRates.markets.toImmutableList()
+            val fiatRates = combinedRates.fiatRates.toImmutableList()
+            val topMovers = combinedRates.topMovers.toImmutableList()
+            val news = combinedRates.news.toImmutableList()
 
-                    when {
-                        bonbastRates.isEmpty()
-                                && cryptoRates.isEmpty()
-                                && markets.isEmpty()
-                                && fiatRates.isEmpty()
-                                && topMovers.isEmpty()
-                                && news.isEmpty() -> setState { OverviewState.Error("No data available") }
+            when {
+                bonbastRates.isEmpty()
+                        && cryptoRates.isEmpty()
+                        && markets.isEmpty()
+                        && fiatRates.isEmpty()
+                        && topMovers.isEmpty()
+                        && news.isEmpty() -> setState { OverviewState.Error("No data available") }
 
-                        else -> setState { Success(bonbastRates, cryptoRates, markets, fiatRates, topMovers, news) }
-                    }
+                else -> setState {
+                    Success(
+                        bonbastRates = bonbastRates,
+                        cryptoRates = cryptoRates,
+                        markets = markets,
+                        fiatRates = fiatRates,
+                        topMovers = topMovers,
+                        news = news
+                    )
                 }
-                .launchIn(viewModelScope)
+            }
         }
     }
 

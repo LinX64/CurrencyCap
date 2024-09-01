@@ -16,7 +16,10 @@ fun <T> Flow<T>.retryOnIOException(
     if (cause is IOException && attempt < maxRetries) {
         val exponentialDelay = initialRetryDelay * 2.0.pow(attempt.toDouble()).toLong()
         val retryDelay =
-            (exponentialDelay + Random.nextLong(-exponentialDelay / 2, exponentialDelay / 2)).coerceAtMost(maxRetryDelay)
+            (exponentialDelay + Random.nextLong(
+                -exponentialDelay / 2,
+                exponentialDelay / 2
+            )).coerceAtMost(maxRetryDelay)
         delay(retryDelay)
         true
     } else false
