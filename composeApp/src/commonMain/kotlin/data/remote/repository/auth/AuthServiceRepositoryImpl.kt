@@ -1,6 +1,7 @@
 package data.remote.repository.auth
 
 import data.remote.model.User
+import data.util.NetworkErrorHandler
 import dev.gitlive.firebase.auth.ActionCodeSettings
 import dev.gitlive.firebase.auth.AndroidPackageName
 import dev.gitlive.firebase.auth.FirebaseAuth
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.map
 
 class AuthServiceRepositoryImpl(
     private val auth: FirebaseAuth,
+    private val errorHandler: NetworkErrorHandler = NetworkErrorHandler(),
     private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 ) : AuthServiceRepository {
 
@@ -32,25 +34,25 @@ class AuthServiceRepositoryImpl(
     override suspend fun authenticate(
         email: String,
         password: String
-    ): AuthState {
-        AuthState.Loading
-
+    ): Result<User> {
         return try {
             val user = auth.signInWithEmailAndPassword(email, password).user
             val uid = user?.uid
             if (uid?.isNotEmpty() == true) {
-                AuthState.Success(User(id = user.uid, isAnonymous = user.isAnonymous))
-            } else AuthState.Error("Username or password is incorrect!")
+                Result.success(User(uid, user.isAnonymous))
+            } else Result.failure(Exception("Could not authenticate user!"))
         } catch (e: Exception) {
-            AuthState.Error(e.message ?: "Could not authenticate user!")
+            Result.failure(Exception(e.message))
         }
     }
 
-    override suspend fun signUpWithEmailAndPassword(email: String, password: String): AuthState = try {
-        val user = auth.createUserWithEmailAndPassword(email, password).user
-        AuthState.Success(User(user!!.uid, user.isAnonymous))
-    } catch (e: Exception) {
-        AuthState.Error(e.message ?: "Could not create user!")
+    override suspend fun signUpWithEmailAndPassword(email: String, password: String): Result<User> {
+        return try {
+            val user = auth.createUserWithEmailAndPassword(email, password).user
+            Result.success(User(user!!.uid, user.isAnonymous))
+        } catch (e: Exception) {
+            return Result.failure(Exception(e.message))
+        }
     }
 
     override suspend fun sendVerificationCodeToEmail(email: String) {
@@ -74,7 +76,7 @@ class AuthServiceRepositoryImpl(
         launchWithAwait {
             try {
                 auth.currentUser?.let { user ->
-                    user.updateEmail(user.email.toString())
+                    user.verifyBeforeUpdateEmail(user.email.toString())
                     updatePhoneNumber(user.phoneNumber.toString())
                     println("Profile updated successfully")
                 }
@@ -110,13 +112,10 @@ class AuthServiceRepositoryImpl(
         scope.async { block() }.await()
     }
 
-    private fun createPhoneAuthCredential(verificationId: String, verificationCode: String): PhoneAuthCredential {
+    private fun createPhoneAuthCredential(
+        verificationId: String,
+        verificationCode: String
+    ): PhoneAuthCredential {
         return PhoneAuthProvider().credential(verificationId, verificationCode)
-    }
-
-    sealed class AuthState {
-        data object Loading : AuthState()
-        data class Success(val user: User) : AuthState()
-        data class Error(val message: String) : AuthState()
     }
 }
