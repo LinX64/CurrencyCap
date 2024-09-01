@@ -43,7 +43,8 @@ internal fun AppNavGraph(
     showPrivacyPolicyBottomSheet: () -> Unit,
     onLoginSuccess: () -> Unit,
     onExploreNewsClick: () -> Unit,
-    showBookmarkConfirmationSnakeBar: (Boolean) -> Unit
+    showBookmarkConfirmationSnakeBar: (Boolean) -> Unit,
+    onShowAboutUsBottomSheet: () -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -60,7 +61,9 @@ internal fun AppNavGraph(
             onError = onError,
             onNavigateToLanding = onNavigateToLanding,
             onExploreNewsClick = onExploreNewsClick,
-            showBookmarkConfirmationSnakeBar = showBookmarkConfirmationSnakeBar
+            showBookmarkConfirmationSnakeBar = showBookmarkConfirmationSnakeBar,
+            showPrivacyPolicyBottomSheet = showPrivacyPolicyBottomSheet,
+            onShowAboutUsBottomSheet = onShowAboutUsBottomSheet
         )
 
         authNavGraph(
@@ -78,7 +81,9 @@ private fun NavGraphBuilder.mainNavGraph(
     onNavigateToLanding: () -> Unit,
     onError: (message: String) -> Unit,
     onExploreNewsClick: () -> Unit,
-    showBookmarkConfirmationSnakeBar: (Boolean) -> Unit
+    showBookmarkConfirmationSnakeBar: (Boolean) -> Unit,
+    onShowAboutUsBottomSheet: () -> Unit,
+    showPrivacyPolicyBottomSheet: () -> Unit
 ) {
     navigation<MainNavGraph>(startDestination = Overview) {
         searchScreen(
@@ -128,7 +133,9 @@ private fun NavGraphBuilder.mainNavGraph(
         )
 
         settingsScreen(
-            hazeState = hazeState
+            hazeState = hazeState,
+            onShowAboutUsBottomSheet = onShowAboutUsBottomSheet,
+            onShowPrivacyPolicy = showPrivacyPolicyBottomSheet
         )
     }
 }

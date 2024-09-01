@@ -3,6 +3,8 @@ package ui.screens.main.settings
 import data.remote.model.User
 
 sealed interface SettingsViewEvent {
+    data object OnAboutUsClick : SettingsViewEvent
+    data object OnPrivacyPolicyClick : SettingsViewEvent
     data object OnGetThemeSettings : SettingsViewEvent
     data class OnDarkModeSwitchChange(val isDarkMode: Boolean) : SettingsViewEvent
     data class OnPushNotificationSwitchChange(val isEnabled: Boolean) : SettingsViewEvent
@@ -17,6 +19,7 @@ sealed interface SettingsState {
 }
 
 sealed interface SettingsNavigationEffect {
-    data object NavigateToLanding : SettingsNavigationEffect
+    data class OpenBrowser(val link: String) : SettingsNavigationEffect
+    data object ShowAboutUsBottomSheet : SettingsNavigationEffect
 }
 

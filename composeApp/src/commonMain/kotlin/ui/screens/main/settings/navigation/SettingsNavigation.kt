@@ -10,11 +10,15 @@ import ui.screens.main.settings.SettingsRoute
 fun NavController.navigateToSettingsScreen() = navigate(Settings)
 
 fun NavGraphBuilder.settingsScreen(
-    hazeState: HazeState
+    hazeState: HazeState,
+    onShowAboutUsBottomSheet: () -> Unit,
+    onShowPrivacyPolicy: () -> Unit
 ) {
     composable<Settings> {
         SettingsRoute(
-            hazeState = hazeState
+            hazeState = hazeState,
+            onShowAboutUsBottomSheet = onShowAboutUsBottomSheet,
+            onShowPrivacyPolicy = onShowPrivacyPolicy
         )
     }
 }

@@ -122,6 +122,7 @@ internal fun App(
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
             onLoginSuccess = { navigateToOverview(mainViewModel, navController) },
             onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.News) },
+            onShowAboutUsBottomSheet = {}, //todo
             showBookmarkConfirmationSnakeBar = { isBookmarked ->
                 scope.launch {
                     snackbarHostState.showSnackbar(
