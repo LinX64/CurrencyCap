@@ -26,6 +26,7 @@ import ui.screens.main.settings.SettingsViewEvent.OnPrivacyPolicyClick
 import ui.screens.main.settings.SettingsViewEvent.OnPushNotificationSwitchChange
 import ui.screens.main.settings.components.SettingsGeneralItem
 import ui.screens.main.settings.components.SettingsHeaderText
+import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -76,6 +77,9 @@ internal fun SettingsScreen(
                 onPushNotificationSwitchChange = onPushNotificationSwitchChange,
                 onDarkModeSwitchChange = onDarkModeSwitchChange,
             )
+        }
+        item {
+            Spacer(Modifier.height(SPACER_PADDING_16))
         }
         item {
             PoliciesCard(
