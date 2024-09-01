@@ -2,10 +2,11 @@ package ui.screens.main.news.news_detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import data.util.NetworkResult
+import data.util.Constant.GET_ARTICLE_BY_URL_NEW
 import domain.repository.NewsRepository
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import org.mobilenativefoundation.store.store5.StoreReadRequest
+import org.mobilenativefoundation.store.store5.StoreReadResponse
 import ui.common.MviViewModel
 import ui.navigation.util.ENCODED_URL
 import ui.screens.main.news.news_detail.NewsDetailNavigationEffect.OpenBottomSheet
@@ -28,20 +29,33 @@ class NewsDetailViewModel(
 
     override fun handleEvent(event: NewsDetailViewEvent) {
         when (event) {
-            is FetchNews -> fetchNews(event.url)
+            is FetchNews -> fetchArticleBy(event.url)
             is OnReadMoreClick -> setEffect(OpenBottomSheet(event.url))
         }
     }
 
-    private fun fetchNews(url: String) {
-        newsRepository.getArticleByUrl(url)
-            .map { result ->
-                when (result) {
-                    is NetworkResult.Success -> setState { Success(result.data) }
-                    is NetworkResult.Error -> setEffect(ShowError(result.throwable.message ?: "Error while fetching news"))
-                    else -> setState { Loading }
+    private fun fetchArticleBy(url: String) {
+        viewModelScope.launch {
+            val store = newsRepository.getArticleByUrlNew(url)
+            store.stream(StoreReadRequest.cached(GET_ARTICLE_BY_URL_NEW, false))
+                .collect { response ->
+                    when (response) {
+                        is StoreReadResponse.Loading -> setState { Loading }
+                        is StoreReadResponse.Data -> {
+                            val article = response.value
+                            setState { Success(article) }
+                        }
+
+                        is StoreReadResponse.Error -> {
+                            val error = response.errorMessageOrNull()
+                            setEffect(
+                                ShowError(error ?: "An error occurred while fetching the news")
+                            )
+                        }
+
+                        else -> Unit
+                    }
                 }
-            }
-            .launchIn(viewModelScope)
+        }
     }
 }

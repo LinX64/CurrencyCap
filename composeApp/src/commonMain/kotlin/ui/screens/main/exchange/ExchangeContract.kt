@@ -36,7 +36,7 @@ data class ExchangeUiState(
     val sourceCurrencyRate: CurrencyRate? = null,
     val targetCurrencyRate: CurrencyRate? = null,
     val convertedAmount: Double = 0.0,
-    val currencyRateRates: ImmutableSet<CurrencyRate> = persistentSetOf(),
+    val rates: ImmutableSet<CurrencyRate> = persistentSetOf(),
     val sourceCurrencyAmount: CurrencyCode = CurrencyCode.USD,
     val targetCurrencyAmount: CurrencyCode = CurrencyCode.EUR
 ) : ExchangeState

@@ -7,6 +7,7 @@ import data.remote.model.User
 import domain.repository.AuthServiceRepository
 import domain.repository.ProfileRepository
 import domain.repository.UserPreferences
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
@@ -56,9 +57,12 @@ internal class ProfileViewModel(
 
     private fun fetchProfile() {
         setState { Loading }
+
         val user = authServiceRepository.currentUser
 
         viewModelScope.launch {
+            delay(500)
+
             val fullName = profileRepository.getUserFullName()
             val phoneNumber = profileRepository.getUserPhoneNumber()
             val email = user.mapNotNull { it.email }.first()

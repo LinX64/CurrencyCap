@@ -41,7 +41,7 @@ internal fun ResetPasswordScreen(
     resetPasswordViewModel: ResetPasswordViewModel = koinViewModel<ResetPasswordViewModel>(),
     padding: PaddingValues = PaddingValues(SPACER_PADDING_16),
     onNavigateToLogin: () -> Unit,
-    onMessage: (message: String) -> Unit
+    onError: (message: String) -> Unit
 ) {
     val state by resetPasswordViewModel.viewState.collectAsStateWithLifecycle()
     val shouldShowDialog = remember { mutableStateOf(false) }
@@ -58,7 +58,7 @@ internal fun ResetPasswordScreen(
 
     HandleNavigationEffect(resetPasswordViewModel) { effect ->
         when (effect) {
-            is ShowError -> onMessage(effect.message)
+            is ShowError -> onError(effect.message)
         }
     }
 
@@ -81,7 +81,7 @@ private fun ResetPasswordContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = SPACER_PADDING_32),
+            .padding(horizontal = SPACER_PADDING_16),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {

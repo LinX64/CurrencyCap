@@ -3,7 +3,6 @@ package ui.screens.initial.register
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import data.remote.repository.auth.AuthServiceRepositoryImpl.AuthState
 import domain.repository.AuthServiceRepository
 import domain.repository.UserPreferences
 import kotlinx.coroutines.launch
@@ -25,8 +24,8 @@ internal class RegisterViewModel(
 
     override fun handleEvent(event: RegisterViewEvent) {
         when (event) {
-            is OnEmailChanged -> email.value = event.newEmail
-            is OnPasswordChanged -> password.value = event.newPassword
+            is OnEmailChanged -> email.value = event.newEmail.trim()
+            is OnPasswordChanged -> password.value = event.newPassword.trim()
             is OnRegisterClick -> register(email = email.value, password = password.value)
         }
     }
@@ -43,16 +42,14 @@ internal class RegisterViewModel(
         setState { Loading }
 
         viewModelScope.launch {
-            when (val state = authServiceRepository.signUpWithEmailAndPassword(email, password)) {
-                AuthState.Loading -> Unit
-                is AuthState.Success -> {
+            val result = authServiceRepository.signUpWithEmailAndPassword(email, password)
+            result.fold(
+                onSuccess = {
                     userPreferences.saveUserUid(authServiceRepository.currentUserId)
                     setEffect(NavigateToFillProfile)
-                }
-
-                is AuthState.Error -> setEffect(ShowError("Error registering user: ${state.message}"))
-            }
-
+                },
+                onFailure = { setEffect(ShowError("Error while registering user: ${it.message}")) }
+            )
             setState { RegisterState.Idle }
         }
     }

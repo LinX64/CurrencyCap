@@ -18,7 +18,7 @@ plugins {
 kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class) compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
 
@@ -81,7 +81,6 @@ kotlin {
             implementation(libs.firebase.auth)
             implementation(libs.firebase.fireStore)
             implementation(libs.firebase.crashlytics)
-            implementation(libs.firebase.messaging)
 
             implementation(libs.kotlinx.collections.immutable)
             implementation(libs.kotlinx.datetime)
@@ -94,6 +93,8 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
             api(libs.compose.webview.multiplatform)
+
+            implementation(libs.mobilenativefoundation.store5)
 
             // Data
             implementation(libs.bundles.datastore)

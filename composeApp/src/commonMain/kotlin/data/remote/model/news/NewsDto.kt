@@ -84,7 +84,7 @@ fun SourceDto.toDomain() = Source(
     name = name
 )
 
-fun Set<ArticleDto>.toDomain(): List<Article> {
+fun List<ArticleDto>.toDomain(): List<Article> {
     return map { it.toDomain() }
 }
 
@@ -99,7 +99,7 @@ fun Article.toEntity() = ArticleEntity().apply {
     isBookmarked = this@toEntity.isBookmarked
 }
 
-fun Set<ArticleDto>.toEntity(): Set<ArticleEntity> {
+fun List<ArticleDto>.toEntity(): List<ArticleEntity> {
     return map { dto ->
         ArticleEntity().apply {
             url = dto.url
@@ -110,5 +110,5 @@ fun Set<ArticleDto>.toEntity(): Set<ArticleEntity> {
             sourceName = dto.sourceDto.name
             urlToImage = dto.urlToImage.orEmpty()
         }
-    }.toSet()
+    }
 }

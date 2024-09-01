@@ -7,8 +7,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CurrenciesDto(
-    @SerialName("timestamp")
-    val timestamp: Long,
     @SerialName("bonbast")
     val bonbast: List<BonbastRateDto>,
     @SerialName("crypto")
@@ -19,7 +17,6 @@ data class CurrenciesDto(
     val rates: List<RateDto>
 ) {
     fun toEntity() = CurrenciesEntity().apply {
-        timestamp = this@CurrenciesDto.timestamp
         bonbast = this@CurrenciesDto.bonbast.toEntity()
         crypto = this@CurrenciesDto.crypto.toEntity()
         markets = this@CurrenciesDto.market.toEntity()

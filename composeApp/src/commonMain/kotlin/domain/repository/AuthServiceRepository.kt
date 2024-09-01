@@ -1,7 +1,6 @@
 package domain.repository
 
 import data.remote.model.User
-import data.remote.repository.auth.AuthServiceRepositoryImpl.AuthState
 import kotlinx.coroutines.flow.Flow
 
 interface AuthServiceRepository {
@@ -9,8 +8,8 @@ interface AuthServiceRepository {
     val hasUser: Boolean
     val currentUser: Flow<User>
 
-    suspend fun authenticate(email: String, password: String): AuthState
-    suspend fun signUpWithEmailAndPassword(email: String, password: String): AuthState
+    suspend fun authenticate(email: String, password: String): Result<User>
+    suspend fun signUpWithEmailAndPassword(email: String, password: String): Result<User>
 
     suspend fun sendVerificationCodeToEmail(email: String)
 

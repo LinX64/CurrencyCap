@@ -2,14 +2,18 @@ package ui.screens.initial.landing
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +34,7 @@ import org.jetbrains.compose.resources.stringResource
 import ui.components.base.button.PrimaryButton
 import ui.components.base.button.SecondaryButton
 import ui.theme.AppDimensions.SPACER_PADDING_16
-import ui.theme.AppDimensions.SPACER_PADDING_32
+import ui.theme.AppDimensions.SPACER_PADDING_48
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -46,7 +50,7 @@ internal fun LandingScreen(
             .padding(SPACER_PADDING_16),
         contentAlignment = Alignment.Center
     ) {
-        Column(
+        ScrollableColumn(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
@@ -76,7 +80,7 @@ internal fun LandingScreen(
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(45.dp))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_48))
 
             PrimaryButton(
                 text = stringResource(Res.string.create_account),
@@ -92,7 +96,7 @@ internal fun LandingScreen(
                 onButtonClick = onLoginClick,
             )
 
-            Spacer(modifier = Modifier.height(SPACER_PADDING_32))
+            Spacer(modifier = Modifier.height(SPACER_PADDING_48))
 
             Text(
                 text = stringResource(Res.string.privacy_policy),
@@ -101,5 +105,25 @@ internal fun LandingScreen(
                 modifier = Modifier.clickable { onPrivacyPolicyClick() }
             )
         }
+    }
+}
+
+@Composable
+internal fun ScrollableColumn(
+    modifier: Modifier = Modifier,
+    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    Box(modifier = modifier) {
+        val scrollState = rememberScrollState()
+        Column(
+            modifier = Modifier
+                .verticalScroll(scrollState)
+                .fillMaxWidth(),
+            verticalArrangement = verticalArrangement,
+            horizontalAlignment = horizontalAlignment,
+            content = content
+        )
     }
 }

@@ -1,15 +1,13 @@
 package domain.repository
 
-import data.util.NetworkResult
 import domain.model.main.CryptoInfo
 import domain.model.main.Currencies
-import kotlinx.coroutines.flow.Flow
+import org.mobilenativefoundation.store.store5.Store
 
 interface MainRepository {
-    fun getAllRates(forceRefresh: Boolean = false): Flow<NetworkResult<Currencies>>
-    fun getCryptoInfoBySymbol(
-        forceRefresh: Boolean = false,
+    fun getAllRatesNew(): Store<String, Currencies>
+    fun getCryptoInfoBySymbolNew(
         id: String,
         symbol: String
-    ): Flow<NetworkResult<CryptoInfo>>
+    ): Store<Any, CryptoInfo>
 }

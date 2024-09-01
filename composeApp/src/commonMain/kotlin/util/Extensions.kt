@@ -19,7 +19,7 @@ internal fun getIconBy(symbol: String): String {
     return APIConst.CRYPTO_ICON_API + lowerCaseSymbol + ".png"
 }
 
-fun String.validateEmail(): Boolean {
+fun String.isEmailValid(): Boolean {
     val emailRegex = Regex("^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})")
     return emailRegex.matches(this)
 }

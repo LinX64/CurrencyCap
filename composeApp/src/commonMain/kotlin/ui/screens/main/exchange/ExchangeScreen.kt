@@ -190,7 +190,7 @@ private fun ExchangeCard(
     if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
         CurrencyPicker(
             hazeState = hazeState,
-            currencyRateList = state.currencyRateRates,
+            currencyRateList = state.rates,
             currencyType = selectedCurrencyType,
             onEvent = { event ->
                 handleEvent(event)
