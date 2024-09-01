@@ -3,7 +3,7 @@ package data.remote.repository.main
 import data.remote.model.main.CryptoInfoDto
 import data.remote.model.main.CurrenciesDto
 import data.remote.model.main.toDomainModel
-import data.util.APIConst.BASE_URL
+import data.remote.model.requests.GetCurrencies
 import data.util.APIConst.CRYPTO_INFO_URL
 import data.util.parseCurrencyRates
 import domain.model.main.CryptoInfo
@@ -12,7 +12,7 @@ import domain.model.main.toEntity
 import domain.repository.MainRepository
 import domain.repository.RatesLocalDataSource
 import io.ktor.client.HttpClient
-import io.ktor.client.request.get
+import io.ktor.client.plugins.resources.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
@@ -33,9 +33,7 @@ class MainRepositoryImpl(
             sourceOfTruth = SourceOfTruth.of(
                 reader = { _: String -> ratesLocalDataSource.getRates() },
                 writer = { _: String, responseDto: CurrenciesDto ->
-                    ratesLocalDataSource.insertRates(
-                        responseDto.toEntity()
-                    )
+                    ratesLocalDataSource.insertRates(responseDto.toEntity())
                 },
                 deleteAll = { ratesLocalDataSource.deleteRates() }
             )
@@ -81,7 +79,7 @@ class MainRepositoryImpl(
     }
 
     private suspend fun getParsedRates(): CurrenciesDto {
-        val plainResponse = httpClient.get(BASE_URL).bodyAsText()
+        val plainResponse = httpClient.get(GetCurrencies()).bodyAsText()
         return parseCurrencyRates(plainResponse)
     }
 }

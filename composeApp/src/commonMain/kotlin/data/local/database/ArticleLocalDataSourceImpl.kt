@@ -38,6 +38,13 @@ class ArticleLocalDataSourceImpl(
         }
     }
 
+    override suspend fun removeArticleByUrl(url: String) {
+        realm.write {
+            val articleEntity = this.query<ArticleEntity>("url == $0", url).first()
+            delete(articleEntity)
+        }
+    }
+
     override fun getArticleByUrl(url: String): Flow<Article?> {
         return realm.query<ArticleEntity>("url == $0", url)
             .asFlow()

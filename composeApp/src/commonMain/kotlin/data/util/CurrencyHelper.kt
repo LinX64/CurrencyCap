@@ -12,13 +12,9 @@ import kotlinx.serialization.json.doubleOrNull
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import kotlinx.serialization.json.longOrNull
 
 internal fun parseCurrencyRates(jsonString: String): CurrenciesDto {
     val jsonElement = Json.parseToJsonElement(jsonString).jsonObject
-
-    val timestamp =
-        jsonElement["timestamp"]?.jsonPrimitive?.longOrNull ?: throw IllegalStateException("timestamp field is missing")
 
     // Converting bonbast fields
     val bonbast = jsonElement["bonbast"]?.jsonArray ?: throw IllegalStateException("bonbast field is missing")
@@ -43,7 +39,6 @@ internal fun parseCurrencyRates(jsonString: String): CurrenciesDto {
     val ratesList = rates.map { Json.decodeFromJsonElement<RateDto>(it) }
 
     return CurrenciesDto(
-        timestamp = timestamp,
         bonbast = bonbastRates,
         crypto = cryptoList,
         market = marketsList,
