@@ -29,12 +29,12 @@ class NewsDetailViewModel(
 
     override fun handleEvent(event: NewsDetailViewEvent) {
         when (event) {
-            is FetchNews -> fetchNews(event.url)
+            is FetchNews -> fetchArticleBy(event.url)
             is OnReadMoreClick -> setEffect(OpenBottomSheet(event.url))
         }
     }
 
-    private fun fetchNews(url: String) {
+    private fun fetchArticleBy(url: String) {
         viewModelScope.launch {
             val store = newsRepository.getArticleByUrlNew(url)
             store.stream(StoreReadRequest.cached(GET_ARTICLE_BY_URL_NEW, false))
@@ -49,9 +49,7 @@ class NewsDetailViewModel(
                         is StoreReadResponse.Error -> {
                             val error = response.errorMessageOrNull()
                             setEffect(
-                                ShowError(
-                                    error ?: "An error occurred while fetching the news"
-                                )
+                                ShowError(error ?: "An error occurred while fetching the news")
                             )
                         }
 

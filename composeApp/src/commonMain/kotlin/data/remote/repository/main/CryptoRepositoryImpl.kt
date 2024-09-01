@@ -6,6 +6,8 @@ import data.remote.model.main.CoinGeckoItemsResponse
 import data.remote.model.main.toChartDataPoints
 import data.util.APIConst.COINCAP_BASE_URL
 import data.util.APIConst.COIN_GECKO_BASE_URL
+import data.util.parseListResponse
+import data.util.parseResponse
 import domain.model.ChipPeriod
 import domain.model.main.ChartDataPoint
 import domain.repository.CryptoRepository
@@ -14,10 +16,8 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import kotlinx.datetime.Instant
-import kotlinx.serialization.json.Json
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -80,9 +80,7 @@ class CryptoRepositoryImpl(
     }
 
     private suspend fun processResponse(response: HttpResponse): List<ChartDataPoint> {
-        val json = Json { ignoreUnknownKeys = true }
-        val jsonString = response.bodyAsText()
-        val data = json.decodeFromString<CoinCapChartResponseDto>(jsonString)
+        val data = parseResponse<CoinCapChartResponseDto>(response)
 
         val chartData = data.data.map { dataPoint ->
             ChartDataPointDto(
@@ -97,9 +95,6 @@ class CryptoRepositoryImpl(
 
     private suspend fun getCoinList(): List<CoinGeckoItemsResponse> {
         val response = httpClient.get("$COIN_GECKO_BASE_URL/coins/list")
-        val json = Json { ignoreUnknownKeys = true }
-        val jsonString = response.bodyAsText()
-        val data = json.decodeFromString<List<CoinGeckoItemsResponse>>(jsonString)
-        return data
+        return parseListResponse<CoinGeckoItemsResponse>(response)
     }
 }

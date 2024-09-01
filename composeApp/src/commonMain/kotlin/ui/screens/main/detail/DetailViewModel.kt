@@ -54,7 +54,7 @@ class DetailViewModel(
         viewModelScope.launch {
             val store = mainRepository.getCryptoInfoBySymbolNew(id, symbol)
             store.stream(StoreReadRequest.cached(key = GET_CRYPTO_INFO_KEY, refresh = forceRefresh))
-                .collect { response ->
+                .collectLatest { response ->
                     when (response) {
                         is StoreReadResponse.Loading -> setState { DetailState.Loading }
                         is StoreReadResponse.Error -> setState { DetailState.Error("No data available") }

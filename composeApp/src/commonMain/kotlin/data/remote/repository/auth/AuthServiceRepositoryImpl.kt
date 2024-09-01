@@ -1,7 +1,6 @@
 package data.remote.repository.auth
 
 import data.remote.model.User
-import data.util.NetworkErrorHandler
 import dev.gitlive.firebase.auth.ActionCodeSettings
 import dev.gitlive.firebase.auth.AndroidPackageName
 import dev.gitlive.firebase.auth.FirebaseAuth
@@ -17,7 +16,6 @@ import kotlinx.coroutines.flow.map
 
 class AuthServiceRepositoryImpl(
     private val auth: FirebaseAuth,
-    private val errorHandler: NetworkErrorHandler = NetworkErrorHandler(),
     private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 ) : AuthServiceRepository {
 

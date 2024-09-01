@@ -5,7 +5,7 @@ import data.remote.model.news.NewsDto
 import data.remote.model.news.toDomain
 import data.remote.model.news.toEntity
 import data.remote.model.requests.GetNews
-import data.util.APIConst.NEWS_URL
+import data.util.parseResponse
 import data.util.retryOnIOException
 import domain.model.Article
 import domain.model.toEntity
@@ -13,14 +13,12 @@ import domain.repository.ArticleLocalDataSource
 import domain.repository.NewsRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.resources.get
-import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.serialization.json.Json
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -56,18 +54,11 @@ class NewsRepositoryImpl(
         ).build()
     }
 
-    private suspend fun getPlainNewsResponse() = httpClient.get(NEWS_URL).bodyAsText()
-
-    private fun parseArticlesResponse(responseText: String): List<ArticleDto> {
-        return Json.decodeFromString(NewsDto.serializer(), responseText).articles
-    }
-
     override fun getNewsOnline(): Flow<List<Article>> = flow {
         val response = httpClient.get(GetNews())
         when (response.status.isSuccess()) {
             true -> {
-                val responseText = response.bodyAsText()
-                val articles: List<ArticleDto> = parseArticlesResponse(responseText)
+                val articles: List<ArticleDto> = parseResponse<NewsDto>(response).articles
                 emit(articles.map { it.toDomain() })
             }
 
@@ -78,8 +69,8 @@ class NewsRepositoryImpl(
         .retryOnIOException()
 
     private suspend fun fetchArticleByUrl(url: String): Article {
-        val responseText = getPlainNewsResponse()
-        val articles: List<ArticleDto> = parseArticlesResponse(responseText)
+        val response = httpClient.get(GetNews())
+        val articles: List<ArticleDto> = parseResponse<NewsDto>(response).articles
 
         val matchedArticle = articles
             .find { it.url.contains(url) }
