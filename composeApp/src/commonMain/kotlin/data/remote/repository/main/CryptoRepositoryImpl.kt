@@ -60,10 +60,10 @@ class CryptoRepositoryImpl(
                 parameter("interval", period.interval)
             }
         }
-        return processResponse(coinCapResponse)
+        return processChartDataResp(coinCapResponse)
     }
 
-    private suspend fun processResponse(response: HttpResponse): List<ChartDataPoint> {
+    private suspend fun processChartDataResp(response: HttpResponse): List<ChartDataPoint> {
         val data = parseResponse<CoinCapChartResponseDto>(response)
 
         val chartData = data.data.map { dataPoint ->
