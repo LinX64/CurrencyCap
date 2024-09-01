@@ -59,13 +59,13 @@ internal fun DetailScreen(
                 val chartData = chartDataState.chartDataPoints
 
                 item {
-//                    DetailHeader(
-//                        cryptoInfo = cryptoInfo,
-//                        chartData = chartData,
-//                        onChartPeriodSelect = { coinId, chipPeriod ->
-//                            handleEvent(OnChartPeriodSelect(coinId, cryptoInfo.symbol, chipPeriod))
-//                        }
-//                    )
+                    DetailHeader(
+                        cryptoInfo = cryptoInfo,
+                        chartData = chartData,
+                        onChartPeriodSelect = { coinId, chipPeriod ->
+                            handleEvent(OnChartPeriodSelect(coinId, cryptoInfo.symbol, chipPeriod))
+                        }
+                    )
                 }
                 item { DetailBody(cryptoInfo = cryptoInfo) }
                 item { DescriptionCard(description = description) }

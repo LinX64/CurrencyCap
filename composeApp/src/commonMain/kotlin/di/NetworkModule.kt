@@ -2,6 +2,7 @@ package di
 
 import data.util.APIConst.BASE_COIN_GECKO_URL
 import data.util.APIConst.BASE_URL
+import data.util.APIConst.COINCAP_BASE_URL
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -64,4 +65,12 @@ fun HttpRequestBuilder.coinGeckoApi() {
         host = BASE_COIN_GECKO_URL
     }
 }
+
+fun HttpRequestBuilder.coinCapApi() {
+    url {
+        protocol = URLProtocol.HTTPS
+        host = COINCAP_BASE_URL
+    }
+}
+
 

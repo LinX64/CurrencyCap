@@ -64,6 +64,11 @@ class DetailViewModel(
                         is StoreReadResponse.Data -> {
                             val data = response.value
                             setState { DetailState.Success(cryptoInfo = data) }
+
+                            onChartPeriodSelected(
+                                coinId = id,
+                                symbol = symbol,
+                            )
                         }
 
                         else -> Unit
@@ -74,13 +79,13 @@ class DetailViewModel(
 
     private fun onChartPeriodSelected(
         forceRefresh: Boolean = false,
-        coinId: String = id,
+        coinId: String,
         symbol: String,
-        chipPeriod: ChipPeriod,
+        chipPeriod: ChipPeriod = ChipPeriod.DAY
     ) {
         viewModelScope.launch {
             cryptoRepository.fetchMarketChartDataNew(forceRefresh, coinId, symbol, chipPeriod)
-                .stream(StoreReadRequest.cached(key = symbol, refresh = forceRefresh))
+                .stream(StoreReadRequest.freshWithFallBackToSourceOfTruth(key = symbol))
                 .collectLatest { response ->
                     when (response) {
                         is StoreReadResponse.Loading -> _chartDataState.value =
