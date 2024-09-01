@@ -14,6 +14,7 @@ object AppDimensions {
     val SPACER_PADDING_16 = 16.dp
     val SPACER_PADDING_24 = 24.dp
     val SPACER_PADDING_32 = 32.dp
+    val SPACER_PADDING_48 = 48.dp
     val SPACER_PADDING_64 = 64.dp
     val SPACER_PADDING_96 = 96.dp
 

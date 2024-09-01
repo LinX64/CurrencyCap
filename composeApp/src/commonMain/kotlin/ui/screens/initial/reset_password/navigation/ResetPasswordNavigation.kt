@@ -16,7 +16,7 @@ fun NavGraphBuilder.resetPasswordScreen(
 ) {
     composable<ResetPassword> {
         ResetPasswordScreen(
-            onMessage = onError,
+            onError = onError,
             onNavigateToLogin = { navController.navigateToLoginScreen() }
         )
     }

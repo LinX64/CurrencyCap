@@ -2,16 +2,16 @@ package ui.screens.main.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import data.util.NetworkResult.Error
-import data.util.NetworkResult.Loading
-import data.util.NetworkResult.Success
+import data.util.Constant.GET_CRYPTO_INFO_KEY
 import domain.model.ChipPeriod
 import domain.repository.CryptoRepository
 import domain.repository.MainRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import org.mobilenativefoundation.store.store5.StoreReadRequest
+import org.mobilenativefoundation.store.store5.StoreReadResponse
 import ui.common.MviViewModel
 import ui.navigation.util.ID
 import ui.navigation.util.SYMBOL
@@ -33,59 +33,75 @@ class DetailViewModel(
 
     init {
         handleEvent(OnLoadCryptoInfo)
+        handleEvent(OnChartPeriodSelect(id, symbol, ChipPeriod.DAY))
     }
 
     override fun handleEvent(event: DetailViewEvent) {
         when (event) {
             OnRetry -> onLoadCryptoInfo()
             OnLoadCryptoInfo -> onLoadCryptoInfo()
-            is OnChartPeriodSelect -> onChartPeriodSelected(false, id, event.symbol, event.chipPeriod)
+            is OnChartPeriodSelect -> onChartPeriodSelected(
+                false,
+                id,
+                event.symbol,
+                event.chipPeriod
+            )
         }
     }
 
     private fun onLoadCryptoInfo(
         forceRefresh: Boolean = false,
     ) {
-        mainRepository.getCryptoInfoBySymbol(forceRefresh, id, symbol)
-            .map { result ->
-                when (result) {
-                    is Success -> {
-                        setState { DetailState.Success(cryptoInfo = result.data) }
-                        onChartPeriodSelected(symbol = result.data.symbol, chipPeriod = ChipPeriod.DAY)
-                    }
+        viewModelScope.launch {
+            val store = mainRepository.getCryptoInfoBySymbolNew(id, symbol)
+            store.stream(StoreReadRequest.cached(key = GET_CRYPTO_INFO_KEY, refresh = forceRefresh))
+                .collectLatest { response ->
+                    when (response) {
+                        is StoreReadResponse.Loading -> setState { DetailState.Loading }
+                        is StoreReadResponse.Error -> {
+                            setState { DetailState.Error("Error while loading data: " + response.errorMessageOrNull()) }
+                        }
 
-                    is Error -> {
-                        val cachedData = result.data
-                        if (cachedData != null) setState { DetailState.Success(cryptoInfo = cachedData) }
-                        else setState { DetailState.Error(result.throwable.message ?: "An error occurred") }
-                    }
+                        is StoreReadResponse.Data -> {
+                            val data = response.value
+                            setState { DetailState.Success(cryptoInfo = data) }
 
-                    is Loading -> setState { DetailState.Loading }
+                        }
+
+                        else -> Unit
+                    }
                 }
-            }
-            .launchIn(viewModelScope)
+        }
     }
 
     private fun onChartPeriodSelected(
         forceRefresh: Boolean = false,
-        coinId: String = id,
+        coinId: String,
         symbol: String,
-        chipPeriod: ChipPeriod,
+        chipPeriod: ChipPeriod
     ) {
-        cryptoRepository.fetchMarketChartData(forceRefresh, coinId, symbol, chipPeriod)
-            .map { result ->
-                when (result) {
-                    is Success -> {
-                        val chartData = result.data.toSet()
-                        if (chartData.isNotEmpty()) {
-                            _chartDataState.value = ChartDataUiState(chartData)
-                        } else _chartDataState.value = ChartDataUiState(isLoading = false, chartDataPoints = emptySet())
-                    }
+        viewModelScope.launch {
+            cryptoRepository.fetchMarketChartDataNew(forceRefresh, coinId, symbol, chipPeriod)
+                .stream(StoreReadRequest.freshWithFallBackToSourceOfTruth(key = symbol))
+                .collectLatest { response ->
+                    when (response) {
+                        is StoreReadResponse.Loading -> _chartDataState.value =
+                            ChartDataUiState(isLoading = true)
 
-                    is Error -> _chartDataState.value = ChartDataUiState(result.data?.toSet(), false)
-                    is Loading -> _chartDataState.value = ChartDataUiState(isLoading = true)
+                        is StoreReadResponse.Error -> _chartDataState.value =
+                            ChartDataUiState(isLoading = false)
+
+                        is StoreReadResponse.Data -> {
+                            val data = response.value.toSet()
+                            _chartDataState.value = ChartDataUiState(chartDataPoints = data)
+                        }
+
+                        is StoreReadResponse.NoNewData -> _chartDataState.value =
+                            ChartDataUiState(isLoading = false)
+
+                        else -> Unit
+                    }
                 }
-            }
-            .launchIn(viewModelScope)
+        }
     }
 }

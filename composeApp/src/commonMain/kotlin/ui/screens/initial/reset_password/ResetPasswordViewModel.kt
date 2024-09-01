@@ -11,7 +11,7 @@ import ui.screens.initial.reset_password.ResetPasswordState.Loading
 import ui.screens.initial.reset_password.ResetPasswordState.Success
 import ui.screens.initial.reset_password.ResetPasswordViewEvent.OnEmailChanged
 import ui.screens.initial.reset_password.ResetPasswordViewEvent.OnResetPasswordClick
-import util.validateEmail
+import util.isEmailValid
 
 internal class ResetPasswordViewModel(
     private val authServiceRepository: AuthServiceRepository
@@ -21,7 +21,7 @@ internal class ResetPasswordViewModel(
 
     override fun handleEvent(event: ResetPasswordViewEvent) {
         when (event) {
-            is OnEmailChanged -> email.value = event.email
+            is OnEmailChanged -> email.value = event.email.trim()
             is OnResetPasswordClick -> handleResetPasswordClick()
         }
     }
@@ -30,8 +30,8 @@ internal class ResetPasswordViewModel(
         val email = email.value
 
         when {
-            email.isEmpty() -> setState { Error("Email cannot be empty") }
-            email.validateEmail().not() -> setEffect(ShowError("Invalid email"))
+            email.isEmpty() -> setState { Error("Email cannot be empty!") }
+            email.isEmailValid().not() -> setEffect(ShowError("Invalid email!"))
             else -> sendRecoveryEmail(email)
         }
     }

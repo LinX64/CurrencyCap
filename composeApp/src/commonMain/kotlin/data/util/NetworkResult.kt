@@ -15,3 +15,8 @@ fun <T> Flow<T>.asResult(): Flow<NetworkResult<T>> =
     map<T, NetworkResult<T>> { NetworkResult.Success(it, DataFreshness.FRESH) }
         .onStart { emit(NetworkResult.Loading(null)) }
         .catch { emit(NetworkResult.Error(it)) }
+
+sealed class DataFreshness {
+    data object FRESH : DataFreshness()
+    data object STALE : DataFreshness()
+}

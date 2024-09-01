@@ -4,11 +4,13 @@ import androidx.lifecycle.viewModelScope
 import data.local.model.exchange.CurrencyType.None
 import data.local.model.exchange.CurrencyType.Source
 import data.local.model.exchange.CurrencyType.Target
-import data.util.NetworkResult
-import data.util.asResult
+import data.util.Constant.ALL_RATES_KEY
+import domain.model.CurrencyRate
+import domain.model.main.Currencies
 import domain.repository.CurrencyRepository
-import domain.repository.ExchangeRepository
+import domain.repository.MainRepository
 import domain.usecase.ConvertCurrenciesUseCase
+import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.FlowPreview
@@ -17,9 +19,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import org.mobilenativefoundation.store.store5.StoreReadRequest
+import org.mobilenativefoundation.store.store5.StoreReadResponse
 import ui.common.MviViewModel
 import ui.screens.main.exchange.ExchangeViewEvent.OnConvert
 import ui.screens.main.exchange.ExchangeViewEvent.OnFetchRates
@@ -30,7 +33,7 @@ import ui.screens.main.exchange.ExchangeViewEvent.OnSwitchCurrencies
 
 internal class ExchangeViewModel(
     private val currencyRepository: CurrencyRepository,
-    private val exchangeRepository: ExchangeRepository,
+    private val mainRepository: MainRepository,
     private val convertCurrenciesUseCase: ConvertCurrenciesUseCase
 ) : MviViewModel<ExchangeViewEvent, ExchangeState, ExchangeNavigationEffect>(ExchangeUiState()) {
 
@@ -57,20 +60,24 @@ internal class ExchangeViewModel(
     private fun fetchRates() {
         setupAmountObserver()
 
-        exchangeRepository.getLatest()
-            .asResult()
-            .map { result ->
-                when (result) {
-                    is NetworkResult.Success -> {
-                        val currencyRates = result.data.sortedBy { it.code }.toImmutableSet()
-                        setState { ExchangeUiState(currencyRateRates = currencyRates) }
-                    }
+        viewModelScope.launch {
+            mainRepository.getAllRatesNew()
+                .stream(StoreReadRequest.cached(ALL_RATES_KEY, false))
+                .collectLatest { response ->
+                    when (response) {
+                        is StoreReadResponse.Data -> {
+                            val data = response.value
+                            setState { ExchangeUiState(rates = mapIRRFiatToToman(data)) }
+                        }
 
-                    is NetworkResult.Error -> setState { ExchangeUiState(currencyRateRates = persistentSetOf()) }
-                    else -> Unit
+                        is StoreReadResponse.Error -> {
+                            setState { ExchangeUiState(rates = persistentSetOf()) }
+                        }
+
+                        else -> Unit
+                    }
                 }
-            }
-            .launchIn(viewModelScope)
+        }
     }
 
     private fun readCurrencySource() {
@@ -78,7 +85,8 @@ internal class ExchangeViewModel(
             currencyRepository.readSourceCurrencyCode().collectLatest { currencyCode ->
                 viewState.collectLatest { currentState ->
                     if (currentState is ExchangeUiState) {
-                        val selectedCurrency = currentState.currencyRateRates.find { it.code == currencyCode.name }
+                        val selectedCurrency =
+                            currentState.rates.find { it.code == currencyCode.name }
 
                         selectedCurrency?.let { nonNullData ->
                             setState { if (this is ExchangeUiState) copy(sourceCurrencyRate = nonNullData) else this }
@@ -94,7 +102,8 @@ internal class ExchangeViewModel(
             currencyRepository.readTargetCurrencyCode().collectLatest { currencyCode ->
                 viewState.collectLatest { currentState ->
                     if (currentState is ExchangeUiState) {
-                        val selectedCurrency = currentState.currencyRateRates.find { it.code == currencyCode.name }
+                        val selectedCurrency =
+                            currentState.rates.find { it.code == currencyCode.name }
 
                         selectedCurrency?.let { nonNullData ->
                             setState { if (this is ExchangeUiState) copy(targetCurrencyRate = nonNullData) else this }
@@ -157,5 +166,27 @@ internal class ExchangeViewModel(
 
     private fun saveCurrencyTargetCode(code: String) {
         viewModelScope.launch { currencyRepository.saveTargetCurrencyCode(code) }
+    }
+
+    private fun mapIRRFiatToToman(data: Currencies): ImmutableSet<CurrencyRate> {
+        val iranianRealRate = data.bonbast.first { it.code == "USD" }.sell
+
+        return data.rates
+            .filter { it.type == FIAT && it.symbol !in unrecognizedSymbols }
+            .map { rate ->
+                CurrencyRate(
+                    code = rate.symbol,
+                    value = if (rate.symbol == "IRR") iranianRealRate else rate.rateUsd.toDouble(),
+                )
+            }.toImmutableSet()
+    }
+
+    companion object {
+        private const val FIAT = "fiat"
+        private val unrecognizedSymbols = setOf(
+            "CNH", "XAG", "PEN", "UYU", "AWG", "KYD", "XOF", "XPT",
+            "XPF", "XAU", "XDR", "BND", "UGX", "XCD", "BIF", "XPD",
+            "SSP", "SZL", "SHP"
+        )
     }
 }

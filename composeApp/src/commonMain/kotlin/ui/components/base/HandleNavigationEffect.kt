@@ -11,9 +11,9 @@ internal fun <Effect : Any> HandleNavigationEffect(
     viewModel: MviViewModel<*, *, Effect>,
     onEffect: (Effect) -> Unit
 ) {
-    val effect by viewModel.effect.collectAsStateWithLifecycle(initialValue = null)
-
-    LaunchedEffect(effect) {
-        effect?.let(onEffect)
+    LaunchedEffect(Unit) {
+        viewModel.effect.collect { effect ->
+            onEffect(effect)
+        }
     }
 }

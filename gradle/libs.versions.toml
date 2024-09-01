@@ -34,6 +34,7 @@ urlencoderLib = "1.5.0"
 datastore = "1.1.1"
 realm = "2.1.0"
 compose-metrics-report = "1.4.0"
+store5Version = "5.1.0-alpha04"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -47,6 +48,7 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 placeholder-material3 = { group = "com.eygraber", name = "compose-placeholder-material3", version.ref = "placeholder-material3" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "jetpack-compose" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "jetpack-compose" }
+mobilenativefoundation-store5 = { module = "org.mobilenativefoundation.store:store5", version.ref = "store5Version" }
 
 # Firebase
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }

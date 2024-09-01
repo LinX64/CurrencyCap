@@ -11,6 +11,8 @@ interface MarketChartDataLocalRepository {
         period: ChipPeriod = ChipPeriod.DAY
     ): Flow<List<ChartDataPoint>>
 
+    suspend fun deleteChartDataFromDb(key: String)
+
     suspend fun insertMarketChartData(
         symbol: String,
         period: String,

@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.viewModelScope
 import data.remote.model.news.toEntity
-import data.util.NetworkResult
+import data.util.Constant.NEWS_KEY
 import domain.model.Article
 import domain.repository.ArticleLocalDataSource
 import domain.repository.NewsRepository
@@ -15,9 +15,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.mobilenativefoundation.store.store5.StoreReadRequest
+import org.mobilenativefoundation.store.store5.StoreReadResponse
 import ui.common.MviViewModel
 import ui.screens.main.news.NewsState.Empty
 import ui.screens.main.news.NewsState.Loading
@@ -32,7 +32,8 @@ class NewsViewModel(
     private val newsRepository: NewsRepository,
     private val articleLocalDataSource: ArticleLocalDataSource,
     private val userPreferences: UserPreferences
-) : MviViewModel<NewsViewEvent, NewsState, NewsNavigationEffect>(Loading), DefaultLifecycleObserver {
+) : MviViewModel<NewsViewEvent, NewsState, NewsNavigationEffect>(Loading),
+    DefaultLifecycleObserver {
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
@@ -44,8 +45,8 @@ class NewsViewModel(
 
     override fun handleEvent(event: NewsViewEvent) {
         when (event) {
-            OnRetry -> fetchNews()
-            is FetchNews -> fetchNews(event.forceRefresh)
+            OnRetry -> fetchNewsNew()
+            is FetchNews -> fetchNewsNew(event.forceRefresh)
             is OnBookmarkArticle -> handleOnBookmarkClick(event.article, event.isBookmarked)
             is OnSetClick -> {
                 saveSelectedDatesAndFilter(event.startDate, event.endDate)
@@ -54,29 +55,24 @@ class NewsViewModel(
         }
     }
 
-    private fun fetchNews(forceRefresh: Boolean = false) {
-        newsRepository.getNews(forceRefresh)
-            .map { result ->
-                when (result) {
-                    is NetworkResult.Success -> {
-                        setState { Success(news = result.data) }
-                        getSources(result.data)
+    private fun fetchNewsNew(forceRefresh: Boolean = false) {
+        viewModelScope.launch {
+            val store = newsRepository.getNewsNew()
+            store.stream(StoreReadRequest.cached(NEWS_KEY, forceRefresh))
+                .collect { response ->
+                    when (response) {
+                        is StoreReadResponse.Loading -> setState { Loading }
+                        is StoreReadResponse.Data -> {
+                            val news = response.value
+                            setState { Success(news = news) }
+                            getSources(news)
+                        }
+
+                        is StoreReadResponse.Error -> setState { Empty }
+                        else -> Unit
                     }
-
-                    is NetworkResult.Error -> {
-                        val news = result.data ?: emptyList()
-                        val message = result.throwable.message ?: ""
-
-                        getSources(news)
-
-                        if (news.isNotEmpty()) setState { Success(news = news) }
-                        else setState { Empty }
-                    }
-
-                    else -> setState { Loading }
                 }
-            }
-            .launchIn(viewModelScope)
+        }
     }
 
     private fun handleOnBookmarkClick(article: Article, isBookmarked: Boolean) {

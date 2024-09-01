@@ -21,7 +21,11 @@ class MarketChartDataLocalRepositoryImpl(
         symbol: String,
         period: ChipPeriod
     ): Flow<List<ChartDataPoint>> {
-        return realm.query<MarketChartDataEntity>("symbol == $0 AND period == $1", symbol, period.interval)
+        return realm.query<MarketChartDataEntity>(
+            "symbol == $0 AND period == $1",
+            symbol,
+            period.interval
+        )
             .asFlow()
             .map { results ->
                 results.list.flatMap { entity ->
@@ -53,6 +57,13 @@ class MarketChartDataLocalRepositoryImpl(
             }
 
             copyToRealm(marketChartData, UpdatePolicy.ALL)
+        }
+    }
+
+    override suspend fun deleteChartDataFromDb(key: String) {
+        realm.write {
+            val marketChartData = realm.query<MarketChartDataEntity>("id == $0", key).first()
+            delete(marketChartData)
         }
     }
 }
