@@ -33,6 +33,7 @@ class DetailViewModel(
 
     init {
         handleEvent(OnLoadCryptoInfo)
+        handleEvent(OnChartPeriodSelect(id, symbol, ChipPeriod.DAY))
     }
 
     override fun handleEvent(event: DetailViewEvent) {
@@ -65,10 +66,6 @@ class DetailViewModel(
                             val data = response.value
                             setState { DetailState.Success(cryptoInfo = data) }
 
-                            onChartPeriodSelected(
-                                coinId = id,
-                                symbol = symbol,
-                            )
                         }
 
                         else -> Unit
@@ -81,7 +78,7 @@ class DetailViewModel(
         forceRefresh: Boolean = false,
         coinId: String,
         symbol: String,
-        chipPeriod: ChipPeriod = ChipPeriod.DAY
+        chipPeriod: ChipPeriod
     ) {
         viewModelScope.launch {
             cryptoRepository.fetchMarketChartDataNew(forceRefresh, coinId, symbol, chipPeriod)

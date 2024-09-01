@@ -33,7 +33,7 @@ class CryptoRepositoryImpl(
         period: ChipPeriod
     ): Store<String, List<ChartDataPoint>> {
         return StoreBuilder.from(
-            fetcher = Fetcher.of { key: String -> fetchDataBy(coinId, symbol) },
+            fetcher = Fetcher.of { key: String -> fetchDataBy(coinId, symbol, period) },
             sourceOfTruth = SourceOfTruth.of(
                 reader = { marketChartDataLocalRepository.getChartDataFromDb(symbol, period) },
                 writer = { _, chartData ->
@@ -50,14 +50,14 @@ class CryptoRepositoryImpl(
 
     private suspend fun fetchDataBy(
         id: String,
-        symbol: String? = null,
-        period: ChipPeriod = ChipPeriod.DAY
+        symbol: String? = null, // TODO: Add fallback with symbol
+        period: ChipPeriod
     ): List<ChartDataPoint> {
         val coinCapResponse = httpClient.get(History()) {
             coinCapApi()
             url {
                 path("assets", id, "history")
-                parameter("interval", period.name)
+                parameter("interval", period.interval)
             }
         }
         return processResponse(coinCapResponse)

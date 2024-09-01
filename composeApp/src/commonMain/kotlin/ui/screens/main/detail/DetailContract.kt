@@ -9,7 +9,6 @@ sealed interface DetailViewEvent {
     data object OnRetry : DetailViewEvent
     data object OnLoadCryptoInfo : DetailViewEvent
 
-    @Stable
     data class OnChartPeriodSelect(
         val coinId: String,
         val symbol: String,
