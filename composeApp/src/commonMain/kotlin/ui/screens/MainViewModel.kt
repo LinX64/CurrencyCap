@@ -28,6 +28,7 @@ class MainViewModel(
     var isSubscribeSheetVisible by mutableStateOf(false)
     var isNewsFilterSheetVisible by mutableStateOf(false)
     var isPrivacyPolicySheetVisible by mutableStateOf(false)
+    var isAboutUsSheetVisible by mutableStateOf(false)
 
     val isDark: StateFlow<Boolean> = userPreferences.isDarkMode()
         .stateIn(
@@ -75,6 +76,10 @@ class MainViewModel(
 
     fun togglePrivacyPolicySheet() {
         isPrivacyPolicySheetVisible = !isPrivacyPolicySheetVisible
+    }
+
+    fun toggleAboutUsSheet() {
+        isAboutUsSheetVisible = !isAboutUsSheetVisible
     }
 }
 

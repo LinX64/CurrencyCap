@@ -38,6 +38,7 @@ import ui.screens.main.news.NewsViewEvent.OnSetClick
 import ui.screens.main.news.NewsViewModel
 import ui.screens.main.news.components.NewsFilterSection
 import ui.screens.main.overview.OverviewViewModel
+import ui.screens.main.settings.AboutUsSection
 import ui.screens.main.subscribers.SubscribersSection
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -110,6 +111,11 @@ internal fun App(
                 isVisible = mainViewModel.isPrivacyPolicySheetVisible,
                 onDismiss = { mainViewModel.togglePrivacyPolicySheet() }
             ) { PrivacyPolicySection() }
+
+            BaseModalBottomSheet(
+                isVisible = mainViewModel.isAboutUsSheetVisible,
+                onDismiss = { mainViewModel.toggleAboutUsSheet() }
+            ) { AboutUsSection() }
         }
     ) { paddingValues ->
         AppNavGraph(
