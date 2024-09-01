@@ -19,6 +19,8 @@ sealed interface SettingsState {
 }
 
 sealed interface SettingsNavigationEffect {
+    data object ShowDeniedPermissions : SettingsNavigationEffect
+    data object ShowFailedToGetPermission : SettingsNavigationEffect
     data class OpenBrowser(val link: String) : SettingsNavigationEffect
     data object ShowAboutUsBottomSheet : SettingsNavigationEffect
 }

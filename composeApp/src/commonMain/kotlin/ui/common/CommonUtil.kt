@@ -4,8 +4,6 @@ import androidx.compose.runtime.Composable
 
 expect fun formatCurrentTotal(currentTotal: Long): String
 expect fun formatToPrice(price: Double): String
-expect fun String.getCountryName(): String
-expect fun String.getCountryFlag(): String
 expect fun getSettingsPreferencesPath(): String
 expect class DecimalFormat() {
     fun format(double: Double): String
@@ -13,4 +11,4 @@ expect class DecimalFormat() {
 
 @Composable
 expect fun SendMail(to: String, subject: String)
-expect fun Double.formatDecimal(maxFractionDigits: Int = 2): String
+

@@ -89,7 +89,9 @@ class AuthServiceRepositoryImpl(
         auth.currentUser?.updatePhoneNumber(credential = credential)
     }
 
-    override suspend fun sendRecoveryEmail(email: String) = launchWithAwait { auth.sendPasswordResetEmail(email) }
+    override suspend fun sendRecoveryEmail(email: String) = launchWithAwait {
+        auth.sendPasswordResetEmail(email)
+    }
 
     override suspend fun deleteAccount() = launchWithAwait {
         try {
@@ -113,7 +115,5 @@ class AuthServiceRepositoryImpl(
     private fun createPhoneAuthCredential(
         verificationId: String,
         verificationCode: String
-    ): PhoneAuthCredential {
-        return PhoneAuthProvider().credential(verificationId, verificationCode)
-    }
+    ): PhoneAuthCredential = PhoneAuthProvider().credential(verificationId, verificationCode)
 }

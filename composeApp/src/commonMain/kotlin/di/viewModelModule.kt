@@ -34,11 +34,13 @@ val viewModelModule = module {
     single { GetVerifiedPhoneViewModel(get()) }
     single { ResetPasswordViewModel(get()) }
     single { NewsViewModel(get(), get(), get()) }
-    single { SettingsViewModel(get()) }
+    single { SettingsViewModel(get(), get()) }
     single { AiPredictViewModel() }
     single { FillProfileViewModel(get()) }
 
-    factory { (url: String) -> NewsDetailViewModel(get(), SavedStateHandle(mapOf(ENCODED_URL to url))) }
+    factory { (url: String) ->
+        NewsDetailViewModel(get(), SavedStateHandle(mapOf(ENCODED_URL to url)))
+    }
     factory { (id: String, symbol: String) ->
         DetailViewModel(get(), get(), SavedStateHandle(mapOf(ID to id, SYMBOL to symbol)))
     }

@@ -9,17 +9,27 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
+import dev.icerock.moko.permissions.Permission
+import dev.icerock.moko.permissions.PermissionsController
+import dev.icerock.moko.permissions.compose.PermissionsControllerFactory
+import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
 import di.koinViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.GlassCard
 import ui.components.base.HandleNavigationEffect
 import ui.screens.main.profile.components.HelpCenterItem
 import ui.screens.main.settings.SettingsNavigationEffect.OpenBrowser
 import ui.screens.main.settings.SettingsNavigationEffect.ShowAboutUsBottomSheet
+import ui.screens.main.settings.SettingsNavigationEffect.ShowDeniedPermissions
+import ui.screens.main.settings.SettingsNavigationEffect.ShowFailedToGetPermission
 import ui.screens.main.settings.SettingsViewEvent.OnAboutUsClick
 import ui.screens.main.settings.SettingsViewEvent.OnDarkModeSwitchChange
 import ui.screens.main.settings.SettingsViewEvent.OnPrivacyPolicyClick
@@ -37,6 +47,10 @@ internal fun SettingsRoute(
     onShowPrivacyPolicy: () -> Unit,
 ) {
     val state by settingsViewModel.viewState.collectAsStateWithLifecycle()
+    val factory: PermissionsControllerFactory = rememberPermissionsControllerFactory()
+    val controller: PermissionsController =
+        remember(factory) { factory.createPermissionsController() }
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
 
     SettingsScreen(
         hazeState = hazeState,
@@ -53,6 +67,13 @@ internal fun SettingsRoute(
         when (effect) {
             is OpenBrowser -> onShowPrivacyPolicy()
             is ShowAboutUsBottomSheet -> onShowAboutUsBottomSheet()
+            is ShowDeniedPermissions -> {
+                coroutineScope.launch {
+                    controller.providePermission(Permission.REMOTE_NOTIFICATION)
+                }
+            }
+
+            is ShowFailedToGetPermission -> Unit
         }
     }
 }
@@ -90,7 +111,7 @@ internal fun SettingsScreen(
 
 @Composable
 private fun GeneralCard(
-    isDarkMode: Boolean,
+    isDarkMode: Boolean = false,
     onPushNotificationSwitchChange: (Boolean) -> Unit,
     onDarkModeSwitchChange: (Boolean) -> Unit,
 ) {
@@ -148,4 +169,3 @@ internal fun PoliciesCard(
         }
     }
 }
-
