@@ -26,6 +26,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        throw Exception("This is a placeholder")
+
         setContent {
             val isDarkTheme = isSystemInDarkTheme()
             val appState by mainViewModel.appState.collectAsStateWithLifecycle()
