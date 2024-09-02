@@ -12,13 +12,15 @@ fun NavController.navigateToSettingsScreen() = navigate(Settings)
 fun NavGraphBuilder.settingsScreen(
     hazeState: HazeState,
     onShowAboutUsBottomSheet: () -> Unit,
-    onShowPrivacyPolicy: () -> Unit
+    onShowPrivacyPolicy: () -> Unit,
+    onError: (String) -> Unit
 ) {
     composable<Settings> {
         SettingsRoute(
             hazeState = hazeState,
             onShowAboutUsBottomSheet = onShowAboutUsBottomSheet,
-            onShowPrivacyPolicy = onShowPrivacyPolicy
+            onShowPrivacyPolicy = onShowPrivacyPolicy,
+            onError = onError
         )
     }
 }

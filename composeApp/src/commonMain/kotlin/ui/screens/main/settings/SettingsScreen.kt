@@ -9,19 +9,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mohamedrejeb.calf.permissions.ExperimentalPermissionsApi
+import com.mohamedrejeb.calf.permissions.Permission
+import com.mohamedrejeb.calf.permissions.rememberPermissionState
 import dev.chrisbanes.haze.HazeState
-import dev.icerock.moko.permissions.Permission
-import dev.icerock.moko.permissions.PermissionsController
-import dev.icerock.moko.permissions.compose.PermissionsControllerFactory
-import dev.icerock.moko.permissions.compose.rememberPermissionsControllerFactory
 import di.koinViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import ui.components.base.BaseGlassLazyColumn
 import ui.components.base.GlassCard
 import ui.components.base.HandleNavigationEffect
@@ -29,7 +24,6 @@ import ui.screens.main.profile.components.HelpCenterItem
 import ui.screens.main.settings.SettingsNavigationEffect.OpenBrowser
 import ui.screens.main.settings.SettingsNavigationEffect.ShowAboutUsBottomSheet
 import ui.screens.main.settings.SettingsNavigationEffect.ShowDeniedPermissions
-import ui.screens.main.settings.SettingsNavigationEffect.ShowFailedToGetPermission
 import ui.screens.main.settings.SettingsViewEvent.OnAboutUsClick
 import ui.screens.main.settings.SettingsViewEvent.OnDarkModeSwitchChange
 import ui.screens.main.settings.SettingsViewEvent.OnPrivacyPolicyClick
@@ -39,24 +33,26 @@ import ui.screens.main.settings.components.SettingsHeaderText
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 internal fun SettingsRoute(
     settingsViewModel: SettingsViewModel = koinViewModel<SettingsViewModel>(),
     hazeState: HazeState,
     onShowAboutUsBottomSheet: () -> Unit,
     onShowPrivacyPolicy: () -> Unit,
+    onError: (String) -> Unit,
 ) {
     val state by settingsViewModel.viewState.collectAsStateWithLifecycle()
-    val factory: PermissionsControllerFactory = rememberPermissionsControllerFactory()
-    val controller: PermissionsController =
-        remember(factory) { factory.createPermissionsController() }
-    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+    val pushNotificationPermissionState = rememberPermissionState(Permission.Notification)
 
     SettingsScreen(
         hazeState = hazeState,
         state = state,
+        isDarkMode = settingsViewModel.isDarkMode,
+        isPushNotificationEnabled = settingsViewModel.isPushNotificationEnabled,
         onPushNotificationSwitchChange = {
             settingsViewModel.handleEvent(OnPushNotificationSwitchChange(it))
+            if (it) pushNotificationPermissionState.launchPermissionRequest()
         },
         onDarkModeSwitchChange = { settingsViewModel.handleEvent(OnDarkModeSwitchChange(it)) },
         onAboutUsClick = { settingsViewModel.handleEvent(OnAboutUsClick) },
@@ -67,13 +63,7 @@ internal fun SettingsRoute(
         when (effect) {
             is OpenBrowser -> onShowPrivacyPolicy()
             is ShowAboutUsBottomSheet -> onShowAboutUsBottomSheet()
-            is ShowDeniedPermissions -> {
-                coroutineScope.launch {
-                    controller.providePermission(Permission.REMOTE_NOTIFICATION)
-                }
-            }
-
-            is ShowFailedToGetPermission -> Unit
+            is ShowDeniedPermissions -> onError("Push notification permission denied!")
         }
     }
 }
@@ -82,23 +72,24 @@ internal fun SettingsRoute(
 internal fun SettingsScreen(
     hazeState: HazeState,
     state: SettingsState,
+    isDarkMode: Boolean = true,
+    isPushNotificationEnabled: Boolean = false,
     onPushNotificationSwitchChange: (Boolean) -> Unit,
     onDarkModeSwitchChange: (Boolean) -> Unit,
     onAboutUsClick: () -> Unit,
     onPrivacyPolicyClick: () -> Unit,
 ) {
     BaseGlassLazyColumn(
-        hazeState = hazeState
+        hazeState = hazeState,
+        verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_16),
     ) {
         item {
             GeneralCard(
-                isDarkMode = state is SettingsState.IsDarkMode,
+                isDarkMode = isDarkMode,
+                isPushNotificationEnabled = isPushNotificationEnabled,
                 onPushNotificationSwitchChange = onPushNotificationSwitchChange,
                 onDarkModeSwitchChange = onDarkModeSwitchChange,
             )
-        }
-        item {
-            Spacer(Modifier.height(SPACER_PADDING_16))
         }
         item {
             PoliciesCard(
@@ -111,7 +102,8 @@ internal fun SettingsScreen(
 
 @Composable
 private fun GeneralCard(
-    isDarkMode: Boolean = false,
+    isDarkMode: Boolean = true,
+    isPushNotificationEnabled: Boolean = false,
     onPushNotificationSwitchChange: (Boolean) -> Unit,
     onDarkModeSwitchChange: (Boolean) -> Unit,
 ) {
@@ -127,6 +119,7 @@ private fun GeneralCard(
                 Column(modifier = Modifier.fillMaxWidth()) {
                     SettingsGeneralItem(
                         text = "Push Notifications",
+                        isChecked = isPushNotificationEnabled,
                         onSwitchChange = onPushNotificationSwitchChange
                     )
 

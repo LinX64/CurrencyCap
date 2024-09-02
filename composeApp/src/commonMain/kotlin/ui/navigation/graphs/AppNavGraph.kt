@@ -135,7 +135,8 @@ private fun NavGraphBuilder.mainNavGraph(
         settingsScreen(
             hazeState = hazeState,
             onShowAboutUsBottomSheet = onShowAboutUsBottomSheet,
-            onShowPrivacyPolicy = showPrivacyPolicyBottomSheet
+            onShowPrivacyPolicy = showPrivacyPolicyBottomSheet,
+            onError = onError
         )
     }
 }
