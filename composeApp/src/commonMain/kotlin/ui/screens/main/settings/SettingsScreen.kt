@@ -8,10 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mohamedrejeb.calf.permissions.ExperimentalPermissionsApi
 import com.mohamedrejeb.calf.permissions.Permission
 import com.mohamedrejeb.calf.permissions.rememberPermissionState
@@ -42,12 +40,9 @@ internal fun SettingsRoute(
     onShowPrivacyPolicy: () -> Unit,
     onError: (String) -> Unit,
 ) {
-    val state by settingsViewModel.viewState.collectAsStateWithLifecycle()
     val pushNotificationPermissionState = rememberPermissionState(Permission.Notification)
-
     SettingsScreen(
         hazeState = hazeState,
-        state = state,
         isDarkMode = settingsViewModel.isDarkMode,
         isPushNotificationEnabled = settingsViewModel.isPushNotificationEnabled,
         onPushNotificationSwitchChange = {
@@ -71,7 +66,6 @@ internal fun SettingsRoute(
 @Composable
 internal fun SettingsScreen(
     hazeState: HazeState,
-    state: SettingsState,
     isDarkMode: Boolean = true,
     isPushNotificationEnabled: Boolean = false,
     onPushNotificationSwitchChange: (Boolean) -> Unit,

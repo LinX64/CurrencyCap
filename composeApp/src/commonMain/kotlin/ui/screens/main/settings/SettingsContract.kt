@@ -14,13 +14,7 @@ sealed interface SettingsViewEvent {
 sealed interface SettingsState {
     data object Idle : SettingsState
     data object Loading : SettingsState
-
-    data class Success(
-        val user: User,
-        val isDarkMode: Boolean = true,
-        val pushNotificationEnabled: Boolean = false
-    ) : SettingsState
-
+    data class Success(val user: User) : SettingsState
     data class Error(val message: String) : SettingsState
 }
 
