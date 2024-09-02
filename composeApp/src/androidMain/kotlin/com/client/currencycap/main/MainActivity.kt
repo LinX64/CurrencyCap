@@ -26,8 +26,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        throw Exception("This is a placeholder")
-
         setContent {
             val isDarkTheme = isSystemInDarkTheme()
             val appState by mainViewModel.appState.collectAsStateWithLifecycle()
@@ -44,10 +42,8 @@ class MainActivity : ComponentActivity() {
 
             AppM3Theme(isDarkMode = isDarkMode) {
                 if (isLoading) SplashScreen()
-                else App()
+                else App(mainViewModel)
             }
         }
-
-        // TODO: Handle notification
     }
 }

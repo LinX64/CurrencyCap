@@ -45,7 +45,7 @@ import ui.screens.main.subscribers.SubscribersSection
 @Composable
 @Preview
 internal fun App(
-    mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
+    mainViewModel: MainViewModel,
     newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
     overviewViewModel: OverviewViewModel = koinViewModel<OverviewViewModel>(),
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
