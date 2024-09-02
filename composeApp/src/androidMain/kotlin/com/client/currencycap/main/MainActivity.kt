@@ -42,10 +42,8 @@ class MainActivity : ComponentActivity() {
 
             AppM3Theme(isDarkMode = isDarkMode) {
                 if (isLoading) SplashScreen()
-                else App()
+                else App(mainViewModel)
             }
         }
-
-        // TODO: Handle notification
     }
 }

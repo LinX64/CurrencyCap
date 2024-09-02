@@ -57,10 +57,10 @@ kotlin {
 
             compileOnly(libs.mongodb.realm)
 
-            implementation(project.dependencies.platform(libs.firebase.bom))
             implementation(libs.firebase.auth)
             implementation(libs.firebase.fireStore)
-
+            implementation(libs.firebase.crashlytics)
+            implementation(libs.firebase.messaging)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -78,9 +78,11 @@ kotlin {
             implementation(libs.androidx.startup)
             implementation(libs.urlencoder.lib)
             implementation(libs.mongodb.realm)
+
             implementation(libs.firebase.auth)
             implementation(libs.firebase.fireStore)
             implementation(libs.firebase.crashlytics)
+            implementation(libs.firebase.messaging)
 
             implementation(libs.kotlinx.collections.immutable)
             implementation(libs.kotlinx.datetime)
@@ -129,7 +131,7 @@ android {
         applicationId = "com.client.currencycap"
         minSdk = 24
         targetSdk = 35
-        versionCode = 16
+        versionCode = 17
         versionName = "1.1.6"
     }
 
@@ -144,6 +146,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            manifestPlaceholders["crashlyticsCollectionEnabled"] = "true"
         }
         getByName("debug") {
             isMinifyEnabled = false
