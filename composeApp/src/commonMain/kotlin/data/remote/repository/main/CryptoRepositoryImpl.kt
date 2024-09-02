@@ -33,14 +33,14 @@ class CryptoRepositoryImpl(
         period: ChipPeriod
     ): Store<String, List<ChartDataPoint>> {
         return StoreBuilder.from(
-            fetcher = Fetcher.of { key: String -> fetchDataBy(coinId, symbol, period) },
+            fetcher = Fetcher.of { fetchDataBy(coinId, symbol, period) },
             sourceOfTruth = SourceOfTruth.of(
                 reader = { marketChartDataLocalRepository.getChartDataFromDb(symbol, period) },
                 writer = { _, chartData ->
                     marketChartDataLocalRepository.insertMarketChartData(
-                        symbol,
-                        period.interval,
-                        chartData
+                        symbol = symbol,
+                        period = period.interval,
+                        prices = chartData
                     )
                 },
                 delete = { key: String -> marketChartDataLocalRepository.deleteChartDataFromDb(key) }

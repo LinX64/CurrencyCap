@@ -95,6 +95,7 @@ kotlin {
             api(libs.compose.webview.multiplatform)
 
             implementation(libs.mobilenativefoundation.store5)
+            implementation(libs.calf.permissions)
 
             // Data
             implementation(libs.bundles.datastore)

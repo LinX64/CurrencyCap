@@ -38,7 +38,9 @@ val viewModelModule = module {
     single { AiPredictViewModel() }
     single { FillProfileViewModel(get()) }
 
-    factory { (url: String) -> NewsDetailViewModel(get(), SavedStateHandle(mapOf(ENCODED_URL to url))) }
+    factory { (url: String) ->
+        NewsDetailViewModel(get(), SavedStateHandle(mapOf(ENCODED_URL to url)))
+    }
     factory { (id: String, symbol: String) ->
         DetailViewModel(get(), get(), SavedStateHandle(mapOf(ID to id, SYMBOL to symbol)))
     }

@@ -33,7 +33,7 @@ class MainRepositoryImpl(
 
     override fun getAllRatesNew(): Store<String, Currencies> {
         return StoreBuilder.from(
-            fetcher = Fetcher.of { key: String -> getParsedRates() },
+            fetcher = Fetcher.of { getParsedRates() },
             sourceOfTruth = SourceOfTruth.of(
                 reader = { _: String -> ratesLocalDataSource.getRates() },
                 writer = { _: String, responseDto: CurrenciesDto ->
