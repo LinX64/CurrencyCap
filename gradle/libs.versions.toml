@@ -19,7 +19,7 @@ lifecycle = "2.8.0"
 jetpack-compose = "1.7.0-rc01"
 
 # Firebase
-firebase-firestore = "2.0.0"
+firebase-firestore = "2.1.0"
 firebaseBom = "33.2.0"
 firebaseCrashlyticsPlugin = "3.0.2"
 firebasePerfPlugin = "1.4.2"
