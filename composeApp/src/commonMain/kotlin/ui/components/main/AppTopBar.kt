@@ -33,6 +33,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import ui.navigation.util.ScreenRoutes.AI_PREDICTION
 import ui.navigation.util.ScreenRoutes.CRYPTO_DETAIL
+import ui.navigation.util.ScreenRoutes.CRYPTO_LIST
 import ui.navigation.util.ScreenRoutes.EXPLORE
 import ui.navigation.util.ScreenRoutes.NEWS
 import ui.navigation.util.ScreenRoutes.NEWS_DETAIL
@@ -60,6 +61,7 @@ internal fun AppTopBar(
     val isNewsScreen = currentDestination == NEWS
     val isOverviewScreen = currentDestination == OVERVIEW
     val isProfileScreen = currentDestination == PROFILE
+    val isCryptoListScreen = currentDestination == CRYPTO_LIST
 
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
@@ -83,7 +85,8 @@ internal fun AppTopBar(
                 isExploreScreen = isExploreScreen,
                 isAiScreen = isAiScreen,
                 isDetailScreen = isDetailScreen,
-                navController = navController
+                navController = navController,
+                isCryptoListScreen = isCryptoListScreen
             )
         },
         actions = {
@@ -106,13 +109,15 @@ private fun NavigationIcon(
     isExploreScreen: Boolean,
     isAiScreen: Boolean,
     isDetailScreen: Boolean?,
-    navController: NavHostController
+    navController: NavHostController,
+    isCryptoListScreen: Boolean
 ) {
     if (isSettingsScreen ||
         isNewsDetailScreen == true ||
         isExploreScreen ||
         isAiScreen ||
         isDetailScreen == true
+        || isCryptoListScreen
     ) {
         IconButton(
             onClick = navController::navigateUp
