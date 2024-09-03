@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ internal fun SectionRowItem(
     subTitle: String? = null,
     hasEndText: Boolean = false,
     endText: String? = null,
+    onEndTextClick: () -> Unit = {}
 ) {
     Column(
         modifier = modifier.fillMaxWidth()
@@ -48,10 +50,15 @@ internal fun SectionRowItem(
                 }
             }
             if (hasEndText) {
-                Text(
-                    text = endText ?: "",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface
+                TextButton(
+                    onClick = onEndTextClick,
+                    content = {
+                        Text(
+                            text = endText ?: "",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
                 )
             }
         }

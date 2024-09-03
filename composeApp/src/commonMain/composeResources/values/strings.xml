@@ -139,4 +139,7 @@
     <string name="chart_data_by_coincap">Chart data provided by CoinCap.io</string>
 
     <string name="last_update_text">Last update: %1$s</string>
+
+    <string name="top_five_cryptos">Top 5 cryptocurrencies</string>
+    <string name="view_all">View All</string>
 </resources>

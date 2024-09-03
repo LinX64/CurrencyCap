@@ -17,6 +17,7 @@ import ui.screens.main.crypto_list.CryptoListState.Error
 import ui.screens.main.crypto_list.CryptoListViewEvent.OnRetry
 import ui.screens.main.overview.components.CryptoHorizontalItem
 import ui.theme.AppDimensions.SPACER_PADDING_8
+import util.getDummyCryptoItems
 
 @Composable
 internal fun CryptoListRoute(
@@ -38,7 +39,10 @@ internal fun CryptoListRoute(
         when (state) {
             is CryptoListState.Success -> {
                 val cryptoRates = (state as CryptoListState.Success).cryptoList
-                items(cryptoRates.size) { index ->
+                items(
+                    count = cryptoRates.size,
+                    key = { index -> cryptoRates[index].id }
+                ) { index ->
                     CryptoHorizontalItem(
                         crypto = cryptoRates[index],
                         isLoading = false,
@@ -51,6 +55,20 @@ internal fun CryptoListRoute(
                 }
             }
 
+            is CryptoListState.Loading -> {
+                items(10) { index ->
+                    val dummyCryptoItems = getDummyCryptoItems()
+                    CryptoHorizontalItem(
+                        crypto = dummyCryptoItems[index],
+                        isLoading = true,
+                        onClick = onCryptoItemClick
+                    )
+
+                    if (index < 4) {
+                        Spacer(modifier = Modifier.height(SPACER_PADDING_8))
+                    }
+                }
+            }
             else -> Unit
         }
     }

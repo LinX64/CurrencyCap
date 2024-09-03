@@ -1,14 +1,15 @@
 package ui.screens.main.overview.components
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.ui.Modifier
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.top_five_cryptos
+import currencycap.composeapp.generated.resources.view_all
+import org.jetbrains.compose.resources.stringResource
 import ui.components.main.SectionRowItem
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.OverviewState.Loading
@@ -26,8 +27,12 @@ internal fun LazyListScope.cryptoListItems(
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-            SectionRowItem(title = "Trending Rates")
-
+            SectionRowItem(
+                title = stringResource(Res.string.top_five_cryptos),
+                hasEndText = true,
+                endText = stringResource(Res.string.view_all),
+                onEndTextClick = onViewAllClick
+            )
             Spacer(modifier = Modifier.height(SPACER_PADDING_16))
         }
     }
@@ -57,21 +62,6 @@ internal fun LazyListScope.cryptoListItems(
                         isLoading = false,
                         onClick = onCryptoItemClick
                     )
-                }
-            }
-
-            item {
-                Spacer(modifier = Modifier.height(SPACER_PADDING_16))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    TextButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = onViewAllClick
-                    ) {
-                        Text("View All")
-                    }
                 }
             }
         }

@@ -23,6 +23,8 @@ object ScreenRoutes {
 
     const val PRIVACY_POLICY = "Privacy Policy"
     const val CRYPTO_DETAIL = "CryptoDetail"
+
+    const val CRYPTO_LIST = "CryptoList"
 }
 
 const val ENCODED_URL = "encodedUrl"

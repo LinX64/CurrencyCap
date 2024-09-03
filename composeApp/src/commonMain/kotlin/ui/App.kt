@@ -110,12 +110,15 @@ internal fun App(
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomSheets = {
-            BaseModalBottomSheet(isVisible = mainViewModel.isSubscribeSheetVisible,
+            BaseModalBottomSheet(
+                isVisible = mainViewModel.isSubscribeSheetVisible,
                 onDismiss = { mainViewModel.toggleSubscribeSheet() }) { SubscribersSection() }
 
-            BaseModalBottomSheet(isVisible = mainViewModel.isNewsFilterSheetVisible,
+            BaseModalBottomSheet(
+                isVisible = mainViewModel.isNewsFilterSheetVisible,
                 onDismiss = { mainViewModel.toggleNewsFilterSheet() }) {
-                NewsFilterSection(sources = sharedViewModelContainer.newsViewModel.sources.value,
+                NewsFilterSection(
+                    sources = sharedViewModelContainer.newsViewModel.sources.value,
                     onCloseClick = { mainViewModel.toggleNewsFilterSheet() },
                     onDoneClick = { startDate, endDate, selectedSources ->
                         mainViewModel.toggleNewsFilterSheet()
@@ -130,10 +133,12 @@ internal fun App(
                 )
             }
 
-            BaseModalBottomSheet(isVisible = mainViewModel.isPrivacyPolicySheetVisible,
+            BaseModalBottomSheet(
+                isVisible = mainViewModel.isPrivacyPolicySheetVisible,
                 onDismiss = { mainViewModel.togglePrivacyPolicySheet() }) { PrivacyPolicySection() }
 
-            BaseModalBottomSheet(isVisible = mainViewModel.isAboutUsSheetVisible,
+            BaseModalBottomSheet(
+                isVisible = mainViewModel.isAboutUsSheetVisible,
                 onDismiss = { mainViewModel.toggleAboutUsSheet() }) { AboutUsSection() }
         }) { paddingValues ->
         AppNavGraph(
