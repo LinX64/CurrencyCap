@@ -15,8 +15,9 @@ import ui.screens.main.overview.components.cryptoListItems
 
 @Composable
 internal fun OverviewRoute(
-    overviewViewModel: OverviewViewModel = koinViewModel<OverviewViewModel>(),
+    overviewViewModel: OverviewViewModel = koinViewModel(),
     hazeState: HazeState,
+    onViewAllClick: () -> Unit,
     onSearchCardClicked: () -> Unit,
     onNewsItemClick: (url: String) -> Unit,
     onCircleButtonClicked: () -> Unit,
@@ -27,6 +28,7 @@ internal fun OverviewRoute(
     OverviewScreen(
         state = state,
         hazeState = hazeState,
+        onViewAllClick = onViewAllClick,
         onSearchCardClicked = onSearchCardClicked,
         onNewsItemClick = onNewsItemClick,
         onCircleButtonClicked = onCircleButtonClicked,
@@ -41,6 +43,7 @@ internal fun OverviewScreen(
     onSearchCardClicked: () -> Unit,
     onNewsItemClick: (url: String) -> Unit,
     onCircleButtonClicked: () -> Unit,
+    onViewAllClick: () -> Unit,
     onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     BaseGlassLazyColumn(
@@ -74,6 +77,6 @@ internal fun OverviewScreen(
             TopRates(state)
         }
 
-        cryptoListItems(state, onCryptoItemClick)
+        cryptoListItems(state, onViewAllClick, onCryptoItemClick)
     }
 }
