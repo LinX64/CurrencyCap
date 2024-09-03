@@ -7,7 +7,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.an_error_occurred
 import dev.chrisbanes.haze.HazeState
-import di.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 import ui.components.ErrorView
 import ui.components.NewsItem
@@ -23,7 +22,7 @@ import util.getDummyNewsItem
 
 @Composable
 internal fun NewsRoute(
-    newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
+    newsViewModel: NewsViewModel,
     hazeState: HazeState,
     onNewsItemClick: (url: String) -> Unit,
     showBookmarkConfirmationSnakeBar: (Boolean) -> Unit

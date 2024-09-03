@@ -1,7 +1,6 @@
 package ui.screens.main.news
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.viewModelScope
 import data.remote.model.news.toEntity
 import data.util.Constant.NEWS_KEY
@@ -32,8 +31,7 @@ class NewsViewModel(
     private val newsRepository: NewsRepository,
     private val articleLocalDataSource: ArticleLocalDataSource,
     private val userPreferences: UserPreferences
-) : MviViewModel<NewsViewEvent, NewsState, NewsNavigationEffect>(Loading),
-    DefaultLifecycleObserver {
+) : MviViewModel<NewsViewEvent, NewsState, NewsNavigationEffect>(Loading) {
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()

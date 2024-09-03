@@ -3,7 +3,10 @@ package ui.screens.main.overview.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import ui.components.main.SectionRowItem
 import ui.screens.main.overview.OverviewState
@@ -15,6 +18,7 @@ import util.getDummyCryptoItems
 
 internal fun LazyListScope.cryptoListItems(
     overviewState: OverviewState,
+    onViewAllClick: () -> Unit,
     onCryptoItemClick: (String, String) -> Unit
 ) {
     item {
@@ -27,7 +31,7 @@ internal fun LazyListScope.cryptoListItems(
 
     when (overviewState) {
         is Success -> {
-            val cryptoRates = overviewState.cryptoRates.take(30)
+            val cryptoRates = overviewState.cryptoRates.take(5)
             if (cryptoRates.isNotEmpty()) {
                 items(
                     count = cryptoRates.size,
@@ -50,6 +54,17 @@ internal fun LazyListScope.cryptoListItems(
                         isLoading = false,
                         onClick = onCryptoItemClick
                     )
+                }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(SPACER_PADDING_16))
+
+                Button(
+                    onClick = onViewAllClick,
+                    modifier = Modifier.padding(SPACER_PADDING_16)
+                ) {
+                    Text(text = "View All")
                 }
             }
         }

@@ -10,8 +10,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.navigation
+import cryptoListScreen
 import dev.chrisbanes.haze.HazeState
 import kotlinx.serialization.Serializable
+import ui.SharedViewModelContainer
 import ui.screens.initial.fill_profile.navigation.fillProfileScreen
 import ui.screens.initial.get_verified.navigation.getVerifiedPhoneScreen
 import ui.screens.initial.landing.navigation.Landing
@@ -38,13 +40,14 @@ internal fun AppNavGraph(
     paddingValues: PaddingValues,
     hazeState: HazeState,
     isLoggedIn: Boolean,
+    sharedViewModelContainer: SharedViewModelContainer,
     onNavigateToLanding: () -> Unit,
     onError: (message: String) -> Unit,
     showPrivacyPolicyBottomSheet: () -> Unit,
     onLoginSuccess: () -> Unit,
     onExploreNewsClick: () -> Unit,
     showBookmarkConfirmationSnakeBar: (Boolean) -> Unit,
-    onShowAboutUsBottomSheet: () -> Unit
+    onShowAboutUsBottomSheet: () -> Unit,
 ) {
     NavHost(
         navController = navController,
@@ -54,11 +57,11 @@ internal fun AppNavGraph(
             .consumeWindowInsets(paddingValues)
             .padding(bottom = SPACER_PADDING_32)
     ) {
-
         mainNavGraph(
             navController = navController,
             hazeState = hazeState,
             onError = onError,
+            sharedViewModelContainer = sharedViewModelContainer,
             onNavigateToLanding = onNavigateToLanding,
             onExploreNewsClick = onExploreNewsClick,
             showBookmarkConfirmationSnakeBar = showBookmarkConfirmationSnakeBar,
@@ -78,12 +81,13 @@ internal fun AppNavGraph(
 private fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
     hazeState: HazeState,
+    sharedViewModelContainer: SharedViewModelContainer,
     onNavigateToLanding: () -> Unit,
     onError: (message: String) -> Unit,
     onExploreNewsClick: () -> Unit,
     showBookmarkConfirmationSnakeBar: (Boolean) -> Unit,
     onShowAboutUsBottomSheet: () -> Unit,
-    showPrivacyPolicyBottomSheet: () -> Unit
+    showPrivacyPolicyBottomSheet: () -> Unit,
 ) {
     navigation<MainNavGraph>(startDestination = Overview) {
         searchScreen(
@@ -97,7 +101,8 @@ private fun NavGraphBuilder.mainNavGraph(
 
         overviewScreen(
             hazeState = hazeState,
-            navController = navController
+            navController = navController,
+            overviewViewModel = sharedViewModelContainer.overviewViewModel
         )
 
         bookmarksScreen(
@@ -107,6 +112,7 @@ private fun NavGraphBuilder.mainNavGraph(
         )
 
         newsScreen(
+            newsViewModel = sharedViewModelContainer.newsViewModel,
             hazeState = hazeState,
             navController = navController,
             showBookmarkConfirmationSnakeBar = showBookmarkConfirmationSnakeBar
@@ -137,6 +143,10 @@ private fun NavGraphBuilder.mainNavGraph(
             onShowAboutUsBottomSheet = onShowAboutUsBottomSheet,
             onShowPrivacyPolicy = showPrivacyPolicyBottomSheet,
             onError = onError
+        )
+
+        cryptoListScreen(
+            hazeState = hazeState
         )
     }
 }

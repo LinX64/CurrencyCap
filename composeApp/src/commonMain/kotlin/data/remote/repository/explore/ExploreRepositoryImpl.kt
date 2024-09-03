@@ -3,13 +3,14 @@ package data.remote.repository.explore
 import data.remote.model.main.CryptoDto
 import data.remote.model.main.CurrenciesDto
 import data.remote.model.main.toCryptoDomain
-import data.util.APIConst.BASE_URL
+import data.remote.model.requests.GetCurrencies
 import data.util.parseCurrencyRates
 import data.util.retryOnIOException
+import di.baseApi
 import domain.model.main.Crypto
 import domain.repository.ExploreRepository
 import io.ktor.client.HttpClient
-import io.ktor.client.request.get
+import io.ktor.client.plugins.resources.get
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -39,8 +40,7 @@ class ExploreRepositoryImpl(
     }
 
     private suspend fun getCurrencies(): CurrenciesDto {
-        val plainResponse = httpClient.get(BASE_URL).bodyAsText()
-        return parseCurrencyRates(plainResponse)
+        val plainResponse = httpClient.get(GetCurrencies()) { baseApi() }
+        return parseCurrencyRates(plainResponse.bodyAsText())
     }
-    // todo: see if we can have only one
 }

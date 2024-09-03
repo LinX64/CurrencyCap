@@ -10,7 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.article_added_to_bookmarks
@@ -41,32 +43,52 @@ import ui.screens.main.overview.OverviewViewModel
 import ui.screens.main.settings.AboutUsSection
 import ui.screens.main.subscribers.SubscribersSection
 
+internal class SharedViewModelContainer(
+    val newsViewModel: NewsViewModel,
+    val overviewViewModel: OverviewViewModel
+) : ViewModel()
+
+@Composable
+private fun rememberSharedViewModelContainer(
+    navController: NavHostController,
+    newsViewModel: NewsViewModel = koinViewModel(),
+    overviewViewModel: OverviewViewModel = koinViewModel()
+): SharedViewModelContainer {
+    return remember(navController) {
+        SharedViewModelContainer(
+            newsViewModel = newsViewModel,
+            overviewViewModel = overviewViewModel
+        )
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
 internal fun App(
     mainViewModel: MainViewModel,
-    newsViewModel: NewsViewModel = koinViewModel<NewsViewModel>(),
-    overviewViewModel: OverviewViewModel = koinViewModel<OverviewViewModel>(),
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
     val navController = rememberNavController()
+    val sharedViewModelContainer = rememberSharedViewModelContainer(navController)
     val appState: AppState = rememberAppState(navController)
     val scope = rememberCoroutineScope()
 
     val mainState by mainViewModel.appState.collectAsStateWithLifecycle()
-    val isRefreshing by overviewViewModel.isRefreshing.collectAsStateWithLifecycle()
-    val isRefreshingInNews by newsViewModel.isRefreshing.collectAsStateWithLifecycle()
+    val isRefreshing by sharedViewModelContainer.overviewViewModel.isRefreshing.collectAsStateWithLifecycle()
+    val isRefreshingInNews by sharedViewModelContainer.newsViewModel.isRefreshing.collectAsStateWithLifecycle()
     val currentDestination = appState.currentDestination
     val isNewsScreen = currentDestination == NEWS
     val isLoggedIn = mainState is MainState.LoggedIn
     val hazeState = remember { HazeState() }
 
-    EdgeToEdgeScaffoldWithPullToRefresh(
-        currentDestination = currentDestination,
+    EdgeToEdgeScaffoldWithPullToRefresh(currentDestination = currentDestination,
         isRefreshing = if (isNewsScreen) isRefreshingInNews else isRefreshing,
-        onRefresh = { if (isNewsScreen) newsViewModel.refresh() else overviewViewModel.refresh() },
+        onRefresh = {
+            if (isNewsScreen) sharedViewModelContainer.newsViewModel.refresh()
+            else sharedViewModelContainer.overviewViewModel.refresh()
+        },
         topBar = {
             AppTopBar(
                 currentDestination = currentDestination,
@@ -79,50 +101,44 @@ internal fun App(
             )
         },
         bottomBar = {
-            BottomNavigationBar(
-                currentDestination = currentDestination,
+            BottomNavigationBar(currentDestination = currentDestination,
                 hazeState = hazeState,
                 isLoggedIn = isLoggedIn,
-                onTabSelected = { tab -> appState.navigateToTopLevelDestination(tab) }
-            )
+                onTabSelected = { tab -> appState.navigateToTopLevelDestination(tab) })
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomSheets = {
-            BaseModalBottomSheet(
-                isVisible = mainViewModel.isSubscribeSheetVisible,
-                onDismiss = { mainViewModel.toggleSubscribeSheet() }
-            ) { SubscribersSection() }
+            BaseModalBottomSheet(isVisible = mainViewModel.isSubscribeSheetVisible,
+                onDismiss = { mainViewModel.toggleSubscribeSheet() }) { SubscribersSection() }
 
-            BaseModalBottomSheet(
-                isVisible = mainViewModel.isNewsFilterSheetVisible,
-                onDismiss = { mainViewModel.toggleNewsFilterSheet() }
-            ) {
-                NewsFilterSection(
-                    sources = newsViewModel.sources.value,
+            BaseModalBottomSheet(isVisible = mainViewModel.isNewsFilterSheetVisible,
+                onDismiss = { mainViewModel.toggleNewsFilterSheet() }) {
+                NewsFilterSection(sources = sharedViewModelContainer.newsViewModel.sources.value,
                     onCloseClick = { mainViewModel.toggleNewsFilterSheet() },
                     onDoneClick = { startDate, endDate, selectedSources ->
                         mainViewModel.toggleNewsFilterSheet()
-                        newsViewModel.handleEvent(OnSetClick(startDate, endDate, selectedSources))
-                    }
-                )
+                        sharedViewModelContainer.newsViewModel.handleEvent(
+                            OnSetClick(
+                                startDate = startDate,
+                                endDate = endDate,
+                                selectedSources = selectedSources
+                            )
+                        )
+                    })
             }
 
-            BaseModalBottomSheet(
-                isVisible = mainViewModel.isPrivacyPolicySheetVisible,
-                onDismiss = { mainViewModel.togglePrivacyPolicySheet() }
-            ) { PrivacyPolicySection() }
+            BaseModalBottomSheet(isVisible = mainViewModel.isPrivacyPolicySheetVisible,
+                onDismiss = { mainViewModel.togglePrivacyPolicySheet() }) { PrivacyPolicySection() }
 
-            BaseModalBottomSheet(
-                isVisible = mainViewModel.isAboutUsSheetVisible,
-                onDismiss = { mainViewModel.toggleAboutUsSheet() }
-            ) { AboutUsSection() }
-        }
-    ) { paddingValues ->
+            BaseModalBottomSheet(isVisible = mainViewModel.isAboutUsSheetVisible,
+                onDismiss = { mainViewModel.toggleAboutUsSheet() }) { AboutUsSection() }
+        }) { paddingValues ->
         AppNavGraph(
             navController = navController,
             hazeState = hazeState,
             paddingValues = paddingValues,
             isLoggedIn = isLoggedIn,
+            sharedViewModelContainer = sharedViewModelContainer,
             onNavigateToLanding = { navigateToLanding(mainViewModel, navController) },
             showPrivacyPolicyBottomSheet = { mainViewModel.togglePrivacyPolicySheet() },
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
@@ -137,7 +153,6 @@ internal fun App(
                         duration = SnackbarDuration.Short
                     )
                 }
-            }
-        )
+            })
     }
 }
