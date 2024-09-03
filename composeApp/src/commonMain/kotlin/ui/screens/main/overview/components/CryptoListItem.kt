@@ -1,12 +1,13 @@
 package ui.screens.main.overview.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.ui.Modifier
 import ui.components.main.SectionRowItem
 import ui.screens.main.overview.OverviewState
@@ -22,7 +23,9 @@ internal fun LazyListScope.cryptoListItems(
     onCryptoItemClick: (String, String) -> Unit
 ) {
     item {
-        Column {
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
             SectionRowItem(title = "Trending Rates")
 
             Spacer(modifier = Modifier.height(SPACER_PADDING_16))
@@ -60,11 +63,15 @@ internal fun LazyListScope.cryptoListItems(
             item {
                 Spacer(modifier = Modifier.height(SPACER_PADDING_16))
 
-                Button(
-                    onClick = onViewAllClick,
-                    modifier = Modifier.padding(SPACER_PADDING_16)
+                Row(
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = "View All")
+                    TextButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = onViewAllClick
+                    ) {
+                        Text("View All")
+                    }
                 }
             }
         }

@@ -101,10 +101,12 @@ internal fun App(
             )
         },
         bottomBar = {
-            BottomNavigationBar(currentDestination = currentDestination,
+            BottomNavigationBar(
+                currentDestination = currentDestination,
                 hazeState = hazeState,
                 isLoggedIn = isLoggedIn,
-                onTabSelected = { tab -> appState.navigateToTopLevelDestination(tab) })
+                onTabSelected = { tab -> appState.navigateToTopLevelDestination(tab) }
+            )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomSheets = {
@@ -124,7 +126,8 @@ internal fun App(
                                 selectedSources = selectedSources
                             )
                         )
-                    })
+                    }
+                )
             }
 
             BaseModalBottomSheet(isVisible = mainViewModel.isPrivacyPolicySheetVisible,

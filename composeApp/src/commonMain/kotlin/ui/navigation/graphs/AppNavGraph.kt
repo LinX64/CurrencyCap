@@ -146,6 +146,7 @@ private fun NavGraphBuilder.mainNavGraph(
         )
 
         cryptoListScreen(
+            navController = navController,
             hazeState = hazeState
         )
     }

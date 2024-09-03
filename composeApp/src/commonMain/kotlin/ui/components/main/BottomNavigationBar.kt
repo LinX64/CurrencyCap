@@ -47,10 +47,11 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import ui.navigation.util.ScreenRoutes.AI_PREDICTION
-import ui.navigation.util.ScreenRoutes.CRYPTO_DETAIL
-import ui.navigation.util.ScreenRoutes.EXPLORE
-import ui.navigation.util.ScreenRoutes.SETTINGS
+import ui.navigation.util.ScreenRoutes.BOOKMARKS
+import ui.navigation.util.ScreenRoutes.EXCHANGE
+import ui.navigation.util.ScreenRoutes.NEWS
+import ui.navigation.util.ScreenRoutes.OVERVIEW
+import ui.navigation.util.ScreenRoutes.PROFILE
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.ICON_SIZE_48
 import ui.theme.AppDimensions.SPACER_PADDING_16
@@ -65,14 +66,6 @@ internal fun BottomNavigationBar(
     onTabSelected: (BottomBarTab) -> Unit
 ) {
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
-
-    val isExploreScreen = currentDestination == EXPLORE
-    val isAIScreen = currentDestination == AI_PREDICTION
-    val isDetailScreen = currentDestination?.startsWith(CRYPTO_DETAIL) == true
-    val isSettingsScreen = currentDestination == SETTINGS
-
-    val isVisible = isSettingsScreen.not() && isExploreScreen.not() && isAIScreen.not() && isDetailScreen.not() && isLoggedIn
-
     LaunchedEffect(currentDestination) {
         val newIndex = tabs.indexOfFirst { it.name == currentDestination }
         if (newIndex != -1) {
@@ -81,7 +74,7 @@ internal fun BottomNavigationBar(
     }
 
     AnimatedVisibility(
-        visible = isVisible,
+        visible = isBottomBarVisible(currentDestination),
         enter = slideInVertically(initialOffsetY = { it }),
         exit = slideOutVertically(targetOffsetY = { it })
     ) {
@@ -125,6 +118,15 @@ internal fun BottomNavigationBar(
             Spacer(modifier = Modifier.height(SPACER_PADDING_8))
         }
     }
+}
+
+private fun isBottomBarVisible(currentDestination: String?): Boolean {
+    val isOverViewScreen = currentDestination == OVERVIEW
+    val isExchangeScreen = currentDestination == EXCHANGE
+    val isBookmarksScreen = currentDestination == BOOKMARKS
+    val isNewsScreen = currentDestination == NEWS
+    val isMyProfileScreen = currentDestination == PROFILE
+    return isOverViewScreen || isExchangeScreen || isBookmarksScreen || isNewsScreen || isMyProfileScreen
 }
 
 @Composable

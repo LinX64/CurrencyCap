@@ -13,6 +13,7 @@ import ui.screens.initial.register.RegisterViewModel
 import ui.screens.initial.reset_password.ResetPasswordViewModel
 import ui.screens.main.ai_predict.AiPredictViewModel
 import ui.screens.main.bookmarks.BookmarksViewModel
+import ui.screens.main.crypto_list.CryptoListViewModel
 import ui.screens.main.detail.DetailViewModel
 import ui.screens.main.exchange.ExchangeViewModel
 import ui.screens.main.news.NewsViewModel
@@ -37,6 +38,7 @@ val viewModelModule = module {
     single { SettingsViewModel(get()) }
     single { AiPredictViewModel() }
     single { FillProfileViewModel(get()) }
+    single { CryptoListViewModel(get()) }
 
     factory { (url: String) ->
         NewsDetailViewModel(get(), SavedStateHandle(mapOf(ENCODED_URL to url)))
