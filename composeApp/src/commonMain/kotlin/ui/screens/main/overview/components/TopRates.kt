@@ -36,13 +36,12 @@ internal fun TopRates(rates: OverviewState) {
             .padding(vertical = SPACER_PADDING_16),
     ) {
         TopRatesHeader(isLoading)
-
         TopRatesContent(rates, isLoading)
     }
 }
 
 @Composable
-private fun TopRatesHeader(isLoading: Boolean) {
+private fun TopRatesHeader(isLoading: Boolean = false) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -62,7 +61,10 @@ private fun TopRatesHeader(isLoading: Boolean) {
 }
 
 @Composable
-private fun TopRatesContent(rates: OverviewState, isLoading: Boolean) {
+private fun TopRatesContent(
+    rates: OverviewState,
+    isLoading: Boolean = false
+) {
     val scrollableState = rememberLazyListState()
 
     LazyRow(
@@ -75,7 +77,7 @@ private fun TopRatesContent(rates: OverviewState, isLoading: Boolean) {
     ) {
         when {
             rates is OverviewState.Success -> {
-                val ratesList = rates.bonbastRates
+                val ratesList = rates.combinedRates.bonbast
                 items(ratesList.size) { index ->
                     RateItem(
                         isLoading = false,

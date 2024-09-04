@@ -6,5 +6,5 @@ import org.koin.dsl.module
 
 val useCaseModule = module {
     single { ConvertCurrenciesUseCase() }
-    single { CombineRatesNewsUseCase(get(), get()) }
+    single { CombineRatesNewsUseCase(get()) }
 }

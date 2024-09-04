@@ -51,7 +51,6 @@ internal fun OverviewScreen(
     ) {
         item(key = "search_header") {
             SearchViewHeader(
-                state = state,
                 onSearchCardClicked = onSearchCardClicked,
                 onCircleButtonClicked = onCircleButtonClicked
             )

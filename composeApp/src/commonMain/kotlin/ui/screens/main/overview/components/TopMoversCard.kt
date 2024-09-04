@@ -92,6 +92,7 @@ internal fun TopMoversCard(
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Text(
+                        modifier = isLoadingModifier,
                         text = "${if (topMovers.priceChange24h >= 0) "+" else ""}${formatToPrice(topMovers.priceChange24h)}%",
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.Bold

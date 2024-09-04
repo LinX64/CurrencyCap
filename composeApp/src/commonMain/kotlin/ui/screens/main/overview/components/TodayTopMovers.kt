@@ -44,10 +44,11 @@ internal fun TodayTopMovers(
         ) {
             when (overviewState) {
                 is Success -> {
-                    overviewState.topMovers.forEach { topMovers ->
+                    val topMovers = overviewState.combinedRates.crypto.sortedBy { it.name }.take(2)
+                    topMovers.forEach { item ->
                         TopMoversCard(
                             isLoading = isLoading,
-                            topMovers = topMovers,
+                            topMovers = item,
                             onClick = onCryptoItemClick,
                         )
                     }

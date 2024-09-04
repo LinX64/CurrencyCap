@@ -40,7 +40,7 @@ internal fun CryptoContent(
 ) {
     when (state) {
         is OverviewState.Success -> {
-            val cryptoRates = state.cryptoRates
+            val cryptoRates = state.combinedRates.crypto
             val bitcoinItem = cryptoRates.find { it.symbol == "btc" }
 
             CryptoSuccessBody(isLoading, bitcoinItem, usd, cryptoRates)

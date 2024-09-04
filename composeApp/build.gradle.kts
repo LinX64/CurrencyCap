@@ -78,6 +78,7 @@ kotlin {
             implementation(libs.androidx.startup)
             implementation(libs.urlencoder.lib)
             implementation(libs.mongodb.realm)
+            implementation(libs.androidx.core.splashscreen)
 
             implementation(libs.firebase.auth)
             implementation(libs.firebase.fireStore)

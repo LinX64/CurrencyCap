@@ -29,29 +29,22 @@ import currencycap.composeapp.generated.resources.search
 import currencycap.composeapp.generated.resources.type_to_search
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import ui.screens.main.overview.OverviewState
-import ui.screens.main.overview.components.getPlaceHolder
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun SearchViewHeader(
-    state: OverviewState,
     onSearchCardClicked: () -> Unit,
     onCircleButtonClicked: () -> Unit
 ) {
-    val isLoading = state is OverviewState.Loading
-
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Card(
-            modifier = if (isLoading) getPlaceHolder(
-                Modifier.fillMaxWidth(0.8f)
-            ) else Modifier.fillMaxWidth(0.8f),
+            modifier = Modifier.fillMaxWidth(0.8f),
             shape = RoundedCornerShape(CARD_CORNER_RADIUS),
             onClick = onSearchCardClicked,
             border = BorderStroke(
@@ -67,16 +60,14 @@ internal fun SearchViewHeader(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Icon(
-                    modifier = if (isLoading) getPlaceHolder(Modifier.padding(SPACER_PADDING_16))
-                    else Modifier.padding(SPACER_PADDING_16),
+                    modifier = Modifier.padding(SPACER_PADDING_16),
                     painter = painterResource(Res.drawable.ic_search_normal),
                     contentDescription = stringResource(Res.string.search),
                     tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                 )
 
                 Text(
-                    modifier = if (isLoading) getPlaceHolder(Modifier.padding(SPACER_PADDING_16))
-                    else Modifier.padding(SPACER_PADDING_16),
+                    modifier = Modifier.padding(SPACER_PADDING_16),
                     text = stringResource(Res.string.type_to_search),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
@@ -86,13 +77,12 @@ internal fun SearchViewHeader(
 
         Spacer(modifier = Modifier.width(SPACER_PADDING_8))
 
-        CircleButton(isLoading = isLoading, onCircleButtonClicked = onCircleButtonClicked)
+        CircleButton(onCircleButtonClicked = onCircleButtonClicked)
     }
 }
 
 @Composable
 private fun CircleButton(
-    isLoading: Boolean = false,
     onCircleButtonClicked: () -> Unit
 ) {
     Card(
@@ -107,7 +97,7 @@ private fun CircleButton(
         )
     ) {
         IconButton(
-            modifier = if (isLoading) getPlaceHolder(Modifier.size(64.dp)) else Modifier.size(64.dp),
+            modifier = Modifier.size(64.dp),
             onClick = onCircleButtonClicked
         ) {
             Icon(

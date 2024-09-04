@@ -18,7 +18,6 @@ import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.OverviewState.Error
 import ui.screens.main.overview.OverviewState.Loading
 import ui.screens.main.overview.OverviewState.Success
-import ui.screens.main.overview.components.tabs.components.NewsHomeItem
 import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
@@ -46,13 +45,13 @@ internal fun NewsTab(
             when (state) {
                 Loading -> item { CenteredColumn { CircularProgressIndicator() } }
                 is Success -> {
-                    val news = state.news.take(2)
-                    items(news.size) { index ->
-                        NewsHomeItem(
-                            onClick = { onNewsItemClick(news[index].url) },
-                            newsItem = state.news[index]
-                        )
-                    }
+//                    val news = state.news.take(2)
+//                    items(news.size) { index ->
+//                        NewsHomeItem(
+//                            onClick = { onNewsItemClick(news[index].url) },
+//                            newsItem = state.news[index]
+//                        )
+//                    }
                 }
 
                 is Error -> {
