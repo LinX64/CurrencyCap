@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
             val fadeOut = ObjectAnimator.ofFloat(splashScreenView.view, View.ALPHA, 1f, 0f)
             with(fadeOut) {
                 interpolator = AnticipateInterpolator()
-                duration = 500L
+                duration = 800L
                 start()
                 doOnEnd { splashScreenView.remove() }
             }

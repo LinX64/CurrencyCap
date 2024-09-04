@@ -24,7 +24,6 @@ internal fun OverviewRoute(
     onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
-
     OverviewScreen(
         state = state,
         hazeState = hazeState,

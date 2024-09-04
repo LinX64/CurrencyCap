@@ -77,7 +77,7 @@ private fun TopRatesContent(
     ) {
         when {
             rates is OverviewState.Success -> {
-                val ratesList = rates.combinedRates.bonbast
+                val ratesList = rates.combinedRates.bonbast.take(3)
                 items(ratesList.size) { index ->
                     RateItem(
                         isLoading = false,

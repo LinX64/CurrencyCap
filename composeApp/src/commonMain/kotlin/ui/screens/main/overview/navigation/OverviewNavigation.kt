@@ -1,6 +1,10 @@
 package ui.screens.main.overview.navigation
 
 import CryptoList
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.slideInVertically
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -21,7 +25,18 @@ fun NavGraphBuilder.overviewScreen(
     hazeState: HazeState,
     navController: NavHostController,
 ) {
-    composable<Overview> {
+    composable<Overview>(
+        enterTransition = {
+            slideInVertically(
+                initialOffsetY = { fullHeight -> fullHeight / 10 },
+                animationSpec = tween(durationMillis = 300)
+            ) + fadeIn(animationSpec = tween(durationMillis = 300)) +
+                    scaleIn(
+                        initialScale = 0.9f,
+                        animationSpec = tween(durationMillis = 300)
+                    )
+        },
+    ) {
         OverviewRoute(
             hazeState = hazeState,
             onSearchCardClicked = { navController.navigate(Explore) },

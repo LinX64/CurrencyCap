@@ -79,7 +79,6 @@ internal fun App(
             BottomNavigationBar(
                 currentDestination = currentDestination,
                 hazeState = hazeState,
-                isLoggedIn = isLoggedIn,
                 onTabSelected = { tab -> appState.navigateToTopLevelDestination(tab) }
             )
         },
@@ -106,7 +105,7 @@ internal fun App(
             showPrivacyPolicyBottomSheet = { mainViewModel.togglePrivacyPolicySheet() },
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
             onLoginSuccess = { navigateToOverview(mainViewModel, navController) },
-            onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.News) },
+            onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.NEWS) },
             onShowAboutUsBottomSheet = { mainViewModel.toggleAboutUsSheet() }, //todo
             showBookmarkConfirmationSnakeBar = { isBookmarked ->
                 scope.launch {
