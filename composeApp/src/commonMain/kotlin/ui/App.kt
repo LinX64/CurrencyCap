@@ -30,7 +30,6 @@ import ui.components.main.navigateToLanding
 import ui.components.main.navigateToOverview
 import ui.components.main.rememberAppState
 import ui.navigation.graphs.AppNavGraph
-import ui.navigation.util.ScreenRoutes.NEWS
 import ui.screens.MainState
 import ui.screens.MainViewModel
 import ui.screens.initial.landing.privacy_policy.PrivacyPolicySection
@@ -48,20 +47,19 @@ internal fun App(
 ) {
     val navController = rememberNavController()
     val overviewViewModel = koinViewModel<OverviewViewModel>()
-    val isRefreshing = overviewViewModel.isRefreshing.value
+    val isRefreshing by overviewViewModel.isRefreshing.collectAsStateWithLifecycle()
 
     val appState: AppState = rememberAppState(navController)
     val scope = rememberCoroutineScope()
 
     val mainState by mainViewModel.appState.collectAsStateWithLifecycle()
     val currentDestination = appState.currentDestination
-    val isNewsScreen = currentDestination == NEWS
     val isLoggedIn = mainState is MainState.LoggedIn
     val hazeState = remember { HazeState() }
 
     EdgeToEdgeScaffoldWithPullToRefresh(
         currentDestination = currentDestination,
-        isRefreshing = if (isNewsScreen) isRefreshing else false,
+        isRefreshing = isRefreshing,
         onRefresh = { overviewViewModel.refresh() },
         topBar = {
             AppTopBar(

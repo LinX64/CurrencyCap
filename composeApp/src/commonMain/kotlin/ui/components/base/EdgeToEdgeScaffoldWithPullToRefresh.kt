@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import ui.navigation.util.ScreenRoutes.NEWS
 import ui.navigation.util.ScreenRoutes.OVERVIEW
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,10 +33,8 @@ internal fun EdgeToEdgeScaffoldWithPullToRefresh(
 ) {
     val pullToRefreshState = rememberPullToRefreshState()
     val isOverviewScreen = currentDestination == OVERVIEW
-    val isNewsScreen = currentDestination == NEWS
-    val isPullToRefreshEnabled = isOverviewScreen || isNewsScreen
 
-    val pullToRefreshModifier = if (isPullToRefreshEnabled) Modifier.pullToRefresh(
+    val pullToRefreshModifier = if (isOverviewScreen) Modifier.pullToRefresh(
         state = pullToRefreshState,
         isRefreshing = isRefreshing,
         onRefresh = { onRefresh() }
@@ -58,7 +55,7 @@ internal fun EdgeToEdgeScaffoldWithPullToRefresh(
         ) {
             content(paddingValues)
 
-            if (isPullToRefreshEnabled) {
+            if (isOverviewScreen) {
                 PullToRefreshDefaults.Indicator(
                     state = pullToRefreshState,
                     isRefreshing = isRefreshing,
