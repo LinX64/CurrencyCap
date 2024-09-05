@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import domain.repository.UserPreferences
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
@@ -33,6 +34,10 @@ class MainViewModel(
             initialValue = false
         )
 
+    init {
+        handleEvent(OnGetUserStatus)
+    }
+
     override fun handleEvent(event: MainViewEvent) {
         when (event) {
             is OnGetUserStatus -> getUserStatus()
@@ -40,10 +45,8 @@ class MainViewModel(
     }
 
     private fun getUserStatus() {
-        setState { Loading }
-
         viewModelScope.launch {
-            val userLoggedIn = userPreferences.isUserLoggedIn()
+            val userLoggedIn = userPreferences.isUserLoggedIn().first()
             if (userLoggedIn) onLoginSuccess() else updateStateToNotLoggedIn()
         }
     }

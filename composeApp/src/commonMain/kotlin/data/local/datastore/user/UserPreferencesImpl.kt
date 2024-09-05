@@ -26,10 +26,10 @@ internal class UserPreferencesImpl(
             booleanPreferencesKey("is_push_notification_enabled")
     }
 
-    override suspend fun isUserLoggedIn(): Boolean {
+    override suspend fun isUserLoggedIn(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
             preferences[isUserLoggedInKey] ?: false
-        }.first()
+        }
     }
 
     override suspend fun saveUserUid(uid: String) {
