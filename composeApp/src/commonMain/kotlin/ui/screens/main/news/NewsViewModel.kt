@@ -10,10 +10,7 @@ import domain.repository.NewsRepository
 import domain.repository.UserPreferences
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toPersistentSet
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.mobilenativefoundation.store.store5.StoreReadRequest
 import org.mobilenativefoundation.store.store5.StoreReadResponse
@@ -33,18 +30,16 @@ class NewsViewModel(
     private val userPreferences: UserPreferences
 ) : MviViewModel<NewsViewEvent, NewsState, NewsNavigationEffect>(Loading) {
 
-    private val _isRefreshing = MutableStateFlow(false)
-    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
     val sources = mutableStateOf(persistentSetOf<String>())
 
-//    init {
-//        handleEvent(FetchNews())
-//    }
+    init {
+        handleEvent(FetchNews())
+    }
 
     override fun handleEvent(event: NewsViewEvent) {
         when (event) {
             OnRetry -> fetchNewsNew()
-            is FetchNews -> fetchNewsNew(event.forceRefresh)
+            is FetchNews -> fetchNewsNew()
             is OnBookmarkArticle -> handleOnBookmarkClick(event.article, event.isBookmarked)
             is OnSetClick -> {
                 saveSelectedDatesAndFilter(event.startDate, event.endDate)
@@ -53,16 +48,16 @@ class NewsViewModel(
         }
     }
 
-    private fun fetchNewsNew(forceRefresh: Boolean = false) {
+    private fun fetchNewsNew() {
         viewModelScope.launch {
             val store = newsRepository.getNewsNew()
-            store.stream(StoreReadRequest.cached(NEWS_KEY, forceRefresh))
-                .collect { response ->
+            store.stream(StoreReadRequest.freshWithFallBackToSourceOfTruth(NEWS_KEY))
+                .collectLatest { response ->
                     when (response) {
                         is StoreReadResponse.Loading -> setState { Loading }
                         is StoreReadResponse.Data -> {
                             val news = response.value
-                            setState { Success(news = news) }
+                            setState { if (news.isNotEmpty()) Success(news) else Empty }
                             getSources(news)
                         }
 
@@ -134,15 +129,15 @@ class NewsViewModel(
         }
     }
 
-    fun refresh() {
-        setState { Loading }
-        _isRefreshing.value = true
-
-        viewModelScope.launch {
-            delay(2500L)
-            _isRefreshing.value = false
-
-            handleEvent(FetchNews(true))
-        }
-    }
+//    fun refresh() {
+//        setState { Loading }
+//        _isRefreshing.value = true
+//
+//        viewModelScope.launch {
+//            delay(2500L)
+//            _isRefreshing.value = false
+//
+//            handleEvent(FetchNews(true))
+//        }
+//    }// TODO fix this later
 }

@@ -102,6 +102,15 @@ private fun LazyListScope.newsScreenContent(
         }
     }
 
+    is Error -> {
+        item {
+            ErrorView(
+                message = stringResource(Res.string.an_error_occurred),
+                onRetry = { handleEvent(OnRetry) }
+            )
+        }
+    }
+
     else -> Unit
 }
 

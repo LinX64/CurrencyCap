@@ -60,7 +60,7 @@ class NewsRepositoryImpl(
         when (response.status.isSuccess()) {
             true -> {
                 val articles: List<ArticleDto> = parseResponse<NewsDto>(response).articles
-                emit(articles.map { it.toDomain() })
+                emit(articles.toDomain())
             }
 
             false -> emit(emptyList())
