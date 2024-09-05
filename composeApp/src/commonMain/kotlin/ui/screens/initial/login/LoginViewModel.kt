@@ -51,7 +51,7 @@ internal class LoginViewModel(
         setState { Loading }
 
         viewModelScope.launch {
-            delay(1000)
+            delay(800L)
 
             val result = authServiceRepository.authenticate(email, password)
             result.fold(

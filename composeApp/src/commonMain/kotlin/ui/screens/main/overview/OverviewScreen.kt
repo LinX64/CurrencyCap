@@ -9,6 +9,7 @@ import di.koinViewModel
 import ui.components.HorizontalLineWithDot
 import ui.components.SearchViewHeader
 import ui.components.base.BaseGlassLazyColumn
+import ui.screens.main.overview.OverviewViewEvent.OnLoadRates
 import ui.screens.main.overview.components.PortfolioSection
 import ui.screens.main.overview.components.TodayTopMovers
 import ui.screens.main.overview.components.TopRates
@@ -28,7 +29,7 @@ internal fun OverviewRoute(
     val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        overviewViewModel.loadCombinedRates()
+        overviewViewModel.handleEvent(OnLoadRates())
     }
 
     OverviewScreen(

@@ -2,6 +2,7 @@ package ui.screens.main.news
 
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import currencycap.composeapp.generated.resources.Res
@@ -17,6 +18,7 @@ import ui.screens.main.news.NewsNavigationEffect.ShowBookmarkConfirmation
 import ui.screens.main.news.NewsState.Empty
 import ui.screens.main.news.NewsState.Loading
 import ui.screens.main.news.NewsState.Success
+import ui.screens.main.news.NewsViewEvent.FetchNews
 import ui.screens.main.news.NewsViewEvent.OnBookmarkArticle
 import ui.screens.main.news.NewsViewEvent.OnRetry
 import util.getDummyNewsItem
@@ -29,6 +31,10 @@ internal fun NewsRoute(
     showBookmarkConfirmationSnakeBar: (Boolean) -> Unit
 ) {
     val state = newsViewModel.viewState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(newsViewModel) {
+        newsViewModel.handleEvent(FetchNews())
+    }
 
     NewsScreen(
         state = state,
