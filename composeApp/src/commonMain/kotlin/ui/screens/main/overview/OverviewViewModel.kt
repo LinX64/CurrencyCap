@@ -37,7 +37,7 @@ class OverviewViewModel(
 
         viewModelScope.launch {
             mainRepository.getAllRatesNew()
-                .stream(StoreReadRequest.cached(ALL_RATES_KEY, false))
+                .stream(StoreReadRequest.cached(ALL_RATES_KEY, isRefreshing.value))
                 .collectLatest { response ->
                     when (response) {
                         is StoreReadResponse.Data -> {
