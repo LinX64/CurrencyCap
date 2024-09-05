@@ -21,12 +21,8 @@ class OverviewViewModel(
     private val mainRepository: MainRepository,
 ) : MviViewModel<OverviewViewEvent, OverviewState, OverviewNavigationEffect>(Loading) {
 
-    private val _isRefreshing = MutableStateFlow(false)
+    private val _isRefreshing = MutableStateFlow(true)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
-
-    init {
-        handleEvent(OnLoadRates())
-    }
 
     override fun handleEvent(event: OverviewViewEvent) {
         when (event) {
@@ -35,17 +31,19 @@ class OverviewViewModel(
         }
     }
 
-    private fun loadCombinedRates() {
+    fun loadCombinedRates() {
         setState { Loading }
+        _isRefreshing.value = true
 
         viewModelScope.launch {
             mainRepository.getAllRatesNew()
-                .stream(StoreReadRequest.cached(ALL_RATES_KEY, false))
+                .stream(StoreReadRequest.cached(ALL_RATES_KEY, isRefreshing.value))
                 .collectLatest { response ->
                     when (response) {
                         is StoreReadResponse.Data -> {
                             val data = response.value
                             setState { Success(data) }
+                            hidePullToRefreshAfterDelay()
                         }
 
                         is StoreReadResponse.Error -> {
@@ -54,11 +52,19 @@ class OverviewViewModel(
                                     response.errorMessageOrNull() ?: "Unknown error"
                                 )
                             }
+                            hidePullToRefreshAfterDelay()
                         }
 
                         else -> Unit
                     }
                 }
+        }
+    }
+
+    private fun hidePullToRefreshAfterDelay() {
+        viewModelScope.launch {
+            delay(500L)
+            _isRefreshing.value = false
         }
     }
 

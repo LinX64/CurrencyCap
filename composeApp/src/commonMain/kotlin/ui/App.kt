@@ -30,10 +30,10 @@ import ui.components.main.navigateToLanding
 import ui.components.main.navigateToOverview
 import ui.components.main.rememberAppState
 import ui.navigation.graphs.AppNavGraph
-import ui.navigation.util.ScreenRoutes.NEWS
-import ui.screens.MainState
 import ui.screens.MainViewModel
+import ui.screens.SheetType
 import ui.screens.initial.landing.privacy_policy.PrivacyPolicySection
+import ui.screens.main.MainState.LoggedIn
 import ui.screens.main.overview.OverviewViewModel
 import ui.screens.main.settings.AboutUsSection
 import ui.screens.main.subscribers.SubscribersSection
@@ -47,23 +47,19 @@ internal fun App(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
     val navController = rememberNavController()
-    val overviewViewModel = koinViewModel<OverviewViewModel>()
-    val isRefreshing = overviewViewModel.isRefreshing.value
-
     val appState: AppState = rememberAppState(navController)
     val scope = rememberCoroutineScope()
-
-    val mainState by mainViewModel.appState.collectAsStateWithLifecycle()
+    val overviewViewModel = koinViewModel<OverviewViewModel>()
+    val isRefreshing by overviewViewModel.isRefreshing.collectAsStateWithLifecycle()
+    val mainState by mainViewModel.viewState.collectAsStateWithLifecycle()
     val currentDestination = appState.currentDestination
-    val isNewsScreen = currentDestination == NEWS
-    val isLoggedIn = mainState is MainState.LoggedIn
+    val isLoggedIn = mainState is LoggedIn
     val hazeState = remember { HazeState() }
 
-    EdgeToEdgeScaffoldWithPullToRefresh(currentDestination = currentDestination,
+    EdgeToEdgeScaffoldWithPullToRefresh(
+        currentDestination = currentDestination,
         isRefreshing = isRefreshing,
-        onRefresh = {
-            overviewViewModel.refresh()
-        },
+        onRefresh = { overviewViewModel.refresh() },
         topBar = {
             AppTopBar(
                 currentDestination = currentDestination,
@@ -71,7 +67,7 @@ internal fun App(
                 scrollBehavior = scrollBehavior,
                 hazeState = hazeState,
                 isLoggedIn = isLoggedIn,
-                onFilterClick = { mainViewModel.toggleNewsFilterSheet() },
+                onFilterClick = { mainViewModel.toggleSheet(SheetType.NEWS_FILTER) },
                 onThemeChangeClick = mainViewModel::toggleDarkMode
             )
         },
@@ -86,15 +82,15 @@ internal fun App(
         bottomSheets = {
             BaseModalBottomSheet(
                 isVisible = mainViewModel.isSubscribeSheetVisible,
-                onDismiss = { mainViewModel.toggleSubscribeSheet() }) { SubscribersSection() }
+                onDismiss = { mainViewModel.toggleSheet(SheetType.SUBSCRIBE) }) { SubscribersSection() }
 
             BaseModalBottomSheet(
                 isVisible = mainViewModel.isPrivacyPolicySheetVisible,
-                onDismiss = { mainViewModel.togglePrivacyPolicySheet() }) { PrivacyPolicySection() }
+                onDismiss = { mainViewModel.toggleSheet(SheetType.PRIVACY_POLICY) }) { PrivacyPolicySection() }
 
             BaseModalBottomSheet(
                 isVisible = mainViewModel.isAboutUsSheetVisible,
-                onDismiss = { mainViewModel.toggleAboutUsSheet() }) { AboutUsSection() }
+                onDismiss = { mainViewModel.toggleSheet(SheetType.ABOUT_US) }) { AboutUsSection() }
         }) { paddingValues ->
         AppNavGraph(
             navController = navController,
@@ -102,11 +98,11 @@ internal fun App(
             paddingValues = paddingValues,
             isLoggedIn = isLoggedIn,
             onNavigateToLanding = { navigateToLanding(mainViewModel, navController) },
-            showPrivacyPolicyBottomSheet = { mainViewModel.togglePrivacyPolicySheet() },
+            showPrivacyPolicyBottomSheet = { mainViewModel.toggleSheet(SheetType.PRIVACY_POLICY) },
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
             onLoginSuccess = { navigateToOverview(mainViewModel, navController) },
             onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.NEWS) },
-            onShowAboutUsBottomSheet = { mainViewModel.toggleAboutUsSheet() }, //todo
+            onShowAboutUsBottomSheet = { mainViewModel.toggleSheet(SheetType.ABOUT_US) }, //todo
             showBookmarkConfirmationSnakeBar = { isBookmarked ->
                 scope.launch {
                     snackbarHostState.showSnackbar(

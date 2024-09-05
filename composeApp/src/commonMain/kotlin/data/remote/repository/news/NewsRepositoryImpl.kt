@@ -6,7 +6,6 @@ import data.remote.model.news.toDomain
 import data.remote.model.news.toEntity
 import data.remote.model.requests.GetNews
 import data.util.parseResponse
-import data.util.retryOnIOException
 import di.baseApi
 import domain.model.Article
 import domain.model.toEntity
@@ -60,14 +59,13 @@ class NewsRepositoryImpl(
         when (response.status.isSuccess()) {
             true -> {
                 val articles: List<ArticleDto> = parseResponse<NewsDto>(response).articles
-                emit(articles.map { it.toDomain() })
+                emit(articles.toDomain())
             }
 
             false -> emit(emptyList())
         }
     }
         .flowOn(Dispatchers.IO)
-        .retryOnIOException()
 
     private suspend fun fetchArticleByUrl(url: String): Article {
         val response = httpClient.get(GetNews()) { baseApi() }
