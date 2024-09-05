@@ -13,18 +13,18 @@ enum class BottomBarTab(
     val route: String,
     val icon: DrawableResource? = null
 ) {
-    Overview(ScreenRoutes.OVERVIEW, Res.drawable.ic_home),
-    News(ScreenRoutes.NEWS, Res.drawable.ic_news),
-    Exchange(ScreenRoutes.EXCHANGE),
-    Bookmarks(ScreenRoutes.BOOKMARKS, Res.drawable.ic_save),
-    Profile(ScreenRoutes.PROFILE, Res.drawable.ic_user_normal)
+    OVERVIEW(ScreenRoutes.OVERVIEW, Res.drawable.ic_home),
+    NEWS(ScreenRoutes.NEWS, Res.drawable.ic_news),
+    EXCHANGE(ScreenRoutes.EXCHANGE),
+    BOOKMARKS(ScreenRoutes.BOOKMARKS, Res.drawable.ic_save),
+    PROFILE(ScreenRoutes.PROFILE, Res.drawable.ic_user_normal)
 }
 
 internal val tabs = persistentSetOf(
-    BottomBarTab.Overview,
-    BottomBarTab.News,
-    BottomBarTab.Exchange,
-    BottomBarTab.Bookmarks,
-    BottomBarTab.Profile
+    BottomBarTab.OVERVIEW,
+    BottomBarTab.NEWS,
+    BottomBarTab.EXCHANGE,
+    BottomBarTab.BOOKMARKS,
+    BottomBarTab.PROFILE
 )
 

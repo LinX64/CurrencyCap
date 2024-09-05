@@ -4,6 +4,7 @@ androidx-activityCompose = "1.9.1"
 calfPermissions = "0.5.5"
 compose-plugin = "1.7.0-alpha03"
 composeWebviewMultiplatform = "1.9.20"
+coreSplashscreen = "1.0.1"
 kotlin = "2.0.10"
 koin = "3.6.0-alpha3"
 koin-compose = "1.1.5"
@@ -38,6 +39,7 @@ store5Version = "5.1.0-alpha04"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModel" }
 androidx-startup = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 calf-permissions = { module = "com.mohamedrejeb.calf:calf-permissions", version.ref = "calfPermissions" }

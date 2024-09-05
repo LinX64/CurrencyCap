@@ -2,11 +2,7 @@ package ui.screens.main.overview
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
-import domain.model.Article
-import domain.model.main.BonbastRate
-import domain.model.main.Crypto
-import domain.model.main.Market
-import domain.model.main.Rate
+import domain.model.main.Currencies
 
 sealed interface OverviewViewEvent {
     data class OnLoadRates(val forceRefresh: Boolean = false) : OverviewViewEvent
@@ -18,12 +14,7 @@ sealed interface OverviewState {
 
     @Stable
     data class Success(
-        val bonbastRates: List<BonbastRate>,
-        val cryptoRates: List<Crypto>,
-        val markets: List<Market>,
-        val fiatRates: List<Rate>,
-        val topMovers: List<Crypto>,
-        val news: List<Article>
+        val combinedRates: Currencies
     ) : OverviewState
 
     @Immutable

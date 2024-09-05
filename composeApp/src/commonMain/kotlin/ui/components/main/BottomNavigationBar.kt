@@ -62,7 +62,6 @@ import ui.theme.colors.CurrencyColors
 internal fun BottomNavigationBar(
     currentDestination: String?,
     hazeState: HazeState,
-    isLoggedIn: Boolean,
     onTabSelected: (BottomBarTab) -> Unit
 ) {
     var selectedTabIndex by rememberSaveable { mutableIntStateOf(0) }
@@ -85,7 +84,7 @@ internal fun BottomNavigationBar(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CenteredExchangeButton(
-                onButtonClicked = { onTabSelected(BottomBarTab.Exchange) }
+                onButtonClicked = { onTabSelected(BottomBarTab.EXCHANGE) }
             )
 
             Box(
@@ -121,12 +120,7 @@ internal fun BottomNavigationBar(
 }
 
 private fun isBottomBarVisible(currentDestination: String?): Boolean {
-    val isOverViewScreen = currentDestination == OVERVIEW
-    val isExchangeScreen = currentDestination == EXCHANGE
-    val isBookmarksScreen = currentDestination == BOOKMARKS
-    val isNewsScreen = currentDestination == NEWS
-    val isMyProfileScreen = currentDestination == PROFILE
-    return isOverViewScreen || isExchangeScreen || isBookmarksScreen || isNewsScreen || isMyProfileScreen
+    return currentDestination in listOf(OVERVIEW, EXCHANGE, BOOKMARKS, NEWS, PROFILE)
 }
 
 @Composable

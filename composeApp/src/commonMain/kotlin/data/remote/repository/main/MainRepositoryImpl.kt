@@ -21,6 +21,9 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.path
 import io.realm.kotlin.internal.platform.pathOf
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -85,8 +88,8 @@ class MainRepositoryImpl(
         }
     }
 
-    private suspend fun getParsedRates(): CurrenciesDto {
+    private suspend fun getParsedRates(): CurrenciesDto = withContext(Dispatchers.IO) {
         val plainResponse = httpClient.get(GetCurrencies()) { baseApi() }
-        return parseCurrencyRates(plainResponse.bodyAsText())
+        parseCurrencyRates(plainResponse.bodyAsText())
     }
 }

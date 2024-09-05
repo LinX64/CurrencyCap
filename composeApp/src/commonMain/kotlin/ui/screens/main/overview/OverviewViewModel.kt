@@ -1,22 +1,24 @@
 package ui.screens.main.overview
 
 import androidx.lifecycle.viewModelScope
-import domain.usecase.CombineRatesNewsUseCase
-import kotlinx.collections.immutable.toImmutableList
+import data.util.Constant.ALL_RATES_KEY
+import domain.repository.MainRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.mobilenativefoundation.store.store5.StoreReadRequest
+import org.mobilenativefoundation.store.store5.StoreReadResponse
 import ui.common.MviViewModel
 import ui.screens.main.overview.OverviewState.Loading
 import ui.screens.main.overview.OverviewState.Success
 import ui.screens.main.overview.OverviewViewEvent.OnLoadRates
 import ui.screens.main.overview.OverviewViewEvent.OnRetry
-import util.getIconBy
 
 class OverviewViewModel(
-    private val combinedRatesUseCase: CombineRatesNewsUseCase,
+    private val mainRepository: MainRepository,
 ) : MviViewModel<OverviewViewEvent, OverviewState, OverviewNavigationEffect>(Loading) {
 
     private val _isRefreshing = MutableStateFlow(false)
@@ -37,36 +39,26 @@ class OverviewViewModel(
         setState { Loading }
 
         viewModelScope.launch {
-            val combinedRates = combinedRatesUseCase(isRefreshing.value)
-            val bonbastRates = combinedRates.bonbastRates.map { bonbastRate ->
-                getIconBy(bonbastRate.code).let { bonbastRate.copy(imageUrl = it) }
-            }.toImmutableList()
+            mainRepository.getAllRatesNew()
+                .stream(StoreReadRequest.cached(ALL_RATES_KEY, false))
+                .collectLatest { response ->
+                    when (response) {
+                        is StoreReadResponse.Data -> {
+                            val data = response.value
+                            setState { Success(data) }
+                        }
 
-            val cryptoRates = combinedRates.cryptoRates.toImmutableList()
-            val markets = combinedRates.markets.toImmutableList()
-            val fiatRates = combinedRates.fiatRates.toImmutableList()
-            val topMovers = combinedRates.topMovers.toImmutableList()
-            val news = combinedRates.news.toImmutableList()
+                        is StoreReadResponse.Error -> {
+                            setState {
+                                OverviewState.Error(
+                                    response.errorMessageOrNull() ?: "Unknown error"
+                                )
+                            }
+                        }
 
-            when {
-                bonbastRates.isEmpty()
-                        && cryptoRates.isEmpty()
-                        && markets.isEmpty()
-                        && fiatRates.isEmpty()
-                        && topMovers.isEmpty()
-                        && news.isEmpty() -> setState { OverviewState.Error("No data available") }
-
-                else -> setState {
-                    Success(
-                        bonbastRates = bonbastRates,
-                        cryptoRates = cryptoRates,
-                        markets = markets,
-                        fiatRates = fiatRates,
-                        topMovers = topMovers,
-                        news = news
-                    )
+                        else -> Unit
+                    }
                 }
-            }
         }
     }
 

@@ -7,16 +7,18 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
-import ui.components.main.BottomBarTab.Bookmarks
-import ui.components.main.BottomBarTab.Exchange
-import ui.components.main.BottomBarTab.News
-import ui.components.main.BottomBarTab.Overview
-import ui.components.main.BottomBarTab.Profile
+import ui.components.main.BottomBarTab.BOOKMARKS
+import ui.components.main.BottomBarTab.EXCHANGE
+import ui.components.main.BottomBarTab.NEWS
+import ui.components.main.BottomBarTab.OVERVIEW
+import ui.components.main.BottomBarTab.PROFILE
 import ui.screens.MainViewModel
 import ui.screens.initial.landing.navigation.Landing
+import ui.screens.initial.login.navigation.Login
 import ui.screens.main.bookmarks.navigation.navigateToBookmarksScreen
 import ui.screens.main.exchange.navigation.navigateToExchangeScreen
 import ui.screens.main.news.navigation.navigateToNewsScreen
+import ui.screens.main.overview.navigation.Overview
 import ui.screens.main.overview.navigation.navigateToOverviewScreen
 import ui.screens.main.profile.navigation.navigateToProfileScreen
 import ui.screens.main.profile.navigation.Profile as ProfileScreen
@@ -48,11 +50,11 @@ internal class AppState(
         }
 
         when (topLevelDestination) {
-            Overview -> navController.navigateToOverviewScreen(topLevelNavOptions)
-            News -> navController.navigateToNewsScreen(topLevelNavOptions)
-            Exchange -> navController.navigateToExchangeScreen(topLevelNavOptions)
-            Bookmarks -> navController.navigateToBookmarksScreen(topLevelNavOptions)
-            Profile -> navController.navigateToProfileScreen(topLevelNavOptions)
+            OVERVIEW -> navController.navigateToOverviewScreen(topLevelNavOptions)
+            NEWS -> navController.navigateToNewsScreen(topLevelNavOptions)
+            EXCHANGE -> navController.navigateToExchangeScreen(topLevelNavOptions)
+            BOOKMARKS -> navController.navigateToBookmarksScreen(topLevelNavOptions)
+            PROFILE -> navController.navigateToProfileScreen(topLevelNavOptions)
         }
     }
 
@@ -73,7 +75,10 @@ internal fun navigateToOverview(
     navController: NavHostController
 ) {
     mainViewModel.onLoginSuccess()
-    navController.popBackStack()
+    navController.navigate(Overview) {
+        popUpTo(Login) { inclusive = true }
+        launchSingleTop = true
+    }
 }
 
 internal fun navigateToLanding(

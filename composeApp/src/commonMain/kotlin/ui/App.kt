@@ -10,9 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.article_added_to_bookmarks
@@ -36,58 +34,35 @@ import ui.navigation.util.ScreenRoutes.NEWS
 import ui.screens.MainState
 import ui.screens.MainViewModel
 import ui.screens.initial.landing.privacy_policy.PrivacyPolicySection
-import ui.screens.main.news.NewsViewEvent.OnSetClick
-import ui.screens.main.news.NewsViewModel
-import ui.screens.main.news.components.NewsFilterSection
 import ui.screens.main.overview.OverviewViewModel
 import ui.screens.main.settings.AboutUsSection
 import ui.screens.main.subscribers.SubscribersSection
-
-internal class SharedViewModelContainer(
-    val newsViewModel: NewsViewModel,
-    val overviewViewModel: OverviewViewModel
-) : ViewModel()
-
-@Composable
-private fun rememberSharedViewModelContainer(
-    navController: NavHostController,
-    newsViewModel: NewsViewModel = koinViewModel(),
-    overviewViewModel: OverviewViewModel = koinViewModel()
-): SharedViewModelContainer {
-    return remember(navController) {
-        SharedViewModelContainer(
-            newsViewModel = newsViewModel,
-            overviewViewModel = overviewViewModel
-        )
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
 internal fun App(
-    mainViewModel: MainViewModel,
+    mainViewModel: MainViewModel = koinViewModel(),
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
     val navController = rememberNavController()
-    val sharedViewModelContainer = rememberSharedViewModelContainer(navController)
+    val overviewViewModel = koinViewModel<OverviewViewModel>()
+    val isRefreshing = overviewViewModel.isRefreshing.value
+
     val appState: AppState = rememberAppState(navController)
     val scope = rememberCoroutineScope()
 
     val mainState by mainViewModel.appState.collectAsStateWithLifecycle()
-    val isRefreshing by sharedViewModelContainer.overviewViewModel.isRefreshing.collectAsStateWithLifecycle()
-    val isRefreshingInNews by sharedViewModelContainer.newsViewModel.isRefreshing.collectAsStateWithLifecycle()
     val currentDestination = appState.currentDestination
     val isNewsScreen = currentDestination == NEWS
     val isLoggedIn = mainState is MainState.LoggedIn
     val hazeState = remember { HazeState() }
 
     EdgeToEdgeScaffoldWithPullToRefresh(currentDestination = currentDestination,
-        isRefreshing = if (isNewsScreen) isRefreshingInNews else isRefreshing,
+        isRefreshing = isRefreshing,
         onRefresh = {
-            if (isNewsScreen) sharedViewModelContainer.newsViewModel.refresh()
-            else sharedViewModelContainer.overviewViewModel.refresh()
+            overviewViewModel.refresh()
         },
         topBar = {
             AppTopBar(
@@ -104,7 +79,6 @@ internal fun App(
             BottomNavigationBar(
                 currentDestination = currentDestination,
                 hazeState = hazeState,
-                isLoggedIn = isLoggedIn,
                 onTabSelected = { tab -> appState.navigateToTopLevelDestination(tab) }
             )
         },
@@ -113,25 +87,6 @@ internal fun App(
             BaseModalBottomSheet(
                 isVisible = mainViewModel.isSubscribeSheetVisible,
                 onDismiss = { mainViewModel.toggleSubscribeSheet() }) { SubscribersSection() }
-
-            BaseModalBottomSheet(
-                isVisible = mainViewModel.isNewsFilterSheetVisible,
-                onDismiss = { mainViewModel.toggleNewsFilterSheet() }) {
-                NewsFilterSection(
-                    sources = sharedViewModelContainer.newsViewModel.sources.value,
-                    onCloseClick = { mainViewModel.toggleNewsFilterSheet() },
-                    onDoneClick = { startDate, endDate, selectedSources ->
-                        mainViewModel.toggleNewsFilterSheet()
-                        sharedViewModelContainer.newsViewModel.handleEvent(
-                            OnSetClick(
-                                startDate = startDate,
-                                endDate = endDate,
-                                selectedSources = selectedSources
-                            )
-                        )
-                    }
-                )
-            }
 
             BaseModalBottomSheet(
                 isVisible = mainViewModel.isPrivacyPolicySheetVisible,
@@ -146,12 +101,11 @@ internal fun App(
             hazeState = hazeState,
             paddingValues = paddingValues,
             isLoggedIn = isLoggedIn,
-            sharedViewModelContainer = sharedViewModelContainer,
             onNavigateToLanding = { navigateToLanding(mainViewModel, navController) },
             showPrivacyPolicyBottomSheet = { mainViewModel.togglePrivacyPolicySheet() },
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
             onLoginSuccess = { navigateToOverview(mainViewModel, navController) },
-            onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.News) },
+            onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.NEWS) },
             onShowAboutUsBottomSheet = { mainViewModel.toggleAboutUsSheet() }, //todo
             showBookmarkConfirmationSnakeBar = { isBookmarked ->
                 scope.launch {

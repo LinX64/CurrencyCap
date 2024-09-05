@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.refresh
+import currencycap.composeapp.generated.resources.view_all
 import domain.model.main.BonbastRate
 import org.jetbrains.compose.resources.stringResource
 import ui.components.main.SectionRowItem
@@ -27,7 +28,10 @@ import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
-internal fun TopRates(rates: OverviewState) {
+internal fun TopRates(
+    rates: OverviewState,
+    onViewAllClick: () -> Unit
+) {
     val isLoading by remember { derivedStateOf { rates is OverviewState.Loading } }
 
     Column(
@@ -35,14 +39,16 @@ internal fun TopRates(rates: OverviewState) {
             .fillMaxWidth()
             .padding(vertical = SPACER_PADDING_16),
     ) {
-        TopRatesHeader(isLoading)
-
+        TopRatesHeader(isLoading, onViewAllClick)
         TopRatesContent(rates, isLoading)
     }
 }
 
 @Composable
-private fun TopRatesHeader(isLoading: Boolean) {
+private fun TopRatesHeader(
+    isLoading: Boolean = false,
+    onViewAllClick: () -> Unit
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -51,6 +57,9 @@ private fun TopRatesHeader(isLoading: Boolean) {
             hasSubTitle = true,
             title = "Top rates",
             subTitle = "Iranian currency",
+            hasEndText = true,
+            endText = stringResource(Res.string.view_all),
+            onEndTextClick = onViewAllClick,
         )
 
         Icon(
@@ -62,7 +71,10 @@ private fun TopRatesHeader(isLoading: Boolean) {
 }
 
 @Composable
-private fun TopRatesContent(rates: OverviewState, isLoading: Boolean) {
+private fun TopRatesContent(
+    rates: OverviewState,
+    isLoading: Boolean = false
+) {
     val scrollableState = rememberLazyListState()
 
     LazyRow(
@@ -75,7 +87,7 @@ private fun TopRatesContent(rates: OverviewState, isLoading: Boolean) {
     ) {
         when {
             rates is OverviewState.Success -> {
-                val ratesList = rates.bonbastRates
+                val ratesList = rates.combinedRates.bonbast.take(3)
                 items(ratesList.size) { index ->
                     RateItem(
                         isLoading = false,

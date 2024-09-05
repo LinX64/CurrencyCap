@@ -22,6 +22,7 @@ import ui.screens.main.overview.OverviewViewModel
 import ui.screens.main.profile.ProfileViewModel
 import ui.screens.main.search.SearchViewModel
 import ui.screens.main.settings.SettingsViewModel
+import ui.screens.main.top_rates.TopRatesViewModel
 
 val viewModelModule = module {
     single { MainViewModel(get()) }
@@ -39,6 +40,7 @@ val viewModelModule = module {
     single { AiPredictViewModel() }
     single { FillProfileViewModel(get()) }
     single { CryptoListViewModel(get()) }
+    single { TopRatesViewModel(get()) }
 
     factory { (url: String) ->
         NewsDetailViewModel(get(), SavedStateHandle(mapOf(ENCODED_URL to url)))

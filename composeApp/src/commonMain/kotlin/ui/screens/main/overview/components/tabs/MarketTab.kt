@@ -44,7 +44,7 @@ internal fun MarketTab(
         ) {
             when (state) {
                 is Success -> {
-                    val cryptoRates = state.cryptoRates.sortedBy { it.marketCap }.take(4)
+                    val cryptoRates = state.combinedRates.crypto.sortedBy { it.marketCap }.take(4)
                     items(cryptoRates.size) { item ->
                         val cryptoItem = cryptoRates[item]
                         CryptoGridItem(cryptoItem = cryptoItem, onCryptoItemClick = onCryptoItemClick)

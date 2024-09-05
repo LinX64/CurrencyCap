@@ -39,7 +39,7 @@ internal fun LazyListScope.cryptoListItems(
 
     when (overviewState) {
         is Success -> {
-            val cryptoRates = overviewState.cryptoRates.take(5)
+            val cryptoRates = overviewState.combinedRates.crypto.take(5)
             if (cryptoRates.isNotEmpty()) {
                 items(
                     count = cryptoRates.size,

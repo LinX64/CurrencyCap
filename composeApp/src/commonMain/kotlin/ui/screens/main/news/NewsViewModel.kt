@@ -37,9 +37,9 @@ class NewsViewModel(
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
     val sources = mutableStateOf(persistentSetOf<String>())
 
-    init {
-        handleEvent(FetchNews())
-    }
+//    init {
+//        handleEvent(FetchNews())
+//    }
 
     override fun handleEvent(event: NewsViewEvent) {
         when (event) {

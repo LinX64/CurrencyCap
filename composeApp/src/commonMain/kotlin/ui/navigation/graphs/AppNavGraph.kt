@@ -13,7 +13,6 @@ import androidx.navigation.compose.navigation
 import cryptoListScreen
 import dev.chrisbanes.haze.HazeState
 import kotlinx.serialization.Serializable
-import ui.SharedViewModelContainer
 import ui.screens.initial.fill_profile.navigation.fillProfileScreen
 import ui.screens.initial.get_verified.navigation.getVerifiedPhoneScreen
 import ui.screens.initial.landing.navigation.Landing
@@ -32,6 +31,7 @@ import ui.screens.main.overview.navigation.overviewScreen
 import ui.screens.main.profile.navigation.profileScreen
 import ui.screens.main.search.navigation.searchScreen
 import ui.screens.main.settings.navigation.settingsScreen
+import ui.screens.main.top_rates.navigation.topRatesScreen
 import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
@@ -40,7 +40,6 @@ internal fun AppNavGraph(
     paddingValues: PaddingValues,
     hazeState: HazeState,
     isLoggedIn: Boolean,
-    sharedViewModelContainer: SharedViewModelContainer,
     onNavigateToLanding: () -> Unit,
     onError: (message: String) -> Unit,
     showPrivacyPolicyBottomSheet: () -> Unit,
@@ -61,7 +60,6 @@ internal fun AppNavGraph(
             navController = navController,
             hazeState = hazeState,
             onError = onError,
-            sharedViewModelContainer = sharedViewModelContainer,
             onNavigateToLanding = onNavigateToLanding,
             onExploreNewsClick = onExploreNewsClick,
             showBookmarkConfirmationSnakeBar = showBookmarkConfirmationSnakeBar,
@@ -81,7 +79,6 @@ internal fun AppNavGraph(
 private fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
     hazeState: HazeState,
-    sharedViewModelContainer: SharedViewModelContainer,
     onNavigateToLanding: () -> Unit,
     onError: (message: String) -> Unit,
     onExploreNewsClick: () -> Unit,
@@ -102,7 +99,6 @@ private fun NavGraphBuilder.mainNavGraph(
         overviewScreen(
             hazeState = hazeState,
             navController = navController,
-            overviewViewModel = sharedViewModelContainer.overviewViewModel
         )
 
         bookmarksScreen(
@@ -112,7 +108,6 @@ private fun NavGraphBuilder.mainNavGraph(
         )
 
         newsScreen(
-            newsViewModel = sharedViewModelContainer.newsViewModel,
             hazeState = hazeState,
             navController = navController,
             showBookmarkConfirmationSnakeBar = showBookmarkConfirmationSnakeBar
@@ -147,6 +142,10 @@ private fun NavGraphBuilder.mainNavGraph(
 
         cryptoListScreen(
             navController = navController,
+            hazeState = hazeState
+        )
+
+        topRatesScreen(
             hazeState = hazeState
         )
     }
