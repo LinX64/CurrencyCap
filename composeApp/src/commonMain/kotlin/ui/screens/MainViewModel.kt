@@ -3,28 +3,25 @@ package ui.screens
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import domain.repository.UserPreferences
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import ui.screens.MainState.Idle
-import ui.screens.MainState.Loading
-import ui.screens.MainState.LoggedIn
-import ui.screens.MainState.NotLoggedIn
+import ui.common.MviViewModel
+import ui.screens.main.MainNavigationEffect
+import ui.screens.main.MainState
+import ui.screens.main.MainState.Loading
+import ui.screens.main.MainState.LoggedIn
+import ui.screens.main.MainState.NotLoggedIn
+import ui.screens.main.MainViewEvent
+import ui.screens.main.MainViewEvent.OnGetUserStatus
 
 class MainViewModel(
     private val userPreferences: UserPreferences
-) : ViewModel() {
-
-    private val _state: MutableStateFlow<MainState> = MutableStateFlow(Idle)
-    val appState: StateFlow<MainState> = _state.asStateFlow()
-
+) : MviViewModel<MainViewEvent, MainState, MainNavigationEffect>(Loading) {
     var isSubscribeSheetVisible by mutableStateOf(false)
     var isNewsFilterSheetVisible by mutableStateOf(false)
     var isPrivacyPolicySheetVisible by mutableStateOf(false)
@@ -37,12 +34,14 @@ class MainViewModel(
             initialValue = false
         )
 
-    init {
-        checkUserLoginStatus()
+    override fun handleEvent(event: MainViewEvent) {
+        when (event) {
+            is OnGetUserStatus -> getUserStatus()
+        }
     }
 
-    private fun checkUserLoginStatus() {
-        _state.value = Loading
+    private fun getUserStatus() {
+        setState { Loading }
 
         viewModelScope.launch {
             delay(1500)
@@ -53,11 +52,11 @@ class MainViewModel(
     }
 
     fun onLoginSuccess() {
-        _state.value = LoggedIn
+        setState { LoggedIn }
     }
 
     fun updateStateToNotLoggedIn() {
-        _state.value = NotLoggedIn
+        setState { NotLoggedIn }
     }
 
     fun toggleDarkMode(isDark: Boolean = false) {
@@ -66,26 +65,19 @@ class MainViewModel(
         }
     }
 
-    fun toggleSubscribeSheet() {
-        isSubscribeSheetVisible = !isSubscribeSheetVisible
-    }
-
-    fun toggleNewsFilterSheet() {
-        isNewsFilterSheetVisible = !isNewsFilterSheetVisible
-    }
-
-    fun togglePrivacyPolicySheet() {
-        isPrivacyPolicySheetVisible = !isPrivacyPolicySheetVisible
-    }
-
-    fun toggleAboutUsSheet() {
-        isAboutUsSheetVisible = !isAboutUsSheetVisible
+    fun toggleSheet(sheetType: SheetType) {
+        when (sheetType) {
+            SheetType.SUBSCRIBE -> isSubscribeSheetVisible = !isSubscribeSheetVisible
+            SheetType.NEWS_FILTER -> isNewsFilterSheetVisible = !isNewsFilterSheetVisible
+            SheetType.PRIVACY_POLICY -> isPrivacyPolicySheetVisible = !isPrivacyPolicySheetVisible
+            SheetType.ABOUT_US -> isAboutUsSheetVisible = !isAboutUsSheetVisible
+        }
     }
 }
 
-sealed class MainState {
-    data object Idle : MainState()
-    data object Loading : MainState()
-    data object NotLoggedIn : MainState()
-    data object LoggedIn : MainState()
+enum class SheetType {
+    SUBSCRIBE,
+    NEWS_FILTER,
+    PRIVACY_POLICY,
+    ABOUT_US
 }
