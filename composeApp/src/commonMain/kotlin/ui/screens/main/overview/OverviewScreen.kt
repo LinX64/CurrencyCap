@@ -18,6 +18,7 @@ internal fun OverviewRoute(
     overviewViewModel: OverviewViewModel = koinViewModel(),
     hazeState: HazeState,
     onViewAllClick: () -> Unit,
+    onViewAllTopRatesClick: () -> Unit,
     onSearchCardClicked: () -> Unit,
     onNewsItemClick: (url: String) -> Unit,
     onCircleButtonClicked: () -> Unit,
@@ -28,6 +29,7 @@ internal fun OverviewRoute(
         state = state,
         hazeState = hazeState,
         onViewAllClick = onViewAllClick,
+        onViewAllTopRatesClick = onViewAllTopRatesClick,
         onSearchCardClicked = onSearchCardClicked,
         onNewsItemClick = onNewsItemClick,
         onCircleButtonClicked = onCircleButtonClicked,
@@ -43,6 +45,7 @@ internal fun OverviewScreen(
     onNewsItemClick: (url: String) -> Unit,
     onCircleButtonClicked: () -> Unit,
     onViewAllClick: () -> Unit,
+    onViewAllTopRatesClick: () -> Unit,
     onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     BaseGlassLazyColumn(
@@ -72,7 +75,7 @@ internal fun OverviewScreen(
         }
 
         item(key = "top_rates") {
-            TopRates(state)
+            TopRates(state, onViewAllTopRatesClick)
         }
 
         cryptoListItems(state, onViewAllClick, onCryptoItemClick)

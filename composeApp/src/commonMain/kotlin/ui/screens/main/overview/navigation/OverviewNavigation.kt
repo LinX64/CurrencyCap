@@ -18,6 +18,7 @@ import ui.screens.main.detail.navigation.CryptoDetail
 import ui.screens.main.news.news_detail.navigation.NewsDetail
 import ui.screens.main.overview.OverviewRoute
 import ui.screens.main.search.navigation.Explore
+import ui.screens.main.top_rates.navigation.TopRates
 
 fun NavController.navigateToOverviewScreen(navOptions: NavOptions) = navigate(Overview, navOptions)
 
@@ -41,6 +42,7 @@ fun NavGraphBuilder.overviewScreen(
             hazeState = hazeState,
             onSearchCardClicked = { navController.navigate(Explore) },
             onViewAllClick = { navController.navigate(CryptoList) },
+            onViewAllTopRatesClick = { navController.navigate(TopRates) },
             onNewsItemClick = { url ->
                 val encodedUrl = UrlEncoderUtil.encode(url)
                 navController.navigate(NewsDetail(encodedUrl))

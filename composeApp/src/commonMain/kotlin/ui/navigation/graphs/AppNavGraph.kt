@@ -31,6 +31,7 @@ import ui.screens.main.overview.navigation.overviewScreen
 import ui.screens.main.profile.navigation.profileScreen
 import ui.screens.main.search.navigation.searchScreen
 import ui.screens.main.settings.navigation.settingsScreen
+import ui.screens.main.top_rates.navigation.topRatesScreen
 import ui.theme.AppDimensions.SPACER_PADDING_32
 
 @Composable
@@ -141,6 +142,10 @@ private fun NavGraphBuilder.mainNavGraph(
 
         cryptoListScreen(
             navController = navController,
+            hazeState = hazeState
+        )
+
+        topRatesScreen(
             hazeState = hazeState
         )
     }
