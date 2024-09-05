@@ -10,9 +10,7 @@ fun NavGraphBuilder.topRatesScreen(
     hazeState: HazeState,
 ) {
     composable<TopRates> {
-        TopRatesRoute(
-            hazeState = hazeState,
-        )
+        TopRatesRoute()
     }
 }
 
