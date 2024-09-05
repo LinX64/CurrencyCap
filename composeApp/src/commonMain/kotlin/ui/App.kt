@@ -59,11 +59,10 @@ internal fun App(
     val isLoggedIn = mainState is MainState.LoggedIn
     val hazeState = remember { HazeState() }
 
-    EdgeToEdgeScaffoldWithPullToRefresh(currentDestination = currentDestination,
-        isRefreshing = isRefreshing,
-        onRefresh = {
-            overviewViewModel.refresh()
-        },
+    EdgeToEdgeScaffoldWithPullToRefresh(
+        currentDestination = currentDestination,
+        isRefreshing = if (isNewsScreen) isRefreshing else false,
+        onRefresh = { overviewViewModel.refresh() },
         topBar = {
             AppTopBar(
                 currentDestination = currentDestination,

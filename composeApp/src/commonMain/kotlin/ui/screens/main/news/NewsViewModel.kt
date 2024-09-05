@@ -48,10 +48,10 @@ class NewsViewModel(
         }
     }
 
-    private fun fetchNewsNew() {
+    private fun fetchNewsNew(isRefresh: Boolean = false) {
         viewModelScope.launch {
             val store = newsRepository.getNewsNew()
-            store.stream(StoreReadRequest.freshWithFallBackToSourceOfTruth(NEWS_KEY))
+            store.stream(StoreReadRequest.cached(NEWS_KEY, isRefresh))
                 .collectLatest { response ->
                     when (response) {
                         is StoreReadResponse.Loading -> setState { Loading }

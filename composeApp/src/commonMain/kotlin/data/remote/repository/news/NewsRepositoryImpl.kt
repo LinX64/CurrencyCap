@@ -6,7 +6,6 @@ import data.remote.model.news.toDomain
 import data.remote.model.news.toEntity
 import data.remote.model.requests.GetNews
 import data.util.parseResponse
-import data.util.retryOnIOException
 import di.baseApi
 import domain.model.Article
 import domain.model.toEntity
@@ -67,7 +66,6 @@ class NewsRepositoryImpl(
         }
     }
         .flowOn(Dispatchers.IO)
-        .retryOnIOException()
 
     private suspend fun fetchArticleByUrl(url: String): Article {
         val response = httpClient.get(GetNews()) { baseApi() }
