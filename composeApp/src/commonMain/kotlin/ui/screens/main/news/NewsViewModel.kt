@@ -10,6 +10,9 @@ import domain.repository.NewsRepository
 import domain.repository.UserPreferences
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.mobilenativefoundation.store.store5.StoreReadRequest
 import org.mobilenativefoundation.store.store5.StoreReadResponse
 import ui.common.MviViewModel
@@ -78,15 +81,18 @@ class NewsViewModel(
         setEffect(NewsNavigationEffect.ShowBookmarkConfirmation(isBookmarked))
     }
 
-    private fun filterNewsBy(startDate: String, endDate: String) {
+    private fun filterNewsBy(startDate: String?, endDate: String?) {
         val currentState = viewState.value
         if (currentState is Success) {
             val news = currentState.news
+            val currentDate =
+                Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+
+            val formattedStartDate = startDate?.let { convertToLocalDate(it) } ?: currentDate
+            val formattedEndDate = endDate?.let { convertToLocalDate(it) } ?: currentDate
+
             val filteredNews = news.filter { article ->
                 val articleDate = convertToLocalDate(article.publishedAt)
-                val formattedStartDate = convertToLocalDate(startDate)
-                val formattedEndDate = convertToLocalDate(endDate)
-
                 articleDate in formattedStartDate..formattedEndDate
             }
 
@@ -106,14 +112,17 @@ class NewsViewModel(
         val sourcesNames = news
             .filter { it.source.name.isNotBlank() }
             .map { it.source.name }
+            .distinct()
             .sorted()
 
         sources.value = sourcesNames
     }
 
     private fun saveSelectedSources(strings: Set<String>) {
+        if (strings.isEmpty()) return
+
         viewModelScope.launch {
-            userPreferences.saveUserSelectedSources(strings)
+            userPreferences.saveUserSelectedSources(emptySet())
         }
 
         filterNewsBySources(strings)
