@@ -32,6 +32,10 @@ class NewsViewModel(
 
     val sources = mutableStateOf(persistentSetOf<String>())
 
+    init {
+        handleEvent(FetchNews())
+    }
+
     override fun handleEvent(event: NewsViewEvent) {
         when (event) {
             OnRetry -> fetchNewsNew()
