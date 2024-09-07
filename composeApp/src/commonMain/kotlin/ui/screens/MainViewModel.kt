@@ -5,9 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import domain.repository.UserPreferences
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import ui.common.MviViewModel
@@ -30,9 +30,13 @@ class MainViewModel(
     val isDark: StateFlow<Boolean> = userPreferences.isDarkMode()
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(1000L),
+            started = SharingStarted.WhileSubscribed(800L),
             initialValue = false
         )
+
+    init {
+        handleEvent(OnGetUserStatus)
+    }
 
     override fun handleEvent(event: MainViewEvent) {
         when (event) {
@@ -41,12 +45,8 @@ class MainViewModel(
     }
 
     private fun getUserStatus() {
-        setState { Loading }
-
         viewModelScope.launch {
-            delay(1500)
-
-            val userLoggedIn = userPreferences.isUserLoggedIn()
+            val userLoggedIn = userPreferences.isUserLoggedIn().first()
             if (userLoggedIn) onLoginSuccess() else updateStateToNotLoggedIn()
         }
     }

@@ -1,4 +1,4 @@
-package ui.screens.main.news.components
+package ui.screens.main.news
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,19 +17,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.filter_by
-import kotlinx.collections.immutable.ImmutableSet
+import di.koinViewModel
 import kotlinx.datetime.Clock
 import org.jetbrains.compose.resources.stringResource
+import ui.screens.main.news.NewsViewEvent.OnSetClick
+import ui.screens.main.news.components.DateOfPublicationButton
+import ui.screens.main.news.components.ExpandableSourceButtonRow
+import ui.screens.main.news.components.FooterHorizontalButtons
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.DateUtils.convertMillisToDate
 
 @Composable
 internal fun NewsFilterSection(
-    modifier: Modifier = Modifier,
-    sources: ImmutableSet<String>,
-    onCloseClick: () -> Unit,
-    onDoneClick: (startDate: String, endDate: String, sources: Set<String>) -> Unit
+    newsViewModel: NewsViewModel = koinViewModel(),
+    onCloseClick: () -> Unit
 ) {
     val defaultDate = convertMillisToDate(Clock.System.now().toEpochMilliseconds())
     var selectedStartDate by rememberSaveable { mutableStateOf(defaultDate) }
@@ -37,7 +39,7 @@ internal fun NewsFilterSection(
     var selectedSources by rememberSaveable { mutableStateOf(emptySet<String>()) }
 
     Column(
-        modifier = modifier
+        modifier = Modifier
             .padding(horizontal = SPACER_PADDING_16, vertical = SPACER_PADDING_16),
         verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_16)
     ) {
@@ -52,7 +54,7 @@ internal fun NewsFilterSection(
         Spacer(modifier = Modifier.height(4.dp))
 
         ExpandableSourceButtonRow(
-            sources = sources,
+            sources = newsViewModel.sources.value,
             selectedSourcesList = { selectedSources = it.toSet() }
         )
 
@@ -65,7 +67,17 @@ internal fun NewsFilterSection(
 
         FooterHorizontalButtons(
             onCloseClick = onCloseClick,
-            onSetClick = { onDoneClick(selectedStartDate, selectedEndDate, selectedSources) }
+            onSetClick = {
+                newsViewModel.handleEvent(
+                    OnSetClick(
+                        startDate = selectedStartDate,
+                        endDate = selectedEndDate,
+                        selectedSources = selectedSources
+                    )
+                )
+
+                onCloseClick()
+            }
         )
     }
 }

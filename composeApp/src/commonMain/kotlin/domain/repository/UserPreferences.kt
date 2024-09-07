@@ -3,7 +3,7 @@ package domain.repository
 import kotlinx.coroutines.flow.Flow
 
 interface UserPreferences {
-    suspend fun isUserLoggedIn(): Boolean
+    suspend fun isUserLoggedIn(): Flow<Boolean>
     suspend fun saveUserUid(uid: String)
     suspend fun getUserUid(): String
     suspend fun clear()

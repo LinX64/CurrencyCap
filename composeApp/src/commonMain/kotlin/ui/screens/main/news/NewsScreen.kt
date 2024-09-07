@@ -29,7 +29,6 @@ internal fun NewsRoute(
     showBookmarkConfirmationSnakeBar: (Boolean) -> Unit
 ) {
     val state = newsViewModel.viewState.collectAsStateWithLifecycle()
-
     NewsScreen(
         state = state,
         hazeState = hazeState,

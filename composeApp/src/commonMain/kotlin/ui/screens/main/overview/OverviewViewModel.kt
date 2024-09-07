@@ -24,20 +24,24 @@ class OverviewViewModel(
     private val _isRefreshing = MutableStateFlow(true)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
 
+    init {
+        handleEvent(OnLoadRates(forceRefresh = false))
+    }
+
     override fun handleEvent(event: OverviewViewEvent) {
         when (event) {
             OnRetry -> loadCombinedRates()
-            is OnLoadRates -> loadCombinedRates()
+            is OnLoadRates -> loadCombinedRates(event.forceRefresh)
         }
     }
 
-    fun loadCombinedRates() {
+    private fun loadCombinedRates(onForceRefresh: Boolean = false) {
         setState { Loading }
         _isRefreshing.value = true
 
         viewModelScope.launch {
             mainRepository.getAllRatesNew()
-                .stream(StoreReadRequest.cached(ALL_RATES_KEY, isRefreshing.value))
+                .stream(StoreReadRequest.cached(ALL_RATES_KEY, onForceRefresh))
                 .collectLatest { response ->
                     when (response) {
                         is StoreReadResponse.Data -> {

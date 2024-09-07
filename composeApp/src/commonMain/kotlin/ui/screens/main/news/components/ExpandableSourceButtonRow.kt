@@ -30,7 +30,6 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.expandable
 import currencycap.composeapp.generated.resources.source
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
@@ -38,7 +37,7 @@ import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
 internal fun ExpandableSourceButtonRow(
-    sources: ImmutableSet<String>,
+    sources: List<String>,
     selectedSourcesList: (ImmutableList<String>) -> Unit
 ) {
     var isExpanded by remember { mutableStateOf(false) }

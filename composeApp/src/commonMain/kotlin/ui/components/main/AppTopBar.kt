@@ -40,6 +40,7 @@ import ui.navigation.util.ScreenRoutes.NEWS_DETAIL
 import ui.navigation.util.ScreenRoutes.OVERVIEW
 import ui.navigation.util.ScreenRoutes.PROFILE
 import ui.navigation.util.ScreenRoutes.SETTINGS
+import ui.navigation.util.ScreenRoutes.TOP_RATES
 import ui.screens.main.settings.navigation.navigateToSettingsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,6 +63,7 @@ internal fun AppTopBar(
     val isOverviewScreen = currentDestination == OVERVIEW
     val isProfileScreen = currentDestination == PROFILE
     val isCryptoListScreen = currentDestination == CRYPTO_LIST
+    val isTopRatesScreen = currentDestination == TOP_RATES
 
     CenterAlignedTopAppBar(
         modifier = Modifier.fillMaxWidth()
@@ -86,7 +88,8 @@ internal fun AppTopBar(
                 isAiScreen = isAiScreen,
                 isDetailScreen = isDetailScreen,
                 navController = navController,
-                isCryptoListScreen = isCryptoListScreen
+                isCryptoListScreen = isCryptoListScreen,
+                topRatesScreen = isTopRatesScreen
             )
         },
         actions = {
@@ -110,7 +113,8 @@ private fun NavigationIcon(
     isAiScreen: Boolean,
     isDetailScreen: Boolean?,
     navController: NavHostController,
-    isCryptoListScreen: Boolean
+    isCryptoListScreen: Boolean,
+    topRatesScreen: Boolean
 ) {
     if (isSettingsScreen ||
         isNewsDetailScreen == true ||
@@ -118,6 +122,7 @@ private fun NavigationIcon(
         isAiScreen ||
         isDetailScreen == true
         || isCryptoListScreen
+        || topRatesScreen
     ) {
         IconButton(
             onClick = navController::navigateUp

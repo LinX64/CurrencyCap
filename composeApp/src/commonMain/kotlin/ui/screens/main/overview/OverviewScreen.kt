@@ -1,7 +1,6 @@
 package ui.screens.main.overview
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
@@ -26,10 +25,6 @@ internal fun OverviewRoute(
     onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
-
-    LaunchedEffect(Unit) {
-        overviewViewModel.loadCombinedRates()
-    }
 
     OverviewScreen(
         state = state,

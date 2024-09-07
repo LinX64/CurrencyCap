@@ -10,11 +10,9 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ui.App
@@ -38,20 +36,13 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
+        )
 
         setContent {
             val isDarkMode by mainViewModel.isDark.collectAsStateWithLifecycle()
-
-            DisposableEffect(isDarkMode) {
-                enableEdgeToEdge(
-                    statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
-                    navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
-                )
-
-                onDispose { }
-            }
-
             AppM3Theme(isDarkMode = isDarkMode) {
                 App()
             }

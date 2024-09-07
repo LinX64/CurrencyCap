@@ -8,10 +8,11 @@ import domain.model.Article
 import domain.repository.ArticleLocalDataSource
 import domain.repository.NewsRepository
 import domain.repository.UserPreferences
-import kotlinx.collections.immutable.persistentSetOf
-import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.mobilenativefoundation.store.store5.StoreReadRequest
 import org.mobilenativefoundation.store.store5.StoreReadResponse
 import ui.common.MviViewModel
@@ -30,11 +31,11 @@ class NewsViewModel(
     private val userPreferences: UserPreferences
 ) : MviViewModel<NewsViewEvent, NewsState, NewsNavigationEffect>(Loading) {
 
-    val sources = mutableStateOf(persistentSetOf<String>())
+    val sources = mutableStateOf(emptyList<String>())
 
-//    init {
-//        handleEvent(FetchNews())
-//    }
+    init {
+        handleEvent(FetchNews)
+    }
 
     override fun handleEvent(event: NewsViewEvent) {
         when (event) {
@@ -48,17 +49,20 @@ class NewsViewModel(
         }
     }
 
-    private fun fetchNewsNew(isRefresh: Boolean = false) {
+    private fun fetchNewsNew() {
         viewModelScope.launch {
             val store = newsRepository.getNewsNew()
-            store.stream(StoreReadRequest.cached(NEWS_KEY, isRefresh))
+            store.stream(StoreReadRequest.freshWithFallBackToSourceOfTruth(NEWS_KEY))
                 .collectLatest { response ->
                     when (response) {
                         is StoreReadResponse.Loading -> setState { Loading }
                         is StoreReadResponse.Data -> {
                             val news = response.value
-                            setState { if (news.isNotEmpty()) Success(news) else Empty }
-                            getSources(news)
+
+                            if (news.isNotEmpty()) {
+                                setState { Success(news) }
+                                getSources(news)
+                            } else setState { Empty }
                         }
 
                         is StoreReadResponse.Error -> setState { Empty }
@@ -77,15 +81,18 @@ class NewsViewModel(
         setEffect(NewsNavigationEffect.ShowBookmarkConfirmation(isBookmarked))
     }
 
-    private fun filterNewsBy(startDate: String, endDate: String) {
+    private fun filterNewsBy(startDate: String?, endDate: String?) {
         val currentState = viewState.value
         if (currentState is Success) {
             val news = currentState.news
+            val currentDate =
+                Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+
+            val formattedStartDate = startDate?.let { convertToLocalDate(it) } ?: currentDate
+            val formattedEndDate = endDate?.let { convertToLocalDate(it) } ?: currentDate
+
             val filteredNews = news.filter { article ->
                 val articleDate = convertToLocalDate(article.publishedAt)
-                val formattedStartDate = convertToLocalDate(startDate)
-                val formattedEndDate = convertToLocalDate(endDate)
-
                 articleDate in formattedStartDate..formattedEndDate
             }
 
@@ -103,15 +110,19 @@ class NewsViewModel(
 
     private fun getSources(news: List<Article>) {
         val sourcesNames = news
+            .filter { it.source.name.isNotBlank() }
             .map { it.source.name }
             .distinct()
+            .sorted()
 
-        sources.value = sourcesNames.toPersistentSet()
+        sources.value = sourcesNames
     }
 
     private fun saveSelectedSources(strings: Set<String>) {
+        if (strings.isEmpty()) return
+
         viewModelScope.launch {
-            userPreferences.saveUserSelectedSources(strings)
+            userPreferences.saveUserSelectedSources(emptySet())
         }
 
         filterNewsBySources(strings)
