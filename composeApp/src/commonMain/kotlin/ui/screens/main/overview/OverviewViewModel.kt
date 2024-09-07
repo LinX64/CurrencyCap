@@ -24,6 +24,10 @@ class OverviewViewModel(
     private val _isRefreshing = MutableStateFlow(true)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
 
+    init {
+        handleEvent(OnLoadRates(forceRefresh = false))
+    }
+
     override fun handleEvent(event: OverviewViewEvent) {
         when (event) {
             OnRetry -> loadCombinedRates()

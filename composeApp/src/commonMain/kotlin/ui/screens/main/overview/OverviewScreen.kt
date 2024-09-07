@@ -1,7 +1,6 @@
 package ui.screens.main.overview
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.chrisbanes.haze.HazeState
@@ -9,7 +8,6 @@ import di.koinViewModel
 import ui.components.HorizontalLineWithDot
 import ui.components.SearchViewHeader
 import ui.components.base.BaseGlassLazyColumn
-import ui.screens.main.overview.OverviewViewEvent.OnLoadRates
 import ui.screens.main.overview.components.PortfolioSection
 import ui.screens.main.overview.components.TodayTopMovers
 import ui.screens.main.overview.components.TopRates
@@ -27,10 +25,6 @@ internal fun OverviewRoute(
     onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     val state by overviewViewModel.viewState.collectAsStateWithLifecycle()
-
-    LaunchedEffect(Unit) {
-        overviewViewModel.handleEvent(OnLoadRates())
-    }
 
     OverviewScreen(
         state = state,

@@ -31,9 +31,13 @@ import ui.components.main.navigateToOverview
 import ui.components.main.rememberAppState
 import ui.navigation.graphs.AppNavGraph
 import ui.screens.MainViewModel
-import ui.screens.SheetType
+import ui.screens.SheetType.ABOUT_US
+import ui.screens.SheetType.NEWS_FILTER
+import ui.screens.SheetType.PRIVACY_POLICY
+import ui.screens.SheetType.SUBSCRIBE
 import ui.screens.initial.landing.privacy_policy.PrivacyPolicySection
 import ui.screens.main.MainState.LoggedIn
+import ui.screens.main.news.NewsFilterSection
 import ui.screens.main.overview.OverviewViewModel
 import ui.screens.main.settings.AboutUsSection
 import ui.screens.main.subscribers.SubscribersSection
@@ -67,7 +71,7 @@ internal fun App(
                 scrollBehavior = scrollBehavior,
                 hazeState = hazeState,
                 isLoggedIn = isLoggedIn,
-                onFilterClick = { mainViewModel.toggleSheet(SheetType.NEWS_FILTER) },
+                onFilterClick = { mainViewModel.toggleSheet(NEWS_FILTER) },
                 onThemeChangeClick = mainViewModel::toggleDarkMode
             )
         },
@@ -82,15 +86,20 @@ internal fun App(
         bottomSheets = {
             BaseModalBottomSheet(
                 isVisible = mainViewModel.isSubscribeSheetVisible,
-                onDismiss = { mainViewModel.toggleSheet(SheetType.SUBSCRIBE) }) { SubscribersSection() }
-
+                onDismiss = { mainViewModel.toggleSheet(SUBSCRIBE) }) { SubscribersSection() }
             BaseModalBottomSheet(
                 isVisible = mainViewModel.isPrivacyPolicySheetVisible,
-                onDismiss = { mainViewModel.toggleSheet(SheetType.PRIVACY_POLICY) }) { PrivacyPolicySection() }
-
+                onDismiss = { mainViewModel.toggleSheet(PRIVACY_POLICY) }) { PrivacyPolicySection() }
             BaseModalBottomSheet(
                 isVisible = mainViewModel.isAboutUsSheetVisible,
-                onDismiss = { mainViewModel.toggleSheet(SheetType.ABOUT_US) }) { AboutUsSection() }
+                onDismiss = { mainViewModel.toggleSheet(ABOUT_US) }) { AboutUsSection() }
+            BaseModalBottomSheet(
+                isVisible = mainViewModel.isNewsFilterSheetVisible,
+                onDismiss = { mainViewModel.toggleSheet(NEWS_FILTER) }) {
+                NewsFilterSection(
+                    onCloseClick = { mainViewModel.toggleSheet(NEWS_FILTER) }
+                )
+            }
         }) { paddingValues ->
         AppNavGraph(
             navController = navController,
@@ -98,11 +107,11 @@ internal fun App(
             paddingValues = paddingValues,
             isLoggedIn = isLoggedIn,
             onNavigateToLanding = { navigateToLanding(mainViewModel, navController) },
-            showPrivacyPolicyBottomSheet = { mainViewModel.toggleSheet(SheetType.PRIVACY_POLICY) },
+            showPrivacyPolicyBottomSheet = { mainViewModel.toggleSheet(PRIVACY_POLICY) },
             onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
             onLoginSuccess = { navigateToOverview(mainViewModel, navController) },
             onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.NEWS) },
-            onShowAboutUsBottomSheet = { mainViewModel.toggleSheet(SheetType.ABOUT_US) }, //todo
+            onShowAboutUsBottomSheet = { mainViewModel.toggleSheet(ABOUT_US) }, //todo
             showBookmarkConfirmationSnakeBar = { isBookmarked ->
                 scope.launch {
                     snackbarHostState.showSnackbar(

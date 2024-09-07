@@ -1,9 +1,9 @@
 package domain.model
 
-import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import data.local.model.ArticleEntity
 
-@Immutable
+@Stable
 data class Article(
     val author: String? = null,
     val content: String,
@@ -23,6 +23,7 @@ fun List<Article>.toEntity(): List<ArticleEntity> = map { article ->
         publishedAt = article.publishedAt
         title = article.title
         url = article.url
+        sourceName = article.source.name
         urlToImage = article.urlToImage ?: ""
         isBookmarked = article.isBookmarked
     }

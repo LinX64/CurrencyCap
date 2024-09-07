@@ -8,8 +8,6 @@ import domain.model.Article
 import domain.repository.ArticleLocalDataSource
 import domain.repository.NewsRepository
 import domain.repository.UserPreferences
-import kotlinx.collections.immutable.persistentSetOf
-import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.mobilenativefoundation.store.store5.StoreReadRequest
@@ -30,10 +28,10 @@ class NewsViewModel(
     private val userPreferences: UserPreferences
 ) : MviViewModel<NewsViewEvent, NewsState, NewsNavigationEffect>(Loading) {
 
-    val sources = mutableStateOf(persistentSetOf<String>())
+    val sources = mutableStateOf(emptyList<String>())
 
     init {
-        handleEvent(FetchNews())
+        handleEvent(FetchNews)
     }
 
     override fun handleEvent(event: NewsViewEvent) {
@@ -48,17 +46,20 @@ class NewsViewModel(
         }
     }
 
-    private fun fetchNewsNew(isRefresh: Boolean = false) {
+    private fun fetchNewsNew() {
         viewModelScope.launch {
             val store = newsRepository.getNewsNew()
-            store.stream(StoreReadRequest.cached(NEWS_KEY, isRefresh))
+            store.stream(StoreReadRequest.freshWithFallBackToSourceOfTruth(NEWS_KEY))
                 .collectLatest { response ->
                     when (response) {
                         is StoreReadResponse.Loading -> setState { Loading }
                         is StoreReadResponse.Data -> {
                             val news = response.value
-                            setState { if (news.isNotEmpty()) Success(news) else Empty }
-                            getSources(news)
+
+                            if (news.isNotEmpty()) {
+                                setState { Success(news) }
+                                getSources(news)
+                            } else setState { Empty }
                         }
 
                         is StoreReadResponse.Error -> setState { Empty }
@@ -103,10 +104,11 @@ class NewsViewModel(
 
     private fun getSources(news: List<Article>) {
         val sourcesNames = news
+            .filter { it.source.name.isNotBlank() }
             .map { it.source.name }
-            .distinct()
+            .sorted()
 
-        sources.value = sourcesNames.toPersistentSet()
+        sources.value = sourcesNames
     }
 
     private fun saveSelectedSources(strings: Set<String>) {

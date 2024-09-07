@@ -13,12 +13,6 @@ import domain.repository.ArticleLocalDataSource
 import domain.repository.NewsRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.resources.get
-import io.ktor.http.isSuccess
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import org.mobilenativefoundation.store.store5.Fetcher
 import org.mobilenativefoundation.store.store5.SourceOfTruth
 import org.mobilenativefoundation.store.store5.Store
@@ -29,9 +23,9 @@ class NewsRepositoryImpl(
     private val articleLocalDataSource: ArticleLocalDataSource,
 ) : NewsRepository {
 
-    override fun getNewsNew(): Store<String, List<Article>> {
+    override suspend fun getNewsNew(): Store<String, List<Article>> {
         return StoreBuilder.from(
-            fetcher = Fetcher.ofFlow { getNewsOnline() },
+            fetcher = Fetcher.of { getNewsOnline() },
             sourceOfTruth = SourceOfTruth.of(
                 reader = { articleLocalDataSource.getArticles() },
                 writer = { _: String, response: List<Article> ->
@@ -54,18 +48,11 @@ class NewsRepositoryImpl(
         ).build()
     }
 
-    override fun getNewsOnline(): Flow<List<Article>> = flow {
+    override suspend fun getNewsOnline(): List<Article> {
         val response = httpClient.get(GetNews()) { baseApi() }
-        when (response.status.isSuccess()) {
-            true -> {
-                val articles: List<ArticleDto> = parseResponse<NewsDto>(response).articles
-                emit(articles.toDomain())
-            }
-
-            false -> emit(emptyList())
-        }
+        val articles: List<ArticleDto> = parseResponse<NewsDto>(response).articles
+        return articles.map(ArticleDto::toDomain)
     }
-        .flowOn(Dispatchers.IO)
 
     private suspend fun fetchArticleByUrl(url: String): Article {
         val response = httpClient.get(GetNews()) { baseApi() }
