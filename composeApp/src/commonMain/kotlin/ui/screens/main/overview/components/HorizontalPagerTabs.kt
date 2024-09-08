@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.components.tabs.CryptoContent
 import ui.screens.main.overview.components.tabs.MarketTab
-import ui.screens.main.overview.components.tabs.NewsTab
+import ui.screens.main.overview.components.tabs.TopGainers
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
@@ -30,7 +30,6 @@ import ui.theme.AppDimensions.SPACER_PADDING_8
 internal fun HorizontalPagerTabs(
     state: OverviewState,
     pagerState: PagerState,
-    onNewsItemClick: (url: String) -> Unit,
     onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     Column {
@@ -39,7 +38,7 @@ internal fun HorizontalPagerTabs(
             modifier = Modifier.height(230.dp)
         ) { page ->
             when (page) {
-                0 -> NewsTab(state = state, onNewsItemClick = onNewsItemClick)
+                0 -> TopGainers(state = state, onCryptoItemClick = onCryptoItemClick)
                 1 -> CryptoContent(state = state)
                 2 -> MarketTab(state = state, onCryptoItemClick = onCryptoItemClick)
             }
