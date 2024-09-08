@@ -16,8 +16,7 @@ import ui.theme.AppDimensions.SPACER_PADDING_8
 @Composable
 internal fun PortfolioSection(
     state: OverviewState,
-    tabs: ImmutableSet<String> = persistentSetOf("News", "Crypto", "Market"),
-    onNewsItemClick: (url: String) -> Unit,
+    tabs: ImmutableSet<String> = persistentSetOf("Top Gainers", "Crypto", "Market"),
     onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     val pagerState = rememberPagerState(
@@ -34,7 +33,6 @@ internal fun PortfolioSection(
             HorizontalPagerTabs(
                 state = state,
                 pagerState = pagerState,
-                onNewsItemClick = onNewsItemClick,
                 onCryptoItemClick = onCryptoItemClick
             )
         }

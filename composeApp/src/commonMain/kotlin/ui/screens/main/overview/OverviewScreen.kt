@@ -66,7 +66,6 @@ internal fun OverviewScreen(
         item(key = "portfolio_section") {
             PortfolioSection(
                 state = state,
-                onNewsItemClick = onNewsItemClick,
                 onCryptoItemClick = onCryptoItemClick
             )
         }
