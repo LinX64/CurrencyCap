@@ -10,17 +10,11 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.runtime.getValue
-import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import androidx.core.view.WindowCompat
 import ui.App
-import ui.screens.MainViewModel
-import ui.theme.AppM3Theme
 
 class MainActivity : ComponentActivity() {
-    private val mainViewModel: MainViewModel by viewModel()
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,9 +26,10 @@ class MainActivity : ComponentActivity() {
                 interpolator = AnticipateInterpolator()
                 duration = 800L
                 start()
-                doOnEnd { splashScreenView.remove() }
             }
         }
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
@@ -42,10 +37,7 @@ class MainActivity : ComponentActivity() {
         )
 
         setContent {
-            val isDarkMode by mainViewModel.isDark.collectAsStateWithLifecycle()
-            AppM3Theme(isDarkMode = isDarkMode) {
-                App()
-            }
+            App()
         }
     }
 }
