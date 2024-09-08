@@ -13,16 +13,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.trading_volume
+import org.jetbrains.compose.resources.stringResource
 import ui.components.base.CenteredColumn
 import ui.screens.main.overview.OverviewState
 import ui.screens.main.overview.OverviewState.Error
 import ui.screens.main.overview.OverviewState.Loading
 import ui.screens.main.overview.OverviewState.Success
+import ui.screens.main.overview.components.tabs.components.CryptoGridItem
 import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
-internal fun NewsTab(
+internal fun TopGainers(
     state: OverviewState,
     onNewsItemClick: (url: String) -> Unit
 ) {
@@ -31,7 +35,7 @@ internal fun NewsTab(
             .padding(end = SPACER_PADDING_32)
     ) {
         Text(
-            text = "Latest News",
+            text = stringResource(Res.string.trading_volume),
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             fontSize = MaterialTheme.typography.bodyLarge.fontSize,
             fontWeight = FontWeight.Bold
@@ -45,13 +49,13 @@ internal fun NewsTab(
             when (state) {
                 Loading -> item { CenteredColumn { CircularProgressIndicator() } }
                 is Success -> {
-//                    val news = state.news.take(2)
-//                    items(news.size) { index ->
-//                        NewsHomeItem(
-//                            onClick = { onNewsItemClick(news[index].url) },
-//                            newsItem = state.news[index]
-//                        )
-//                    }
+                    val topGainers = state.combinedRates.crypto.filter { it.high24h > 0 }.take(2)
+                    items(topGainers.size) { index ->
+                        CryptoGridItem(
+                            cryptoItem = topGainers[index],
+                            onCryptoItemClick = { _, _ -> }
+                        )
+                    }
                 }
 
                 is Error -> {

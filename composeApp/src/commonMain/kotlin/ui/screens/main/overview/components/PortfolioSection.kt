@@ -6,14 +6,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import ui.components.main.VerticalBarCard
 import ui.screens.main.overview.OverviewState
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
@@ -21,7 +16,6 @@ import ui.theme.AppDimensions.SPACER_PADDING_8
 @Composable
 internal fun PortfolioSection(
     state: OverviewState,
-    scope: CoroutineScope = rememberCoroutineScope(),
     tabs: ImmutableSet<String> = persistentSetOf("News", "Crypto", "Market"),
     onNewsItemClick: (url: String) -> Unit,
     onCryptoItemClick: (id: String, symbol: String) -> Unit,
@@ -44,15 +38,6 @@ internal fun PortfolioSection(
                 onCryptoItemClick = onCryptoItemClick
             )
         }
-
-        VerticalBarCard(
-            modifier = Modifier.align(Alignment.TopEnd),
-            onTabSelected = { index ->
-                scope.launch {
-                    pagerState.animateScrollToPage(index)
-                }
-            }
-        )
     }
 }
 
