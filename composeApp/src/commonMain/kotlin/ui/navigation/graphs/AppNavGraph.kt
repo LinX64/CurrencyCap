@@ -21,6 +21,7 @@ import ui.screens.initial.login.navigation.loginScreen
 import ui.screens.initial.register.navigation.registerScreen
 import ui.screens.initial.reset_password.navigation.resetPasswordScreen
 import ui.screens.main.ai_predict.navigation.aiPredictScreen
+import ui.screens.main.assets_live_price.navigation.assetsLiveScreen
 import ui.screens.main.bookmarks.navigation.bookmarksScreen
 import ui.screens.main.detail.navigation.detailScreen
 import ui.screens.main.exchange.navigation.exchangeScreen
@@ -33,6 +34,7 @@ import ui.screens.main.search.navigation.searchScreen
 import ui.screens.main.settings.navigation.settingsScreen
 import ui.screens.main.top_rates.navigation.topRatesScreen
 import ui.theme.AppDimensions.SPACER_PADDING_32
+
 
 @Composable
 internal fun AppNavGraph(
@@ -56,6 +58,7 @@ internal fun AppNavGraph(
             .consumeWindowInsets(paddingValues)
             .padding(bottom = SPACER_PADDING_32)
     ) {
+
         mainNavGraph(
             navController = navController,
             hazeState = hazeState,
@@ -147,6 +150,10 @@ private fun NavGraphBuilder.mainNavGraph(
 
         topRatesScreen(
             hazeState = hazeState
+        )
+
+        assetsLiveScreen(
+            onError = onError,
         )
     }
 }

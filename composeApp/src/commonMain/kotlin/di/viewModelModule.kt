@@ -12,6 +12,7 @@ import ui.screens.initial.login.LoginViewModel
 import ui.screens.initial.register.RegisterViewModel
 import ui.screens.initial.reset_password.ResetPasswordViewModel
 import ui.screens.main.ai_predict.AiPredictViewModel
+import ui.screens.main.assets_live_price.AssetsLivePriceViewModel
 import ui.screens.main.bookmarks.BookmarksViewModel
 import ui.screens.main.crypto_list.CryptoListViewModel
 import ui.screens.main.detail.DetailViewModel
@@ -41,6 +42,7 @@ val viewModelModule = module {
     single { FillProfileViewModel(get()) }
     single { CryptoListViewModel(get()) }
     single { TopRatesViewModel(get()) }
+    single { AssetsLivePriceViewModel(get()) }
 
     factory { (url: String) ->
         NewsDetailViewModel(get(), SavedStateHandle(mapOf(ENCODED_URL to url)))

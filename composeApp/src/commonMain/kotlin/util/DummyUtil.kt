@@ -2,6 +2,7 @@ package util
 
 import data.remote.model.User
 import domain.model.Article
+import domain.model.AssetPriceItem
 import domain.model.Source
 import domain.model.main.BonbastRate
 import domain.model.main.ChartDataPoint
@@ -256,3 +257,46 @@ internal fun getDummyCurrencies(): Currencies = Currencies(
     rates = getDummyRatesItem()
 )
 
+internal fun getDummyLiveRates(): List<AssetPriceItem> =
+    listOf(
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        )
+    )
