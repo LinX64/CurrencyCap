@@ -8,4 +8,7 @@ object APIConst {
     const val CRYPTO_ICON_API = "https://linx64.github.io/cryptoicon-api/public/icons/"
     const val CRYPTO_INFO_URL = "/coins"
     const val COINCAP_BASE_URL = "api.coincap.io/v2"
+
+    // WebSocket
+    const val LIVE_PRICES = "wss://ws.coincap.io/prices?assets=ALL"
 }

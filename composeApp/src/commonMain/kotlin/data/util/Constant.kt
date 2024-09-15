@@ -7,4 +7,5 @@ object Constant {
     const val GET_ARTICLE_BY_URL_NEW = "GET_ARTICLE_BY_URL_NEW"
     const val CRYPTO_LIST_KEY = "CRYPTO_LIST"
     const val RATES_LIST_KEY = "RATES_LIST"
+    const val LIVE_PRICES_KEY = "LIVE_PRICES"
 }

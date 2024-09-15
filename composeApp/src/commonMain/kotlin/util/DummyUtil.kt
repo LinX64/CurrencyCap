@@ -1,5 +1,6 @@
 package util
 
+import data.remote.model.AssetPriceItemDto
 import data.remote.model.User
 import domain.model.Article
 import domain.model.Source
@@ -256,3 +257,33 @@ internal fun getDummyCurrencies(): Currencies = Currencies(
     rates = getDummyRatesItem()
 )
 
+internal fun getDummyLiveRates(): List<AssetPriceItemDto> = listOf(
+    AssetPriceItemDto(
+        symbol = "BTC",
+        price = "50,000",
+    ),
+    AssetPriceItemDto(
+        symbol = "ETH",
+        price = "3,000",
+    ),
+    AssetPriceItemDto(
+        symbol = "BNB",
+        price = "500",
+    ),
+    AssetPriceItemDto(
+        symbol = "ADA",
+        price = "2",
+    ),
+    AssetPriceItemDto(
+        symbol = "XRP",
+        price = "1",
+    ),
+    AssetPriceItemDto(
+        symbol = "DOGE",
+        price = "0.5",
+    ),
+    AssetPriceItemDto(
+        symbol = "DOT",
+        price = "50",
+    ),
+)

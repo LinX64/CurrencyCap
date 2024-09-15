@@ -1,6 +1,7 @@
 package di
 
 import data.local.model.ArticleEntity
+import data.local.model.AssetPriceEntity
 import data.local.model.MarketChartDataEntity
 import data.local.model.PriceDataPointEntity
 import data.local.model.main.BonbastRateEntity
@@ -15,7 +16,7 @@ import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import org.koin.dsl.module
 
-const val REALM_SCHEMA_VERSION: Long = 4
+const val REALM_SCHEMA_VERSION: Long = 5
 const val REALM_FILE_NAME = "rates.realm"
 
 val dataModule = module {
@@ -31,7 +32,8 @@ val dataModule = module {
                 MarketChartDataEntity::class,
                 PriceDataPointEntity::class,
                 CryptoInfoEntity::class,
-                MarketDataEntity::class
+                MarketDataEntity::class,
+                AssetPriceEntity::class
             )
         )
             .name(REALM_FILE_NAME)
