@@ -84,7 +84,10 @@ internal fun BottomNavigationBar(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CenteredExchangeButton(
-                onButtonClicked = { onTabSelected(BottomBarTab.EXCHANGE) }
+                onButtonClicked = {
+                    selectedTabIndex = tabs.indexOf(BottomBarTab.EXCHANGE)
+                    onTabSelected(BottomBarTab.EXCHANGE)
+                }
             )
 
             Box(
