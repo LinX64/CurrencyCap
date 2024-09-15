@@ -45,7 +45,6 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.exchange
 import currencycap.composeapp.generated.resources.ic_arrow_up_down
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -94,7 +93,10 @@ internal fun BottomNavigationBar(
                     .padding(bottom = SPACER_PADDING_16)
                     .height(94.dp)
                     .clip(RoundedCornerShape(CARD_CORNER_RADIUS))
-                    .hazeChild(hazeState, HazeStyle.Unspecified, null)
+                    .hazeChild(
+                        state = hazeState,
+                        shape = RoundedCornerShape(CARD_CORNER_RADIUS)
+                    )
                     .border(
                         width = 1.dp,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),

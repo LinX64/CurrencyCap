@@ -90,8 +90,6 @@ kotlin {
 
             // UI
             implementation(libs.haze)
-            implementation(libs.haze.materials)
-
             implementation(libs.compottie)
             implementation(libs.placeholder.material3)
             implementation(libs.coil)
