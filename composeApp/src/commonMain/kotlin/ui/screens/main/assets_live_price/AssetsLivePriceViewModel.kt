@@ -17,6 +17,7 @@ import ui.screens.main.assets_live_price.AssetsLivePriceState.Error
 import ui.screens.main.assets_live_price.AssetsLivePriceState.Loading
 import ui.screens.main.assets_live_price.AssetsLivePriceState.Success
 import ui.screens.main.assets_live_price.AssetsLivePriceViewEvent.OnFetchLivePrices
+import ui.screens.main.assets_live_price.AssetsLivePriceViewEvent.OnObserveSearchQuery
 import ui.screens.main.assets_live_price.AssetsLivePriceViewEvent.OnSearchQueryChanged
 
 class AssetsLivePriceViewModel(
@@ -29,11 +30,12 @@ class AssetsLivePriceViewModel(
 
     init {
         handleEvent(OnFetchLivePrices)
-        observeSearchQuery()
+        handleEvent(OnObserveSearchQuery)
     }
 
     override fun handleEvent(event: AssetsLivePriceViewEvent) {
         when (event) {
+            OnObserveSearchQuery -> observeSearchQuery()
             is OnFetchLivePrices -> fetchLivePrices()
             is OnSearchQueryChanged -> searchQuery.value = event.query
         }

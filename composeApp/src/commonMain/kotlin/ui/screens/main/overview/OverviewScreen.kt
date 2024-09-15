@@ -20,7 +20,6 @@ internal fun OverviewRoute(
     onViewAllClick: () -> Unit,
     onViewAllTopRatesClick: () -> Unit,
     onSearchCardClicked: () -> Unit,
-    onNewsItemClick: (url: String) -> Unit,
     onCircleButtonClicked: () -> Unit,
     onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
@@ -29,11 +28,10 @@ internal fun OverviewRoute(
     OverviewScreen(
         state = state,
         hazeState = hazeState,
+        onSearchCardClicked = onSearchCardClicked,
+        onCircleButtonClicked = onCircleButtonClicked,
         onViewAllClick = onViewAllClick,
         onViewAllTopRatesClick = onViewAllTopRatesClick,
-        onSearchCardClicked = onSearchCardClicked,
-        onNewsItemClick = onNewsItemClick,
-        onCircleButtonClicked = onCircleButtonClicked,
         onCryptoItemClick = onCryptoItemClick,
     )
 }
@@ -43,7 +41,6 @@ internal fun OverviewScreen(
     state: OverviewState,
     hazeState: HazeState,
     onSearchCardClicked: () -> Unit,
-    onNewsItemClick: (url: String) -> Unit,
     onCircleButtonClicked: () -> Unit,
     onViewAllClick: () -> Unit,
     onViewAllTopRatesClick: () -> Unit,

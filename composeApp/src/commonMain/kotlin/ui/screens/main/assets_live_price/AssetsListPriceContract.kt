@@ -5,6 +5,7 @@ import domain.model.AssetPriceItem
 sealed interface AssetsLivePriceViewEvent {
     data class OnSearchQueryChanged(val query: String) : AssetsLivePriceViewEvent
     data object OnFetchLivePrices : AssetsLivePriceViewEvent
+    data object OnObserveSearchQuery : AssetsLivePriceViewEvent
 }
 
 sealed interface AssetsLivePriceState {
