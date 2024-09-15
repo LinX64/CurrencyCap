@@ -81,9 +81,9 @@ class AssetsLivePriceViewModel(
         val filteredAssets = if (query.isBlank()) {
             currentAssets
         } else {
+            val lowercaseQuery = query.lowercase()
             currentAssets.filter { asset ->
-                asset.symbol.contains(query, ignoreCase = true) ||
-                        asset.symbol.contains(query, ignoreCase = true)
+                asset.symbol.lowercase().contains(lowercaseQuery)
             }
         }
 

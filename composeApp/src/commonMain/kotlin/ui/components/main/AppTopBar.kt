@@ -2,9 +2,6 @@ package ui.components.main
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -13,10 +10,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -26,6 +19,7 @@ import currencycap.composeapp.generated.resources.back
 import currencycap.composeapp.generated.resources.filter
 import currencycap.composeapp.generated.resources.ic_arrow_left
 import currencycap.composeapp.generated.resources.ic_filter_search
+import currencycap.composeapp.generated.resources.ic_presention_chart
 import currencycap.composeapp.generated.resources.ic_settings
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeChild
@@ -41,6 +35,7 @@ import ui.navigation.util.ScreenRoutes.OVERVIEW
 import ui.navigation.util.ScreenRoutes.PROFILE
 import ui.navigation.util.ScreenRoutes.SETTINGS
 import ui.navigation.util.ScreenRoutes.TOP_RATES
+import ui.screens.main.assets_live_price.navigation.LivePrices
 import ui.screens.main.settings.navigation.navigateToSettingsScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,7 +47,6 @@ internal fun AppTopBar(
     hazeState: HazeState,
     isLoggedIn: Boolean,
     onFilterClick: () -> Unit,
-    onThemeChangeClick: (isDark: Boolean) -> Unit,
 ) {
     val isSettingsScreen = currentDestination == SETTINGS
     val isNewsDetailScreen = currentDestination?.startsWith(NEWS_DETAIL)
@@ -98,8 +92,8 @@ internal fun AppTopBar(
                 isOverviewScreen = isOverviewScreen,
                 isProfileScreen = isProfileScreen,
                 onFilterClick = onFilterClick,
-                onThemeChangeClick = onThemeChangeClick,
-                onSettingsClick = { navController.navigateToSettingsScreen() }
+                onSettingsClick = { navController.navigateToSettingsScreen() },
+                onLivePricesClick = { navController.navigate(LivePrices) }
             )
         }
     )
@@ -142,11 +136,9 @@ private fun Actions(
     isOverviewScreen: Boolean,
     isProfileScreen: Boolean,
     onFilterClick: () -> Unit,
-    onThemeChangeClick: (isDark: Boolean) -> Unit,
-    onSettingsClick: () -> Unit
+    onSettingsClick: () -> Unit,
+    onLivePricesClick: () -> Unit
 ) {
-    var isDarkTheme by rememberSaveable { mutableStateOf(true) }
-
     if (isNewsScreen) {
         IconButton(
             modifier = Modifier.padding(end = 16.dp),
@@ -162,15 +154,11 @@ private fun Actions(
 
     if (isOverviewScreen) {
         IconButton(
-            modifier = Modifier.padding(end = 16.dp),
-            onClick = {
-                isDarkTheme = !isDarkTheme
-                onThemeChangeClick(isDarkTheme)
-            }
+            onClick = onLivePricesClick
         ) {
             Icon(
-                imageVector = if (isDarkTheme) Icons.Filled.LightMode else Icons.Filled.DarkMode,
-                contentDescription = "theme",
+                painter = painterResource(Res.drawable.ic_presention_chart),
+                contentDescription = "live_prices",
                 tint = MaterialTheme.colorScheme.onSurface
             )
         }

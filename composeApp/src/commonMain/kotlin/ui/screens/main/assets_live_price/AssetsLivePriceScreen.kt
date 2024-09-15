@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Text
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -14,6 +14,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
 import domain.model.AssetPriceItem
 import ui.components.base.CenteredColumn
+import ui.screens.main.assets_live_price.AssetsLivePriceState.Loading
 import ui.screens.main.assets_live_price.AssetsLivePriceState.Success
 import ui.screens.main.assets_live_price.AssetsLivePriceViewEvent.OnSearchQueryChanged
 import ui.screens.main.assets_live_price.components.AnimatedRateRow
@@ -30,15 +31,10 @@ internal fun AssetsLivePriceScreen(
             val rates = assetsLivePriceState.rates
             AssetsLivePriceContent(
                 rates = rates,
-                isLoading = false,
                 onValueChange = { assetsLivePriceViewModel.handleEvent(OnSearchQueryChanged(it)) }
             )
         }
-
-        is Error -> CenteredColumn {
-            Text(text = assetsLivePriceState.message.toString())
-        }
-
+        is Loading -> CenteredColumn { CircularProgressIndicator() }
         else -> Unit
     }
 }
@@ -46,7 +42,6 @@ internal fun AssetsLivePriceScreen(
 @Composable
 private fun AssetsLivePriceContent(
     rates: List<AssetPriceItem>,
-    isLoading: Boolean = false,
     onValueChange: (String) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
@@ -69,7 +64,6 @@ private fun AssetsLivePriceContent(
         ) { index ->
             AnimatedRateRow(
                 rateItem = rates[index],
-                isLoading = isLoading,
             )
         }
     }

@@ -32,13 +32,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import domain.model.AssetPriceItem
 import kotlinx.coroutines.delay
-import ui.screens.main.overview.components.getPlaceHolder
 import util.separateCamelCase
 
 @Composable
 internal fun AnimatedRateRow(
     rateItem: AssetPriceItem,
-    isLoading: Boolean = false
 ) {
     var previousPrice by rememberSaveable { mutableStateOf(rateItem.price) }
     val priceChange = rateItem.price.toDouble() - previousPrice.toDouble()
@@ -79,7 +77,6 @@ internal fun AnimatedRateRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
             text = rateItem.symbol.separateCamelCase().replace("-", " "),
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold
