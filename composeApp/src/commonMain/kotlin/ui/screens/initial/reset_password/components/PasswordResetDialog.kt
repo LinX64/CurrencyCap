@@ -25,7 +25,6 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.email
 import currencycap.composeapp.generated.resources.email_sent
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -44,8 +43,8 @@ internal fun PasswordResetDialog(
             Surface(
                 modifier = Modifier.clip(RoundedCornerShape(CARD_CORNER_RADIUS))
                     .hazeChild(
-                        hazeState,
-                        HazeStyle.Unspecified, null
+                        state = hazeState,
+                        shape = RoundedCornerShape(CARD_CORNER_RADIUS)
                     ),
                 shape = MaterialTheme.shapes.medium,
                 color = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f),

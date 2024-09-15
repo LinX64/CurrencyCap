@@ -31,7 +31,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.toRect
@@ -90,9 +89,9 @@ internal fun BottomNavigationBar(
 
             Box(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(bottom = SPACER_PADDING_16)
                     .height(94.dp)
-                    .clip(RoundedCornerShape(CARD_CORNER_RADIUS))
                     .hazeChild(
                         state = hazeState,
                         shape = RoundedCornerShape(CARD_CORNER_RADIUS)
