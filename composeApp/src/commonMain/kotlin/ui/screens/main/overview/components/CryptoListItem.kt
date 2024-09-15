@@ -12,7 +12,7 @@ import currencycap.composeapp.generated.resources.view_all
 import org.jetbrains.compose.resources.stringResource
 import ui.components.main.SectionRowItem
 import ui.screens.main.overview.OverviewState
-import ui.screens.main.overview.OverviewState.Loading
+import ui.screens.main.overview.OverviewState.Idle
 import ui.screens.main.overview.OverviewState.Success
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
@@ -66,7 +66,7 @@ internal fun LazyListScope.cryptoListItems(
             }
         }
 
-        is Loading -> {
+        is Idle -> {
             items(2) { index ->
                 CryptoHorizontalItem(
                     crypto = getDummyCryptoItems()[index],

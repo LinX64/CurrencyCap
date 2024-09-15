@@ -5,7 +5,10 @@ import data.util.Constant.LIVE_PRICES_KEY
 import domain.model.AssetPriceItem
 import domain.repository.AssetsRepository
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -14,7 +17,7 @@ import org.mobilenativefoundation.store.store5.StoreReadRequest
 import org.mobilenativefoundation.store.store5.StoreReadResponse
 import ui.common.MviViewModel
 import ui.screens.main.assets_live_price.AssetsLivePriceState.Error
-import ui.screens.main.assets_live_price.AssetsLivePriceState.Loading
+import ui.screens.main.assets_live_price.AssetsLivePriceState.Idle
 import ui.screens.main.assets_live_price.AssetsLivePriceState.Success
 import ui.screens.main.assets_live_price.AssetsLivePriceViewEvent.OnFetchLivePrices
 import ui.screens.main.assets_live_price.AssetsLivePriceViewEvent.OnObserveSearchQuery
@@ -23,10 +26,12 @@ import ui.screens.main.assets_live_price.AssetsLivePriceViewEvent.OnSearchQueryC
 class AssetsLivePriceViewModel(
     private val assetsRepository: AssetsRepository
 ) : MviViewModel<AssetsLivePriceViewEvent, AssetsLivePriceState, AssetsLivePriceNavigationEffect>(
-    Loading
+    Idle
 ) {
     private var currentAssets: List<AssetPriceItem> = emptyList()
     private val searchQuery = MutableStateFlow("")
+    private val _isRefreshing = MutableStateFlow(true)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
 
     init {
         handleEvent(OnFetchLivePrices)
@@ -52,7 +57,7 @@ class AssetsLivePriceViewModel(
                             updateStateWithFilteredAssets(searchQuery.value)
                         }
 
-                        is StoreReadResponse.Loading -> setState { Loading }
+                        is StoreReadResponse.Loading -> _isRefreshing.value = true
                         is StoreReadResponse.Error -> {
                             setState {
                                 Error(response.errorMessageOrNull() ?: "Error fetching assets")
@@ -77,6 +82,18 @@ class AssetsLivePriceViewModel(
         }
     }
 
+    fun refresh() {
+        _isRefreshing.value = true
+
+        viewModelScope.launch {
+            delay(2500L)
+            _isRefreshing.value = false
+
+            handleEvent(OnFetchLivePrices)
+        }
+    }
+
+
     private fun updateStateWithFilteredAssets(query: String) {
         val filteredAssets = if (query.isBlank()) {
             currentAssets
@@ -93,6 +110,14 @@ class AssetsLivePriceViewModel(
             } else {
                 Success(filteredAssets)
             }
+        }
+        hidePullToRefreshAfterDelay()
+    }
+
+    private fun hidePullToRefreshAfterDelay() {
+        viewModelScope.launch {
+            delay(500L)
+            _isRefreshing.value = false
         }
     }
 }

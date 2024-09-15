@@ -51,7 +51,7 @@ internal fun MarketTab(
                 }
             }
 
-            is OverviewState.Loading -> {
+            is OverviewState.Idle -> {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()

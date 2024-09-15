@@ -15,7 +15,7 @@ import currencycap.composeapp.generated.resources.today_top_movers
 import org.jetbrains.compose.resources.stringResource
 import ui.components.main.SectionRowItem
 import ui.screens.main.overview.OverviewState
-import ui.screens.main.overview.OverviewState.Loading
+import ui.screens.main.overview.OverviewState.Idle
 import ui.screens.main.overview.OverviewState.Success
 import ui.theme.AppDimensions.SPACER_PADDING_16
 import ui.theme.AppDimensions.SPACER_PADDING_8
@@ -26,7 +26,7 @@ internal fun TodayTopMovers(
     overviewState: OverviewState,
     onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
-    val isLoading = overviewState is Loading
+    val isLoading = overviewState is Idle
     Column(
         modifier = Modifier.fillMaxWidth(),
     ) {
@@ -54,7 +54,7 @@ internal fun TodayTopMovers(
                     }
                 }
 
-                is Loading -> {
+                is Idle -> {
                     repeat(2) {
                         TopMoversCard(
                             isLoading = isLoading,

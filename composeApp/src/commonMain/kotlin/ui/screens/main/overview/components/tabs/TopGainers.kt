@@ -22,7 +22,7 @@ import currencycap.composeapp.generated.resources.top_gainers
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.CenteredColumn
 import ui.screens.main.overview.OverviewState
-import ui.screens.main.overview.OverviewState.Loading
+import ui.screens.main.overview.OverviewState.Idle
 import ui.screens.main.overview.OverviewState.Success
 import ui.screens.main.overview.components.tabs.components.CryptoGridItem
 import ui.theme.AppDimensions.SPACER_PADDING_8
@@ -84,7 +84,7 @@ internal fun TopGainers(
                                     }
                                 }
 
-                                is Loading -> {
+                                is Idle -> {
                                     CenteredColumn {
                                         CircularProgressIndicator()
                                     }
