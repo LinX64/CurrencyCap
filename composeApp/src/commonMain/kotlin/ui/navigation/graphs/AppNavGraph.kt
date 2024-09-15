@@ -55,33 +55,30 @@ internal fun AppNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = LivePrices,
+        startDestination = if (isLoggedIn) Overview else Landing,
         modifier = Modifier
             .fillMaxSize()
             .consumeWindowInsets(paddingValues)
             .padding(bottom = SPACER_PADDING_32)
     ) {
-        composable<LivePrices> {
-            AssetsLivePriceScreen()
-        }
 
-//        mainNavGraph(
-//            navController = navController,
-//            hazeState = hazeState,
-//            onError = onError,
-//            onNavigateToLanding = onNavigateToLanding,
-//            onExploreNewsClick = onExploreNewsClick,
-//            showBookmarkConfirmationSnakeBar = showBookmarkConfirmationSnakeBar,
-//            showPrivacyPolicyBottomSheet = showPrivacyPolicyBottomSheet,
-//            onShowAboutUsBottomSheet = onShowAboutUsBottomSheet
-//        )
-//
-//        authNavGraph(
-//            navController = navController,
-//            showPrivacyPolicyBottomSheet = showPrivacyPolicyBottomSheet,
-//            onLoginSuccess = onLoginSuccess,
-//            onError = onError
-//        )
+        mainNavGraph(
+            navController = navController,
+            hazeState = hazeState,
+            onError = onError,
+            onNavigateToLanding = onNavigateToLanding,
+            onExploreNewsClick = onExploreNewsClick,
+            showBookmarkConfirmationSnakeBar = showBookmarkConfirmationSnakeBar,
+            showPrivacyPolicyBottomSheet = showPrivacyPolicyBottomSheet,
+            onShowAboutUsBottomSheet = onShowAboutUsBottomSheet
+        )
+
+        authNavGraph(
+            navController = navController,
+            showPrivacyPolicyBottomSheet = showPrivacyPolicyBottomSheet,
+            onLoginSuccess = onLoginSuccess,
+            onError = onError
+        )
     }
 }
 
@@ -157,6 +154,10 @@ private fun NavGraphBuilder.mainNavGraph(
         topRatesScreen(
             hazeState = hazeState
         )
+
+        composable<LivePrices> {
+            AssetsLivePriceScreen()
+        }
     }
 }
 
