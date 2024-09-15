@@ -11,7 +11,6 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.pullToRefresh
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -62,21 +61,20 @@ import ui.theme.AppM3Theme
 @Preview
 internal fun App(
     mainViewModel: MainViewModel = koinViewModel(),
-    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
+    overviewViewModel: OverviewViewModel = koinViewModel(),
 ) {
     val navController = rememberNavController()
-    val appState: AppState = rememberAppState(navController)
+    val appState = rememberAppState(navController)
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     val scope = rememberCoroutineScope()
-    val overviewViewModel = koinViewModel<OverviewViewModel>()
-    val isRefreshing by overviewViewModel.isRefreshing.collectAsStateWithLifecycle()
+
     val mainState by mainViewModel.viewState.collectAsStateWithLifecycle()
     val isDarkMode by mainViewModel.isDark.collectAsStateWithLifecycle()
     val isLoggedIn = mainState is LoggedIn
+
     val currentDestination = appState.currentDestination
     val hazeState = remember { HazeState() }
-    val pullToRefreshState = rememberPullToRefreshState()
-    val isOverviewScreen = currentDestination == OVERVIEW
 
     AppM3Theme(isDarkMode = isDarkMode) {
         Scaffold(
@@ -99,78 +97,85 @@ internal fun App(
             },
             snackbarHost = { SnackbarHost(snackbarHostState) },
         ) { paddingValues ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = paddingValues.calculateTopPadding())
-                    .then(
-                        if (isOverviewScreen) {
-                            Modifier.pullToRefresh(
-                                state = pullToRefreshState,
-                                isRefreshing = isRefreshing,
-                                onRefresh = { overviewViewModel.refresh() }
-                            )
-                        } else Modifier
-                    )
-                    .hazeChild(hazeState),
-                contentAlignment = Alignment.TopCenter
-            ) {
-                NavGraph(
-                    navController = navController,
-                    paddingValues = paddingValues,
-                    hazeState = hazeState,
-                    isLoggedIn = isLoggedIn,
-                    mainViewModel = mainViewModel,
-                    appState = appState,
-                    snackbarHostState = snackbarHostState,
-                    scope = scope
-                )
-
-                if (isOverviewScreen) {
-                    PullToRefreshDefaults.Indicator(
-                        state = pullToRefreshState,
-                        isRefreshing = isRefreshing,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                }
-            }
-
-            BottomSheets(mainViewModel = mainViewModel)
+            MainContent(
+                appState = appState,
+                paddingValues = paddingValues,
+                hazeState = hazeState,
+                navController = navController,
+                isLoggedIn = isLoggedIn,
+                mainViewModel = mainViewModel,
+                overviewViewModel = overviewViewModel,
+                snackbarHostState = snackbarHostState,
+                scope = scope
+            )
         }
+
+        BottomSheets(mainViewModel = mainViewModel)
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun NavGraph(
-    navController: NavHostController,
+private fun MainContent(
+    appState: AppState,
     paddingValues: PaddingValues,
     hazeState: HazeState,
     isLoggedIn: Boolean,
     mainViewModel: MainViewModel,
-    appState: AppState,
+    overviewViewModel: OverviewViewModel,
     snackbarHostState: SnackbarHostState,
     scope: CoroutineScope,
+    navController: NavHostController
 ) {
-    AppNavGraph(
-        navController = navController,
-        hazeState = hazeState,
-        paddingValues = paddingValues,
-        isLoggedIn = isLoggedIn,
-        onNavigateToLanding = { navigateToLanding(mainViewModel, navController) },
-        showPrivacyPolicyBottomSheet = { mainViewModel.toggleSheet(PRIVACY_POLICY) },
-        onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
-        onLoginSuccess = { navigateToOverview(mainViewModel, navController) },
-        onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.NEWS) },
-        onShowAboutUsBottomSheet = { mainViewModel.toggleSheet(ABOUT_US) },
-        showBookmarkConfirmationSnakeBar = { isBookmarked ->
-            scope.launch {
-                snackbarHostState.showSnackbar(
-                    message = if (isBookmarked) getString(Res.string.article_added_to_bookmarks)
-                    else getString(Res.string.article_removed_from_bookmarks),
-                    duration = SnackbarDuration.Short
-                )
+    val isOverviewScreen = appState.currentDestination == OVERVIEW
+    val isRefreshing by overviewViewModel.isRefreshing.collectAsStateWithLifecycle()
+    val pullToRefreshState = rememberPullToRefreshState()
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = paddingValues.calculateTopPadding())
+            .let { modifier ->
+                if (isOverviewScreen) {
+                    modifier.pullToRefresh(
+                        state = pullToRefreshState,
+                        isRefreshing = isRefreshing,
+                        onRefresh = overviewViewModel::refresh
+                    )
+                } else modifier
             }
-        })
+            .hazeChild(hazeState),
+        contentAlignment = Alignment.TopCenter
+    ) {
+        AppNavGraph(
+            navController = navController,
+            hazeState = hazeState,
+            paddingValues = paddingValues,
+            isLoggedIn = isLoggedIn,
+            onNavigateToLanding = { navigateToLanding(mainViewModel, navController) },
+            showPrivacyPolicyBottomSheet = { mainViewModel.toggleSheet(PRIVACY_POLICY) },
+            onError = { message -> scope.launch { snackbarHostState.showSnackbar(message) } },
+            onLoginSuccess = { navigateToOverview(mainViewModel, navController) },
+            onExploreNewsClick = { appState.navigateToTopLevelDestination(BottomBarTab.NEWS) },
+            onShowAboutUsBottomSheet = { mainViewModel.toggleSheet(ABOUT_US) },
+            showBookmarkConfirmationSnakeBar = { isBookmarked ->
+                scope.launch {
+                    snackbarHostState.showSnackbar(
+                        message = if (isBookmarked) getString(Res.string.article_added_to_bookmarks)
+                        else getString(Res.string.article_removed_from_bookmarks),
+                        duration = SnackbarDuration.Short
+                    )
+                }
+            })
+
+        if (isOverviewScreen) {
+            PullToRefreshDefaults.Indicator(
+                state = pullToRefreshState,
+                isRefreshing = isRefreshing,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+    }
 }
 
 @Composable
