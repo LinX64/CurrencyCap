@@ -1,8 +1,8 @@
 package util
 
-import data.remote.model.AssetPriceItemDto
 import data.remote.model.User
 import domain.model.Article
+import domain.model.AssetPriceItem
 import domain.model.Source
 import domain.model.main.BonbastRate
 import domain.model.main.ChartDataPoint
@@ -257,32 +257,32 @@ internal fun getDummyCurrencies(): Currencies = Currencies(
     rates = getDummyRatesItem()
 )
 
-internal fun getDummyLiveRates(): List<AssetPriceItemDto> = listOf(
-    AssetPriceItemDto(
+internal fun getDummyLiveRates(): List<AssetPriceItem> = listOf(
+    AssetPriceItem(
         symbol = "BTC",
-        price = "50,000",
+        price = "50000",
     ),
-    AssetPriceItemDto(
+    AssetPriceItem(
         symbol = "ETH",
-        price = "3,000",
+        price = "3000",
     ),
-    AssetPriceItemDto(
+    AssetPriceItem(
         symbol = "BNB",
         price = "500",
     ),
-    AssetPriceItemDto(
+    AssetPriceItem(
         symbol = "ADA",
         price = "2",
     ),
-    AssetPriceItemDto(
+    AssetPriceItem(
         symbol = "XRP",
         price = "1",
     ),
-    AssetPriceItemDto(
+    AssetPriceItem(
         symbol = "DOGE",
-        price = "0.5",
+        price = "05",
     ),
-    AssetPriceItemDto(
+    AssetPriceItem(
         symbol = "DOT",
         price = "50",
     ),

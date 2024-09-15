@@ -1,13 +1,11 @@
-package ui.screens.main.assets_live_price
+package ui.screens.main.assets_live_price.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -18,6 +16,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import currencycap.composeapp.generated.resources.Res
+import currencycap.composeapp.generated.resources.search
+import org.jetbrains.compose.resources.stringResource
 import ui.theme.AppDimensions.CARD_CORNER_RADIUS
 
 @Composable
@@ -26,10 +27,9 @@ internal fun SearchBarHeader(
     onValueChange: (String) -> Unit
 ) {
     var searchQuery by remember { mutableStateOf("") }
-
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(CARD_CORNER_RADIUS),
+        shape = RoundedCornerShape(CARD_CORNER_RADIUS)
     ) {
         TextField(
             value = searchQuery,
@@ -38,23 +38,16 @@ internal fun SearchBarHeader(
                 onValueChange(it)
             },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Search") },
+            placeholder = { Text(text = stringResource(Res.string.search)) },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Search,
-                    contentDescription = "Search"
+                    contentDescription = stringResource(Res.string.search)
                 )
-            },
-            trailingIcon = {
-                IconButton(onClick = { searchQuery = "" }) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "Clear search"
-                    )
-                }
             },
             colors = TextFieldDefaults.colors(
                 unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent
             )
         )
     }

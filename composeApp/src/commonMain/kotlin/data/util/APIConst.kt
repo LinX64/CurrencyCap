@@ -10,5 +10,6 @@ object APIConst {
     const val COINCAP_BASE_URL = "api.coincap.io/v2"
 
     // WebSocket
-    const val LIVE_PRICES = "wss://ws.coincap.io/prices?assets=ALL"
+    const val LIVE_PRICES =
+        "wss://ws.coincap.io/prices?assets=bitcoin,ethereum,tether,binance-coin,xrp,solana,cardano,dogecoin,polygon,tron,polkadot,litecoin,shiba-inu,avalanche,chainlink,uniswap,wrapped-bitcoin,bitcoin-cash,stellar,monero,vechain,algorand,cosmos,tezos,aave,theta,elrond,fantom,decentraland,filecoin,hedera,zcash,near-protocol,the-graph,synthetix,helium,enjin-coin,thorchain,apecoin,flow,arweave,kusama,maker,loopring,mina"
 }
