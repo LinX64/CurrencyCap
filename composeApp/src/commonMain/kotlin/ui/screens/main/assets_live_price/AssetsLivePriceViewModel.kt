@@ -55,6 +55,7 @@ class AssetsLivePriceViewModel(
                         is StoreReadResponse.Data -> {
                             currentAssets = response.value
                             updateStateWithFilteredAssets(searchQuery.value)
+                            hidePullToRefreshAfterDelay()
                         }
 
                         is StoreReadResponse.Loading -> _isRefreshing.value = true
@@ -93,7 +94,6 @@ class AssetsLivePriceViewModel(
         }
     }
 
-
     private fun updateStateWithFilteredAssets(query: String) {
         val filteredAssets = if (query.isBlank()) {
             currentAssets
@@ -111,7 +111,6 @@ class AssetsLivePriceViewModel(
                 Success(filteredAssets)
             }
         }
-        hidePullToRefreshAfterDelay()
     }
 
     private fun hidePullToRefreshAfterDelay() {
