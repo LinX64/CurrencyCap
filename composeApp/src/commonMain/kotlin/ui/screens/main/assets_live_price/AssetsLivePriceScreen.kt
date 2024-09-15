@@ -34,6 +34,7 @@ internal fun AssetsLivePriceScreen(
                 onValueChange = { assetsLivePriceViewModel.handleEvent(OnSearchQueryChanged(it)) }
             )
         }
+
         is Loading -> CenteredColumn { CircularProgressIndicator() }
         else -> Unit
     }
@@ -50,14 +51,8 @@ private fun AssetsLivePriceContent(
         modifier = Modifier.fillMaxSize()
             .padding(SPACER_PADDING_16),
     ) {
-        item {
-            SearchBarHeader(
-                onValueChange = onValueChange,
-            )
-        }
-
-        item { Spacer(modifier = Modifier.height(SPACER_PADDING_16)) }
-
+        item(key = "search_bar") { SearchBarHeader(onValueChange = onValueChange) }
+        item(key = "spacer") { Spacer(modifier = Modifier.height(SPACER_PADDING_16)) }
         items(
             count = rates.size,
             key = { index -> rates[index].symbol }
