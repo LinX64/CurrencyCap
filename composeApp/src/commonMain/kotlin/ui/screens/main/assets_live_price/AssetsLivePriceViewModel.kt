@@ -2,8 +2,13 @@ package ui.screens.main.assets_live_price
 
 import androidx.lifecycle.viewModelScope
 import data.util.Constant.LIVE_PRICES_KEY
+import domain.model.AssetPriceItem
 import domain.repository.AssetsRepository
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.mobilenativefoundation.store.store5.StoreReadRequest
 import org.mobilenativefoundation.store.store5.StoreReadResponse
@@ -12,20 +17,25 @@ import ui.screens.main.assets_live_price.AssetsLivePriceState.Error
 import ui.screens.main.assets_live_price.AssetsLivePriceState.Loading
 import ui.screens.main.assets_live_price.AssetsLivePriceState.Success
 import ui.screens.main.assets_live_price.AssetsLivePriceViewEvent.OnFetchLivePrices
+import ui.screens.main.assets_live_price.AssetsLivePriceViewEvent.OnSearchQueryChanged
 
 class AssetsLivePriceViewModel(
     private val assetsRepository: AssetsRepository
 ) : MviViewModel<AssetsLivePriceViewEvent, AssetsLivePriceState, AssetsLivePriceNavigationEffect>(
     Loading
 ) {
+    private var currentAssets: List<AssetPriceItem> = emptyList()
+    private val searchQuery = MutableStateFlow("")
 
     init {
         handleEvent(OnFetchLivePrices)
+        observeSearchQuery()
     }
 
     override fun handleEvent(event: AssetsLivePriceViewEvent) {
         when (event) {
             is OnFetchLivePrices -> fetchLivePrices()
+            is OnSearchQueryChanged -> searchQuery.value = event.query
         }
     }
 
@@ -36,22 +46,51 @@ class AssetsLivePriceViewModel(
                 .collectLatest { response ->
                     when (response) {
                         is StoreReadResponse.Data -> {
-                            val newData = response.value.sortedWith(compareBy { it.symbol })
-                            setState {
-                                if (newData.isEmpty()) {
-                                    Error("No data found")
-                                } else Success(newData)
-                            }
+                            currentAssets = response.value
+                            updateStateWithFilteredAssets(searchQuery.value)
                         }
 
                         is StoreReadResponse.Loading -> setState { Loading }
-                        is StoreReadResponse.Error -> setState {
-                            Error(response.errorMessageOrNull() ?: "Error")
+                        is StoreReadResponse.Error -> {
+                            setState {
+                                Error(response.errorMessageOrNull() ?: "Error fetching assets")
+                            }
                         }
 
                         else -> Unit
                     }
                 }
+        }
+    }
+
+    @OptIn(FlowPreview::class)
+    private fun observeSearchQuery() {
+        viewModelScope.launch {
+            searchQuery
+                .debounce(500)
+                .distinctUntilChanged()
+                .collectLatest { query ->
+                    updateStateWithFilteredAssets(query)
+                }
+        }
+    }
+
+    private fun updateStateWithFilteredAssets(query: String) {
+        val filteredAssets = if (query.isBlank()) {
+            currentAssets
+        } else {
+            currentAssets.filter { asset ->
+                asset.symbol.contains(query, ignoreCase = true) ||
+                        asset.symbol.contains(query, ignoreCase = true)
+            }
+        }
+
+        setState {
+            if (filteredAssets.isEmpty()) {
+                Error("No matching assets found")
+            } else {
+                Success(filteredAssets)
+            }
         }
     }
 }

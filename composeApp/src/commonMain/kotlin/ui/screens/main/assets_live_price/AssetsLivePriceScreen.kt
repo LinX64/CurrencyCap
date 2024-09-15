@@ -15,12 +15,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
 import domain.model.AssetPriceItem
 import ui.components.base.CenteredColumn
-import ui.screens.main.assets_live_price.AssetsLivePriceState.Loading
 import ui.screens.main.assets_live_price.AssetsLivePriceState.Success
+import ui.screens.main.assets_live_price.AssetsLivePriceViewEvent.OnSearchQueryChanged
 import ui.screens.main.assets_live_price.components.AnimatedRateRow
 import ui.screens.main.assets_live_price.components.SearchBarHeader
 import ui.theme.AppDimensions.SPACER_PADDING_16
-import util.getDummyLiveRates
 
 @Composable
 internal fun AssetsLivePriceScreen(
@@ -33,19 +32,14 @@ internal fun AssetsLivePriceScreen(
             AssetsLivePriceContent(
                 rates = rates,
                 isLoading = false,
-            )
-        }
-
-        is Loading -> {
-            AssetsLivePriceContent(
-                rates = getDummyLiveRates(),
-                isLoading = true,
+                onValueChange = { assetsLivePriceViewModel.handleEvent(OnSearchQueryChanged(it)) }
             )
         }
 
         is Error -> CenteredColumn {
             Text(text = assetsLivePriceState.message.toString())
         }
+
         else -> Unit
     }
 }
@@ -54,6 +48,7 @@ internal fun AssetsLivePriceScreen(
 private fun AssetsLivePriceContent(
     rates: List<AssetPriceItem>,
     isLoading: Boolean = false,
+    onValueChange: (String) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
     LazyColumn(
@@ -64,7 +59,7 @@ private fun AssetsLivePriceContent(
         item {
             SearchBarHeader(
                 modifier = Modifier.fillMaxWidth(),
-                onValueChange = { /* TODO */ }
+                onValueChange = onValueChange,
             )
         }
 

@@ -257,33 +257,46 @@ internal fun getDummyCurrencies(): Currencies = Currencies(
     rates = getDummyRatesItem()
 )
 
-internal fun getDummyLiveRates(): List<AssetPriceItem> = listOf(
-    AssetPriceItem(
-        symbol = "BTC",
-        price = "50000",
-    ),
-    AssetPriceItem(
-        symbol = "ETH",
-        price = "3000",
-    ),
-    AssetPriceItem(
-        symbol = "BNB",
-        price = "500",
-    ),
-    AssetPriceItem(
-        symbol = "ADA",
-        price = "2",
-    ),
-    AssetPriceItem(
-        symbol = "XRP",
-        price = "1",
-    ),
-    AssetPriceItem(
-        symbol = "DOGE",
-        price = "05",
-    ),
-    AssetPriceItem(
-        symbol = "DOT",
-        price = "50",
-    ),
-)
+internal fun getDummyLiveRates(): List<AssetPriceItem> =
+    listOf(
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        ),
+        AssetPriceItem(
+            symbol = "",
+            price = "",
+        )
+    )

@@ -3,6 +3,7 @@ package ui.screens.main.assets_live_price
 import domain.model.AssetPriceItem
 
 sealed interface AssetsLivePriceViewEvent {
+    data class OnSearchQueryChanged(val query: String) : AssetsLivePriceViewEvent
     data object OnFetchLivePrices : AssetsLivePriceViewEvent
 }
 
