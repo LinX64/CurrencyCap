@@ -33,7 +33,7 @@ ktor = "2.3.12"
 coroutines = "1.8.1"
 urlencoderLib = "1.5.0"
 datastore = "1.1.1"
-realm = "2.1.0"
+realm = "2.2.0"
 compose-metrics-report = "1.4.0"
 store5Version = "5.1.0-alpha04"
 
