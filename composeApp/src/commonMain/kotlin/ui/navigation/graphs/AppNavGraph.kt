@@ -55,7 +55,7 @@ internal fun AppNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = if (isLoggedIn) Overview else Landing,
+        startDestination = if (isLoggedIn) MainNavGraph else AuthNavGraph,
         modifier = Modifier
             .fillMaxSize()
             .consumeWindowInsets(paddingValues)
