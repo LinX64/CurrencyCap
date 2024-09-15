@@ -31,6 +31,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.toRect
@@ -44,6 +45,7 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.exchange
 import currencycap.composeapp.generated.resources.ic_arrow_up_down
 import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -89,13 +91,10 @@ internal fun BottomNavigationBar(
 
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .padding(bottom = SPACER_PADDING_16)
                     .height(94.dp)
-                    .hazeChild(
-                        state = hazeState,
-                        shape = RoundedCornerShape(CARD_CORNER_RADIUS)
-                    )
+                    .clip(RoundedCornerShape(CARD_CORNER_RADIUS))
+                    .hazeChild(hazeState, HazeStyle.Unspecified, null)
                     .border(
                         width = 1.dp,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = .1f),

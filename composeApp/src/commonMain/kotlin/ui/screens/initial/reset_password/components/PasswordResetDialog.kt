@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -24,6 +25,7 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.email
 import currencycap.composeapp.generated.resources.email_sent
 import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeChild
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -40,10 +42,10 @@ internal fun PasswordResetDialog(
     if (showDialog) {
         Dialog(onDismissRequest = { /*TODO*/ }) {
             Surface(
-                modifier = Modifier
+                modifier = Modifier.clip(RoundedCornerShape(CARD_CORNER_RADIUS))
                     .hazeChild(
-                        state = hazeState,
-                        shape = RoundedCornerShape(CARD_CORNER_RADIUS)
+                        hazeState,
+                        HazeStyle.Unspecified, null
                     ),
                 shape = MaterialTheme.shapes.medium,
                 color = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f),

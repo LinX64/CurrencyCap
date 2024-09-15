@@ -25,14 +25,14 @@ import currencycap.composeapp.generated.resources.ic_settings
 import currencycap.composeapp.generated.resources.live_prices
 import currencycap.composeapp.generated.resources.settings
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.hazeChild
+import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import ui.navigation.util.ScreenRoutes
 import ui.screens.main.assets_live_price.navigation.LivePrices
 import ui.screens.main.settings.navigation.navigateToSettingsScreen
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
 internal fun AppTopBar(
     currentDestination: String?,
@@ -49,8 +49,12 @@ internal fun AppTopBar(
     CenterAlignedTopAppBar(
         modifier = Modifier
             .fillMaxWidth()
-            .hazeChild(state = hazeState),
-        title = {
+//            .hazeChild(
+//                state = hazeState,
+//                style = HazeMaterials.regular(MaterialTheme.colorScheme.surface),
+//                mask = remember { Brush.easedVerticalGradient(easing = EaseInOut) },
+//            ),
+        , title = {
             if (screenConfig.showTitle && isLoggedIn) {
                 Text(
                     text = destination.orEmpty(),

@@ -13,11 +13,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.haze
 import ui.theme.AppDimensions.SPACER_PADDING_16
-import ui.theme.AppDimensions.SPACER_PADDING_24
 import ui.theme.AppDimensions.SPACER_PADDING_96
 
 @Composable
@@ -41,10 +40,7 @@ internal fun BaseGlassLazyColumn(
             modifier = Modifier.fillMaxSize()
                 .haze(
                     state = hazeState,
-                    style = HazeStyle(
-                        tint = MaterialTheme.colorScheme.surface.copy(alpha = 0.1f),
-                        blurRadius = SPACER_PADDING_24
-                    )
+                    style = HazeDefaults.style(backgroundColor = MaterialTheme.colorScheme.surface),
                 ),
             contentPadding = contentPadding,
             verticalArrangement = verticalArrangement,
