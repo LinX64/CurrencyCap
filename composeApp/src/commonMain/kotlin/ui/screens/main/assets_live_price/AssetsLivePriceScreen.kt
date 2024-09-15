@@ -6,15 +6,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import di.koinViewModel
 import domain.model.AssetPriceItem
-import ui.components.base.CenteredColumn
-import ui.screens.main.assets_live_price.AssetsLivePriceState.Loading
 import ui.screens.main.assets_live_price.AssetsLivePriceState.Success
 import ui.screens.main.assets_live_price.AssetsLivePriceViewEvent.OnSearchQueryChanged
 import ui.screens.main.assets_live_price.components.AnimatedRateRow
@@ -34,7 +31,7 @@ internal fun AssetsLivePriceScreen(
                 onValueChange = { assetsLivePriceViewModel.handleEvent(OnSearchQueryChanged(it)) }
             )
         }
-        is Loading -> CenteredColumn { CircularProgressIndicator() }
+
         else -> Unit
     }
 }
@@ -50,14 +47,8 @@ private fun AssetsLivePriceContent(
         modifier = Modifier.fillMaxSize()
             .padding(SPACER_PADDING_16),
     ) {
-        item {
-            SearchBarHeader(
-                onValueChange = onValueChange,
-            )
-        }
-
-        item { Spacer(modifier = Modifier.height(SPACER_PADDING_16)) }
-
+        item(key = "search_bar") { SearchBarHeader(onValueChange = onValueChange) }
+        item(key = "spacer") { Spacer(modifier = Modifier.height(SPACER_PADDING_16)) }
         items(
             count = rates.size,
             key = { index -> rates[index].symbol }

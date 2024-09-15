@@ -1,13 +1,15 @@
 package ui.screens.main.overview.components.tabs
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,10 +22,9 @@ import currencycap.composeapp.generated.resources.top_gainers
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.CenteredColumn
 import ui.screens.main.overview.OverviewState
-import ui.screens.main.overview.OverviewState.Loading
+import ui.screens.main.overview.OverviewState.Idle
 import ui.screens.main.overview.OverviewState.Success
 import ui.screens.main.overview.components.tabs.components.CryptoGridItem
-import ui.theme.AppDimensions.SPACER_PADDING_32
 import ui.theme.AppDimensions.SPACER_PADDING_8
 
 @Composable
@@ -33,7 +34,6 @@ internal fun TopGainers(
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
-            .padding(end = SPACER_PADDING_32)
     ) {
         Text(
             text = stringResource(Res.string.top_gainers),
@@ -44,31 +44,66 @@ internal fun TopGainers(
 
         Spacer(modifier = Modifier.height(SPACER_PADDING_8))
 
-        LazyVerticalGrid(
-            modifier = Modifier.fillMaxSize().height(220.dp),
-            columns = GridCells.Fixed(2),
-            verticalArrangement = Arrangement.spacedBy(SPACER_PADDING_8),
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .height(220.dp)
         ) {
-            when (state) {
-                is Success -> {
-                    val cryptoRates = state.combinedRates.crypto.filter { it.high24h > 0 }
-                        .sortedByDescending { it.high24h }.take(4)
-                    items(cryptoRates.size) { item ->
-                        val cryptoItem = cryptoRates[item]
-                        CryptoGridItem(
-                            cryptoItem = cryptoItem,
-                            onCryptoItemClick = onCryptoItemClick
-                        )
+            repeat(2) { rowIndex ->
+                Row(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(SPACER_PADDING_8)
+                ) {
+                    repeat(2) { columnIndex ->
+                        val index = rowIndex * 2 + columnIndex
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                        ) {
+                            when (state) {
+                                is Success -> {
+                                    val cryptoRates = state.combinedRates.crypto
+                                        .filter { it.high24h > 0 }
+                                        .sortedByDescending { it.high24h }
+                                        .take(4)
+                                    if (index < cryptoRates.size) {
+                                        val cryptoItem = cryptoRates[index]
+                                        CryptoGridItem(
+                                            cryptoItem = cryptoItem,
+                                            onCryptoItemClick = onCryptoItemClick
+                                        )
+                                    } else {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .background(MaterialTheme.colorScheme.surface)
+                                        )
+                                    }
+                                }
+
+                                is Idle -> {
+                                    CenteredColumn {
+                                        CircularProgressIndicator()
+                                    }
+                                }
+
+                                else -> {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .background(MaterialTheme.colorScheme.surface)
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
-
-                is Loading -> item {
-                    CenteredColumn {
-                        CircularProgressIndicator()
-                    }
+                if (rowIndex == 0) {
+                    Spacer(modifier = Modifier.height(SPACER_PADDING_8))
                 }
-
-                else -> Unit
             }
         }
     }

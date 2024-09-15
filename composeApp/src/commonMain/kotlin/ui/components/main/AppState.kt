@@ -31,7 +31,7 @@ internal fun rememberAppState(
 }
 
 @Stable
-internal class AppState(
+class AppState(
     val navController: NavHostController
 ) {
     val currentDestination: String?

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -25,7 +24,6 @@ import domain.model.main.Crypto
 import org.jetbrains.compose.resources.stringResource
 import ui.components.base.GlassCard
 import ui.theme.AppDimensions.SPACER_PADDING_32
-import ui.theme.AppDimensions.SPACER_PADDING_8
 import util.formatNumber
 
 @Composable
@@ -34,12 +32,11 @@ internal fun CryptoGridItem(
     onCryptoItemClick: (id: String, symbol: String) -> Unit,
 ) {
     GlassCard(
-        modifier = Modifier.padding(end = SPACER_PADDING_8),
         isClickable = true,
         onCardClick = { onCryptoItemClick(cryptoItem.id, cryptoItem.symbol) }
     ) {
         Column(
-            modifier = Modifier.size(width = 190.dp, height = 75.dp)
+            modifier = Modifier.size(width = 220.dp, height = 75.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically

@@ -49,8 +49,8 @@ internal fun AppTopBar(
     CenterAlignedTopAppBar(
         modifier = Modifier
             .fillMaxWidth()
-            .hazeChild(state = hazeState),
-        title = {
+            .hazeChild(state = hazeState)
+        , title = {
             if (screenConfig.showTitle && isLoggedIn) {
                 Text(
                     text = destination.orEmpty(),

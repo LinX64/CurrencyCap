@@ -12,14 +12,14 @@ import kotlinx.coroutines.launch
 import org.mobilenativefoundation.store.store5.StoreReadRequest
 import org.mobilenativefoundation.store.store5.StoreReadResponse
 import ui.common.MviViewModel
-import ui.screens.main.overview.OverviewState.Loading
+import ui.screens.main.overview.OverviewState.Idle
 import ui.screens.main.overview.OverviewState.Success
 import ui.screens.main.overview.OverviewViewEvent.OnLoadRates
 import ui.screens.main.overview.OverviewViewEvent.OnRetry
 
 class OverviewViewModel(
     private val mainRepository: MainRepository,
-) : MviViewModel<OverviewViewEvent, OverviewState, OverviewNavigationEffect>(Loading) {
+) : MviViewModel<OverviewViewEvent, OverviewState, OverviewNavigationEffect>(Idle) {
 
     private val _isRefreshing = MutableStateFlow(true)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
@@ -36,9 +36,6 @@ class OverviewViewModel(
     }
 
     private fun loadCombinedRates(onForceRefresh: Boolean = false) {
-        setState { Loading }
-        _isRefreshing.value = true
-
         viewModelScope.launch {
             mainRepository.getAllRatesNew()
                 .stream(StoreReadRequest.cached(ALL_RATES_KEY, onForceRefresh))
@@ -59,6 +56,7 @@ class OverviewViewModel(
                             hidePullToRefreshAfterDelay()
                         }
 
+                        is StoreReadResponse.Loading -> _isRefreshing.value = true
                         else -> Unit
                     }
                 }
@@ -73,7 +71,6 @@ class OverviewViewModel(
     }
 
     fun refresh() {
-        setState { Loading }
         _isRefreshing.value = true
 
         viewModelScope.launch {

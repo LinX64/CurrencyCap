@@ -32,7 +32,7 @@ internal fun TopRates(
     rates: OverviewState,
     onViewAllClick: () -> Unit
 ) {
-    val isLoading by remember { derivedStateOf { rates is OverviewState.Loading } }
+    val isLoading by remember { derivedStateOf { rates is OverviewState.Idle } }
 
     Column(
         modifier = Modifier

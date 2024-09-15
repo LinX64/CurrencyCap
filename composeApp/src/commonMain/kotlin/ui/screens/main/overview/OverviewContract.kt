@@ -10,7 +10,7 @@ sealed interface OverviewViewEvent {
 }
 
 sealed interface OverviewState {
-    data object Loading : OverviewState
+    data object Idle : OverviewState
 
     @Stable
     data class Success(

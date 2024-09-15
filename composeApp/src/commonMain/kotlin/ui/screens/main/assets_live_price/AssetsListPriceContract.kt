@@ -10,7 +10,6 @@ sealed interface AssetsLivePriceViewEvent {
 
 sealed interface AssetsLivePriceState {
     data object Idle : AssetsLivePriceState
-    data object Loading : AssetsLivePriceState
     data class Success(val rates: List<AssetPriceItem>) : AssetsLivePriceState
     data class Error(val message: String) : AssetsLivePriceState
 }
