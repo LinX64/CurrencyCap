@@ -113,3 +113,8 @@ fun formatTimestamp(timestamp: Long): String {
 }
 
 fun getCurrentTimeInMillis(): Long = Clock.System.now().toEpochMilliseconds()
+
+fun String.separateCamelCase(): String {
+    return this.replace(Regex("(?<=[a-z])(?=[A-Z])"), " ")
+        .replaceFirstChar { it.uppercase() }
+}

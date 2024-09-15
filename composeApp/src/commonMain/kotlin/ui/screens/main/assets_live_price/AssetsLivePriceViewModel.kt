@@ -36,7 +36,7 @@ class AssetsLivePriceViewModel(
                 .collectLatest { response ->
                     when (response) {
                         is StoreReadResponse.Data -> {
-                            val newData = response.value.sortedBy { it.symbol }
+                            val newData = response.value.sortedWith(compareBy { it.symbol })
                             setState {
                                 if (newData.isEmpty()) {
                                     Error("No data found")

@@ -7,11 +7,15 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
@@ -28,105 +32,85 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import domain.model.AssetPriceItem
 import kotlinx.coroutines.delay
 import ui.screens.main.overview.components.getPlaceHolder
-import ui.theme.AppDimensions.SPACER_PADDING_8
-import kotlin.math.abs
+import util.separateCamelCase
 
 @Composable
 internal fun AnimatedRateRow(
     rateItem: AssetPriceItem,
-    previousPrice: String?,
     isLoading: Boolean = false
 ) {
     var showAnimation by remember { mutableStateOf(false) }
-    val haptic = LocalHapticFeedback.current
-
-    val priceChange = previousPrice?.let { prev ->
-        rateItem.price.toDouble() - prev.toDouble()
-    }
-    val changePercentage = priceChange?.let { change ->
-        (change / previousPrice.toDouble()) * 100
+    var previousPrice by remember(rateItem.symbol) { mutableStateOf(rateItem.price) }
+    val priceChange = remember(rateItem.price, previousPrice) {
+        rateItem.price.toDouble() - previousPrice.toDouble()
     }
 
-    val priceColor = when {
-        priceChange == null -> MaterialTheme.colorScheme.onSurface
-        priceChange > 0 -> Color.Green
-        priceChange < 0 -> Color.Red
-        else -> MaterialTheme.colorScheme.onSurface
+    val priceColor = remember(priceChange) {
+        when {
+            priceChange > 0 -> Color(0xFF4CAF50)
+            priceChange < 0 -> Color(0xFFE57373)
+            else -> Color.Gray
+        }
     }
 
     val animatedColor by animateColorAsState(
         targetValue = if (showAnimation) priceColor else MaterialTheme.colorScheme.onSurface,
-        animationSpec = tween(durationMillis = 1000, easing = FastOutSlowInEasing)
+        animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing)
     )
 
     val shimmerEffect = rememberInfiniteTransition()
     val shimmerAlpha by shimmerEffect.animateFloat(
-        initialValue = 0.2f,
-        targetValue = 0.8f,
+        initialValue = 0.6f,
+        targetValue = 1f,
         animationSpec = infiniteRepeatable(
-            animation = tween(1000),
+            animation = tween(500),
             repeatMode = RepeatMode.Reverse
         )
     )
 
     LaunchedEffect(rateItem.price) {
         showAnimation = true
-        if (abs(priceChange ?: 0.0) > 0.01) {
-            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-        }
-        delay(1000)
+        delay(500)
         showAnimation = false
+        previousPrice = rateItem.price
     }
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(SPACER_PADDING_8),
+            .padding(12.dp)
+            .background(
+                color = if (showAnimation) priceColor.copy(alpha = 0.1f) else Color.Transparent,
+                shape = RoundedCornerShape(8.dp)
+            ),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Column {
-            Text(
-                modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
-                text = rateItem.symbol.separateCamelCase(),
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold
-            )
-            if (changePercentage != null) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        imageVector = if (priceChange >= 0) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
-                        contentDescription = if (priceChange >= 0) "Price increased" else "Price decreased",
-                        tint = priceColor
-                    )
-                    Text(
-                        text = abs(changePercentage).toString().take(5) + "%",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = priceColor
-                    )
-                }
-            }
-        }
+        Text(
+            modifier = if (isLoading) getPlaceHolder(Modifier) else Modifier,
+            text = rateItem.symbol.separateCamelCase().replace("-", " "),
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Bold
+        )
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = "$${rateItem.price}",
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 color = animatedColor,
                 modifier = Modifier.alpha(if (showAnimation) shimmerAlpha else 1f)
             )
-            if (priceChange != null) {
-                Icon(
-                    imageVector = if (priceChange >= 0) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
-                    contentDescription = if (priceChange >= 0) "Price increased" else "Price decreased",
-                    tint = priceColor
-                )
-            }
+            Spacer(modifier = Modifier.width(4.dp))
+            Icon(
+                imageVector = if (priceChange >= 0) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
+                contentDescription = if (priceChange >= 0) "Price increased" else "Price decreased",
+                tint = priceColor,
+                modifier = Modifier.size(24.dp)
+            )
         }
     }
 }
