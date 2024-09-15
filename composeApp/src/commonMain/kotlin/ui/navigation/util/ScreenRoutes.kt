@@ -26,6 +26,7 @@ object ScreenRoutes {
 
     const val CRYPTO_LIST = "CryptoList"
     const val TOP_RATES = "TopRates"
+    const val LIVE_PRICES = "LivePrices"
 }
 
 const val ENCODED_URL = "encodedUrl"
