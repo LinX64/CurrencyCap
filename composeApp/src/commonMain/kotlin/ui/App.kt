@@ -27,7 +27,6 @@ import currencycap.composeapp.generated.resources.Res
 import currencycap.composeapp.generated.resources.article_added_to_bookmarks
 import currencycap.composeapp.generated.resources.article_removed_from_bookmarks
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.hazeChild
 import di.koinViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -143,8 +142,7 @@ private fun MainContent(
                         onRefresh = overviewViewModel::refresh
                     )
                 } else modifier
-            }
-            .hazeChild(hazeState),
+            },
         contentAlignment = Alignment.TopCenter
     ) {
         AppNavGraph(
