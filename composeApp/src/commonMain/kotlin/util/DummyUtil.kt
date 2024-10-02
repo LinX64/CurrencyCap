@@ -2,19 +2,12 @@ package util
 
 import data.remote.model.User
 import domain.model.Article
-import domain.model.AssetPriceItem
 import domain.model.Source
-import domain.model.main.BonbastRate
-import domain.model.main.ChartDataPoint
 import domain.model.main.Crypto
 import domain.model.main.CryptoImage
 import domain.model.main.CryptoInfo
-import domain.model.main.Currencies
 import domain.model.main.Description
-import domain.model.main.Market
 import domain.model.main.MarketData
-import domain.model.main.Rate
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 internal fun getDummyNewsItem() = Article(
@@ -30,37 +23,6 @@ internal fun getDummyNewsItem() = Article(
     url = "url",
     urlToImage = "https://readwrite.com/wp-content/uploads/2024/06/new-crypto-presale-pepe-unchained-goes-live.jpg",
     isBookmarked = false
-)
-
-internal fun getDummyNewsItems() = persistentListOf(
-    Article(
-        author = "Alvin Hemedez",
-        content = "Pepe’s global popularity has led to the launch of Pepe Unchained, an enhanced version that has quickly trended as a high-potential presale project that could be the best alternative to PEPE.\\r\\nThe pro… [+6203 chars]\"",
-        description = "epe’s global popularity has led to the launch of Pepe Unchained, an enhanced version that has quickly trended as a… Continue reading New Crypto Presale Pepe Unchained Goes Live – What Is PEPU Meme Token\\nThe post New Crypto Presale Pepe Unchained Goes Live – …",
-        publishedAt = "2024-06-23T14:24:37Z",
-        source = Source(
-            id = "id",
-            name = "CoinDesk"
-        ),
-        title = "New Crypto Presale Pepe Unchained Goes Live – What Is PEPU Meme Token",
-        url = "url",
-        urlToImage = "https://readwrite.com/wp-content/uploads/2024/06/new-crypto-presale-pepe-unchained-goes-live.jpg",
-        isBookmarked = false
-    ),
-    Article(
-        author = "Alvin Hemedez",
-        content = "Pepe’s global popularity has led to the launch of Pepe Unchained, an enhanced version that has quickly trended as a high-potential presale project that could be the best alternative to PEPE.\\r\\nThe pro… [+6203 chars]\"",
-        description = "epe’s global popularity has led to the launch of Pepe Unchained, an enhanced version that has quickly trended as a… Continue reading New Crypto Presale Pepe Unchained Goes Live – What Is PEPU Meme Token\\nThe post New Crypto Presale Pepe Unchained Goes Live – …",
-        publishedAt = "2024-06-23T14:24:37Z",
-        source = Source(
-            id = "id",
-            name = "CoinDesk"
-        ),
-        title = "New Crypto Presale Pepe Unchained Goes Live – What Is PEPU Meme Token",
-        url = "url",
-        urlToImage = "https://readwrite.com/wp-content/uploads/2024/06/new-crypto-presale-pepe-unchained-goes-live.jpg",
-        isBookmarked = false
-    )
 )
 
 internal fun getDummyCryptoItem(): Crypto = Crypto(
@@ -208,95 +170,3 @@ internal fun getDummyUser() = User(
     phoneNumber = "phoneNumber",
     profilePicture = ""
 )
-
-internal fun getDummyChartData(): ImmutableList<ChartDataPoint> = persistentListOf(
-    ChartDataPoint(
-        price = "132.0",
-        timestamp = 1721779200000
-    ),
-    ChartDataPoint(
-        price = "155.0",
-        timestamp = 1721779200000
-    ),
-)
-
-internal fun getDummyBonbastRates(): ImmutableList<BonbastRate> = persistentListOf(
-    BonbastRate(
-        code = "code", sell = 8.9, buy = 10.11, imageUrl = "imageUrl"
-    )
-)
-
-internal fun getDummyMarketRates(): ImmutableList<Market> = persistentListOf(
-    Market(
-        baseId = "te",
-        baseSymbol = "brute",
-        exchangeId = "labores",
-        percentExchangeVolume = "sociis",
-        priceQuote = "invidunt",
-        priceUsd = "nostrum",
-        quoteId = "id",
-        quoteSymbol = "per",
-        rank = "iudicabit",
-        tradesCount24Hr = null,
-        updated = 3698,
-        volumeUsd24Hr = "adipisci"
-    )
-)
-
-internal fun getDummyRatesItem(): ImmutableList<Rate> = persistentListOf(
-    Rate(
-        id = "vero", rateUsd = "ultricies", symbol = "animal", type = "proin", currencySymbol = null
-    )
-)
-
-internal fun getDummyCurrencies(): Currencies = Currencies(
-    timestamp = 123456789,
-    bonbast = getDummyBonbastRates(),
-    crypto = getDummyCryptoItems(),
-    markets = getDummyMarketRates(),
-    rates = getDummyRatesItem()
-)
-
-internal fun getDummyLiveRates(): List<AssetPriceItem> =
-    listOf(
-        AssetPriceItem(
-            symbol = "",
-            price = "",
-        ),
-        AssetPriceItem(
-            symbol = "",
-            price = "",
-        ),
-        AssetPriceItem(
-            symbol = "",
-            price = "",
-        ),
-        AssetPriceItem(
-            symbol = "",
-            price = "",
-        ),
-        AssetPriceItem(
-            symbol = "",
-            price = "",
-        ),
-        AssetPriceItem(
-            symbol = "",
-            price = "",
-        ),
-        AssetPriceItem(
-            symbol = "",
-            price = "",
-        ),
-        AssetPriceItem(
-            symbol = "",
-            price = "",
-        ),
-        AssetPriceItem(
-            symbol = "",
-            price = "",
-        ),
-        AssetPriceItem(
-            symbol = "",
-            price = "",
-        )
-    )
