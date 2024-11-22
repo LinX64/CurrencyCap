@@ -10,4 +10,6 @@ plugins {
     alias(libs.plugins.firebase.perf) apply false
     alias(libs.plugins.realm.plugin) apply false
     alias(libs.plugins.compose.compiler.report) apply false
+    alias(libs.plugins.android.test) apply false
+    alias(libs.plugins.kotlin.android) apply false
 }

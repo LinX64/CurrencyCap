@@ -8,18 +8,23 @@
     <application
         android:name=".MyApp"
         android:allowBackup="true"
+        android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:enableOnBackInvokedCallback="true"
         android:theme="@style/Theme.MyApp.MySplash"
         tools:targetApi="tiramisu">
+        <profileable
+            android:shell="true"
+            tools:targetApi="29" />
+
         <activity
             android:name=".main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,7 +34,6 @@
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false"
             tools:node="remove">
-
             <meta-data
                 android:name="ui.common.ContextProvider"
                 android:value="androidx.startup" />
