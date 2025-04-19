@@ -1,1 +1,3 @@
+## NOT BEING MAINTAINED, AND THE APPLICATION IS NOT PUBLISHED ANYMORE DUE TO THE API AND CLOSURE OF BONBAST.COM
+
 This is a Kotlin Multiplatform project for different currencies.
